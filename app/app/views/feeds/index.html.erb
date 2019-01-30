@@ -1,0 +1,82 @@
+<%# @events.inspect %>
+
+<p id="notice">
+  <%= notice %>
+</p>
+
+<div class="me-favorite" data-controller="favorite">
+  <% if current_user and !current_user.all_favorited(scope: ['favorite']).empty? %>
+  <h2 data-target="favorite.header" class="mdc-typography--headline2">
+    Eventos salvos
+  </h2>
+  <div class="saved-list" data-target="favorite.list">
+    <div class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        <% current_user.all_favorited(scope: ['favorite']).reverse.each do |event| %>
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2" data-target="favorite.event" data-action="mouseover->favorite#showEventName mouseout->favorite#hideEventName">
+            <div class="me-card mdc-card">
+              <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
+              </div>
+              <div class="mdc-typography--body2">
+                <%= link_to(event.name, event.url) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% else %>
+  <span>Você não possuí eventos salvos ainda</span>
+  <% end %>
+</div>
+
+
+
+<h2 class="mdc-typography--headline2">Eventos indicados para você</h2>
+
+<div class="me-feed">
+
+  <div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <% @events.each do |event| %>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3">
+
+        <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-event-favorited="<%= current_user.favorited?(event, scope: ['favorite']) if current_user %>" data-event-identifier="<%= event.id %>">
+          <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
+          </div>
+
+            <div class="mdc-card__primary-action" tabindex="0">
+              <a href="<%= event.url %>">
+                <h2 class="mdc-card__title mdc-typography--headline2">
+                  <%= event.name[0..50] %>
+                </h2>
+              </a>
+              <h3 class="mdc-card__subtitle mdc-typography--subtitle1">
+                <%= next_day_to_occur(event) %>
+              </h3>
+
+              <div class="mdc-typography--body2">
+                <%= event.place.name[0..40] %>
+                <%# event.place.address %>
+              </div>
+            </div>
+
+          <div class="mdc-card__actions">
+            <div data-action="click->event#like">
+              <div data-target="event.like">
+                <button data-target="event.likeButton" class="me-like-button mdc-button mdc-button--dense <%= 'mdc-button--raised' if favorited event %>">
+                  <i class="material-icons mdc-button__icon">star</i>
+                  <span class="mdc-button__label" style="text-align: right">
+                    <%= favorited(event) ? "Salvo" : "Salvar" %>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>

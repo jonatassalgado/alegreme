@@ -1,0 +1,13 @@
+.me-search-field {
+  align-self: center;
+
+  &.mdc-text-field {
+    background: white;
+    border-radius: 35px;
+    width: 100%
+  }
+
+  & .mdc-text-field__input {
+    padding: 0 15px;
+  }
+}

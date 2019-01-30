@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<div class="col s3">
+  <div class="card">
+    <div class="card-image">
+      <img src="<%= url_for(@event.cover) %>">
+      <!-- <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">star</i></a> -->
+    </div>
+    <div class="card-content">
+      <div class="card-title small"><%= @event.name[0..50] %></div>
+      <div class="tooltipped" data-position="bottom" data-tooltip="<%= @event.place.address %>">
+        <%= @event.place.name[0..40] %>
+      </div>
+      <div>
+        <%= next_day_to_occur(@event) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>

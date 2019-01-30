@@ -1,0 +1,32 @@
+@import '@material/card/_mixins';
+
+.me-favorite {
+    min-height: 185px;
+
+  & .mdc-layout-grid {
+    --mdc-layout-grid-margin-desktop: 0;
+    --mdc-layout-grid-gutter-desktop: 8px;
+  }
+
+  & .me-card {
+    cursor: pointer;
+    font-size: 12px;
+    border: 0;
+    box-shadow: none;
+    @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
+
+
+    & .mdc-typography--body2 {
+      display: none;
+      pointer-events: none;
+      padding: 6px 0 6px 0;
+      line-height: 1.1em;
+      font-weight: 400;
+
+      &:hover {
+        background: inherit;
+      }
+    }
+  }
+
+}

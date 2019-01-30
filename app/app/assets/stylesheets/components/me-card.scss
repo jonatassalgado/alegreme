@@ -1,0 +1,14 @@
+.me-card {
+  & a {
+    text-decoration: none;
+
+
+    & .mdc-card__title {
+      color: black
+    }
+  }
+
+  & .mdc-card__subtitle {
+    margin: 3px 0;
+  }
+}
