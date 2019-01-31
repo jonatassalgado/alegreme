@@ -62,7 +62,7 @@ import heapq as hq
 #raw = pd.read_json('./events.json')
 #csv = raw.to_csv('./events-raw.csv')
 
-base = pd.read_csv('./events.csv')
+base = pd.read_csv('./svm-classification-events-v1-events.csv')
 
 # remove null values
 base = base.loc[(base['description'].notna()) & (base['label'].notna())]
@@ -70,9 +70,15 @@ base = base.loc[(base['description'].notna()) & (base['label'].notna())]
 X = base['name'].str.cat(base[['description', 'categories']], sep=' ', na_rep='').values.astype(str)
 y = base.loc[:, 'label'].values.astype(str)
 
+from nltk import download
+download('stopwords')
+download('punkt')
+download('rslp')
+
 from nltk.tokenize import word_tokenize
 from nltk.stem import RSLPStemmer
 from nltk.corpus import stopwords
+
 from sklearn.pipeline import Pipeline
 
 stopwords = stopwords.words('portuguese')
@@ -109,7 +115,7 @@ X_stemmed = stemmer_text(X_cleanned)
 
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X_stemmed, y, test_size=0.10, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X_stemmed, y, test_size=0.10, random_state=None)
 
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -188,6 +194,7 @@ from sklearn.metrics import accuracy_score
 accuracy = accuracy_score([i[0] for i in predictions_labels], y_test)
 accuracyb = accuracy_score([i[1] for i in predictions_labels], y_test)
 accuracyc = accuracy + accuracyb 
+
 
 
 

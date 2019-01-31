@@ -57,7 +57,7 @@
               </h3>
 
               <div class="mdc-typography--body2">
-                <%= event.place.name[0..40] %>
+                <%= event.place.name[0..40] if event.place %>
                 <%# event.place.address %>
               </div>
             </div>

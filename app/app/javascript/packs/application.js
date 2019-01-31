@@ -16,7 +16,7 @@ import {MDCTopAppBar} from '@material/top-app-bar/index';
 import {MDCList} from '@material/list';
 import {MDCRipple} from '@material/ripple';
 import {MDCTextField} from '@material/textfield';
-import {Botkit} from 'botkit/lib/Web'
+
 
 
 
