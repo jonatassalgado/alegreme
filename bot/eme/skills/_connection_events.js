@@ -10,11 +10,19 @@ module.exports = function(controller) {
       bot.startConversation(message, function(err, convo) {
 
         convo.say({
-          text: 'Hello human! I am brand new Botkit bot, ready to be customized to your needs!',
+          text: 'Oi! Eu sou o <b>Eme</b>'
+        });
+
+        convo.say({
+          text: 'Trabalho aqui no projeto <b>Alegreme</b> e vou te ajudar a ter uma <i>agenda de eventos de Porto Alegre com a sua cara</i>.'
+        });
+
+        convo.ask({
+          text: 'Para isso vou precisar saber o que você gosta. <b>Ok?</b>',
           quick_replies: [
             {
-              title: 'Help',
-              payload: 'help',
+              title: 'Ok, pode perguntar',
+              payload: 'Ok, pode perguntar',
             },
           ]
         });
@@ -24,24 +32,54 @@ module.exports = function(controller) {
 
     }
 
-    controller.hears(['help','contact','documentation','docs','community'], 'message_received', function(bot, message) {
+    controller.hears(['Ok, pode perguntar', 'ok', 'sim', 'claro', 'vamos lá', 'partiu', 'foi'], 'message_received', function(bot, message) {
 
       bot.startConversation(message, function(err, convo) {
 
-        // set up a menu thread which other threads can point at.
+
+        convo.say({
+          text: 'Vou te mostrar alguns eventos reais que acontecem em Porto Alegre e te <b>perguntar se gostaria de ir ou não</b>'
+        })
+
+        convo.say({
+          text: 'Com base no seu gosto por alguns eventos, <b>vou definir sua persona</b>, o qual me ajudará a indicar eventos futuros',
+          typingDelay: 5000
+        })
+
+        convo.say({
+          text: 'Vamos ao primeiro evento',
+          typingDelay: 5500
+        })
+
+        convo.say({
+          text: '<b>Arduino Day 2019</b>',
+          typingDelay: 5000,
+          files: [
+              {
+                url: './arduino-day-2019.png',
+                image: true
+              }
+          ]
+        })
+
+        convo.say({
+          text: 'Evento para pessoas desenvolvedoras de software que desejam aprendar mais sobre a linguagem Arduino.'
+        })
+
         convo.ask({
-          text: 'I can point you to resources, and connect you with experts who can help.',
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: 3000,
           quick_replies: [
             {
-              title: 'Read the Docs',
+              title: 'Iria certo',
               payload: 'documentation',
             },
             {
-              title: 'Join the Community',
+              title: 'Talvez',
               payload: 'community',
             },
             {
-              title: 'Expert Help',
+              title: 'Não me vejo indo',
               payload: 'contact us',
             },
           ]
