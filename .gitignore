@@ -13,6 +13,7 @@ app/rerun.txt
 app/pickle-email-*.html
 app/public/packs/
 .scrapy/
+ml/__pycache__
 
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
