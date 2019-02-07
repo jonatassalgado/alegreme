@@ -47,7 +47,7 @@ ENV RAILS_VERSION 5.2.1
 
 RUN gem install rails --version "$RAILS_VERSION"
 
-ENV RAILS_ROOT /var/www/web
+ENV RAILS_ROOT /var/www/alegreme
 RUN mkdir -p $RAILS_ROOT
 
 WORKDIR $RAILS_ROOT
