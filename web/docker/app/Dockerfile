@@ -35,27 +35,32 @@ RUN rm -fr /usr/local/bin/bundle
 RUN gem install --no-document bundler
 
 
-# see update.sh for why all "apt-get install"s have to stay as one long line
 RUN apt-get update && curl --silent --location https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
-# see http://guides.rubyonrails.org/command_line.html#rails-dbconsole
 RUN apt-get update && apt-get install -y mysql-client postgresql-client libsqlite3-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
-ENV RAILS_VERSION 5.2.1
-
-RUN gem install rails --version "$RAILS_VERSION"
-
-COPY Gemfile* /tmp/
-WORKDIR /tmp
-RUN bundle install
-
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install yarn
 RUN yarn install --check-files
 
-ENV app /app
-RUN mkdir $app
-WORKDIR $app
-ADD . $app
+ENV RAILS_VERSION 5.2.1
+
+RUN gem install rails --version "$RAILS_VERSION"
+
+ENV RAILS_ROOT /var/www/web
+RUN mkdir -p $RAILS_ROOT
+
+WORKDIR $RAILS_ROOT
+
+#ENV RAILS_ENV='production'
+#ENV RACK_ENV='production'
+
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
+RUN bundle install --jobs 20 --retry 5
+
+COPY . .
+RUN bundle exec rake assets:precompile
+EXPOSE 3000
+
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
