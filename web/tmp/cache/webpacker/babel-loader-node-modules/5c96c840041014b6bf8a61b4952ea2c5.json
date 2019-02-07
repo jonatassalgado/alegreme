@@ -1,0 +1,1 @@
+{"ast":null,"code":"var raw_utterances = require('./utterances.json');\n\nmodule.exports.getUtterances = function () {\n  var utterances = {};\n\n  for (var k in raw_utterances) {\n    if (raw_utterances.hasOwnProperty(k)) {\n      utterances[k] = new RegExp(raw_utterances[k], 'i');\n    }\n  }\n\n  return utterances;\n};","map":null,"metadata":{},"sourceType":"module"}

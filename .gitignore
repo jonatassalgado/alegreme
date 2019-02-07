@@ -1,19 +1,21 @@
-app/*.rbc
-app/capybara-*.html
-app/.rspec
-app/log
-app/tmp
-app/db/*.sqlite3
-app/db/*.sqlite3-journal
-app/public/system
-app/coverage/
-app/spec/tmp
-app/*.orig
-app/rerun.txt
-app/pickle-email-*.html
-app/public/packs/
+web/*.rbc
+web/capybara-*.html
+web/.rspec
+web/log
+web/tmp
+web/db/*.sqlite3
+web/db/*.sqlite3-journal
+web/public/system
+web/coverage/
+web/spec/tmp
+web/*.orig
+web/rerun.txt
+web/pickle-email-*.html
+web/public/packs/
 .scrapy/
 ml/__pycache__
+web/tmp/pids
+web/tmp/cache
 
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
