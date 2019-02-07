@@ -47,6 +47,8 @@ ENV RAILS_VERSION 5.2.1
 
 RUN gem install rails --version "$RAILS_VERSION"
 
+
+
 ENV RAILS_ROOT /var/www/alegreme
 RUN mkdir -p $RAILS_ROOT
 
@@ -54,6 +56,15 @@ WORKDIR $RAILS_ROOT
 
 #ENV RAILS_ENV='production'
 #ENV RACK_ENV='production'
+
+COPY ./docker/app/docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+ENV BUNDLE_PATH=/bundle \
+    BUNDLE_BIN=/bundle/bin \
+    GEM_HOME=/bundle
+ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
