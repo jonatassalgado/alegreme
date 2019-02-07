@@ -1,5 +1,4 @@
 import sys
-sys.path.insert(0, '../alegreme/ml')
 import pandas as pd
 import numpy as np
 import json
@@ -36,4 +35,4 @@ api.add_resource(PredictPersona, '/')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

@@ -12,7 +12,7 @@ from joblib import dump, load
 class PersonaPrediction(object):
 
     def __init__(self):
-        self.base = pd.read_csv('ml/svm-classification-personas-v1-events.csv')
+        self.base = pd.read_csv('../svm-classification-personas-v1-events.csv')
 
 
     def visualize(self):

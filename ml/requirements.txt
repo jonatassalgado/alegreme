@@ -1,0 +1,7 @@
+pandas
+numpy
+flask
+flask_restful
+seaborn
+sklearn
+joblib
