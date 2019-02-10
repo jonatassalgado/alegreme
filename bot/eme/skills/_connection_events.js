@@ -78,7 +78,7 @@ module.exports = function(controller) {
 
       // HOW WORKS
       convo.addMessage({
-        text: 'Vou te mostrar alguns eventos reais que acontecem em Porto Alegre e te <b>perguntar se gostaria de ir ou não</b>'
+        text: 'Vou te mostrar alguns eventos que acontecem em Porto Alegre e te <b>perguntar se gostaria de ir ou não</b>'
       }, 'how_works')
 
       convo.addMessage({

@@ -16,6 +16,7 @@ web/public/packs/
 ml/__pycache__
 web/tmp/pids
 web/tmp/cache
+.~lock*
 
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
