@@ -2,18 +2,50 @@
 
 module.exports = function(controller) {
 
-  var events = [{
-    "id": 0,
-    "name": "<b>Arduino Day 2019</b>",
-    "imageUrl": "./arduino-day-2019.png",
-    "description": "Evento para pessoas desenvolvedoras de software que desejam aprendar mais sobre a linguagem Arduino."
-  },
-  {
-    "id": 1,
-    "name": "<b>Festa HOT</b>",
-    "imageUrl": "./arduino-day-2019.png",
-    "description": "A pista mais fervida de Porto Alegre, sem moralismo, sem preconceito. No som: house, disco e os hits clássicos das últimas décadas. "
-  }]
+  var events = [
+    {
+      "id": 0,
+      "name": "<b>Arduino Day</b>",
+      "imageUrl": "./arduino-day-2019.png",
+      "description": "Evento para pessoas desenvolvedoras de software que desejam aprendar mais sobre a linguagem Arduino."
+    },
+    {
+      "id": 1,
+      "name": "<b>Festa HOT</b>",
+      "imageUrl": "./festa-hot-doma.png",
+      "description": "A pista mais fervida de Porto Alegre, sem moralismo, sem preconceito. No som: house, disco e os hits clássicos das últimas décadas. "
+    },
+    {
+      "id": 2,
+      "name": "<b>Mindfulness Intermediário e Avançado</b>",
+      "imageUrl": "./mindfulness-intermediario-avancado.png",
+      "description": "Curso de mindfulness para recuperar a motivação na prática, criando um compromisso sincero, também como avançar no treino e estabilização da atenção instrospectiva, possibilitando agir de maneira mais assertiva, criando felicidade e bem estar para nós mesmos e para os outros."
+    },
+    {
+      "id": 3,
+      "name": "<b>Bike Tour A Magia das Missões</b>",
+      "imageUrl": "./bike-tour-missoes.jpeg",
+      "description": "Cicloturismo em São Miguel das Missões e depois do pedal vamos relaxar na acolhedora Pousada das Missões."
+    },
+    {
+      "id": 4,
+      "name": "<b>Cinema mudo com música ao vivo</b>",
+      "imageUrl": "./cine-ibere-musica-aovivo.jpeg",
+      "description": "Sessão no Iberê Camargo do filme O Gabinete do Dr. Caligari, um dos filmes mais importantes da história do cinema mundial. Considerado o primeiro filme de terror."
+    },
+    {
+      "id": 5,
+      "name": "<b>Festa Nacional da Uva</b>",
+      "imageUrl": "./festa-da-uva.jpeg",
+      "description": "É uma das maiores festas do Brasil com shows de artistas como Anitta e Molejo. Ocorre em Caxias do Sul, cidade da serra gaúcha com colonização italiana e produção de vinho."
+    },
+    {
+      "id": 6,
+      "name": "<b>Feira do Aeromovel</b>",
+      "imageUrl": "./feira-do-aeromovel.jpeg",
+      "description": "A feira acontece de frente para a Orla do Guaíba, na Praça do antigo Aeromovel. Um público lindo ocupando a Praça, expositores de marcas locais, gastronomia, cultura, arte e cidadania."
+    }
+  ]
 
 
   controller.on('hello', conductOnboarding);
@@ -91,23 +123,20 @@ module.exports = function(controller) {
         typingDelay: 5500
       }, 'how_works')
 
-      if (convo.vars.currentEvent == undefined) {
-        convo.setVar('currentEvent', 0)
-      }
 
       convo.addMessage({
-        text: events[convo.vars.currentEvent].name,
+        text: events[0].name,
         typingDelay: 5000,
         files: [
           {
-            url: events[convo.vars.currentEvent].imageUrl,
+            url: events[0].imageUrl,
             image: true
           }
         ]
       }, 'how_works')
 
       convo.addMessage({
-        text: events[convo.vars.currentEvent].description,
+        text: events[0].description,
         action: 'goOrNotGo'
       }, 'how_works')
 
@@ -139,40 +168,23 @@ module.exports = function(controller) {
               convo.setVar('personaSuitability', [])
             }
 
-            convo.vars.personaSuitability[convo.vars.currentEvent] = 1;
-            convo.setVar('currentEvent', convo.vars.currentEvent + 1);
+            convo.vars.personaSuitability[0] = 1;
 
-            convo.pitchEvent()
-            convo.next()
+            pitchHot(res, convo)
+            
+            console.log(convo.vars);
           }
         },
         {
           pattern: 'talvez',
           callback: function(res, convo) {
-            if (convo.vars.personaSuitability == undefined){
-              convo.setVar('personaSuitability', [])
-            }
 
-            convo.vars.personaSuitability[convo.vars.currentEvent] = 0;
-            convo.vars.currentEvent = convo.vars.currentEvent + 1;
-            console.log(convo.vars);
-
-            convo.gotoThread('pitchEvent')
-            convo.next()
           }
         },
         {
           pattern: 'Não',
           callback: function(res, convo) {
-            if (convo.vars.personaSuitability == undefined){
-              convo.setVar('personaSuitability', [])
-            }
 
-            convo.vars.personaSuitability[convo.vars.currentEvent] = -1;
-            convo.vars.currentEvent = convo.vars.currentEvent + 1;
-
-            convo.gotoThread('pitchEvent')
-            convo.next()
           }
         },
         {
@@ -186,28 +198,145 @@ module.exports = function(controller) {
 
 
 
-
-
-      convo.pitchEvent = function pitchEvent() {
-        this.say({
-          text: events[this.vars.currentEvent].name,
-          typingDelay: 5000,
-          files: [
+      const pitchHot = function(res, convo){
+        convo.ask({
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: 3000,
+          quick_replies: [
             {
-              url: events[this.vars.currentEvent].imageUrl,
-              image: true
-            }
+              title: 'Iria certo',
+              payload: 'Iria certo',
+            },
+            {
+              title: 'Talvez',
+              payload: 'Talvez',
+            },
+            {
+              title: 'Não me vejo indo',
+              payload: 'Não iria',
+            },
           ]
-        })
+        },[
+          {
+            pattern: 'Iria',
+            callback: function(res, convo) {
+              if (convo.vars.personaSuitability == undefined){
+                convo.setVar('personaSuitability', [])
+              }
 
-        this.say({
-          text: events[this.vars.currentEvent].description,
-          action: 'goOrNotGo'
-        })
+              convo.vars.personaSuitability[1] = 1;
+
+              convo.say({
+                text: events[1].name,
+                typingDelay: 4000,
+                files: [
+                  {
+                    url: events[1].imageUrl,
+                    image: true
+                  }
+                ]
+              })
+              convo.say({
+                text: events[1].description
+              })
+
+              pitchMindfullness(res, convo)
+              convo.next();
+
+              console.log(convo.vars);
+            }
+          },
+          {
+            pattern: 'talvez',
+            callback: function(res, convo) {
+
+            }
+          },
+          {
+            pattern: 'Não',
+            callback: function(res, convo) {
+
+            }
+          },
+          {
+            default: true,
+            callback: function(res, convo) {
+              // convo.gotoThread('end');
+            }
+          }
+        ]);
       }
 
+
+
+      const pitchMindfullness = function(res, convo){
+        convo.ask({
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: 3000,
+          quick_replies: [
+            {
+              title: 'Iria certo',
+              payload: 'Iria certo',
+            },
+            {
+              title: 'Talvez',
+              payload: 'Talvez',
+            },
+            {
+              title: 'Não me vejo indo',
+              payload: 'Não iria',
+            },
+          ]
+        },[
+          {
+            pattern: 'Iria',
+            callback: function(res, convo) {
+              if (convo.vars.personaSuitability == undefined){
+                convo.setVar('personaSuitability', [])
+              }
+
+              convo.vars.personaSuitability[2] = 1;
+
+              convo.say({
+                text: events[2].name,
+                typingDelay: 4000,
+                files: [
+                  {
+                    url: events[2].imageUrl,
+                    image: true
+                  }
+                ]
+              })
+              convo.say({
+                text: events[2].description
+              })
+              convo.next();
+
+              console.log(convo.vars);
+            }
+          },
+          {
+            pattern: 'talvez',
+            callback: function(res, convo) {
+
+            }
+          },
+          {
+            pattern: 'Não',
+            callback: function(res, convo) {
+
+            }
+          },
+          {
+            default: true,
+            callback: function(res, convo) {
+              // convo.gotoThread('end');
+            }
+          }
+        ]);
+      }
+
+
     });
-
-
   }
 }
