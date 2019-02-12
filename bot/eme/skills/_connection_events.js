@@ -56,6 +56,42 @@ module.exports = function(controller) {
       "name": "<b>Feira do Aeromovel</b>",
       "imageUrl": "./feira-do-aeromovel.jpeg",
       "description": "A feira acontece de frente para a Orla do Guaíba, na praça do antigo Aeromovel. Um público lindo ocupando a praça, expositores de marcas locais, gastronomia, cultura, arte e cidadania."
+    },
+    {
+      "id": 7,
+      "name": "<b>Feira Vegana Noturna</b>",
+      "imageUrl": "./feira-vegana-noturna.jpeg",
+      "description": "Feira com produtos veganos que ocorre no bairro Bom Fim durante a noite."
+    },
+    {
+      "id": 8,
+      "name": "<b>Madrugadão Virada Nerd</b>",
+      "imageUrl": "./virada-nerd.jpeg",
+      "description": "Duas madrugadas no final de semana com pizzas e jogos de tabuleiro para se divertir com amigos."
+    },
+    {
+      "id": 9,
+      "name": "<b>Arruaça</b>",
+      "imageUrl": "./arruaca.jpeg",
+      "description": "Festa de rua das mina, das mana e das mona. DJs gurias tocando house e techno no centro da cidade, na rua."
+    },
+    {
+      "id": 10,
+      "name": "<b>Mindfulness no Pôr do Sol</b>",
+      "imageUrl": "./mindfulness-por-do-sol.jpeg",
+      "description": "Venha participar da meditação de Atenção Plena e desfrutar de um momento de presença e desenvolvimento de tranquilidade, contemplando nosso belo cartão postal na Orla do Guaíba."
+    },
+    {
+      "id": 11,
+      "name": "<b>Trilha da Fortaleza no Parque de Itapuã</b>",
+      "imageUrl": "./trilha-da-fortaleza.jpeg",
+      "description": "Localizado a 57 km da capital, o Parque de Itapuã, protege a última amostra dos ecossistemas com campos, matas, dunas, lagoas, praias e morros às margens do lago Guaíba e da laguna dos Patos."
+    },
+    {
+      "id": 12,
+      "name": "<b>Exposição Cecily Brown</b>",
+      "imageUrl": "./exposicao-cecily-brown.jpeg",
+      "description": "Cecily Brown é uma das artistas de maior destaque na pintura contemporânea mundial."
     }
   ]
 
@@ -625,6 +661,7 @@ module.exports = function(controller) {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[6] = "1";
+              pitchFeiraNoturnaVegana(res, convo);
               convo.next();
             }
           },
@@ -632,6 +669,7 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[6] = "0";
+              pitchFeiraNoturnaVegana(res, convo);
               convo.next();
             }
           },
@@ -639,6 +677,7 @@ module.exports = function(controller) {
             pattern: patterns.negative,
             callback: function(res, convo) {
               convo.vars.personaSuitability[6] = "-1";
+              pitchFeiraNoturnaVegana(res, convo);
               convo.next();
             }
           },
@@ -651,6 +690,445 @@ module.exports = function(controller) {
           }
         ]);
       }
+
+
+
+
+      // 7
+      const pitchFeiraNoturnaVegana = function(res, convo){
+        convo.say({
+          text: events[7].name,
+          typingDelay: typing.normal,
+          files: [
+            {
+              url: events[7].imageUrl,
+              image: true
+            }
+          ]
+        })
+
+        convo.say({
+          text: events[7].description,
+          typingDelay: typing.normal
+        })
+
+        convo.ask({
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: typing.normal,
+          quick_replies: [
+            {
+              title: 'Iria certo',
+              payload: 'Iria certo',
+            },
+            {
+              title: 'Talvez',
+              payload: 'Talvez',
+            },
+            {
+              title: 'Não me vejo indo',
+              payload: 'Não iria',
+            },
+          ]
+        },[
+          {
+            pattern: patterns.positive,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[7] = "1";
+              pitchMadrugadaoNerd(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.neutral,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[7] = "0";
+              pitchMadrugadaoNerd(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[7] = "-1";
+              pitchMadrugadaoNerd(res, convo);
+              convo.next();
+            }
+          },
+          {
+            default: true,
+            callback: function(res, convo) {
+              bot.reply(convo.source_message, 'Eita! Perguntei se você gostaria de ir no evento acima, é só responder <b>sim</b>, <b>talvez</b> ou <b>não</b>');
+              convo.silentRepeat();
+            }
+          }
+        ]);
+      }
+
+
+
+
+      // 8
+      const pitchMadrugadaoNerd = function(res, convo){
+        convo.say({
+          text: events[8].name,
+          typingDelay: typing.normal,
+          files: [
+            {
+              url: events[8].imageUrl,
+              image: true
+            }
+          ]
+        })
+
+        convo.say({
+          text: events[8].description,
+          typingDelay: typing.normal
+        })
+
+        convo.ask({
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: typing.normal,
+          quick_replies: [
+            {
+              title: 'Iria certo',
+              payload: 'Iria certo',
+            },
+            {
+              title: 'Talvez',
+              payload: 'Talvez',
+            },
+            {
+              title: 'Não me vejo indo',
+              payload: 'Não iria',
+            },
+          ]
+        },[
+          {
+            pattern: patterns.positive,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[8] = "1";
+              pitchArruaca(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.neutral,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[8] = "0";
+              pitchArruaca(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[8] = "-1";
+              pitchArruaca(res, convo);
+              convo.next();
+            }
+          },
+          {
+            default: true,
+            callback: function(res, convo) {
+              bot.reply(convo.source_message, 'Eita! Perguntei se você gostaria de ir no evento acima, é só responder <b>sim</b>, <b>talvez</b> ou <b>não</b>');
+              convo.silentRepeat();
+            }
+          }
+        ]);
+      }
+
+
+
+
+      // 9
+      const pitchArruaca = function(res, convo){
+        convo.say({
+          text: events[9].name,
+          typingDelay: typing.normal,
+          files: [
+            {
+              url: events[9].imageUrl,
+              image: true
+            }
+          ]
+        })
+
+        convo.say({
+          text: events[9].description,
+          typingDelay: typing.normal
+        })
+
+        convo.ask({
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: typing.normal,
+          quick_replies: [
+            {
+              title: 'Iria certo',
+              payload: 'Iria certo',
+            },
+            {
+              title: 'Talvez',
+              payload: 'Talvez',
+            },
+            {
+              title: 'Não me vejo indo',
+              payload: 'Não iria',
+            },
+          ]
+        },[
+          {
+            pattern: patterns.positive,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[9] = "1";
+              pitchMindfullnessPorDoSol(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.neutral,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[9] = "0";
+              pitchMindfullnessPorDoSol(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[9] = "-1";
+              pitchMindfullnessPorDoSol(res, convo);
+              convo.next();
+            }
+          },
+          {
+            default: true,
+            callback: function(res, convo) {
+              bot.reply(convo.source_message, 'Eita! Perguntei se você gostaria de ir no evento acima, é só responder <b>sim</b>, <b>talvez</b> ou <b>não</b>');
+              convo.silentRepeat();
+            }
+          }
+        ]);
+      }
+
+
+
+
+      // 10
+      const pitchMindfullnessPorDoSol = function(res, convo){
+        convo.say({
+          text: events[10].name,
+          typingDelay: typing.normal,
+          files: [
+            {
+              url: events[10].imageUrl,
+              image: true
+            }
+          ]
+        })
+
+        convo.say({
+          text: events[10].description,
+          typingDelay: typing.normal
+        })
+
+        convo.ask({
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: typing.normal,
+          quick_replies: [
+            {
+              title: 'Iria certo',
+              payload: 'Iria certo',
+            },
+            {
+              title: 'Talvez',
+              payload: 'Talvez',
+            },
+            {
+              title: 'Não me vejo indo',
+              payload: 'Não iria',
+            },
+          ]
+        },[
+          {
+            pattern: patterns.positive,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[10] = "1";
+              pitchTrilhaDaFortaleza(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.neutral,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[10] = "0";
+              pitchTrilhaDaFortaleza(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[10] = "-1";
+              pitchTrilhaDaFortaleza(res, convo);
+              convo.next();
+            }
+          },
+          {
+            default: true,
+            callback: function(res, convo) {
+              bot.reply(convo.source_message, 'Eita! Perguntei se você gostaria de ir no evento acima, é só responder <b>sim</b>, <b>talvez</b> ou <b>não</b>');
+              convo.silentRepeat();
+            }
+          }
+        ]);
+      }
+
+
+
+
+      // 11
+      const pitchTrilhaDaFortaleza = function(res, convo){
+        convo.say({
+          text: events[11].name,
+          typingDelay: typing.normal,
+          files: [
+            {
+              url: events[11].imageUrl,
+              image: true
+            }
+          ]
+        })
+
+        convo.say({
+          text: events[11].description,
+          typingDelay: typing.normal
+        })
+
+        convo.ask({
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: typing.normal,
+          quick_replies: [
+            {
+              title: 'Iria certo',
+              payload: 'Iria certo',
+            },
+            {
+              title: 'Talvez',
+              payload: 'Talvez',
+            },
+            {
+              title: 'Não me vejo indo',
+              payload: 'Não iria',
+            },
+          ]
+        },[
+          {
+            pattern: patterns.positive,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[11] = "1";
+              pitchCecilyBrown(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.neutral,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[11] = "0";
+              pitchCecilyBrown(res, convo);
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[11] = "-1";
+              pitchCecilyBrown(res, convo);
+              convo.next();
+            }
+          },
+          {
+            default: true,
+            callback: function(res, convo) {
+              bot.reply(convo.source_message, 'Eita! Perguntei se você gostaria de ir no evento acima, é só responder <b>sim</b>, <b>talvez</b> ou <b>não</b>');
+              convo.silentRepeat();
+            }
+          }
+        ]);
+      }
+
+
+
+
+      // 12
+      const pitchCecilyBrown = function(res, convo){
+        convo.say({
+          text: events[12].name,
+          typingDelay: typing.normal,
+          files: [
+            {
+              url: events[12].imageUrl,
+              image: true
+            }
+          ]
+        })
+
+        convo.say({
+          text: events[12].description,
+          typingDelay: typing.normal
+        })
+
+        convo.ask({
+          text: '<b>Você iria neste evento?</b>',
+          typingDelay: typing.normal,
+          quick_replies: [
+            {
+              title: 'Iria certo',
+              payload: 'Iria certo',
+            },
+            {
+              title: 'Talvez',
+              payload: 'Talvez',
+            },
+            {
+              title: 'Não me vejo indo',
+              payload: 'Não iria',
+            },
+          ]
+        },[
+          {
+            pattern: patterns.positive,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[12] = "1";
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.neutral,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[12] = "0";
+              convo.next();
+            }
+          },
+          {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[12] = "-1";
+              convo.next();
+            }
+          },
+          {
+            default: true,
+            callback: function(res, convo) {
+              bot.reply(convo.source_message, 'Eita! Perguntei se você gostaria de ir no evento acima, é só responder <b>sim</b>, <b>talvez</b> ou <b>não</b>');
+              convo.silentRepeat();
+            }
+          }
+        ]);
+      }
+
+
+
+
 
 
     });
