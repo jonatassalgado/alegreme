@@ -12,7 +12,7 @@ from joblib import dump, load
 class PersonaPrediction(object):
 
     def __init__(self):
-        self.base = pd.read_csv('../svm-classification-personas-v1-events.csv')
+        self.base = pd.read_csv('../svm-classification-personas-v3-events.csv')
 
 
     def visualize(self):
@@ -42,6 +42,7 @@ class PersonaPrediction(object):
 
     def predict(self, query):
         query = ast.literal_eval(query)
+        query = list(map(int, query))
         classificator = load('predict-persona-model.joblib')
         predictions = classificator.predict_proba([query])
 
@@ -55,7 +56,7 @@ class PersonaPrediction(object):
             best_two_labels_index = hq.nlargest(2, range(len(prediction)), prediction.take)
             return classificator.classes_[best_two_labels_index]
 
-
-predictModel = PersonaPrediction()
-predictModel.clean()
-predictModel.train()
+# 
+# predictModel = PersonaPrediction()
+# predictModel.clean()
+# predictModel.train()

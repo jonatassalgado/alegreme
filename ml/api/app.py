@@ -31,7 +31,7 @@ class PredictPersona(Resource):
                }
 
 
-api.add_resource(PredictPersona, '/')
+api.add_resource(PredictPersona, '/predict/persona')
 
 
 if __name__ == '__main__':

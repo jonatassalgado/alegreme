@@ -1,10 +1,11 @@
 /* This module kicks in if no Botkit Studio token has been provided */
 
 module.exports = function(controller) {
+  const http = require('http');
 
   var patterns = {
-    positive: /iria|sim|claro|j(a|á)|l(a|á)|partiu|aham|foi/gi,
-    negative: /não|nunca|nem/gi,
+    positive: /iria|iria certo|sim|claro|j(a|á)|l(a|á)|partiu|aham|foi/gi,
+    negative: /n(a|ã)o iria|n(a|ã)o|nunca|nem/gi,
     neutral: /talvez|quiça|quem|sabe|se|p(a|á)/gi
   }
 
@@ -279,6 +280,14 @@ module.exports = function(controller) {
         ]
       },[
         {
+          pattern: patterns.negative,
+          callback: function(res, convo) {
+            convo.vars.personaSuitability[0] = "-1";
+            pitchHot(res, convo)
+            convo.next();
+          }
+        },
+        {
           pattern: patterns.positive,
           callback: function(res, convo) {
             convo.vars.personaSuitability[0] = "1";
@@ -290,14 +299,6 @@ module.exports = function(controller) {
           pattern: patterns.neutral,
           callback: function(res, convo) {
             convo.vars.personaSuitability[0] = "0";
-            pitchHot(res, convo)
-            convo.next();
-          }
-        },
-        {
-          pattern: patterns.negative,
-          callback: function(res, convo) {
-            convo.vars.personaSuitability[0] = "-1";
             pitchHot(res, convo)
             convo.next();
           }
@@ -356,6 +357,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[1] = "-1";
+              pitchMindfullness(res, convo)
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[1] = "1";
@@ -367,14 +376,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[1] = "0";
-              pitchMindfullness(res, convo)
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[1] = "-1";
               pitchMindfullness(res, convo)
               convo.next();
             }
@@ -428,6 +429,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[2] = "-1";
+              pitchBikeTour(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[2] = "1";
@@ -439,14 +448,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[2] = "0";
-              pitchBikeTour(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[2] = "-1";
               pitchBikeTour(res, convo);
               convo.next();
             }
@@ -502,6 +503,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[3] = "-1";
+              pitchCineIbere(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[3] = "1";
@@ -513,14 +522,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[3] = "0";
-              pitchCineIbere(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[3] = "-1";
               pitchCineIbere(res, convo);
               convo.next();
             }
@@ -575,6 +576,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[4] = "-1";
+              pitchFestaDaUva(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[4] = "1";
@@ -586,14 +595,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[4] = "0";
-              pitchFestaDaUva(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[4] = "-1";
               pitchFestaDaUva(res, convo);
               convo.next();
             }
@@ -649,6 +650,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[5] = "-1";
+              pitchFeiraAeromovel(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[5] = "1";
@@ -660,14 +669,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[5] = "0";
-              pitchFeiraAeromovel(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[5] = "-1";
               pitchFeiraAeromovel(res, convo);
               convo.next();
             }
@@ -723,6 +724,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[6] = "-1";
+              pitchFeiraNoturnaVegana(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[6] = "1";
@@ -734,14 +743,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[6] = "0";
-              pitchFeiraNoturnaVegana(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[6] = "-1";
               pitchFeiraNoturnaVegana(res, convo);
               convo.next();
             }
@@ -796,6 +797,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[7] = "-1";
+              pitchMadrugadaoNerd(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[7] = "1";
@@ -807,14 +816,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[7] = "0";
-              pitchMadrugadaoNerd(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[7] = "-1";
               pitchMadrugadaoNerd(res, convo);
               convo.next();
             }
@@ -869,6 +870,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[8] = "-1";
+              pitchArruaca(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[8] = "1";
@@ -880,14 +889,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[8] = "0";
-              pitchArruaca(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[8] = "-1";
               pitchArruaca(res, convo);
               convo.next();
             }
@@ -942,6 +943,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[9] = "-1";
+              pitchMindfullnessPorDoSol(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[9] = "1";
@@ -953,14 +962,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[9] = "0";
-              pitchMindfullnessPorDoSol(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[9] = "-1";
               pitchMindfullnessPorDoSol(res, convo);
               convo.next();
             }
@@ -1015,6 +1016,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[10] = "-1";
+              pitchTrilhaDaFortaleza(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[10] = "1";
@@ -1026,14 +1035,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[10] = "0";
-              pitchTrilhaDaFortaleza(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[10] = "-1";
               pitchTrilhaDaFortaleza(res, convo);
               convo.next();
             }
@@ -1088,6 +1089,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[11] = "-1";
+              pitchCecilyBrown(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[11] = "1";
@@ -1099,14 +1108,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[11] = "0";
-              pitchCecilyBrown(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[11] = "-1";
               pitchCecilyBrown(res, convo);
               convo.next();
             }
@@ -1161,6 +1162,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[12] = "-1";
+              pitchFestiqueijo(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[12] = "1";
@@ -1172,14 +1181,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[12] = "0";
-              pitchFestiqueijo(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[12] = "-1";
               pitchFestiqueijo(res, convo);
               convo.next();
             }
@@ -1234,6 +1235,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[13] = "-1";
+              pitchPatricksDay(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[13] = "1";
@@ -1245,14 +1254,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[13] = "0";
-              pitchPatricksDay(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[13] = "-1";
               pitchPatricksDay(res, convo);
               convo.next();
             }
@@ -1307,6 +1308,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[14] = "-1";
+              pitchFeiraMeGusta(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[14] = "1";
@@ -1318,14 +1327,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[14] = "0";
-              pitchFeiraMeGusta(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[14] = "-1";
               pitchFeiraMeGusta(res, convo);
               convo.next();
             }
@@ -1380,6 +1381,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[15] = "-1";
+              pitchHackatownMobilidade(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[15] = "1";
@@ -1391,14 +1400,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[15] = "0";
-              pitchHackatownMobilidade(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[15] = "-1";
               pitchHackatownMobilidade(res, convo);
               convo.next();
             }
@@ -1453,6 +1454,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[16] = "-1";
+              pitchFennda(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[16] = "1";
@@ -1464,14 +1473,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[16] = "0";
-              pitchFennda(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[16] = "-1";
               pitchFennda(res, convo);
               convo.next();
             }
@@ -1526,6 +1527,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[17] = "-1";
+              pitchYogaRedencao(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[17] = "1";
@@ -1537,14 +1546,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[17] = "0";
-              pitchYogaRedencao(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[17] = "-1";
               pitchYogaRedencao(res, convo);
               convo.next();
             }
@@ -1599,6 +1600,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[18] = "-1";
+              pitchCaminhadaSaoJose(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[18] = "1";
@@ -1610,14 +1619,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[18] = "0";
-              pitchCaminhadaSaoJose(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[18] = "-1";
               pitchCaminhadaSaoJose(res, convo);
               convo.next();
             }
@@ -1672,6 +1673,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[19] = "-1";
+              pitchFridaKahlo(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[19] = "1";
@@ -1683,14 +1692,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[19] = "0";
-              pitchFridaKahlo(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[19] = "-1";
               pitchFridaKahlo(res, convo);
               convo.next();
             }
@@ -1745,6 +1746,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[20] = "-1";
+              pitchSerenataIluminada(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[20] = "1";
@@ -1756,14 +1765,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[20] = "0";
-              pitchSerenataIluminada(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[20] = "-1";
               pitchSerenataIluminada(res, convo);
               convo.next();
             }
@@ -1818,6 +1819,14 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[21] = "-1";
+              pitchPicnicMuseu(res, convo);
+              convo.next();
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[21] = "1";
@@ -1829,14 +1838,6 @@ module.exports = function(controller) {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[21] = "0";
-              pitchPicnicMuseu(res, convo);
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[21] = "-1";
               pitchPicnicMuseu(res, convo);
               convo.next();
             }
@@ -1891,28 +1892,83 @@ module.exports = function(controller) {
           ]
         },[
           {
+            pattern: patterns.negative,
+            callback: function(res, convo) {
+              convo.vars.personaSuitability[22] = "-1";
+              http.get('http://localhost:5000/predict/persona?query=' + JSON.stringify(convo.vars.personaSuitability), (res) => {
+                res.on('data', (data) => {
+                  console.log(data);
+                  bot.say({
+                    text: `Pronto! Sua persona é uma <b>${data.personas.primary} ${data.personas.secondary}</b>`,
+                    typingDelay: typing.normal
+                  })
+                  console.log(convo.vars);
+                  convo.next();
+                });
+
+              }).on('error', (e) => {
+                console.error(e);
+              });
+            }
+          },
+          {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[22] = "1";
-              convo.say({
-                text: "Pronto! Você é XXXX",
-                typingDelay: typing.normal
-              })
-              convo.next();
+              http.get('http://localhost:5000/predict/persona?query=' + JSON.stringify(convo.vars.personaSuitability), (res) => {
+                res.on('data', (data) => {
+                  console.log(data);
+                  bot.say({
+                    text: `Pronto! Sua persona é uma <b>${data.personas.primary} ${data.personas.secondary}</b>`,
+                    typingDelay: typing.normal
+                  })
+                  console.log(convo.vars);
+                  convo.next();
+                });
+
+              }).on('error', (e) => {
+                console.error(e);
+              });
             }
           },
           {
             pattern: patterns.neutral,
             callback: function(res, convo) {
               convo.vars.personaSuitability[22] = "0";
-              convo.next();
-            }
-          },
-          {
-            pattern: patterns.negative,
-            callback: function(res, convo) {
-              convo.vars.personaSuitability[22] = "-1";
-              convo.next();
+
+              const options = {
+                method: 'GET'
+              };
+
+              const req = http.request(`http://localhost:5000/predict/persona?query=${JSON.stringify(convo.vars.personaSuitability)}`, options, (res) => {
+                res.setEncoding('utf8');
+                res.on('data', (data) => {
+                  json = JSON.parse(data);
+                  bot.say({
+                    text: "Pronto!",
+                    typingDelay: typing.slow
+                  })
+                  bot.say({
+                    text: "Sua persona é",
+                    typingDelay: typing.normal
+                  })
+                  bot.say({
+                    text: `<b>${json.personas.primary.toUpperCase()} ${json.personas.secondary.toUpperCase()}</b>`,
+                    typingDelay: typing.normal
+                  })
+                });
+                res.on('end', () => {
+                  console.log('No more data in response.');
+                });
+              });
+
+              req.on('error', (e) => {
+                console.error(`problem with request: ${e.message}`);
+              });
+
+              req.end();
+
+
             }
           },
           {
