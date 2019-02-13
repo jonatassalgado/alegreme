@@ -19,6 +19,9 @@ web/tmp/cache
 .~lock*
 *.jpeg~
 *.png~
+*.kra
+.pem
+usr/
 
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo

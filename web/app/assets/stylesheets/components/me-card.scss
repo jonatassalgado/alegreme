@@ -1,14 +1,27 @@
+$name-color: #212121;
+$description-color: #616161;
+
 .me-card {
   & a {
     text-decoration: none;
 
 
     & .mdc-card__title {
-      color: black
+      color: $name-color;
+      max-height: 36px;
+      font-size: 14px;
+      line-height: 18px;
     }
   }
 
   & .mdc-card__subtitle {
-    margin: 3px 0;
+    color: $description-color;
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  & .mdc-card__media {
+      border-radius: 2px;
   }
 }

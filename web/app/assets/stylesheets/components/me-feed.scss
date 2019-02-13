@@ -12,6 +12,7 @@
     font-size: 14px;
     border: 0;
     box-shadow: none;
+    background: none;
     @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
 
     & .mdc-typography--headline2 {

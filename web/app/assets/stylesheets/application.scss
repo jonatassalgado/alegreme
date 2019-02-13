@@ -1,48 +1,49 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- */
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+* vendor/assets/stylesheets directory can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the bottom of the
+* compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+* files in this directory. Styles in this file should be added after the last require_* statement.
+* It is generally better to create a new file per style scope.
+*
+*= require_tree .
+*/
 
 $mdc-typography-styles-headline1: (
-  font-size: 2rem,
-  line-height: 1.1rem,
-  font-weight: 500
+font-size: 2rem,
+line-height: 1.1rem,
+font-weight: 500
 );
 
 $mdc-typography-styles-headline2: (
-  font-size: 1rem,
-  line-height: 1.1rem,
-  font-weight: 500
+font-size: 1rem,
+line-height: 1.1rem,
+font-weight: 500
 );
 
 $mdc-typography-styles-subtitle1: (
-    font-size: 0.9rem,
-    line-height: 1.1rem,
-    font-weight: 400
-  );
+font-size: 0.9rem,
+line-height: 1.1rem,
+font-weight: 400
+);
 
 $mdc-typography-styles-subtitle2: (
-    font-size: 0.8rem,
-    line-height: 1.1rem,
-    font-weight: 300
-  );
+font-size: 0.8rem,
+line-height: 1.1rem,
+font-weight: 300
+);
 
 $mdc-typography-styles-body2: (
-  font-family: Roboto,
-  font-size: 0.775rem,
-  line-height: 1.25rem,
-  font-weight: 100
-  );
+font-family: Roboto,
+font-size: 0.775rem,
+line-height: 1.25rem,
+font-weight: 100
+);
+
 
 @import "@material/typography/mdc-typography";
 @import "@material/card/mdc-card";
@@ -61,19 +62,19 @@ $mdc-typography-styles-body2: (
 body {
   display: flex;
   height: 100vh;
+  overflow: hidden;
+  margin: 0;
+
 }
 
 .mdc-drawer-app-content {
   flex: auto;
   overflow: auto;
   position: relative;
+  background: #fafafa;
 }
 
 .main-content {
   overflow: auto;
   height: 100%;
-}
-
-.app-bar {
-  position: absolute;
 }

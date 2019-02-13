@@ -1,13 +1,50 @@
+$icon-color: #616161;
+
 .me-search-field {
   align-self: center;
 
   &.mdc-text-field {
-    background: white;
-    border-radius: 35px;
-    width: 100%
+    // background: white;
+    border-radius: 0;
+    width: 100%;
+    height: inherit;
   }
 
   & .mdc-text-field__input {
-    padding: 0 15px;
+    font-size: 16px;
+    color: #212121;
+    padding: 0 40px;
+    box-sizing: border-box;
+    height: 48px;
+    width: 100%;
+    font-weight: 400;
+    outline: none;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: border 0.1s ease-out;
+    border-bottom-color: transparent !important;
+  }
+
+  & .search-icon {
+    color: $icon-color;
+    position: absolute;
+    top: 13px;
+    left: 24px;
+    z-index: 2;
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    fill: currentcolor;
+    stroke: none;
+    width: 24px;
+    height: 24px;
   }
 }

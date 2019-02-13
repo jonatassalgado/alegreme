@@ -17,26 +17,8 @@
 </head>
 
 <body>
-
-  <aside class="mdc-drawer  ">
-    <div class="mdc-drawer__header">
-      <h3 class="mdc-drawer__title">Mail</h3>
-      <h6 class="mdc-drawer__subtitle">email@material.io</h6>
-    </div>
-  <div class="mdc-drawer__content">
-  <nav class="mdc-list"><a class="mdc-list-item mdc-list-item--activated" href="#" tabindex="-1" aria-selected="true"><i class="material-icons mdc-list-item__graphic" aria-hidden="true">inbox</i>Inbox</a><a class="mdc-list-item" href="#" tabindex="-1"><i
-        class="material-icons mdc-list-item__graphic" aria-hidden="true">star</i>Star</a><a class="mdc-list-item" href="#" tabindex="-1"><i class="material-icons mdc-list-item__graphic" aria-hidden="true">send</i>Sent Mail</a><a class="mdc-list-item"
-      href="#" tabindex="-1"><i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>Drafts</a>
-    <hr class="mdc-list-divider">
-    <h6 class="mdc-list-group__subheader">Labels</h6><a class="mdc-list-item" href="#" tabindex="-1"><i class="material-icons mdc-list-item__graphic" aria-hidden="true">bookmark</i>Family</a><a class="mdc-list-item" href="#" tabindex="-1"><i class="material-icons mdc-list-item__graphic"
-        aria-hidden="true">bookmark</i>Friends</a><a class="mdc-list-item" href="#" tabindex="-1"><i class="material-icons mdc-list-item__graphic" aria-hidden="true">bookmark</i>Work</a>
-    <hr class="mdc-list-divider"><a class="mdc-list-item" href="#" tabindex="-1"><i class="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>Settings</a><a class="mdc-list-item" href="#" tabindex="-1"><i class="material-icons mdc-list-item__graphic"
-        aria-hidden="true">announcement</i>Help &amp; feedback</a>
-  </nav>
-</div>
-  </aside>
   <div class="mdc-drawer-app-content">
-    <header class="mdc-top-app-bar app-bar" id="top-bar" style="top: 0">
+    <header class="me-top-app-bar mdc-top-app-bar app-bar" id="top-bar" style="top: 0">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
           <a href="#" class="material-icons mdc-top-app-bar__navigation-icon">menu</a>
@@ -44,7 +26,9 @@
         </section>
         <section class="mdc-top-app-bar__section" style="display: flex">
           <div class="me-search-field mdc-text-field">
-            <input type="text" id="text-field-shape-one" class="mdc-text-field__input">
+            <iron-icon icon="search" aria-hidden="true" class="search-icon"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" class="style-scope iron-icon"></path></g></svg>
+            </iron-icon>
+            <input type="text" placeholder="O que você quer fazer em Porto Alegre?" id="text-field-shape-one" class="mdc-text-field__input">
           </div>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
