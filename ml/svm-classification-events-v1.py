@@ -127,26 +127,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 
 from sklearn.feature_extraction.text import TfidfTransformer
-#tfidf_transformer = TfidfTransformer()
-#training_features = tfidf_transformer.fit_transform(training_features)
-#training_features.shape
-
-from sklearn.naive_bayes import MultinomialNB
-#from sklearn.model_selection import GridSearchCV
-#from numpy import linspace
-
-#paramsearch = GridSearchCV(estimator=MultinomialNB(), param_grid=dict(alpha=linspace(0,2,20)[1:]), n_jobs=6)
-#paramsearch.fit(X_train, y_train)
-#best_alpha_mnb = paramsearch.best_estimator_.alpha
-
-
-#classificator = MultinomialNB(alpha=best_alpha_mnb).fit(training_features, y_train)
-#prediction = classificator.predict(test_features)
-
-
 from sklearn.linear_model import SGDClassifier
-#classificator = SGDClassifier(loss='hinge', penalty='l2', alpha=best_alpha_mnb, n_iter=5, random_state=42).fit(training_features, y_train)
-#prediction = classificator.predict(test_features)
+
 
 
 classificator = Pipeline([('vect', CountVectorizer(ngram_range=(1, 1))),
@@ -154,38 +136,38 @@ classificator = Pipeline([('vect', CountVectorizer(ngram_range=(1, 1))),
                           ('clf-svm', SGDClassifier(alpha=0.001, loss='log'))])
 
 
-from sklearn.model_selection import GridSearchCV
-parameters_svm = {'vect__ngram_range': [(1, 1), (1, 2)], 
-                  'tfidf__use_idf': (True, False),
-                  'clf-svm__alpha': (1e-2, 1e-3),
-                  'clf-svm__loss': ('log', 'modified_huber')}
-
-gs_clf_svm = GridSearchCV(classificator, parameters_svm, n_jobs=-1)
-
+#    
+#from sklearn.model_selection import GridSearchCV
+#parameters_svm = {'vect__ngram_range': [(1, 1), (1, 2)],
+#                  'vect__min-df': range(0.0, 1.0, 0.1),
+#                  'tfidf__use_idf': (True, False),
+#                  'clf-svm__alpha': (0.01, 0.001, 0.0001),
+#                  'clf-svm__penalty': ( 'l2', 'l1', 'elasticnet'),
+#                  'clf-svm__max_iter': ( 5, 1000),  
+#                  'clf-svm__loss': ('log', 'modified_huber')}
+#
+#gs_clf_svm = GridSearchCV(classificator, parameters_svm, n_jobs=-1)
+#
+#
+#gs_classificator = gs_clf_svm.fit(X_train, y_train)
+#best_params = gs_classificator.best_params_
+#predictions = gs_classificator.predict_proba(X_test)
 
     
-#classificator.fit(X_train, y_train)
-
-
-
-#gs_classificator = Pipeline([('vect', CountVectorizer(preprocessor=clean_text, ngram_range=best_params['vect__ngram_range'])),
-#                          ('tfidf', TfidfTransformer(use_idf=best_params['tfidf__use_idf'])),
-#                          ('clf-svm', SGDClassifier(alpha=best_params['clf-svm__alpha']))])
-
-gs_classificator = gs_clf_svm.fit(X_train, y_train)
-best_params = gs_classificator.best_params_
-predictions = gs_classificator.predict_proba(X_test)
+    
+classificator = classificator.fit(X_train, y_train)
+predictions = classificator.predict_proba(X_test)
 
 
 predictions_labels = []
 for prediction in predictions:    
     best_label_index = prediction.argmax(axis=0)
-    best_label_name = gs_classificator.classes_[best_label_index]
+    best_label_name = classificator.classes_[best_label_index]
     
     
     
     best_two_labels_index = hq.nlargest(2, range(len(prediction)), prediction.take)
-    predictions_labels.append(gs_classificator.classes_[best_two_labels_index])
+    predictions_labels.append(classificator.classes_[best_two_labels_index])
 
 print(predictions_labels)
 
