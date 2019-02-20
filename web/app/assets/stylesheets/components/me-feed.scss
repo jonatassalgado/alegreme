@@ -1,11 +1,27 @@
 @import '@material/card/_mixins';
+@import '@material/layout-grid/_mixins';
 
+$name-color: #212121;
+$description-color: #616161;
+
+$mdc-layout-grid-columns: (
+desktop: 15,
+tablet: 8,
+phone: 4
+);
 
 .me-feed {
 
   & .mdc-layout-grid {
-      --mdc-layout-grid-margin-desktop: 0;
-      --mdc-layout-grid-gutter-desktop: 15px;
+    --mdc-layout-grid-margin-desktop: 0;
+    --mdc-layout-grid-gutter-desktop: 15px;
+    & a {
+        text-decoration: none;
+    }
+  }
+
+  & .mdc-layout-grid__inner {
+    @include mdc-layout-grid-inner($size: 'desktop', $margin: 0, $gutter: 15px);
   }
 
   & .me-card {
@@ -16,23 +32,32 @@
     @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
 
     & .mdc-typography--headline2 {
-        margin: 0 0 6px 0;
+      margin: 0 0 6px 0;
     }
 
     & .mdc-typography--subtitle2 {
-        margin: 0 0 6px 0;
+      margin: 0 0 6px 0;
     }
 
     & .mdc-card__primary-action {
-        padding: 6px 0 6px 0;
+      padding: 6px 0 6px 0;
 
-        &:hover {
-            background: inherit;
-        }
+      &:hover {
+        background: inherit;
+      }
+    }
+
+    & .mdc-card__title {
+      color: $name-color;
+      font-size: 14px;
+      line-height: 18px;
+      margin: 6px 0 0 0;
+      font-family: Roboto;
+      font-weight: 400;
     }
 
     & .mdc-card__actions {
-        padding: 0;
+      padding: 0;
     }
   }
 

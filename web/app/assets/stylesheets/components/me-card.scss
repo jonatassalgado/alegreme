@@ -2,15 +2,59 @@ $name-color: #212121;
 $description-color: #616161;
 
 .me-card {
+  min-height: 160px;
+
+  &__primary {
+    padding: 1rem;
+
+    & .mdc-card__title {
+      margin: 0;
+      color: $name-color;
+    }
+  }
+
+  &__secondary {
+    padding: 0 1rem 1rem;
+    color: $description-color;
+    font-weight: 400;
+
+    & b {
+      font-weight: 500;
+    }
+
+    & p {
+      margin: 0;
+    }
+  }
+
+  &__place {
+    color: $name-color;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 6px 0 0 0;
+    font-family: Roboto;
+    font-weight: 100;
+  }
+
+  &__date {
+    color: $name-color;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0;
+    font-family: Roboto;
+    font-weight: 100;
+  }
+
   & a {
     text-decoration: none;
 
-
     & .mdc-card__title {
       color: $name-color;
-      max-height: 36px;
       font-size: 14px;
       line-height: 18px;
+      margin: 6px 0 0 0;
+      font-family: Roboto;
+      font-weight: 400;
     }
   }
 
@@ -22,6 +66,6 @@ $description-color: #616161;
   }
 
   & .mdc-card__media {
-      border-radius: 2px;
+    border-radius: 2px;
   }
 }

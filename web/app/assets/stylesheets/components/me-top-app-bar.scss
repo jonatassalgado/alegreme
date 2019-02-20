@@ -13,4 +13,8 @@ $border-color: #e0e0e0;
   & .mdc-top-app-bar__navigation-icon {
     color: $font-color;
   }
+
+  & .mdc-top-app-bar__section {
+    width: calc(100% / 3);
+  }
 }

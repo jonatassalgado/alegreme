@@ -17,9 +17,6 @@ export default class FavoriteController extends Controller {
     })
   }
 
-  hideEventName(event) {
-  }
-
   set updateList(events) {
 
     const favoriteTemplate = (events) =>

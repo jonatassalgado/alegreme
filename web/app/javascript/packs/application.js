@@ -26,8 +26,8 @@ document.addEventListener("turbolinks:load", function() {
     const topAppBar = new MDCTopAppBar(topAppBarElement);
 
     // List
-    const list = MDCList.attachTo(document.querySelector('.mdc-list'));
-    list.wrapFocus = true;
+    // const list = MDCList.attachTo(document.querySelector('.mdc-list'));
+    // list.wrapFocus = true;
 
     // Button
     const buttons = document.querySelectorAll('.mdc-button');

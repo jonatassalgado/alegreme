@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  require "day_of_week"
+
   include Rails.application.routes.url_helpers
 
   belongs_to :place
@@ -17,5 +19,10 @@ class Event < ApplicationRecord
   def url
     return event_path(self)
   end
+
+  def day_of_week
+    Alegreme::Dates.get_next_day_occur_human_readable(self)
+  end
+
 
 end

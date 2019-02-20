@@ -1,22 +1,49 @@
 <p id="notice"><%= notice %></p>
 
-<div class="col s3">
-  <div class="card">
-    <div class="card-image">
-      <img src="<%= url_for(@event.cover) %>">
-      <!-- <a class="btn-floating halfway-fab waves-effect waves-light"><i class="material-icons">star</i></a> -->
-    </div>
-    <div class="card-content">
-      <div class="card-title small"><%= @event.name[0..50] %></div>
-      <div class="tooltipped" data-position="bottom" data-tooltip="<%= @event.place.address %>">
-        <%= @event.place.name[0..40] %>
-      </div>
-      <div>
-        <%= next_day_to_occur(@event) %>
+<div class="me-single">
+  <div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+
+
+        <div class="me-card mdc-card event-<%= @event.id %>" data-controller="event" data-target="event.event" data-event-favorited="<%= current_user.favorited?(@event, scope: ['favorite']) if current_user %>" data-event-identifier="<%= @event.id %>">
+          <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= @event.cover_url %>')">
+          </div>
+
+          <div class="me-card__primary">
+            <h2 class="mdc-card__title mdc-typography--headline6">
+              <%= @event.name[0..50] %>
+            </h2>
+          </div>
+
+          <div class="me-card__secondary">
+            <h3 class="mdc-card__subtitle mdc-typography--subtitle1">
+              <%= @event.day_of_week %>
+            </h3>
+
+            <% if @event.place %>
+              <div class="mdc-typography--body2">
+                <p><b>Local:</b> <%= @event.place.name[0..40] %></p>
+                <p><b>Endereço:</b> <%= @event.place.address %></p>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="mdc-card__actions">
+            <div data-action="click->event#like">
+              <div data-target="event.like">
+                <button data-target="event.likeButton" class="me-like-button mdc-button <%= 'mdc-button--raised' if favorited @event %>">
+                  <i class="material-icons mdc-button__icon">star</i>
+                  <span class="mdc-button__label" style="text-align: right">
+                    <%= favorited(@event) ? "Salvo" : "Salvar" %>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
