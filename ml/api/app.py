@@ -7,6 +7,7 @@ import json
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 from personaprediction import PersonaPrediction
+from eventprediction import EventPrediction
 
 app = Flask(__name__)
 api = Api(app)
@@ -30,8 +31,32 @@ class PredictPersona(Resource):
                     }
                }
 
+class PredictEvent(Resource):
+    def get(self):
+        args = parser.parse_args()
+        user_query = args['query']
+        print(user_query)
+
+        predictModel = EventPrediction()
+        prediction = predictModel.predict(user_query)
+        output = np.array(prediction).tolist()
+
+        return {'classification' :
+                    {
+                        'primary' : {
+                                        'name': output[0][0],
+                                        'score': output[0][1]
+                                    },
+                        'secondary' : {
+                                        'name': output[1][0],
+                                        'score': output[1][1]
+                                    },
+                    }
+               }
+
 
 api.add_resource(PredictPersona, '/predict/persona')
+api.add_resource(PredictEvent, '/predict/event')
 
 
 if __name__ == '__main__':
