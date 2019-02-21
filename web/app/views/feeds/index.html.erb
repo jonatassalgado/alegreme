@@ -31,19 +31,18 @@
 
 
 
-<h2 class="mdc-typography--headline2">Eventos indicados para você</h2>
-
 <div class="me-feed">
+  <h2 class="mdc-typography--headline1">Eventos indicados para você</h2>
+  <div class="me-feed__divider"></div>
+
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
       <% @events[0...10].each do |event| %>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3">
-
-        <a href="<%= event.url %>">
-          <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventPlace" data-event-favorited="<%= current_user.favorited?(event, scope: ['favorite']) if current_user %>" data-event-identifier="<%= event.id %>">
+        <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventDetails" data-event-favorited="<%= current_user.favorited?(event, scope: ['favorite']) if current_user %>" data-event-identifier="<%= event.id %>">
+          <a href="<%= event.url %>">
             <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
             </div>
-
 
             <div class="mdc-card__title" data-target="event.name">
               <%= event.name[0..50] %>
@@ -56,22 +55,18 @@
             <div class="me-card__date" data-target="event.date" style="display: none">
               <%= event.day_of_week %>
             </div>
+          </a>
 
-            <!-- <div class="mdc-card__actions">
-              <div data-action="click->event#like">
-                <div data-target="event.like">
-                  <button data-target="event.likeButton" class="me-like-button mdc-button mdc-button--dense <%= 'mdc-button--raised' if favorited event %>">
-                    <i class="material-icons mdc-button__icon">star</i>
-                    <span class="mdc-button__label" style="text-align: right">
-                      <%= favorited(event) ? "Salvo" : "Salvar" %>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div> -->
-
+          <div class="me-card__like-button" data-action="click->event#like">
+            <div data-target="event.like">
+              <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if favorited(event) %>" style="display: none" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
+                <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
+                <i class="material-icons mdc-icon-button__icon">star_border</i>
+              </button>
+            </div>
           </div>
-        </a>
+
+        </div>
       </div>
       <% end %>
     </div>

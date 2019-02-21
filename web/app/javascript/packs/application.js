@@ -31,8 +31,17 @@ document.addEventListener("turbolinks:load", function() {
 
     // Button
     const buttons = document.querySelectorAll('.mdc-button');
+    const icons = document.querySelectorAll('.mdc-icon-button');
+
     buttons.forEach((button) => {
-      new MDCRipple(button);
+      button = new MDCRipple(button);
+    })
+
+    icons.forEach((icon) => {
+      const buttonToggle = new mdc.iconButton.MDCIconButtonToggle(icon);
+
+      const ripple = new MDCRipple(icon);
+      ripple.unbounded = true;
     })
 
     // Textfield

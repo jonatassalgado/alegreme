@@ -1,0 +1,40 @@
+@import '../_variables';
+@import '@material/icon-button/_mixins';
+
+$fill-color: #fafafa;
+$icon-color: $brand-color;
+
+.me-feed {
+  .me-icon-button {
+
+    &.mdc-icon-button {
+      background: $fill-color;
+      transition: 0.2s all ease 0s;
+      border-radius: 100%;
+      @include mdc-icon-button-ink-color($color: $icon-color);
+      @include mdc-icon-button-size($width: 28px, $height: 28px, $padding: 4px);
+
+      &:hover {
+        box-shadow: 0 0 0 3px darken($color: $fill-color, $amount: 25%);
+      }
+    }
+  }
+}
+
+.me-single {
+  .me-icon-button {
+
+    &.mdc-icon-button {
+      background: $fill-color;
+      box-shadow: 0 0 5px 1px #0000003b;
+      transition: 0.2s all ease 0s;
+      border-radius: 100%;
+      @include mdc-icon-button-ink-color($color: $icon-color);
+      @include mdc-icon-button-size($width: 36px, $height: 36, $padding: 6px);
+
+      &:hover {
+        box-shadow: 0 0 5px 1px #00000061;
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ web/*.orig
 web/rerun.txt
 web/pickle-email-*.html
 web/public/packs/
+web/tmp/
 .scrapy/
 ml/__pycache__
 web/tmp/pids

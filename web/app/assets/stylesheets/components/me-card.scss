@@ -1,8 +1,11 @@
-$name-color: #212121;
-$description-color: #616161;
+@import '../_variables';
+
+$name-color: $font-primary-color;
+$description-color: $font-secondary-color;
 
 .me-card {
   min-height: 160px;
+  position: relative;
 
   &__primary {
     padding: 1rem;
@@ -29,33 +32,38 @@ $description-color: #616161;
 
   &__place {
     color: $name-color;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
     margin: 6px 0 0 0;
     font-family: Roboto;
-    font-weight: 100;
+    font-weight: 400;
   }
 
   &__date {
     color: $name-color;
     font-size: 12px;
     line-height: 16px;
-    margin: 0;
+    margin: 3px 0 0 0;
     font-family: Roboto;
-    font-weight: 100;
+    font-weight: 200;
+  }
+
+  &__like-button {
+    position: absolute;
+    top: 50px;
+    right: 6px;
   }
 
   & a {
-    text-decoration: none;
+    display: contents;
+  }
 
-    & .mdc-card__title {
-      color: $name-color;
-      font-size: 14px;
-      line-height: 18px;
-      margin: 6px 0 0 0;
-      font-family: Roboto;
-      font-weight: 400;
-    }
+  & .mdc-card__title {
+    color: $name-color;
+    line-height: 18px;
+    margin: 6px 0 0 0;
+    font-family: Roboto;
+    font-weight: 400;
   }
 
   & .mdc-card__subtitle {

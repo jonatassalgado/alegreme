@@ -30,7 +30,7 @@ export default class FavoriteController extends Controller {
               <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
                   ${events.map((event) => html `
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2" data-target="favorite.event" data-action="mouseover->favorite#showEventName mouseout->favorite#hideEventName">
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2" data-target="favorite.event" data-action="mouseover->favorite#showEventName">
                       <div class="me-card mdc-card">
                         <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('${event.cover_url}')">
                         </div>
@@ -48,7 +48,9 @@ export default class FavoriteController extends Controller {
             </div>
             `
           : html `
-            <span>Você não possuí eventos salvos ainda</span>
+            <h2 class="mdc-typography--headline2">
+              Você não possuí eventos salvos ainda
+            </h2>
           `
         }
       `;

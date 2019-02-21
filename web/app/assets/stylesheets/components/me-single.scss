@@ -1,7 +1,12 @@
 .me-single {
   margin: 0 200px;
 
+  .me-card__like-button {
+    top: 220px;
+    right: 15px;
+  }
+
   & a {
-  text-decoration: none
-}
+    text-decoration: none
+  }
 }

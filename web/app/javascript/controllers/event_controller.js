@@ -1,5 +1,6 @@
 import { Controller } from "stimulus"
 import { html, render } from 'lit-html';
+import { iconButton } from 'material-components-web';
 
 
 export default class EventController extends Controller {
@@ -9,17 +10,19 @@ export default class EventController extends Controller {
 
   }
 
-  showEventPlace(event) {
+  showEventDetails(event) {
     const self = this
 
     self.nameTarget.style.display = "none";
     self.placeTarget.style.display = "inline";
     self.dateTarget.style.display = "inline";
+    self.likeButtonTarget.style.display = "inline";
 
     self.eventTarget.addEventListener("mouseout", function() {
       self.nameTarget.style.display = "inline";
       self.placeTarget.style.display = "none";
       self.dateTarget.style.display = "none";
+      self.likeButtonTarget.style.display = "none";
     })
   }
 
@@ -34,7 +37,9 @@ export default class EventController extends Controller {
         // self.likeCount = response
         self.likeActive = response
         self.data.set("favorited", response.favorited)
-        self.favoriteController.updateList = response.all_favorited
+        if (self.favoriteController) {
+          self.favoriteController.updateList = response.all_favorited
+        }
       },
       error: function(response){
         console.log(response)
@@ -71,31 +76,8 @@ export default class EventController extends Controller {
 
 
   set likeActive(value) {
-    const like = (favorite) =>
-      html `
-        ${ favorite ?
-          html `
-            <i class="material-icons mdc-button__icon">star</i>
-            <span class="mdc-button__label" style="text-align: right">
-              Salvo
-            </span>
-          `
 
-          :
 
-          html `
-            <i class="material-icons mdc-button__icon">star</i>
-            <span class="mdc-button__label" style="text-align: right">
-              Salvar
-            </span>
-          `
-        }
-      `;
-
-    const likeButtonsWrapper = this.likeButtonTarget;
-    likeButtonsWrapper.classList.toggle('mdc-button--raised');
-
-    render(like(value.favorited), likeButtonsWrapper);
   }
 
 }

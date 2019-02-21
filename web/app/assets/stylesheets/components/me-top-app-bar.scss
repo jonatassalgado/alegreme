@@ -1,7 +1,8 @@
+@import '../_variables';
 @import '@material/top-app-bar/_mixins';
 
 $fill-color: #ffffff;
-$font-color: #212121;
+$font-color: $font-primary-color;
 $border-color: #e0e0e0;
 
 .me-top-app-bar {
@@ -9,6 +10,11 @@ $border-color: #e0e0e0;
   color: $font-color;
   border-bottom: 1px solid $border-color;
   position: fixed;
+
+  &__logo {
+    height: 30px;
+    display: flex;
+  }
 
   & .mdc-top-app-bar__navigation-icon {
     color: $font-color;

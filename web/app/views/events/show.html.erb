@@ -29,16 +29,12 @@
             <% end %>
           </div>
 
-          <div class="mdc-card__actions">
-            <div data-action="click->event#like">
-              <div data-target="event.like">
-                <button data-target="event.likeButton" class="me-like-button mdc-button <%= 'mdc-button--raised' if favorited @event %>">
-                  <i class="material-icons mdc-button__icon">star</i>
-                  <span class="mdc-button__label" style="text-align: right">
-                    <%= favorited(@event) ? "Salvo" : "Salvar" %>
-                  </span>
-                </button>
-              </div>
+          <div class="me-card__like-button" data-action="click->event#like">
+            <div data-target="event.like">
+              <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if favorited(@event) %>" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
+                <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
+                <i class="material-icons mdc-icon-button__icon">star_border</i>
+              </button>
             </div>
           </div>
 

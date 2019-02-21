@@ -1,16 +1,20 @@
 @import '@material/card/_mixins';
 
 .me-favorite {
-    min-height: 185px;
+    min-height: 150px;
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
     --mdc-layout-grid-gutter-desktop: 8px;
   }
 
+  & .mdc-layout-grid__inner {
+    grid-template-columns: repeat(14, minmax(0, 1fr));
+  }
+
   & .me-card {
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     border: 0;
     box-shadow: none;
     background-color: inherit;

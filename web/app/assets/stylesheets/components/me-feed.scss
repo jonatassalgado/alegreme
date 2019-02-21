@@ -1,8 +1,9 @@
 @import '@material/card/_mixins';
 @import '@material/layout-grid/_mixins';
+@import '../_variables';
 
-$name-color: #212121;
-$description-color: #616161;
+$name-color: $font-primary-color;
+$description-color: $font-secondary-color;
 
 $mdc-layout-grid-columns: (
 desktop: 15,
@@ -11,6 +12,14 @@ phone: 4
 );
 
 .me-feed {
+
+  &__divider {
+    width: 100px;
+    height: 2px;
+    background: $brand-color;
+    border-radius: 1px;
+    margin: 12px 0 26px 0;
+  }
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
@@ -29,7 +38,12 @@ phone: 4
     border: 0;
     box-shadow: none;
     background: none;
+    position: relative;
     @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
+
+    & .mdc-typography--headline1 {
+      color: $font-primary-color;
+    }
 
     & .mdc-typography--headline2 {
       margin: 0 0 6px 0;
