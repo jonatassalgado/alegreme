@@ -4,6 +4,35 @@
   <%= notice %>
 </p>
 
+<div class="me-float-menu">
+  <div class="me-float-menu__nav">
+    <div class="me-float-menu__item">
+      <div class="me-float-menu__icon">
+        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
+      </div>
+      <div class="me-floa-menu__label">
+        Home
+      </div>
+    </div>
+    <div class="me-float-menu__item">
+      <div class="me-float-menu__icon">
+        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
+      </div>
+      <div class="me-floa-menu__label">
+        Home
+      </div>
+    </div>
+    <div class="me-float-menu__item">
+      <div class="me-float-menu__icon">
+        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
+      </div>
+      <div class="me-floa-menu__label">
+        Home
+      </div>
+    </div>
+  </div>
+</div>
+
 <% if current_user and !current_user.all_favorited(scope: ['favorite']).empty? %>
 <div class="me-favorite" data-controller="favorite">
   <h2 data-target="favorite.header" class="mdc-typography--headline2">
@@ -42,6 +71,7 @@
         <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventDetails" data-event-favorited="<%= current_user.favorited?(event, scope: ['favorite']) if current_user %>" data-event-identifier="<%= event.id %>">
           <a href="<%= event.url %>">
             <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
+              <div class="me-card__overlay"></div>
             </div>
 
             <div class="mdc-card__title" data-target="event.name">
