@@ -1,7 +1,8 @@
 @import '@material/card/_mixins';
+@import '../_variables';
+
 
 .me-favorite {
-    min-height: 150px;
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
@@ -13,6 +14,7 @@
   }
 
   & .me-card {
+    min-height: 132px;
     cursor: pointer;
     font-size: 11px;
     border: 0;

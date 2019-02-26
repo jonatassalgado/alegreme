@@ -1,18 +1,70 @@
+@import '../_variables';
+@import '@material/textfield/_mixins';
+
 $icon-color: #616161;
+$border-color: #e0e0e0;
 
 .me-search-field {
   align-self: center;
+  width: 100%;
+  height: 48px;
+  border-radius: 0;
+  align-self: baseline;
+  transition: height 0.2s linear;
 
-  &.mdc-text-field {
-    // background: white;
-    border-radius: 0;
+  &__bot {
     width: 100%;
-    height: inherit;
+    align-self: flex-end;
+    position: absolute;
+    height: 400px;
+    z-index: 2;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+
+    &::before {
+      content: " ";
+      background: linear-gradient(to bottom, white 7%, transparent 19%);
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    & iframe {
+      border: 0;
+      width: inherit;
+      height: inherit;
+    }
+  }
+
+  &__reply {
+    border-radius: 30px;
+    color: $brand-color;
+    border: 1px solid $brand-color;
+    display: none;
+    position: absolute;
+    align-self: center;
+    padding: 4px 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: $brand-color;
+      color: white;
+    }
+  }
+
+  &.mdc-text-field--focused {
+    @include mdc-text-field-label-color($color: $font-primary-color);
+    @include mdc-text-field-caret-color($color: $font-primary-color);
   }
 
   & .mdc-text-field__input {
+    caret-color: $font-primary-color;
     font-size: 16px;
-    color: #212121;
     padding: 0 40px;
     box-sizing: border-box;
     height: 48px;
@@ -23,6 +75,7 @@ $icon-color: #616161;
     border: 1px solid transparent;
     transition: border 0.1s ease-out;
     border-bottom-color: transparent !important;
+    align-self: baseline;
   }
 
   & .search-icon {
@@ -30,7 +83,7 @@ $icon-color: #616161;
     position: absolute;
     top: 13px;
     left: 24px;
-    z-index: 2;
+    z-index: 3;
     display: -ms-inline-flexbox;
     display: -webkit-inline-flex;
     display: inline-flex;
@@ -46,5 +99,17 @@ $icon-color: #616161;
     stroke: none;
     width: 24px;
     height: 24px;
+  }
+
+  &--bot-on {
+    height: 400px;
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+    @include mdc-text-field-textarea-fill-color($color: white);
+    will-change: unset;
+    transition: height 0.2s linear;
+
+    &::before, ::after {
+      content: none;
+    }
   }
 }

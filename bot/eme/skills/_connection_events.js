@@ -165,38 +165,39 @@ module.exports = function(controller) {
     bot.startConversation(message, function(err, convo) {
 
 
-      // START
-      convo.ask({
-        text: 'Oi. Tem alguém ai?',
-        typingDelay: typing.normal,
-        quick_replies: [
-          {
-            title: 'Sim',
-            payload: 'Sim! Tô aqui',
-          }
-        ]
-      },
-      [
-        {
-          pattern: /sim|eu|yo|aqui/gi,
-          callback: function(res, convo) {
-            if (convo.vars.personaSuitability == undefined){
-              convo.setVar('personaSuitability', [])
-            }
-
-            convo.gotoThread('self_presentation')
-            convo.next()
-          }
-        }
-      ]);
+      // // START
+      // convo.ask({
+      //   text: 'Oi. Tem alguém ai?',
+      //   typingDelay: typing.normal,
+      //   quick_replies: [
+      //     {
+      //       title: 'Sim',
+      //       payload: 'Sim! Tô aqui',
+      //     }
+      //   ]
+      // },
+      // [
+      //   {
+      //     pattern: /sim|eu|yo|aqui/gi,
+      //     callback: function(res, convo) {
+      //       if (convo.vars.personaSuitability == undefined){
+      //         convo.setVar('personaSuitability', [])
+      //       }
+      //
+      //       convo.gotoThread('self_presentation')
+      //       convo.next()
+      //     }
+      //   }
+      // ]);
 
 
 
       // SELF PRESENTATION
-      convo.addMessage({
+      convo.ask({
         text: 'Oi! Eu sou o <b>Eme</b>',
-        typingDelay: typing.normal
-      }, 'self_presentation');
+        typingDelay: typing.normal,
+        action: 'self_presentation'
+      });
 
       convo.addMessage({
         text: 'Trabalho aqui no projeto <b>Alegreme</b> e vou te ajudar a ter uma <i>agenda de eventos de Porto Alegre com a sua cara</i>.',
@@ -217,6 +218,9 @@ module.exports = function(controller) {
         {
           pattern: /ok|sim|claro|vamos|pode/gi,
           callback: function(res, convo) {
+            if (convo.vars.personaSuitability == undefined){
+              convo.setVar('personaSuitability', [])
+            }
             convo.gotoThread('how_works')
             convo.next()
           }

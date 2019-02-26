@@ -1,0 +1,20 @@
+@import '@material/card/_mixins';
+@import '../_variables';
+
+.me-overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+  visibility: hidden;
+
+  &--active {
+    background: #000000ad;
+    opacity: 1;
+    visibility: visible;
+  }
+}

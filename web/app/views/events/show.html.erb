@@ -21,12 +21,13 @@
               <%= @event.day_of_week %>
             </h3>
 
+            <div class="mdc-typography--body2">
             <% if @event.place %>
-              <div class="mdc-typography--body2">
                 <p><b>Local:</b> <%= @event.place.name[0..40] %></p>
                 <p><b>Endereço:</b> <%= @event.place.address %></p>
-              </div>
             <% end %>
+            <p><b>Descrição:</b> <%= @event.description.html_safe %></p>
+          </div>
           </div>
 
           <div class="me-card__like-button" data-action="click->event#like">
