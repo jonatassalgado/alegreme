@@ -5,7 +5,7 @@ module Alegreme
       return if event.calendars.first.day_time.nil?
 
       event_date = (event.calendars.first.day_time.to_date)
-      difference = (event_date.mjd + 30) - DateTime.now.mjd
+      difference = (event_date.mjd) - DateTime.now.mjd
 
       case difference
       when 0

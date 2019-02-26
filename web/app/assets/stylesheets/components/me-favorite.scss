@@ -1,8 +1,11 @@
 @import '@material/card/_mixins';
+@import '../_mixins';
 @import '../_variables';
 
+$gutter: 6px;
 
 .me-favorite {
+  position: relative;
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
@@ -10,7 +13,26 @@
   }
 
   & .mdc-layout-grid__inner {
-    grid-template-columns: repeat(14, minmax(0, 1fr));
+    display: grid;
+    grid-gap: 6px;
+    grid-template-columns: inherit;
+    grid-template-rows: minmax(150px, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: 50px;
+    overflow-x: scroll;
+    scroll-snap-type: x proximity;
+    padding-bottom: calc(.75 * #{$gutter});
+    margin-bottom: calc(-.25 * #{$gutter});
+    @include no-scroll-bar();
+  }
+
+  & .mdc-layout-grid__cell--span-2 {
+    scroll-snap-align: center;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: auto;
   }
 
   & .me-card {
@@ -23,17 +45,32 @@
     @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
 
 
-    & .mdc-typography--body2 {
-      display: none;
+    &__title, &__date {
       pointer-events: none;
-      padding: 6px 0 6px 0;
+      margin: 3px 0 0 0;
       line-height: 1.1em;
-      font-weight: 400;
 
       &:hover {
         background: inherit;
       }
     }
+
+    &__title {
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    &__date {
+      font-weight: 300;
+      font-size: 11px;
+      color: $font-secondary-color;
+    }
+  }
+
+  & .me-icon__group {
+    position: absolute;
+    right: 0;
+    top: 0px;
   }
 
 }

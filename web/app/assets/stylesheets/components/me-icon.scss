@@ -1,0 +1,32 @@
+@import '../_mixins';
+@import '../_variables';
+
+.me-icon {
+  background: $icon-background-color;
+  border-radius: 30px;
+  padding: 6px;
+  cursor: pointer;
+
+  &__group {
+    display: flex;
+
+    & > .me-icon {
+      margin-left: 6px;
+    }
+  }
+
+  &:hover {
+    background: darken($color: $icon-background-color, $amount: 5%);
+  }
+
+  &--scroll-left {
+    width: 20px;
+    height: 20px;
+  }
+
+  &--scroll-right {
+    width: 20px;
+    height: 20px;
+  }
+
+}

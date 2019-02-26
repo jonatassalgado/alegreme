@@ -10,6 +10,8 @@ class Event < ApplicationRecord
 
   has_one_attached :cover
 
+  accepts_nested_attributes_for :calendars, :place, :categories, :organizers
+
   acts_as_favoritable
 
   def cover_url
@@ -18,6 +20,10 @@ class Event < ApplicationRecord
 
   def url
     return event_path(self)
+  end
+
+  def day_time
+    return calendars.first.day_time
   end
 
   def day_of_week

@@ -26,6 +26,14 @@
     <%= form.text_field :url %>
   </div>
 
+  <%= form.fields_for :calendars do |calendars_form| %>
+    <%= calendars_form.datetime_field :day_time %>
+  <% end %>
+
+  <%= form.fields_for :places do |places_form| %>
+    <%= places_form.text_field :name %>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
