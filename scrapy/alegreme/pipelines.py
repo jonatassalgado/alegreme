@@ -15,7 +15,7 @@ class AlegremePipeline(object):
     file = None
 
     def open_spider(self, spider):
-        self.file = open('events.json', 'w')
+        self.file = open('events.json', 'wb')
         self.exporter = JsonItemExporter(self.file)
         self.exporter.start_exporting()
 

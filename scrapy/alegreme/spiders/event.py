@@ -4,7 +4,7 @@ import base64
 import json
 import os
 
-from urlparse import urljoin
+from urllib.parse import urljoin
 from alegreme.items import Event
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
