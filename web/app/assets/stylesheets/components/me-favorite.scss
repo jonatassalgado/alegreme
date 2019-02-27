@@ -7,9 +7,54 @@ $gutter: 6px;
 .me-favorite {
   position: relative;
 
+  &__list {
+
+    &::before {
+      content: close-quote;
+      background: linear-gradient(to left, transparent , #fafafa );
+      width: 126px;
+      height: 90%;
+      position: absolute;
+      left: 0;
+      z-index: 1;
+      top: 35px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s linear;
+    }
+
+    &::after {
+      content: close-quote;
+      background: linear-gradient(to right, transparent , #fafafa );
+      width: 126px;
+      height: 90%;
+      position: absolute;
+      right: 0;
+      z-index: 1;
+      top: 35px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s linear;
+    }
+
+    &--at-initital {
+      &.me-favorite__list::before {
+        opacity: 1;
+      }
+    }
+
+    &--at-end {
+      &.me-favorite__list::after {
+        opacity: 1;
+      }
+    }
+  }
+
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
     --mdc-layout-grid-gutter-desktop: 8px;
+    @include add-horizontal-scroll();
+    @include no-scroll-bar();
   }
 
   & .mdc-layout-grid__inner {
@@ -18,12 +63,10 @@ $gutter: 6px;
     grid-template-columns: inherit;
     grid-template-rows: minmax(150px, 1fr);
     grid-auto-flow: column;
-    grid-auto-columns: 50px;
-    overflow-x: scroll;
-    scroll-snap-type: x proximity;
+    grid-auto-columns: 54px;
     padding-bottom: calc(.75 * #{$gutter});
     margin-bottom: calc(-.25 * #{$gutter});
-    @include no-scroll-bar();
+    // @include add-horizontal-scroll();
   }
 
   & .mdc-layout-grid__cell--span-2 {
@@ -49,6 +92,7 @@ $gutter: 6px;
       pointer-events: none;
       margin: 3px 0 0 0;
       line-height: 1.1em;
+      color: $font-secondary-color;
 
       &:hover {
         background: inherit;
@@ -63,7 +107,6 @@ $gutter: 6px;
     &__date {
       font-weight: 300;
       font-size: 11px;
-      color: $font-secondary-color;
     }
   }
 

@@ -46,28 +46,27 @@
       <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" class="style-scope iron-icon"></path></g></svg>
     </div>
   </div>
-  <div class="saved-list">
-    <div class="mdc-layout-grid">
-      <div data-target="favorite.list" class="mdc-layout-grid__inner">
-        <% @favorited_events.each do |event| %>
-          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
-            <div class="me-card mdc-card event-<%= event.id %>" data-target="favorite.event" data-action="mouseover->favorite#showEventName">
-              <a href="<%= event.url %>">
-                <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
-                </div>
-                <div class="me-card__date" data-target="favorite.date">
-                  <%= event.day_of_week %>
-                </div>
-                <div class="me-card__title mdc-card__title" data-target="favorite.title" style="display: none">
-                  <%= event.name %>
-                </div>
-              </a>
-            </div>
+  <div data-target="favorite.list" class="me-favorite__list mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <% @favorited_events.each do |event| %>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <div class="me-card mdc-card event-<%= event.id %>" data-target="favorite.event" data-action="mouseover->favorite#showEventName">
+            <a href="<%= event.url %>">
+              <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
+              </div>
+              <div class="me-card__date" data-target="favorite.date">
+                <%= event.day_of_week %>
+              </div>
+              <div class="me-card__title mdc-card__title" data-target="favorite.title" style="display: none">
+                <%= event.name %>
+              </div>
+            </a>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
+
 </div>
 <% end %>
 
@@ -79,7 +78,7 @@
 
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-      <% @events[0...10].each do |event| %>
+      <% @events[0...50].each do |event| %>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3">
         <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventDetails" data-event-favorited="<%= current_user.favorited?(event, scope: ['favorite']) if current_user %>" data-event-identifier="<%= event.id %>">
           <a href="<%= event.url %>">

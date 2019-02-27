@@ -29,4 +29,9 @@
     height: 20px;
   }
 
+  &--off {
+    opacity: 0.150;
+    pointer-events: none;
+  }
+
 }

@@ -1,6 +1,12 @@
-@mixin no-scroll-bar() {
+@mixin add-horizontal-scroll() {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
   scroll-behavior: smooth;
-  
+}
+
+@mixin no-scroll-bar() {
+
   &::-webkit-scrollbar {
     height: 0;
     width: 0;
@@ -18,8 +24,6 @@
 }
 
 @mixin custom-scroll-bar() {
-  scroll-behavior: smooth;
-
 
   &::-webkit-scrollbar {
     border-radius: 10px;
