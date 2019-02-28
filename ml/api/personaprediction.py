@@ -3,6 +3,7 @@ import numpy as np
 import seaborn as sns
 import ast
 import heapq as hq
+import time
 
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import SGDClassifier
@@ -28,6 +29,7 @@ class PersonaPrediction(object):
 
 
     def train(self):
+        timestr = time.strftime("%Y%m%d-%H%M%S")
         X_test = np.random.choice([-1, 0, 1], size=(23,), p=[3/10, 3/10, 4/10]).reshape(1, -1)
         #X_test = [[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]]
 
@@ -37,7 +39,7 @@ class PersonaPrediction(object):
 
         classificator = classificator.fit(self.X, self.y)
 
-        dump(classificator, 'predict-persona-model.joblib')
+        dump(classificator, 'predict-persona-model-' + timestr + '.joblib')
 
 
     def predict(self, query):
@@ -56,7 +58,7 @@ class PersonaPrediction(object):
             best_two_labels_index = hq.nlargest(2, range(len(prediction)), prediction.take)
             return classificator.classes_[best_two_labels_index]
 
-# 
+#
 # predictModel = PersonaPrediction()
 # predictModel.clean()
 # predictModel.train()

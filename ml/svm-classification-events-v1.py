@@ -62,7 +62,7 @@ import heapq as hq
 #raw = pd.read_json('./events.json')
 #csv = raw.to_csv('./events-raw.csv')
 
-base = pd.read_csv('./svm-classification-events-v1-events.csv')
+base = pd.read_csv('./svm-classification-events-v2-events.csv')
 
 # remove null values
 base = base.loc[(base['description'].notna()) & (base['label'].notna())]

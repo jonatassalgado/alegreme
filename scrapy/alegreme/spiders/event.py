@@ -14,12 +14,11 @@ from scrapy.loader import ItemLoader
 class EventSpider(scrapy.Spider):
     name = 'event'
     allowed_domains = ['facebook.com']
-    start_urls = ['https://www.facebook.com/events/283974625654238',
-                  'https://www.facebook.com/events/1280587702094834',
-                  'https://www.facebook.com/events/2042768449135744',
-                  'https://www.facebook.com/events/1773912142731195',
-                  'https://www.facebook.com/events/224451225098227',
-                  'https://www.facebook.com/events/881366315400369']
+    start_urls = ['https://www.facebook.com/events/560795694396186',
+                  'https://www.facebook.com/events/400025397235588',
+                  'https://www.facebook.com/events/313565609288915',
+                  'https://www.facebook.com/events/373799036764008',
+                  'https://www.facebook.com/events/413168566085862']
 
     def start_requests(self):
         for url in self.start_urls:
