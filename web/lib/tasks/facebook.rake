@@ -2,6 +2,7 @@ namespace :scrapy do
 
   require 'json'
   require 'open-uri'
+  require 'net/http'
 
   task facebook: :environment do
     puts "Parsear JSON ****************************************"
