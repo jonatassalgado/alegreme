@@ -1,3 +1,5 @@
+
+import os
 import re
 import pandas as pd
 import numpy as np
@@ -111,14 +113,15 @@ class EventPrediction(object):
 
 
     def train(self):
-        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.10, random_state=None)
+        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.10, random_state=True)
 
         classificator = Pipeline([('vect', CountVectorizer(ngram_range=(1, 1))),
                                   ('tfidf', TfidfTransformer(use_idf=True)),
                                   ('clf-svm', SGDClassifier(alpha=0.001, loss='log'))])
 
         classificator = classificator.fit(X_train, y_train)
-        dump(classificator, 'predict-event-model.joblib')
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        dump(classificator, 'predict-event-model-' + timestr + '.joblib')
         classificator = classificator.fit(X_train, y_train)
         predictions = classificator.predict_proba(X_test)
 
@@ -138,10 +141,13 @@ class EventPrediction(object):
 
 
     def predict(self, query):
-        timestr = time.strftime("%Y%m%d-%H%M%S")
         query = self.__cleanning_text(query)
         query = self.__stemming_text(query)
-        classificator = load('predict-event-model-' + timestr + '.joblib')
+
+        regex = re.compile(r'predict-event-model-\d{8}-\d{6}\.joblib$')
+        last_file = max(filter(regex.search, os.listdir('./')))
+
+        classificator = load(last_file)
         predictions = classificator.predict_proba([query])
 
 

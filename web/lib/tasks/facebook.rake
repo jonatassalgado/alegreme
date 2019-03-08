@@ -6,8 +6,11 @@ namespace :scrapy do
   task facebook: :environment do
     puts "Parsear JSON ****************************************"
 
-    file = File.read('../events.json')
-    data = JSON.parse(file)
+    files = Dir['../../../scrapy/alegreme/*']
+    last_file = (files.select{ |file| file[/events-\d{8}-\d{6}\.json$/] }).max
+    current_file = File.read(last_file)
+    data = JSON.parse(current_file)
+
 
     puts data
 
@@ -27,6 +30,9 @@ namespace :scrapy do
 
       puts "Criar Evento ****************************************"
 
+      uri = URI("http://localhost:5000/predict/event?query=#{item['description']}")
+      response = JSON.parse(Net::HTTP.get_response(uri))
+
       @event = Event.create_with(
         name: item['name'],
         description: item['description'],
@@ -39,7 +45,7 @@ namespace :scrapy do
       @place.events << @event unless @place.events.include?(@event)
       puts @event.inspect
 
- 
+
 
       puts "Criar organizador ****************************************"
 

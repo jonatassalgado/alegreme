@@ -45,7 +45,11 @@ class PersonaPrediction(object):
     def predict(self, query):
         query = ast.literal_eval(query)
         query = list(map(int, query))
-        classificator = load('predict-persona-model.joblib')
+
+        regex = re.compile(r'predict-event-model-\d{8}-\d{6}\.joblib$')
+        last_file = max(filter(regex.search, os.listdir('./')))
+
+        classificator = load(last_file)
         predictions = classificator.predict_proba([query])
 
 
