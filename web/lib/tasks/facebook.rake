@@ -7,13 +7,10 @@ namespace :scrapy do
   task facebook: :environment do
     puts "Parsear JSON ****************************************"
 
-    files = Dir['../../../scrapy/alegreme/*']
+    files = Dir['../scrapy/alegreme/*']
     last_file = (files.select{ |file| file[/events-\d{8}-\d{6}\.json$/] }).max
     current_file = File.read(last_file)
     data = JSON.parse(current_file)
-
-
-    puts data
 
 
     data.each do |item|
@@ -31,20 +28,53 @@ namespace :scrapy do
 
       puts "Criar Evento ****************************************"
 
-      uri = URI("http://localhost:5000/predict/event?query=#{item['description']}")
-      response = JSON.parse(Net::HTTP.get_response(uri))
+      if item['description']
+        params = { query: item['description'] }
+        uri = URI("http://localhost:5000/predict/event")
+        uri.query = URI.encode_www_form(params)
+        response = Net::HTTP.get_response(uri)
+        persona = JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
 
-      @event = Event.create_with(
-        name: item['name'],
-        description: item['description'],
-        url: item['event_url']
-      ).find_or_create_by(url: item['event_url'])
+        if response.is_a?(Net::HTTPSuccess)
+          @event = Event.create_with(
+            name: item['name'],
+            description: item['description'],
+            url: item['event_url'],
+            features: {
+              persona: {
+                primary: {
+                  name: persona['classification']['primary']['name'],
+                  score: persona['classification']['primary']['score']
+                },
+                secondary: {
+                  name: persona['classification']['secondary']['name'],
+                  score: persona['classification']['secondary']['score']
+                }
+              }
+            }
+          ).find_or_create_by(url: item['event_url'])
+        else
+          @event = Event.create_with(
+            name: item['name'],
+            description: item['description'],
+            url: item['event_url']
+          ).find_or_create_by(url: item['event_url'])
+        end
 
-      cover = open(item['cover_url'])
-      @event.cover.attach(io: cover, filename: "event#{@event.id}.jpg", content_type: "image/jpg")
+        if item['cover_url']
+          begin
+            cover = open(item['cover_url'])
+            @event.cover.attach(io: cover, filename: "event#{@event.id}.jpg", content_type: "image/jpg")
+          rescue OpenURI::HTTPError => ex
+            puts "Erro no download de imagem cover do facebook: #{ex}"
+          end
+        end
 
-      @place.events << @event unless @place.events.include?(@event)
-      puts @event.inspect
+        @place.events << @event unless @place.events.include?(@event)
+        puts @event.inspect
+      end
+
+
 
 
 
