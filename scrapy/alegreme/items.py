@@ -59,7 +59,6 @@ class Event(scrapy.Item):
         output_processor=TakeFirst()
     )
     description = scrapy.Field(
-        input_processor=Join('<br>'),
         output_processor=TakeFirst()
     )
     categories = scrapy.Field()

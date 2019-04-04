@@ -30,7 +30,22 @@ class Event < ApplicationRecord
 
   def personas_secondary_name= value
     self.personas["secondary"]["name"] = value
-    self.personas["secondary"]["score"] = 0.99
+  end
+
+  def personas_primary_score
+    self.personas["primary"]["score"]
+  end
+
+  def personas_primary_score= value
+    self.personas["primary"]["score"] = value
+  end
+
+  def personas_secondary_score
+    self.personas["secondary"]["score"]
+  end
+
+  def personas_secondary_score= value
+    self.personas["secondary"]["score"] = value
   end
 
   acts_as_favoritable

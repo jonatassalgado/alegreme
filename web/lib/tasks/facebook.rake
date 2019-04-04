@@ -94,18 +94,18 @@ namespace :scrapy do
 
 
 
-
-      puts "Criar categoria ****************************************"
-
-      item['categories'].try(:each) do |category|
-        @category = Category.create_with({
-          name: category
-        }).find_or_create_by(name: category)
-
-        @event.categories << @category unless @event.categories.include?(@category)
-        puts @category.inspect
-      end
-
+      # 
+      # puts "Criar categoria ****************************************"
+      #
+      # item['categories'].try(:each) do |category|
+      #   @category = Category.create_with({
+      #     name: category
+      #   }).find_or_create_by(name: category)
+      #
+      #   @event.categories << @category unless @event.categories.include?(@category)
+      #   puts @category.inspect
+      # end
+      #
 
 
 

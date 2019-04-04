@@ -127,7 +127,7 @@ export default class FavoriteController extends Controller {
       var scrollSize = self.listTarget.scrollWidth;
       var scrolled = self.listTarget.scrollLeft;
 
-      if(parentSize + scrolled == scrollSize) {
+      if(parentSize + scrolled > scrollSize) {
         self.scrollRightTarget.classList.add('me-icon--off');
         self.listTarget.classList.remove('me-favorite__list--at-end');
         self.listTarget.classList.add('me-favorite__list--at-initital');

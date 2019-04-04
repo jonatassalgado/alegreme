@@ -66,6 +66,19 @@
   </div>
 
   <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :personas_primary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
     <div class="mdc-select mdc-select--outlined">
       <i class="mdc-select__dropdown-icon"></i>
       <%= form.select(:personas_secondary_name, ["aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
@@ -79,6 +92,18 @@
     </div>
   </div>
 
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :personas_secondary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
 
   <button class="demo-button mdc-button mdc-button--unelevated mdc-ripple-upgraded">
     <span class="mdc-button__label">Salvar</span>
