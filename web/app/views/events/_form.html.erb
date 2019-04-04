@@ -11,30 +11,77 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :name, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Nome</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="mdc-text-field text-field mdc-text-field--fullwidth mdc-text-field--no-label mdc-text-field--textarea">
+    <%= form.text_area :description, { class: "mdc-text-field__input" } %>
+    <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+      <div class="mdc-notched-outline__leading"></div>
+      <div class="mdc-notched-outline__notch">
+        <label class="mdc-floating-label" for="text-field-fullwidth-textarea-helper" style="">Standard</label>
+      </div>
+      <div class="mdc-notched-outline__trailing"></div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :url %>
-    <%= form.text_field :url %>
+  <%= form.fields_for :ocurrences, event.ocurrences do |occur| %>
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= occur.datetime_field :dates, {value: datetime_local(event.ocurrences['dates'][0]), class: 'mdc-text-field__input', multiple: true } %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Data</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
   </div>
-
-  <%= form.fields_for :calendars do |calendars_form| %>
-    <%= calendars_form.datetime_field :day_time %>
   <% end %>
 
-  <%= form.fields_for :places do |places_form| %>
-    <%= places_form.text_field :name %>
-  <% end %>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:personas_primary_name, ["aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Persona primária</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
   </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:personas_secondary_name, ["aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Persona secundária</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <button class="demo-button mdc-button mdc-button--unelevated mdc-ripple-upgraded">
+    <span class="mdc-button__label">Salvar</span>
+  </button>
+
 <% end %>

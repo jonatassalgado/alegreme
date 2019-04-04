@@ -5,18 +5,39 @@ class Event < ApplicationRecord
 
   belongs_to :place
   has_and_belongs_to_many :categories
-  has_and_belongs_to_many :calendars
   has_and_belongs_to_many :organizers
 
   has_one_attached :cover
 
-  accepts_nested_attributes_for :calendars, :place, :categories, :organizers
+  accepts_nested_attributes_for :place, :categories, :organizers
+
+  delegate :name, :address, to: :place, prefix: true, allow_nil: true
+
+  jsonb_accessor :ocurrences, dates: [:datetime, array: true, default: []]
+
+
+  def personas_primary_name
+    self.personas["primary"]["name"]
+  end
+
+  def personas_primary_name= value
+    self.personas["primary"]["name"] = value
+  end
+
+  def personas_secondary_name
+    self.personas["secondary"]["name"]
+  end
+
+  def personas_secondary_name= value
+    self.personas["secondary"]["name"] = value
+    self.personas["secondary"]["score"] = 0.99
+  end
 
   acts_as_favoritable
 
   def cover_url
     if self.cover.attached?
-      return rails_blob_path(self.cover, disposition: "attachment", only_path: true) 
+      return rails_blob_path(self.cover, disposition: "attachment", only_path: true)
     end
   end
 
@@ -25,7 +46,7 @@ class Event < ApplicationRecord
   end
 
   def day_time
-    return calendars.first.day_time
+    return self.dates.first
   end
 
   def day_of_week

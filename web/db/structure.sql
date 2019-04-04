@@ -120,18 +120,6 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
--- Name: calendars; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.calendars (
-    id bigint NOT NULL,
-    day_time timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
 -- Name: calendars_events; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -139,25 +127,6 @@ CREATE TABLE public.calendars_events (
     event_id bigint NOT NULL,
     calendar_id bigint NOT NULL
 );
-
-
---
--- Name: calendars_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.calendars_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: calendars_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.calendars_id_seq OWNED BY public.calendars.id;
 
 
 --
@@ -210,7 +179,8 @@ CREATE TABLE public.events (
     name character varying,
     description text,
     url character varying,
-    features jsonb DEFAULT '"{}"'::jsonb NOT NULL,
+    personas jsonb DEFAULT '"{}"'::jsonb NOT NULL,
+    ocurrences jsonb DEFAULT '"{}"'::jsonb NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     place_id bigint
@@ -408,13 +378,6 @@ ALTER TABLE ONLY public.active_storage_blobs ALTER COLUMN id SET DEFAULT nextval
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.calendars ALTER COLUMN id SET DEFAULT nextval('public.calendars_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
 
 
@@ -475,14 +438,6 @@ ALTER TABLE ONLY public.active_storage_blobs
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
-
-
---
--- Name: calendars_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.calendars
-    ADD CONSTRAINT calendars_pkey PRIMARY KEY (id);
 
 
 --
@@ -605,10 +560,17 @@ CREATE UNIQUE INDEX index_categories_events_on_event_id_and_category_id ON publi
 
 
 --
--- Name: index_events_on_features; Type: INDEX; Schema: public; Owner: -
+-- Name: index_events_on_ocurrences; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_events_on_features ON public.events USING gin (features);
+CREATE INDEX index_events_on_ocurrences ON public.events USING gin (ocurrences);
+
+
+--
+-- Name: index_events_on_personas; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_personas ON public.events USING gin (personas);
 
 
 --
@@ -701,7 +663,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190107003443'),
 ('20190107003540'),
 ('20190107003623'),
-('20190107004316'),
 ('20190107010727'),
 ('20190107011529'),
 ('20190107011635'),

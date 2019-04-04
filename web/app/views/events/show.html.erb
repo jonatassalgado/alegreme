@@ -12,7 +12,7 @@
 
           <div class="me-card__primary">
             <h2 class="mdc-card__title mdc-typography--headline6">
-              <%= @event.name[0..50] %>
+              <%= @event.name %>
             </h2>
           </div>
 
@@ -23,8 +23,8 @@
             <div class="mdc-typography--body2">
               <b>Quando:</b> <%= @event.day_of_week %><br>
               <% if @event.place %>
-              <b>Local:</b> <%= @event.place.name[0..40] %><br>
-              <b>Endereço:</b> <%= @event.place.address %><br>
+              <b>Local:</b> <%= @event.place_name %><br>
+              <b>Endereço:</b> <%= @event.place_address %><br>
               <% end %>
               <b>Descrição:</b> <%= @event.description.html_safe %><br>
             </div>

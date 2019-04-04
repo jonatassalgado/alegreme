@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :parse_ocurrences, only: [:update]
 
   # GET /events
   # GET /events.json
@@ -67,8 +68,14 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
+    def parse_ocurrences
+      params[:event][:ocurrences][:dates].each_with_index do |date, index|
+        @event.ocurrences['dates'][index] = DateTime.parse(date).strftime("%Y-%m-%d %H:%M:%S")
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :description, :url, calendars_attributes: [:id, :day_time])
+      params.require(:event).permit(:name, :description, :url, :personas_primary_name, :personas_secondary_name, :ocurrences, :dates)
     end
 end

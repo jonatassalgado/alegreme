@@ -16,34 +16,46 @@ import {MDCTopAppBar} from '@material/top-app-bar/index';
 import {MDCList} from '@material/list';
 import {MDCRipple} from '@material/ripple';
 import {MDCTextField} from '@material/textfield';
+import {MDCSelect} from '@material/select';
+
 
 
 
 
 document.addEventListener("turbolinks:load", function() {
-    // TopAppBar
-    const topAppBarElement = document.querySelector('.mdc-top-app-bar');
-    const topAppBar = new MDCTopAppBar(topAppBarElement);
+  // TopAppBar
+  const topAppBarElement = document.querySelector('.mdc-top-app-bar');
+  const topAppBar = new MDCTopAppBar(topAppBarElement);
 
-    // List
-    // const list = MDCList.attachTo(document.querySelector('.mdc-list'));
-    // list.wrapFocus = true;
+  // List
+  // const list = MDCList.attachTo(document.querySelector('.mdc-list'));
+  // list.wrapFocus = true;
 
-    // Button
-    const buttons = document.querySelectorAll('.mdc-button');
-    const icons = document.querySelectorAll('.mdc-icon-button');
+  // Button
+  const buttons = document.querySelectorAll('.mdc-button');
+  const icons = document.querySelectorAll('.mdc-icon-button');
 
-    buttons.forEach((button) => {
-      button = new MDCRipple(button);
-    })
+  buttons.forEach((button) => {
+    button = new MDCRipple(button);
+  })
 
-    icons.forEach((icon) => {
-      const buttonToggle = new mdc.iconButton.MDCIconButtonToggle(icon);
+  icons.forEach((icon) => {
+    const buttonToggle = new mdc.iconButton.MDCIconButtonToggle(icon);
 
-      const ripple = new MDCRipple(icon);
-      ripple.unbounded = true;
-    })
+    const ripple = new MDCRipple(icon);
+    ripple.unbounded = true;
+  })
 
-    // Textfield
-    const textField = new MDCTextField(document.querySelector('.mdc-text-field'));
+  // Textfield
+  const fields = document.querySelectorAll('.mdc-text-field');
+  fields.forEach((field) => {
+    const textField = new MDCTextField(field);
+  })
+
+
+  // Select
+  const selects = document.querySelectorAll('.mdc-select');
+  selects.forEach((select) => {
+    const textField = new MDCSelect(select);
+  })
 });

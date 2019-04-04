@@ -1,0 +1,19 @@
+.me-text-field {
+
+
+  &__container {
+    margin: 25px 0;
+  }
+
+  &--fullwidth {
+
+    & .mdc-text-field {
+      width: 100%;
+    }
+
+    & .mdc-floating-label {
+      // max-width: 200px;
+    }
+  }
+
+}

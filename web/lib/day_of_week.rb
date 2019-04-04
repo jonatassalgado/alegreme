@@ -2,9 +2,9 @@ module Alegreme
   module Dates
 
     def self.get_next_day_occur_human_readable(event)
-      return if event.calendars.first.day_time.nil?
+      return if event.ocurrences['dates'].first.nil?
 
-      event_date = (event.calendars.first.day_time.to_date)
+      event_date = (event.ocurrences['dates'].first.to_date)
       difference = (event_date.mjd) - DateTime.now.mjd
 
       case difference

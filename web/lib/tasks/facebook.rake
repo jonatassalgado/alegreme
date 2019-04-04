@@ -40,18 +40,20 @@ namespace :scrapy do
             name: item['name'],
             description: item['description'],
             url: item['event_url'],
-            features: {
-              persona: {
-                primary: {
-                  name: persona['classification']['primary']['name'],
-                  score: persona['classification']['primary']['score']
-                },
-                secondary: {
-                  name: persona['classification']['secondary']['name'],
-                  score: persona['classification']['secondary']['score']
-                }
+            ocurrences: {
+              dates: item['datetimes']
+            },
+            personas: {
+              primary: {
+                name: persona['classification']['primary']['name'],
+                score: persona['classification']['primary']['score']
+              },
+              secondary: {
+                name: persona['classification']['secondary']['name'],
+                score: persona['classification']['secondary']['score']
               }
             }
+
           ).find_or_create_by(url: item['event_url'])
         else
           @event = Event.create_with(
@@ -95,7 +97,6 @@ namespace :scrapy do
 
       puts "Criar categoria ****************************************"
 
-
       item['categories'].try(:each) do |category|
         @category = Category.create_with({
           name: category
@@ -108,16 +109,16 @@ namespace :scrapy do
 
 
 
-      puts "Criar dia no calendário ****************************************"
-
-      item['datetimes'].try(:each) do |datetime|
-        @day_time = Calendar.create_with({
-          day_time: datetime
-        }).find_or_create_by(day_time: datetime)
-
-        @event.calendars << @day_time unless @event.calendars.include?(@day_time)
-        puts @day_time.inspect
-      end
+      # puts "Criar dia no calendário ****************************************"
+      #
+      # item['datetimes'].try(:each) do |datetime|
+      #   @day_time = Calendar.create_with({
+      #     day_time: datetime
+      #   }).find_or_create_by(day_time: datetime)
+      #
+      #   @event.calendars << @day_time unless @event.calendars.include?(@day_time)
+      #   puts @day_time.inspect
+      # end
 
     end
 

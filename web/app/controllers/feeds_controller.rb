@@ -2,17 +2,21 @@ class FeedsController < ApplicationController
   def index
     @events = {
       # for_me: Event.joins(:calendars).order('day_time ASC').uniq,
-      underground: Event.where("(features -> 'persona' -> 'primary' ->> 'name') = 'underground' AND (features -> 'persona' -> 'primary' ->> 'score')::numeric > 0.35").joins(:calendars).where('day_time >= ?', DateTime.now),
-      praieiro: Event.where("(features -> 'persona' -> 'primary' ->> 'name') = 'praieiro' AND (features -> 'persona' -> 'primary' ->> 'score')::numeric > 0.35").joins(:calendars).where('day_time >= ?', DateTime.now),
-      cult: Event.where("(features -> 'persona' -> 'primary' ->> 'name') = 'cult' AND (features -> 'persona' -> 'primary' ->> 'score')::numeric > 0.35").joins(:calendars).where('day_time >= ?', DateTime.now),
-      aventureiro: Event.where("(features -> 'persona' -> 'primary' ->> 'name') = 'aventureiro' AND (features -> 'persona' -> 'primary' ->> 'score')::numeric > 0.35").joins(:calendars).where('day_time >= ?', DateTime.now),
-      geek: Event.where("(features -> 'persona' -> 'primary' ->> 'name') = 'geek' AND (features -> 'persona' -> 'primary' ->> 'score')::numeric > 0.35").joins(:calendars).where('day_time >= ?', DateTime.now),
-      hipster: Event.where("(features -> 'persona' -> 'primary' ->> 'name') = 'hipster' AND (features -> 'persona' -> 'primary' ->> 'score')::numeric > 0.35").joins(:calendars).where('day_time >= ?', DateTime.now),
-      turista: Event.where("(features -> 'persona' -> 'primary' ->> 'name') = 'turista' AND (features -> 'persona' -> 'primary' ->> 'score')::numeric > 0.35").joins(:calendars).where('day_time >= ?', DateTime.now),
-      zeen: Event.where("(features -> 'persona' -> 'primary' ->> 'name') = 'zeen' AND (features -> 'persona' -> 'primary' ->> 'score')::numeric > 0.35").joins(:calendars).where('day_time >= ?', DateTime.now)
+      underground: Event.where("(personas -> 'primary' ->> 'name') = 'underground' AND (personas -> 'primary' ->> 'score')::numeric > 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now).order("(ocurrences -> 'dates' ->> 0) ASC").uniq,
+      praieiro: Event.where("(personas -> 'primary' ->> 'name') = 'praieiro' AND (personas -> 'primary' ->> 'score')::numeric > 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now).order("(ocurrences -> 'dates' ->> 0) ASC").uniq,
+      cult: Event.where("(personas -> 'primary' ->> 'name') = 'cult' AND (personas -> 'primary' ->> 'score')::numeric > 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now).order("(ocurrences -> 'dates' ->> 0) ASC").uniq,
+      aventureiro: Event.where("(personas -> 'primary' ->> 'name') = 'aventureiro' AND (personas -> 'primary' ->> 'score')::numeric > 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now).order("(ocurrences -> 'dates' ->> 0) ASC").uniq,
+      geek: Event.where("(personas -> 'primary' ->> 'name') = 'geek' AND (personas -> 'primary' ->> 'score')::numeric > 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now).order("(ocurrences -> 'dates' ->> 0) ASC").uniq,
+      hipster: Event.where("(personas -> 'primary' ->> 'name') = 'hipster' AND (personas -> 'primary' ->> 'score')::numeric > 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now).order("(ocurrences -> 'dates' ->> 0) ASC").uniq,
+      turista: Event.where("(personas -> 'primary' ->> 'name') = 'turista' AND (personas -> 'primary' ->> 'score')::numeric > 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now).order("(ocurrences -> 'dates' ->> 0) ASC").uniq,
+      zeen: Event.where("(personas -> 'primary' ->> 'name') = 'zeen' AND (personas -> 'primary' ->> 'score')::numeric > 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now).order("(ocurrences -> 'dates' ->> 0) ASC").uniq
     }
 
 
-    @favorited_events = Event.where(id: current_user.all_favorited.pluck(:id)).joins(:calendars).where('day_time >= ?', DateTime.now).order('day_time ASC').uniq if current_user
+    if current_user and !current_user.all_favorited.empty?
+      @favorited_events = Event.where(id: current_user.all_favorited.pluck(:id)).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now).order("ocurrences -> 'dates' ->> 0 ASC").uniq
+    else
+      @favorited_events = []
+    end
   end
 end
