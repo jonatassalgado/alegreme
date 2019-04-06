@@ -39,7 +39,7 @@ namespace :scrapy do
           @event = Event.create_with(
             name: item['name'],
             description: item['description'],
-            url: item['event_url'],
+            source_url: item['source_url'],
             ocurrences: {
               dates: item['datetimes']
             },
@@ -54,13 +54,13 @@ namespace :scrapy do
               }
             }
 
-          ).find_or_create_by(url: item['event_url'])
+          ).find_or_create_by(source_url: item['source_url'])
         else
           @event = Event.create_with(
             name: item['name'],
             description: item['description'],
-            url: item['event_url']
-          ).find_or_create_by(url: item['event_url'])
+            source_url: item['source_url']
+          ).find_or_create_by(source_url: item['source_url'])
         end
 
         if item['cover_url']
@@ -85,7 +85,7 @@ namespace :scrapy do
       item['organizers'].try(:each) do |organizer|
         @organizer = Organizer.create_with({
           name: item['organizer'],
-          url: item['organizer_url']
+          source_url: item['organizer_url']
         }).find_or_create_by(name: organizer)
 
         @event.organizers << @organizer unless @event.organizers.include?(@organizer)
@@ -94,7 +94,7 @@ namespace :scrapy do
 
 
 
-      # 
+      #
       # puts "Criar categoria ****************************************"
       #
       # item['categories'].try(:each) do |category|

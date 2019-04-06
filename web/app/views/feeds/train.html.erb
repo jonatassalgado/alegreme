@@ -1,0 +1,85 @@
+<%# @events.inspect %>
+
+<p id="notice">
+  <%= notice %>
+</p>
+
+<div class="me-float-menu">
+  <div class="me-float-menu__nav">
+    <div class="me-float-menu__item">
+      <div class="me-float-menu__icon">
+        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
+      </div>
+      <div class="me-floa-menu__label">
+        Home
+      </div>
+    </div>
+    <div class="me-float-menu__item">
+      <div class="me-float-menu__icon">
+        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
+      </div>
+      <div class="me-floa-menu__label">
+        Home
+      </div>
+    </div>
+    <div class="me-float-menu__item">
+      <div class="me-float-menu__icon">
+        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
+      </div>
+      <div class="me-floa-menu__label">
+        Home
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if current_user and !current_user.all_favorited(scope: ['favorite']).empty? %>
+<div class="me-favorite" data-controller="favorite">
+  <h2 data-target="favorite.header" class="mdc-typography--headline2">
+    Eventos salvos
+  </h2>
+  <div class="me-icon__group">
+    <div data-target="favorite.scrollLeft" data-action="click->favorite#scrollLeft" class="me-icon me-icon--scroll-left">
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" class="style-scope iron-icon"></path></g></svg>
+    </div>
+    <div data-target="favorite.scrollRight" data-action="click->favorite#scrollRight" class="me-icon me-icon--scroll-right">
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" class="style-scope iron-icon"></path></g></svg>
+    </div>
+  </div>
+  <div data-target="favorite.list" class="me-favorite__list mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <% @favorited_events.each do |event| %>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+          <div class="me-card mdc-card event-<%= event.id %>" data-target="favorite.event" data-action="mouseover->favorite#showEventName">
+            <a href="<%= event.url %>">
+              <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
+              </div>
+              <div class="me-card__date" data-target="favorite.date">
+                <%= event.day_of_week %>
+              </div>
+              <div class="me-card__title mdc-card__title" data-target="favorite.title" style="display: none">
+                <%= event.name %>
+              </div>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>
+<% end %>
+
+
+
+<div class="me-feed">
+  <%# render partial: "section", locals: { events: @events, title: "Eventos indicados para você" } %>
+  <%= render partial: "section", locals: { events: @events[:underground], title: "Eventos underground" } unless @events[:underground].empty? %>
+  <%= render partial: "section", locals: { events: @events[:hipster], title: "Eventos para hipster" } unless @events[:hipster].empty? %>
+  <%= render partial: "section", locals: { events: @events[:cult], title: "Eventos para cult" } unless @events[:cult].empty? %>
+  <%= render partial: "section", locals: { events: @events[:geek], title: "Eventos para geek" } unless @events[:geek].empty? %>
+  <%= render partial: "section", locals: { events: @events[:praieiro], title: "Eventos para praieiros urbanos" } unless @events[:praieiro].empty? %>
+  <%= render partial: "section", locals: { events: @events[:aventureiro], title: "Eventos para aventureiro" } unless @events[:aventureiro].empty? %>
+  <%= render partial: "section", locals: { events: @events[:turista], title: "Eventos para turista" } unless @events[:turista].empty? %>
+  <%= render partial: "section", locals: { events: @events[:zeen], title: "Eventos para zeen" } unless @events[:zeen].empty? %>
+</div>

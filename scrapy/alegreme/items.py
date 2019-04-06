@@ -52,7 +52,7 @@ class Event(scrapy.Item):
     times = scrapy.Field(
         input_processor=MapCompose(get_time)
     )
-    event_url = scrapy.Field(
+    source_url = scrapy.Field(
         output_processor=TakeFirst()
     )
     place = scrapy.Field(

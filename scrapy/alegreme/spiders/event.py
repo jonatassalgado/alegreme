@@ -53,7 +53,7 @@ class EventSpider(scrapy.Spider):
         loader.add_xpath('organizers_fallback_a', '//*[@class="_2xq3"]/text()')
         loader.add_xpath('description', '//*[@class="_63ew"]//span')
         loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
-        loader.add_value('event_url', response.url)
+        loader.add_value('source_url', response.url)
 
 
         loader.load_item()

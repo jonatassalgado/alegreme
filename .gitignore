@@ -25,6 +25,7 @@ web/tmp/cache
 usr/
 web/log/development.log
 web/storage
+structure.sql
 
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo

@@ -31,7 +31,9 @@ download('rslp')
 class EventPrediction(object):
 
     def __init__(self):
-        self.base = pd.read_csv('../svm-classification-events-v2-events.csv')
+        regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
+        last_file = max(filter(regex.search, os.listdir('../')))
+        self.base = pd.read_csv('../' + last_file)
 
 
     def __cleanning_text(self, text):

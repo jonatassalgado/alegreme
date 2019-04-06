@@ -28,8 +28,8 @@ class AlegremePipeline(object):
 
 
     def process_item(self, item, spider):
-        if 'event_url' in item:
-            item['event_url'] = re.search('([A-z].+/)\w+', item['event_url']).group(0)
+        if 'source_url' in item:
+            item['source_url'] = re.search('([A-z].+/)\w+', item['source_url']).group(0)
             pass
 
         if 'organizers' not in item:

@@ -48,7 +48,9 @@ class Event < ApplicationRecord
     self.personas["secondary"]["score"] = value
   end
 
+
   acts_as_favoritable
+
 
   def cover_url
     if self.cover.attached?
@@ -56,16 +58,30 @@ class Event < ApplicationRecord
     end
   end
 
+
   def url
     return event_path(self)
   end
+
 
   def day_time
     return self.dates.first
   end
 
+
   def day_of_week
     Alegreme::Dates.get_next_day_occur_human_readable(self)
+  end
+
+
+  def datetimes
+    datetimes = []
+
+    self.ocurrences['dates'].each_with_index do |date, index|
+      datetimes << DateTime.parse(date).strftime("%Y-%m-%d %H:%M:%S")
+    end
+
+    return datetimes
   end
 
 
