@@ -88,7 +88,7 @@ class EventPrediction(object):
 
     def clean(self):
         self.base = self.base.loc[(self.base['description'].notna()) & (self.base['label'].notna())]
-        self.X = self.base['name'].str.cat(self.base[['description', 'categories']], sep=' ', na_rep='').values.astype(str)
+        self.X = self.base['name'].str.cat(self.base[['description']], sep=' ', na_rep='').values.astype(str)
         self.y = self.base.loc[:, 'label'].values.astype(str)
 
         descriptions_cleanned = []
