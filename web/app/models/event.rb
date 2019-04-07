@@ -48,6 +48,14 @@ class Event < ApplicationRecord
     self.personas["secondary"]["score"] = value
   end
 
+  def personas_outlier
+    self.personas["outlier"]
+  end
+
+  def personas_outlier= value
+    self.personas["outlier"] = value
+  end
+
 
   acts_as_favoritable
 
