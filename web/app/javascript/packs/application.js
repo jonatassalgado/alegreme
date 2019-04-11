@@ -17,8 +17,8 @@ import {MDCList} from '@material/list';
 import {MDCRipple} from '@material/ripple';
 import {MDCTextField} from '@material/textfield';
 import {MDCSelect} from '@material/select';
-
-
+import {MDCFormField} from '@material/form-field';
+import {MDCCheckbox} from '@material/checkbox';
 
 
 
@@ -58,4 +58,12 @@ document.addEventListener("turbolinks:load", function() {
   selects.forEach((select) => {
     const textField = new MDCSelect(select);
   })
+
+
+  // Checkbox
+  const checkboxes = document.querySelectorAll('.mdc-checkbox');
+  checkboxes.forEach((checkbox) => {
+    new MDCCheckbox(checkbox);
+  })
+
 });

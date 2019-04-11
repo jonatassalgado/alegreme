@@ -28,7 +28,7 @@ download('stopwords')
 download('punkt')
 download('rslp')
 
-class EventPrediction(object):
+class EventCategoryPrediction(object):
 
     def __init__(self):
         regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
@@ -87,9 +87,9 @@ class EventPrediction(object):
 
 
     def clean(self):
-        self.base = self.base.loc[(self.base['description'].notna()) & (self.base['label'].notna())]
+        self.base = self.base.loc[(self.base['description'].notna()) & (self.base['label_b'].notna())]
         self.X = self.base['name'].str.cat(self.base[['description']], sep=' ', na_rep='').values.astype(str)
-        self.y = self.base.loc[:, 'label'].values.astype(str)
+        self.y = self.base.loc[:, 'label_b'].values.astype(str)
 
         descriptions_cleanned = []
         for description in self.X:
@@ -119,11 +119,11 @@ class EventPrediction(object):
 
         classificator = Pipeline([('vect', CountVectorizer(ngram_range=(1, 1))),
                                   ('tfidf', TfidfTransformer(use_idf=True)),
-                                  ('clf-svm', SGDClassifier(alpha=0.001, loss='log'))])
+                                  ('clf-svm', SGDClassifier(alpha=0.001, loss='modified_huber', penalty='elasticnet', max_iter=1000))])
 
         classificator = classificator.fit(X_train, y_train)
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        dump(classificator, 'predict-event__persona-model-' + timestr + '.joblib')
+        dump(classificator, 'predict-event__category-model-' + timestr + '.joblib')
         classificator = classificator.fit(X_train, y_train)
         predictions = classificator.predict_proba(X_test)
 
@@ -146,7 +146,7 @@ class EventPrediction(object):
         query = self.__cleanning_text(query)
         query = self.__stemming_text(query)
 
-        regex = re.compile(r'predict-event__persona-model-\d{8}-\d{6}\.joblib$')
+        regex = re.compile(r'predict-event__category-model-\d{8}-\d{6}\.joblib$')
         last_file = max(filter(regex.search, os.listdir('./')))
 
         classificator = load(last_file)
@@ -165,9 +165,9 @@ class EventPrediction(object):
             print(output)
             return output
 
-#
-# predictModel = EventPrediction()
-# predictModel.clean()
-# predictModel.train()
-#
-# predictModel.predict('Workshop: EMPATIA para liderança disruptiva.  <br>Como impulsionar ideias, engajamento e inovação.<br>Objetivo do Workshop?<br>Estimular a responsabilidade pessoal para desenvolvimento de pessoas através da valorização de idéias, estímulo a empatia e reforço da confiança relações de parceria do grupo. Através de metodologias inovadoras e criativas baseados nos princípios do Art of Hosting - Arte de Anfitriar -, o maior objetivo é estimular profissionais a desenvolverem em si e no outro a responsabilidade, autonomia e confiança para criarem novas ideias, inovar e buscar oportunidades de melhoria contínua, trazendo alto valor ao trabalho final executado pela organização. Questionar e minimizar paradigmas que dificultem relacionamentos para que o colaborador assuma a postura de protagonista e responsável por gerar resultados em seu entorno e busca de melhoria continua. Aprender a estimular a inteligência coletiva que surge da colaboração de muitos indivíduos em suas diversidades.<br>O que você vai aprender?  <br>Você vai aprender como construir um clima de confiança que conecta e facilita os processo de trabalho, melhora a comunicação e promove a colaboração. Transmitir confiança e credibilidade em suas relações e assim criar ambientes de cooperação saudáveis, construtivos e produtivos, ampliando a resolução de problemas, a inovação e o engajamento de equipes. <br>Conteúdo programático e módulos:<br>- Conceitos de liderança disruptiva, colaboração e inteligência emocional<br>- Propósito e valores individuais X organizacionais<br>- Autoconhecimento e quebra de paradigmas  - precisamos falar sobre autonomia, controle e confiança<br>- Mindfulness e liderança <br>- Colaboração gera resultados práticos? <br>- Metodologia World Café <br>- Ambientes de confiança e inovação<br>A quem se destina? <br>Líderes e funcionários que queiram desenvolver habilidades de liderança e criar ambientes de colaboração, inovação e confiança entre suas equipe<br>Instrutora: <br>Semadar Marques - Escritora, palestrante e uma estudiosa do comportamento humano, com doze anos de experiência e mais de 500 palestras ministradas. Facilitadora de aprendizagens sobre Empatia e Liderança Colaborativa, sou analista em Inteligência Emocional pela Six Seconds Emotional Intelligence (SEI), com diversas formações em desenvolvimento emocional. Também sou umas das 30 facilitadoras no Brasil do método Heal Your Life®, criado e disseminado no mundo inteiro pela escritora Louise Hay. <br>Vasta formação e experiência na área, ministrando palestras, conferências e workshops sobre estes temas por todo o pais. Mas gosta mesmo de se apresentar falando sobre sua capacidade de facilitar conversas que despertem reflexões profundas e questionamentos internos, criando equipes mais colaborativas e criativas, estimulando conexões saudáveis e incentivando-as a desafiar suas crenças e serem melhores a cada dia. <br>Tem como maiores influências Daniel Goleman, autor da teoria da Inteligência Emocional, Marshal Rosemberg, criador do conceito de Comunicação Não Violenta e Brene Brown, pesquisadora e conferencista americana que estuda conexões humanas e nossa habilidade de empatia. Também colunista do Portal RHevista RH e tem textos publicados em diversos sites e jornais de todo o Brasil, dentre eles a Folha de São Paulo, a Revista Donna do Jornal Zero Hora e a Associação Brasileira de Recursos Humanos - ABRH Brasil. <br>Data: 03/04/2019<br>Horário: 19h às 22h<br>Local: CC100 Av. Cristóvão Colombo, 100 – Floresta – Porto Alegre.<br>Carga horária: 3 horas<br>Informações: contato@eventsoffice.com.br ou WhatsApp (51) 984328121. ')
+
+predictModel = EventCategoryPrediction()
+predictModel.clean()
+predictModel.train()
+
+predictModel.predict('Workshop: EMPATIA para liderança disruptiva.  <br>Como impulsionar ideias, engajamento e inovação.<br>Objetivo do Workshop?<br>Estimular a responsabilidade pessoal para desenvolvimento de pessoas através da valorização de idéias, estímulo a empatia e reforço da confiança relações de parceria do grupo. Através de metodologias inovadoras e criativas baseados nos princípios do Art of Hosting - Arte de Anfitriar -, o maior objetivo é estimular profissionais a desenvolverem em si e no outro a responsabilidade, autonomia e confiança para criarem novas ideias, inovar e buscar oportunidades de melhoria contínua, trazendo alto valor ao trabalho final executado pela organização. Questionar e minimizar paradigmas que dificultem relacionamentos para que o colaborador assuma a postura de protagonista e responsável por gerar resultados em seu entorno e busca de melhoria continua. Aprender a estimular a inteligência coletiva que surge da colaboração de muitos indivíduos em suas diversidades.<br>O que você vai aprender?  <br>Você vai aprender como construir um clima de confiança que conecta e facilita os processo de trabalho, melhora a comunicação e promove a colaboração. Transmitir confiança e credibilidade em suas relações e assim criar ambientes de cooperação saudáveis, construtivos e produtivos, ampliando a resolução de problemas, a inovação e o engajamento de equipes. <br>Conteúdo programático e módulos:<br>- Conceitos de liderança disruptiva, colaboração e inteligência emocional<br>- Propósito e valores individuais X organizacionais<br>- Autoconhecimento e quebra de paradigmas  - precisamos falar sobre autonomia, controle e confiança<br>- Mindfulness e liderança <br>- Colaboração gera resultados práticos? <br>- Metodologia World Café <br>- Ambientes de confiança e inovação<br>A quem se destina? <br>Líderes e funcionários que queiram desenvolver habilidades de liderança e criar ambientes de colaboração, inovação e confiança entre suas equipe<br>Instrutora: <br>Semadar Marques - Escritora, palestrante e uma estudiosa do comportamento humano, com doze anos de experiência e mais de 500 palestras ministradas. Facilitadora de aprendizagens sobre Empatia e Liderança Colaborativa, sou analista em Inteligência Emocional pela Six Seconds Emotional Intelligence (SEI), com diversas formações em desenvolvimento emocional. Também sou umas das 30 facilitadoras no Brasil do método Heal Your Life®, criado e disseminado no mundo inteiro pela escritora Louise Hay. <br>Vasta formação e experiência na área, ministrando palestras, conferências e workshops sobre estes temas por todo o pais. Mas gosta mesmo de se apresentar falando sobre sua capacidade de facilitar conversas que despertem reflexões profundas e questionamentos internos, criando equipes mais colaborativas e criativas, estimulando conexões saudáveis e incentivando-as a desafiar suas crenças e serem melhores a cada dia. <br>Tem como maiores influências Daniel Goleman, autor da teoria da Inteligência Emocional, Marshal Rosemberg, criador do conceito de Comunicação Não Violenta e Brene Brown, pesquisadora e conferencista americana que estuda conexões humanas e nossa habilidade de empatia. Também colunista do Portal RHevista RH e tem textos publicados em diversos sites e jornais de todo o Brasil, dentre eles a Folha de São Paulo, a Revista Donna do Jornal Zero Hora e a Associação Brasileira de Recursos Humanos - ABRH Brasil. <br>Data: 03/04/2019<br>Horário: 19h às 22h<br>Local: CC100 Av. Cristóvão Colombo, 100 – Floresta – Porto Alegre.<br>Carga horária: 3 horas<br>Informações: contato@eventsoffice.com.br ou WhatsApp (51) 984328121. ')

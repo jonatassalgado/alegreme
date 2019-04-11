@@ -8,6 +8,7 @@ from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 from personaprediction import PersonaPrediction
 from eventprediction import EventPrediction
+from eventcategoryprediction import EventCategoryPrediction
 
 app = Flask(__name__)
 api = Api(app)
@@ -54,9 +55,33 @@ class PredictEvent(Resource):
                     }
                }
 
+class PredictEventCategory(Resource):
+    def get(self):
+        args = parser.parse_args()
+        user_query = args['query']
+        print(user_query)
 
-api.add_resource(PredictPersona, '/predict/persona')
+        predictModel = EventCategoryPrediction()
+        prediction = predictModel.predict(user_query)
+        output = np.array(prediction).tolist()
+
+        return {'classification' :
+                    {
+                        'primary' : {
+                                        'name': output[0][0],
+                                        'score': output[0][1]
+                                    },
+                        'secondary' : {
+                                        'name': output[1][0],
+                                        'score': output[1][1]
+                                    },
+                    }
+               }
+
+
 api.add_resource(PredictEvent, '/predict/event')
+api.add_resource(PredictEventCategory, '/predict/event-category')
+api.add_resource(PredictPersona, '/predict/persona')
 
 
 if __name__ == '__main__':
