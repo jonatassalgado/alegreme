@@ -4,12 +4,11 @@ class Event < ApplicationRecord
   include Rails.application.routes.url_helpers
 
   belongs_to :place
-  has_and_belongs_to_many :categories
   has_and_belongs_to_many :organizers
 
   has_one_attached :cover
 
-  accepts_nested_attributes_for :place, :categories, :organizers
+  accepts_nested_attributes_for :place, :organizers
 
   delegate :name, :address, to: :place, prefix: true, allow_nil: true
 
@@ -46,6 +45,38 @@ class Event < ApplicationRecord
 
   def personas_secondary_score= value
     self.personas["secondary"]["score"] = value
+  end
+
+  def categories_primary_name
+    self.categories["primary"]["name"]
+  end
+
+  def categories_primary_name= value
+    self.categories["primary"]["name"] = value
+  end
+
+  def categories_secondary_name
+    self.categories["secondary"]["name"]
+  end
+
+  def categories_secondary_name= value
+    self.categories["secondary"]["name"] = value
+  end
+
+  def categories_primary_score
+    self.categories["primary"]["score"]
+  end
+
+  def categories_primary_score= value
+    self.categories["primary"]["score"] = value
+  end
+
+  def categories_secondary_score
+    self.categories["secondary"]["score"]
+  end
+
+  def categories_secondary_score= value
+    self.categories["secondary"]["score"] = value
   end
 
   def personas_outlier

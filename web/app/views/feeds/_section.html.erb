@@ -12,7 +12,7 @@
           </div>
 
           <div class="mdc-card__title" data-target="event.name">
-            <%= event.name %> ( <%= event.personas['primary']['name'] %> - <%= event.personas['primary']['score'][0...4] %>)
+            <%= event.name %> ( <%= event.personas['primary']['name'] %> - <%= event.personas['primary']['score'][0...4] %>) ( <%= event.categories['primary']['name'] %> - <%= event.categories['primary']['score'][0...4] %>)
           </div>
 
           <div class="me-card__place" data-target="event.place" style="display: none">

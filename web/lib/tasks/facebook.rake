@@ -33,7 +33,7 @@ namespace :scrapy do
         uri = URI("http://localhost:5000/predict/event")
         uri.query = URI.encode_www_form(params)
         response = Net::HTTP.get_response(uri)
-        persona = JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
+        predict = JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
 
         if response.is_a?(Net::HTTPSuccess)
           @event = Event.create_with(
@@ -45,15 +45,24 @@ namespace :scrapy do
             },
             personas: {
               primary: {
-                name: persona['classification']['primary']['name'],
-                score: persona['classification']['primary']['score']
+                name: predict['classification']['personas']['primary']['name'],
+                score: predict['classification']['personas']['primary']['score']
               },
               secondary: {
-                name: persona['classification']['secondary']['name'],
-                score: persona['classification']['secondary']['score']
+                name: predict['classification']['personas']['secondary']['name'],
+                score: predict['classification']['personas']['secondary']['score']
+              }
+            },
+            categories: {
+              primary: {
+                name: predict['classification']['categories']['primary']['name'],
+                score: predict['classification']['categories']['primary']['score']
+              },
+              secondary: {
+                name: predict['classification']['categories']['secondary']['name'],
+                score: predict['classification']['categories']['secondary']['score']
               }
             }
-
           ).find_or_create_by(source_url: item['source_url'])
         else
           @event = Event.create_with(
@@ -92,33 +101,6 @@ namespace :scrapy do
         puts organizer.inspect
       end
 
-
-
-      #
-      # puts "Criar categoria ****************************************"
-      #
-      # item['categories'].try(:each) do |category|
-      #   @category = Category.create_with({
-      #     name: category
-      #   }).find_or_create_by(name: category)
-      #
-      #   @event.categories << @category unless @event.categories.include?(@category)
-      #   puts @category.inspect
-      # end
-      #
-
-
-
-      # puts "Criar dia no calendário ****************************************"
-      #
-      # item['datetimes'].try(:each) do |datetime|
-      #   @day_time = Calendar.create_with({
-      #     day_time: datetime
-      #   }).find_or_create_by(day_time: datetime)
-      #
-      #   @event.calendars << @day_time unless @event.calendars.include?(@day_time)
-      #   puts @day_time.inspect
-      # end
 
     end
 

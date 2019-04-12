@@ -23,9 +23,10 @@ web/tmp/cache
 *.kra
 .pem
 usr/
-web/log/development.log
 web/storage
 structure.sql
+ml/api/__pycache__/
+web/log/
 
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo

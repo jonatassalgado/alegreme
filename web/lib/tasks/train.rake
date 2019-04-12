@@ -17,6 +17,7 @@ namespace :ml do
       item = csv.find { |row| row[7] == event.source_url }
       if item
         item[8] = event.personas['primary']['name']
+        item[9] = event.categories['primary']['name']
       else
         csv << [
                 event.name,
@@ -28,7 +29,7 @@ namespace :ml do
                 nil,
                 event.source_url,
                 event.personas['primary']['name'],
-                nil,
+                event.categories['primary']['name'],
                 nil,
                 nil]
       end

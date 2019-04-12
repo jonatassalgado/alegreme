@@ -105,6 +105,61 @@
     </div>
   </div>
 
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:categories_primary_name, ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Categoria primária</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :categories_primary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:categories_secondary_name, ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Categoria secundária</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :categories_secondary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="mdc-form-field">
     <div class="mdc-checkbox">
       <%= form.check_box :personas_outlier, {class: 'mdc-checkbox__native-control'}, 'true', 'false' %>

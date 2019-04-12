@@ -38,49 +38,47 @@ class PredictEvent(Resource):
         user_query = args['query']
         print(user_query)
 
-        predictModel = EventPrediction()
-        prediction = predictModel.predict(user_query)
-        output = np.array(prediction).tolist()
+        predictPersonaModel = EventPrediction()
+        predictCategoryModel = EventCategoryPrediction()
 
-        return {'classification' :
-                    {
-                        'primary' : {
-                                        'name': output[0][0],
-                                        'score': output[0][1]
-                                    },
-                        'secondary' : {
-                                        'name': output[1][0],
-                                        'score': output[1][1]
-                                    },
-                    }
-               }
+        persona_prediction = predictPersonaModel.predict(user_query)
+        category_prediction = predictCategoryModel.predict(user_query)
 
-class PredictEventCategory(Resource):
-    def get(self):
-        args = parser.parse_args()
-        user_query = args['query']
-        print(user_query)
+        persona_output = np.array(persona_prediction).tolist()
+        category_output = np.array(category_prediction).tolist()
 
-        predictModel = EventCategoryPrediction()
-        prediction = predictModel.predict(user_query)
-        output = np.array(prediction).tolist()
+        print(persona_output)
+        print(category_output)
 
-        return {'classification' :
-                    {
-                        'primary' : {
-                                        'name': output[0][0],
-                                        'score': output[0][1]
-                                    },
-                        'secondary' : {
-                                        'name': output[1][0],
-                                        'score': output[1][1]
-                                    },
+        return {
+                'classification' : {
+                    'personas':
+                        {
+                            'primary' : {
+                                'name': persona_output[0][0],
+                                'score': persona_output[0][1]
+                            },
+                            'secondary' : {
+                                'name': persona_output[1][0],
+                                'score': persona_output[1][1]
+                            }
+                        },
+                    'categories':
+                        {
+                            'primary' : {
+                                'name': category_output[0][0],
+                                'score': category_output[0][1]
+                            },
+                            'secondary' : {
+                                'name': category_output[1][0],
+                                'score': category_output[1][1]
+                            }
+                        }
                     }
                }
 
 
 api.add_resource(PredictEvent, '/predict/event')
-api.add_resource(PredictEventCategory, '/predict/event-category')
 api.add_resource(PredictPersona, '/predict/persona')
 
 
