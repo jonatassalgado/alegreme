@@ -7,7 +7,7 @@ class FavoritesController < ApplicationController
     render json: {
       event_id: @event.id,
       favorited: true,
-      all_favorited: Event.where(id: current_user.all_favorited.pluck(:id)).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now).order("ocurrences -> 'dates' ->> 0 ASC").uniq.as_json({only: [:id, :name, :day_time], methods: [:cover_url, :url]})
+      all_favorited: Event.where(id: current_user.all_favorited.pluck(:id)).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now - 1).order("ocurrences -> 'dates' ->> 0 ASC").uniq.as_json({only: [:id, :name], methods: [:cover_url, :day_of_week, :url]})
     }
   end
 
@@ -17,7 +17,7 @@ class FavoritesController < ApplicationController
     render json: {
       event_id: @event.id,
       favorited: false,
-      all_favorited: Event.where(id: current_user.all_favorited.pluck(:id)).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now).order("ocurrences -> 'dates' ->> 0 ASC").uniq.as_json({only: [:id, :name, :day_time], methods: [:cover_url, :url]})
+      all_favorited: Event.where(id: current_user.all_favorited.pluck(:id)).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now - 1).order("ocurrences -> 'dates' ->> 0 ASC").uniq.as_json({only: [:id, :name], methods: [:cover_url, :day_of_week, :url]})
     }
   end
 

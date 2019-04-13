@@ -104,8 +104,12 @@ export default class FavoriteController extends Controller {
   set removeRepeatedDates(value) {
     if (value == true) {
       const dates = document.querySelectorAll('.me-favorite .me-card__date');
+      var lastDay = dates[0].innerText;
       for(var i = 0; i < dates.length - 1; i++){
-        if(dates[i].innerText != "" && dates[i].innerText == dates[i+1].innerText) {
+        if (lastDay != dates[i+1].innerText) {
+          lastDay = dates[i].innerText;
+        }
+        if(lastDay == dates[i+1].innerText) {
           dates[i+1].remove()
         }
       }
