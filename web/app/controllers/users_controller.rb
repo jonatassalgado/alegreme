@@ -70,7 +70,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :id, :personas_primary_name, :personas_primary_score, :personas_secondary_name, :personas_secondary_score)
+      params.require(:user).permit(:name, :id, :personas_primary_name, :personas_primary_score, :personas_secondary_name, :personas_secondary_score, :personas_tertiary_name, :personas_tertiary_score, :personas_quartenary_name, :personas_quartenary_score)
     end
 
     def mount_json

@@ -33,6 +33,12 @@
   </div>
 </div>
 
+<!-- <section>
+  Eventos para <%= select('current_user', 'personas_primary_name', ["aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: ""} ) %> com ascendência em praieiro com um q de cult em toda a cidade acontecendo todos os dias.
+</section>
+<br><br> -->
+
+
 <% if current_user and !current_user.all_favorited(scope: ['favorite']).empty? %>
 <div class="me-favorite" data-controller="favorite">
   <h2 data-target="favorite.header" class="mdc-typography--headline2">
@@ -73,7 +79,7 @@
 
 
 <div class="me-feed">
-  <%# render partial: "section", locals: { events: @events, title: "Eventos indicados para você" } %>
+  <%= render partial: "section", locals: { events: @events[:user], title: "Eventos indicados para você" } unless @events[:user].empty? %>
   <%= render partial: "section", locals: { events: @events[:underground], title: "Eventos underground" } unless @events[:underground].empty? %>
   <%= render partial: "section", locals: { events: @events[:hipster], title: "Eventos para hipster" } unless @events[:hipster].empty? %>
   <%= render partial: "section", locals: { events: @events[:cult], title: "Eventos para cult" } unless @events[:cult].empty? %>

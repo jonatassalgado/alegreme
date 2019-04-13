@@ -51,7 +51,8 @@ namespace :scrapy do
               secondary: {
                 name: predict['classification']['personas']['secondary']['name'],
                 score: predict['classification']['personas']['secondary']['score']
-              }
+              },
+              outlier: false
             },
             categories: {
               primary: {

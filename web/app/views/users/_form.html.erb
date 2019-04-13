@@ -79,6 +79,62 @@
   </div>
 
 
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:personas_tertiary_name, ["", "aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Persona terciária</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :personas_tertiary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:personas_quartenary_name, ["", "aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Persona quarta</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :personas_quartenary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+
   <button class="demo-button mdc-button mdc-button--unelevated mdc-ripple-upgraded">
     <span class="mdc-button__label">Salvar</span>
   </button>

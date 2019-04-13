@@ -38,4 +38,37 @@ class User < ApplicationRecord
     self.features['psychographic']['personas']['secondary']['score'] = value
   end
 
+
+  def personas_tertiary_name
+    self.features['psychographic']['personas']['tertiary']['name'] if self.features['psychographic']
+  end
+
+  def personas_tertiary_name= value
+    self.features['psychographic']['personas']['tertiary']['name'] = value
+  end
+
+  def personas_quartenary_name
+    self.features['psychographic']['personas']['quartenary']['name'] if self.features['psychographic']
+  end
+
+  def personas_quartenary_name= value
+    self.features['psychographic']['personas']['quartenary']['name'] = value
+  end
+
+  def personas_tertiary_score
+    self.features['psychographic']['personas']['tertiary']['score'] if self.features['psychographic']
+  end
+
+  def personas_tertiary_score= value
+    self.features['psychographic']['personas']['tertiary']['score'] = value
+  end
+
+  def personas_quartenary_score
+    self.features['psychographic']['personas']['quartenary']['score'] if self.features['psychographic']
+  end
+
+  def personas_quartenary_score= value
+    self.features['psychographic']['personas']['quartenary']['score'] = value
+  end
+
 end
