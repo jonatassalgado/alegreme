@@ -6,6 +6,7 @@
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
 
         <a href="<%= @event.url %>/edit">Editar</a>
+        <a href="/train">Treinar</a>
 
         <div class="me-card mdc-card event-<%= @event.id %>" data-controller="event" data-target="event.event" data-event-favorited="<%= current_user.favorited?(@event, scope: ['favorite']) if current_user %>" data-event-identifier="<%= @event.id %>">
           <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= @event.cover_url %>')">

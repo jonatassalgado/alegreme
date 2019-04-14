@@ -1,10 +1,13 @@
-<h2 class="mdc-typography--headline1"><%= title %></h2>
+<h2 class="mdc-typography--<%= type == :large ? 'headline1' : 'headline2' %>">
+  <%= title %>
+</h2>
+
 <div class="me-feed__divider"></div>
 
 <div class="mdc-layout-grid">
   <div class="mdc-layout-grid__inner">
     <% events.each do |event| %>
-    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3">
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
       <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventDetails" data-event-favorited="<%= current_user.favorited?(event, scope: ['favorite']) if current_user %>" data-event-identifier="<%= event.id %>">
         <a href="<%= event.url %>">
           <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
@@ -12,7 +15,7 @@
           </div>
 
           <div class="mdc-card__title" data-target="event.name">
-            <%= event.name %> ( <%= event.personas['primary']['name'] %> - <%= event.personas['primary']['score'][0...4] %>) ( <%= event.categories['primary']['name'] %> - <%= event.categories['primary']['score'][0...4] %>)
+            <%= event.name %> • <span class="me-card__category"><%= event.categories_primary_name.capitalize %></span>
           </div>
 
           <div class="me-card__place" data-target="event.place" style="display: none">
@@ -22,6 +25,7 @@
           <div class="me-card__date" data-target="event.date" style="display: none">
             <%= event.day_of_week %>
           </div>
+
         </a>
 
         <div class="me-card__like-button" data-action="click->event#like">

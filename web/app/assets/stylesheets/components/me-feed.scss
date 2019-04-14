@@ -13,6 +13,10 @@ phone: 4
 
 .me-feed {
 
+  &__section {
+    margin: 0 0 120px 0;
+  }
+
   &__divider {
     width: 100px;
     height: 2px;
@@ -23,7 +27,7 @@ phone: 4
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
-    --mdc-layout-grid-gutter-desktop: 15px;
+    --mdc-layout-grid-gutter-desktop: 8px;
     & a {
         text-decoration: none;
     }

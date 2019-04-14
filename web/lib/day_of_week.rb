@@ -30,7 +30,7 @@ module Alegreme
           return "Sábado"
         end
       else
-        return event_date.strftime("%-d/%-m/%Y")
+        return I18n.l(event_date, format: :short)
       end
     end
 

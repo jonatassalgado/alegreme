@@ -11,25 +11,17 @@
         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
       </div>
       <div class="me-floa-menu__label">
-        <a href="/train">Treinar</a>
+        <a href="/">Início</a>
       </div>
     </div>
-    <div class="me-float-menu__item">
+    <!-- <div class="me-float-menu__item">
       <div class="me-float-menu__icon">
         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
       </div>
       <div class="me-floa-menu__label">
-        Home
+        <a href="#indicados">Indicados</a>
       </div>
-    </div>
-    <div class="me-float-menu__item">
-      <div class="me-float-menu__icon">
-        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" class="style-scope iron-icon"></path></g></svg>
-      </div>
-      <div class="me-floa-menu__label">
-        Home
-      </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -40,7 +32,7 @@
 
 
 <% if current_user and !current_user.all_favorited(scope: ['favorite']).empty? %>
-<div class="me-favorite" data-controller="favorite">
+<div id="salvos" class="me-favorite" data-controller="favorite">
   <h2 data-target="favorite.header" class="mdc-typography--headline2">
     Eventos salvos
   </h2>
@@ -79,13 +71,13 @@
 
 
 <div class="me-feed">
-  <%= render partial: "section", locals: { events: @events[:user], title: "Eventos indicados para você" } unless @events[:user].empty? %>
-  <%= render partial: "section", locals: { events: @events[:underground], title: "Eventos underground" } unless @events[:underground].empty? %>
-  <%= render partial: "section", locals: { events: @events[:hipster], title: "Eventos para hipster" } unless @events[:hipster].empty? %>
-  <%= render partial: "section", locals: { events: @events[:cult], title: "Eventos para cult" } unless @events[:cult].empty? %>
-  <%= render partial: "section", locals: { events: @events[:geek], title: "Eventos para geek" } unless @events[:geek].empty? %>
-  <%= render partial: "section", locals: { events: @events[:praieiro], title: "Eventos para praieiros urbanos" } unless @events[:praieiro].empty? %>
-  <%= render partial: "section", locals: { events: @events[:aventureiro], title: "Eventos para aventureiro" } unless @events[:aventureiro].empty? %>
-  <%= render partial: "section", locals: { events: @events[:turista], title: "Eventos para turista" } unless @events[:turista].empty? %>
-  <%= render partial: "section", locals: { events: @events[:zeen], title: "Eventos para zeen" } unless @events[:zeen].empty? %>
+  <div id="indicados" class="me-feed__section">
+    <%= render partial: "section", locals: { events: @events[:user], title: "Eventos indicados para você", type: :large } unless @events[:user].empty? %>
+  </div>
+  <div class="me-feed__section">
+    <%= render partial: "section", locals: { events: @events[:show], title: "Shows que talvez você goste", type: :small } unless @events[:show].empty? %>
+  </div>
+  <div class="me-feed__section">
+    <%= render partial: "section", locals: { events: @events[:party], title: "Festas que talvez você goste", type: :small } unless @events[:party].empty? %>
+  </div>
 </div>

@@ -4,7 +4,7 @@ $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
 
 .me-card {
-  min-height: 160px;
+  min-height: 176px;
   position: relative;
 
   &__primary {
@@ -51,6 +51,10 @@ $description-color: $font-secondary-color;
     font-weight: 400;
   }
 
+  &__category {
+    color: $font-tertiary-color;
+  }
+
   &__date {
     color: $name-color;
     font-size: 12px;
@@ -76,6 +80,7 @@ $description-color: $font-secondary-color;
     margin: 6px 0 0 0;
     font-family: Roboto;
     font-weight: 400;
+    padding-right: 20px;
   }
 
   & .mdc-card__subtitle {
