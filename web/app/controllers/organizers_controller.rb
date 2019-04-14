@@ -1,4 +1,5 @@
 class OrganizersController < ApplicationController
+  before_action :authorize_admin
   before_action :set_organizer, only: [:show, :edit, :update, :destroy]
 
   # GET /organizers

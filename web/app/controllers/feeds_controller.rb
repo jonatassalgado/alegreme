@@ -1,4 +1,6 @@
 class FeedsController < ApplicationController
+  before_action :authorize_admin, only: [:train]
+
   def index
 
     count_primary_persona = Event.find_by_sql(["(SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (personas -> 'primary' ->> 'score')::numeric >= 0.51 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') LIMIT 5)", current_user.personas_primary_name, DateTime.now - 1]).count

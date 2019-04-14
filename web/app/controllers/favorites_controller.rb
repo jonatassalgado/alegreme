@@ -1,5 +1,5 @@
 class FavoritesController < ApplicationController
-
+  before_action :authorize_user
 
   def create
     @event = Event.find favorite_params['event_id']
