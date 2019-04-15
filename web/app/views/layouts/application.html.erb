@@ -50,8 +50,11 @@
           </div>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-          <% unless current_user %>
-          <a href="/users/sign_in">Entrar</a>
+          <% if current_user %>
+            <%= current_user.email %>
+            (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)
+          <% else %>
+            <%= link_to "Entrar com o Google", user_google_oauth2_omniauth_authorize_path %>
           <% end %>
         </section>
       </div>

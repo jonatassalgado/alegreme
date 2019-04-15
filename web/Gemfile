@@ -24,6 +24,8 @@ gem 'materialize-sass', '~> 1.0.0'
 
 # Devise
 gem 'devise'
+gem 'omniauth-google-oauth2'
+
 
 # Favorites
 gem 'acts_as_favoritor'
