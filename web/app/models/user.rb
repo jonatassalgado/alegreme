@@ -5,9 +5,6 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
 
-  acts_as_favoritor
-
-
   def personas_primary_name
     self.features['psychographic']['personas']['primary']['name'] if self.features['psychographic']
   end
@@ -40,7 +37,6 @@ class User < ApplicationRecord
     self.features['psychographic']['personas']['secondary']['score'] = value
   end
 
-
   def personas_tertiary_name
     self.features['psychographic']['personas']['tertiary']['name'] if self.features['psychographic']
   end
@@ -71,6 +67,61 @@ class User < ApplicationRecord
 
   def personas_quartenary_score= value
     self.features['psychographic']['personas']['quartenary']['score'] = value
+  end
+
+
+
+  def taste_events_save event_id
+    if self.taste['events'] 
+      self.taste['events']['saved'] << event_id
+      self.save
+    else
+      self.taste = {
+        events: {
+          saved: [],
+          liked: [],
+          viewed: [],
+          disliked: []
+        }
+      }
+
+      self.taste['events']['saved'] << event_id
+      self.save
+    end
+  end
+
+
+  def taste_events_unsave event_id
+    self.taste['events']['saved'].delete(event_id)
+    self.save
+
+    return self.taste['events']['saved']
+  end
+
+  def taste_events_saved? event_id
+    if self.taste['events']
+      self.taste['events']['saved'].include? event_id
+    else
+      return false
+    end
+  end
+
+
+  def taste_events_saved
+    if self.taste['events']
+      self.taste['events']['saved']
+    else
+      self.taste = {
+        events: {
+          saved: [],
+          liked: [],
+          viewed: [],
+          disliked: []
+        }
+      }
+
+      self.taste['events']['saved']
+    end
   end
 
 

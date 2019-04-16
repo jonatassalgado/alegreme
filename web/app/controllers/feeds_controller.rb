@@ -53,8 +53,8 @@ class FeedsController < ApplicationController
 
 
 
-    if current_user and !current_user.all_favorited.empty?
-      @favorited_events = Event.where(id: current_user.all_favorited.pluck(:id)).where("ocurrences -> 'dates'->> 0 >= ?", (DateTime.now - 1)).order("ocurrences -> 'dates' ->> 0 ASC").uniq
+    if current_user and !current_user.taste_events_saved.empty?
+      @favorited_events = Event.where(id: current_user.taste_events_saved).where("ocurrences -> 'dates'->> 0 >= ?", (DateTime.now - 1)).order("ocurrences -> 'dates' ->> 0 ASC").uniq
     else
       @favorited_events = []
     end
@@ -76,7 +76,7 @@ class FeedsController < ApplicationController
 
 
     if current_user and !current_user.all_favorited.empty?
-      @favorited_events = Event.where(id: current_user.all_favorited.pluck(:id)).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now).order("ocurrences -> 'dates' ->> 0 ASC").uniq
+      @favorited_events = Event.where(id: current_user.taste_events_saved).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now).order("ocurrences -> 'dates' ->> 0 ASC").uniq
     else
       @favorited_events = []
     end

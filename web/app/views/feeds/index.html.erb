@@ -31,7 +31,7 @@
 <br><br> -->
 
 
-<% if current_user and !current_user.all_favorited(scope: ['favorite']).empty? %>
+<% if current_user and !current_user.taste_events_saved.empty? %>
 <div id="salvos" class="me-favorite" data-controller="favorite">
   <h2 data-target="favorite.header" class="mdc-typography--headline2">
     Eventos salvos

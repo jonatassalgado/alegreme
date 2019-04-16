@@ -88,9 +88,6 @@ class Event < ApplicationRecord
   end
 
 
-  acts_as_favoritable
-
-
   def cover_url
     if self.cover.attached?
       return rails_blob_path(self.cover, disposition: "attachment", only_path: true)
