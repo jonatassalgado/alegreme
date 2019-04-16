@@ -384,6 +384,15 @@
         });
 
         that.on('message', function(message) {
+          if (message.javascript) {
+            that.sendEvent({
+              type: 'event',
+              name: message.trigger
+            });
+          }
+        });
+
+        that.on('message', function(message) {
 
           that.renderMessage(message);
 

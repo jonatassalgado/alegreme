@@ -1899,40 +1899,108 @@ module.exports = function(controller) {
             pattern: patterns.negative,
             callback: function(res, convo) {
               convo.vars.personaSuitability[22] = "-1";
-              http.get('http://localhost:5000/predict/persona?query=' + JSON.stringify(convo.vars.personaSuitability), (res) => {
+
+              const options = {
+                method: 'GET'
+              };
+
+              const req = http.request(`http://localhost:5000/predict/persona?query=${JSON.stringify(convo.vars.personaSuitability)}`, options, (res) => {
+                res.setEncoding('utf8');
                 res.on('data', (data) => {
-                  console.log(data);
+                  json = JSON.parse(data);
                   bot.say({
-                    text: `Pronto! Sua persona é uma <b>${data.personas.primary} ${data.personas.secondary}</b>`,
+                    text: "Pronto! Segundo meus cálculos",
+                    typingDelay: typing.slow
+                  })
+                  bot.say({
+                    text: `Suas duas personas principais são <b>${json.classification.personas.primary.name.toUpperCase()} e ${json.classification.personas.secondary.name.toUpperCase()}</b>`,
                     typingDelay: typing.normal
                   })
-                  console.log(convo.vars);
+                  bot.say({
+                    text: `E podemos dizer que você tem um ascendente em ${json.classification.personas.tertiary.name.toUpperCase()} com um "Q" de ${json.classification.personas.quartenary.name.toUpperCase()}`,
+                    typingDelay: typing.slow
+                  })
+                  bot.say({
+                    text: "Espero ter acertado, a partir de agora tentarei sugerir eventos que tem a ver com você",
+                    typingDelay: typing.normal
+                  })
+                  bot.say({
+                    text: "Mas lembre-se que estarei aprendendo com você diariamente o que você gosta e não gosta",
+                    typingDelay: typing.normal
+                  })
+                  bot.say({
+                    text: "Então a cada nova semana você poderá notar que estarei acertando cada vez mais",
+                    typingDelay: typing.normal
+                  })
+
+                  loadNewEvents(res, convo);
                   convo.next();
                 });
-
-              }).on('error', (e) => {
-                console.error(e);
+                res.on('end', () => {
+                  console.log('No more data in response.');
+                });
               });
+
+              req.on('error', (e) => {
+                console.error(`problem with request: ${e.message}`);
+              });
+
+              req.end();
+
             }
           },
           {
             pattern: patterns.positive,
             callback: function(res, convo) {
               convo.vars.personaSuitability[22] = "1";
-              http.get('http://localhost:5000/predict/persona?query=' + JSON.stringify(convo.vars.personaSuitability), (res) => {
+
+              const options = {
+                method: 'GET'
+              };
+
+              const req = http.request(`http://localhost:5000/predict/persona?query=${JSON.stringify(convo.vars.personaSuitability)}`, options, (res) => {
+                res.setEncoding('utf8');
                 res.on('data', (data) => {
-                  console.log(data);
+                  json = JSON.parse(data);
                   bot.say({
-                    text: `Pronto! Sua persona é uma <b>${data.personas.primary} ${data.personas.secondary}</b>`,
+                    text: "Pronto! Segundo meus cálculos",
+                    typingDelay: typing.slow
+                  })
+                  bot.say({
+                    text: `Suas duas personas principais são <b>${json.classification.personas.primary.name.toUpperCase()} e ${json.classification.personas.secondary.name.toUpperCase()}</b>`,
                     typingDelay: typing.normal
                   })
-                  console.log(convo.vars);
+                  bot.say({
+                    text: `E podemos dizer que você tem um ascendente em ${json.classification.personas.tertiary.name.toUpperCase()} com um "Q" de ${json.classification.personas.quartenary.name.toUpperCase()}`,
+                    typingDelay: typing.slow
+                  })
+                  bot.say({
+                    text: "Espero ter acertado, a partir de agora tentarei sugerir eventos que tem a ver com você",
+                    typingDelay: typing.normal
+                  })
+                  bot.say({
+                    text: "Mas lembre-se que estarei aprendendo com você diariamente o que você gosta e não gosta",
+                    typingDelay: typing.normal
+                  })
+                  bot.say({
+                    text: "Então a cada nova semana você poderá notar que estarei acertando cada vez mais",
+                    typingDelay: typing.normal
+                  })
+
+                  loadNewEvents(res, convo);
                   convo.next();
                 });
-
-              }).on('error', (e) => {
-                console.error(e);
+                res.on('end', () => {
+                  console.log('No more data in response.');
+                });
               });
+
+              req.on('error', (e) => {
+                console.error(`problem with request: ${e.message}`);
+              });
+
+              req.end();
+
             }
           },
           {
@@ -1949,17 +2017,32 @@ module.exports = function(controller) {
                 res.on('data', (data) => {
                   json = JSON.parse(data);
                   bot.say({
-                    text: "Pronto!",
+                    text: "Pronto! Segundo meus cálculos",
                     typingDelay: typing.slow
                   })
                   bot.say({
-                    text: "Sua persona é",
+                    text: `Suas duas personas principais são <b>${json.classification.personas.primary.name.toUpperCase()} e ${json.classification.personas.secondary.name.toUpperCase()}</b>`,
                     typingDelay: typing.normal
                   })
                   bot.say({
-                    text: `<b>${json.personas.primary.toUpperCase()} ${json.personas.secondary.toUpperCase()}</b>`,
+                    text: `E podemos dizer que você tem um ascendente em <b>${json.classification.personas.tertiary.name.toUpperCase()}</b> com um "Q" de <b>${json.classification.personas.quartenary.name.toUpperCase()}</b>`,
+                    typingDelay: typing.slow
+                  })
+                  bot.say({
+                    text: "Espero ter acertado, a partir de agora tentarei sugerir eventos que tem a ver com você",
                     typingDelay: typing.normal
                   })
+                  bot.say({
+                    text: "Mas lembre-se que estarei aprendendo com você diariamente o que você gosta e não gosta",
+                    typingDelay: typing.normal
+                  })
+                  bot.say({
+                    text: "Então a cada nova semana você poderá notar que estarei acertando cada vez mais",
+                    typingDelay: typing.normal
+                  })
+
+                  loadNewEvents(res, convo);
+                  convo.next();
                 });
                 res.on('end', () => {
                   console.log('No more data in response.');
@@ -1985,9 +2068,31 @@ module.exports = function(controller) {
         ]);
       }
 
-
-
-
+      const loadNewEvents = function(res, convo){
+        convo.ask({
+          text: 'Quer ver os eventos agora?',
+          typingDelay: typing.normal,
+          quick_replies: [
+            {
+              title: 'Sim, me mostre',
+              payload: 'Sim, me mostre',
+            }
+          ]
+        },
+        [
+          {
+            pattern: /ok|sim|claro|vamos|pode|bora/gi,
+            callback: function(res, convo) {
+              convo.say({
+                text: 'Recarregando página...',
+                javascript: true,
+                trigger: 'reload'
+              });
+              convo.next();
+            }
+          }
+        ], {});
+      }
 
 
     });

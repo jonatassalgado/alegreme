@@ -62,6 +62,9 @@ var Botkit = {
         }
         console.log('Embedded Botkit: Ready!');
         break;
+      case 'reload':
+        location.reload();
+        break;
       case 'connected':
         // console.log('100% CONNECTED AND READY TO GO');
         break;
