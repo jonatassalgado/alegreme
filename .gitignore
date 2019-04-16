@@ -27,7 +27,7 @@ web/storage
 structure.sql
 ml/api/__pycache__/
 web/log/
-
+web/log/development.log
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb

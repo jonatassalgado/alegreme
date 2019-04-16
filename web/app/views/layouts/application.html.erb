@@ -42,7 +42,9 @@
             </div>
             <script src="//localhost:3030/embed.js"></script>
             <script>
-              var options = {}; // for options, see: https://github.com/howdyai/botkit-starter-web/blob/master/docs/botkit_web_client.md#botkitbootuser
+              var options = {
+                id: <%= current_user.id %>
+              }; // for options, see: https://github.com/howdyai/botkit-starter-web/blob/master/docs/botkit_web_client.md#botkitbootuser
               Botkit.boot(options);
             </script>
             <link rel="stylesheet" href="//localhost/css/embed.css" />
@@ -51,7 +53,7 @@
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
           <% if current_user %>
-            <%= current_user.email %>
+            <%= link_to current_user.email, edit_user_path(current_user) %>
             (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)
           <% else %>
             <%= link_to "Entrar com o Google", user_google_oauth2_omniauth_authorize_path(nil, {state: Base64.urlsafe_encode64('["hipster", "geek", "praieiro", "cult"]')}) %>
