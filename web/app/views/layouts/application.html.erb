@@ -54,7 +54,7 @@
             <%= current_user.email %>
             (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)
           <% else %>
-            <%= link_to "Entrar com o Google", user_google_oauth2_omniauth_authorize_path %>
+            <%= link_to "Entrar com o Google", user_google_oauth2_omniauth_authorize_path(nil, {state: Base64.urlsafe_encode64('["hipster", "geek", "praieiro", "cult"]')}) %>
           <% end %>
         </section>
       </div>

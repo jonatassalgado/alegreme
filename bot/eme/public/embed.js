@@ -63,7 +63,9 @@ var Botkit = {
         console.log('Embedded Botkit: Ready!');
         break;
       case 'reload':
-        location.reload();
+        personas = message.data.params
+        location.assign(`http://localhost:3000/users/auth/google_oauth2?state=${personas}`)
+        // location.reload();
         break;
       case 'connected':
         // console.log('100% CONNECTED AND READY TO GO');

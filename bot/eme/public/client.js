@@ -383,11 +383,12 @@
           }
         });
 
-        that.on('message', function(message) {
-          if (message.javascript) {
+        that.on('event', function(message) {
+          if (message.name == 'reload') {
             that.sendEvent({
               type: 'event',
-              name: message.trigger
+              name: message.name,
+              params: message.params
             });
           }
         });
