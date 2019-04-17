@@ -2058,7 +2058,7 @@ module.exports = function(controller) {
             res.setEncoding("utf8");
             res.on("data", data => {
               json = JSON.parse(data);
-
+              console.log(json)
               convo.setVar("personaPredict", json.classification.personas);
 
               bot.say({

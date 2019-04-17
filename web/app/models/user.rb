@@ -71,6 +71,15 @@ class User < ApplicationRecord
 
 
 
+  def personas_assortment_finished?
+    self.features['psychographic']['personas']['assortment']['finished'] if self.features['psychographic']
+  end
+
+  def personas_assortment_finished= value
+    self.features['psychographic']['personas']['assortment']['finished'] = value
+  end
+
+
   def taste_events_save event_id
     if self.taste['events'] 
       self.taste['events']['saved'] << event_id
@@ -155,7 +164,11 @@ class User < ApplicationRecord
               quartenary: {
                 name: personas['quartenary']['name'],
                 score: personas['quartenary']['score']
-              }
+              },
+              assortment: { 
+                finished: personas['assortment']['finished'], 
+                finished_at: personas['assortment']['finished_at'] 
+              } 
             }
           }
         }

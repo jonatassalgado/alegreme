@@ -37,14 +37,20 @@
             <div data-target="chat.botConversation" class="me-search-field__bot">
               <iframe  id="botkit_client" src="//localhost:3030/chat.html"></iframe>
             </div>
-            <div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
-              <span>Sim, estou aqui</span>
-            </div>
+            <% unless current_user.try('personas_assortment_finished?') %>
+              <div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
+                <span>Sim, estou aqui</span>
+              </div>
+            <% end %>
             <script src="//localhost:3030/embed.js"></script>
             <script>
-              var options = {
-                id: <%= current_user.id %>
-              }; // for options, see: https://github.com/howdyai/botkit-starter-web/blob/master/docs/botkit_web_client.md#botkitbootuser
+              <% if current_user %>
+                var options = {
+                  id: current_user.try(:id)
+                }; 
+              <% else %>
+                var options = {}; 
+              <% end %>
               Botkit.boot(options);
             </script>
             <link rel="stylesheet" href="//localhost/css/embed.css" />
@@ -56,7 +62,7 @@
             <%= link_to current_user.email, edit_user_path(current_user) %>
             (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)
           <% else %>
-            <%= link_to "Entrar com o Google", user_google_oauth2_omniauth_authorize_path(nil, {state: Base64.urlsafe_encode64('["hipster", "geek", "praieiro", "cult"]')}) %>
+            <%= link_to "Entrar com o Google", user_google_oauth2_omniauth_authorize_path %>
           <% end %>
         </section>
       </div>

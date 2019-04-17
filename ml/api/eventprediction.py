@@ -1,6 +1,7 @@
 
 import os
 import re
+import base64
 import pandas as pd
 import numpy as np
 import heapq as hq
@@ -143,6 +144,7 @@ class EventPrediction(object):
 
 
     def predict(self, query):
+        query = base64.b64decode(query).decode('utf-8')
         query = self.__cleanning_text(query)
         query = self.__stemming_text(query)
 

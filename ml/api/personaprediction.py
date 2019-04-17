@@ -1,3 +1,6 @@
+import os
+import re
+import base64
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -8,7 +11,8 @@ import time
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import GridSearchCV
-from joblib import dump, load
+from joblib import dump
+from joblib import load
 
 class PersonaPrediction(object):
 
@@ -46,7 +50,7 @@ class PersonaPrediction(object):
         query = ast.literal_eval(query)
         query = list(map(int, query))
 
-        regex = re.compile(r'predict-event-model-\d{8}-\d{6}\.joblib$')
+        regex = re.compile(r'predict-persona-model-\d{8}-\d{6}\.joblib$')
         last_file = max(filter(regex.search, os.listdir('./')))
 
         classificator = load(last_file)
@@ -54,13 +58,18 @@ class PersonaPrediction(object):
 
 
         for prediction in predictions:
-            best_label_index = prediction.argmax(axis=0)
-            best_label_name = classificator.classes_[best_label_index]
+            best_four_labels_index = hq.nlargest(4, range(len(prediction)), prediction.take)
+            best_labels_name = classificator.classes_[best_four_labels_index]
+            best_labels_score = hq.nlargest(4, prediction)
 
-
-
-            best_two_labels_index = hq.nlargest(2, range(len(prediction)), prediction.take)
-            return classificator.classes_[best_two_labels_index]
+            output = [
+                        [best_labels_name[0], best_labels_score[0]],
+                        [best_labels_name[1], best_labels_score[1]],
+                        [best_labels_name[2], best_labels_score[2]],
+                        [best_labels_name[3], best_labels_score[3]]
+                     ]
+            print(output)
+            return output
 
 #
 # predictModel = PersonaPrediction()

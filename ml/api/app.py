@@ -4,11 +4,12 @@ import numpy as np
 import json
 
 
+from datetime import datetime
 from flask import Flask
-from flask_restful import reqparse, abort, Api, Resource
 from personaprediction import PersonaPrediction
 from eventprediction import EventPrediction
 from eventcategoryprediction import EventCategoryPrediction
+from flask_restful import reqparse, abort, Api, Resource
 
 app = Flask(__name__)
 api = Api(app)
@@ -23,14 +24,34 @@ class PredictPersona(Resource):
         user_query = args['query']
 
         prediction = PersonaPrediction.predict(self, query=user_query)
-        output = np.array(prediction).tolist()
+        persona_output = np.array(prediction).tolist()
 
-        return {'personas' :
-                    {
-                        'primary' : output[0],
-                        'secondary' : output[1]
+        return {
+            'classification': {
+                'personas': {
+                    'primary' : {
+                        'name': persona_output[0][0],
+                        'score': persona_output[0][1]
+                    },
+                    'secondary' : {
+                        'name': persona_output[1][0],
+                        'score': persona_output[1][1]
+                    },
+                    'tertiary' : {
+                        'name': persona_output[2][0],
+                        'score': persona_output[2][1]
+                    },
+                    'quartenary' : {
+                        'name': persona_output[3][0],
+                        'score': persona_output[3][1]
+                    },
+                    'assortment' : {
+                        'finished': 'true',
+                        'finished_at' : datetime.strftime(datetime.today(), '%Y-%m-%d %H:%M:%S')
                     }
-               }
+                }
+            }   
+        }
 
 class PredictEvent(Resource):
     def get(self):
@@ -47,35 +68,30 @@ class PredictEvent(Resource):
         persona_output = np.array(persona_prediction).tolist()
         category_output = np.array(category_prediction).tolist()
 
-        print(persona_output)
-        print(category_output)
-
         return {
                 'classification' : {
-                    'personas':
-                        {
-                            'primary' : {
-                                'name': persona_output[0][0],
-                                'score': persona_output[0][1]
-                            },
-                            'secondary' : {
-                                'name': persona_output[1][0],
-                                'score': persona_output[1][1]
-                            }
+                    'personas': {
+                        'primary' : {
+                            'name': persona_output[0][0],
+                            'score': persona_output[0][1]
                         },
-                    'categories':
-                        {
-                            'primary' : {
-                                'name': category_output[0][0],
-                                'score': category_output[0][1]
-                            },
-                            'secondary' : {
-                                'name': category_output[1][0],
-                                'score': category_output[1][1]
-                            }
+                        'secondary' : {
+                            'name': persona_output[1][0],
+                            'score': persona_output[1][1]
+                        }
+                    },
+                    'categories': {
+                        'primary' : {
+                            'name': category_output[0][0],
+                            'score': category_output[0][1]
+                        },
+                        'secondary' : {
+                            'name': category_output[1][0],
+                            'score': category_output[1][1]
                         }
                     }
-               }
+                }
+            }
 
 
 api.add_resource(PredictEvent, '/predict/event')

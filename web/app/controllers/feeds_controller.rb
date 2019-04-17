@@ -75,7 +75,7 @@ class FeedsController < ApplicationController
     }
 
 
-    if current_user and !current_user.all_favorited.empty?
+    if current_user and !current_user.taste_events_saved.empty?
       @favorited_events = Event.where(id: current_user.taste_events_saved).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now).order("ocurrences -> 'dates' ->> 0 ASC").uniq
     else
       @favorited_events = []

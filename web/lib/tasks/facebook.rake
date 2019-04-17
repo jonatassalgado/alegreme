@@ -29,13 +29,16 @@ namespace :scrapy do
       puts "Criar Evento ****************************************"
 
       if item['description']
-        params = { query: item['description'] }
+        query = Base64.encode64(item['description'])
+        params = { query: query }
         uri = URI("http://localhost:5000/predict/event")
         uri.query = URI.encode_www_form(params)
         response = Net::HTTP.get_response(uri)
         predict = JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
 
         if response.is_a?(Net::HTTPSuccess)
+          geocode = Geocoder.search(item['address']).first if item['address']
+
           @event = Event.create_with(
             name: item['name'],
             description: item['description'],
@@ -63,14 +66,21 @@ namespace :scrapy do
                 name: predict['classification']['categories']['secondary']['name'],
                 score: predict['classification']['categories']['secondary']['score']
               }
+            },
+            geographic: {
+              address: item['address'],
+              latlon: geocode.try(:coordinates),
+              neighborhood: geocode.try(:suburb),
+              city: geocode.try(:city)
             }
           ).find_or_create_by(source_url: item['source_url'])
         else
-          @event = Event.create_with(
-            name: item['name'],
-            description: item['description'],
-            source_url: item['source_url']
-          ).find_or_create_by(source_url: item['source_url'])
+          puts 'NÃO FOI POSSÍVEL CRIAR O EVENTO'
+          # @event = Event.create_with(
+          #   name: item['name'],
+          #   description: item['description'],
+          #   source_url: item['source_url']
+          # ).find_or_create_by(source_url: item['source_url'])
         end
 
         if item['cover_url']

@@ -14,6 +14,8 @@ namespace :ml do
     events = Event.where("(personas -> 'primary' ->> 'score')::numeric >= 0.90").uniq
 
     events.each do |event|
+      next if event.personas['outlier'] == 'true'
+
       item = csv.find { |row| row[7] == event.source_url }
       if item
         item[8] = event.personas['primary']['name']
