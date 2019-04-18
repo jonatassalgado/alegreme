@@ -64,6 +64,39 @@ class EventsController < ApplicationController
     end
   end
 
+  def retrain 
+    @event = Event.find params['event_id']
+
+    if params[:feature] == 'personas'
+      @event.personas_outlier = params[:outlier] if params[:outlier]
+      @event.personas_primary_name = params[:persona] if params[:persona]
+      @event.personas_primary_score = 0.90 if params[:correct] || params[:persona]
+    elsif params[:feature] == 'categories'
+      @event.categories_outlier = params[:outlier] if params[:outlier]
+      @event.categories_primary_name = params[:category] if params[:category]
+      @event.categories_primary_score = 0.90 if params[:correct] || params[:category]
+    end
+    
+    render json: {
+      status: @event.save ? :ok : :error,
+      persona: {
+        primary: {
+          name: @event.personas_primary_name,
+          score: @event.personas_primary_score
+        },
+        outlier: @event.personas_outlier
+      },
+      category: {
+        primary: {
+          name: @event.categories_primary_name,
+          score: @event.categories_primary_score
+        },
+        outlier: @event.categories_outlier
+      }
+    }
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
@@ -84,4 +117,9 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:name, :description, :url, :personas_primary_name, :personas_secondary_name, :personas_primary_score, :personas_secondary_score, :categories_primary_name, :categories_secondary_name, :categories_primary_score, :categories_secondary_score, :personas_outlier, :dates)
     end
+
+    def retrain_params
+      params.permit(:event_id, :feature, :score, :outlier)
+    end
+
 end

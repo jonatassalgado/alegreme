@@ -1,13 +1,15 @@
 import { Controller } from "stimulus"
 import { html, render } from 'lit-html';
 import { iconButton } from 'material-components-web';
+import {MDCMenu} from '@material/menu';
+
 
 
 export default class EventController extends Controller {
-  static targets = [ "event", "name", "place", "date", "like", "likeButton", "likeCount" ];
+  static targets = [ "event", "name", "place", "date", "like", "likeButton", "likeCount", "moreButton", "menu" ];
 
   initialize() {
-
+    // new MDCMenu(this.moreButtonTarget);
   }
 
   showEventDetails(event) {
@@ -26,6 +28,17 @@ export default class EventController extends Controller {
     })
   }
 
+  openMenu() {
+    const self = this;
+    console.log(MDCMenu);
+    console.log(self.menuTarget);
+    const mdcMenu = new MDCMenu(self.menuTarget);
+    if (mdcMenu.open) {
+      mdcMenu.open = false;
+    } else {
+      mdcMenu.open = true;
+    }
+  }
 
   like() {
     const self = this

@@ -20,8 +20,10 @@ export default class SearchFieldController extends Controller {
     const textSize = this.inputTarget.placeholder.length;
     const buttonDistance = (textSize * 12) + 'px';
 
-    this.replyTarget.style.display = 'block';
-    this.replyTarget.style.left = buttonDistance;
+    if (this.hasReplyTarget) {
+      this.replyTarget.style.display = 'block';
+      this.replyTarget.style.left = buttonDistance;
+    }
   }
 
 
@@ -47,13 +49,13 @@ export default class SearchFieldController extends Controller {
   set conversationVisibility(value) {
     switch (value) {
       case 'visible':
-        this.replyTarget.style.display = 'none';
+        if (this.hasReplyTarget) { this.replyTarget.style.display = 'none' }
         this.botConversationTarget.style.visibility = 'visible';
         this.botConversationTarget.style.opacity = 1;
         this.fieldTarget.classList.add("me-search-field--bot-on");
         break;
       case 'hidden':
-        this.replyTarget.style.display = 'block';
+        if (this.hasReplyTarget) { this.replyTarget.style.display = 'block' }
         this.botConversationTarget.style.visibility = 'hidden';
         this.botConversationTarget.style.opacity = 0;
         this.fieldTarget.classList.remove("me-search-field--bot-on");

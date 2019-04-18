@@ -65,7 +65,8 @@ namespace :scrapy do
               secondary: {
                 name: predict['classification']['categories']['secondary']['name'],
                 score: predict['classification']['categories']['secondary']['score']
-              }
+              },
+              outlier: false
             },
             geographic: {
               address: item['address'],

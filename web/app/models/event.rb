@@ -14,6 +14,42 @@ class Event < ApplicationRecord
 
   jsonb_accessor :ocurrences, dates: [:datetime, array: true, default: []]
 
+  scope 'for_user', -> (user) {
+    where("(personas -> 'primary' ->> 'name') IN (?, ?, ?, ?)", user.personas_primary_name, user.personas_secondary_name, user.personas_tertiary_name, user.personas_quartenary_name)
+  }
+
+  scope 'order_by_score', -> {
+    order("(personas -> 'primary' ->> 'score')::numeric DESC")
+  }
+
+  scope 'order_by_date', -> {
+    order("(ocurrences -> 'dates' ->> 0) ASC")
+  }
+
+  scope 'by_persona', -> (persona) { 
+    where("((personas ->> 'outlier') IS NULL OR (personas ->> 'outlier') = 'false') AND (personas -> 'primary' ->> 'name') = ?", persona)
+  }
+
+  scope 'by_category', -> (category) { 
+    where("(categories -> 'primary' ->> 'name') = ? AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false')", category) 
+  }
+
+  scope 'active', -> {
+    where("(ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now - 1)
+  }
+
+  scope 'with_low_score', -> (feature) {
+    case feature
+    when :personas
+      where("(personas -> 'primary' ->> 'score')::numeric < 0.51")
+    when :categories
+      where("(categories -> 'primary' ->> 'score')::numeric < 0.51")
+    end
+  }
+
+  scope 'not_retrained', -> {
+    where("(categories -> 'primary' ->> 'score')::numeric < 0.90 OR (personas -> 'primary' ->> 'score')::numeric < 0.90")
+  }
 
   def personas_primary_name
     self.personas["primary"]["name"]
@@ -85,6 +121,14 @@ class Event < ApplicationRecord
 
   def personas_outlier= value
     self.personas["outlier"] = value
+  end
+
+  def categories_outlier
+    self.categories["outlier"]
+  end
+
+  def categories_outlier= value
+    self.categories["outlier"] = value
   end
 
 

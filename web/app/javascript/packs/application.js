@@ -19,6 +19,8 @@ import {MDCTextField} from '@material/textfield';
 import {MDCSelect} from '@material/select';
 import {MDCFormField} from '@material/form-field';
 import {MDCCheckbox} from '@material/checkbox';
+import {MDCMenu} from '@material/menu';
+
 
 
 
@@ -64,6 +66,13 @@ document.addEventListener("turbolinks:load", function() {
   const checkboxes = document.querySelectorAll('.mdc-checkbox');
   checkboxes.forEach((checkbox) => {
     new MDCCheckbox(checkbox);
+  })
+
+
+  // Menu
+  const menus = document.querySelectorAll('.mdc-menu');
+  menus.forEach((menu) => {
+    new MDCMenu(menu);
   })
 
 });

@@ -94,5 +94,11 @@ $description-color: $font-secondary-color;
     border-radius: 2px;
   }
 
+  & .mdc-card__actions {
+    position: absolute;
+    top: 93px;
+    right: -10px;
+  }
+
 
 }

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   root to: 'feeds#index'
   get '/train', to: 'feeds#train'
+  get '/retrain', to: 'events#retrain'
 
   resources :users
   resources :calendars
