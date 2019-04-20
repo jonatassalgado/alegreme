@@ -45,7 +45,7 @@ class EventSpider(scrapy.Spider):
                   'https://www.facebook.com/pg/forumdaliberdade/events',
                   'https://www.facebook.com/pg/SindilojasPOA/events',
                   'https://www.facebook.com/pg/prefpoa/events',
-                  '']
+                  'https://www.facebook.com/pg/centrodeeventospucrs/events/']
 
     def start_requests(self):
         for url in self.start_urls:

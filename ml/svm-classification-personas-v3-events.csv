@@ -1,24 +1,22 @@
-event,aventureiro,cult,geek,hipster,praieiro,turista,underground,zeen
-Arduino Day 2019,-1,0,1,0,-1,0,0,0
-Doma,-1,-1,-1,0,-1,-1,1,-1
-Carnawow,0,0,0,0,0,0,0,1
-Bike Tour,1,0,0,0,0,0,0,0
-Cine Iberê| Cinema mudo com música ao vivo,0,1,0,0,0,0,0,0
-Festa Da Uva 2019 – Oficial,0,0,-1,0,0,1,-1,0
-Feira do Aeromovel 10ª ed. - 26/01,0,0,0,0,1,0,0,0
-Feira Vegana Noturna,0,0,0,1,0,0,0,0
-Madrugadão Virada Nerd,-1,0,1,0,-1,0,0,0
-Arruaça,-1,-1,-1,0,-1,-1,1,-1
-Mindfulness no Pôr do Sol,0,0,0,0,0,-1,0,1
-Trilha da Fortaleza-Parque de Itapuã,1,0,0,0,0,0,0,0
-Exposição | Cecily Brown: se o paraíso fosse assim tão bom,0,1,0,0,0,0,0,0
-Festiqueijo,0,0,-1,0,0,1,-1,0
-St. Patrick's Day,0,0,-1,0,1,0,0,0
-Feira Me Gusta,0,0,0,1,0,0,0,0
-Hackatown Porto Alegre | Mobilidade,-1,0,1,0,-1,0,0,0
-Fennda,-1,-1,-1,0,-1,-1,1,-1
-Yoga para o seu BEM,0,0,0,0,0,0,0,1
-São José dos Ausentes | Páscoa 2019,1,0,0,0,0,0,0,0
-Frida Kahlo À Revolução! no 20º Porto Verão Alegre,0,1,0,0,0,0,0,0
-Serenata Iluminada,0,0,0,0,1,0,0,0
-Picnic Cultural no Museu - Edição nº18,0,0,0,1,0,0,0,0
+event,aventureiro,cult,geek,hipster,praieiro,underground,zeen
+Arduino Day 2019,0,0,1,0,-1,0,0
+Doma,0,0,0,0,-1,1,-1
+Carnawow,0,0,0,0,0,0,1
+Bike Tour,1,0,0,0,0,0,0
+Cine Iberê| Cinema mudo com música ao vivo,0,1,0,0,0,0,0
+Feira do Aeromovel 10ª ed. - 26/01,0,0,0,1,1,0,0
+Feira Vegana Noturna,0,0,0,2,0,0,0
+Madrugadão Virada Nerd,0,0,1,0,-1,0,0
+Arruaça,0,0,0,0,-1,1,-1
+Mindfulness no Pôr do Sol,0,0,0,0,0,0,1
+Trilha da Fortaleza-Parque de Itapuã,2,0,0,0,0,0,0
+Exposição | Cecily Brown: se o paraíso fosse assim tão bom,0,1,0,0,0,0,0
+St. Patrick's Day,0,0,0,0,1,0,0
+Feira Me Gusta,0,0,0,1,0,0,0
+Hackatown Porto Alegre | Mobilidade,0,0,2,0,-1,0,0
+Fennda,0,0,0,0,-2,2,-1
+Yoga para o seu BEM,0,0,0,0,0,0,1
+São José dos Ausentes | Páscoa 2019,1,0,0,0,0,0,0
+Frida Kahlo À Revolução! no 20º Porto Verão Alegre,0,2,0,0,0,0,0
+Serenata Iluminada,0,0,0,1,1,0,0
+Picnic Cultural no Museu - Edição nº18,0,0,0,1,0,0,0

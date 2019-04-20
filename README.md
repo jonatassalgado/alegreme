@@ -19,7 +19,7 @@ source activate alegreme
 
 ### Scrapy
 sudo docker run -p 8050:8050 -p 5023:5023 scrapinghub/splash
-scrapy crawl event -s CLOSESPIDER_ITEMCOUNT=50
+scrapy crawl event -s CLOSESPIDER_ITEMCOUNT=250
 
 
 ### Flask

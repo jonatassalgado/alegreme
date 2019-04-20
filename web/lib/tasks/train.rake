@@ -11,27 +11,25 @@ namespace :ml do
     last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
 
     csv = CSV.read('../ml/' + last_file)
-    events = Event.where("(personas -> 'primary' ->> 'score')::numeric >= 0.90").uniq
+    events = Event.where("(personas -> 'primary' ->> 'score')::numeric >= 0.90 OR (categories -> 'primary' ->> 'score')::numeric >= 0.90").uniq
 
     events.each do |event|
-      next if event.personas['outlier'] == 'true'
-
       item = csv.find { |row| row[7] == event.source_url }
       if item
-        item[8] = event.personas['primary']['name']
-        item[9] = event.categories['primary']['name']
+        item[8] = (event.personas['outlier'] == 'true' || event.personas['primary']['score'].to_f < 0.90) ? nil : event.personas['primary']['name']
+        item[9] = (event.categories['outlier'] == 'true' || event.categories['primary']['score'].to_f < 0.90) ? nil : event.categories['primary']['name']
       else
         csv << [
                 event.name,
-                event.try(:place).try(:address),
+                event.geographic['address'],
                 event.datetimes,
                 event.try(:place).try(:name),
                 event.organizers.pluck(:name),
                 event.description,
                 nil,
                 event.source_url,
-                event.personas['primary']['name'],
-                event.categories['primary']['name'],
+                (event.personas['outlier'] == 'true' || event.personas['primary']['score'].to_f < 0.90) ? nil : event.personas['primary']['name'],
+                (event.categories['outlier'] == 'true' || event.categories['primary']['score'].to_f < 0.90) ? nil : event.categories['primary']['name'],
                 nil,
                 nil]
       end

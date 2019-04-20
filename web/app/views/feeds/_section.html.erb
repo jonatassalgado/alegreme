@@ -63,7 +63,7 @@
                   <li class="mdc-list-item" role="menuitem">
                     <span class="mdc-list-item__text"><%= link_to  "Categoria outlier", retrain_path(event_id: event.id, feature: 'categories', outlier: true), remote: true %></span>
                   </li>
-                  <% ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton"].each do |category| %>
+                  <% ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton", "palestra", "celebração", "workshop", "oficina", "aula de dança", "literatura", "festival", "acadêmico", "gastronômico", "brecho", "profissional"].each do |category| %>
                     <li class="mdc-list-item" role="menuitem">
                       <span class="mdc-list-item__text"><%= link_to  category.capitalize, retrain_path(event_id: event.id, feature: 'categories', category: category), remote: true %></span>
                     </li>

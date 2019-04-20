@@ -27,14 +27,14 @@ class PersonaPrediction(object):
 
 
     def clean(self):
-        base = self.base.iloc[:, 0:9].dropna().transpose()
-        self.X = base.iloc[1:9, :].astype(int).values
-        self.y = base[1:9].index.values
+        base = self.base.iloc[:, 0:8].dropna().transpose()
+        self.X = base.iloc[1:8, :].astype(int).values
+        self.y = base[1:8].index.values
 
 
     def train(self):
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        X_test = np.random.choice([-1, 0, 1], size=(23,), p=[3/10, 3/10, 4/10]).reshape(1, -1)
+        X_test = np.random.choice([-1, 0, 1], size=(21,), p=[3/10, 3/10, 4/10]).reshape(1, -1)
         #X_test = [[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]]
 
         classificator = Pipeline([('clf-svm', SGDClassifier(alpha=0.01, loss='log'))])
@@ -72,6 +72,7 @@ class PersonaPrediction(object):
             return output
 
 #
-# predictModel = PersonaPrediction()
-# predictModel.clean()
-# predictModel.train()
+#predictModel = PersonaPrediction()
+#predictModel.clean()
+#predictModel.train()  # 2   3   4    5   6   7   8   9   10   11  12  13  14   15 16  17   18  19  20  21   22
+#predictModel.predict("['0','1','-1','0','0','1','0','0','1','-1','0','0','-1','0','1','1','-1','0','0','1','1' ]")

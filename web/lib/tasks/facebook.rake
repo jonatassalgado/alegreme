@@ -16,10 +16,16 @@ namespace :scrapy do
     data.each do |item|
 
       puts "Criar lugar ****************************************"
+      geocode = Geocoder.search(item['address']).first if item['address']
 
       @place = Place.create_with({
         name: item['place'],
-        address: item['address']
+        geographic: {
+          address: item['address'],
+          latlon: geocode.try(:coordinates),
+          neighborhood: geocode.try(:suburb),
+          city: geocode.try(:city)
+        }
         }).find_or_create_by(name: item['place'])
 
         puts @place.inspect
@@ -37,7 +43,6 @@ namespace :scrapy do
         predict = JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
 
         if response.is_a?(Net::HTTPSuccess)
-          geocode = Geocoder.search(item['address']).first if item['address']
 
           @event = Event.create_with(
             name: item['name'],

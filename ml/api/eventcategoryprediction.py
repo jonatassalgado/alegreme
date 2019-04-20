@@ -22,7 +22,7 @@ from joblib import dump, load
 
 
 stopwords = stopwords.words('portuguese')
-stopwords.extend(['porto', 'alegre', 'dia', 'ano', '“', '”', 'ano', 'é', '⇨', 'ª', '’', 'página', 'evento', 'poa', 'brasil', 'propõe', 'edição', 'ano', '01', '2009', 'dessa', 'desse', 'deste', 'chegou', 'hora', 'lugar', 'tempo', 'real', 'mais', 'ajuda', 'problema', 'após', 'acontece', 'boa', 'cheio', 'cheia', 'além', 'acesso', 'consulta', 'pessoas', 'pode', 'ser', 'planejamento', 'ano', 'próximo', 'precisa', 'possuir', 'qualquer', 'ser', 'agenda', 'breve', 'todas', 'novidades', 'chega', 'prestigiar', 'local', 'pequeno', 'aqui', 'apresenta', 'sábado', 'frente', 'ré', 'novo', 'nova', 'divulgação', 'participe', 'facebook', 'instagram', 'siga', 'promove', 'realiza'])
+stopwords.extend(['porto', 'alegre', 'dia', 'ano', '“', '”', 'é', '⇨', 'ª', '’', 'página', 'evento', 'poa', 'brasil', 'propõe', 'edição', '01', '2009', 'dessa', 'desse', 'deste', 'chegou', 'hora', 'lugar', 'tempo', 'real', 'mais', 'ajuda', 'problema', 'após', 'acontece', 'boa', 'cheio', 'cheia', 'além', 'acesso', 'consulta', 'pessoas', 'pode', 'ser', 'planejamento', 'próximo', 'precisa', 'possuir', 'qualquer', 'agenda', 'breve', 'todas', 'novidades', 'chega', 'prestigiar', 'local', 'pequeno', 'aqui', 'apresenta', 'sábado', 'frente', 'ré', 'novo', 'nova', 'divulgação', 'participe', 'facebook', 'instagram', 'siga', 'promove', 'realiza', 'de', 'do', 'com', 'da', 'em', 'que', 'para', 'no', 'na', 'um', 'os', 'uma', 'as', 'como', 'por', 'se', 'não', 'dos', 'ao', 'das', 'anos', 'ou', 'sua', 'são', 'seu', 'entrada', 'pela', 'lote', 'àsh', 'nos', 'sobre', 'até', 'tem', 'ingressos', 'entre', 'comunicação', 'valor', 'às', 'pelo', 'também', 'informações', 'você', 'onde', 'meia', 'vida', 'nossa', 'suas', 'dinheiro', 'pra', 'cidade', 'rua', 'já', 'feira', 'shopping', 'inteira', 'pessoa', 'multisom', 'arte', 'quem', 'apresentação', 'espaço', 'casa', 'nas', 'vai', 'rs', 'desconto', 'grupo', 'dash', 'data', 'muito', 'gt', 'abril', 'será', 'todos', 'partir', 'vem', 'venda', 'grande', 'trabalho', 'sul', 'público', 'pagamento', 'quando', 'através', 'dias', 'está', 'seus', 'somente', 'mundo', 'br', 'sem', 'janeiro', 'teatro', 'estudantes', 'horário', 'segunda', 'todo', 'foi', 'nosso', 'forma', 'alimento', 'outros', 'cada', 'voz', 'promocional', 'horários', 'realização', 'estão', 'pontos', 'rio', 'mas', 'ingresso', 'domingo', 'abertura', 'fazer', 'formas', 'história', 'doação', 'canoas', 'vamos', 'gente', 'sexta', 'classificação', 'reduzido', 'dekg', 'disponível', 'idosos', 'desde', 'perecível', 'aos', 'horas', 'projeto', 'av', 'melhor', 'lei', 'serão', 'bem', 'atéh', 'www', 'vez', 'esse', 'locais', 'lista', 'primeiro', 'isso', 'outras', 'objetivo', 'ainda', 'amor', 'joão', 'conta', 'dois', 'essa', 'funcionamento', 'federal', 'formação', 'produção', 'caso', 'contato', 'https', 'maior', 'só', 'há', 'sempre', 'nome', 'toda', 'social', 'duração', 'maio', 'crédito', 'mesmo', 'inscrições', 'verão', 'antes', 'momento', 'oficial', 'vagas', 'centro', 'programa', 'paulo', 'documento', 'esta', 'diversos', 'relações', 'março', 'empresas', 'processos', 'assim', 'especial', 'solidário', 'eventos', 'pessoal', 'ter', 'grandes', 'experiência', 'praia', 'brasileira', 'eu', 'débito', 'durante', 'valores', 'prática', 'carteira', 'online', 'este', 'cartão', 'apenas', 'livre', 'ele', 'bom', 'volta', 'tudo', 'amigos', 'participantes', 'mestre', 'presença', 'whatsapp', 'benefício', 'apoio', 'projetos', 'então', 'criação', 'programação', 'serviço', 'baixa', 'primeira', 'ambiente', 'corpo', 'nomes', 'muita', 'curtir', 'duas', 'maiores', 'bar', 'bourbon', 'artes', 'palco', 'bilheteria', 'pesquisa', 'poder', 'encontro', 'demais', 'foto', 'belas', 'pedro', 'nós', 'podem', 'diferentes', 'parte', 'the', 'dupla', 'saldanha', 'empresa', 'pré', 'estar', 'quatro', 'grupos', 'taxa', 'te', 'conhecer', 'site', 'me', 'mediante', 'técnica', 'práticas', 'convidados', 'limitadas', 'quer', 'fevereiro', 'obra', 'gmail', 'meio', 'fica', 'atualmente', 'identidade', 'aprender', 'área', 'fim', 'venha', 'antecipado', 'sendo', 'apresentar', 'dar', 'uso', 'depois', 'qual', 'identificação', 'ly', 'ideias', 'nossos', 'energia', 'possui', 'hoje', 'lado', 'conteúdo', 'início', 'aulas', 'conveniência', 'avenida', 'final', 'patrocínio', 'segundo', 'obrigatória', 'bit', 'amp', 'diversas', 'participação', 'nossas', 'trabalhos', 'estado', 'nacional', 'ferramentas', 'processo', 'in', 'of', 'acréscimo', 'baixo', 'necessária', 'aceitos', 'graduada', 'sympla', 'região', 'autorais', 'ela', 'alguns', 'inscrição', 'marca', 'sucesso', 'investimento', 'neste', 'mail', 'atenção', 'total', 'reais', 'antecipados', 'melhores', 'internet', 'deverão', 'fernando', 'resultados', 'três', 'teremos', 'internacional', 'geral', 'importantes', 'la', 'principais', 'gaúcha', 'meu', 'barra', 'tribo', 'formada', 'loja', 'produções', 'água', 'entregues', 'lojas', 'mãe', 'mulheres', 'conflitos', 'carlos', 'http', 'som', 'agora', 'irá', 'públicos', 'nessa', 'áreas', 'bairro', 'vista', 'confiança', 'quinta', 'sujeito', 'seja', 'categoria', 'andradas', 'semana', 'documentos', 'humano', 'violenta', 'marcas', 'experiências', 'free', 'vivo', 'país', 'conhecimento', 'ambientes', 'pós', 'organização', 'emocional'])
 
 download('stopwords')
 download('punkt')
@@ -74,6 +74,13 @@ class EventCategoryPrediction(object):
 
         return text
 
+    def __get_top_n_words(self, corpus, n=None):
+        vec = CountVectorizer().fit(corpus)
+        bag_of_words = vec.transform(corpus)
+        sum_words = bag_of_words.sum(axis=0) 
+        words_freq = [(word, sum_words[0, idx]) for word, idx in     vec.vocabulary_.items()]
+        words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
+        return words_freq[:n]
 
     def __stemming_text(self, text):
         text_tokenized = word_tokenize(text)
@@ -115,7 +122,7 @@ class EventCategoryPrediction(object):
 
 
     def train(self):
-        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.10, random_state=True)
+        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.15, random_state=True)
 
         classificator = Pipeline([('vect', CountVectorizer(ngram_range=(1, 1))),
                                   ('tfidf', TfidfTransformer(use_idf=True)),
@@ -145,8 +152,8 @@ class EventCategoryPrediction(object):
     def predict(self, query):
         query = self.__cleanning_text(query)
         query = self.__stemming_text(query)
-
-        regex = re.compile(r'predict-event__category-model-\d{8}-\d{6}\.joblib$')
+            
+        regex = re.compile(r'predict-event__cmoategory-model-\d{8}-\d{6}\.joblib$')
         last_file = max(filter(regex.search, os.listdir('./')))
 
         classificator = load(last_file)
@@ -164,10 +171,47 @@ class EventCategoryPrediction(object):
                      ]
             print(output)
             return output
+        
+        
+    def most_popular_words(self, n=300):
+        self.base = self.base.loc[(self.base['description'].notna()) & (self.base['label_b'].notna())]
+        self.X = self.base['name'].str.cat(self.base[['description']], sep=' ', na_rep='').values.astype(str)
+        self.y = self.base.loc[:, 'label_b'].values.astype(str)
 
-# 
-# predictModel = EventCategoryPrediction()
-# predictModel.clean()
-# predictModel.train()
+        descriptions_cleanned = []
+        for description in self.X:
+            descriptions_cleanned.append(self.__cleanning_text(description))
+        X = self.__get_top_n_words(descriptions_cleanned, n)
+        
+        most_popular = []
+        for x in X[0:n]:
+            most_popular.append(x[0])
+        return most_popular
+
+        
+    def get_best_params(self):
+        classificator = Pipeline([('vect', CountVectorizer(ngram_range=(1, 1))),
+                                  ('tfidf', TfidfTransformer(use_idf=True)),
+                                  ('clf-svm', SGDClassifier(alpha=0.001, loss='modified_huber', penalty='elasticnet', max_iter=1000))])
+        
+        from sklearn.model_selection import GridSearchCV
+        parameters_svm = {'vect__ngram_range': [(1, 1), (1, 2)],
+                          'tfidf__use_idf': (True, False),
+                          'clf-svm__alpha': (0.01, 0.001, 0.0001),
+                          'clf-svm__penalty': ( 'l2', 'l1', 'elasticnet'),
+                          'clf-svm__max_iter': ( 5, 1000),  
+                          'clf-svm__loss': ('log', 'modified_huber')}
+        
+        gs_clf_svm = GridSearchCV(classificator, parameters_svm, n_jobs=-1)
+        
+        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.15, random_state=True)
+        
+        gs_classificator = gs_clf_svm.fit(X_train, y_train)
+        return gs_classificator.best_params_
+
+ 
+predictModel = EventCategoryPrediction()
+predictModel.clean()
+#predictModel.train()
 #
-# predictModel.predict('Workshop: EMPATIA para liderança disruptiva.  <br>Como impulsionar ideias, engajamento e inovação.<br>Objetivo do Workshop?<br>Estimular a responsabilidade pessoal para desenvolvimento de pessoas através da valorização de idéias, estímulo a empatia e reforço da confiança relações de parceria do grupo. Através de metodologias inovadoras e criativas baseados nos princípios do Art of Hosting - Arte de Anfitriar -, o maior objetivo é estimular profissionais a desenvolverem em si e no outro a responsabilidade, autonomia e confiança para criarem novas ideias, inovar e buscar oportunidades de melhoria contínua, trazendo alto valor ao trabalho final executado pela organização. Questionar e minimizar paradigmas que dificultem relacionamentos para que o colaborador assuma a postura de protagonista e responsável por gerar resultados em seu entorno e busca de melhoria continua. Aprender a estimular a inteligência coletiva que surge da colaboração de muitos indivíduos em suas diversidades.<br>O que você vai aprender?  <br>Você vai aprender como construir um clima de confiança que conecta e facilita os processo de trabalho, melhora a comunicação e promove a colaboração. Transmitir confiança e credibilidade em suas relações e assim criar ambientes de cooperação saudáveis, construtivos e produtivos, ampliando a resolução de problemas, a inovação e o engajamento de equipes. <br>Conteúdo programático e módulos:<br>- Conceitos de liderança disruptiva, colaboração e inteligência emocional<br>- Propósito e valores individuais X organizacionais<br>- Autoconhecimento e quebra de paradigmas  - precisamos falar sobre autonomia, controle e confiança<br>- Mindfulness e liderança <br>- Colaboração gera resultados práticos? <br>- Metodologia World Café <br>- Ambientes de confiança e inovação<br>A quem se destina? <br>Líderes e funcionários que queiram desenvolver habilidades de liderança e criar ambientes de colaboração, inovação e confiança entre suas equipe<br>Instrutora: <br>Semadar Marques - Escritora, palestrante e uma estudiosa do comportamento humano, com doze anos de experiência e mais de 500 palestras ministradas. Facilitadora de aprendizagens sobre Empatia e Liderança Colaborativa, sou analista em Inteligência Emocional pela Six Seconds Emotional Intelligence (SEI), com diversas formações em desenvolvimento emocional. Também sou umas das 30 facilitadoras no Brasil do método Heal Your Life®, criado e disseminado no mundo inteiro pela escritora Louise Hay. <br>Vasta formação e experiência na área, ministrando palestras, conferências e workshops sobre estes temas por todo o pais. Mas gosta mesmo de se apresentar falando sobre sua capacidade de facilitar conversas que despertem reflexões profundas e questionamentos internos, criando equipes mais colaborativas e criativas, estimulando conexões saudáveis e incentivando-as a desafiar suas crenças e serem melhores a cada dia. <br>Tem como maiores influências Daniel Goleman, autor da teoria da Inteligência Emocional, Marshal Rosemberg, criador do conceito de Comunicação Não Violenta e Brene Brown, pesquisadora e conferencista americana que estuda conexões humanas e nossa habilidade de empatia. Também colunista do Portal RHevista RH e tem textos publicados em diversos sites e jornais de todo o Brasil, dentre eles a Folha de São Paulo, a Revista Donna do Jornal Zero Hora e a Associação Brasileira de Recursos Humanos - ABRH Brasil. <br>Data: 03/04/2019<br>Horário: 19h às 22h<br>Local: CC100 Av. Cristóvão Colombo, 100 – Floresta – Porto Alegre.<br>Carga horária: 3 horas<br>Informações: contato@eventsoffice.com.br ou WhatsApp (51) 984328121. ')
+#predictModel.predict('<span>Nossa Feira aterriza novamente na Casa de Cultura Mario Quintana como um grande mercado do alternativo, vintage e cultural.<br>Como sempre teremos expositores dos mais variados, um som gostoso e nostálgico e algumas atrações!<br><br>A arara convidada desta vez fica por conta da querida Carol Morandi que traz sua linha de peças em crochê, a Carol Morandi Handmade Crochet, marca local que também irá fazer um desfile pocket em nosso evento!<br><br>Na finaleira não podia faltar o agito dos Teachers Trio na pista, tocando o melhor da Jovem Guarda! Pedida mais que confirmada!<br><br>Não perde!<br><br>***Vai ser em <br>14/04 na Casa de Cultura Mario Quintana, Travessa dos Catavento<br>das 13h às 19h<br><br>ENTRADA FRANCA<br><br>***16h Desfile pocket da marca Carol Morandi Handmade Crochet<br><br>***17h show com a banda Teachers Trio<br><br>/////Em caso de chuva o evento será transferido\\\\\<br><br>Tem uma marca, trabalho artístico, brechó e que expor?<br>Entra em contato conosco pelo<br>mercadodepulgaspoa@gmail.com e manda teu portfólio!<br><br>*Breve mais informações S2<br></span>')

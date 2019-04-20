@@ -53,125 +53,111 @@ module.exports = function(controller) {
     },
     {
       id: 5,
-      name: "<b>Festa Nacional da Uva</b>",
-      imageUrl: "./festa-da-uva.jpeg",
-      description:
-        "É uma das maiores festas do Brasil com shows de artistas como Anitta e Molejo. Ocorre em Caxias do Sul, cidade da serra gaúcha com colonização italiana e produção de vinho."
-    },
-    {
-      id: 6,
       name: "<b>Feira do Aeromovel</b>",
       imageUrl: "./feira-do-aeromovel.jpeg",
       description:
         "A feira acontece de frente para a Orla do Guaíba, na praça do antigo Aeromovel. Um público lindo ocupando a praça, expositores de marcas locais, gastronomia, cultura, arte e cidadania."
     },
     {
-      id: 7,
+      id: 6,
       name: "<b>Feira Vegana Noturna</b>",
       imageUrl: "./feira-vegana-noturna.jpeg",
       description:
         "Feira com produtos veganos que ocorre no bairro Bom Fim durante a noite."
     },
     {
-      id: 8,
+      id: 7,
       name: "<b>Madrugadão Virada Nerd</b>",
       imageUrl: "./virada-nerd.jpeg",
       description:
         "Duas madrugadas no final de semana com pizzas e jogos de tabuleiro para se divertir com amigos."
     },
     {
-      id: 9,
+      id: 8,
       name: "<b>Arruaça</b>",
       imageUrl: "./arruaca.jpeg",
       description:
         "Festa de rua das mina, das mana e das mona. DJs gurias tocando house e techno no centro da cidade, na rua."
     },
     {
-      id: 10,
+      id: 9,
       name: "<b>Mindfulness no Pôr do Sol</b>",
       imageUrl: "./mindfulness-por-do-sol.jpeg",
       description:
         "Venha participar da meditação de Atenção Plena e desfrutar de um momento de presença e desenvolvimento de tranquilidade, contemplando nosso belo cartão postal na Orla do Guaíba."
     },
     {
-      id: 11,
+      id: 10,
       name: "<b>Trilha da Fortaleza no Parque de Itapuã</b>",
       imageUrl: "./trilha-da-fortaleza.jpeg",
       description:
         "Localizado a 57 km da capital, o Parque de Itapuã, protege a última amostra dos ecossistemas com campos, matas, dunas, lagoas, praias e morros às margens do lago Guaíba e da laguna dos Patos."
     },
     {
-      id: 12,
+      id: 11,
       name: "<b>Exposição Cecily Brown</b>",
       imageUrl: "./exposicao-cecily-brown.jpeg",
       description:
         "Cecily Brown é uma das artistas de maior destaque na pintura contemporânea mundial."
     },
     {
-      id: 13,
-      name: "<b>Festiqueijo</b>",
-      imageUrl: "./festiqueijo.jpeg",
-      description:
-        "É considerado um dos melhores festivais gastronômicos da Serra Gaúcha, oferecendo aos visitantes queijos e vinhos, tudo à vontade e acompanhado de shows típicos locais e regionais."
-    },
-    {
-      id: 14,
+      id: 12,
       name: "<b>Saint Patrick's Day</b>",
       imageUrl: "./patricks-day.jpeg",
       description:
         "Mais de 70 Torneiras de chopp artesanal, espaços temáticos, caça ao tesouro com prêmios de vale tatto, chopp e tickets de food trucks. "
     },
     {
-      id: 15,
+      id: 13,
       name: "<b>Feira Me Gusta</b>",
       imageUrl: "./feira-me-gusta.jpeg",
       description:
         "Brechó, arte, gastronomia, música e boa convivência se encontraram sob a sombra de muitas árvores, em bancos e pelos passeios da Praça Isabel."
     },
     {
-      id: 16,
+      id: 14,
       name: "<b>Hackatown Mobilidade</b>",
       imageUrl: "./hackatown-mobilidade.jpeg",
       description:
         "Dividido em três dias imersivos, o Hackatown é um espaço de cocriação de soluções para a mobilidade urbana de Porto Alegre em participação com a prefeitura e PUCRS."
     },
     {
-      id: 17,
+      id: 15,
       name: "<b>Fennda na rua</b>",
       imageUrl: "./fennda.jpeg",
       description:
         "Festa de rua das mona, das mana e das mina. Techno, house e funk é o que toca. O dresscode é ir de nude."
     },
     {
-      id: 18,
+      id: 16,
       name: "<b>Yoga na Redenção</b>",
       imageUrl: "./yoga-redencao.jpeg",
       description:
         "Qualquer pessoa pode participar, não importa a idade, sexo, peso do corpo, crença ou religião, basta a vontade de praticar."
     },
     {
-      id: 19,
+      id: 17,
       name: "<b>Caminhada em São José dos Ausentes</b>",
       imageUrl: "./caminhada-sao-jose.jpeg",
       description:
         "São José dos Ausentes é conhecida pela beleza de suas paisagens, seus rios e cachoeiras. O ponto mais alto do Rio Grande do Sul, fica próximo ao Canion do Montenegro e com uma altitude de 1403m."
     },
     {
-      id: 20,
+      id: 18,
       name: "<b>Teatro Frida Kahlo À Revolução</b>",
       imageUrl: "./frida-kahlo.jpeg",
       description:
         "Livremente inspirada na vida e obra da poderosa pintora mexicana com dramaturgia  e trilha sonora originais."
     },
     {
-      id: 21,
+      id: 19,
       name: "<b>Serenata Iluminada na Redenção</b>",
       imageUrl: "./serenata-iluminada.jpeg",
       description:
         "Levamos velas, lanternas, instrumentos musicais e manifestações culturais para fazer um encontro que mistura alegria, expressão e reflexão sobre o bom uso dos espaços públicos."
     },
     {
-      id: 22,
+      id: 20,
       name: "<b>Picnic Cultural no Museu</b>",
       imageUrl: "./picnic-museu.jpeg",
       description:
@@ -612,7 +598,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[4] = "-1";
-                pitchFestaDaUva(res, convo);
+                pitchFeiraAeromovel(res, convo);
                 convo.next();
               }
             },
@@ -620,7 +606,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[4] = "1";
-                pitchFestaDaUva(res, convo);
+                pitchFeiraAeromovel(res, convo);
                 convo.next();
               }
             },
@@ -628,7 +614,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[4] = "0";
-                pitchFestaDaUva(res, convo);
+                pitchFeiraAeromovel(res, convo);
                 convo.next();
               }
             },
@@ -647,7 +633,7 @@ module.exports = function(controller) {
       };
 
       // 5
-      const pitchFestaDaUva = function(res, convo) {
+      const pitchFeiraAeromovel = function(res, convo) {
         convo.say({
           text: events[5].name,
           typingDelay: typing.normal,
@@ -688,7 +674,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[5] = "-1";
-                pitchFeiraAeromovel(res, convo);
+                pitchFeiraNoturnaVegana(res, convo);
                 convo.next();
               }
             },
@@ -696,7 +682,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[5] = "1";
-                pitchFeiraAeromovel(res, convo);
+                pitchFeiraNoturnaVegana(res, convo);
                 convo.next();
               }
             },
@@ -704,7 +690,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[5] = "0";
-                pitchFeiraAeromovel(res, convo);
+                pitchFeiraNoturnaVegana(res, convo);
                 convo.next();
               }
             },
@@ -723,7 +709,7 @@ module.exports = function(controller) {
       };
 
       // 6
-      const pitchFeiraAeromovel = function(res, convo) {
+      const pitchFeiraNoturnaVegana = function(res, convo) {
         convo.say({
           text: events[6].name,
           typingDelay: typing.normal,
@@ -764,7 +750,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[6] = "-1";
-                pitchFeiraNoturnaVegana(res, convo);
+                pitchMadrugadaoNerd(res, convo);
                 convo.next();
               }
             },
@@ -772,7 +758,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[6] = "1";
-                pitchFeiraNoturnaVegana(res, convo);
+                pitchMadrugadaoNerd(res, convo);
                 convo.next();
               }
             },
@@ -780,7 +766,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[6] = "0";
-                pitchFeiraNoturnaVegana(res, convo);
+                pitchMadrugadaoNerd(res, convo);
                 convo.next();
               }
             },
@@ -799,7 +785,7 @@ module.exports = function(controller) {
       };
 
       // 7
-      const pitchFeiraNoturnaVegana = function(res, convo) {
+      const pitchMadrugadaoNerd = function(res, convo) {
         convo.say({
           text: events[7].name,
           typingDelay: typing.normal,
@@ -840,7 +826,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[7] = "-1";
-                pitchMadrugadaoNerd(res, convo);
+                pitchArruaca(res, convo);
                 convo.next();
               }
             },
@@ -848,7 +834,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[7] = "1";
-                pitchMadrugadaoNerd(res, convo);
+                pitchArruaca(res, convo);
                 convo.next();
               }
             },
@@ -856,7 +842,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[7] = "0";
-                pitchMadrugadaoNerd(res, convo);
+                pitchArruaca(res, convo);
                 convo.next();
               }
             },
@@ -875,7 +861,7 @@ module.exports = function(controller) {
       };
 
       // 8
-      const pitchMadrugadaoNerd = function(res, convo) {
+      const pitchArruaca = function(res, convo) {
         convo.say({
           text: events[8].name,
           typingDelay: typing.normal,
@@ -916,7 +902,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[8] = "-1";
-                pitchArruaca(res, convo);
+                pitchMindfullnessPorDoSol(res, convo);
                 convo.next();
               }
             },
@@ -924,7 +910,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[8] = "1";
-                pitchArruaca(res, convo);
+                pitchMindfullnessPorDoSol(res, convo);
                 convo.next();
               }
             },
@@ -932,7 +918,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[8] = "0";
-                pitchArruaca(res, convo);
+                pitchMindfullnessPorDoSol(res, convo);
                 convo.next();
               }
             },
@@ -951,7 +937,7 @@ module.exports = function(controller) {
       };
 
       // 9
-      const pitchArruaca = function(res, convo) {
+      const pitchMindfullnessPorDoSol = function(res, convo) {
         convo.say({
           text: events[9].name,
           typingDelay: typing.normal,
@@ -992,7 +978,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[9] = "-1";
-                pitchMindfullnessPorDoSol(res, convo);
+                pitchTrilhaDaFortaleza(res, convo);
                 convo.next();
               }
             },
@@ -1000,7 +986,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[9] = "1";
-                pitchMindfullnessPorDoSol(res, convo);
+                pitchTrilhaDaFortaleza(res, convo);
                 convo.next();
               }
             },
@@ -1008,7 +994,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[9] = "0";
-                pitchMindfullnessPorDoSol(res, convo);
+                pitchTrilhaDaFortaleza(res, convo);
                 convo.next();
               }
             },
@@ -1027,7 +1013,7 @@ module.exports = function(controller) {
       };
 
       // 10
-      const pitchMindfullnessPorDoSol = function(res, convo) {
+      const pitchTrilhaDaFortaleza = function(res, convo) {
         convo.say({
           text: events[10].name,
           typingDelay: typing.normal,
@@ -1068,7 +1054,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[10] = "-1";
-                pitchTrilhaDaFortaleza(res, convo);
+                pitchCecilyBrown(res, convo);
                 convo.next();
               }
             },
@@ -1076,7 +1062,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[10] = "1";
-                pitchTrilhaDaFortaleza(res, convo);
+                pitchCecilyBrown(res, convo);
                 convo.next();
               }
             },
@@ -1084,7 +1070,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[10] = "0";
-                pitchTrilhaDaFortaleza(res, convo);
+                pitchCecilyBrown(res, convo);
                 convo.next();
               }
             },
@@ -1103,7 +1089,7 @@ module.exports = function(controller) {
       };
 
       // 11
-      const pitchTrilhaDaFortaleza = function(res, convo) {
+      const pitchCecilyBrown = function(res, convo) {
         convo.say({
           text: events[11].name,
           typingDelay: typing.normal,
@@ -1144,7 +1130,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[11] = "-1";
-                pitchCecilyBrown(res, convo);
+                pitchPatricksDay(res, convo);
                 convo.next();
               }
             },
@@ -1152,7 +1138,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[11] = "1";
-                pitchCecilyBrown(res, convo);
+                pitchPatricksDay(res, convo);
                 convo.next();
               }
             },
@@ -1160,7 +1146,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[11] = "0";
-                pitchCecilyBrown(res, convo);
+                pitchPatricksDay(res, convo);
                 convo.next();
               }
             },
@@ -1179,7 +1165,7 @@ module.exports = function(controller) {
       };
 
       // 12
-      const pitchCecilyBrown = function(res, convo) {
+      const pitchPatricksDay = function(res, convo) {
         convo.say({
           text: events[12].name,
           typingDelay: typing.normal,
@@ -1220,7 +1206,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[12] = "-1";
-                pitchFestiqueijo(res, convo);
+                pitchFeiraMeGusta(res, convo);
                 convo.next();
               }
             },
@@ -1228,7 +1214,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[12] = "1";
-                pitchFestiqueijo(res, convo);
+                pitchFeiraMeGusta(res, convo);
                 convo.next();
               }
             },
@@ -1236,7 +1222,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[12] = "0";
-                pitchFestiqueijo(res, convo);
+                pitchFeiraMeGusta(res, convo);
                 convo.next();
               }
             },
@@ -1255,7 +1241,7 @@ module.exports = function(controller) {
       };
 
       // 13
-      const pitchFestiqueijo = function(res, convo) {
+      const pitchFeiraMeGusta = function(res, convo) {
         convo.say({
           text: events[13].name,
           typingDelay: typing.normal,
@@ -1296,7 +1282,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[13] = "-1";
-                pitchPatricksDay(res, convo);
+                pitchHackatownMobilidade(res, convo);
                 convo.next();
               }
             },
@@ -1304,7 +1290,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[13] = "1";
-                pitchPatricksDay(res, convo);
+                pitchHackatownMobilidade(res, convo);
                 convo.next();
               }
             },
@@ -1312,7 +1298,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[13] = "0";
-                pitchPatricksDay(res, convo);
+                pitchHackatownMobilidade(res, convo);
                 convo.next();
               }
             },
@@ -1331,7 +1317,7 @@ module.exports = function(controller) {
       };
 
       // 14
-      const pitchPatricksDay = function(res, convo) {
+      const pitchHackatownMobilidade = function(res, convo) {
         convo.say({
           text: events[14].name,
           typingDelay: typing.normal,
@@ -1372,7 +1358,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[14] = "-1";
-                pitchFeiraMeGusta(res, convo);
+                pitchFennda(res, convo);
                 convo.next();
               }
             },
@@ -1380,7 +1366,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[14] = "1";
-                pitchFeiraMeGusta(res, convo);
+                pitchFennda(res, convo);
                 convo.next();
               }
             },
@@ -1388,7 +1374,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[14] = "0";
-                pitchFeiraMeGusta(res, convo);
+                pitchFennda(res, convo);
                 convo.next();
               }
             },
@@ -1407,7 +1393,7 @@ module.exports = function(controller) {
       };
 
       // 15
-      const pitchFeiraMeGusta = function(res, convo) {
+      const pitchFennda = function(res, convo) {
         convo.say({
           text: events[15].name,
           typingDelay: typing.normal,
@@ -1448,7 +1434,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[15] = "-1";
-                pitchHackatownMobilidade(res, convo);
+                pitchYogaRedencao(res, convo);
                 convo.next();
               }
             },
@@ -1456,7 +1442,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[15] = "1";
-                pitchHackatownMobilidade(res, convo);
+                pitchYogaRedencao(res, convo);
                 convo.next();
               }
             },
@@ -1464,7 +1450,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[15] = "0";
-                pitchHackatownMobilidade(res, convo);
+                pitchYogaRedencao(res, convo);
                 convo.next();
               }
             },
@@ -1483,7 +1469,7 @@ module.exports = function(controller) {
       };
 
       // 16
-      const pitchHackatownMobilidade = function(res, convo) {
+      const pitchYogaRedencao = function(res, convo) {
         convo.say({
           text: events[16].name,
           typingDelay: typing.normal,
@@ -1524,7 +1510,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[16] = "-1";
-                pitchFennda(res, convo);
+                pitchCaminhadaSaoJose(res, convo);
                 convo.next();
               }
             },
@@ -1532,7 +1518,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[16] = "1";
-                pitchFennda(res, convo);
+                pitchCaminhadaSaoJose(res, convo);
                 convo.next();
               }
             },
@@ -1540,7 +1526,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[16] = "0";
-                pitchFennda(res, convo);
+                pitchCaminhadaSaoJose(res, convo);
                 convo.next();
               }
             },
@@ -1559,7 +1545,7 @@ module.exports = function(controller) {
       };
 
       // 17
-      const pitchFennda = function(res, convo) {
+      const pitchCaminhadaSaoJose = function(res, convo) {
         convo.say({
           text: events[17].name,
           typingDelay: typing.normal,
@@ -1600,7 +1586,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[17] = "-1";
-                pitchYogaRedencao(res, convo);
+                pitchFridaKahlo(res, convo);
                 convo.next();
               }
             },
@@ -1608,7 +1594,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[17] = "1";
-                pitchYogaRedencao(res, convo);
+                pitchFridaKahlo(res, convo);
                 convo.next();
               }
             },
@@ -1616,7 +1602,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[17] = "0";
-                pitchYogaRedencao(res, convo);
+                pitchFridaKahlo(res, convo);
                 convo.next();
               }
             },
@@ -1635,7 +1621,7 @@ module.exports = function(controller) {
       };
 
       // 18
-      const pitchYogaRedencao = function(res, convo) {
+      const pitchFridaKahlo = function(res, convo) {
         convo.say({
           text: events[18].name,
           typingDelay: typing.normal,
@@ -1676,7 +1662,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[18] = "-1";
-                pitchCaminhadaSaoJose(res, convo);
+                pitchSerenataIluminada(res, convo);
                 convo.next();
               }
             },
@@ -1684,7 +1670,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[18] = "1";
-                pitchCaminhadaSaoJose(res, convo);
+                pitchSerenataIluminada(res, convo);
                 convo.next();
               }
             },
@@ -1692,7 +1678,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[18] = "0";
-                pitchCaminhadaSaoJose(res, convo);
+                pitchSerenataIluminada(res, convo);
                 convo.next();
               }
             },
@@ -1711,7 +1697,7 @@ module.exports = function(controller) {
       };
 
       // 19
-      const pitchCaminhadaSaoJose = function(res, convo) {
+      const pitchSerenataIluminada = function(res, convo) {
         convo.say({
           text: events[19].name,
           typingDelay: typing.normal,
@@ -1752,7 +1738,7 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[19] = "-1";
-                pitchFridaKahlo(res, convo);
+                pitchPicnicMuseu(res, convo);
                 convo.next();
               }
             },
@@ -1760,7 +1746,7 @@ module.exports = function(controller) {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[19] = "1";
-                pitchFridaKahlo(res, convo);
+                pitchPicnicMuseu(res, convo);
                 convo.next();
               }
             },
@@ -1768,7 +1754,7 @@ module.exports = function(controller) {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[19] = "0";
-                pitchFridaKahlo(res, convo);
+                pitchPicnicMuseu(res, convo);
                 convo.next();
               }
             },
@@ -1787,7 +1773,7 @@ module.exports = function(controller) {
       };
 
       // 20
-      const pitchFridaKahlo = function(res, convo) {
+      const pitchPicnicMuseu = function(res, convo) {
         convo.say({
           text: events[20].name,
           typingDelay: typing.normal,
@@ -1828,172 +1814,20 @@ module.exports = function(controller) {
               pattern: patterns.negative,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[20] = "-1";
-                pitchSerenataIluminada(res, convo);
-                convo.next();
+                predictPersona(res, convo);
               }
             },
             {
               pattern: patterns.positive,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[20] = "1";
-                pitchSerenataIluminada(res, convo);
-                convo.next();
+                predictPersona(res, convo);
               }
             },
             {
               pattern: patterns.neutral,
               callback: function(res, convo) {
                 convo.vars.personaSuitability[20] = "0";
-                pitchSerenataIluminada(res, convo);
-                convo.next();
-              }
-            },
-            {
-              default: true,
-              callback: function(res, convo) {
-                bot.reply(
-                  convo.source_message,
-                  "Eita! Perguntei se você gostaria de ir no evento acima, é só responder <b>sim</b>, <b>talvez</b> ou <b>não</b>"
-                );
-                convo.silentRepeat();
-              }
-            }
-          ]
-        );
-      };
-
-      // 21
-      const pitchSerenataIluminada = function(res, convo) {
-        convo.say({
-          text: events[21].name,
-          typingDelay: typing.normal,
-          files: [
-            {
-              url: events[21].imageUrl,
-              image: true
-            }
-          ]
-        });
-
-        convo.say({
-          text: events[21].description,
-          typingDelay: typing.normal
-        });
-
-        convo.ask(
-          {
-            text: "<b>Você iria neste evento?</b>",
-            typingDelay: typing.normal,
-            quick_replies: [
-              {
-                title: "Iria certo",
-                payload: "Iria certo"
-              },
-              {
-                title: "Talvez",
-                payload: "Talvez"
-              },
-              {
-                title: "Não me vejo indo",
-                payload: "Não iria"
-              }
-            ]
-          },
-          [
-            {
-              pattern: patterns.negative,
-              callback: function(res, convo) {
-                convo.vars.personaSuitability[21] = "-1";
-                pitchPicnicMuseu(res, convo);
-                convo.next();
-              }
-            },
-            {
-              pattern: patterns.positive,
-              callback: function(res, convo) {
-                convo.vars.personaSuitability[21] = "1";
-                pitchPicnicMuseu(res, convo);
-                convo.next();
-              }
-            },
-            {
-              pattern: patterns.neutral,
-              callback: function(res, convo) {
-                convo.vars.personaSuitability[21] = "0";
-                pitchPicnicMuseu(res, convo);
-                convo.next();
-              }
-            },
-            {
-              default: true,
-              callback: function(res, convo) {
-                bot.reply(
-                  convo.source_message,
-                  "Eita! Perguntei se você gostaria de ir no evento acima, é só responder <b>sim</b>, <b>talvez</b> ou <b>não</b>"
-                );
-                convo.silentRepeat();
-              }
-            }
-          ]
-        );
-      };
-
-      // 22
-      const pitchPicnicMuseu = function(res, convo) {
-        convo.say({
-          text: events[22].name,
-          typingDelay: typing.normal,
-          files: [
-            {
-              url: events[22].imageUrl,
-              image: true
-            }
-          ]
-        });
-
-        convo.say({
-          text: events[22].description,
-          typingDelay: typing.normal
-        });
-
-        convo.ask(
-          {
-            text: "<b>Você iria neste evento?</b>",
-            typingDelay: typing.normal,
-            quick_replies: [
-              {
-                title: "Iria certo",
-                payload: "Iria certo"
-              },
-              {
-                title: "Talvez",
-                payload: "Talvez"
-              },
-              {
-                title: "Não me vejo indo",
-                payload: "Não iria"
-              }
-            ]
-          },
-          [
-            {
-              pattern: patterns.negative,
-              callback: function(res, convo) {
-                convo.vars.personaSuitability[22] = "-1";
-                predictPersona(res, convo);
-              }
-            },
-            {
-              pattern: patterns.positive,
-              callback: function(res, convo) {
-                convo.vars.personaSuitability[22] = "1";
-                predictPersona(res, convo);
-              }
-            },
-            {
-              pattern: patterns.neutral,
-              callback: function(res, convo) {
-                convo.vars.personaSuitability[22] = "0";
                 predictPersona(res, convo);
               }
             },
