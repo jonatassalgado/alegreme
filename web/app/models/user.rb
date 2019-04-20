@@ -140,7 +140,7 @@ class User < ApplicationRecord
 
     data = access_token.info
     user = User.where(email: data['email']).first
-    personas = YAML.load(Base64.urlsafe_decode64(params['state']))
+    personas = YAML.load(Base64.urlsafe_decode64(params['state'])) if params['eme']
 
     unless user
       user = User.create(
