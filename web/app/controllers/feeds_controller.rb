@@ -7,7 +7,7 @@ class FeedsController < ApplicationController
   
     if params[:personas] || params[:categories]
       @events = {
-        user: Event.with_personas(params[:personas]).with_categories(params[:categories]).active.limit(15).uniq
+        user: Event.with_personas(params[:personas]).with_categories(params[:categories]).in_days(params[:ocurrences]).active.order_by_date.limit(15).uniq
       }      
     else
       @events = {

@@ -3,7 +3,7 @@ import { MDCChipSet, MDCChipSetFoundation } from "@material/chips";
 import { stringify } from "query-string";
 
 export default class FilterController extends Controller {
-  static targets = ["filterContainer", "personas", "categories"];
+  static targets = ["filterContainer", "personas", "categories", "ocurrences"];
 
   initialize() {
     console.log(this);
@@ -23,9 +23,14 @@ export default class FilterController extends Controller {
         return chipElement.innerText.toLowerCase();
     });
 
-    Promise.all([selectedPersonaValues, selectedCategoryValues])
+    let selectedOcurrencesValues = self.ocurrencesController.MDCChipSet.selectedChipIds.map(function(chipId) {
+        const chipElement = self.ocurrencesController.chipContainerTarget.querySelector(`#${chipId}`);
+        return chipElement.innerText.toLowerCase();
+    });
+
+    Promise.all([selectedPersonaValues, selectedCategoryValues, selectedOcurrencesValues])
       .then(function(resultsArray) {
-        const urlWithFilters = stringify({personas: resultsArray[0], categories: resultsArray[1]}, {arrayFormat: 'bracket'});
+        const urlWithFilters = stringify({personas: resultsArray[0], categories: resultsArray[1], ocurrences: resultsArray[2]}, {arrayFormat: 'bracket'});
         Turbolinks.visit(`${location.origin}?${urlWithFilters}`);
       })
       .catch(function(err) {
@@ -42,6 +47,11 @@ export default class FilterController extends Controller {
 
   get categoriesController() {
     return this.application.getControllerForElementAndIdentifier(this.categoriesTarget, 'chip')
+  }
+
+
+  get ocurrencesController() {
+    return this.application.getControllerForElementAndIdentifier(this.ocurrencesTarget, 'chip')
   }
 
 }
