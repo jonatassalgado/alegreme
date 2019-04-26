@@ -1,6 +1,47 @@
+<% if current_user %>
 <h2 class="mdc-typography--<%= type == :large ? 'headline1' : 'headline2' %>">
-  <%= title %>
+    Eventos recomendados para você 
+<% else %>
+
+<h2 class="mdc-typography--<%= type == :large ? 'headline1' : 'headline2' %>">
+
+  <div data-controller="filter" data-target="filter.filterContainer" class="me-filter">
+    <div data-controller="chip" data-chip-type="personas" data-target="chip.chipContainer filter.personas" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
+      
+      <% Event.active.collect(&:personas_primary_name).uniq.each do |persona| %>
+        <div data-target="chip.chip" data-action="click->chip#select" class="me-chip mdc-chip <%= params[:personas] and params[:personas].include?(persona) ? 'mdc-chip--selected' : nil %>">
+          <div class="mdc-chip__checkmark" >
+            <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+              <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+            </svg>
+          </div>
+          <div class="mdc-chip__text">
+            <%= persona.capitalize %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    nas categorias 
+
+    <div data-controller="chip" data-chip-type="categories" data-target="chip.chipContainer filter.categories" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
+      <% Event.with_personas(params[:personas]).collect(&:categories_primary_name).uniq.each do |category| %>
+        <div data-target="chip.chip" data-action="click->chip#select" class="me-chip mdc-chip <%= params[:categories] and params[:categories].include?(category) ? 'mdc-chip--selected' : nil %>">
+          <div class="mdc-chip__checkmark" >
+            <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+              <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+            </svg>
+          </div>
+          <div class="mdc-chip__text">
+            <%= category.capitalize %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>.
 </h2>
+
+<% end %>
 
 <div class="me-feed__divider"></div>
 
@@ -8,7 +49,7 @@
   <div class="mdc-layout-grid__inner">
     <% events.each do |event| %>
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
-      <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventDetails" data-event-favorited="<%= @actual_user.taste_events_saved? event.id if @actual_user %>" data-event-identifier="<%= event.id %>">
+      <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventDetails" data-event-favorited="<%= current_or_guest_user.taste_events_saved? event.id if current_user %>" data-event-identifier="<%= event.id %>">
         <a href="<%= event.url %>">
           <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
             <div class="me-card__overlay"></div>
@@ -30,14 +71,14 @@
 
         <div class="me-card__like-button" data-action="click->event#like">
           <div data-target="event.like">
-            <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if @actual_user.taste_events_saved?(event.id) %>" style="display: none" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
+            <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(event.id) %>" style="display: none" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
               <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
               <i class="material-icons mdc-icon-button__icon">star_border</i>
             </button>
           </div>
         </div>
 
-        <% if @actual_user.admin? %>
+        <% if current_or_guest_user.admin? %>
         <div class="mdc-card__actions">
           <div class="mdc-card__action-icons">
             <div class="mdc-menu-surface--anchor">

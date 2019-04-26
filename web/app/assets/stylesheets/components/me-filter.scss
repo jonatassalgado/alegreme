@@ -1,0 +1,20 @@
+@import "../variables";
+@import "@material/top-app-bar/_mixins";
+
+.me-filter {
+  display: inline;
+
+  &__label {
+    align-self: center;
+    margin: 0 6px 0 0px;
+    font-weight: 400;
+  }
+
+  & .mdc-chip-set .mdc-chip {
+    margin: 4px 0;
+  }
+
+  & .mdc-chip--selected {
+    background-color: $brand-color;
+  }
+}

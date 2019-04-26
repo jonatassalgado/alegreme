@@ -18,12 +18,72 @@ class Event < ApplicationRecord
     where("(personas -> 'primary' ->> 'name') IN (?, ?, ?, ?)", user.personas_primary_name, user.personas_secondary_name, user.personas_tertiary_name, user.personas_quartenary_name)
   }
 
+  scope 'saved_by_user', -> (user) {
+    where(id: user.taste_events_saved)
+  }
+
+  scope 'with_personas', -> (personas) {
+    if !personas || personas.empty?
+      Event.active
+    else
+      where("(personas -> 'primary' ->> 'name') IN (?)", personas)
+    end
+  }
+
+  scope 'with_categories', -> (categories) {
+    if !categories || categories.empty?
+      Event.active
+    else
+      where("(categories -> 'primary' ->> 'name') IN (?)", categories)
+    end
+  }
+
+  scope 'feed_for_user', -> (user, filters = {categories: ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton", "palestra", "celebração", "workshop", "oficina", "aula de dança", "literatura", "festival", "acadêmico", "gastronômico", "brecho", "profissional"]}) {
+
+    count_primary_persona = Event.find_by_sql(["(SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (categories -> 'primary' ->> 'name') IN (?) AND (personas -> 'primary' ->> 'score')::numeric >= 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') LIMIT 5)", user.personas_primary_name, filters[:categories], DateTime.now - 1]).count
+    count_secondary_persona = Event.find_by_sql(["(SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (categories -> 'primary' ->> 'name') IN (?) AND (personas -> 'primary' ->> 'score')::numeric >= 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') LIMIT 4)", user.personas_secondary_name, filters[:categories], DateTime.now - 1]).count + (5 - count_primary_persona)
+    count_tertiary_persona = Event.find_by_sql(["(SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (categories -> 'primary' ->> 'name') IN (?) AND  (personas -> 'primary' ->> 'score')::numeric >= 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') LIMIT 2)", user.personas_tertiary_name, filters[:categories], DateTime.now - 1]).count + (((4 + count_secondary_persona) - count_primary_persona) >= 0 ? (4 + count_secondary_persona) - count_primary_persona : 0)
+    count_quartenary_persona = Event.find_by_sql(["(SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (categories -> 'primary' ->> 'name') IN (?) AND (personas -> 'primary' ->> 'score')::numeric >= 0.35 AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') LIMIT 2)", user.personas_quartenary_name, filters[:categories], DateTime.now - 1]).count + (((2 + count_tertiary_persona) - count_secondary_persona) >= 0 ? (2 + count_tertiary_persona) - count_secondary_persona : 0)
+
+    find_by_sql(["
+      SELECT events.* FROM
+      ((SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND (categories -> 'primary' ->> 'name') NOT IN ('curso') AND (categories -> 'primary' ->> 'name') IN (?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') ORDER BY (personas -> 'primary' ->> 'score')::numeric DESC LIMIT ?)
+      UNION
+      (SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND (categories -> 'primary' ->> 'name') NOT IN ('curso') AND (categories -> 'primary' ->> 'name') IN (?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') ORDER BY (personas -> 'primary' ->> 'score')::numeric DESC LIMIT ?)
+      UNION
+      (SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND (categories -> 'primary' ->> 'name') NOT IN ('curso') AND (categories -> 'primary' ->> 'name') IN (?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') ORDER BY (personas -> 'primary' ->> 'score')::numeric DESC LIMIT ?)
+      UNION
+      (SELECT events.* FROM (SELECT DISTINCT ON (events.id) * FROM events) events WHERE ((personas -> 'primary' ->> 'name') = ? AND (ocurrences -> 'dates' ->> 0)::timestamptz > ?) AND (categories -> 'primary' ->> 'name') NOT IN ('curso') AND (categories -> 'primary' ->> 'name') IN (?) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false') ORDER BY (personas -> 'primary' ->> 'score')::numeric DESC LIMIT ?))
+      AS events ORDER BY (ocurrences -> 'dates' ->> 0) ASC  LIMIT 15",
+      user.personas_primary_name,
+      DateTime.now - 1,
+      filters[:categories],
+      count_primary_persona,
+      user.personas_secondary_name,
+      DateTime.now - 1,
+      filters[:categories],
+      count_secondary_persona,
+      user.personas_tertiary_name,
+      DateTime.now - 1,
+      filters[:categories],
+      count_tertiary_persona,
+      user.personas_quartenary_name,
+      DateTime.now - 1,
+      filters[:categories],
+      count_quartenary_persona])
+  }
+
   scope 'order_by_score', -> {
     order("(personas -> 'primary' ->> 'score')::numeric DESC")
   }
 
-  scope 'order_by_date', -> {
-    order("(ocurrences -> 'dates' ->> 0) ASC")
+  scope 'order_by_date', -> (direction = 'ASC') {
+    case direction
+    when 'ASC' 
+      order("(ocurrences -> 'dates' ->> 0) ASC") 
+    when 'DESC' 
+      order("(ocurrences -> 'dates' ->> 0) DESC")
+    end
   }
 
   scope 'by_persona', -> (persona) { 
