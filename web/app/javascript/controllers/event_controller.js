@@ -47,8 +47,6 @@ export default class EventController extends Controller {
       type: self.isFavorited,
       url: `/events/${self.identifier}/favorite`,
       success: function(response){
-        // self.likeCount = response
-        self.likeActive = response
         self.data.set("favorited", response.favorited)
         if (self.favoriteController) {
           self.favoriteController.updateList = response.all_favorited
@@ -87,10 +85,5 @@ export default class EventController extends Controller {
     likeElementsCounts.forEach( count => { count.textContent = value.event_likes_count } )
   }
 
-
-  set likeActive(value) {
-
-
-  }
 
 }

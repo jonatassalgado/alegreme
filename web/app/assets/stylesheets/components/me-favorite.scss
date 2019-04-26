@@ -108,6 +108,20 @@ $gutter: 6px;
       font-weight: 300;
       font-size: 11px;
     }
+
+    &__remove {
+      width: 6px;
+      height: 6px;
+      background: $icon-background-color;
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      display: none;
+      z-index: 1;
+    }
   }
 
   & .me-icon__group {

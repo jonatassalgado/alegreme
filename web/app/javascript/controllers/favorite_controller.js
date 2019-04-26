@@ -3,7 +3,7 @@ import { Controller } from "stimulus"
 import { html, render } from 'lit-html';
 
 export default class FavoriteController extends Controller {
-  static targets = [ "event", "list", "title", "date", "scrollLeft", "scrollRight", "header" ];
+  static targets = [ "event", "list", "title", "date", "remove", "scrollLeft", "scrollRight", "header" ];
 
   initialize() {
     this.removeRepeatedDates = true;
@@ -20,24 +20,6 @@ export default class FavoriteController extends Controller {
   scrollRight(event) {
     const amount = this.listTarget.offsetWidth;
     this.listTarget.scrollBy(amount, 0);
-  }
-
-
-  showEventName(event) {
-    const self = event.target;
-    const parent = event.target.parentElement;
-
-    parent.querySelector('.me-card__title').style.display = "inline";
-    if (parent.querySelector('.me-card__date')) {
-      parent.querySelector('.me-card__date').style.display = "none";
-    }
-
-    self.addEventListener("mouseout", function() {
-      parent.querySelector('.me-card__title').style.display = "none";
-      if (parent.querySelector('.me-card__date')) {
-        parent.querySelector('.me-card__date').style.display = "inline";
-      }
-    })
   }
 
 
@@ -61,14 +43,17 @@ export default class FavoriteController extends Controller {
         <div class="mdc-layout-grid__inner">
         ${events.map((event) => html `
           <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
-            <div class="me-card mdc-card event-${event.id}" data-target="favorite.event" data-action="mouseover->favorite#showEventName">
+            <div data-controller="favorite-events" data-target="favorite-events.event" data-action="mouseover->favorite-events#showEventDetails" class="me-card mdc-card event-${event.id}" data-favorite-events-identifier="${event.id}">
+              <div data-target="favorite-events.remove" data-action="click->favorite-events#remove" class="me-card__remove">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="m55.7 52.7c6.2 6.7 12.4 13.5 18.6 20.2 2.2 2.4-1.4 5.9-3.5 3.5-6.2-6.7-12.3-13.4-18.5-20.1-6.1 6.8-12.3 13.4-18.4 20.1-2.2 2.4-5.7-1.2-3.5-3.5 6.2-6.7 12.4-13.5 18.6-20.2-6.2-6.7-12.4-13.5-18.6-20.2-2.2-2.4 1.4-5.9 3.5-3.5 6.1 6.6 12.3 13.3 18.4 20 6.2-6.7 12.3-13.4 18.5-20.1 2.2-2.4 5.7 1.2 3.5 3.5-6.2 6.8-12.4 13.5-18.6 20.3z"/></svg>
+              </div>
               <a href="${event.url}">
                 <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('${event.cover_url}')">
                 </div>
-                <div class="me-card__date" data-target="favorite.date">
+                <div class="me-card__date" data-target="favorite-events.date">
                   ${event.day_of_week}
                 </div>
-                <div class="me-card__title mdc-card__title" data-target="favorite.title" style="display: none">
+                <div class="me-card__title mdc-card__title" data-target="favorite-events.title" style="display: none">
                     <span>${event.name}</span>
                 </div>
               </a>
