@@ -77,6 +77,18 @@ class Event < ApplicationRecord
     order("(personas -> 'primary' ->> 'score')::numeric DESC")
   }
 
+  scope 'in_days', -> (ocurrences) {
+    return nil unless ocurrences
+
+    if ocurrences.include?('hoje') && ocurrences.include?('amanhã')
+      where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) BETWEEN ? AND ?", DateTime.now.yday, DateTime.now.yday + 1)
+    elsif ocurrences.include? 'hoje'
+      where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) = ?", DateTime.now.yday)
+    elsif ocurrences.include? 'amanhã'
+      where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) = ?", DateTime.now.yday + 1)
+    end
+  }
+
   scope 'order_by_date', -> (direction = 'ASC') {
     case direction
     when 'ASC' 

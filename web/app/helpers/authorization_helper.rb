@@ -41,12 +41,10 @@ module AuthorizationHelper
   # called (once) when the user logs in, insert any code your application needs
   # to hand off from guest_user to current_user.
   def logging_in
-    # For example:
-    # guest_comments = guest_user.comments.all
-    # guest_comments.each do |comment|
-      # comment.user_id = current_user.id
-      # comment.save!
-    # end
+    if current_user.features.empty?
+      current_user.features = guest_user.features
+      current_user.save   
+    end
   end
 
   def create_guest_user

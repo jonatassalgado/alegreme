@@ -136,46 +136,48 @@ class User < ApplicationRecord
 
 
   def self.from_omniauth(access_token, params)
-    puts params
-
+ 
     data = access_token.info
     user = User.where(email: data['email']).first
-    personas = YAML.load(Base64.urlsafe_decode64(params['state'])) if params['eme']
+    personas = YAML.load(Base64.urlsafe_decode64(params['state']))
 
-    unless user
-      user = User.create(
-        email: data['email'],
-        password: Devise.friendly_token[0, 20],
-        features:{  
-          psychographic: {
-            personas: {
-              primary: {
-                name: personas['primary']['name'],
-                score: personas['primary']['score']
-              },
-              secondary: {
-                name: personas['secondary']['name'],
-                score: personas['secondary']['score']
-              },
-              tertiary: {
-                name: personas['tertiary']['name'],
-                score: personas['tertiary']['score']
-              },
-              quartenary: {
-                name: personas['quartenary']['name'],
-                score: personas['quartenary']['score']
-              },
-              assortment: { 
-                finished: personas['assortment']['finished'], 
-                finished_at: personas['assortment']['finished_at'] 
-              } 
-            }
+    if personas['assortment']['finished']
+      psychographic = {  
+        psychographic: {
+          personas: {
+            primary: {
+              name: personas['primary']['name'],
+              score: personas['primary']['score']
+            },
+            secondary: {
+              name: personas['secondary']['name'],
+              score: personas['secondary']['score']
+            },
+            tertiary: {
+              name: personas['tertiary']['name'],
+              score: personas['tertiary']['score']
+            },
+            quartenary: {
+              name: personas['quartenary']['name'],
+              score: personas['quartenary']['score']
+            },
+            assortment: { 
+              finished: personas['assortment']['finished'], 
+              finished_at: personas['assortment']['finished_at'] 
+            } 
           }
         }
-      )
+      }
     end
 
-    return user
+    if user && personas['assortment']['finished']
+      return user.update_attributes(features: psychographic)
+    elsif personas['assortment']['finished']
+      return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: psychographic)
+    else
+      return user
+    end
+
   end
 
 end
