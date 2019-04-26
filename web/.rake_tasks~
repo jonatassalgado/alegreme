@@ -26,6 +26,11 @@ db:structure:dump
 db:structure:load
 db:version
 dev:cache
+geocode:all
+geocoder:maxmind:geolite:download
+geocoder:maxmind:geolite:extract
+geocoder:maxmind:geolite:insert
+geocoder:maxmind:geolite:load
 initializers
 log:clear
 middleware

@@ -4,6 +4,8 @@ namespace :scrapy do
   require 'open-uri'
   require 'net/http'
 
+  require_relative '../geographic'
+
   task facebook: :environment do
     puts "Parsear JSON ****************************************"
 
@@ -16,7 +18,7 @@ namespace :scrapy do
     data.each do |item|
 
       puts "Criar lugar ****************************************"
-      geocode = Geocoder.search(item['address']).first if item['address']
+      geocode = Geocoder.search(Alegreme::Geographic.get_cep_from_address(item['address'])).first if item['address']
 
       @place = Place.create_with({
         name: item['place'],
@@ -24,7 +26,8 @@ namespace :scrapy do
           address: item['address'],
           latlon: geocode.try(:coordinates),
           neighborhood: geocode.try(:suburb),
-          city: geocode.try(:city)
+          city: item['address'] ? item['address'][/Porto Alegre/] : nil,
+          cep: Alegreme::Geographic.get_cep_from_address(item['address'])
         }
         }).find_or_create_by(name: item['place'])
 
@@ -77,7 +80,8 @@ namespace :scrapy do
               address: item['address'],
               latlon: geocode.try(:coordinates),
               neighborhood: geocode.try(:suburb),
-              city: geocode.try(:city)
+              city: item['address'] ? item['address'][/Porto Alegre/] : nil,
+              cep: Alegreme::Geographic.get_cep_from_address(item['address'])
             }
           ).find_or_create_by(source_url: item['source_url'])
         else

@@ -18,6 +18,7 @@ namespace :ml do
       if item
         item[8] = (event.personas['outlier'] == 'true' || event.personas['primary']['score'].to_f < 0.90) ? nil : event.personas['primary']['name']
         item[9] = (event.categories['outlier'] == 'true' || event.categories['primary']['score'].to_f < 0.90) ? nil : event.categories['primary']['name']
+        item[10] = event.geographic['neighborhood']
       else
         csv << [
                 event.name,
@@ -30,7 +31,7 @@ namespace :ml do
                 event.source_url,
                 (event.personas['outlier'] == 'true' || event.personas['primary']['score'].to_f < 0.90) ? nil : event.personas['primary']['name'],
                 (event.categories['outlier'] == 'true' || event.categories['primary']['score'].to_f < 0.90) ? nil : event.categories['primary']['name'],
-                nil,
+                event.geographic['neighborhood'],
                 nil]
       end
 

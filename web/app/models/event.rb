@@ -191,6 +191,13 @@ class Event < ApplicationRecord
     self.categories["outlier"] = value
   end
 
+  def neighborhood
+    self.geographic["neighborhood"]
+  end
+
+  def neighborhood= value
+    self.geographic["neighborhood"] = value
+  end
 
   def cover_url
     if self.cover.attached?
