@@ -21,7 +21,33 @@ import {MDCFormField} from '@material/form-field';
 import {MDCCheckbox} from '@material/checkbox';
 import {MDCMenu} from '@material/menu';
 
+Turbolinks.scroll = {};
 
+document.addEventListener("turbolinks:load", ()=> {
+  
+  const elements = document.querySelectorAll("[data-turbolinks-scroll]");
+  console.log(elements)
+
+  elements.forEach(function(element){
+    
+    element.addEventListener("click", ()=> {
+      Turbolinks.scroll['top'] = document.scrollingElement.scrollTop;
+    });
+    
+    element.addEventListener("submit", ()=> {
+      Turbolinks.scroll['top'] = document.scrollingElement.scrollTop;
+    });
+    
+  });
+  
+  if (Turbolinks.scroll['top']) {
+    document.scrollingElement.scrollTo(0, Turbolinks.scroll['top']);
+  }
+  
+  console.log(Turbolinks.scroll)
+
+  Turbolinks.scroll = {};
+});
 
 
 document.addEventListener("turbolinks:load", function() {
@@ -38,7 +64,7 @@ document.addEventListener("turbolinks:load", function() {
   const icons = document.querySelectorAll('.mdc-icon-button');
 
   buttons.forEach((button) => {
-    button = new MDCRipple(button);
+    new MDCRipple(button);
   })
 
   icons.forEach((icon) => {
@@ -51,14 +77,17 @@ document.addEventListener("turbolinks:load", function() {
   // Textfield
   const fields = document.querySelectorAll('.mdc-text-field');
   fields.forEach((field) => {
-    const textField = new MDCTextField(field);
+    const chatInput = field.querySelector('[data-target="chat.input"]');
+    if (chatInput) { 
+      new MDCTextField(field);
+    };
   })
 
 
   // Select
   const selects = document.querySelectorAll('.mdc-select');
   selects.forEach((select) => {
-    const textField = new MDCSelect(select);
+    new MDCSelect(select);
   })
 
 

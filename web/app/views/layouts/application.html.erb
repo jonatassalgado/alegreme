@@ -8,6 +8,7 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -30,30 +31,26 @@
         </section>
         <section class="mdc-top-app-bar__section" style="display: flex; width: 65%">
           <div data-controller="chat" data-target="chat.field" class="me-search-field me-search-field mdc-text-field">
-            <iron-icon data-target="chat.botIcon" icon="search" aria-hidden="true" class="search-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="197.403 624.831 51.688 40.571" width="51.688" height="40.571"><g><path d=" M 207.376 630.618 L 207.376 630.618 Q 210.952 625.738 217.285 625.517 L 217.285 625.517 L 217.285 625.517 Q 223.617 625.296 226.442 629.88 L 226.442 629.88 L 226.442 629.88 Q 230.093 625.07 236.641 624.841 L 236.641 624.841 L 236.641 624.841 Q 247.722 624.454 248.202 638.198 L 248.202 638.198 L 249.091 663.67 L 238.01 664.057 L 237.103 638.081 L 237.103 638.081 Q 236.94 633.404 233.126 633.537 L 233.126 633.537 L 233.126 633.537 Q 230.392 633.633 228.81 635.777 L 228.81 635.777 L 229.807 664.344 L 218.798 664.728 L 217.891 638.752 L 217.891 638.752 Q 217.727 634.075 213.842 634.211 L 213.842 634.211 L 213.842 634.211 Q 211.251 634.301 209.525 636.451 L 209.525 636.451 L 210.523 665.017 L 199.514 665.402 L 198.569 638.346 L 197.403 627.652 L 205.928 626.274 L 207.089 630.628 L 207.376 630.618 Z " fill="rgb(0,0,0)"/></g></svg>
-            </iron-icon>
-            <input data-target="chat.input" type="text" placeholder="Oi, tem alguem ai?" id="text-field-shape-one" class="mdc-text-field__input">
-            <div data-target="chat.botConversation" class="me-search-field__bot">
-              <iframe  id="botkit_client" src="//localhost:3030/chat.html"></iframe>
-            </div>
             <% unless current_user.try('personas_assortment_finished?') %>
+              <iron-icon data-target="chat.botIcon" icon="search" aria-hidden="true" class="search-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="197.403 624.831 51.688 40.571" width="51.688" height="40.571"><g><path d=" M 207.376 630.618 L 207.376 630.618 Q 210.952 625.738 217.285 625.517 L 217.285 625.517 L 217.285 625.517 Q 223.617 625.296 226.442 629.88 L 226.442 629.88 L 226.442 629.88 Q 230.093 625.07 236.641 624.841 L 236.641 624.841 L 236.641 624.841 Q 247.722 624.454 248.202 638.198 L 248.202 638.198 L 249.091 663.67 L 238.01 664.057 L 237.103 638.081 L 237.103 638.081 Q 236.94 633.404 233.126 633.537 L 233.126 633.537 L 233.126 633.537 Q 230.392 633.633 228.81 635.777 L 228.81 635.777 L 229.807 664.344 L 218.798 664.728 L 217.891 638.752 L 217.891 638.752 Q 217.727 634.075 213.842 634.211 L 213.842 634.211 L 213.842 634.211 Q 211.251 634.301 209.525 636.451 L 209.525 636.451 L 210.523 665.017 L 199.514 665.402 L 198.569 638.346 L 197.403 627.652 L 205.928 626.274 L 207.089 630.628 L 207.376 630.618 Z " fill="rgb(0,0,0)"/></g></svg>
+              </iron-icon>
+              <input data-target="chat.input" type="text" placeholder="Oi, tem alguem ai?" id="text-field-shape-one" class="mdc-text-field__input">
+              <div data-target="chat.botConversation" class="me-search-field__bot">
+                <iframe  id="botkit_client" src="//localhost:3030/chat.html"></iframe>
+              </div>
               <div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
                 <span>Sim, estou aqui</span>
               </div>
+              <script src="//localhost:3030/embed.js"></script>
+              <script>
+                  var options = {
+                    id: <%= current_or_guest_user.try(:id) %>
+                  }; 
+                  Botkit.boot(options);
+              </script>
+              <link rel="stylesheet" href="//localhost/css/embed.css" />
             <% end %>
-            <script src="//localhost:3030/embed.js"></script>
-            <script>
-              <% if current_user %>
-                var options = {
-                  id: <%= current_user.try(:id) %>
-                }; 
-              <% else %>
-                var options = {}; 
-              <% end %>
-              Botkit.boot(options);
-            </script>
-            <link rel="stylesheet" href="//localhost/css/embed.css" />
 
           </div>
         </section>

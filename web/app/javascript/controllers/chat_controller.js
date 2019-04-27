@@ -6,7 +6,9 @@ export default class SearchFieldController extends Controller {
   static targets = [ "chat", "field", "input", "botIcon", "botConversation", "reply" ];
 
   initialize() {
-    this.insertButton();
+    if (this.hasInputTarget) {
+      this.insertButton();
+    }
   }
 
 

@@ -6,8 +6,10 @@ export default class FavoriteController extends Controller {
   static targets = [ "event", "list", "title", "date", "remove", "scrollLeft", "scrollRight", "header" ];
 
   initialize() {
-    this.removeRepeatedDates = true;
-    this.hideScrollButtons = true;
+    if (this.hasListTarget) {
+      this.removeRepeatedDates = true;
+      this.hideScrollButtons = true;
+    }
   }
 
 

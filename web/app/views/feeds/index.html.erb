@@ -75,16 +75,11 @@
 
 <div class="me-feed">
   <div id="indicados" class="me-feed__section">
-    <%= render partial: "recomendations", locals: { events: @events[:user], title: "Eventos recomendados para", type: :large } %>
+    <% if current_user.personas_assortment_finished? %>
+      <%= render partial: "section", locals: { events: @events[:user], title: "Eventos recomendados para você", type: :large, filters: false } %>
+      <%= render partial: "section", locals: { events: @events[:categories], title: "Eventos ", type: :large, filters: { personas: false, categories: true, occurences: true } } %>
+    <% else %>
+      <%= render partial: "section", locals: { events: @events[:user], title: "Eventos recomendados para", type: :large, filters: { personas: true, categories: true, occurences: true } } %>
+    <% end %>
   </div>
-  <%
-=begin%>
- <div class="me-feed__section">
-    <%= render partial: "section", locals: { events: @events[:show], title: "Shows que talvez você goste", type: :small } unless @events[:show].empty? %>
-  </div>
-  <div class="me-feed__section">
-    <%= render partial: "section", locals: { events: @events[:party], title: "Festas que talvez você goste", type: :small } unless @events[:party].empty? %>
-  </div> 
-<%
-=end%>
 </div>

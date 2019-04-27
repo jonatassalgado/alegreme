@@ -6,36 +6,51 @@ export default class FilterController extends Controller {
   static targets = ["filterContainer", "personas", "categories", "ocurrences"];
 
   initialize() {
-    console.log(this);
+  
   }
 
 
   filter() {
     const self = this;
+    let promises = [];
 
-    let selectedPersonaValues = self.personasController.MDCChipSet.selectedChipIds.map(function(chipId) {
-        const chipElement = self.personasController.chipContainerTarget.querySelector(`#${chipId}`);
-        return chipElement.innerText.toLowerCase();
-    });
-
-    let selectedCategoryValues = self.categoriesController.MDCChipSet.selectedChipIds.map(function(chipId) {
-        const chipElement = self.categoriesController.chipContainerTarget.querySelector(`#${chipId}`);
-        return chipElement.innerText.toLowerCase();
-    });
-
-    let selectedOcurrencesValues = self.ocurrencesController.MDCChipSet.selectedChipIds.map(function(chipId) {
-        const chipElement = self.ocurrencesController.chipContainerTarget.querySelector(`#${chipId}`);
-        return chipElement.innerText.toLowerCase();
-    });
-
-    Promise.all([selectedPersonaValues, selectedCategoryValues, selectedOcurrencesValues])
-      .then(function(resultsArray) {
-        const urlWithFilters = stringify({personas: resultsArray[0], categories: resultsArray[1], ocurrences: resultsArray[2]}, {arrayFormat: 'bracket'});
-        Turbolinks.visit(`${location.origin}?${urlWithFilters}`);
-      })
-      .catch(function(err) {
-        console.log(err)
+    if (this.hasPersonasTarget) {
+      let selectedPersonaValues = self.personasController.MDCChipSet.selectedChipIds.map(function(chipId) {
+          const chipElement = self.personasController.chipContainerTarget.querySelector(`#${chipId}`);
+          return chipElement.innerText.toLowerCase();
       });
+
+      promises[0] = selectedPersonaValues;
+    }
+
+    if (this.hasCategoriesTarget) {
+      let selectedCategoryValues = self.categoriesController.MDCChipSet.selectedChipIds.map(function(chipId) {
+          const chipElement = self.categoriesController.chipContainerTarget.querySelector(`#${chipId}`);
+          return chipElement.innerText.toLowerCase();
+      });
+
+      promises[1] = selectedCategoryValues;
+    }
+
+    if (this.hasOcurrencesTarget) {
+      let selectedOcurrencesValues = self.ocurrencesController.MDCChipSet.selectedChipIds.map(function(chipId) {
+          const chipElement = self.ocurrencesController.chipContainerTarget.querySelector(`#${chipId}`);
+          return chipElement.innerText.toLowerCase();
+      });
+
+      promises[2] = selectedOcurrencesValues;
+    }
+
+    if (promises.length) {
+      Promise.all(promises)
+        .then(function(resultsArray) {
+          const urlWithFilters = stringify({personas: resultsArray[0], categories: resultsArray[1], ocurrences: resultsArray[2]}, {arrayFormat: 'bracket'});
+          Turbolinks.visit(`${location.origin}?${urlWithFilters}`, { action: "replace" });
+        })
+        .catch(function(err) {
+          console.log(err)
+        });
+    }
 
   }
 

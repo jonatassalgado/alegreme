@@ -5,7 +5,12 @@ class FeedsController < ApplicationController
 
   def index
   
-    if params[:personas] || params[:categories]
+    if current_user && current_user.personas_assortment_finished?
+      @events = {
+        user: Event.feed_for_user(current_user),
+        categories: Event.with_categories(params[:categories]).in_days(params[:ocurrences]).active.order_by_date.limit(15).uniq
+      }
+    elsif params[:personas] || params[:categories]
       @events = {
         user: Event.with_personas(params[:personas]).with_categories(params[:categories]).in_days(params[:ocurrences]).active.order_by_date.limit(15).uniq
       }      

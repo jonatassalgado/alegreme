@@ -67,7 +67,8 @@ font-weight: 100
 body {
   display: flex;
   height: 100vh;
-  overflow: hidden;
+  min-height: 2000px;
+  // overflow: hidden;
   margin: 0;
   font-family: Roboto;
   font-size: 14px;
@@ -81,9 +82,9 @@ a {
 
 .mdc-drawer-app-content {
   flex: auto;
-  overflow: auto;
+  // overflow: auto;
   position: relative;
-  background: #fafafa;
+  // background: #fafafa;
 }
 
 .main-content {
