@@ -50,13 +50,17 @@
                   Botkit.boot(options);
               </script>
               <link rel="stylesheet" href="//localhost/css/embed.css" />
+            <% else %>
+              <form data-target="chat.form" data-action="submit->chat#search" method="get" name="search" action="" style="width: 100%"> 
+                <input data-target="chat.input" type="text" placeholder="O que você está buscando hoje?" id="text-field-shape-one" class="mdc-text-field__input">
+                <input type="submit" style="display: none;" />
+              </form>
             <% end %>
-
           </div>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
           <% if current_user %>
-            <%= link_to current_user.email, edit_user_path(current_user) %>
+            <%= link_to current_user.email.split(/@|&|\+/).first, edit_user_path(current_user) %>
             (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)
           <% else %>
             <%= link_to "Entrar com o Google", user_google_oauth2_omniauth_authorize_path %>

@@ -26,7 +26,6 @@ Turbolinks.scroll = {};
 document.addEventListener("turbolinks:load", ()=> {
   
   const elements = document.querySelectorAll("[data-turbolinks-scroll]");
-  console.log(elements)
 
   elements.forEach(function(element){
     
@@ -43,8 +42,6 @@ document.addEventListener("turbolinks:load", ()=> {
   if (Turbolinks.scroll['top']) {
     document.scrollingElement.scrollTo(0, Turbolinks.scroll['top']);
   }
-  
-  console.log(Turbolinks.scroll)
 
   Turbolinks.scroll = {};
 });

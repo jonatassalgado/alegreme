@@ -5,7 +5,11 @@ class FeedsController < ApplicationController
 
   def index
   
-    if current_user && current_user.personas_assortment_finished?
+    if params[:q]
+      @events = {
+        user: Event.search(params[:q].downcase, highlight: true, limit: 20)
+      }
+    elsif current_user && current_user.personas_assortment_finished?
       @events = {
         user: Event.feed_for_user(current_user),
         categories: Event.with_categories(params[:categories]).in_days(params[:ocurrences]).active.order_by_date.limit(15).uniq

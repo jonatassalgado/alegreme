@@ -1,18 +1,21 @@
 class Event < ApplicationRecord
   require "day_of_week"
-
+  
   include Rails.application.routes.url_helpers
-
+  
   belongs_to :place
+  
   has_and_belongs_to_many :organizers
-
+  
   has_one_attached :cover
-
+  
   accepts_nested_attributes_for :place, :organizers
-
+  
   delegate :name, :address, to: :place, prefix: true, allow_nil: true
-
+  
   jsonb_accessor :ocurrences, dates: [:datetime, array: true, default: []]
+  
+  searchkick language: "portuguese", highlight: [:name, :description]
 
   scope 'for_user', -> (user) {
     where("(personas -> 'primary' ->> 'name') IN (?, ?, ?, ?)", user.personas_primary_name, user.personas_secondary_name, user.personas_tertiary_name, user.personas_quartenary_name)

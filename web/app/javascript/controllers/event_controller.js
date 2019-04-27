@@ -12,7 +12,7 @@ export default class EventController extends Controller {
     // new MDCMenu(this.moreButtonTarget);
   }
 
-  showEventDetails(event) {
+  showEventDetails() {
     const self = this
 
     self.nameTarget.style.display = "none";

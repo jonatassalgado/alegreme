@@ -3,7 +3,7 @@ import { Controller } from "stimulus"
 import { html, render } from 'lit-html';
 
 export default class SearchFieldController extends Controller {
-  static targets = [ "chat", "field", "input", "botIcon", "botConversation", "reply" ];
+  static targets = [ "chat", "field", "form", "input", "botIcon", "botConversation", "reply" ];
 
   initialize() {
     if (this.hasInputTarget) {
@@ -12,13 +12,13 @@ export default class SearchFieldController extends Controller {
   }
 
 
-  showBot(event) {
+  showBot() {
     this.overlayVisibility = 'visible';
     this.conversationVisibility = 'visible';
   }
 
 
-  insertButton(event) {
+  insertButton() {
     const textSize = this.inputTarget.placeholder.length;
     const buttonDistance = (textSize * 12) + 'px';
 
@@ -26,6 +26,15 @@ export default class SearchFieldController extends Controller {
       this.replyTarget.style.display = 'block';
       this.replyTarget.style.left = buttonDistance;
     }
+  }
+
+
+  search(event) {
+    console.log(event);
+    event.preventDefault();
+
+    const query = this.inputTarget.value;
+    Turbolinks.visit(`${location.origin}?q=${query.toLowerCase()}`);
   }
 
 
