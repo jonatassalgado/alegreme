@@ -6,7 +6,7 @@ import {MDCMenu} from '@material/menu';
 
 
 export default class EventController extends Controller {
-  static targets = [ "event", "name", "place", "date", "like", "likeButton", "likeCount", "moreButton", "menu" ];
+  static targets = [ "event", "overlay", "name", "place", "date", "like", "likeButton", "likeCount", "moreButton", "menu" ];
 
   initialize() {
     // new MDCMenu(this.moreButtonTarget);
@@ -18,13 +18,17 @@ export default class EventController extends Controller {
     self.nameTarget.style.display = "none";
     self.placeTarget.style.display = "inline";
     self.dateTarget.style.display = "inline";
-    self.likeButtonTarget.style.display = "inline";
+    if (self.data.get('favorited') == 'false') {
+      self.likeButtonTarget.style.display = "inline";
+    }
 
     self.eventTarget.addEventListener("mouseout", function() {
       self.nameTarget.style.display = "inline";
       self.placeTarget.style.display = "none";
       self.dateTarget.style.display = "none";
-      self.likeButtonTarget.style.display = "none";
+      if (self.data.get('favorited') == 'false') {
+        self.likeButtonTarget.style.display = "none";
+      }
     })
   }
 

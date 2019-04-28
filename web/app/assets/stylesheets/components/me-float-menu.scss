@@ -1,12 +1,13 @@
-@import '../_variables';
+@import '../variables';
 
 .me-float-menu {
   position: fixed;
   top: 64px;
   bottom: 90px;
-  left: 0;
+  left: 6px;
   z-index: 1;
   will-change: transform;
+  color: $icon-dark-color;
 
   &__nav {
     display: flex;
@@ -35,6 +36,7 @@
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 20px;
+    cursor: pointer;
   }
 
   &__label {

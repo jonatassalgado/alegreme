@@ -1,6 +1,6 @@
 @import '@material/card/_mixins';
 @import '../_mixins';
-@import '../_variables';
+@import '../variables';
 
 $gutter: 6px;
 
@@ -11,7 +11,7 @@ $gutter: 6px;
 
     &::before {
       content: close-quote;
-      background: linear-gradient(to left, transparent , #fafafa );
+      background: linear-gradient(to left, transparent , $background-color );
       width: 126px;
       height: 90%;
       position: absolute;
@@ -25,7 +25,7 @@ $gutter: 6px;
 
     &::after {
       content: close-quote;
-      background: linear-gradient(to right, transparent , #fafafa );
+      background: linear-gradient(to right, transparent , $background-color );
       width: 126px;
       height: 90%;
       position: absolute;

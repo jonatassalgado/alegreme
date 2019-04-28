@@ -7,6 +7,12 @@ $description-color: $font-secondary-color;
   min-height: 176px;
   position: relative;
 
+  &:hover {
+    & .me-card__overlay {
+      // background: linear-gradient(to top, #ffffff38, transparent), linear-gradient(-45deg, #00000042 25%, transparent 35%)
+    }
+  }
+
   &__primary {
     padding: 1rem;
 
@@ -66,7 +72,7 @@ $description-color: $font-secondary-color;
 
   &__like-button {
     position: absolute;
-    top: 50px;
+    top: 40px;
     right: 6px;
   }
 

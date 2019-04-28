@@ -2,7 +2,6 @@
 @import '@material/icon-button/_mixins';
 
 $fill-color: #fafafa;
-$icon-color: $brand-color;
 
 .me-feed {
   .me-icon-button {
@@ -12,10 +11,16 @@ $icon-color: $brand-color;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
       @include mdc-icon-button-ink-color($color: $icon-color);
-      @include mdc-icon-button-size($width: 28px, $height: 28px, $padding: 4px);
-
+      @include mdc-icon-button-size($width: 28px, $height: 28px, $padding: 6px);
+      
       &:hover {
-        box-shadow: 0 0 0 3px darken($color: $fill-color, $amount: 25%);
+        // box-shadow: 0 0 0 3px $brand-color;
+        // background: $brand-color;
+      }
+      
+      &--on {
+        @include mdc-icon-button-ink-color($color: $brand-color);
+        // background: $brand-color;
       }
     }
   }
