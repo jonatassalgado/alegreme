@@ -5,8 +5,10 @@
     <div class="mdc-layout-grid__inner">
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
 
-        <a href="<%= @event.url %>/edit">Editar</a>
-        <a href="/train">Treinar</a>
+        <% if current_user.admin? %>
+          <a href="<%= @event.url %>/edit">Editar</a>
+          <a href="/train">Treinar</a>
+        <% end %>
 
         <div class="me-card mdc-card event-<%= @event.id %>" data-controller="event" data-target="event.event" data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>" data-event-identifier="<%= @event.id %>">
           <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= @event.cover_url %>')">
@@ -26,22 +28,22 @@
               <b>Quando:</b> <%= @event.day_of_week %><br>
               <% if @event.place %>
               <b>Local:</b> <%= @event.place_name %><br>
-              <b>Endereço:</b> <%= @event.place_address %><br>
+              <b>Endereço:</b> <%= @event.geographic['address'] %><br>
               <% end %>
-              <b>Descrição:</b> <%= @event.description.html_safe %><br>
+              <br><br>
+              <%= @event.description.html_safe %><br>
             </div>
           </div>
 
           <div class="me-card__like-button" data-action="click->event#like">
             <div data-target="event.like">
-              <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user and current_user.taste_events_saved?(@event.id) %>" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
-                <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
-                <i class="material-icons mdc-icon-button__icon">star_border</i>
+              <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= '' if current_user and current_user.taste_events_saved?(@event.id) %>" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
+                <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">bookmark</i>
+                <i class="material-icons-sharp mdc-icon-button__icon">bookmark_border</i>
               </button>
             </div>
           </div>
 
-        </div>
       </div>
     </div>
   </div>

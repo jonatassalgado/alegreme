@@ -7,11 +7,11 @@ $fill-color: #fafafa;
   .me-icon-button {
 
     &.mdc-icon-button {
-      background: $fill-color;
+      background: $icon-background-color;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
-      @include mdc-icon-button-ink-color($color: $icon-color);
-      @include mdc-icon-button-size($width: 28px, $height: 28px, $padding: 6px);
+      @include mdc-icon-button-ink-color($color: $icon-light-color);
+      @include mdc-icon-button-size($width: 35px, $height: 35px, $padding: 2px);
       
       &:hover {
         // box-shadow: 0 0 0 3px $brand-color;
@@ -21,6 +21,10 @@ $fill-color: #fafafa;
       &--on {
         @include mdc-icon-button-ink-color($color: $brand-color);
         // background: $brand-color;
+      }
+
+      & .material-icons-sharp {
+        font-size: 35px;
       }
     }
   }

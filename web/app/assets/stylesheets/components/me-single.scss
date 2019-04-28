@@ -1,12 +1,31 @@
-.me-single {
-  margin: 0 200px;
+@import '../variables';
+@import '@material/fab/_mixins';
 
-  .me-card__like-button {
-    top: 220px;
-    right: 15px;
-  }
+
+.me-single {
+  margin: 0 180px;
 
   & a {
-    text-decoration: none
+    text-decoration: underline;
+    color: $link-color;
   }
+
+  .me-card__like-button {
+    top: 195px;
+    right: 10px;
+    position: absolute;
+  }
+
+  .me-card__primary {
+    padding: 2.5rem 1rem 1rem;
+  }
+
+  .mdc-fab {
+    @include mdc-fab-container-color($brand-color);
+  }
+
+  .mdc-typography--body2 {
+    font-weight: 400;
+  }
+
 }

@@ -21,6 +21,7 @@ import {MDCFormField} from '@material/form-field';
 import {MDCCheckbox} from '@material/checkbox';
 import {MDCMenu} from '@material/menu';
 
+
 Turbolinks.scroll = {};
 
 document.addEventListener("turbolinks:load", ()=> {
@@ -58,10 +59,20 @@ document.addEventListener("turbolinks:load", function() {
 
   // Button
   const buttons = document.querySelectorAll('.mdc-button');
+  const fabs = document.querySelectorAll('.mdc-fab');
   const icons = document.querySelectorAll('.mdc-icon-button');
 
   buttons.forEach((button) => {
-    new MDCRipple(button);
+    if (button) {
+      new MDCRipple(button);
+    }
+  })
+
+  
+  fabs.forEach((fab) => {
+    if (fab) {
+      new MDCRipple(fab);
+    }
   })
 
   icons.forEach((icon) => {

@@ -91,8 +91,8 @@
           <div class="me-card__like-button" data-action="click->event#like">
             <div data-target="event.like">
               <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(event.id) %>" style="<%= 'display: none' unless current_user && current_user.taste_events_saved?(event.id) %>" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
-                <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">bookmark</i>
-                <i class="material-icons-sharp mdc-icon-button__icon">bookmark</i>
+                <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
+                <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
               </button>
             </div>
           </div>
