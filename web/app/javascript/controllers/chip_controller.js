@@ -12,7 +12,6 @@ export default class ChipController extends Controller {
   select() {
     const self = this;
 
-    debugger
     this.filterController.filter()
   }
 

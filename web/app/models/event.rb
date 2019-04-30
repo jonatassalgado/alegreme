@@ -216,7 +216,11 @@ class Event < ApplicationRecord
 
   def cover_url
     if self.cover.attached?
-      return rails_blob_path(self.cover, disposition: "attachment", only_path: true)
+      if self.cover.attachment.service_url
+        self.cover.attachment.service_url
+      else
+        return rails_blob_path(self.cover, disposition: "attachment", only_path: true)
+      end
     end
   end
 

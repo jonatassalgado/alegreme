@@ -9,7 +9,7 @@ namespace :scrapy do
   task facebook: :environment do
     puts "Parsear JSON ****************************************"
 
-    files = Dir['../scrapy/alegreme/*']
+    files = Dir['./scrapy/*']
     last_file = (files.select{ |file| file[/events-\d{8}-\d{6}\.json$/] }).max
     current_file = File.read(last_file)
     data = JSON.parse(current_file)
@@ -40,7 +40,7 @@ namespace :scrapy do
       if item['description']
         query = Base64.encode64(item['description'])
         params = { query: query }
-        uri = URI("http://localhost:5000/predict/event")
+        uri = URI("#{ENV['API_URL']}:5000/predict/event")
         uri.query = URI.encode_www_form(params)
         response = Net::HTTP.get_response(uri)
         predict = JSON.parse(response.body) if response.is_a?(Net::HTTPSuccess)
@@ -96,14 +96,14 @@ namespace :scrapy do
         if item['cover_url']
           begin
             cover = open(item['cover_url'])
-            @event.cover.attach(io: cover, filename: "event#{@event.id}.jpg", content_type: "image/jpg")
+            @event.cover.attach(io: cover, filename: "event#{@event.id}.jpg", content_type: "image/jepg", cache_control: 'max-age=600')
           rescue OpenURI::HTTPError => ex
             puts "Erro no download de imagem cover do facebook: #{ex}"
           end
         end
 
         @place.events << @event unless @place.events.include?(@event)
-        puts @event.inspect
+        puts @event.try(:inspect)
       end
 
 

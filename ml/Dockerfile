@@ -1,13 +1,15 @@
 FROM python:3.7.1
 
-ENV app /app
-ENV api $app/api
 
-RUN mkdir $app
+ENV ML_ROOT /var/www/ml
+ENV API_ROOT /var/www/ml/api
+RUN mkdir -p $ML_ROOT
 
-ADD . $app
-RUN pip install -r $app/requirements.txt
+WORKDIR $ML_ROOT
 
+ADD . $ML_ROOT
+RUN pip install -r $ML_ROOT/requirements.txt
 
-WORKDIR $api
+WORKDIR $API_ROOT
+
 CMD python app.py
