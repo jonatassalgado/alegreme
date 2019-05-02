@@ -5,6 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
+import os
 import json
 import dateparser
 import re
@@ -17,7 +18,11 @@ class AlegremePipeline(object):
 
     def open_spider(self, spider):
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        self.file = open('events-' + timestr + '.json', 'wb')
+        if os.environ.get('IS_DOCKER', False):
+            self.file = open('/var/www/scrapy/data/events-' + timestr + '.json', 'wb')
+        else:
+            self.file = open('./items/events-' + timestr + '.json', 'wb')
+
         self.exporter = JsonItemExporter(self.file)
         self.exporter.start_exporting()
 

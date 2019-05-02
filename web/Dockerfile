@@ -58,7 +58,6 @@ ENV RAILS_VERSION 5.2.1
 RUN gem install rails --version "$RAILS_VERSION"
 
 
-
 ENV RAILS_ROOT /var/www/alegreme
 RUN mkdir -p $RAILS_ROOT
 
@@ -81,6 +80,10 @@ ENV RACK_ENV='production'
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install --jobs 20 --retry 5
+
+ENV SCRAPY_ROOT /var/www/scrapy
+RUN mkdir -p "${SCRAPY_ROOT}/data"
+COPY ./scrapy "${SCRAPY_ROOT}/data"
 
 COPY . .
 

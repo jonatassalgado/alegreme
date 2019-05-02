@@ -9,7 +9,11 @@ namespace :scrapy do
   task facebook: :environment do
     puts "Parsear JSON ****************************************"
 
-    files = Dir['./scrapy/*']
+    if ENV['IS_DOCKER'] == 'true'
+      files = Dir['/var/www/scrapy/data/*']
+    else
+      files = Dir['./scrapy/*']
+    end
     last_file = (files.select{ |file| file[/events-\d{8}-\d{6}\.json$/] }).max
     current_file = File.read(last_file)
     data = JSON.parse(current_file)
@@ -96,7 +100,7 @@ namespace :scrapy do
         if item['cover_url']
           begin
             cover = open(item['cover_url'])
-            @event.cover.attach(io: cover, filename: "event#{@event.id}.jpg", content_type: "image/jepg", cache_control: 'max-age=600')
+            @event.cover.attach(io: cover, filename: "event#{@event.id}.jpg", content_type: "image/jpeg")
           rescue OpenURI::HTTPError => ex
             puts "Erro no download de imagem cover do facebook: #{ex}"
           end

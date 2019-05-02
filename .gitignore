@@ -26,6 +26,7 @@ usr/
 web/storage
 structure.sql
 ml/api/__pycache__/
+scrapy/alegreme/__pycache__/
 web/log/
 web/log/development.log
 web/.rake_tasks~

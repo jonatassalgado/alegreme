@@ -1,6 +1,7 @@
 version: '3.1'
 volumes:
   bundle_cache: {}
+  scrapy_shared:
 services:
   app:
     build:
@@ -11,6 +12,7 @@ services:
       - api
       - search
     volumes:
+      - scrapy_shared:/var/www/scrapy/data
       - bundle_cache:/bundle
       - .:/web
     environment:
@@ -22,6 +24,7 @@ services:
       AWS_BUCKET: alegreme-event-cover
       API_URL: http://api
       ELASTICSEARCH_URL: http://search:9200
+      IS_DOCKER: 'true'
     links:
       - api
       - search
@@ -50,7 +53,15 @@ services:
     ports:
         - "5000:5000"
     volumes:
-        - /var/lib/api/data
+        - /var/www/api/data
+  bot:
+    build:
+      context: ./bot
+      dockerfile: ./Dockerfile
+    ports:
+        - "3030:3030"
+    volumes:
+        - /var/www/bot/data
   search:
     build:
       context: ./search
@@ -60,5 +71,21 @@ services:
     ports:
         - "9200:9200"
     volumes:
-        - /var/lib/search/data
+        - /var/www/search/data
+  scrapy:
+    build:
+      context: ./scrapy
+      dockerfile: ./Dockerfile
+    environment:
+        SPLASH_URL: http://splash:8050
+        IS_DOCKER: 'true'
+    depends_on:
+      - splash
+    volumes:
+        - scrapy_shared:/var/www/scrapy/data
+  splash:
+    image: scrapinghub/splash
+    ports:
+      - "8050:8050"
+      - "5023:5023"
 

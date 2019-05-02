@@ -9,6 +9,8 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+
 BOT_NAME = 'alegreme'
 
 SPIDER_MODULES = ['alegreme.spiders']
@@ -17,7 +19,11 @@ NEWSPIDER_MODULE = 'alegreme.spiders'
 
 
 # Splash
-SPLASH_URL = 'http://0.0.0.0:8050'
+if os.environ.get('IS_DOCKER', False):
+   SPLASH_URL = os.environ.get('SPLASH_URL', False)
+else:
+   SPLASH_URL = 'http://0.0.0.0:8050'
+
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
 
