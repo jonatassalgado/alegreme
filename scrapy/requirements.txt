@@ -1,3 +1,4 @@
 scrapy
 scrapy-splash
+scrapy-do
 dateparser

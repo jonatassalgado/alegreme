@@ -83,6 +83,8 @@ services:
       - splash
     volumes:
         - scrapy_shared:/var/www/scrapy/data
+    ports:
+      - "7654:7654"
   splash:
     image: scrapinghub/splash
     ports:

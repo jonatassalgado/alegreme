@@ -12,4 +12,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# CMD ["scrapy", "runspider", "crawler/myspider.py"]
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+EXPOSE 7654
+
+CMD ["scrapy-do", "-n", "scrapy-do"]
