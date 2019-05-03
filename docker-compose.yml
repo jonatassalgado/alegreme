@@ -97,7 +97,7 @@ services:
       - splash
     volumes:
       - scrapy_shared:/var/www/scrapy/data
-      - ./scrapydo
+      - /var/www/scrapy/scrapydo
     ports:
       - "7654:7654"
     restart: always
