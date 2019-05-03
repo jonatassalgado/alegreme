@@ -64,7 +64,7 @@ var Botkit = {
         break;
       case 'reload':
         personas = message.data.params
-        location.assign(`http://localhost:3000/users/auth/google_oauth2?state=${personas}`)
+        location.assign(`http://${process.env.PUBLIC_IP}/users/auth/google_oauth2?state=${personas}`)
         // location.reload();
         break;
       case 'connected':

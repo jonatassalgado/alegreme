@@ -70,6 +70,7 @@ services:
     environment:
       MONGO_URI: mongodb://jon:password@mongo:27017
       PRIVATE_IP: '172.26.14.59'
+      PUBLIC_IP: '3.209.95.87'
     restart: always
     depends_on:
       - mongo
@@ -92,7 +93,7 @@ services:
         SPLASH_URL: http://splash:8050
         IS_DOCKER: 'true'
         PRIVATE_IP: '172.26.14.59'
-        STATIC_IP: '3.209.95.87'
+        PUBLIC_IP: '3.209.95.87'
     depends_on:
       - splash
     volumes:

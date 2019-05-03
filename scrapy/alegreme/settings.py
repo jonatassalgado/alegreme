@@ -22,7 +22,7 @@ NEWSPIDER_MODULE = 'alegreme.spiders'
 # Splash
 is_docker = os.environ.get('IS_DOCKER')
 splash_url = os.environ.get('SPLASH_URL')
-static_ip = os.environ.get('STATIC_IP')
+public_ip = os.environ.get('PUBLIC_IP')
 private_ip = os.environ.get('PRIVATE_IP')
 home = os.environ.get('HOME')
 
