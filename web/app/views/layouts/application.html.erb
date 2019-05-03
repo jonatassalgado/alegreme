@@ -34,19 +34,19 @@
             <% unless current_user.try('personas_assortment_finished?') %>
               <input data-target="chat.input" autocomplete="false" type="text" placeholder="Oi, tem alguem ai?" id="text-field-shape-one" class="mdc-text-field__input">
               <div data-target="chat.botConversation" class="me-search-field__bot">
-                <iframe  id="botkit_client" src="//localhost:3030/chat.html"></iframe>
+                <iframe  id="botkit_client" src="<%= request.protocol + request.host %>:3030/chat.html"></iframe>
               </div>
               <div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
                 <span>Sim, estou aqui</span>
               </div>
-              <script src="//localhost:3030/embed.js"></script>
+              <script src="<%= request.protocol + request.host %>:3030/embed.js"></script>
               <script>
                   var options = {
                     id: <%= current_or_guest_user.try(:id) %>
                   }; 
                   Botkit.boot(options);
               </script>
-              <link rel="stylesheet" href="//localhost/css/embed.css" />
+              <link rel="stylesheet" href="<%= request.protocol + request.host %>:3030/css/embed.css" />
             <% else %>
               <form data-target="chat.form" data-action="submit->chat#search" method="get" name="search" action="" style="width: 100%"> 
                 <input data-target="chat.input" autocomplete="false" type="text" placeholder="O que você está buscando hoje?" id="text-field-shape-one" class="mdc-text-field__input">

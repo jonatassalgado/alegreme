@@ -84,6 +84,8 @@ RUN bundle install --jobs 20 --retry 5
 COPY . .
 
 RUN bundle exec rake assets:precompile
+RUN bundle exec rake db:setup
+RUN bundle exec rake db:migrate
 
 EXPOSE 3000
 
