@@ -90,6 +90,8 @@ services:
     environment:
         SPLASH_URL: http://splash:8050
         IS_DOCKER: 'true'
+        PRIVATE_IP: '172.26.14.59'
+        STATIC_IP: '3.209.95.87'
     depends_on:
       - splash
     volumes:

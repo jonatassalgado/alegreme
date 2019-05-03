@@ -18,9 +18,18 @@ NEWSPIDER_MODULE = 'alegreme.spiders'
 
 
 
+
 # Splash
-if os.environ.get('IS_DOCKER') == 'true':
-   SPLASH_URL = os.environ.get('SPLASH_URL')
+is_docker = os.environ.get('IS_DOCKER')
+splash_url = os.environ.get('SPLASH_URL')
+static_ip = os.environ.get('STATIC_IP')
+private_ip = os.environ.get('PRIVATE_IP')
+
+if private_ip:
+   SPLASH_URL = 'http://' + private_ip + ':8050'
+   IS_DOCKER = 'true'
+elif is_docker == 'true':
+   SPLASH_URL = splash_url
    IS_DOCKER = 'true'
 else:
    SPLASH_URL = 'http://0.0.0.0:8050'
