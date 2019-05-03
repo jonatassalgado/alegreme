@@ -19,8 +19,8 @@ NEWSPIDER_MODULE = 'alegreme.spiders'
 
 
 # Splash
-if os.environ.get('IS_DOCKER', False):
-   SPLASH_URL = os.environ.get('SPLASH_URL', False)
+if os.environ.get('IS_DOCKER') == 'true':
+   SPLASH_URL = os.environ.get('SPLASH_URL')
 else:
    SPLASH_URL = 'http://0.0.0.0:8050'
 
