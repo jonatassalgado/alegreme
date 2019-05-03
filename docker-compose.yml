@@ -69,6 +69,7 @@ services:
         - /var/www/bot/data
     environment:
       MONGO_URI: mongodb://jon:password@mongo:27017
+      PRIVATE_IP: '172.26.14.59'
     restart: always
     depends_on:
       - mongo
@@ -96,6 +97,7 @@ services:
       - splash
     volumes:
       - scrapy_shared:/var/www/scrapy/data
+      - ./scrapydo
     ports:
       - "7654:7654"
     restart: always
