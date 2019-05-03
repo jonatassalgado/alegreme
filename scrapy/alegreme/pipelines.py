@@ -18,7 +18,7 @@ class AlegremePipeline(object):
 
     def open_spider(self, spider):
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        self.file = open(spider.settings.get('PWD') + '/data/events-' + timestr + '.json', 'wb')
+        self.file = open(os.environ.get('PWD') + '/data/events-' + timestr + '.json', 'wb')
 
         self.exporter = JsonItemExporter(self.file)
         self.exporter.start_exporting()
