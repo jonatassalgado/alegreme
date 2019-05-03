@@ -21,8 +21,12 @@ NEWSPIDER_MODULE = 'alegreme.spiders'
 # Splash
 if os.environ.get('IS_DOCKER') == 'true':
    SPLASH_URL = os.environ.get('SPLASH_URL')
+   IS_DOCKER = 'true'
 else:
    SPLASH_URL = 'http://0.0.0.0:8050'
+   IS_DOCKER = 'false'
+
+PWD = os.environ.get('PWD')
 
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
