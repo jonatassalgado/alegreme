@@ -22,7 +22,7 @@ class AlegremePipeline(object):
         settings = get_project_settings()
         timestr = time.strftime("%Y%m%d-%H%M%S")
         pwd = settings.get('PWD')
-        self.file = open(pwd + '/data/events-' + timestr + '.json', 'wb')
+        self.file = open(pwd + '/events-' + timestr + '.json', 'wb')
 
         self.exporter = JsonItemExporter(self.file)
         self.exporter.start_exporting()

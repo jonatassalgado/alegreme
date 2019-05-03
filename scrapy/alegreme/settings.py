@@ -28,14 +28,16 @@ private_ip = os.environ.get('PRIVATE_IP')
 if private_ip:
    SPLASH_URL = 'http://' + private_ip + ':8050'
    IS_DOCKER = 'true'
+   PWD = '/var/www/scrapy/data'
 elif is_docker == 'true':
    SPLASH_URL = splash_url
    IS_DOCKER = 'true'
+   PWD = '/var/www/scrapy/data'
 else:
    SPLASH_URL = 'http://0.0.0.0:8050'
    IS_DOCKER = 'false'
+   PWD = '/home/jon/Projects/alegreme/web/scrapy'
 
-PWD = os.environ.get('PWD')
 
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
