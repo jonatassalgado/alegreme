@@ -8,7 +8,7 @@ WORKDIR $SCRAPY_ROOT
 ADD . $SCRAPY_ROOT
 
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 
@@ -18,4 +18,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 7654
 
-CMD ["scrapy-do", "-n", "scrapy-do"]
+CMD ["scrapy-do", "-n", "scrapy-do", "--config", "scrapydo.conf"]
