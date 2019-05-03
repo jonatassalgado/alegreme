@@ -19,147 +19,147 @@ module.exports = function(controller) {
     {
       id: 0,
       name: "<b>Arduino Day</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/arduino-day-2019.png`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/arduino-day-2019.png`,
       description:
         "Evento para pessoas desenvolvedoras de software que desejam aprendar mais sobre a linguagem Arduino."
     },
     {
       id: 1,
       name: "<b>Festa HOT</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/festa-hot-doma.png`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/festa-hot-doma.png`,
       description:
         "A pista mais fervida de Porto Alegre, sem moralismo, sem preconceito. No som: house, disco e os hits clássicos das últimas décadas. "
     },
     {
       id: 2,
       name: "<b>Carnawow</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/carnawow.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/carnawow.jpeg`,
       description:
         "O Carnawow é uma síntese de celebração e meditação. São 5 dias pra abrir tua energia, tua capacidade de sentir e criar através de sessões e meditações ativas."
     },
     {
       id: 3,
       name: "<b>Bike Tour nas Ruínas das Missões</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/bike-tour-missoes.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/bike-tour-missoes.jpeg`,
       description:
         "Cicloturismo em São Miguel das Missões e depois do pedal vamos relaxar na acolhedora Pousada das Missões."
     },
     {
       id: 4,
       name: "<b>Cinema mudo com música ao vivo</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/cine-ibere-musica-aovivo.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/cine-ibere-musica-aovivo.jpeg`,
       description:
         "Sessão no Iberê Camargo do filme O Gabinete do Dr. Caligari, um dos filmes mais importantes da história do cinema mundial. Considerado o primeiro filme de terror."
     },
     {
       id: 5,
       name: "<b>Feira do Aeromovel</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/feira-do-aeromovel.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/feira-do-aeromovel.jpeg`,
       description:
         "A feira acontece de frente para a Orla do Guaíba, na praça do antigo Aeromovel. Um público lindo ocupando a praça, expositores de marcas locais, gastronomia, cultura, arte e cidadania."
     },
     {
       id: 6,
       name: "<b>Feira Vegana Noturna</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/feira-vegana-noturna.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/feira-vegana-noturna.jpeg`,
       description:
         "Feira com produtos veganos que ocorre no bairro Bom Fim durante a noite."
     },
     {
       id: 7,
       name: "<b>Madrugadão Virada Nerd</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/virada-nerd.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/virada-nerd.jpeg`,
       description:
         "Duas madrugadas no final de semana com pizzas e jogos de tabuleiro para se divertir com amigos."
     },
     {
       id: 8,
       name: "<b>Arruaça</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/arruaca.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/arruaca.jpeg`,
       description:
         "Festa de rua das mina, das mana e das mona. DJs gurias tocando house e techno no centro da cidade, na rua."
     },
     {
       id: 9,
       name: "<b>Mindfulness no Pôr do Sol</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/mindfulness-por-do-sol.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/mindfulness-por-do-sol.jpeg`,
       description:
         "Venha participar da meditação de Atenção Plena e desfrutar de um momento de presença e desenvolvimento de tranquilidade, contemplando nosso belo cartão postal na Orla do Guaíba."
     },
     {
       id: 10,
       name: "<b>Trilha da Fortaleza no Parque de Itapuã</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/trilha-da-fortaleza.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/trilha-da-fortaleza.jpeg`,
       description:
         "Localizado a 57 km da capital, o Parque de Itapuã, protege a última amostra dos ecossistemas com campos, matas, dunas, lagoas, praias e morros às margens do lago Guaíba e da laguna dos Patos."
     },
     {
       id: 11,
       name: "<b>Exposição Cecily Brown</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/exposicao-cecily-brown.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/exposicao-cecily-brown.jpeg`,
       description:
         "Cecily Brown é uma das artistas de maior destaque na pintura contemporânea mundial."
     },
     {
       id: 12,
       name: "<b>Saint Patrick's Day</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/patricks-day.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/patricks-day.jpeg`,
       description:
         "Mais de 70 Torneiras de chopp artesanal, espaços temáticos, caça ao tesouro com prêmios de vale tatto, chopp e tickets de food trucks. "
     },
     {
       id: 13,
       name: "<b>Feira Me Gusta</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/feira-me-gusta.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/feira-me-gusta.jpeg`,
       description:
         "Brechó, arte, gastronomia, música e boa convivência se encontraram sob a sombra de muitas árvores, em bancos e pelos passeios da Praça Isabel."
     },
     {
       id: 14,
       name: "<b>Hackatown Mobilidade</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/hackatown-mobilidade.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/hackatown-mobilidade.jpeg`,
       description:
         "Dividido em três dias imersivos, o Hackatown é um espaço de cocriação de soluções para a mobilidade urbana de Porto Alegre em participação com a prefeitura e PUCRS."
     },
     {
       id: 15,
       name: "<b>Fennda na rua</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/fennda.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/fennda.jpeg`,
       description:
         "Festa de rua das mona, das mana e das mina. Techno, house e funk é o que toca. O dresscode é ir de nude."
     },
     {
       id: 16,
       name: "<b>Yoga na Redenção</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/yoga-redencao.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/yoga-redencao.jpeg`,
       description:
         "Qualquer pessoa pode participar, não importa a idade, sexo, peso do corpo, crença ou religião, basta a vontade de praticar."
     },
     {
       id: 17,
       name: "<b>Caminhada em São José dos Ausentes</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/caminhada-sao-jose.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/caminhada-sao-jose.jpeg`,
       description:
         "São José dos Ausentes é conhecida pela beleza de suas paisagens, seus rios e cachoeiras. O ponto mais alto do Rio Grande do Sul, fica próximo ao Canion do Montenegro e com uma altitude de 1403m."
     },
     {
       id: 18,
       name: "<b>Teatro Frida Kahlo À Revolução</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/frida-kahlo.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/frida-kahlo.jpeg`,
       description:
         "Livremente inspirada na vida e obra da poderosa pintora mexicana com dramaturgia  e trilha sonora originais."
     },
     {
       id: 19,
       name: "<b>Serenata Iluminada na Redenção</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/serenata-iluminada.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/serenata-iluminada.jpeg`,
       description:
         "Levamos velas, lanternas, instrumentos musicais e manifestações culturais para fazer um encontro que mistura alegria, expressão e reflexão sobre o bom uso dos espaços públicos."
     },
     {
       id: 20,
       name: "<b>Picnic Cultural no Museu</b>",
-      imageUrl: `${location.protocol}${location.host}/images/bot/picnic-museu.jpeg`,
+      imageUrl: `${process.env.WEB_DOMAIN}/images/bot/picnic-museu.jpeg`,
       description:
         "Vamos celebrar um dia lindo no pátio do Museu de Porto Alegre Joaquim Felizardo. Um lugar cheio de energia positiva para tu curtires com teus amigos, amores e familiares."
     }
