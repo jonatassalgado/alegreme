@@ -19,10 +19,8 @@ class AlegremePipeline(object):
     def open_spider(self, spider):
         current_directory = os.getcwd()
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        if os.environ.get('IS_DOCKER') == 'true':
-            self.file = open(current_directory + 'events-' + timestr + '.json', 'wb')
-        else:
-            self.file = open('/home/jon/Projects/alegreme/scrapy/alegreme/items/events-' + timestr + '.json', 'wb')
+        print('ENV: ' + os.environ.get('IS_DOCKER'))
+        self.file = open(current_directory + '/data/events-' + timestr + '.json', 'wb')
 
         self.exporter = JsonItemExporter(self.file)
         self.exporter.start_exporting()
