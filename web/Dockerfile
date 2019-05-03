@@ -81,10 +81,6 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install --jobs 20 --retry 5
 
-ENV SCRAPY_ROOT /var/www/scrapy
-RUN mkdir -p "${SCRAPY_ROOT}/data"
-COPY ./scrapy "${SCRAPY_ROOT}/data"
-
 COPY . .
 
 RUN bundle exec rake assets:precompile
