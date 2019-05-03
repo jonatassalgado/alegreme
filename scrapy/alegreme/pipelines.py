@@ -10,6 +10,7 @@ import json
 import dateparser
 import re
 import time
+import settings
 from scrapy.exporters import JsonItemExporter
 
 class AlegremePipeline(object):
@@ -18,7 +19,7 @@ class AlegremePipeline(object):
 
     def open_spider(self, spider):
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        self.file = open(os.environ.get('PWD') + '/data/events-' + timestr + '.json', 'wb')
+        self.file = open('/var/www/scrapy/data/events-' + timestr + '.json', 'wb')
 
         self.exporter = JsonItemExporter(self.file)
         self.exporter.start_exporting()
