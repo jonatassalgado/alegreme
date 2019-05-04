@@ -7,7 +7,7 @@ set -e
 bundle check || bundle install --binstubs="$BUNDLE_BIN"
 # Ensure all gems installed. Add binstubs to bin which has been added to PATH in Dockerfile.
 
-rake db:migrate
+rake db:migrate RAILS_ENV=production
 
 rails runner "Event.reindex"
 
