@@ -27,6 +27,7 @@ services:
       API_URL: http://api
       ELASTICSEARCH_URL: http://search:9200
       IS_DOCKER: 'true'
+      HTTP_HOST: 'www.alegreme.com'
     links:
       - api
       - search
