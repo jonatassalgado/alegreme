@@ -140,10 +140,11 @@ class User < ApplicationRecord
     data = access_token.info
     user = User.where(email: data['email']).first
     state = Base64.urlsafe_decode64(params['state'])
-    personas = YAML.load(state) if state.encoding.name == 'UTF-8'
+    raise Exception.new('JSON de personas com enconding incorreto!') if state.encoding.name == 'UTF-8'
+    personas = YAML.load(state) 
 
     if personas && personas['assortment']['finished']
-      psychographic = {  
+      features = {  
         psychographic: {
           personas: {
             primary: {
@@ -172,10 +173,10 @@ class User < ApplicationRecord
     end
 
     if user && personas && personas['assortment']['finished']
-      user.update_attributes(features: psychographic)
+      user.update_attributes(features: features)
       return user
     elsif personas && personas['assortment']['finished']
-      return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: psychographic)
+      return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: features)
     elsif user
       return user
     else
