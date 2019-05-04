@@ -21,6 +21,8 @@ web/tmp/cache
 *.jpeg~
 *.png~
 *.kra
+*.swp
+*.swo
 .pem
 usr/
 web/storage
