@@ -140,7 +140,7 @@ class User < ApplicationRecord
     data = access_token.info
     user = User.where(email: data['email']).first
     state = Base64.urlsafe_decode64(params['state'])
-    raise Exception.new('JSON de personas com enconding incorreto!') if state.encoding.name == 'UTF-8'
+    raise Exception.new('JSON de personas com enconding incorreto!') unless ['UTF-8', 'US-ASCII'].include? state.encoding.name
     personas = YAML.load(state) 
 
     if personas && personas['assortment']['finished']

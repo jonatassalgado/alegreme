@@ -1,5 +1,11 @@
 FROM ubuntu:16.04
 
+RUN apt-get update && apt-get install -y locales locales-all
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
 ENV RUBY_MAJOR="2.5" \
     RUBY_VERSION="2.5.3" \
     DB_PACKAGES="libsqlite3-dev" \
