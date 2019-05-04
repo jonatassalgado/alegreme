@@ -28,6 +28,7 @@ services:
       ELASTICSEARCH_URL: http://search:9200
       IS_DOCKER: 'true'
       HTTP_HOST: 'www.alegreme.com'
+      NODE_ENV: production
     links:
       - api
       - search
