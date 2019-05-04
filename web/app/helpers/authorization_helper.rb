@@ -41,7 +41,7 @@ module AuthorizationHelper
   # called (once) when the user logs in, insert any code your application needs
   # to hand off from guest_user to current_user.
   def logging_in
-    if current_user.features.empty?
+    unless current_user.personas_assortment_finished?
       current_user.features = guest_user.features
       current_user.save   
     end
