@@ -16,7 +16,7 @@ services:
     volumes:
       - scrapy_shared:/var/www/scrapy/data
       - bundle_cache:/bundle
-      - .:/web
+      - ./web:/var/www/alegreme
     environment:
       RAILS_SERVE_STATIC_FILES: 'true'
       PGHOST: db
@@ -34,7 +34,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker

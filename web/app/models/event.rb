@@ -216,11 +216,7 @@ class Event < ApplicationRecord
 
   def cover_url
     if self.cover.attached?
-      if Rails.env == 'production'
-        self.cover.attachment.service_url
-      else
-        return rails_blob_path(self.cover, disposition: "attachment", only_path: true)
-      end
+      return Rails.application.routes.url_helpers.url_for(self.cover)
     end
   end
 

@@ -9,6 +9,8 @@ bundle check || bundle install --binstubs="$BUNDLE_BIN"
 
 rake db:migrate
 
+rails runner "Event.reindex"
+
 whenever --update-crontab
 
 exec "$@"
