@@ -2,6 +2,11 @@ version: '3.1'
 volumes:
   bundle_cache: {}
   scrapy_shared:
+  api_data:
+  bot_data:
+  search_data:
+  scrapydo_data:
+  mongo_data:  
 services:
   app:
     build:
