@@ -6,11 +6,16 @@ namespace :ml do
 
   task train: :environment do
 
+    if ENV['IS_DOCKER'] == 'true'
+      files = Dir['/var/www/scrapy/data/scraped/*']
+      last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
+      csv = CSV.read(last_file)
+    else
+      files = Dir['../ml/*']
+      last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
+      csv = CSV.read('../ml/' + last_file)
+    end
 
-    files = Dir['../ml/*']
-    last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
-
-    csv = CSV.read('../ml/' + last_file)
     events = Event.where("(personas -> 'primary' ->> 'score')::numeric >= 0.90 OR (categories -> 'primary' ->> 'score')::numeric >= 0.90").uniq
 
     events.each do |event|

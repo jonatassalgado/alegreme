@@ -10,7 +10,7 @@ namespace :scrapy do
     puts "Parsear JSON ****************************************"
 
     if ENV['IS_DOCKER'] == 'true'
-      files = Dir['/var/www/scrapy/data/*']
+      files = Dir['/var/www/scrapy/data/scraped/*']
     else
       files = Dir['./scrapy/*']
     end
