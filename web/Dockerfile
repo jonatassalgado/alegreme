@@ -6,6 +6,9 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+RUN echo "America/Sao_Paulo" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 ENV RUBY_MAJOR="2.5" \
     RUBY_VERSION="2.5.3" \
     DB_PACKAGES="libsqlite3-dev" \

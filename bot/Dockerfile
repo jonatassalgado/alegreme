@@ -1,5 +1,7 @@
 FROM node:slim
 
+ENV TZ 'America/Sao_Paulo'
+
 ENV BOT_ROOT /var/www/bot
 RUN mkdir -p $BOT_ROOT
 
