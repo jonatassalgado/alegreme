@@ -9,7 +9,7 @@ bundle check || bundle install --binstubs="$BUNDLE_BIN"
 
 rake db:exists RAILS_ENV=production && rake db:migrate RAILS_ENV=production || rake db:setup db:migrate RAILS_ENV=production
 
-rails runner "Event.reindex"
+rake db:exists RAILS_ENV=production && rails runner "Event.reindex"
 
 whenever --update-crontab
 
