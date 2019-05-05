@@ -141,35 +141,44 @@ class User < ApplicationRecord
     user = User.where(email: data['email']).first
     state = Base64.urlsafe_decode64(params['state'])
     raise Exception.new('JSON de personas com enconding incorreto!') unless ['UTF-8', 'US-ASCII', 'ASCII-8BIT'].include? state.encoding.name
-    personas = YAML.load(state) 
+    
+    def valid_yaml_string?(yml)
+      !!YAML.load(state) 
+    rescue Exception => e
+      STDERR.puts e.message
+      return false
+    end
 
-    if personas && personas['assortment']['finished']
-      features = {  
-        psychographic: {
-          personas: {
-            primary: {
-              name: personas['primary']['name'],
-              score: personas['primary']['score']
-            },
-            secondary: {
-              name: personas['secondary']['name'],
-              score: personas['secondary']['score']
-            },
-            tertiary: {
-              name: personas['tertiary']['name'],
-              score: personas['tertiary']['score']
-            },
-            quartenary: {
-              name: personas['quartenary']['name'],
-              score: personas['quartenary']['score']
-            },
-            assortment: { 
-              finished: personas['assortment']['finished'], 
-              finished_at: personas['assortment']['finished_at'] 
-            } 
+    if valid_yaml_string?(state)
+      personas = YAML.load(state)
+      if personas && personas['assortment']['finished']
+        features = {  
+          psychographic: {
+            personas: {
+              primary: {
+                name: personas['primary']['name'],
+                score: personas['primary']['score']
+              },
+              secondary: {
+                name: personas['secondary']['name'],
+                score: personas['secondary']['score']
+              },
+              tertiary: {
+                name: personas['tertiary']['name'],
+                score: personas['tertiary']['score']
+              },
+              quartenary: {
+                name: personas['quartenary']['name'],
+                score: personas['quartenary']['score']
+              },
+              assortment: { 
+                finished: personas['assortment']['finished'], 
+                finished_at: personas['assortment']['finished_at'] 
+              } 
+            }
           }
         }
-      }
+      end
     end
 
     if user && personas && personas['assortment']['finished']
