@@ -14,7 +14,7 @@ ADD . $SCRAPY_ROOT
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY ./classified /var/www/scrapy/data/classified
+COPY ./classified scrapy_shared:/var/www/scrapy/data/classified
 COPY . .
 
 COPY ./docker-entrypoint.sh /
