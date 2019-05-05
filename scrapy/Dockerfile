@@ -4,8 +4,8 @@ ENV TZ "America/Sao_Paulo"
 
 ENV SCRAPY_ROOT /var/www/scrapy
 RUN mkdir -p $SCRAPY_ROOT
-RUN mkdir -p "${SCRAPY_ROOT}/data/scraped"
-RUN mkdir -p "${SCRAPY_ROOT}/data/classified"
+RUN mkdir -p /var/www/scrapy/data/scraped
+RUN mkdir -p /var/www/scrapy/data/classified
 
 WORKDIR $SCRAPY_ROOT
 
