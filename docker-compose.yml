@@ -69,6 +69,9 @@ services:
       - "5000:5000"
     volumes:
       - api_data:/var/www/api/data
+      - scrapy_shared:/var/www/scrapy/data
+    environment:
+      - IS_DOCKER: 'true'
   bot:
     build:
       context: ./bot
@@ -109,7 +112,7 @@ services:
       - splash
     volumes:
       - scrapy_shared:/var/www/scrapy/data
-      - scrapydo_data:/var/www/scrapy/scrapydo
+      - scrapydo_data:/var/www/scrapy/projects
     ports:
       - "7654:7654"
     restart: always
