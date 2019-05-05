@@ -31,9 +31,14 @@ stopwords.extend(['porto', 'alegre', 'dia', 'ano', '“', '”', 'é', '⇨', '�
 class EventCategoryPrediction(object):
 
     def __init__(self):
-        regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
-        last_file = max(filter(regex.search, os.listdir('../')))
-        self.base = pd.read_csv('../' + last_file)
+         if os.environ['IS_DOCKER'] == 'true':
+            regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
+            last_file = max(filter(regex.search, os.listdir('/var/www/scrapy/data/classified/')))
+            self.base = pd.read_csv('/var/www/scrapy/data/classified/' + last_file)
+        else:
+            regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
+            last_file = max(filter(regex.search, os.listdir('../')))
+            self.base = pd.read_csv('../' + last_file)
 
 
     def __cleanning_text(self, text):
