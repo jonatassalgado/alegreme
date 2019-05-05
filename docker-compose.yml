@@ -71,7 +71,7 @@ services:
       - api_data:/var/www/api/data
       - scrapy_shared:/var/www/scrapy/data
     environment:
-      - IS_DOCKER: 'true'
+      IS_DOCKER: 'true'
   bot:
     build:
       context: ./bot
