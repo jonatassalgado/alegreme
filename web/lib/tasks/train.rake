@@ -7,7 +7,7 @@ namespace :ml do
   task train: :environment do
 
     if ENV['IS_DOCKER'] == 'true'
-      files = Dir['/var/www/scrapy/data/scraped/*']
+      files = Dir['/var/www/scrapy/data/classified/*']
       last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
       csv = CSV.read(last_file)
     else
@@ -44,13 +44,20 @@ namespace :ml do
 
 
     timestr = DateTime.now.strftime("%Y%m%d-%H%M%S")
-    CSV.open('../ml/svm-classification-events-' + timestr + '.csv', 'wb') do |row|
-      csv.each do |item|
-        row << item
+    
+    if ENV['IS_DOCKER'] == 'true'
+      CSV.open('/var/www/scrapy/data/classified/svm-classification-events-' + timestr + '.csv', 'wb') do |row|
+        csv.each do |item|
+          row << item
+        end
+      end
+    else
+      CSV.open('../ml/svm-classification-events-' + timestr + '.csv', 'wb') do |row|
+        csv.each do |item|
+          row << item
+        end
       end
     end
-
-
+  
   end
-
 end
