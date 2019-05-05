@@ -11,9 +11,9 @@ namespace :ml do
       last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
       csv = CSV.read(last_file)
     else
-      files = Dir['../ml/*']
+      files = Dir['../scrapy/classified*']
       last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
-      csv = CSV.read('../ml/' + last_file)
+      csv = CSV.read('../scrapy/classified' + last_file)
     end
 
     events = Event.where("(personas -> 'primary' ->> 'score')::numeric >= 0.90 OR (categories -> 'primary' ->> 'score')::numeric >= 0.90").uniq
@@ -52,7 +52,7 @@ namespace :ml do
         end
       end
     else
-      CSV.open('../ml/svm-classification-events-' + timestr + '.csv', 'wb') do |row|
+      CSV.open('../scrapy/classified/svm-classification-events-' + timestr + '.csv', 'wb') do |row|
         csv.each do |item|
           row << item
         end
