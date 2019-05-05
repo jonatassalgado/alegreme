@@ -6,8 +6,13 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN echo "America/Sao_Paulo" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
+ENV TZ "America/Sao_Paulo"
+RUN echo $TZ > /etc/timezone && \
+  apt-get update && apt-get install -y tzdata && \
+  rm /etc/localtime && \
+  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+  dpkg-reconfigure -f noninteractive tzdata && \
+  apt-get clean
 
 ENV RUBY_MAJOR="2.5" \
     RUBY_VERSION="2.5.3" \

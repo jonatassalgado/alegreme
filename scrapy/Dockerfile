@@ -1,7 +1,6 @@
 FROM python:3
 
-RUN echo "America/Sao_Paulo" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
+ENV TZ "America/Sao_Paulo"
 
 ENV SCRAPY_ROOT /var/www/scrapy
 RUN mkdir -p $SCRAPY_ROOT
