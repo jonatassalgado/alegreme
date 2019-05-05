@@ -4,8 +4,6 @@ ENV TZ "America/Sao_Paulo"
 
 ENV SCRAPY_ROOT /var/www/scrapy
 RUN mkdir -p $SCRAPY_ROOT
-RUN mkdir -p /var/www/scrapy/data/scraped
-RUN mkdir -p /var/www/scrapy/data/classified
 
 WORKDIR $SCRAPY_ROOT
 
@@ -14,12 +12,16 @@ ADD . $SCRAPY_ROOT
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY ./classified scrapy_shared:/var/www/scrapy/data/classified
-COPY . .
+
+RUN mkdir -p data/scraped
+RUN mkdir -p data/classified
+COPY ./classified ./data/classified
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+COPY . .
 
 EXPOSE 7654
 

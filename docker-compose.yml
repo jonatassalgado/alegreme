@@ -6,6 +6,7 @@ volumes:
   bot_data:
   search_data:
   scrapydo_data:
+  splash_data:
   mongo_data:  
 services:
   app:
@@ -118,6 +119,8 @@ services:
       - "8050:8050"
       - "5023:5023"
     restart: always
+    volumes:
+      - splash_data:/var/www/splash/data
   mongo:
     image: mongo:4.1
     restart: always
