@@ -69,9 +69,6 @@ RUN mkdir -p $RAILS_ROOT
 
 WORKDIR $RAILS_ROOT
 
-#ENV RAILS_ENV='production'
-#ENV RACK_ENV='production'
-
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
@@ -89,6 +86,7 @@ RUN bundle install --jobs 20 --retry 5
 
 COPY . .
 
+RUN bundle exec rake webpacker:clobber
 RUN bundle exec rake assets:precompile
 
 EXPOSE 3000
