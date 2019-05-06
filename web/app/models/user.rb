@@ -135,58 +135,56 @@ class User < ApplicationRecord
     data     = access_token.info
     user     = User.where(email: data['email']).first
     state    = Base64.urlsafe_decode64(params['state'])
-    personas = {}
     
+    Rails.logger.debug "PERSONAS STATE: #{state.inspect} "
     raise Exception.new('JSON de personas com enconding incorreto!') unless ['UTF-8', 'US-ASCII', 'ASCII-8BIT'].include? state.encoding.name
     
-    def begin
-      personas = YAML.load(state)
-    rescue StandardError
-      puts "O state retornado não é um YAML válido "
-    else
-      if personas && personas['assortment']['finished']
-        features = {  
-          psychographic: {
-            personas: {
-              primary: {
-                name: personas['primary']['name'],
-                score: personas['primary']['score']
-              },
-              secondary: {
-                name: personas['secondary']['name'],
-                score: personas['secondary']['score']
-              },
-              tertiary: {
-                name: personas['tertiary']['name'],
-                score: personas['tertiary']['score']
-              },
-              quartenary: {
-                name: personas['quartenary']['name'],
-                score: personas['quartenary']['score']
-              },
-              assortment: { 
-                finished: personas['assortment']['finished'], 
-                finished_at: personas['assortment']['finished_at'] 
-              } 
-            }
+    @personas ||= begin
+      YAML.load(state)
+    rescue SyntaxError
+      {}
+    end
+   
+    Rails.logger.debug "PERSONAS YAML: #{@personas.inspect} "
+    
+    if @personas.empty?
+      return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: guest_user.features)
+    
+    elsif @personas && @personas['assortment']['finished']
+      features = {  
+        psychographic: {
+          personas: {
+            primary: {
+              name: @personas['primary']['name'],
+              score: @personas['primary']['score']
+            },
+            secondary: {
+              name: @personas['secondary']['name'],
+              score: @personas['secondary']['score']
+            },
+            tertiary: {
+              name: @personas['tertiary']['name'],
+              score: @personas['tertiary']['score']
+            },
+            quartenary: {
+              name: @personas['quartenary']['name'],
+              score: @personas['quartenary']['score']
+            },
+            assortment: { 
+              finished: @personas['assortment']['finished'], 
+              finished_at: @personas['assortment']['finished_at'] 
+            } 
           }
         }
+      }
+
+      if user 
+        user if user.update_attributes(features: features)
+      else 
+        User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: features)
       end
+
     end
-
-    
-
-    if user && !personas.empty? && personas['assortment']['finished']
-      user.update_attributes(features: features)
-      return user
-    elsif !personas.empty? && personas['assortment']['finished']
-      return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: features)
-    elsif user
-      return user
-    else
-      return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: guest_user.features)
-    end
-
   end
 
 
