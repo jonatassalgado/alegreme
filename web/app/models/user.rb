@@ -142,14 +142,7 @@ class User < ApplicationRecord
     state = Base64.urlsafe_decode64(params['state'])
     raise Exception.new('JSON de personas com enconding incorreto!') unless ['UTF-8', 'US-ASCII', 'ASCII-8BIT'].include? state.encoding.name
     
-    def valid_yaml_string?(yml)
-      !!YAML.load(state) 
-    rescue Exception => e
-      STDERR.puts e.message
-      return false
-    end
-
-    if valid_yaml_string?(state)
+    def begin
       personas = YAML.load(state)
       if personas && personas['assortment']['finished']
         features = {  
@@ -179,7 +172,12 @@ class User < ApplicationRecord
           }
         }
       end
+    rescue StandardError
+      puts "O state retornado não é um YAML válido "
+      personas = {}
     end
+
+    
 
     if user && personas && personas['assortment']['finished']
       user.update_attributes(features: features)
