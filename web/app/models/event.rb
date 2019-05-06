@@ -2,11 +2,12 @@ class Event < ApplicationRecord
   require "day_of_week"
   
   include Rails.application.routes.url_helpers
+
+  after_save :reindex, if: proc{ |event| event.description_changed? }
+  after_destroy :reindex, :destroy_entries
   
   belongs_to :place
-  
   has_and_belongs_to_many :organizers
-  
   has_one_attached :cover
   
   accepts_nested_attributes_for :place, :organizers
@@ -15,7 +16,7 @@ class Event < ApplicationRecord
   
   jsonb_accessor :ocurrences, dates: [:datetime, array: true, default: []]
   
-  searchkick language: "portuguese", highlight: [:name, :description]
+  searchkick callbacks: false, language: "portuguese", highlight: [:name, :description]
 
   scope 'for_user', -> (user) {
     where("(personas -> 'primary' ->> 'name') IN (?, ?, ?, ?)", user.personas_primary_name, user.personas_secondary_name, user.personas_tertiary_name, user.personas_quartenary_name)
@@ -246,5 +247,16 @@ class Event < ApplicationRecord
     return datetimes
   end
 
+
+  private
+
+  def destroy_entries
+    users = User.where id: self.saved_by
+
+    users.each do |user|
+      user.taste['events']['saved'].delete self.id
+      user.taste['events']['total_saves'] -= 1
+    end
+  end
 
 end

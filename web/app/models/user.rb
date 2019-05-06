@@ -80,31 +80,37 @@ class User < ApplicationRecord
   end
 
 
-  def taste_events_save event_id
-    if self.taste['events'] 
-      self.taste['events']['saved'] << event_id
-      self.save
-    else
-      self.taste = {
-        events: {
-          saved: [],
-          liked: [],
-          viewed: [],
-          disliked: []
-        }
-      }
+  def taste_events_save event_id    
+    event = Event.find event_id
+
+    ActiveRecord::Base.transaction do
+      event.entries['saved_by'] << self.id
+      event.entries['total_saves'] += 1
 
       self.taste['events']['saved'] << event_id
-      self.save
+      self.taste['events']['total_saves'] += 1
+      
+      return event.save && self.save
     end
+  rescue ActiveRecord::RecordInvalid
+    puts "Não foi possível salvar sua ação (ERRO 7813)!"
   end
 
 
-  def taste_events_unsave event_id
-    self.taste['events']['saved'].delete(event_id)
-    self.save
+  def taste_events_unsave event_id  
+    event = Event.find event_id
 
-    return self.taste['events']['saved']
+    ActiveRecord::Base.transaction do
+      event.entries['saved_by'].delete self.id 
+      event.entries['total_saves'] -= 1
+      
+      self.taste['events']['saved'].delete event_id
+      self.taste['events']['total_saves'] -= 1
+      
+      return event.save && self.save
+    end
+  rescue ActiveRecord::RecordInvalid
+    puts "Não foi possível salvar sua ação (ERRO 7814)!"
   end
 
   def taste_events_saved? event_id
