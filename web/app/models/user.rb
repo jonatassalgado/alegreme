@@ -181,10 +181,10 @@ class User < ApplicationRecord
 
     
 
-    if user && personas && personas['assortment']['finished']
+    if user && !personas.empty? && personas['assortment']['finished']
       user.update_attributes(features: features)
       return user
-    elsif personas && personas['assortment']['finished']
+    elsif !personas.empty? && personas['assortment']['finished']
       return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: features)
     elsif user
       return user
