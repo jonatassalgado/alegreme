@@ -2,12 +2,13 @@ version: '3.1'
 volumes:
   bundle_cache: {}
   scrapy_shared:
+  db_backup:
   api_data:
   bot_data:
   search_data:
   scrapydo_data:
   splash_data:
-  mongo_data:  
+  mongo_data:
 services:
   app:
     build:
@@ -22,6 +23,7 @@ services:
     volumes:
       - scrapy_shared:/var/www/scrapy/data
       - bundle_cache:/bundle
+      - ./web/db/backups:/var/www/alegreme/db/backups
       - ./storage:/var/www/alegreme/storage
     environment:
       RAILS_SERVE_STATIC_FILES: 'false'
