@@ -137,13 +137,18 @@ class User < ApplicationRecord
 
   def self.from_omniauth(access_token, guest_user, params)
  
-    data = access_token.info
-    user = User.where(email: data['email']).first
-    state = Base64.urlsafe_decode64(params['state'])
+    data     = access_token.info
+    user     = User.where(email: data['email']).first
+    state    = Base64.urlsafe_decode64(params['state'])
+    personas = {}
+    
     raise Exception.new('JSON de personas com enconding incorreto!') unless ['UTF-8', 'US-ASCII', 'ASCII-8BIT'].include? state.encoding.name
     
     def begin
       personas = YAML.load(state)
+    rescue StandardError
+      puts "O state retornado não é um YAML válido "
+    else
       if personas && personas['assortment']['finished']
         features = {  
           psychographic: {
@@ -172,9 +177,6 @@ class User < ApplicationRecord
           }
         }
       end
-    rescue StandardError
-      puts "O state retornado não é um YAML válido "
-      personas = {}
     end
 
     
