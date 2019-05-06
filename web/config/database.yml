@@ -22,7 +22,7 @@ development:
 production:
   adapter: postgresql
   encoding: unicode
-  database: development
+  database: production
   pool: 5
   timeout: 5000
   user: postgres

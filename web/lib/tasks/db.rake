@@ -21,9 +21,9 @@ namespace :db do
       full_path  = nil
       cmd        = nil
   
-      with_config do |app, host, db, user|
+      with_config do |app, host, db, user, pass|
         full_path = "#{backup_dir}/#{Time.now.strftime('%Y%m%d%H%M%S')}_#{db}.#{dump_sfx}"
-        cmd       = "pg_dump -F #{dump_fmt} -v -O -o -U '#{user}' -h '#{host}' -d '#{db}' -f '#{full_path}'"
+        cmd       = "PGPASSWORD='#{pass}' pg_dump -F #{dump_fmt} -v -O -o -U '#{user}' -h '#{host}' -d '#{db}' -f '#{full_path}'"
       end
   
       puts cmd
@@ -45,9 +45,9 @@ namespace :db do
           full_path  = nil
           cmd        = nil
   
-          with_config do |app, host, db, user|
+          with_config do |app, host, db, user, pass|
             full_path = "#{backup_dir}/#{Time.now.strftime('%Y%m%d%H%M%S')}_#{db}.#{table_name.parameterize.underscore}.#{dump_sfx}"
-            cmd       = "pg_dump -F #{dump_fmt} -v -O -o -U '#{user}' -h '#{host}' -d '#{db}' -t '#{table_name}' -f '#{full_path}'"
+            cmd       = "PGPASSWORD='#{pass}' pg_dump -F #{dump_fmt} -v -O -o -U '#{user}' -h '#{host}' -d '#{db}' -t '#{table_name}' -f '#{full_path}'"
           end
   
           puts cmd
@@ -76,7 +76,7 @@ namespace :db do
         file = nil
         cmd  = nil
   
-        with_config do |app, host, db, user|
+        with_config do |app, host, db, user, pass|
           backup_dir = backup_directory
           files      = Dir.glob("#{backup_dir}/**/*#{pattern}*")
           
@@ -93,7 +93,7 @@ namespace :db do
             when 'p'
               cmd = "psql -U '#{user}' -h '#{host}' -d '#{db}' -f '#{file}'"
             else
-              cmd = "pg_restore -F #{fmt} -v -c -C -U '#{user}' -h '#{host}' -d '#{db}' -f '#{file}'"
+              cmd = "PGPASSWORD='#{pass}' pg_restore -F #{fmt} -v -c -C -U '#{user}' -h '#{host}' -d '#{db}' -f '#{file}'"
             end
           else
             puts "Too many files match the pattern '#{pattern}':"
@@ -166,6 +166,7 @@ namespace :db do
       yield Rails.application.class.parent_name.underscore,
             ActiveRecord::Base.connection_config[:host],
             ActiveRecord::Base.connection_config[:database],
-            ActiveRecord::Base.connection_config[:username]
+            ActiveRecord::Base.connection_config[:username],
+            ActiveRecord::Base.connection_config[:password]
     end
   end

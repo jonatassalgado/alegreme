@@ -13,6 +13,10 @@
 #   rake "some:great:rake:task"
 # end
 #
+every 1.day, at: '23:00 pm' do
+  rake "db:exists && db:dump"
+end
+
 every 1.day, at: '02:00 am' do
   rake "scrapy:facebook"
 end
