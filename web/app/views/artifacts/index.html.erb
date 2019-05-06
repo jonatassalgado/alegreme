@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Artefatos</h1>
+
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th style="text-align: left">Nome</th>
+      <th>Quando</th>
+      <th>Download</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @artifacts.each do |artifact| %>
+      <tr>
+        <td><%= artifact.name %></td>
+        <td style="text-align: center"><%= time_ago_in_words artifact.created_at %></td>
+        <td style="text-align: center; text-decoration: underline"><a href="<%= Rails.application.routes.url_helpers.rails_blob_path(artifact.file, only_path: true) %>">Baixar arquivo</a></td>
+        <td><%= link_to 'Mostrar', artifact %></td>
+        <td><%= link_to 'Excluir', edit_artifact_path(artifact) %></td>
+        <td><%= link_to 'Destruir', artifact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Artifact', new_artifact_path %>

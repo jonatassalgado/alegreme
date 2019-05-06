@@ -1,0 +1,4 @@
+class Artifact < ApplicationRecord
+    has_one_attached :file
+
+end

@@ -8,13 +8,11 @@ namespace :ml do
 
     if ENV['IS_DOCKER'] == 'true'
       files = Dir['/var/www/scrapy/data/classified/*']
-      last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
-      csv = CSV.read(last_file)
     else
-      files = Dir['../scrapy/classified*']
-      last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
-      csv = CSV.read('../scrapy/classified' + last_file)
+      files = Dir['../scrapy/classified/*']
     end
+    last_file = (files.select{ |file| file[/svm-classification-events-\d{8}-\d{6}\.csv$/] }).max
+    csv = CSV.read(last_file)
 
     events = Event.where("(personas -> 'primary' ->> 'score')::numeric >= 0.90 OR (categories -> 'primary' ->> 'score')::numeric >= 0.90").uniq
 
@@ -44,6 +42,7 @@ namespace :ml do
 
 
     timestr = DateTime.now.strftime("%Y%m%d-%H%M%S")
+    artifact = Artifact.create(name: "svm-classification-events-#{timestr}")
     
     if ENV['IS_DOCKER'] == 'true'
       CSV.open('/var/www/scrapy/data/classified/svm-classification-events-' + timestr + '.csv', 'wb') do |row|
@@ -51,12 +50,14 @@ namespace :ml do
           row << item
         end
       end
+      artifact.file.attach(io: File.open("/var/www/scrapy/data/classified/svm-classification-events-#{timestr}.csv"), filename: "svm-classification-events-#{timestr}.csv", content_type: "text/csv")
     else
       CSV.open('../scrapy/classified/svm-classification-events-' + timestr + '.csv', 'wb') do |row|
         csv.each do |item|
           row << item
         end
       end
+      artifact.file.attach(io: File.open("../scrapy/classified/svm-classification-events-#{timestr}.csv"), filename: "svm-classification-events-#{timestr}.csv", content_type: "text/csv")
     end
   
   end
