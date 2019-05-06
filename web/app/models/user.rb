@@ -196,7 +196,7 @@ class User < ApplicationRecord
   def validate_taste_existence(dictionary = 'events')
     self.taste[dictionary] ||= {}
 
-    if self.taste[dictionary] == 'events'
+    if dictionary == 'events'
       self.taste[dictionary]['saved']          ||= [] 
       self.taste[dictionary]['liked']          ||= [] 
       self.taste[dictionary]['viewed']         ||= [] 
