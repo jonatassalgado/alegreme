@@ -3,6 +3,9 @@ pt-BR:
   devise:
     omniauth_callbacks:
       success: 'Login feito com sucesso!'
+    sessions:
+      user:
+        signed_out: 'Logout feito com sucesso!'
   activerecord:
     errors:
       messages:

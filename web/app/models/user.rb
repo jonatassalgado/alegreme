@@ -87,6 +87,7 @@ class User < ApplicationRecord
       event.entries['saved_by'] << self.id
       event.entries['total_saves'] += 1
 
+      validate_taste_existence 'events'
       self.taste['events']['saved'] << event_id
       self.taste['events']['total_saves'] += 1
       
@@ -104,6 +105,7 @@ class User < ApplicationRecord
       event.entries['saved_by'].delete self.id 
       event.entries['total_saves'] -= 1
       
+      validate_taste_existence 'events'
       self.taste['events']['saved'].delete event_id
       self.taste['events']['total_saves'] -= 1
       
@@ -123,20 +125,7 @@ class User < ApplicationRecord
 
 
   def taste_events_saved
-    if self.taste['events']
-      self.taste['events']['saved']
-    else
-      self.taste = {
-        events: {
-          saved: [],
-          liked: [],
-          viewed: [],
-          disliked: []
-        }
-      }
-
-      self.taste['events']['saved']
-    end
+    self.taste['events']['saved']
   end
 
 
@@ -198,6 +187,25 @@ class User < ApplicationRecord
       return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: guest_user.features)
     end
 
+  end
+
+
+
+  private 
+
+  def validate_taste_existence(dictionary = 'events')
+    self.taste[dictionary] ||= {}
+
+    if self.taste[dictionary] == 'events'
+      self.taste[dictionary]['saved']          ||= [] 
+      self.taste[dictionary]['liked']          ||= [] 
+      self.taste[dictionary]['viewed']         ||= [] 
+      self.taste[dictionary]['disliked']       ||= [] 
+      self.taste[dictionary]['total_saves']    ||= 0 
+      self.taste[dictionary]['total_likes']    ||= 0
+      self.taste[dictionary]['total_views']    ||= 0
+      self.taste[dictionary]['total_dislikes'] ||= 0
+    end
   end
 
 end
