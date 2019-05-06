@@ -1,5 +1,8 @@
 ---
 pt-BR:
+  devise:
+    omniauth_callbacks:
+      success: 'Login feito com sucesso!'
   activerecord:
     errors:
       messages:
