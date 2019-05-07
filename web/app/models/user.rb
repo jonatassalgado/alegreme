@@ -141,13 +141,15 @@ class User < ApplicationRecord
     
     @personas ||= begin
       YAML.load(state)
-    rescue SyntaxError
+    rescue Psych::SyntaxError
       {}
     end
    
     Rails.logger.debug "PERSONAS YAML: #{@personas.inspect} "
+    Rails.logger.debug "GOOGLE DATA: #{data.inspect} "
     
     if @personas.empty?
+      return user if user
       return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: guest_user.features)
     
     elsif @personas && @personas['assortment']['finished']
