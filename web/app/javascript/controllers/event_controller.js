@@ -55,6 +55,8 @@ export default class EventController extends Controller {
         if (self.favoriteController) {
           self.favoriteController.updateList = response.all_favorited
         }
+
+        Turbolinks.clearCache();
       },
       error: function(response){
         console.log(response)

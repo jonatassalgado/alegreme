@@ -34,15 +34,24 @@ $fill-color: #fafafa;
   .me-icon-button {
 
     &.mdc-icon-button {
-      background: $fill-color;
-      box-shadow: 0 0 5px 1px #0000003b;
+      background: $icon-background-color;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
-      @include mdc-icon-button-ink-color($color: $icon-color);
-      @include mdc-icon-button-size($width: 36px, $height: 36, $padding: 6px);
-
+      @include mdc-icon-button-ink-color($color: $icon-light-color);
+      @include mdc-icon-button-size($width: 35px, $height: 35px, $padding: 2px);
+      
       &:hover {
-        box-shadow: 0 0 5px 1px #00000061;
+        // box-shadow: 0 0 0 3px $brand-color;
+        // background: $brand-color;
+      }
+      
+      &--on {
+        @include mdc-icon-button-ink-color($color: $brand-color);
+        // background: $brand-color;
+      }
+
+      & .material-icons-sharp {
+        font-size: 35px;
       }
     }
   }
