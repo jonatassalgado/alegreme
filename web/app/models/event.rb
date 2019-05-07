@@ -18,6 +18,9 @@ class Event < ApplicationRecord
   
   searchkick callbacks: false, language: "portuguese", highlight: [:name, :description]
 
+  # scope :with_eager_loaded_cover, -> { eager_load(cover_attachment: :blob) }
+  # scope :with_preloaded_cover, -> { preload(cover_attachment: :blob) }
+
   scope 'for_user', -> (user) {
     where("(personas -> 'primary' ->> 'name') IN (?, ?, ?, ?)", user.personas_primary_name, user.personas_secondary_name, user.personas_tertiary_name, user.personas_quartenary_name)
   }
