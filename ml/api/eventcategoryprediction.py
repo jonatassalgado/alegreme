@@ -40,8 +40,8 @@ class EventCategoryPrediction(object):
                 '/var/www/scrapy/data/classified/' + last_file)
         else:
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
-            last_file = max(filter(regex.search, os.listdir('../')))
-            self.base = pd.read_csv('../' + last_file)
+            last_file = max(filter(regex.search, os.listdir('../../../alegreme/scrapy/classified')))
+            self.base = pd.read_csv('../../../alegreme/scrapy/classified/' + last_file)
 
     def __cleanning_text(self, text):
 
