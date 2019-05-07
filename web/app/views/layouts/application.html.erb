@@ -39,14 +39,14 @@
               <div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
                 <span>Sim, estou aqui</span>
               </div>
-              <script src="<%= request.protocol + request.host %>:3030/embed.js"></script>
+              <script src="<%= request.protocol + request.host %>:3030/embed.js" data-turbolinks-track="reload"></script>
               <script>
                   var options = {
                     id: <%= current_or_guest_user.try(:id) %>
                   }; 
                   Botkit.boot(options);
               </script>
-              <link rel="stylesheet" href="<%= request.protocol + request.host %>:3030/css/embed.css" />
+              <link rel="stylesheet" href="<%= request.protocol + request.host %>:3030/css/embed.css" data-turbolinks-track="reload"/>
             <% else %>
               <form data-target="chat.form" data-action="submit->chat#search" method="get" name="search" action="" style="width: 100%"> 
                 <input data-target="chat.input" autocomplete="false" type="text" placeholder="O que você está buscando hoje?" id="text-field-shape-one" class="mdc-text-field__input">
