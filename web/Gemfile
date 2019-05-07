@@ -68,6 +68,7 @@ gem 'whenever', require: false
 
 group :production do
   gem 'aws-sdk-s3'
+  gem 'sentry-raven'
 end
 
 group :development, :test do
