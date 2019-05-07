@@ -1,8 +1,11 @@
 .me-page {
-
-    &__feed-section {
-        max-width: 800px; 
-        margin: auto;
-        padding-top: 85px;
+  &__feed-section {
+    max-width: 800px;
+    margin: auto;
+    padding-top: 85px;
+    
+    @include mdc-layout-grid-media-query_("phone") {
+      padding-top: 45px;
     }
+  }
 }

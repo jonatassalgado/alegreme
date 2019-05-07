@@ -9,17 +9,29 @@
   <%= csp_meta_tag %>
 
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag request.protocol + request.host + ":3030/css/embed.css" %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag request.protocol + request.host + ":3030/embed.js" %>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Roboto:300,400,500|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+
+  <script>
+  document.addEventListener("turbolinks:load", ()=> {
+      var options = {
+        id: <%= current_or_guest_user.try(:id) %>
+      }; 
+
+      Botkit.boot(options);
+  })
+  </script>
 
 </head>
 
 <body>
   <div class="mdc-drawer-app-content">
-    <header class="me-top-app-bar mdc-top-app-bar mdc-top-app-bar--fixed" id="top-bar" style="top: 0">
+    <header class="me-top-app-bar mdc-top-app-bar mdc-top-app-bar--fixed" id="top-bar" style="top: 0" data-turbolinks-permanent>
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
           
@@ -30,7 +42,7 @@
           </span>
         </section>
         <section class="mdc-top-app-bar__section" style="display: flex; width: 65%">
-          <div data-controller="chat" data-target="chat.field" class="me-search-field me-search-field mdc-text-field">
+          <div data-controller="chat" data-target="chat.field" class="me-search-field me-search-field mdc-text-field" id="me-chat" data-turbolinks-permanent>
             <% unless current_user.try('personas_assortment_finished?') %>
               <input data-target="chat.input" autocomplete="false" type="text" placeholder="Oi, tem alguem ai?" id="text-field-shape-one" class="mdc-text-field__input">
               <div data-target="chat.botConversation" class="me-search-field__bot">
@@ -39,14 +51,6 @@
               <div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
                 <span>Sim, estou aqui</span>
               </div>
-              <script src="<%= request.protocol + request.host %>:3030/embed.js" data-turbolinks-track="reload"></script>
-              <script>
-                  var options = {
-                    id: <%= current_or_guest_user.try(:id) %>
-                  }; 
-                  Botkit.boot(options);
-              </script>
-              <link rel="stylesheet" href="<%= request.protocol + request.host %>:3030/css/embed.css" data-turbolinks-track="reload"/>
             <% else %>
               <form data-target="chat.form" data-action="submit->chat#search" method="get" name="search" action="" style="width: 100%"> 
                 <input data-target="chat.input" autocomplete="false" type="text" placeholder="O que você está buscando hoje?" id="text-field-shape-one" class="mdc-text-field__input">

@@ -14,6 +14,10 @@ $border-color: #e0e0e0;
   &__logo {
     height: 30px;
     display: flex;
+
+    @include mdc-layout-grid-media-query_("phone") {
+      
+    }
   }
 
   & .mdc-top-app-bar__navigation-icon {

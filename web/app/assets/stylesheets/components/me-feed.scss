@@ -1,18 +1,18 @@
-@import '@material/card/_mixins';
-@import '@material/layout-grid/_mixins';
-@import '../_variables';
+@import "@material/card/_mixins";
+@import "@material/layout-grid/_mixins";
+@import "@material/layout-grid/_variables";
+@import "../_variables";
 
 $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
 
 $mdc-layout-grid-columns: (
-desktop: 15,
-tablet: 8,
-phone: 4
+  desktop: 15,
+  tablet: 18,
+  phone: 4
 );
 
 .me-feed {
-
   &__section {
     margin: 0 0 120px 0;
   }
@@ -23,18 +23,55 @@ phone: 4
     background: $brand-color;
     border-radius: 1px;
     margin: 12px 0 26px 0;
+    @include mdc-layout-grid-media-query_("tablet") {
+      margin: 12px var(--mdc-layout-grid-margin-phone, 16px) 26px var(--mdc-layout-grid-margin-phone, 16px);
+    }
+    @include mdc-layout-grid-media-query_("phone") {
+      display: none;
+    }
+  }
+
+  & .mdc-typography--headline1 {
+    @include mdc-layout-grid-media-query_("tablet") {
+      padding: var(--mdc-layout-grid-margin-phone, 16px);
+      line-height: 1.5em;
+      font-size: 1.6em;
+      text-align: center;
+    }
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: var(--mdc-layout-grid-margin-phone, 16px);
+      line-height: 1.5em;
+      font-size: 1.6em;
+      text-align: center;
+    }
   }
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
     --mdc-layout-grid-gutter-desktop: 8px;
     & a {
-        text-decoration: none;
+      text-decoration: none;
     }
   }
 
   & .mdc-layout-grid__inner {
-    @include mdc-layout-grid-inner($size: 'desktop', $margin: 0, $gutter: 15px);
+    @include mdc-layout-grid-media-query_("desktop") {
+      @include mdc-layout-grid-inner(
+        $size: "desktop",
+        $margin: 0,
+        $gutter: 15px
+      );
+    }
+    @include mdc-layout-grid-media-query_("tablet") {
+      @include mdc-layout-grid-inner(
+        $size: "tablet",
+        $margin: 0,
+        $gutter: 15px
+      );
+    }
+    @include mdc-layout-grid-media-query_("phone") {
+      @include mdc-layout-grid-inner($size: "phone", $margin: 0, $gutter: 15px);
+    }
   }
 
   & .me-card {
@@ -44,6 +81,9 @@ phone: 4
     background: none;
     position: relative;
     @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
+    @include mdc-layout-grid-media-query_("phone") {
+      min-height: 260px;
+    }
 
     & .mdc-typography--headline1 {
       color: $font-primary-color;
@@ -68,10 +108,14 @@ phone: 4
     & .mdc-card__title {
       color: $name-color;
       font-size: 14px;
-      line-height: 18px;
+      line-height: 1.2em;
       margin: 6px 0 0 0;
       font-family: Roboto;
       font-weight: 400;
+
+      @include mdc-layout-grid-media-query_("phone") {
+        font-size: 20px;
+      }
     }
 
     & .mdc-card__actions {
@@ -87,9 +131,9 @@ phone: 4
       & .mdc-card__media {
         transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
         border-radius: 2px;
-        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+          0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
       }
     }
   }
-
 }
