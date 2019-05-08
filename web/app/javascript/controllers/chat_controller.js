@@ -3,7 +3,7 @@ import { Controller } from "stimulus"
 import { html, render } from 'lit-html';
 
 export default class SearchFieldController extends Controller {
-  static targets = [ "chat", "field", "form", "input", "botIcon", "botConversation", "reply" ];
+  static targets = [ "chat", "field", "form", "input", "botIcon", "botConversation", "reply", "close" ];
 
   initialize() {
     if (this.hasInputTarget) {
@@ -13,8 +13,14 @@ export default class SearchFieldController extends Controller {
 
 
   showBot() {
-    this.overlayVisibility = 'visible';
     this.conversationVisibility = 'visible';
+    this.overlayVisibility = 'visible';
+  }
+
+
+  hideBot() {
+    this.conversationVisibility = 'hidden';
+    this.overlayVisibility = 'hidden';
   }
 
 
@@ -64,12 +70,18 @@ export default class SearchFieldController extends Controller {
         this.botConversationTarget.style.visibility = 'visible';
         this.botConversationTarget.style.opacity = 1;
         this.fieldTarget.classList.add("me-search-field--bot-on");
+        this.fieldTarget.parentElement.classList.add("me-top-app-bar--bot-on");
+        setTimeout(() => {
+          this.closeTarget.classList.add("me-search-field__close--bot-on");
+        }, 400)
         break;
-      case 'hidden':
+        case 'hidden':
         if (this.hasReplyTarget) { this.replyTarget.style.display = 'block' }
         this.botConversationTarget.style.visibility = 'hidden';
         this.botConversationTarget.style.opacity = 0;
         this.fieldTarget.classList.remove("me-search-field--bot-on");
+        this.fieldTarget.parentElement.classList.remove("me-top-app-bar--bot-on");
+        this.closeTarget.classList.remove("me-search-field__close--bot-on");
         break;
     }
   }

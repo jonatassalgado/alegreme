@@ -1,5 +1,5 @@
-@import '../_variables';
-@import '@material/top-app-bar/_mixins';
+@import "../_variables";
+@import "@material/top-app-bar/_mixins";
 
 $fill-color: #ffffff;
 $font-color: $font-primary-color;
@@ -14,17 +14,43 @@ $border-color: #e0e0e0;
   &__logo {
     height: 30px;
     display: flex;
+  }
 
+  &__section {
+    &--left {
+      @include mdc-layout-grid-media-query_("phone") {
+        display: none;
+      }
+    }
+    &--middle {
+      display: flex;
+      width: calc(100% / 2);
+      @include mdc-layout-grid-media-query_("phone") {
+        padding: 8px 12px;
+        margin: 0 2px;
+      }
+    }
+    &--right {
+      @include mdc-layout-grid-media-query_("phone") {
+        display: none;
+      }
+    }
+  }
+
+  &--bot-on {
     @include mdc-layout-grid-media-query_("phone") {
-      
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  & .mdc-top-app-bar__row {
+    @include mdc-layout-grid-media-query_("phone") {
+      height: 65px;
     }
   }
 
   & .mdc-top-app-bar__navigation-icon {
     color: $font-color;
-  }
-
-  & .mdc-top-app-bar__section {
-    width: calc(100% / 3);
   }
 }

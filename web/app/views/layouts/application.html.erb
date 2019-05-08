@@ -31,17 +31,16 @@
 
 <body>
   <div class="mdc-drawer-app-content">
-    <header class="me-top-app-bar mdc-top-app-bar mdc-top-app-bar--fixed" id="top-bar" style="top: 0" data-turbolinks-permanent>
+    <header id="top-bar" class="me-top-app-bar mdc-top-app-bar mdc-top-app-bar--fixed" style="top: 0" data-turbolinks-permanent>
       <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-          
+        <section class="me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
           <span class="mdc-top-app-bar__title">
             <a href="/">
               <%= image_tag "logo.png", class: "me-top-app-bar__logo" %>
             </a>
           </span>
         </section>
-        <section class="mdc-top-app-bar__section" style="display: flex; width: 65%">
+        <section class="me-top-app-bar__section--middle mdc-top-app-bar__section">
           <div data-controller="chat" data-target="chat.field" class="me-search-field me-search-field mdc-text-field" id="me-chat" data-turbolinks-permanent>
             <% unless current_user.try('personas_assortment_finished?') %>
               <input data-target="chat.input" autocomplete="false" type="text" placeholder="Oi, tem alguem ai?" id="text-field-shape-one" class="mdc-text-field__input">
@@ -51,6 +50,9 @@
               <div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
                 <span>Sim, estou aqui</span>
               </div>
+              <div data-target="chat.close" data-action="click->chat#hideBot" class="me-search-field__close me-search-field__close--is-hide">
+                <span>Fechar</span>
+              </div>
             <% else %>
               <form data-target="chat.form" data-action="submit->chat#search" method="get" name="search" action="" style="width: 100%"> 
                 <input data-target="chat.input" autocomplete="false" type="text" placeholder="O que você está buscando hoje?" id="text-field-shape-one" class="mdc-text-field__input">
@@ -59,7 +61,7 @@
             <% end %>
           </div>
         </section>
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+        <section class="me-top-app-bar__section--right mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
           <% if current_user %>
             <%= link_to current_user.email.split(/@|&|\+/).first, edit_user_path(current_user) %>
             (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)

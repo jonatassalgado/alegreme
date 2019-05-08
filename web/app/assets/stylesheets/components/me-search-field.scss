@@ -1,5 +1,5 @@
-@import '../_variables';
-@import '@material/textfield/_mixins';
+@import "../_variables";
+@import "@material/textfield/_mixins";
 
 $icon-color: #616161;
 $border-color: #e0e0e0;
@@ -12,6 +12,11 @@ $border-color: #e0e0e0;
   align-self: baseline;
   transition: height 0.2s linear;
 
+  @include mdc-layout-grid-media-query_("phone") {
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+  }
+
   &__bot {
     width: 100%;
     align-self: flex-end;
@@ -21,6 +26,10 @@ $border-color: #e0e0e0;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.5s linear;
+
+    @include mdc-layout-grid-media-query_("phone") {
+      height: 100vh;
+    }
 
     &::before {
       content: " ";
@@ -54,6 +63,34 @@ $border-color: #e0e0e0;
     &:hover {
       background-color: $brand-color;
       color: white;
+    }
+  }
+
+  &__close {
+    z-index: 2;
+    width: 100vw;
+    text-align: center;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    transition: visibility 0s, opacity 0.5s linear;
+    opacity: 0;
+    visibility: hidden;
+
+    & span {
+      border: 1px solid $border-color;
+      border-radius: 2px;
+      padding: 8px 35px;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      color: $font-secondary-color;
+    }
+
+    &--bot-on {
+      visibility: visible;
+      opacity: 1;
     }
   }
 
@@ -103,12 +140,20 @@ $border-color: #e0e0e0;
 
   &--bot-on {
     height: 450px;
-    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+      0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4);
     @include mdc-text-field-textarea-fill-color($color: white);
     will-change: unset;
     transition: height 0.2s linear;
 
-    &::before, ::after {
+    @include mdc-layout-grid-media-query_("phone") {
+      width: 100vw;
+      height: 100vh;
+      border-radius: 0;
+    }
+
+    &::before,
+    ::after {
       content: none;
     }
   }
