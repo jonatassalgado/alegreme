@@ -7,7 +7,7 @@ $fill-color: #fafafa;
   .me-icon-button {
 
     &.mdc-icon-button {
-      background: $icon-background-color;
+      background: $fill-color;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
       @include mdc-icon-button-ink-color($color: $icon-light-color);

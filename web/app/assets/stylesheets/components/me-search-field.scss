@@ -14,7 +14,7 @@ $border-color: #e0e0e0;
 
   @include mdc-layout-grid-media-query_("phone") {
     border-radius: 3px;
-    @include mdc-elevation($z-value: 1)
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
 
   &__bot {

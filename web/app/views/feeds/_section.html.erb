@@ -69,9 +69,19 @@
       <% events.each do |event| %>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
         <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventDetails" data-event-favorited="<%= current_or_guest_user.taste_events_saved? event.id if current_user %>" data-event-identifier="<%= event.id %>">
-          <a href="<%= event.url %>">
             <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
-              <div data-target="event.overlay" class="me-card__overlay"></div>
+              <a href="<%= event.url %>">
+                <div data-target="event.overlay" class="me-card__overlay"></div>
+              </a>
+
+              <div class="me-card__like-button" data-action="click->event#like">
+                <div data-target="event.like">
+                  <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(event.id) %>" style="<%= 'display: none' unless current_user && current_user.taste_events_saved?(event.id) %>" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
+                    <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
+                    <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
+                  </button>
+                </div>
+              </div>
             </div>
 
             <span class="me-card__category" data-target="event.category">
@@ -79,7 +89,9 @@
             </span>
             
             <div class="mdc-card__title" data-target="event.name">
-              <%= limit_name_size event.name %>
+              <a href="<%= event.url %>">
+                <%= limit_name_size event.name %>
+              </a>
             </div>
 
             <div class="me-card__place" data-target="event.place">
@@ -90,16 +102,6 @@
               <%= event.day_of_week %>
             </div>
 
-          </a>
-
-          <div class="me-card__like-button" data-action="click->event#like">
-            <div data-target="event.like">
-              <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(event.id) %>" style="<%= 'display: none' unless current_user && current_user.taste_events_saved?(event.id) %>" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
-                <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
-                <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
-              </button>
-            </div>
-          </div>
 
           <% if current_or_guest_user.admin? %>
           <div class="mdc-card__actions">

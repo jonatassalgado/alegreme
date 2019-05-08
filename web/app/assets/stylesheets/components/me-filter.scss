@@ -16,6 +16,9 @@
     border: 1px solid $border-color;
     font-weight: 400;
     text-transform: lowercase;
+    @include mdc-layout-grid-media-query_("phone") {
+      border: unset;
+    }
   }
 
   & .mdc-chip-set .mdc-chip {
@@ -26,5 +29,8 @@
     color: $font-primary-color;
     background-color: $brand-color;
     border: 1px solid $brand-color;
+    @include mdc-layout-grid-media-query_("phone") {
+      border: unset;
+    }
   }
 }

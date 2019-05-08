@@ -1,4 +1,6 @@
+@import '@material/fab/_mixins';
 @import '../_variables';
+
 
 $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
@@ -76,9 +78,40 @@ $description-color: $font-secondary-color;
 
   &__like-button {
     position: absolute;
-    top: 40px;
-    right: 6px;
+    bottom: 10px;
+    right: 10px;
   }
+
+  &--single {
+    margin: 35px 0;
+    border-radius: 20px;
+    overflow: hidden;
+
+    & a {
+      text-decoration: underline;
+      color: $link-color;
+    }
+  
+    .me-card__like-button {
+      top: 195px;
+      right: 10px;
+      position: absolute;
+    }
+  
+    .me-card__primary {
+      padding: 2.5rem 1rem 1rem;
+    }
+  
+    .mdc-fab {
+      @include mdc-fab-container-color($brand-color);
+    }
+  
+    .mdc-typography--body2 {
+      font-weight: 400;
+    }
+  
+  }
+  
 
   & a {
     display: contents;
