@@ -12,6 +12,6 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
+// require turbolinks
 //= require materialize
-//= require_tree .
+//= require serviceworker-companion

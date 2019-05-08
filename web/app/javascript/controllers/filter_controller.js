@@ -45,8 +45,12 @@ export default class FilterController extends Controller {
       Promise.all(promises)
         .then(function(resultsArray) {
           const urlWithFilters = stringify({personas: resultsArray[0], categories: resultsArray[1], ocurrences: resultsArray[2]}, {arrayFormat: 'bracket'});
-          Turbolinks.clearCache();
-          Turbolinks.visit(`${location.origin}?${urlWithFilters}`, { action: "replace" });
+          // Turbolinks.clearCache();
+          if (urlWithFilters !== "" && typeof urlWithFilters !== "undefined") {
+            location.assing(`${location.origin}?${urlWithFilters}`);
+          } else {
+            location.assign(`${location.origin}`);
+          }
         })
         .catch(function(err) {
           console.log(err)

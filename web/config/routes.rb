@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   root to: 'feeds#index'
   get '/train', to: 'feeds#train'
   get '/retrain', to: 'events#retrain'
+  get '/service-worker.js', to: redirect('service-worker.js')
+  get '/manifest.json', to: redirect('manifest.json')
+  # match "/manifest.json"
   
   resources :users
   resources :calendars

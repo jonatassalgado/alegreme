@@ -69,7 +69,7 @@
       <% events.each do |event| %>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
         <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event" data-target="event.event" data-action="mouseover->event#showEventDetails" data-event-favorited="<%= current_or_guest_user.taste_events_saved? event.id if current_user %>" data-event-identifier="<%= event.id %>">
-            <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
+            <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= rails_blob_url event.cover %>')">
               <a href="<%= event.url %>">
                 <div data-target="event.overlay" class="me-card__overlay"></div>
               </a>
