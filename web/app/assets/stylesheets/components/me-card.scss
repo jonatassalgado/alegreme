@@ -58,7 +58,11 @@ $description-color: $font-secondary-color;
   }
 
   &__category {
-    color: $font-tertiary-color;
+    color: $font-secondary-color;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin: 8px 0 0 0px;
+    font-weight: 500;
   }
 
   &__date {

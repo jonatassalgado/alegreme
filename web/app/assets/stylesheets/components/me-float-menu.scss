@@ -9,6 +9,10 @@
   will-change: transform;
   color: $icon-dark-color;
 
+  @include mdc-layout-grid-media-query_("phone") {
+    display: none;
+  }
+
   &__nav {
     display: flex;
     flex-direction: column;

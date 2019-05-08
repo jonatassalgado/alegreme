@@ -25,13 +25,13 @@ export default class SearchFieldController extends Controller {
 
 
   insertButton() {
-    const textSize = this.inputTarget.placeholder.length;
-    const buttonDistance = (textSize * 12) + 'px';
+    // const textSize = this.inputTarget.placeholder.length;
+    // const buttonDistance = (textSize * 12) + 'px';
 
-    if (this.hasReplyTarget) {
-      this.replyTarget.style.display = 'block';
-      this.replyTarget.style.left = buttonDistance;
-    }
+    // if (this.hasReplyTarget) {
+    //   this.replyTarget.style.display = 'block';
+    //   this.replyTarget.style.left = buttonDistance;
+    // }
   }
 
 

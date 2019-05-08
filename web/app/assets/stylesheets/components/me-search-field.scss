@@ -14,7 +14,7 @@ $border-color: #e0e0e0;
 
   @include mdc-layout-grid-media-query_("phone") {
     border-radius: 3px;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    @include mdc-elevation($z-value: 1)
   }
 
   &__bot {
@@ -51,7 +51,6 @@ $border-color: #e0e0e0;
     border-radius: 30px;
     color: $brand-color;
     border: 1px solid $brand-color;
-    display: none;
     position: absolute;
     align-self: center;
     padding: 4px 6px;
@@ -59,6 +58,16 @@ $border-color: #e0e0e0;
     font-weight: 500;
     font-size: 12px;
     text-transform: uppercase;
+    left: 215px;
+
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 12px 8px;
+      color: #ffffff;
+      background-color: $brand-color;
+      right: 6px;
+      width: 100px;
+      left: unset;
+    }
 
     &:hover {
       background-color: $brand-color;
@@ -68,16 +77,23 @@ $border-color: #e0e0e0;
 
   &__close {
     z-index: 2;
-    width: 100vw;
-    text-align: center;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    transition: visibility 0s, opacity 0.5s linear;
-    opacity: 0;
     visibility: hidden;
+    text-align: center;
+    transition: visibility 0s, opacity 0.5s linear;
+    position: absolute;
+    opacity: 0;
+    right: 6px;
+    top: 15px;
+    cursor: pointer;
+    
+    @include mdc-layout-grid-media-query_("phone") {
+      width: 100vw;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+    }
 
     & span {
       border: 1px solid $border-color;
@@ -102,7 +118,7 @@ $border-color: #e0e0e0;
   & .mdc-text-field__input {
     caret-color: $font-primary-color;
     font-size: 16px;
-    padding: 0 40px;
+    padding: 0 25px;
     box-sizing: border-box;
     height: 48px;
     width: 100%;
@@ -113,6 +129,10 @@ $border-color: #e0e0e0;
     transition: border 0.1s ease-out;
     border-bottom-color: transparent !important;
     align-self: baseline;
+
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 0 12px;
+    }
   }
 
   & .search-icon {
@@ -148,7 +168,8 @@ $border-color: #e0e0e0;
 
     @include mdc-layout-grid-media-query_("phone") {
       width: 100vw;
-      height: 100vh;
+      height: -webkit-fill-available;
+      height: calc(100vh - 56px);
       border-radius: 0;
     }
 

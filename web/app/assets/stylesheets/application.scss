@@ -62,6 +62,7 @@ font-weight: 100
 @import "@material/chips/mdc-chips";
 @import "components/me-components";
 @import "@material/fab/mdc-fab";
+@import "@material/elevation/mdc-elevation";
 
 
 body {
@@ -72,7 +73,12 @@ body {
   font-family: Roboto;
   font-size: 14px;
   color: #212121;
+  
+  @include mdc-layout-grid-media-query_("phone") {
+    background: $filter-background-color;
+  }
 }
+
 
 a {
   text-decoration: none;

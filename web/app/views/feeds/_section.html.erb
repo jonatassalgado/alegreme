@@ -55,7 +55,7 @@
                 </div>
               </div>
             <% end %>
-          </div>
+          </div>.
         <% end %>
       </div>
     <% end %>  
@@ -74,15 +74,19 @@
               <div data-target="event.overlay" class="me-card__overlay"></div>
             </div>
 
+            <span class="me-card__category" data-target="event.category">
+              <%= event.categories_primary_name.capitalize %>
+            </span>
+            
             <div class="mdc-card__title" data-target="event.name">
-              <%= event.name %> • <span class="me-card__category"><%= event.categories_primary_name.capitalize %></span>
+              <%= limit_name_size event.name %>
             </div>
 
-            <div class="me-card__place" data-target="event.place" style="display: none">
-              <%= event.place.try(:name) if event.place %>
+            <div class="me-card__place" data-target="event.place">
+              <%= limit_place_name_size event.place_name %>
             </div>
 
-            <div class="me-card__date" data-target="event.date" style="display: none">
+            <div class="me-card__date" data-target="event.date">
               <%= event.day_of_week %>
             </div>
 

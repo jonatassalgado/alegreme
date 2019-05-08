@@ -10,11 +10,21 @@
     font-weight: 400;
   }
 
+  & .mdc-chip {
+    color: $font-secondary-color;
+    background-color: $background-color;
+    border: 1px solid $border-color;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+
   & .mdc-chip-set .mdc-chip {
     margin: 4px 0;
   }
 
   & .mdc-chip--selected {
+    color: $font-primary-color;
     background-color: $brand-color;
+    border: 1px solid $brand-color;
   }
 }

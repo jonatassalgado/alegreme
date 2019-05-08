@@ -9,12 +9,16 @@ $description-color: $font-secondary-color;
 $mdc-layout-grid-columns: (
   desktop: 15,
   tablet: 18,
-  phone: 4
+  phone: 8
 );
 
 .me-feed {
   &__section {
     margin: 0 0 120px 0;
+
+    @include mdc-layout-grid-media-query_("phone") {
+      margin: 0;
+    }
   }
 
   &__divider {
@@ -24,7 +28,8 @@ $mdc-layout-grid-columns: (
     border-radius: 1px;
     margin: 12px 0 26px 0;
     @include mdc-layout-grid-media-query_("tablet") {
-      margin: 12px var(--mdc-layout-grid-margin-phone, 16px) 26px var(--mdc-layout-grid-margin-phone, 16px);
+      margin: 12px var(--mdc-layout-grid-margin-phone, 16px) 26px
+        var(--mdc-layout-grid-margin-phone, 16px);
     }
     @include mdc-layout-grid-media-query_("phone") {
       display: none;
@@ -43,12 +48,25 @@ $mdc-layout-grid-columns: (
       line-height: 1.5em;
       font-size: 1.6em;
       text-align: center;
+      margin-bottom: 0;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      margin-top: 15px;
     }
   }
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
     --mdc-layout-grid-gutter-desktop: 8px;
+
+    @include mdc-layout-grid-media-query_("phone") {
+      background-color: $background-color;
+      border-radius: 20px;
+      border-radius: 20px;
+      margin-bottom: 35px;
+      @include mdc-elevation($z-value: 4)
+    }
+
     & a {
       text-decoration: none;
     }
@@ -85,6 +103,20 @@ $mdc-layout-grid-columns: (
       min-height: 260px;
     }
 
+    &__place {
+      display: none;
+      @include mdc-layout-grid-media-query_("phone") {
+        display: inline-block;
+      }
+    }
+
+    &__date {
+      display: none;
+      @include mdc-layout-grid-media-query_("phone") {
+        display: inline-block;
+      }
+    }
+
     & .mdc-typography--headline1 {
       color: $font-primary-color;
     }
@@ -111,10 +143,11 @@ $mdc-layout-grid-columns: (
       line-height: 1.2em;
       margin: 6px 0 0 0;
       font-family: Roboto;
-      font-weight: 400;
+      font-weight: 500;
 
       @include mdc-layout-grid-media-query_("phone") {
-        font-size: 20px;
+        margin: 6px 0 0 0;
+        color: $font-secondary-color;
       }
     }
 
@@ -124,7 +157,7 @@ $mdc-layout-grid-columns: (
 
     & .mdc-card__media {
       transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+      // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
     }
 
     &:hover {
