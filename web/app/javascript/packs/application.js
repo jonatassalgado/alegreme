@@ -48,7 +48,7 @@ import {MDCMenu} from '@material/menu';
 // });
 
 
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("DOMContentLoad", function() {
   // TopAppBar
   const topAppBarElement = document.querySelector('.mdc-top-app-bar');
   const topAppBar = new MDCTopAppBar(topAppBarElement);
