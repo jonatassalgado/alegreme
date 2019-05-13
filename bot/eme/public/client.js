@@ -3,7 +3,7 @@
 
     var Botkit = {
       config: {
-        ws_url: (location.protocol === 'https:' ? 'wss' : 'ws') + '://' + location.host,
+        ws_url: (location.protocol === 'https:' ? 'wss' : 'ws') + '://' + location.host + '/bot/',
         reconnect_timeout: 3000,
         max_reconnect: 5
       },
@@ -91,7 +91,7 @@
       getHistory: function(guid) {
         var that = this;
         if (that.guid) {
-          that.request('/botkit/history', {
+          that.request('/bot/botkit/history', {
             user: that.guid
           }).then(function(history) {
             if (history.success) {
@@ -107,7 +107,7 @@
       webhook: function(message) {
         var that = this;
 
-        that.request('/botkit/receive', message).then(function(message) {
+        that.request('/bot/botkit/receive', message).then(function(message) {
           that.trigger(message.type, message);
         }).catch(function(err) {
           that.trigger('webhook_error', err);

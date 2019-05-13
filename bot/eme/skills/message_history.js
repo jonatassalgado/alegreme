@@ -19,7 +19,7 @@ module.exports = function(controller) {
   if (controller.storage && controller.storage.history) {
 
     // expose history as an endpoint
-    controller.webserver.post('/botkit/history', function(req, res) {
+    controller.webserver.post('/bot/botkit/history', function(req, res) {
       if (req.body.user) {
         // IMPORTANT: The identify of this user should be validated before returning message history!
         controller.storage.history.getHistoryForUser(req.body.user, 10).then(function(history) {
@@ -59,12 +59,12 @@ module.exports = function(controller) {
 
   } else {
     console.log("Configure a MONGO_URI to enable message history");
-    controller.webserver.post('/botkit/history', function(req, res) {
+    controller.webserver.post('/bot/botkit/history', function(req, res) {
       res.json({success:true, history: []});
     });
   }
 
-  controller.webserver.post('/botkit/history', function(req, res) {
+  controller.webserver.post('/bot/botkit/history', function(req, res) {
     res.json({success:true, history: []});
   });
 
