@@ -47,7 +47,7 @@ export default class FilterController extends Controller {
           const urlWithFilters = stringify({personas: resultsArray[0], categories: resultsArray[1], ocurrences: resultsArray[2]}, {arrayFormat: 'bracket'});
           // Turbolinks.clearCache();
           if (urlWithFilters !== "" && typeof urlWithFilters !== "undefined") {
-            location.assing(`${location.origin}?${urlWithFilters}`);
+            location.assign(`${location.origin}?${urlWithFilters}`);
           } else {
             location.assign(`${location.origin}`);
           }

@@ -12,7 +12,7 @@
 			<% unless current_user.try('personas_assortment_finished?') %>
 					<input data-target="chat.input" autocomplete="false" type="text" placeholder="Oi, tem alguem ai?" id="text-field-shape-one" class="mdc-text-field__input">
 					<div data-target="chat.botConversation" class="me-search-field__bot">
-					<iframe  id="botkit_client" src="<%= request.protocol + request.host %>:3030/chat.html"></iframe>
+					<iframe  id="botkit_client" src="<%= request.protocol + request.host %>/bot/chat.html"></iframe>
 					</div>
 					<div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
 					<span>Sim, estou aqui</span>
