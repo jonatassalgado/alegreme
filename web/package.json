@@ -8,6 +8,7 @@
     "default-passive-events": "^1.0.10",
     "lit-html": "^0.14.0",
     "material-components-web": "^0.43.0",
+    "mobile-detect": "^1.4.3",
     "query-string": "^6.4.2",
     "stimulus": "^1.1.1"
   },

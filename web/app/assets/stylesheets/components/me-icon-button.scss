@@ -1,7 +1,7 @@
 @import '../_variables';
 @import '@material/icon-button/_mixins';
 
-$fill-color: #fafafa;
+$fill-color: #ffffff;
 
 .me-feed {
   .me-icon-button {
@@ -11,20 +11,23 @@ $fill-color: #fafafa;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
       @include mdc-icon-button-ink-color($color: $icon-light-color);
-      @include mdc-icon-button-size($width: 35px, $height: 35px, $padding: 2px);
-      
-      &:hover {
-        // box-shadow: 0 0 0 3px $brand-color;
-        // background: $brand-color;
+      @include mdc-icon-button-size($width: 30px, $height: 30px, $padding: 0);
+
+      @include mdc-layout-grid-media-query_("phone") {
+        @include mdc-icon-button-ink-color($color: $icon-light-color);
+        @include mdc-icon-button-size($width: 30px, $height: 30px, $padding: 0);
+        background: none;
       }
+      
+      &:hover {}
       
       &--on {
         @include mdc-icon-button-ink-color($color: $brand-color);
-        // background: $brand-color;
       }
 
       & .material-icons-sharp {
-        font-size: 35px;
+        font-size: 30px;
+        background: $background-color;
       }
     }
   }
@@ -38,20 +41,20 @@ $fill-color: #fafafa;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
       @include mdc-icon-button-ink-color($color: $icon-light-color);
-      @include mdc-icon-button-size($width: 35px, $height: 35px, $padding: 2px);
-      
+      @include mdc-icon-button-size($width: 35px, $height: 35px, $padding: 0);
+
       &:hover {
         // box-shadow: 0 0 0 3px $brand-color;
         // background: $brand-color;
       }
-      
+
       &--on {
         @include mdc-icon-button-ink-color($color: $brand-color);
         // background: $brand-color;
       }
 
       & .material-icons-sharp {
-        font-size: 35px;
+        font-size: 30px;
       }
     }
   }

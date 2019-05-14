@@ -3,6 +3,12 @@
 
 .me-filter {
   display: inline;
+  @include mdc-layout-grid-media-query_("phone") {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
   &__label {
     align-self: center;
@@ -24,6 +30,9 @@
 
   & .mdc-chip-set .mdc-chip {
     margin: 4px 0;
+    @include mdc-layout-grid-media-query_("phone") {
+      margin: 4px; 
+    }
   }
 
   & .mdc-chip--selected {

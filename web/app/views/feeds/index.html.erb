@@ -1,9 +1,9 @@
 <div class="me-float-menu">
   <div class="me-float-menu__nav">
     <% if current_user and !current_user.taste_events_saved.empty? %>
-    <div class="me-float-menu__item" onclick="Turbolinks.visit(`${location.origin}/#salvos`)">
+    <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#salvos`)">
       <div class="me-float-menu__icon">
-        <i class="material-icons-sharp">bookmarks</i>
+        <i class="material-icons-sharp">sentiment_satisfied</i>
       </div>
       <div class="me-floa-menu__label">
         Salvos
@@ -11,9 +11,9 @@
     </div>
     <% end %>
     <% if current_user and current_user.personas_assortment_finished? %>
-    <div class="me-float-menu__item" onclick="Turbolinks.visit(`${location.origin}/#recomendados`)">
+    <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#recomendados`)">
       <div class="me-float-menu__icon">
-        <i class="material-icons">stars</i>
+        <i class="material-icons-outlined">star_border</i>
       </div>
       <div class="me-floa-menu__label">
         Para você
@@ -21,9 +21,9 @@
     </div>
     <% end %>
     <% if current_user and current_user.personas_assortment_finished? %>
-    <div class="me-float-menu__item" onclick="Turbolinks.visit(`${location.origin}/#categorias`)">
+    <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#categorias`)">
       <div class="me-float-menu__icon">
-        <i class="material-icons">category</i>
+        <i class="material-icons-outlined">category</i>
       </div>
       <div class="me-floa-menu__label">
         Categorias
@@ -95,11 +95,11 @@
 
 <div class="me-feed">
   <% if params[:q] %>
-    <%= render partial: "section", locals: { events: @events[:user], title: "Eventos encontrados para \"#{params[:q]}\"", identifier: 'busca', type: :large, filters: false } %>
+    <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos encontrados para \"#{params[:q]}\""}, identifier: 'busca', type: :large, filters: false } %>
   <% elsif current_user && current_user.personas_assortment_finished? %>
-    <%= render partial: "section", locals: { events: @events[:user], title: "Eventos recomendados para você", identifier: 'recomendados', type: :large, filters: false } %>
-    <%= render partial: "section", locals: { events: @events[:categories], title: "Eventos ", identifier: 'categorias', type: :large, filters: { personas: false, categories: true, occurences: true } } if @events[:categories] %>
+    <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos recomendados para você"}, identifier: 'recomendados', type: :large, filters: false } %>
+    <%= render partial: "section", locals: { events: @events[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: { personas: false, categories: true, occurences: true } } if @events[:categories] %>
   <% else %>
-    <%= render partial: "section", locals: { events: @events[:user], title: "Eventos recomendados para", identifier: 'recomendados', type: :large, filters: { personas: true, categories: true, occurences: true } } %>
+    <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos recomendados para", categories: "nas categorias", occurences: "acontecendo"}, identifier: 'recomendados', type: :large, filters: { personas: true, categories: true, occurences: true } } %>
   <% end %>
 </div>

@@ -1,6 +1,6 @@
 <div id="<%= identifier %>" class="me-feed__section">
   <h2 class="mdc-typography--<%= type == :large ? 'headline1' : 'headline2' %>">
-    <%= title %>
+    <%= titles[:principal] %>
 
     <% if filters %>
     <div data-controller="filter" data-target="filter.filterContainer" class="me-filter">
@@ -24,7 +24,7 @@
       <% end %>
 
       <% if filters[:categories] %>
-      nas categorias
+      <%= titles[:categories] %>
       <div data-controller="chip" data-chip-type="categories" data-target="chip.chipContainer filter.categories"
         class="me-chip-set mdc-chip-set mdc-chip-set--filter">
         <% Event.with_personas(params[:personas]).collect(&:categories_primary_name).uniq.each do |category| %>
@@ -45,7 +45,7 @@
       <% end %>
 
       <% if filters[:occurences] %>
-      acontecendo
+      <%= titles[:occurences] %>
       <div data-controller="chip" data-chip-type="ocurrences" data-target="chip.chipContainer filter.ocurrences"
         class="me-chip-set mdc-chip-set mdc-chip-set--filter">
         <% ['hoje', 'amanhã'].each do |ocurrence| %>
@@ -74,29 +74,50 @@
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
       <% events.each do |event| %>
-      <div
-        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
         <div class="me-card mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event"
           data-target="event.event" data-action="mouseover->event#showEventDetails"
           data-event-favorited="<%= current_or_guest_user.taste_events_saved? event.id if current_user %>"
           data-event-identifier="<%= event.id %>">
-          <div class="mdc-card__media mdc-card__media--16-9"
-            style="background-image: url('<%= rails_blob_url(event.cover) if event.cover.attached? %>')">
-            <a href="<%= event.url %>">
-              <div data-target="event.overlay" class="me-card__overlay"></div>
-            </a>
-
+          
+          <% if current_user %>
             <div class="me-card__like-button" data-action="click->event#like">
               <div data-target="event.like">
-                <button data-target="event.likeButton" id="add-to-favorites"
+                <button data-target="event.likeButton" 
+                  id="add-to-favorites"
                   class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(event.id) %>"
-                  style="<%= 'display: none' unless current_user && current_user.taste_events_saved?(event.id) %>"
-                  aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
+                  aria-label="Add to favorites" 
+                  aria-hidden="true" 
+                  aria-pressed="false">
                   <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
                   <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
                 </button>
               </div>
             </div>
+          <% end %>
+          
+          <div class="mdc-card__media mdc-card__media--16-9"
+            style="background-image: url('<%= rails_blob_url(event.cover) if event.cover.attached? %>')">
+            <a href="<%= event.url %>">
+              <div data-target="event.overlay" class="me-card__overlay"></div>
+            </a>
+            
+            <% if false %>
+            <div class="me-card__like-button" data-action="click->event#like">
+              <div data-target="event.like">
+                <button data-target="event.likeButton" 
+                  id="add-to-favorites"
+                  class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(event.id) %>"
+                  aria-label="Add to favorites" 
+                  aria-hidden="true" 
+                  aria-pressed="false">
+                  <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
+                  <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
+                </button>
+              </div>
+            </div>
+            <% end %>
+
           </div>
 
           <div class="me-card__primary-section">

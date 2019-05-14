@@ -1,7 +1,6 @@
 import { Controller } from "stimulus"
-import { html, render } from 'lit-html';
-import { iconButton } from 'material-components-web';
 import {MDCMenu} from '@material/menu';
+import * as MobileDetect from 'mobile-detect';
 
 
 
@@ -9,27 +8,33 @@ export default class EventController extends Controller {
   static targets = [ "event", "overlay", "name", "place", "date", "like", "likeButton", "likeCount", "moreButton", "menu" ];
 
   initialize() {
-    // new MDCMenu(this.moreButtonTarget);
+    this.md = new MobileDetect(window.navigator.userAgent);
+
+    if (this.md.mobile()) {
+
+    } else {
+      if (this.data.get('favorited') == 'false') {
+        this.likeButtonTarget.style.display = "none";
+      }
+    }
   }
 
   showEventDetails() {
     const self = this
 
-    // self.nameTarget.style.display = "none";
-    // self.placeTarget.style.display = "inline";
-    // self.dateTarget.style.display = "inline";
-    if (self.data.get('favorited') == 'false') {
-      self.likeButtonTarget.style.display = "inline";
-    }
-
-    self.eventTarget.addEventListener("mouseout", function() {
-      // self.nameTarget.style.display = "inline";
-      // self.placeTarget.style.display = "none";
-      // self.dateTarget.style.display = "none";
+    if (this.md.mobile()) {
+      
+    } else {
       if (self.data.get('favorited') == 'false') {
-        self.likeButtonTarget.style.display = "none";
+        self.likeButtonTarget.style.display = "inline";
       }
-    })
+  
+      self.eventTarget.addEventListener("mouseout", function() {
+        if (self.data.get('favorited') == 'false') {
+          self.likeButtonTarget.style.display = "none";
+        }
+      })  
+    }
   }
 
   openMenu() {
