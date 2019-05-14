@@ -3,12 +3,25 @@
 
 
 <% if current_user && current_user.admin? %>
-  <a href="<%= @event.url %>/edit">Editar</a>
-  <a href="/train">Treinar</a>
+<a href="<%= @event.url %>/edit">Editar</a>
+<a href="/train">Treinar</a>
 <% end %>
 
-<div class="me-card me-card--single mdc-card event-<%= @event.id %>" data-controller="event" data-target="event.event" data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>" data-event-identifier="<%= @event.id %>">
+<div class="me-card me-card--single mdc-card event-<%= @event.id %>" data-controller="event" data-target="event.event"
+  data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
+  data-event-identifier="<%= @event.id %>"
+  data-event-modifier="single">
   <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= @event.cover_url %>')">
+    <div class="me-card__like-button" data-action="click->event#like">
+      <div data-target="event.like">
+        <button data-target="event.likeButton" id="add-to-favorites"
+          class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(@event.id) %>"
+          aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
+          <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
+          <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="me-card__primary">
@@ -29,15 +42,6 @@
       <% end %>
       <br><br>
       <%= @event.description.html_safe %><br>
-    </div>
-  </div>
-
-  <div class="me-card__like-button" data-action="click->event#like">
-    <div data-target="event.like">
-      <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(@event.id) %>" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
-        <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
-        <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
-      </button>
     </div>
   </div>
 </div>

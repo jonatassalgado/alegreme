@@ -14,32 +14,6 @@ $description-color: $font-secondary-color;
     }
   }
 
-  // &__primary {
-  //   padding: 1rem;
-
-  //   & .mdc-card__title {
-  //     margin: 0;
-  //     color: $name-color;
-  //   }
-  // }
-
-  // &__secondary {
-  //   padding: 0 1rem 1rem;
-  //   color: $description-color;
-  //   font-weight: 400;
-
-  //   & b {
-  //     font-weight: 500;
-  //   }
-
-  //   & p {
-  //     font-size: 14px;
-  //     margin: 0;
-  //     line-height: 1.6em;
-  //   }
-
-  // }
-
   &__overlay {
     position: absolute;
     display: flex;
@@ -47,6 +21,10 @@ $description-color: $font-secondary-color;
     top: 0;
     height: 100%;
     background: linear-gradient(to top, #ffffff38, transparent);
+    overflow: hidden;
+    @include mdc-ripple-surface;
+    @include mdc-ripple-radius-bounded;
+    @include mdc-states;
   }
 
   &__primary-section {
@@ -97,8 +75,8 @@ $description-color: $font-secondary-color;
     }
 
     .me-card__like-button {
-      top: 195px;
-      right: 10px;
+      bottom: -22px;
+      right: 16px;
       position: absolute;
     }
 
@@ -112,7 +90,7 @@ $description-color: $font-secondary-color;
 
     .mdc-typography--body2 {
       font-weight: 400;
-      padding: 0 16px;
+      padding: 0 16px 16px;
       font-family: Cabin;
       font-size: 14px;
     }

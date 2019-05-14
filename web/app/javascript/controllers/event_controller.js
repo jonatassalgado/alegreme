@@ -1,5 +1,6 @@
 import { Controller } from "stimulus"
 import {MDCMenu} from '@material/menu';
+import {MDCRipple} from '@material/ripple';
 import * as MobileDetect from 'mobile-detect';
 
 
@@ -9,11 +10,17 @@ export default class EventController extends Controller {
 
   initialize() {
     this.md = new MobileDetect(window.navigator.userAgent);
+    const isFavorited = this.data.get('favorited') == 'false';
+    const isSingle = this.data.get('modifier') == 'single';
+
+    if (this.hasOverlayTarget) {
+      MDCRipple.attachTo(this.overlayTarget);
+    }
 
     if (this.md.mobile()) {
-
+      // if mobile
     } else {
-      if (this.data.get('favorited') == 'false') {
+      if (isFavorited && !isSingle) {
         this.likeButtonTarget.style.display = "none";
       }
     }

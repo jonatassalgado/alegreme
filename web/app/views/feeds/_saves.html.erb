@@ -38,6 +38,7 @@
           </div>
           <a href="<%= event.url %>">
             <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
+              <div data-target="favorite-events.overlay" class="me-card__overlay mdc-ripple-surface	"></div>
             </div>
             <div class="me-card__date" data-target="favorite-events.date">
               <%= event.day_of_week %>

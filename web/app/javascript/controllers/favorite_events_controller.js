@@ -1,30 +1,23 @@
-
 import { Controller } from "stimulus"
-import { html, render } from 'lit-html';
+import {MDCRipple} from '@material/ripple';
+
 
 export default class FavoriteEventsController extends Controller {
-  static targets = [ "event", "title", "date", "remove" ];
+  static targets = [ "event", "overlay", "title", "date", "remove" ];
 
   initialize() {
-
+    if (this.hasOverlayTarget) {
+      MDCRipple.attachTo(this.overlayTarget);
+    }
   }
 
 
   showEventDetails(event) {
     const self = this;
 
-    // self.titleTarget.style.display = "inline";
     self.removeTarget.style.display = "inline";
-    // if (self.hasDateTarget) {
-    //   self.dateTarget.style.display = "none";
-    // }
-
     self.eventTarget.addEventListener("mouseout", function() {
-      // self.titleTarget.style.display = "none";
       self.removeTarget.style.display = "none";
-      // if (self.hasDateTarget) {
-      //   self.dateTarget.style.display = "inline";
-      // }
     })
   }
 
