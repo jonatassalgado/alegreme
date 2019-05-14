@@ -40,7 +40,8 @@ export default class SearchFieldController extends Controller {
     event.preventDefault();
 
     const query = this.inputTarget.value;
-    Turbolinks.visit(`${location.origin}?q=${query.toLowerCase()}`);
+    // Turbolinks.visit(`${location.origin}?q=${query.toLowerCase()}`);
+    location.assign(`${location.origin}?q=${query.toLowerCase()}`);
   }
 
 

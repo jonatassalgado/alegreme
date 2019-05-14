@@ -15,17 +15,17 @@ export default class EventController extends Controller {
   showEventDetails() {
     const self = this
 
-    self.nameTarget.style.display = "none";
-    self.placeTarget.style.display = "inline";
-    self.dateTarget.style.display = "inline";
+    // self.nameTarget.style.display = "none";
+    // self.placeTarget.style.display = "inline";
+    // self.dateTarget.style.display = "inline";
     if (self.data.get('favorited') == 'false') {
       self.likeButtonTarget.style.display = "inline";
     }
 
     self.eventTarget.addEventListener("mouseout", function() {
-      self.nameTarget.style.display = "inline";
-      self.placeTarget.style.display = "none";
-      self.dateTarget.style.display = "none";
+      // self.nameTarget.style.display = "inline";
+      // self.placeTarget.style.display = "none";
+      // self.dateTarget.style.display = "none";
       if (self.data.get('favorited') == 'false') {
         self.likeButtonTarget.style.display = "none";
       }
@@ -56,7 +56,7 @@ export default class EventController extends Controller {
           self.favoriteController.updateList = response.all_favorited
         }
 
-        Turbolinks.clearCache();
+        // Turbolinks.clearCache();
       },
       error: function(response){
         console.log(response)

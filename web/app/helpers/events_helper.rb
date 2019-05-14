@@ -8,6 +8,10 @@ module EventsHelper
     place_name.truncate(22, separator: ' ')
   end
 
+  def format_hour datetime
+    DateTime.parse(datetime).strftime("%H:%M")
+  end
+
   def datetime_local(datetime)
     DateTime.parse(datetime).strftime('%Y-%m-%dT%H:%M')
   end

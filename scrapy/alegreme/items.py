@@ -14,7 +14,7 @@ from scrapy.loader.processors import Join, MapCompose, TakeFirst
 
 
 def get_date(value):
-    dates = re.search('([A-Z].+?:\d\d)', value)
+    dates = re.search('([A-Z].+?:\d{2}.+?\w{2})', value)
 
     if dates:
         date = dates.group(0)
@@ -24,7 +24,7 @@ def get_date(value):
 
 
 def get_time(value):
-    times = re.search('(..:\d{2}.+?\w\w)', value)
+    times = re.search('(..:\d{2}.+?\w{2})', value)
 
     if times:
         start_time = times.group(0)

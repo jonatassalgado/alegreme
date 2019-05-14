@@ -230,8 +230,8 @@ class Event < ApplicationRecord
   end
 
 
-  def day_time
-    return self.dates.first
+  def first_day_time
+    return self.ocurrences['dates'].first
   end
 
 

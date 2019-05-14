@@ -1,6 +1,5 @@
-@import '@material/fab/_mixins';
-@import '../_variables';
-
+@import "@material/fab/_mixins";
+@import "../_variables";
 
 $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
@@ -15,31 +14,31 @@ $description-color: $font-secondary-color;
     }
   }
 
-  &__primary {
-    padding: 1rem;
+  // &__primary {
+  //   padding: 1rem;
 
-    & .mdc-card__title {
-      margin: 0;
-      color: $name-color;
-    }
-  }
+  //   & .mdc-card__title {
+  //     margin: 0;
+  //     color: $name-color;
+  //   }
+  // }
 
-  &__secondary {
-    padding: 0 1rem 1rem;
-    color: $description-color;
-    font-weight: 400;
+  // &__secondary {
+  //   padding: 0 1rem 1rem;
+  //   color: $description-color;
+  //   font-weight: 400;
 
-    & b {
-      font-weight: 500;
-    }
+  //   & b {
+  //     font-weight: 500;
+  //   }
 
-    & p {
-      font-size: 14px;
-      margin: 0;
-      line-height: 1.6em;
-    }
+  //   & p {
+  //     font-size: 14px;
+  //     margin: 0;
+  //     line-height: 1.6em;
+  //   }
 
-  }
+  // }
 
   &__overlay {
     position: absolute;
@@ -50,36 +49,40 @@ $description-color: $font-secondary-color;
     background: linear-gradient(to top, #ffffff38, transparent);
   }
 
-  &__place {
-    color: $name-color;
-    font-size: 14px;
-    line-height: 16px;
-    margin: 6px 0 0 0;
-    font-family: Roboto;
-    font-weight: 400;
-  }
-
-  &__category {
+  &__primary-section {
     color: $font-secondary-color;
     text-transform: uppercase;
-    font-size: 10px;
+    font-size: 11px;
     margin: 8px 0 0 0px;
+    font-weight: 800;
+  }
+
+  &__secondary-section {
+    color: $font-primary-color;
+    font-size: 15px;
+    margin: 3px 0 0 0px;
     font-weight: 500;
   }
 
-  &__date {
-    color: $name-color;
-    font-size: 12px;
-    line-height: 16px;
-    margin: 3px 0 0 0;
-    font-family: Roboto;
+  &__tertiary-section {
+    color: $font-tertiary-color;
+    font-size: 14px;
+    margin: 3px 0 0 0px;
     font-weight: 200;
   }
 
+  &__title {}
+
+  &__place {}
+
+  &__category {}
+
+  &__date {}
+
   &__like-button {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 6px;
+    right: 6px;
   }
 
   &--single {
@@ -91,27 +94,25 @@ $description-color: $font-secondary-color;
       text-decoration: underline;
       color: $link-color;
     }
-  
+
     .me-card__like-button {
       top: 195px;
       right: 10px;
       position: absolute;
     }
-  
+
     .me-card__primary {
       padding: 2.5rem 1rem 1rem;
     }
-  
+
     .mdc-fab {
       @include mdc-fab-container-color($brand-color);
     }
-  
+
     .mdc-typography--body2 {
       font-weight: 400;
     }
-  
   }
-  
 
   & a {
     display: contents;
@@ -121,7 +122,6 @@ $description-color: $font-secondary-color;
     color: $name-color;
     line-height: 18px;
     margin: 6px 0 0 0;
-    font-family: Roboto;
     font-weight: 400;
     padding-right: 20px;
   }
@@ -142,6 +142,4 @@ $description-color: $font-secondary-color;
     top: 93px;
     right: -10px;
   }
-
-
 }
