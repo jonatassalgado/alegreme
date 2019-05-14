@@ -13,18 +13,18 @@ export default class FavoriteEventsController extends Controller {
   showEventDetails(event) {
     const self = this;
 
-    self.titleTarget.style.display = "inline";
+    // self.titleTarget.style.display = "inline";
     self.removeTarget.style.display = "inline";
-    if (self.hasDateTarget) {
-      self.dateTarget.style.display = "none";
-    }
+    // if (self.hasDateTarget) {
+    //   self.dateTarget.style.display = "none";
+    // }
 
     self.eventTarget.addEventListener("mouseout", function() {
-      self.titleTarget.style.display = "none";
+      // self.titleTarget.style.display = "none";
       self.removeTarget.style.display = "none";
-      if (self.hasDateTarget) {
-        self.dateTarget.style.display = "inline";
-      }
+      // if (self.hasDateTarget) {
+      //   self.dateTarget.style.display = "inline";
+      // }
     })
   }
 

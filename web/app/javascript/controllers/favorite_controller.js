@@ -55,7 +55,7 @@ export default class FavoriteController extends Controller {
                 <div class="me-card__date" data-target="favorite-events.date">
                   ${event.day_of_week}
                 </div>
-                <div class="me-card__title mdc-card__title" data-target="favorite-events.title" style="display: none">
+                <div class="me-card__title mdc-card__title" data-target="favorite-events.title">
                     <span>${event.name}</span>
                 </div>
               </a>
