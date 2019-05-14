@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>App</title>
+  <title>Alegreme - Eventos e atividades em Porto Alegre</title>
   <meta name="theme-color" content="#5ecf80" />
   <meta name="viewport"
     content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -26,13 +26,13 @@
 
     <%= render partial: "layouts/app-top-bar" %>
 
-    <% if !current_page?("/offline") && current_page?(controller: 'feeds', action: 'index') %>
+    <% if current_page?(controller: 'feeds', action: 'index') %>
     <section class="me-page__feed-section">
       <div class="me-overlay">
       </div>
       <%= yield %>
     </section>
-    <% elsif !current_page?("/offline") && current_page?(controller: 'events', action: 'show') %>
+    <% elsif current_page?(controller: 'events', action: 'show') %>
     <section class="me-page__events-section">
       <div class="me-overlay">
       </div>
@@ -40,6 +40,19 @@
     </section>
     <% end %>
   </div>
+
+  <% if notice %>
+  <div class="me-snackbar mdc-snackbar">
+    <div class="mdc-snackbar__surface">
+      <div class="mdc-snackbar__label" role="status" aria-live="polite">
+        <%= notice %>
+      </div>
+      <div class="mdc-snackbar__actions">
+        <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
+      </div>
+    </div>
+  </div>
+  <% end %>
 
 </body>
 

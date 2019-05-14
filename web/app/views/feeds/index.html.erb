@@ -1,9 +1,3 @@
-<%# @events.inspect %>
-
-<p id="notice">
-  <%= notice %>
-</p>
-
 <div class="me-float-menu">
   <div class="me-float-menu__nav">
     <% if current_user and !current_user.taste_events_saved.empty? %>
@@ -39,50 +33,62 @@
   </div>
 </div>
 
-<!-- <section>
-  Eventos para <%= select('current_user', 'personas_primary_name', ["aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: ""} ) %> com ascendência em praieiro com um q de cult em toda a cidade acontecendo todos os dias.
-</section>
-<br><br> -->
-
 
 <div id="salvos" class="me-favorite" data-controller="favorite">
-<% if current_user and !current_user.taste_events_saved.empty? %>
+  <% if current_user and !current_user.taste_events_saved.empty? %>
   <h2 data-target="favorite.header" class="mdc-typography--headline2">
     Eventos salvos
   </h2>
   <div class="me-icon__group">
-    <div data-target="favorite.scrollLeft" data-action="click->favorite#scrollLeft" class="me-icon me-icon--scroll-left">
-      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" class="style-scope iron-icon"></path></g></svg>
+    <div data-target="favorite.scrollLeft" data-action="click->favorite#scrollLeft"
+      class="me-icon me-icon--scroll-left">
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon"
+        style="pointer-events: none; display: block; width: 100%; height: 100%;">
+        <g class="style-scope iron-icon">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" class="style-scope iron-icon"></path>
+        </g>
+      </svg>
     </div>
-    <div data-target="favorite.scrollRight" data-action="click->favorite#scrollRight" class="me-icon me-icon--scroll-right">
-      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" class="style-scope iron-icon"></path></g></svg>
+    <div data-target="favorite.scrollRight" data-action="click->favorite#scrollRight"
+      class="me-icon me-icon--scroll-right">
+      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon"
+        style="pointer-events: none; display: block; width: 100%; height: 100%;">
+        <g class="style-scope iron-icon">
+          <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" class="style-scope iron-icon"></path>
+        </g>
+      </svg>
     </div>
   </div>
   <div data-target="favorite.list" class="me-favorite__list mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
       <% @favorited_events.each do |event| %>
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
-          <div data-controller="favorite-events" data-target="favorite-events.event" data-action="mouseover->favorite-events#showEventDetails" class="me-card mdc-card event-<%= event.id %>" data-favorite-events-identifier="<%= event.id %>">
-            <div data-target="favorite-events.remove" data-action="click->favorite-events#remove" class="me-card__remove">
-              <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="m55.7 52.7c6.2 6.7 12.4 13.5 18.6 20.2 2.2 2.4-1.4 5.9-3.5 3.5-6.2-6.7-12.3-13.4-18.5-20.1-6.1 6.8-12.3 13.4-18.4 20.1-2.2 2.4-5.7-1.2-3.5-3.5 6.2-6.7 12.4-13.5 18.6-20.2-6.2-6.7-12.4-13.5-18.6-20.2-2.2-2.4 1.4-5.9 3.5-3.5 6.1 6.6 12.3 13.3 18.4 20 6.2-6.7 12.3-13.4 18.5-20.1 2.2-2.4 5.7 1.2 3.5 3.5-6.2 6.8-12.4 13.5-18.6 20.3z"/></svg>
-            </div>
-            <a href="<%= event.url %>">
-              <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
-              </div>
-              <div class="me-card__date" data-target="favorite-events.date">
-                <%= event.day_of_week %>
-              </div>
-              <div class="me-card__title mdc-card__title" data-target="favorite-events.title" style="display: none">
-                <%= event.name %>
-              </div>
-            </a>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+        <div data-controller="favorite-events" data-target="favorite-events.event"
+          data-action="mouseover->favorite-events#showEventDetails" class="me-card mdc-card event-<%= event.id %>"
+          data-favorite-events-identifier="<%= event.id %>">
+          <div data-target="favorite-events.remove" data-action="click->favorite-events#remove" class="me-card__remove">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" focusable="false">
+              <path
+                d="m55.7 52.7c6.2 6.7 12.4 13.5 18.6 20.2 2.2 2.4-1.4 5.9-3.5 3.5-6.2-6.7-12.3-13.4-18.5-20.1-6.1 6.8-12.3 13.4-18.4 20.1-2.2 2.4-5.7-1.2-3.5-3.5 6.2-6.7 12.4-13.5 18.6-20.2-6.2-6.7-12.4-13.5-18.6-20.2-2.2-2.4 1.4-5.9 3.5-3.5 6.1 6.6 12.3 13.3 18.4 20 6.2-6.7 12.3-13.4 18.5-20.1 2.2-2.4 5.7 1.2 3.5 3.5-6.2 6.8-12.4 13.5-18.6 20.3z" />
+              </svg>
           </div>
+          <a href="<%= event.url %>">
+            <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= event.cover_url %>')">
+            </div>
+            <div class="me-card__date" data-target="favorite-events.date">
+              <%= event.day_of_week %>
+            </div>
+            <div class="me-card__title mdc-card__title" data-target="favorite-events.title" style="display: none">
+              <%= event.name %>
+            </div>
+          </a>
         </div>
+      </div>
       <% end %>
     </div>
   </div>
 
-<% end %>
+  <% end %>
 </div>
 
 
