@@ -28,21 +28,25 @@
 
     <% if current_page?(controller: 'feeds', action: 'index') %>
     <section class="me-page__feed-section">
-      <div class="me-overlay">
-      </div>
+      <div class="me-overlay"></div>
       <%= yield %>
     </section>
     <% elsif current_page?(controller: 'events', action: 'show') %>
     <section class="me-page__events-section">
-      <div class="me-overlay">
-      </div>
+      <div class="me-overlay"></div>
       <%= yield %>
     </section>
+    <% else %>
+      <section class="me-page__feed-section">
+        <div class="me-overlay"></div>
+        <%= yield %>
+      </section>
     <% end %>
+    
   </div>
 
   <% if notice %>
-  <div class="me-snackbar mdc-snackbar">
+  <div data-controller="snackbar" class="me-snackbar mdc-snackbar">
     <div class="mdc-snackbar__surface">
       <div class="mdc-snackbar__label" role="status" aria-live="polite">
         <%= notice %>
