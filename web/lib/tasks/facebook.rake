@@ -3,8 +3,14 @@ namespace :scrapy do
   require 'json'
   require 'open-uri'
   require 'net/http'
+  require 'down'
 
   require_relative '../geographic'
+  require_relative '../../config/initializers/shrine'
+  require_relative '../../app/uploaders/image_uploader'
+
+
+  uploader = ImageUploader.new(:store)
 
   task facebook: :environment do
     puts "Parsear JSON ****************************************"
@@ -99,9 +105,19 @@ namespace :scrapy do
 
         if item['cover_url']
           begin
-            cover = open(item['cover_url'])
-            @event.cover.attach(io: cover, filename: "event#{@event.id}.jpg", content_type: "image/jpeg")
-          rescue OpenURI::HTTPError => ex
+            event_name = "event-#{item['name'].parameterize}"
+            event_cover_file = Down.download(item['cover_url'])
+            @event.image = uploader.upload(event_cover_file, metadata: {"filename" => event_name})
+            
+            # require 'down'
+            # uploader = ImageUploader.new(:store)
+            # @event = Event.new
+            # event_name = "event-#{"SADSA dsadsa sd".parameterize}"
+            # event_cover_file = Down.download("https://scontent.fpoa12-1.fna.fbcdn.net/v/t1.0-9/s851x315/45818886_739571639728842_5669269685833564160_n.jpg?_nc_cat=102&_nc_ht=scontent.fpoa12-1.fna&oh=3e347b8687b90b3acd35521150f4f51e&oe=5D29543E")
+            # @event.image = uploader.upload(event_cover_file, metadata: {"filename" => event_name})
+            # @event.place = Place.new name: 'aaa'
+            # @event.save!
+          rescue Down::Error => ex
             puts "Erro no download de imagem cover do facebook: #{ex}"
           end
         end

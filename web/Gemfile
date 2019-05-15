@@ -60,11 +60,21 @@ gem 'httparty'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'mini_magick'
+# gem 'mini_magick'
+
+gem 'image_processing', '~> 1.0'
+# gem 'image_optim'
+# gem 'image_optim_pack'
 
 gem 'rack-cors'
 
 gem 'whenever', require: false
+
+gem 'shrine'
+gem 'mimemagic'
+gem 'shrine-color'
+
+gem 'facets', require: false
 
 # gem 'serviceworker-rails'
 

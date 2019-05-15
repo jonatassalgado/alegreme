@@ -50,7 +50,7 @@ export default class FavoriteController extends Controller {
                 <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="m55.7 52.7c6.2 6.7 12.4 13.5 18.6 20.2 2.2 2.4-1.4 5.9-3.5 3.5-6.2-6.7-12.3-13.4-18.5-20.1-6.1 6.8-12.3 13.4-18.4 20.1-2.2 2.4-5.7-1.2-3.5-3.5 6.2-6.7 12.4-13.5 18.6-20.2-6.2-6.7-12.4-13.5-18.6-20.2-2.2-2.4 1.4-5.9 3.5-3.5 6.1 6.6 12.3 13.3 18.4 20 6.2-6.7 12.3-13.4 18.5-20.1 2.2-2.4 5.7 1.2 3.5 3.5-6.2 6.8-12.4 13.5-18.6 20.3z"/></svg>
               </div>
               <a href="${event.url}">
-                <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('${event.cover_url}')">
+                <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('${event.image.url}')">
                 <div data-target="favorite-events.overlay" class="me-card__overlay mdc-ripple-surface	"></div>
                 </div>
                 <div class="me-card__date" data-target="favorite-events.date">

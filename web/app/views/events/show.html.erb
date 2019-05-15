@@ -11,7 +11,7 @@
   data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
   data-event-identifier="<%= @event.id %>"
   data-event-modifier="single">
-  <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= @event.cover_url %>')">
+  <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url('<%= @event.image[:single].url if @event.image[:single].exists? %>')">
     <div class="me-card__like-button" data-action="click->event#like">
       <div data-target="event.like">
         <button data-target="event.likeButton" id="add-to-favorites"

@@ -1,14 +1,16 @@
 class Event < ApplicationRecord
   require "day_of_week"
   
+  include ImageUploader::Attachment.new(:image)
   include Rails.application.routes.url_helpers
+
 
   after_save :reindex, if: proc{ |event| event.description_changed? }
   after_destroy :reindex, :destroy_entries
   
   belongs_to :place
   has_and_belongs_to_many :organizers
-  has_one_attached :cover
+  # has_one_attached :cover
   
   accepts_nested_attributes_for :place, :organizers
   
