@@ -68,7 +68,21 @@ export default class EventController extends Controller {
           self.favoriteController.updateList = response.all_favorited
         }
 
-        // Turbolinks.clearCache();
+        caches.open('v1:sw-cache-feed-page').then(function(cache) {
+          cache.delete('/').then(function(response) {
+            if (response) {
+              cache.add('/');
+            } 
+          });
+        })
+        
+        caches.open('v1:sw-cache-events-page').then(function(cache) {
+          cache.delete(`/events/${self.identifier}`).then(function(response) {
+            if (response) {
+              cache.add(`/events/${self.identifier}`);
+            } 
+          });
+        })
       },
       error: function(response){
         console.log(response)
