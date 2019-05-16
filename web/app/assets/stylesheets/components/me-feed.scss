@@ -13,6 +13,7 @@ $mdc-layout-grid-columns: (
 );
 
 .me-feed {
+
   &__section {
     margin: 0 0 120px 0;
 
@@ -91,85 +92,6 @@ $mdc-layout-grid-columns: (
       @include mdc-layout-grid-inner($size: "phone", $margin: 0, $gutter: 15px);
       & .mdc-layout-grid__cell:first-child {
         grid-column-end: span 8;
-      }
-    }
-  }
-
-  & .me-card {
-    font-size: 14px;
-    border: 0;
-    box-shadow: none;
-    background: none;
-    position: relative;
-    margin: 0 0 25px 0;
-    @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
-    @include mdc-layout-grid-media-query_("phone") {
-      min-height: 165px;
-    }
-
-    &__place {
-      // display: none;
-      // @include mdc-layout-grid-media-query_("phone") {
-      //   display: inline-block;
-      // }
-    }
-
-    &__date {
-      // display: none;
-      // @include mdc-layout-grid-media-query_("phone") {
-      //   display: inline-block;
-      // }
-    }
-
-    & .mdc-typography--headline1 {
-      color: $font-primary-color;
-    }
-
-    & .mdc-typography--headline2 {
-      margin: 0 0 6px 0;
-    }
-
-    & .mdc-typography--subtitle2 {
-      margin: 0 0 6px 0;
-    }
-
-    & .mdc-card__primary-action {
-      padding: 6px 0 6px 0;
-
-      &:hover {
-        background: inherit;
-      }
-    }
-
-    & .mdc-card__title {
-      color: $name-color;
-      font-size: 14px;
-      line-height: 1.2em;
-      margin: 6px 0 0 0;
-      font-family: Roboto;
-      font-weight: 500;
-
-      @include mdc-layout-grid-media-query_("phone") {
-        margin: 6px 0 0 0;
-        color: $font-secondary-color;
-      }
-    }
-
-    & .mdc-card__actions {
-      padding: 0;
-    }
-
-    & .mdc-card__media {
-      transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
-    }
-
-    &:hover {
-      & .mdc-card__media {
-        // transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-        // border-radius: 2px;
-        // box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
-        //   0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
       }
     }
   }

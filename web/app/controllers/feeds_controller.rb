@@ -14,7 +14,7 @@ class FeedsController < ApplicationController
         user: Event.feed_for_user(current_user),
         categories: Event.with_categories(params[:categories]).in_days(params[:ocurrences]).active.order_by_date.limit(18).uniq
       }
-    elsif params[:personas] || params[:categories]
+    elsif params[:personas] || params[:categories] || params[:ocurrences]
       @events = {
         user: Event.with_personas(params[:personas]).with_categories(params[:categories]).in_days(params[:ocurrences]).active.order_by_date.limit(15).uniq
       }      

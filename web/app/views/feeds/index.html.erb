@@ -46,6 +46,6 @@
     <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos recomendados para você"}, identifier: 'recomendados', type: :large, filters: false } %>
     <%= render partial: "section", locals: { events: @events[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: { personas: false, categories: true, occurences: true } } if @events[:categories] %>
   <% else %>
-    <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos recomendados para", categories: "nas categorias", occurences: "acontecendo"}, identifier: 'recomendados', type: :large, filters: { personas: true, categories: true, occurences: true } } %>
+    <%= render partial: "section", locals: { events: @events[:user], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'recomendados', type: :large, filters: { categories: true, occurences: true } } %>
   <% end %>
 </div>
