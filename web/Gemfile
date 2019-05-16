@@ -76,6 +76,8 @@ gem 'shrine-color'
 
 gem 'facets', require: false
 
+gem 'active_record_extended'
+
 # gem 'serviceworker-rails'
 
 group :production do
@@ -97,6 +99,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'awesome_print', require: 'ap'
   gem 'meta_request'
+  gem 'niceql'
+  gem 'bullet'
 end
 
 group :test do

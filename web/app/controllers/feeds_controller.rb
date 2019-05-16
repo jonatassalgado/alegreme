@@ -7,7 +7,7 @@ class FeedsController < ApplicationController
   
     if params[:q]
       @events = {
-        user: Event.search(params[:q].downcase, highlight: true, limit: 23)
+        user: Event.search(params[:q].downcase, highlight: true, limit: 23, include: [:place])
       }
     elsif current_user && current_user.personas_assortment_finished?
       @events = {

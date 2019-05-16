@@ -39,6 +39,10 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_record_extended (1.1.0)
+      activerecord (>= 5.0, < 6.1)
+      ar_outer_joins (~> 0.2)
+      pg (< 2.0)
     activejob (5.2.2)
       activesupport (= 5.2.2)
       globalid (>= 0.3.6)
@@ -59,6 +63,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    ar_outer_joins (0.2.0)
+      activerecord (>= 3.2)
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
@@ -86,6 +92,9 @@ GEM
     bootsnap (1.3.2)
       msgpack (~> 1.0)
     builder (3.2.3)
+    bullet (6.0.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (10.0.2)
     callsite (0.0.11)
     capybara (3.12.0)
@@ -189,6 +198,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    niceql (0.1.25)
     nio4r (2.3.1)
     nokogiri (1.9.1)
       mini_portile2 (~> 2.4.0)
@@ -302,6 +312,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
+    uniform_notifier (1.12.1)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (3.7.0)
@@ -321,9 +332,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_record_extended
   awesome_print
   aws-sdk-s3
   bootsnap (>= 1.1.0)
+  bullet
   byebug
   capybara (>= 2.15)
   chromedriver-helper
@@ -340,6 +353,7 @@ DEPENDENCIES
   materialize-sass (~> 1.0.0)
   meta_request
   mimemagic
+  niceql
   omniauth-google-oauth2
   pg
   puma (~> 3.11)
