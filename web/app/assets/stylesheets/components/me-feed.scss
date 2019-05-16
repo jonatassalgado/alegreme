@@ -60,7 +60,7 @@ $mdc-layout-grid-columns: (
     --mdc-layout-grid-gutter-desktop: 12px;
 
     @include mdc-layout-grid-media-query_("phone") {
-      background-color: $background-color;
+      background-color: $surface-color;
       border-radius: 20px;
       border-radius: 20px;
       margin-bottom: 35px;

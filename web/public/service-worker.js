@@ -66,7 +66,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  '/',
+  /(\/|\/#)/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: CACHE_NAME + 'feed-page'
   })

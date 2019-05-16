@@ -11,7 +11,7 @@ $border-color: #e0e0e0;
   position: fixed;
   border-bottom: 1px solid $border-color;
   @include mdc-layout-grid-media-query_("phone") {
-    background-color: unset;
+    background-color: $background-color;
     border-bottom: 0;
 
     &.mdc-top-app-bar--fixed-scrolled {
@@ -35,7 +35,7 @@ $border-color: #e0e0e0;
     }
     &--middle {
       display: flex;
-      width: 900px;
+      width: 600px;
       flex: none;
       @include mdc-layout-grid-media-query_("phone") {
         padding: 8px 12px;

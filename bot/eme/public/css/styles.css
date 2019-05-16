@@ -100,7 +100,7 @@ a.button {
 
 /* chat client */
 #message_window {
-  background: #FFFFFF;
+  background: #ffffff;
   /*height: 500px;
   width: 320px;*/
   height: 100%;
@@ -110,7 +110,7 @@ a.button {
   flex-direction: column;
   font-family: Roboto; }
   #message_window .disconnected {
-    background: #FFFFCC;
+    background: #ffffcc;
     padding: 0.25rem; }
   #message_window.connected .disconnected {
     display: none; }
@@ -119,14 +119,14 @@ a.button {
   #message_window.offline .disconnected {
     display: none; }
   #message_window.offline .offline {
-    background: #FF0000;
-    color: #FFF;
+    background: #ff0000;
+    color: #fff;
     padding: 0.25rem;
     display: block; }
   #message_window .powered_by {
     flex-shrink: 0;
     text-align: center;
-    border-bottom: 1px solid #CCC;
+    border-bottom: 1px solid #ccc;
     font-size: 14px;
     padding: 0.25rem;
     color: #666; }
@@ -145,8 +145,8 @@ a.button {
       margin: 0.25rem;
       clear: both; }
   #message_window footer {
-    border-top: 1px solid #CCC;
-    padding: 0.25rem; }
+    border-top: 1px solid #ccc;
+    padding: 0 6px; }
     #message_window footer input[type="text"] {
       flex-grow: 1;
       font-size: 0.75rem;
@@ -154,13 +154,18 @@ a.button {
       border: none;
       font-family: Roboto; }
     #message_window footer button {
-      width: 50px;
       background: none;
       border: 0;
       cursor: pointer;
       color: #5ecf80;
       font-weight: 500;
-      font-family: Roboto; }
+      font-family: inherit;
+      font-size: 14px;
+      padding: 8px 12px; }
+      @media (max-width: 479px) {
+        #message_window footer button {
+          font-size: 14px;
+          padding: 15px 20px; } }
   #message_window b {
     font-weight: 500; }
   #message_window form {
@@ -173,14 +178,14 @@ a.button {
   #message_window .message {
     font-size: 14px;
     padding: 0.5rem;
-    background: #F0F0F0;
+    background: #f0f0f0;
     color: #333;
     border-radius: 5px;
     width: auto;
     display: inline-block;
     max-width: 75%; }
   #message_window .file_attachment {
-    background: #F0F0F0;
+    background: #f0f0f0;
     color: #333;
     border-radius: 5px;
     width: fit-content;
@@ -214,6 +219,7 @@ a.button {
     text-align: center;
     overflow-x: auto;
     flex-shrink: 0;
+    padding: 12px 6px;
     -webkit-overflow-scrolling: touch;
     /* Lets it scroll lazy */ }
     #message_window #message_replies ul {
@@ -222,7 +228,7 @@ a.button {
       padding: 0; }
       #message_window #message_replies ul li {
         display: inline-block;
-        margin: 0.5rem;
+        margin: 6px 12px;
         margin-left: 0; }
     #message_window #message_replies a {
       text-decoration: none;
@@ -235,9 +241,12 @@ a.button {
       cursor: pointer;
       font-weight: 500;
       text-transform: uppercase; }
+      @media (max-width: 479px) {
+        #message_window #message_replies a {
+          padding: 16px 37px; } }
       #message_window #message_replies a:hover {
         background: #34ad58;
-        color: #FFF; }
+        color: #fff; }
 
 /* typing indicator CSS based on code by Joseph Fusco -> https://codepen.io/fusco/pen/XbpaYv */
 .typing-indicator {

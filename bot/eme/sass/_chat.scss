@@ -2,8 +2,8 @@ $brand-color: #5ecf80;
 $font-primary-color: #000000;
 $font-secondary-color: #4a4a4a;
 $action_color: orange;
-$background: #FFFFFF;
-$bot_message_background: #F0F0F0;
+$background: #ffffff;
+$bot_message_background: #f0f0f0;
 $bot_message_text: #333;
 $human_message_background: $brand-color;
 $human_message_text: white;
@@ -23,7 +23,7 @@ $human_message_text: white;
   font-family: Roboto;
 
   .disconnected {
-    background: #FFFFCC;
+    background: #ffffcc;
     padding: 0.25rem;
   }
   &.connected .disconnected {
@@ -33,13 +33,12 @@ $human_message_text: white;
     display: none;
   }
   &.offline {
-
     .disconnected {
       display: none;
     }
     .offline {
-      background: #FF0000;
-      color: #FFF;
+      background: #ff0000;
+      color: #fff;
       padding: 0.25rem;
       display: block;
     }
@@ -49,7 +48,7 @@ $human_message_text: white;
     flex-shrink: 0;
     text-align: center;
 
-    border-bottom: 1px solid #CCC;
+    border-bottom: 1px solid #ccc;
     font-size: 14px;
     padding: 0.25rem;
     color: #666;
@@ -66,7 +65,7 @@ $human_message_text: white;
   }
 
   section {
-    flex-grow:  1;
+    flex-grow: 1;
     flex-direction: column-reverse;
     display: flex;
     overflow-y: auto;
@@ -78,8 +77,8 @@ $human_message_text: white;
   }
 
   footer {
-    border-top: 1px solid #CCC;
-    padding: 0.25rem;
+    border-top: 1px solid #ccc;
+    padding: 0 6px;
     input[type="text"] {
       flex-grow: 1;
       font-size: 0.75rem;
@@ -89,13 +88,19 @@ $human_message_text: white;
     }
 
     button {
-      width: 50px;
       background: none;
       border: 0;
       cursor: pointer;
       color: $brand-color;
       font-weight: 500;
-      font-family: Roboto;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 8px 12px;
+
+      @media (max-width: 479px) {
+        font-size: 14px;
+        padding: 15px 20px;
+      }
     }
   }
 
@@ -123,11 +128,9 @@ $human_message_text: white;
     width: auto;
     display: inline-block;
     max-width: 75%;
-
   }
 
   .file_attachment {
-
     background: $bot_message_background;
     color: $bot_message_text;
     border-radius: 5px;
@@ -139,7 +142,6 @@ $human_message_text: white;
       max-width: 100%;
       display: block;
     }
-
   }
 
   .button_message {
@@ -152,10 +154,9 @@ $human_message_text: white;
     padding: 0.25rem 1rem;
     text-decoration: none;
     text-align: center;
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
     display: block;
   }
-
 
   .message p {
     margin-top: 0;
@@ -171,13 +172,13 @@ $human_message_text: white;
 
     background: $human_message_background;
     color: $human_message_text;
-
   }
 
   #message_replies {
     text-align: center;
     overflow-x: auto;
     flex-shrink: 0;
+    padding: 12px 6px;
     -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
 
     ul {
@@ -186,7 +187,7 @@ $human_message_text: white;
       padding: 0;
       li {
         display: inline-block;
-        margin: 0.5rem;
+        margin: 6px 12px;
         margin-left: 0;
       }
     }
@@ -202,16 +203,17 @@ $human_message_text: white;
       cursor: pointer;
       font-weight: 500;
       text-transform: uppercase;
+      @media (max-width: 479px) {
+        padding: 16px 37px;
+      }
 
       &:hover {
         background: darken($color: $brand-color, $amount: 15%);
-        color: #FFF;
+        color: #fff;
       }
     }
   }
 }
-
-
 
 /* typing indicator CSS based on code by Joseph Fusco -> https://codepen.io/fusco/pen/XbpaYv */
 .typing-indicator {
@@ -229,7 +231,7 @@ $human_message_text: white;
     opacity: 0.4;
     @for $i from 1 through 3 {
       &:nth-of-type(#{$i}) {
-        animation: 1s blink infinite ($i * .3333s);
+        animation: 1s blink infinite ($i * 0.3333s);
       }
     }
   }

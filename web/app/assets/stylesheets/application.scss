@@ -78,7 +78,7 @@ body {
   color: #212121;
   
   @include mdc-layout-grid-media-query_("phone") {
-    background: $filter-background-color;
+    background: $background-color;
   }
 }
 

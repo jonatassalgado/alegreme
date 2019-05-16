@@ -10,9 +10,9 @@ module.exports = function(controller) {
   };
 
   var typing = {
-    slow: 100,
-    normal: 100,
-    fast: 100
+    slow: 5000,
+    normal: 2500,
+    fast: 1250
   };
 
   var events = [
