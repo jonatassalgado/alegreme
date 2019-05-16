@@ -7,16 +7,16 @@ class FeedsController < ApplicationController
   
     if params[:q]
       @events = {
-        user: Event.search(params[:q].downcase, highlight: true, limit: 23, include: [:place])
+        user: Event.search(params[:q].downcase, highlight: true, limit: 23, includes: [:place])
       }
     elsif current_user && current_user.personas_assortment_finished?
       @events = {
         user: Event.feed_for_user(current_user),
-        categories: Event.with_categories(params[:categories]).in_days(params[:ocurrences]).active.order_by_date.limit(18).uniq
+        categories: Event.with_categories(params[:categories]).in_days(params[:ocurrences]).active.includes(:place).order_by_date.limit(18).uniq
       }
     elsif params[:personas] || params[:categories] || params[:ocurrences]
       @events = {
-        user: Event.with_personas(params[:personas]).with_categories(params[:categories]).in_days(params[:ocurrences]).active.order_by_date.limit(15).uniq
+        user: Event.with_personas(params[:personas]).with_categories(params[:categories]).in_days(params[:ocurrences]).active.includes(:place).order_by_date.limit(15).uniq
       }      
     else
       @events = {

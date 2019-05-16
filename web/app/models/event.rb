@@ -44,13 +44,13 @@ class Event < ApplicationRecord
         }
 
   scope "feed_for_user", ->(user, filters = { categories: ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton", "palestra", "celebração", "workshop", "oficina", "aula de dança", "literatura", "festival", "acadêmico", "gastronômico", "brecho", "profissional"] }) {
-      events_for_primary_persona = Event.by_category(filters[:categories], "primary", { 'not_in': ["curso"] }).by_persona(user.personas_primary_name).active.order_by_score.limit(10)
-      events_for_secondary_persona = Event.by_category(filters[:categories], "secondary", { 'not_in': ["curso"] }).by_persona(user.personas_secondary_name).active.order_by_score.limit(10)
-      events_for_tertiary_persona = Event.by_category(filters[:categories], "tertiary", { 'not_in': ["curso"] }).by_persona(user.personas_tertiary_name).active.order_by_score.limit(10)
-      events_for_quartenary_persona = Event.by_category(filters[:categories], "quartenary", { 'not_in': ["curso"] }).by_persona(user.personas_quartenary_name).active.order_by_score.limit(10)
+      events_for_primary_persona = Event.by_category(filters[:categories], "primary", { 'not_in': ["curso"] }).by_persona(user.personas_primary_name).active.order_by_score.limit(15)
+      events_for_secondary_persona = Event.by_category(filters[:categories], "secondary", { 'not_in': ["curso"] }).by_persona(user.personas_secondary_name).active.order_by_score.limit(15)
+      events_for_tertiary_persona = Event.by_category(filters[:categories], "tertiary", { 'not_in': ["curso"] }).by_persona(user.personas_tertiary_name).active.order_by_score.limit(15)
+      events_for_quartenary_persona = Event.by_category(filters[:categories], "quartenary", { 'not_in': ["curso"] }).by_persona(user.personas_quartenary_name).active.order_by_score.limit(15)
       
-      count_primary_persona = events_for_primary_persona.count
-      count_secondary_persona = events_for_secondary_persona.count + (5 - count_primary_persona)
+      count_primary_persona = events_for_primary_persona.count >= 0 ? events_for_primary_persona.count : 0
+      count_secondary_persona = events_for_secondary_persona.count + ((5 - count_primary_persona) >= 0 ? (5 - count_primary_persona) : 0)
       count_tertiary_persona = events_for_tertiary_persona.count + (((4 + count_secondary_persona) - count_primary_persona) >= 0 ? (4 + count_secondary_persona) - count_primary_persona : 0)
       count_quartenary_persona = events_for_quartenary_persona.count + (((2 + count_tertiary_persona) - count_secondary_persona) >= 0 ? (2 + count_tertiary_persona) - count_secondary_persona : 0)
 
@@ -59,7 +59,7 @@ class Event < ApplicationRecord
       events_for_tertiary_persona = Event.by_category(filters[:categories], "tertiary", { 'not_in': ["curso"] }).by_persona(user.personas_tertiary_name).active.order_by_score.limit(count_tertiary_persona)
       events_for_quartenary_persona = Event.by_category(filters[:categories], "quartenary", { 'not_in': ["curso"] }).by_persona(user.personas_quartenary_name).active.order_by_score.limit(count_quartenary_persona)
 
-      Event.union(events_for_primary_persona, events_for_secondary_persona, events_for_tertiary_persona, events_for_quartenary_persona).includes(:place).order_by_date
+      Event.union(events_for_primary_persona, events_for_secondary_persona, events_for_tertiary_persona, events_for_quartenary_persona).includes(:place).order_by_date.limit(13)
     }
 
   scope "order_by_score", -> {
