@@ -90,7 +90,7 @@
               </div>
             <% end %>
             <div class="mdc-card__media mdc-card__media--16-9"
-            style="background-image: url('<%= event.image[:feed].url if event.image[:feed].exists? %>')">
+            style="background-image: url('<%= get_image_url event %>')">
               <a href="<%= event.url %>">
                 <div data-target="event.overlay" class="me-card__overlay mdc-ripple-surface"></div>
               </a>

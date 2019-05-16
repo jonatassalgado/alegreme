@@ -15,4 +15,8 @@ module EventsHelper
   def datetime_local(datetime)
     DateTime.parse(datetime).strftime('%Y-%m-%dT%H:%M')
   end
+
+  def get_image_url(event, type = :feed)
+    event.image[type].url if event.image && event.image[type].exists?
+  end
 end
