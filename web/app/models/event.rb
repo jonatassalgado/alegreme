@@ -48,7 +48,7 @@ class Event < ApplicationRecord
       events_for_secondary_persona = Event.by_category(filters[:categories], "secondary", { 'not_in': ["curso"] }).by_persona(user.personas_secondary_name).active.order_by_score.limit(15)
       events_for_tertiary_persona = Event.by_category(filters[:categories], "tertiary", { 'not_in': ["curso"] }).by_persona(user.personas_tertiary_name).active.order_by_score.limit(15)
       events_for_quartenary_persona = Event.by_category(filters[:categories], "quartenary", { 'not_in': ["curso"] }).by_persona(user.personas_quartenary_name).active.order_by_score.limit(15)
-      
+
       count_primary_persona = events_for_primary_persona.count >= 0 ? events_for_primary_persona.count : 0
       count_secondary_persona = events_for_secondary_persona.count + ((5 - count_primary_persona) >= 0 ? (5 - count_primary_persona) : 0)
       count_tertiary_persona = events_for_tertiary_persona.count + (((4 + count_secondary_persona) - count_primary_persona) >= 0 ? (4 + count_secondary_persona) - count_primary_persona : 0)
@@ -114,6 +114,10 @@ class Event < ApplicationRecord
 
   scope "not_retrained", -> {
           where("(categories -> 'primary' ->> 'score')::numeric < 0.90 OR (personas -> 'primary' ->> 'score')::numeric < 0.90")
+        }
+
+  scope "favorited_by", ->(user = current_user) {
+          where(id: user.taste_events_saved)
         }
 
   def personas_primary_name

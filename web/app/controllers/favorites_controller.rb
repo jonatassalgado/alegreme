@@ -2,25 +2,19 @@ class FavoritesController < ApplicationController
   before_action :authorize_user
 
   def create
-    @event = Event.find favorite_params['event_id']
-    current_user.taste_events_save @event.id
+    current_user.taste_events_save favorite_params['event_id'].to_i    
 
-
-    render json: {
-      event_id: @event.id,
-      favorited: true,
-      all_favorited: Event.where(id: current_user.taste_events_saved).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now - 1).order("ocurrences -> 'dates' ->> 0 ASC").uniq.as_json({only: [:id, :name], methods: [:cover_url, :day_of_week, :url]})
-    }
+    respond_to do |format|
+      format.json { render partial: 'events/favorited_events', locals: {user: current_user, currentEventFavorited: true} }
+    end
   end
 
   def destroy
-    @event = Event.find favorite_params['event_id']
-    current_user.taste_events_unsave @event.id
-    render json: {
-      event_id: @event.id,
-      favorited: false,
-      all_favorited: Event.where(id: current_user.taste_events_saved).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now - 1).order("ocurrences -> 'dates' ->> 0 ASC").uniq.as_json({only: [:id, :name], methods: [:cover_url, :day_of_week, :url]})
-    }
+    current_user.taste_events_unsave favorite_params['event_id'].to_i
+    
+    respond_to do |format|
+      format.json { render partial: 'events/favorited_events', locals: {user: current_user, currentEventFavorited: false} }
+    end
   end
 
   private

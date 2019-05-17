@@ -58,14 +58,14 @@ export default class EventController extends Controller {
 
   like() {
     const self = this
-
+    
     Rails.ajax({
       type: self.isFavorited,
       url: `/events/${self.identifier}/favorite`,
       success: function(response){
-        self.data.set("favorited", response.favorited)
+        self.data.set("favorited", response.currentEventFavorited)
         if (self.favoriteController) {
-          self.favoriteController.updateList = response.all_favorited
+          self.favoriteController.updateList = response.events
         }
 
         caches.open('v1:sw-cache-feed-page').then(function(cache) {

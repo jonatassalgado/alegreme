@@ -36,7 +36,7 @@ export default class FavoriteEventsController extends Controller {
         });
 
         if (self.favoriteController) {
-          self.favoriteController.updateList = response.all_favorited
+          self.favoriteController.updateList = response.events
         }
       },
       error: function(response){

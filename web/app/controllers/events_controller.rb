@@ -13,6 +13,9 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    respond_to do |format|
+      format.html { render :show }
+    end
   end
 
   # GET /events/new
@@ -31,7 +34,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.html { redirect_to @event, notice: "Event was successfully created." }
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new }
@@ -45,7 +48,7 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to @event, notice: "Event was successfully updated." }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
@@ -59,67 +62,66 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+      format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
-  def retrain 
-    @event = Event.find params['event_id']
+  def retrain
+    @event = Event.find params["event_id"]
 
-    if params[:feature] == 'personas'
+    if params[:feature] == "personas"
       @event.personas_outlier = params[:outlier] if params[:outlier]
       @event.personas_primary_name = params[:persona] if params[:persona]
       @event.personas_primary_score = 0.90 if params[:correct] || params[:persona]
-    elsif params[:feature] == 'categories'
+    elsif params[:feature] == "categories"
       @event.categories_outlier = params[:outlier] if params[:outlier]
       @event.categories_primary_name = params[:category] if params[:category]
       @event.categories_primary_score = 0.90 if params[:correct] || params[:category]
     end
-    
+
     render json: {
       status: @event.save ? :ok : :error,
       persona: {
         primary: {
           name: @event.personas_primary_name,
-          score: @event.personas_primary_score
+          score: @event.personas_primary_score,
         },
-        outlier: @event.personas_outlier
+        outlier: @event.personas_outlier,
       },
       category: {
         primary: {
           name: @event.categories_primary_name,
-          score: @event.categories_primary_score
+          score: @event.categories_primary_score,
         },
-        outlier: @event.categories_outlier
-      }
+        outlier: @event.categories_outlier,
+      },
     }
   end
 
-
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
 
-    def parse_personas
-      @event.personas['outlier'] = params[:event][:personas_outlier] || 'false'
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
-    def parse_ocurrences
-      params[:event][:ocurrences][:dates].each_with_index do |date, index|
-        @event.ocurrences['dates'][index] = DateTime.parse(date).strftime("%Y-%m-%d %H:%M:%S")
-      end
-    end
+  def parse_personas
+    @event.personas["outlier"] = params[:event][:personas_outlier] || "false"
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_params
-      params.require(:event).permit(:name, :description, :url, :personas_primary_name, :personas_secondary_name, :personas_primary_score, :personas_secondary_score, :categories_primary_name, :categories_secondary_name, :categories_primary_score, :categories_secondary_score, :personas_outlier, :dates)
+  def parse_ocurrences
+    params[:event][:ocurrences][:dates].each_with_index do |date, index|
+      @event.ocurrences["dates"][index] = DateTime.parse(date).strftime("%Y-%m-%d %H:%M:%S")
     end
+  end
 
-    def retrain_params
-      params.permit(:event_id, :feature, :score, :outlier)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_params
+    params.require(:event).permit(:name, :description, :url, :personas_primary_name, :personas_secondary_name, :personas_primary_score, :personas_secondary_score, :categories_primary_name, :categories_secondary_name, :categories_primary_score, :categories_secondary_score, :personas_outlier, :dates)
+  end
 
+  def retrain_params
+    params.permit(:event_id, :feature, :score, :outlier)
+  end
 end
