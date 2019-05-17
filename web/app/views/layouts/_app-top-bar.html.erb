@@ -50,7 +50,7 @@
         (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)
       <% else %>
         <div class="g-signin2" data-onsuccess="onSuccess" data-gapiscan="true" data-onload="true">
-          <div onclick="location.assign('/users/auth/google_oauth2')" style="height:36px;width:185px;"
+          <div onclick="CacheSystem.clearCache(); location.assign('/users/auth/google_oauth2')" style="height:36px;width:185px;"
 					class="abcRioButton">
             <div class="abcRioButtonContentWrapper">
               <div class="abcRioButtonIcon" style="padding:8px">

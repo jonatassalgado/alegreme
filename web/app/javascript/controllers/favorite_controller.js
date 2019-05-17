@@ -81,6 +81,7 @@ export default class FavoriteController extends Controller {
 
     this.removeRepeatedDates = true;
     this.hideScrollButtons = true;
+    
   }
 
 

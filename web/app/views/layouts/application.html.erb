@@ -3,6 +3,7 @@
 
 <head>
   <title>Alegreme - Eventos e atividades em Porto Alegre</title>
+  <meta name="turbolinks-cache-control" content="no-preview">
   <meta name="theme-color" content="#5ecf80" />
   <meta name="viewport"
     content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -13,11 +14,11 @@
 
   <link rel="manifest" href="/manifest.json" />
 
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <%= stylesheet_link_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/css/embed.css" : ":3030/css/embed.css") %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/css/embed.css" : ":3030/css/embed.css"), 'data-turbolinks-track': 'reload' %>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Cabin:400,500,600,700|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
-  <%= javascript_include_tag 'application' %>
-  <%= javascript_pack_tag 'application' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
 </head>
 
@@ -26,7 +27,7 @@
 
     <%= render partial: "layouts/app-top-bar" %>
 
-    <% if current_page?(controller: 'feeds', action: 'index') %>
+    <% if request.parameters['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
     <section class="me-page__feed-section">
       <div class="me-overlay"></div>
       <%= yield %>

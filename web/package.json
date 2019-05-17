@@ -10,7 +10,8 @@
     "material-components-web": "^0.43.0",
     "mobile-detect": "^1.4.3",
     "query-string": "^6.4.2",
-    "stimulus": "^1.1.1"
+    "stimulus": "^1.1.1",
+    "turbolinks": "^5.2.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.1.14"
