@@ -1,0 +1,11 @@
+@import "../_variables";
+
+.me-footer {
+  text-align: center;
+  padding: 16px;
+  color: $font-secondary-color;
+
+  & span {
+    margin: 0 12px;
+  }
+}
