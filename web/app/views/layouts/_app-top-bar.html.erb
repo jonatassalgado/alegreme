@@ -1,5 +1,4 @@
-<header id="top-bar" class="me-top-app-bar mdc-top-app-bar" style="top: 0"
-	data-turbolinks-permanent>
+<header id="top-bar" class="me-top-app-bar mdc-top-app-bar" style="top: 0">
   <div class="mdc-top-app-bar__row">
     <section
 			class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -17,7 +16,7 @@
           <div data-target="chat.botConversation" class="me-search-field__bot">
             <iframe id="botkit_client" referrerpolicy="no-referrer" src="<%= request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/chat.html" : ":3030/chat.html") %>"></iframe>
           </div>
-          <%= javascript_include_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/embed.js" : ":3030/embed.js") %>
+          <%= javascript_include_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/embed.js" : ":3030/embed.js"), defer: true %>
           <script>
             var options = {
             	id: <%= current_or_guest_user.try(:id) %>

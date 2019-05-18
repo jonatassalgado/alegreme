@@ -71,7 +71,11 @@ export default class EventController extends Controller {
           self.favoriteController.updateList = response.events;
         }
 
-        CacheSystem.clearCache(["feed-page", "events-page"]);
+        CacheSystem.clearCache(["feed-page", "events-page"], {
+          event: {
+            identifier: self.identifier
+          }
+        });
       },
       error: function(response) {
         console.log(response);

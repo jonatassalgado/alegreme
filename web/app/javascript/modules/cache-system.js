@@ -10,7 +10,7 @@ const CacheSystem = (function() {
     Turbolinks.start();
     status.turbolinksStarted = true;
     console.log("[TURBOLINKS]: started");
-  }
+  };
 
   module.activateTurbolinks = () => {
     const feedCache = caches.has("v1:sw-cache-feed-page");
@@ -32,34 +32,48 @@ const CacheSystem = (function() {
           startTurbolinks();
         }
       })
-      .catch(erro => {
-        console.log(erro.message);
+      .catch(reason => {
+        console.log(reason.message);
       });
   };
 
-  module.clearCache = cacheNames => {
+  module.clearCache = (cacheNames, attrs) => {
     if (!cacheNames || cacheNames.includes("feed-page")) {
-      caches.open("v1:sw-cache-feed-page").then(function(cache) {
-        cache.delete("/").then(function(response) {
-          if (response) {
-            console.log("Cache v1:sw-cache-feed-page deleted: ", response);
-          }
+      caches
+        .open("v1:sw-cache-feed-page")
+        .then(function(cache) {
+          cache.delete("/").then(function(response) {
+            if (response) {
+              console.log("Cache v1:sw-cache-feed-page deleted: ", response);
+            }
+          });
+        })
+        .catch(function(reason) {
+          console.log(reason);
         });
-      });
     }
 
     if (cacheNames && cacheNames.includes("events-page")) {
-      caches.open("v1:sw-cache-events-page").then(function(cache) {
-        cache.delete(`/events/${self.identifier}`).then(function(response) {
-          if (response) {
-            cache.add(`/events/${self.identifier}`);
-          }
+      caches
+        .open("v1:sw-cache-events-page")
+        .then(function(cache) {
+          cache
+            .delete(`/events/${attrs.event.identifier}`)
+            .then(function(response) {
+              if (response) {
+                console.log("v1:sw-cache-events-page deleted: ", response);
+                // cache.add(`/events/${attrs.event.identifier}`);
+              }
+            });
+        })
+        .catch(function(reason) {
+          console.log(reason);
         });
-      });
     }
 
     if (status.turbolinksStarted) {
       Turbolinks.clearCache();
+      console.log("[TURBOLINKS] cache cleaned: true");
     }
   };
 
