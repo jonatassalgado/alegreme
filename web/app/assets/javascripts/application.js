@@ -12,6 +12,8 @@
 //
 //= require rails-ujs
 //= require activestorage
-// require turbolinks
 //= require materialize
+
 //= require serviceworker-companion
+
+//= require botkit

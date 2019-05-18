@@ -31,6 +31,7 @@ gem 'lupa', git: 'https://github.com/edelpero/lupa.git'
 
 gem 'geocoder'
 
+gem 'gon'
 
 # Webpacker
 gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
