@@ -1,13 +1,13 @@
-var options = {
-  id: gon.user_id || "null"
-};
+// var options = {
+//   id: gon.user_id || "null"
+// };
 
-Botkit.boot(options);
+// Botkit.boot(options);
 
-document.addEventListener("turbolinks:render", () => {
-  var options = {
-    id: gon.user_id || "null"
-  };
+// document.addEventListener("turbolinks:render", () => {
+//   var options = {
+//     id: gon.user_id || "null"
+//   };
 
-  Botkit.boot(options);
-});
+//   Botkit.boot(options);
+// });

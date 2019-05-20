@@ -35,7 +35,7 @@ $border-color: #e0e0e0;
     }
     &--middle {
       display: flex;
-      width: 600px;
+      width: 920px;
       flex: none;
       @include mdc-layout-grid-media-query_("phone") {
         padding: 8px 12px;
@@ -59,7 +59,7 @@ $border-color: #e0e0e0;
       height: 55px;
       border-bottom: 1px solid $border-color;
     }
-    
+
     & .me-top-app-bar__section--middle {
       @include mdc-layout-grid-media-query_("phone") {
         padding: 0px 12px;
@@ -93,9 +93,10 @@ $border-color: #e0e0e0;
     color: $font-color;
   }
 
-  @include mdc-layout-grid-media-query_("phone") {
-    & .mdc-text-field:not(.mdc-text-field--disabled) {
-      background-color: white;
+  & .mdc-text-field:not(.mdc-text-field--disabled) {
+    background-color: $surface-color;
+    @include mdc-layout-grid-media-query_("phone") {
+      background-color: $surface-color;
     }
 
     & .mdc-text-field--focused {

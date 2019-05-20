@@ -23,8 +23,8 @@
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
         <div data-controller="chat" data-target="chat.field" class="me-search-field me-search-field mdc-text-field"
 				id="me-chat" data-turbolinks-permanent>
-          <% unless current_user.try('personas_assortment_finished?') %>
-            <input data-target="chat.input" data-action="click->chat#showBot" id="text-field-shape-one" class="mdc-text-field__input" autocomplete="off" type="text" placeholder="Oi, tem alguem ai?">
+          <%# unless current_user.try('personas_assortment_finished?') %>
+            <!-- <input data-target="chat.input" data-action="click->chat#showBot" id="text-field-shape-one" class="mdc-text-field__input" autocomplete="off" type="text" placeholder="Oi, tem alguem ai?">
             <div data-target="chat.botConversation" class="me-search-field__bot">
               <iframe id="botkit_client" referrerpolicy="no-referrer" src="<%= request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/chat.html" : ":3030/chat.html") %>"></iframe>
             </div>
@@ -34,8 +34,8 @@
             <div data-target="chat.close" data-action="click->chat#hideBot"
               class="me-search-field__close me-search-field__close--is-hide">
               <span>Fechar</span>
-            </div>
-          <% else %>
+            </div> -->
+          <%# else %>
             <form data-target="chat.form" data-action="submit->chat#search" method="get" name="search" action=""
               style="width: 100%">
               <input data-target="chat.input" autocomplete="false" type="text"
@@ -43,7 +43,7 @@
 						class="mdc-text-field__input">
               <input type="submit" style="display: none;" />
             </form>
-          <% end %>
+          <%# end %>
         </div>
       </section>
     <% end %>

@@ -16,4 +16,4 @@
 
 //= require serviceworker-companion
 
-//= require botkit
+// require botkit
