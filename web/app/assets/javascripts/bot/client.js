@@ -424,7 +424,6 @@ var that = this;
             var li = document.createElement('li');
             var el = document.createElement('a');
             el.innerHTML = reply.title;
-            el.href = '#';
 
             el.onclick = function() {
               that.quickReply(reply.payload);

@@ -2,7 +2,7 @@
   &__feed-section {
     max-width: 900px;
     margin: auto;
-    padding-top: 85px;
+    // padding-top: 35px;
     
     @include mdc-layout-grid-media-query_("phone") {
       padding-top: 45px;

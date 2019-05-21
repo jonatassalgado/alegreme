@@ -1,0 +1,86 @@
+@import "../_variables";
+
+.me-hero {
+  height: 325px;
+  max-height: 55vh;
+  z-index: 1;
+  max-width: 900px;
+  margin: 100px auto 0;
+  border: 1px solid $border-color;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: height 500ms linear 0ms, opacity 400ms linear;
+  opacity: 1;
+
+  &:hover {
+    & .me-hero__list {
+      opacity: 1;
+    }
+  }
+
+  &__content {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    max-width: 65%;
+  }
+
+  &__cover {
+    background-image: url(/images/hero-onboarding.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    height: inherit;
+    background-size: 100%;
+  }
+
+  &__title {
+    color: $font-secondary-color;
+    font-size: 32px;
+  }
+
+  &__description {
+    color: $font-tertiary-color;
+    font-size: 16px;
+  }
+
+  &__list {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 16px 16px 6px 16px;
+    background: linear-gradient(to top, #ffffffe6 , transparent );
+    flex-wrap: wrap;
+    padding-top: 150px;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+    justify-content: flex-end;
+  }
+
+  &__list-item {
+    flex-grow: 1;
+    width: 33%;
+    max-width: 33%;
+    margin: 6px 0;
+    
+    & i {
+      font-size: 14px;
+      margin: 0 6px;
+      position: relative;
+      top: 3px;
+      color: $brand-color;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+  }
+
+  &--hidden {
+    height: 0;
+    opacity: 0;
+  }
+}
