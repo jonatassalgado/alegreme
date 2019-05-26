@@ -23,6 +23,7 @@ web/tmp/cache
 *.kra
 *.swp
 *.swo
+*.ods
 .pem
 usr/
 web/storage
@@ -72,7 +73,6 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
-
 # Ignore node_modules
 node_modules/
 
@@ -89,3 +89,4 @@ yarn-debug.log*
 # Ignore uploaded files in development
 app/storage/*
 !/storage/.keep
+.vscode/settings.json
