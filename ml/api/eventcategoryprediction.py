@@ -469,9 +469,9 @@ class EventCategoryPrediction(object):
         return gs_classificator.best_params_
 
 
-#predictModel = EventCategoryPrediction()
-#predictModel.clean()
-#predictModel.train()
+# predictModel = EventCategoryPrediction()
+# predictModel.clean()
+# predictModel.train()
 #predictModel.debug
 #bagOfWords = predictModel.bag_of_words()
 
