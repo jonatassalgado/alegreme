@@ -106,28 +106,22 @@ stopwords.extend([
 ])
 
 
-class EventCategoryPrediction(object):
+class EventPersonaPrediction(object):
     def __init__(self):
 
         self.debug = {}
         
         if 'IS_DOCKER' in os.environ and os.environ['IS_DOCKER'] == 'true':
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
-            last_file = max(
-                filter(regex.search,
-                       os.listdir('/var/www/scrapy/data/classified/')))
-            self.base = pd.read_csv('/var/www/scrapy/data/classified/' +
-                                    last_file)
-            self.base = self.base.drop_duplicates(['event_url'])
-
+            last_file = max(filter(regex.search, os.listdir('/var/www/scrapy/data/classified/')))
+            self.base = pd.read_csv('/var/www/scrapy/data/classified/' + last_file)        
         else:
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
-            last_file = max(
-                filter(regex.search,
-                       os.listdir('../../../alegreme/scrapy/classified')))
-            self.base = pd.read_csv('../../../alegreme/scrapy/classified/' +
-                                    last_file)
-            self.base = self.base.drop_duplicates(['event_url'])
+            last_file = max(filter(regex.search, os.listdir('../../../alegreme/scrapy/classified')))
+            self.base = pd.read_csv('../../../alegreme/scrapy/classified/' + last_file)
+            
+        self.base = self.base.drop_duplicates(['event_url'])
+
 
     def __cleanning_text(self, text):
         def __downcase(text):
@@ -306,10 +300,10 @@ class EventCategoryPrediction(object):
     def clean(self):
 
         self.base = self.base.loc[(self.base['description'].notna())
-                                  & (self.base['category'].notna())]
+                                  & (self.base['label'].notna())]
         self.X = self.X_raw = self.base['name'].str.cat(
             self.base[['description']], sep=' ', na_rep='').values.astype(str)
-        self.y = self.base.loc[:, 'category'].values.astype(str)
+        self.y = self.base.loc[:, 'label'].values.astype(str)
 
         descriptions_cleanned = []
         for description in self.X:
@@ -374,15 +368,16 @@ class EventCategoryPrediction(object):
                                                             random_state=True)
 
         classificator = Pipeline([
-            ('tfidf', TfidfVectorizer(ngram_range=(1, 1))),
-            ('clf-svm', SGDClassifier(alpha=0.001, loss='modified_huber', penalty='l2'))
+            ('tfidf', TfidfVectorizer(ngram_range=(1, 3))),
+            ('clf-svm', SGDClassifier(alpha=0.001, loss='modified_huber', penalty='elasticnet'))
         ])
 
         classificator = classificator.fit(X_train, y_train)
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        dump(classificator,
-             'predict-event__category-model-' + timestr + '.joblib')
-
+        dump(classificator, 'predict-event__persona-model-' + timestr + '.joblib')
+        
+#        predictions = classificator.predict(X_test)
+#        print(classificator.score(X_test, y_test))
         predictions = classificator.predict_proba(X_test)
 
         predictions_labels = []
@@ -410,7 +405,7 @@ class EventCategoryPrediction(object):
         query = self.__stemming_text(query)
 
         regex = re.compile(
-            r'predict-event__category-model-\d{8}-\d{6}\.joblib$')
+            r'predict-event__persona-model-\d{8}-\d{6}\.joblib$')
         last_file = max(filter(regex.search, os.listdir('./')))
 
         classificator = load(last_file)
@@ -469,7 +464,7 @@ class EventCategoryPrediction(object):
         return gs_classificator.best_params_
 
 
-#predictModel = EventCategoryPrediction()
+#predictModel = EventPersonaPrediction()
 #predictModel.clean()
 #predictModel.train()
 #predictModel.debug

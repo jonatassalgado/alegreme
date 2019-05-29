@@ -6,8 +6,7 @@ import json
 
 from datetime import datetime
 from flask import Flask
-from personaprediction import PersonaPrediction
-from eventprediction import EventPrediction
+from eventpersonaprediction import EventPersonaPrediction
 from eventcategoryprediction import EventCategoryPrediction
 from flask_restful import reqparse, abort, Api, Resource
 
@@ -23,7 +22,7 @@ class PredictPersona(Resource):
         args = parser.parse_args()
         user_query = args['query']
 
-        prediction = PersonaPrediction.predict(self, query=user_query)
+        prediction = EventPersonaPrediction.predict(self, query=user_query)
         persona_output = np.array(prediction).tolist()
 
         return {
@@ -59,7 +58,7 @@ class PredictEvent(Resource):
         user_query = args['query']
         print(user_query)
 
-        predictPersonaModel = EventPrediction()
+        predictPersonaModel = EventPersonaPrediction()
         predictCategoryModel = EventCategoryPrediction()
 
         persona_prediction = predictPersonaModel.predict(user_query)
