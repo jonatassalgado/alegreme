@@ -13,6 +13,9 @@ web/rerun.txt
 web/pickle-email-*.html
 web/public/packs/
 web/tmp/
+web/db/schema.rb
+web/db/test.sqlite3
+web/db/development.sqlite3
 .scrapy/
 ml/__pycache__
 web/tmp/pids
