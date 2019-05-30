@@ -26,14 +26,14 @@ public_ip = os.environ.get('PUBLIC_IP')
 private_ip = os.environ.get('PRIVATE_IP')
 home = os.environ.get('HOME')
 
-if home == '/home/jon':
-   SPLASH_URL = 'http://0.0.0.0:8050'
-   IS_DOCKER = 'false'
-   PWD = '/home/jon/Projects/alegreme/web/scrapy'
-else:
-   SPLASH_URL = 'http://172.26.14.59:8050'
-   IS_DOCKER = 'true'
-   PWD = '/var/www/scrapy/data'
+# if home == '/home/jon':
+SPLASH_URL = 'http://0.0.0.0:8050'
+IS_DOCKER = 'false'
+PWD = '/home/jon/Projects/alegreme/scrapy/'
+# else:
+#    SPLASH_URL = 'http://172.26.14.59:8050'
+#    IS_DOCKER = 'true'
+#    PWD = '/var/www/scrapy/data'
 
 
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
@@ -46,18 +46,18 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 5
+# CONCURRENT_REQUESTS = 8
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 2
+# DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
-CONCURRENT_REQUESTS_PER_DOMAIN = 5
-CONCURRENT_REQUESTS_PER_IP = 5
+# CONCURRENT_REQUESTS_PER_DOMAIN = 8
+# CONCURRENT_REQUESTS_PER_IP = 8
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+# COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -84,6 +84,25 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
 }
 
+# DOWNLOADER_MIDDLEWARES.update({
+#     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+#     'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
+# })
+
+# USER_AGENTS = [
+#     ('Mozilla/5.0 (X11; Linux x86_64) '
+#      'AppleWebKit/537.36 (KHTML, like Gecko) '
+#      'Chrome/57.0.2987.110 '
+#      'Safari/537.36'),  # chrome
+#     ('Mozilla/5.0 (X11; Linux x86_64) '
+#      'AppleWebKit/537.36 (KHTML, like Gecko) '
+#      'Chrome/61.0.3163.79 '
+#      'Safari/537.36'),  # chrome
+#     ('Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) '
+#      'Gecko/20100101 '
+#      'Firefox/55.0')  # firefox
+# ]
+
 DEPTH_LIMIT = 5
 CLOSESPIDER_ITEMCOUNT=250
 
@@ -103,7 +122,7 @@ LOG_ENABLED = True
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
-#AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 #AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies

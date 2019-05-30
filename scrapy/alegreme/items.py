@@ -10,6 +10,7 @@ import re
 import dateparser
 
 from scrapy.loader.processors import Join, MapCompose, TakeFirst
+from urllib.parse import unquote
 
 
 
@@ -31,6 +32,19 @@ def get_time(value):
         return start_time
     else:
         return value
+
+def get_description(value):
+    description = re.sub(r'http(s|):\/\/l.facebook?.+?u=', '', value)
+    description = re.sub(r';h=.+?(?=")', '', description)
+    description = re.sub(r'target="_blank"', '', description)
+    description = re.sub(r'data-lynx-mode="hover"', '', description)
+    description = re.sub(r'&amp', '', description)
+    return unquote(description)
+
+
+def get_price(value):
+    price = re.findall(r'(\d|\d{2}|\d{3}|\d{4})\b', value)
+    return price
 
 
 class Event(scrapy.Item):
@@ -59,7 +73,10 @@ class Event(scrapy.Item):
         output_processor=TakeFirst()
     )
     description = scrapy.Field(
-        output_processor=TakeFirst()
+        input_processor=MapCompose(get_description)
+    )
+    price = scrapy.Field(
+        input_processor=MapCompose(get_price)
     )
     categories = scrapy.Field()
     organizers = scrapy.Field()

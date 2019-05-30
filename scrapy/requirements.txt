@@ -2,3 +2,4 @@ scrapy
 scrapy-splash
 scrapy-do
 dateparser
+scrapy-useragents
