@@ -1,4 +1,4 @@
-favorited_events = Event.select("id, name, ocurrences, image_data").favorited_by(user).active.order_by_date.uniq
+favorited_events = Event.select("id, details, ocurrences, image_data").favorited_by(user).active.order_by_date.uniq
 
 json.events favorited_events do |event|
   json.id event.id

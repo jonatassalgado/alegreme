@@ -13,83 +13,101 @@ import "controllers";
 // import 'default-passive-events'
 import * as mdc from "material-components-web";
 
-import { MDCTopAppBar } from "@material/top-app-bar/index";
-import { MDCList } from "@material/list";
-import { MDCRipple } from "@material/ripple";
-import { MDCTextField } from "@material/textfield";
-import { MDCSelect } from "@material/select";
-import { MDCFormField } from "@material/form-field";
-import { MDCCheckbox } from "@material/checkbox";
-import { MDCMenu } from "@material/menu";
-import { MDCSnackbar } from "@material/snackbar";
-
-import { CacheSystem } from "modules/cache-system";
+import {
+  MDCTopAppBar
+} from "@material/top-app-bar/index";
+import {
+  MDCList
+} from "@material/list";
+import {
+  MDCRipple
+} from "@material/ripple";
+import {
+  MDCTextField
+} from "@material/textfield";
+import {
+  MDCSelect
+} from "@material/select";
+import {
+  MDCFormField
+} from "@material/form-field";
+import {
+  MDCCheckbox
+} from "@material/checkbox";
+import {
+  MDCMenu
+} from "@material/menu";
+import {
+  MDCSnackbar
+} from "@material/snackbar";
+import {
+  CacheSystem
+} from "modules/cache-system";
 
 CacheSystem.activateTurbolinks();
 
-document.addEventListener(
-  "turbolinks:load",
-  function() {
-    // TopAppBar
-    const topAppBarElement = document.querySelector(".mdc-top-app-bar");
-    const topAppBar = new MDCTopAppBar(topAppBarElement);
+const applicationScript = () => {
+  // TopAppBar
+  const topAppBarElement = document.querySelector(".mdc-top-app-bar");
+  const topAppBar = new MDCTopAppBar(topAppBarElement);
 
-    // Button
-    const buttons = document.querySelectorAll(".mdc-button");
-    const fabs = document.querySelectorAll(".mdc-fab");
-    const icons = document.querySelectorAll(".mdc-icon-button");
+  // Button
+  const buttons = document.querySelectorAll(".mdc-button");
+  const fabs = document.querySelectorAll(".mdc-fab");
+  const icons = document.querySelectorAll(".mdc-icon-button");
 
-    buttons.forEach(button => {
-      if (button) {
-        new MDCRipple(button);
-      }
-    });
-
-    fabs.forEach(fab => {
-      if (fab) {
-        new MDCRipple(fab);
-      }
-    });
-
-    icons.forEach(icon => {
-      new mdc.iconButton.MDCIconButtonToggle(icon);
-      const ripple = new MDCRipple(icon);
-      ripple.unbounded = true;
-    });
-
-    // Textfield
-    const fields = document.querySelectorAll(".mdc-text-field");
-    fields.forEach(field => {
-      const chatInput = field.querySelector('[data-target="chat.input"]');
-      if (chatInput) {
-        new MDCTextField(field);
-      }
-    });
-
-    // Snackbar
-    const snackbarElem = document.querySelector(".mdc-snackbar");
-    if (snackbarElem) {
-      const snackbar = new MDCSnackbar(snackbarElem);
-      snackbar.open();
+  buttons.forEach(button => {
+    if (button) {
+      new MDCRipple(button);
     }
+  });
 
-    // Select
-    const selects = document.querySelectorAll(".mdc-select");
-    selects.forEach(select => {
-      new MDCSelect(select);
-    });
+  fabs.forEach(fab => {
+    if (fab) {
+      new MDCRipple(fab);
+    }
+  });
 
-    // Checkbox
-    const checkboxes = document.querySelectorAll(".mdc-checkbox");
-    checkboxes.forEach(checkbox => {
-      new MDCCheckbox(checkbox);
-    });
+  icons.forEach(icon => {
+    new mdc.iconButton.MDCIconButtonToggle(icon);
+    const ripple = new MDCRipple(icon);
+    ripple.unbounded = true;
+  });
 
-    // Menu
-    const menus = document.querySelectorAll(".mdc-menu");
-    menus.forEach(menu => {
-      new MDCMenu(menu);
-    });
-  },
-  { once: true }
-);
+  // Textfield
+  const fields = document.querySelectorAll(".mdc-text-field");
+  fields.forEach(field => {
+    // const chatInput = field.querySelector('[data-target="chat.input"]');
+    // if (chatInput) {
+    new MDCTextField(field);
+    // }
+  });
+
+  // Snackbar
+  const snackbarElem = document.querySelector(".mdc-snackbar");
+  if (snackbarElem) {
+    const snackbar = new MDCSnackbar(snackbarElem);
+    snackbar.open();
+  }
+
+  // Select
+  const selects = document.querySelectorAll(".mdc-select");
+  selects.forEach(select => {
+    new MDCSelect(select);
+  });
+
+  // Checkbox
+  const checkboxes = document.querySelectorAll(".mdc-checkbox");
+  checkboxes.forEach(checkbox => {
+    new MDCCheckbox(checkbox);
+  });
+
+  // Menu
+  const menus = document.querySelectorAll(".mdc-menu");
+  menus.forEach(menu => {
+    new MDCMenu(menu);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", applicationScript, false);
+document.addEventListener("turbolinks:load", applicationScript, false);

@@ -100,7 +100,7 @@ namespace :scrapy do
           )
           puts @event.try(:inspect)
         else
-          puts "N√ÉO FOI POSS√çVEL CRIAR O EVENTO"
+          puts "N√O FOI POSSÕVEL CRIAR O EVENTO"
           # @event = Event.create_with(
           #   name: item['name'],
           #   description: item['description'],
