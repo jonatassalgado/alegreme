@@ -28,6 +28,6 @@ production:
   user: postgres
   password: docker
 
-test:
-  <<: *default
-  database: db/test.sqlite3
+# test:
+#   <<: *default
+#   database: db/test.sqlite3

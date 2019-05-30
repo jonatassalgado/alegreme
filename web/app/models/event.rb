@@ -120,6 +120,14 @@ class Event < ApplicationRecord
           where(id: user.taste_events_saved)
         }
 
+  scope "by_kind_min_score", -> (score) {
+    Event.select("*").from(Event.select("*, jsonb_array_elements(kinds) as kind")).where("(kind ->> 'score')::numeric >= :score", score: score)
+  }
+
+  scope "by_tag_thing_min_score", -> (score) {
+    Event.select("*").from(Event.select("*, jsonb_array_elements(tags -> things) as tag")).where("(tag ->> 'score')::numeric >= :score", score: score)
+  }
+
   def personas_primary_name
     self.personas["primary"]["name"]
   end

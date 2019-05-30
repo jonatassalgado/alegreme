@@ -66,18 +66,24 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
     t.jsonb "geographic", default: {"cep"=>nil, "city"=>nil, "latlon"=>[], "address"=>nil, "neighborhood"=>nil}, null: false
     t.jsonb "ocurrences", default: {"dates"=>[]}, null: false
     t.jsonb "entries", default: {"liked_by"=>[], "saved_by"=>[], "viewed_by"=>[], "disliked_by"=>[], "total_likes"=>0, "total_saves"=>0, "total_views"=>0, "total_dislikes"=>0}, null: false
-    t.jsonb "jsonb", default: {}, null: false
+    t.jsonb "kinds", default: [], null: false
+    t.jsonb "tags", default: {"things"=>[], "features"=>[], "activities"=>[]}, null: false
     t.jsonb "image_data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "place_id"
+    t.index "((tags -> 'activities'::text))", name: "index_events_on_tags_activities", using: :gin
+    t.index "((tags -> 'features'::text))", name: "index_events_on_tags_features", using: :gin
+    t.index "((tags -> 'things'::text))", name: "index_events_on_tags_things", using: :gin
     t.index ["categories"], name: "index_events_on_categories", using: :gin
     t.index ["entries"], name: "index_events_on_entries", using: :gin
     t.index ["geographic"], name: "index_events_on_geographic", using: :gin
     t.index ["image_data"], name: "index_events_on_image_data", using: :gin
+    t.index ["kinds"], name: "index_events_on_kinds", using: :gin
     t.index ["ocurrences"], name: "index_events_on_ocurrences", using: :gin
     t.index ["personas"], name: "index_events_on_personas", using: :gin
     t.index ["place_id"], name: "index_events_on_place_id"
+    t.index ["tags"], name: "index_events_on_tags", using: :gin
   end
 
   create_table "events_organizers", id: false, force: :cascade do |t|

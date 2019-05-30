@@ -38,7 +38,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.jsonb :ocurrences, null: false, default: {
         dates: []
       }
-      t.jsonb :entries, :jsonb, null: false, default: {
+      t.jsonb :entries, null: false, default: {
         saved_by: [],
         liked_by: [],
         viewed_by: [],
@@ -48,7 +48,13 @@ class CreateEvents < ActiveRecord::Migration[5.2]
         total_views: 0,
         total_dislikes: 0
       }
-      t.jsonb :image_data, :jsonb, null: false, default: {}
+      t.jsonb :kinds, null: false, default: []
+      t.jsonb :tags, null: false, default: {
+        things: [],
+        features: [],
+        activities: []
+      }
+      t.jsonb :image_data, null: false, default: {}
       t.timestamps
     end
     add_index  :events, :personas, using: :gin
@@ -56,6 +62,11 @@ class CreateEvents < ActiveRecord::Migration[5.2]
     add_index  :events, :geographic, using: :gin
     add_index  :events, :ocurrences, using: :gin
     add_index  :events, :entries, using: :gin
+    add_index  :events, :kinds, using: :gin
+    add_index  :events, :tags, using: :gin
+    add_index  :events, "(tags -> 'things')", using: :gin,  name: 'index_events_on_tags_things'
+    add_index  :events, "(tags -> 'features')", using: :gin,  name: 'index_events_on_tags_features'
+    add_index  :events, "(tags -> 'activities')", using: :gin,  name: 'index_events_on_tags_activities'
     add_index  :events, :image_data, using: :gin
   end
 end
