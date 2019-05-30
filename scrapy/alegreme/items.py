@@ -33,7 +33,7 @@ def get_time(value):
     else:
         return value
 
-def get_description(value):
+def clean_description(value):
     description = re.sub(r'http(s|):\/\/l.facebook?.+?u=', '', value)
     description = re.sub(r';h=.+?(?=")', '', description)
     description = re.sub(r'target="_blank"', '', description)
@@ -42,9 +42,9 @@ def get_description(value):
     return unquote(description)
 
 
-def get_price(value):
-    price = re.findall(r'(\d|\d{2}|\d{3}|\d{4})\b', value)
-    return price
+def get_prices(value):
+    prices = re.findall(r'(\d|\d{2}|\d{3}|\d{4})\b', value)
+    return prices
 
 
 class Event(scrapy.Item):
@@ -73,10 +73,11 @@ class Event(scrapy.Item):
         output_processor=TakeFirst()
     )
     description = scrapy.Field(
-        input_processor=MapCompose(get_description)
+        input_processor=MapCompose(clean_description),
+        output_processor=TakeFirst()
     )
-    price = scrapy.Field(
-        input_processor=MapCompose(get_price)
+    prices = scrapy.Field(
+        input_processor=MapCompose(get_prices)
     )
     categories = scrapy.Field()
     organizers = scrapy.Field()

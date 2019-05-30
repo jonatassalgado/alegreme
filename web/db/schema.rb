@@ -58,13 +58,11 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.string "source_url"
     t.jsonb "personas", default: {"outlier"=>nil, "primary"=>{"name"=>nil, "score"=>nil}, "secondary"=>{"name"=>nil, "score"=>nil}}, null: false
     t.jsonb "categories", default: {"outlier"=>nil, "primary"=>{"name"=>nil, "score"=>nil}, "secondary"=>{"name"=>nil, "score"=>nil}}, null: false
     t.jsonb "geographic", default: {"cep"=>nil, "city"=>nil, "latlon"=>[], "address"=>nil, "neighborhood"=>nil}, null: false
     t.jsonb "ocurrences", default: {"dates"=>[]}, null: false
+    t.jsonb "details", default: {"name"=>nil, "prices"=>[], "source_url"=>nil, "description"=>nil}, null: false
     t.jsonb "entries", default: {"liked_by"=>[], "saved_by"=>[], "viewed_by"=>[], "disliked_by"=>[], "total_likes"=>0, "total_saves"=>0, "total_views"=>0, "total_dislikes"=>0}, null: false
     t.jsonb "kinds", default: [], null: false
     t.jsonb "tags", default: {"things"=>[], "features"=>[], "activities"=>[]}, null: false
@@ -76,6 +74,7 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
     t.index "((tags -> 'features'::text))", name: "index_events_on_tags_features", using: :gin
     t.index "((tags -> 'things'::text))", name: "index_events_on_tags_things", using: :gin
     t.index ["categories"], name: "index_events_on_categories", using: :gin
+    t.index ["details"], name: "index_events_on_details", using: :gin
     t.index ["entries"], name: "index_events_on_entries", using: :gin
     t.index ["geographic"], name: "index_events_on_geographic", using: :gin
     t.index ["image_data"], name: "index_events_on_image_data", using: :gin
@@ -101,12 +100,11 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
   end
 
   create_table "places", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
+    t.jsonb "details", default: {"name"=>nil}, null: false
     t.jsonb "geographic", default: {"cep"=>nil, "city"=>nil, "latlon"=>[], "address"=>nil, "neighborhood"=>nil}, null: false
-    t.jsonb "jsonb", default: {"cep"=>nil, "city"=>nil, "latlon"=>[], "address"=>nil, "neighborhood"=>nil}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["details"], name: "index_places_on_details", using: :gin
     t.index ["geographic"], name: "index_places_on_geographic", using: :gin
   end
 

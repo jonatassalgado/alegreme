@@ -2,9 +2,6 @@ class CreateEvents < ActiveRecord::Migration[5.2]
   def change
     enable_extension "btree_gin"
     create_table :events do |t|
-      t.string :name
-      t.text :description
-      t.string :source_url
       t.jsonb :personas, null: false, default: {
         primary: {
           name: nil,
@@ -38,6 +35,12 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.jsonb :ocurrences, null: false, default: {
         dates: []
       }
+      t.jsonb :details, null: false, default: {
+        name: nil,
+        description: nil,
+        source_url: nil,
+        prices: []
+      }
       t.jsonb :entries, null: false, default: {
         saved_by: [],
         liked_by: [],
@@ -61,6 +64,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
     add_index  :events, :categories, using: :gin
     add_index  :events, :geographic, using: :gin
     add_index  :events, :ocurrences, using: :gin
+    add_index  :events, :details, using: :gin
     add_index  :events, :entries, using: :gin
     add_index  :events, :kinds, using: :gin
     add_index  :events, :tags, using: :gin

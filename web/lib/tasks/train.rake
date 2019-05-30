@@ -17,21 +17,21 @@ namespace :ml do
     events = Event.where("(personas -> 'primary' ->> 'score')::numeric >= 0.90 OR (categories -> 'primary' ->> 'score')::numeric >= 0.90").uniq
 
     events.each do |event|
-      item = csv.find { |row| row[7] == event.source_url }
+      item = csv.find { |row| row[7] == event.details['source_url'] }
       if item
         item[8] = (event.personas['outlier'] == 'true' || event.personas['primary']['score'].to_f < 0.90) ? nil : event.personas['primary']['name']
         item[9] = (event.categories['outlier'] == 'true' || event.categories['primary']['score'].to_f < 0.90) ? nil : event.categories['primary']['name']
         item[10] = event.geographic['neighborhood']
       else
         csv << [
-                event.name,
+                event.details['name'],
                 event.geographic['address'],
                 event.datetimes,
-                event.try(:place).try(:name),
+                event.try(:place).details['name'],
                 event.organizers.pluck(:name),
-                event.description,
+                event.details['description'],
                 nil,
-                event.source_url,
+                event.details['source_url'],
                 (event.personas['outlier'] == 'true' || event.personas['primary']['score'].to_f < 0.90) ? nil : event.personas['primary']['name'],
                 (event.categories['outlier'] == 'true' || event.categories['primary']['score'].to_f < 0.90) ? nil : event.categories['primary']['name'],
                 event.geographic['neighborhood'],

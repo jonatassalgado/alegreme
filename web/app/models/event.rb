@@ -4,7 +4,7 @@ class Event < ApplicationRecord
   include ImageUploader::Attachment.new(:image)
   include Rails.application.routes.url_helpers
 
-  after_save :reindex, if: proc { |event| event.description_changed? }
+  after_save :reindex, if: proc { |event| event.details_changed? }
   after_destroy :reindex, :destroy_entries
 
   belongs_to :place
@@ -13,7 +13,7 @@ class Event < ApplicationRecord
 
   accepts_nested_attributes_for :place, :organizers
 
-  delegate :name, :address, to: :place, prefix: true, allow_nil: true
+  delegate :details_name, to: :place, prefix: true, allow_nil: true
 
   jsonb_accessor :ocurrences, dates: [:datetime, array: true, default: []]
 
@@ -127,6 +127,42 @@ class Event < ApplicationRecord
   scope "by_tag_thing_min_score", -> (score) {
     Event.select("*").from(Event.select("*, jsonb_array_elements(tags -> things) as tag")).where("(tag ->> 'score')::numeric >= :score", score: score)
   }
+
+  def details_name
+    self.details["name"]
+  end
+
+  def details_name=(value)
+    self.details["name"] = value
+  end
+  
+  def details_description
+    self.details["description"]
+  end
+  
+  def details_description=(value)
+    self.details["description"] = value
+  end
+
+  def details_prices
+    self.details["prices"]
+  end
+
+  def details_prices=(value)
+    if value.is_a? Array
+      self.details["prices"] = value
+    else
+      self.details["prices"] << value
+    end
+  end
+
+  def details_source_url
+    self.details["source_url"]
+  end
+
+  def details_source_url=(value)
+    self.details["source_url"] = value
+  end
 
   def personas_primary_name
     self.personas["primary"]["name"]

@@ -1,7 +1,7 @@
 module EventsHelper
 
   def limit_name_size(name, limit = 40)
-    name.truncate(limit, separator: ' ')
+    name.truncate(limit, separator: ' ') if name
   end
 
   def limit_place_name_size place_name

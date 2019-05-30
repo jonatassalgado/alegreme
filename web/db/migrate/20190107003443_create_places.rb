@@ -2,9 +2,10 @@ class CreatePlaces < ActiveRecord::Migration[5.2]
   def change
     enable_extension "btree_gin"
     create_table :places do |t|
-      t.string :name
-      t.string :address
-      t.jsonb :geographic, :jsonb, null: false, default: {
+      t.jsonb :details, null: false, default: {
+        name: nil
+      }
+      t.jsonb :geographic, null: false, default: {
         address: nil,
         latlon: [],
         neighborhood: nil,
@@ -13,6 +14,7 @@ class CreatePlaces < ActiveRecord::Migration[5.2]
       }
       t.timestamps
     end
+    add_index  :places, :details, using: :gin
     add_index  :places, :geographic, using: :gin
   end
 end

@@ -15,7 +15,7 @@ class PlacesTest < ApplicationSystemTestCase
     click_on "New Place"
 
     fill_in "Address", with: @place.address
-    fill_in "Name", with: @place.name
+    fill_in "Name", with: @place.details_name
     click_on "Create Place"
 
     assert_text "Place was successfully created"
@@ -27,7 +27,7 @@ class PlacesTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Address", with: @place.address
-    fill_in "Name", with: @place.name
+    fill_in "Name", with: @place.details_name
     click_on "Update Place"
 
     assert_text "Place was successfully updated"
