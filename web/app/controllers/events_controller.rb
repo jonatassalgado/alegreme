@@ -69,34 +69,31 @@ class EventsController < ApplicationController
 
   def retrain
     @event = Event.find params["event_id"]
+    @feature = params[:feature]
 
-    if params[:feature] == "personas"
+    if @feature == "personas"
       @event.personas_outlier = params[:outlier] if params[:outlier]
       @event.personas_primary_name = params[:persona] if params[:persona]
       @event.personas_primary_score = 0.90 if params[:correct] || params[:persona]
-    elsif params[:feature] == "categories"
+    elsif @feature == "categories"
       @event.categories_outlier = params[:outlier] if params[:outlier]
       @event.categories_primary_name = params[:category] if params[:category]
       @event.categories_primary_score = 0.90 if params[:correct] || params[:category]
+    elsif @feature == "themes"
+      @event.theme_outlier = params[:outlier] if params[:outlier]
+      @event.theme_name = params[:theme] if params[:theme]
+      @event.theme_score = 0.90 if params[:correct] || params[:theme]
+    # elsif @feature == "kinds"
+    #   @event.categories_outlier = params[:outlier] if params[:outlier]
+    #   @event.categories_primary_name = params[:category] if params[:category]
+    #   @event.categories_primary_score = 0.90 if params[:correct] || params[:category]
     end
 
-    render json: {
-      status: @event.save ? :ok : :error,
-      persona: {
-        primary: {
-          name: @event.personas_primary_name,
-          score: @event.personas_primary_score,
-        },
-        outlier: @event.personas_outlier,
-      },
-      category: {
-        primary: {
-          name: @event.categories_primary_name,
-          score: @event.categories_primary_score,
-        },
-        outlier: @event.categories_outlier,
-      },
-    }
+    respond_to do |format|
+      if @event.update(retrain_params)
+        format.js 
+      end
+    end
   end
 
   private
@@ -122,6 +119,6 @@ class EventsController < ApplicationController
   end
 
   def retrain_params
-    params.permit(:event_id, :feature, :score, :outlier)
+    params.permit(:personas_primary_name, :personas_primary_score, :categories_primary_name, :categories_primary_score, :personas_outlier)
   end
 end

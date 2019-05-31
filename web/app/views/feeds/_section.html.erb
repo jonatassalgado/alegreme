@@ -132,50 +132,6 @@
                 <%= limit_place_name_size event.place_details_name %>
               </div>
             </div>
-            <% if current_or_guest_user.admin? %>
-              <div class="mdc-card__actions">
-                <div class="mdc-card__action-icons">
-                  <div class="mdc-menu-surface--anchor">
-                    <button data-target="event.moreButton" data-action="click->event#openMenu"
-                      class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon mdc-ripple-upgraded--unbounded mdc-ripple-upgraded"
-                      title="More options">more_vert</button>
-                    <div data-target="event.menu" class="mdc-menu mdc-menu-surface">
-                      <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                        <li class="mdc-list-item" role="menuitem">
-                          <span
-                        class="mdc-list-item__text"><%= link_to  "Persona correta", retrain_path(event_id: event.id, feature: 'personas', correct: true), remote: true %></span>
-                        </li>
-                        <li class="mdc-list-item" role="menuitem">
-                          <span
-                        class="mdc-list-item__text"><%= link_to  "Persona outlier", retrain_path(event_id: event.id, feature: 'personas', outlier: true), remote: true %></span>
-                        </li>
-                        <% ["aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"].each do |persona| %>
-                          <li class="mdc-list-item" role="menuitem">
-                            <span
-                        class="mdc-list-item__text"><%= link_to  persona.capitalize, retrain_path(event_id: event.id, feature: 'personas', persona: persona), remote: true %></span>
-                          </li>
-                        <% end %>
-                        <li class="mdc-list-divider" role="separator"></li>
-                        <li class="mdc-list-item" role="menuitem">
-                          <span
-                        class="mdc-list-item__text"><%= link_to  "Categoria correta", retrain_path(event_id: event.id, feature: 'categories', correct: true), remote: true %></span>
-                        </li>
-                        <li class="mdc-list-item" role="menuitem">
-                          <span
-                        class="mdc-list-item__text"><%= link_to  "Categoria outlier", retrain_path(event_id: event.id, feature: 'categories', outlier: true), remote: true %></span>
-                        </li>
-                        <% ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton", "palestra", "celebração", "workshop", "oficina", "aula de dança", "literatura", "festival", "acadêmico", "gastronômico", "brecho", "profissional"].each do |category| %>
-                          <li class="mdc-list-item" role="menuitem">
-                            <span
-                        class="mdc-list-item__text"><%= link_to  category.capitalize, retrain_path(event_id: event.id, feature: 'categories', category: category), remote: true %></span>
-                          </li>
-                        <% end %>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
           </div>
         </div>
       <% end %>

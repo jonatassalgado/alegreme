@@ -78,7 +78,7 @@ caches.open("v1:sw-cache-feed-page").then(function(cache) {
     );
 
     workbox.routing.registerRoute(
-      /(\/|\/#)/,
+      /^\/[^\/]/,
       new workbox.strategies.StaleWhileRevalidate({
         cacheName: CACHE_NAME + "feed-page"
       })

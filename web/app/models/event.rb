@@ -1,6 +1,11 @@
 class Event < ApplicationRecord
   require "day_of_week"
 
+  THEMES = ["lazer", "saúde", "atividade física", "educação", "cultura", "alimentação", "compras"].freeze
+  PERSONAS = ["aventureiro", "cult", "geek", "hipster", "praieiro", "underground", "zeen"].freeze
+  CATEGORIES = ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "esporte", "meetup", "hackaton", "palestra",  "literatura", "festival", "brecho"].freeze
+  KINDS = ["noite", "bebida", "ar livre", "música", "bem-estar", "bicicleta", "skate", "aventura", "caminhada", "dança", "acadêmico", "profissional", "arte", "economia compartilhada"].freeze
+
   include ImageUploader::Attachment.new(:image)
   include Rails.application.routes.url_helpers
 
@@ -168,6 +173,30 @@ class Event < ApplicationRecord
     self.personas["primary"]["name"]
   end
 
+  def theme_name
+    self.theme["name"]
+  end
+
+  def theme_name=(value)
+    self.theme["name"] = value
+  end
+  
+  def theme_score
+    self.theme["score"]
+  end
+  
+  def theme_score=(value)
+    self.theme["score"] = value
+  end
+  
+  def theme_outlier
+    self.theme["outlier"]
+  end
+
+  def theme_outlier=(value)
+    self.theme["outlier"] = value
+  end
+  
   def personas_primary_name=(value)
     self.personas["primary"]["name"] = value
   end

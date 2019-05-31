@@ -100,7 +100,7 @@ namespace :scrapy do
           )
           puts @event.try(:inspect)
         else
-          puts "N√O FOI POSSÕVEL CRIAR O EVENTO"
+          puts "N√ÉO FOI POSS√çVEL CRIAR O EVENTO"
           # @event = Event.create_with(
           #   name: item['name'],
           #   description: item['description'],
@@ -108,7 +108,7 @@ namespace :scrapy do
           # ).find_or_create_by(source_url: item['source_url'])
         end
 
-        if @event
+        if @event && @place
           if item["cover_url"]
             begin
               event_name = "event-#{item["name"].parameterize}"

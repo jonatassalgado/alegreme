@@ -1,0 +1,32 @@
+<tr style="font-weight: bold">
+	<td>Cover</td>
+	<td>Nome</td>
+	<td>Local</td>
+	<td>Descrição</td>
+	<td>Tema</td>
+	<td>Categoria</td>
+	<td>Persona</td>
+	<td>Tipo</td>
+</tr>
+<% cache @events do %>
+	<% @events.each do |event| %>
+		<% cache(event) do %>
+			<tr>
+				<td><img src="<%= get_image_url event, :"list-mobile" %>"></td>
+				<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
+				<td><%= event.place_details_name %></td>
+				<td><%= limit_description_size event.details_description, 400 %></td>
+				<td id="<%= dom_id event, 'chip_themes' %>">
+					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'themes'} %>
+				</td>
+				<td id="<%= dom_id event, 'chip_categories' %>">
+					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'categories'} %>
+				</td>
+				<td id="<%= dom_id event, 'chip_personas' %>">
+					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'personas'} %>
+				</td>
+				<td></td>
+			</tr>
+		<% end %>
+	<% end %>
+<% end %>

@@ -1,0 +1,7 @@
+(function(){
+    let chipEventElem = document.getElementById('<%= dom_id @event, "chip_#{@feature}" %>');
+    let chipEventChild = chipEventElem.lastElementChild
+
+    chipEventElem.removeChild(chipEventChild);
+    chipEventElem.insertAdjacentHTML('beforeend', '<%= j render partial: 'layouts/classifier/chips', locals: {event: @event, feature: @feature} %>');
+})()

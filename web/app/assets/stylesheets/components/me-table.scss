@@ -1,0 +1,29 @@
+@import "../_variables";
+
+.me-table {
+	border: 1px solid $border-color;
+	border-spacing: 0;
+	font-size: 11px;
+	width: 100%;
+	
+	& td {
+		border-top: 1px solid $border-color;
+		padding: 6px 10px;
+	}
+
+	& tr {
+		padding: 6px 0;
+	}
+
+	& .mdc-chip {
+		font-size: 11px;
+	}
+
+	& .mdc-list-item {
+		font-size: 12px;
+	}
+
+	& .mdc-list-item {
+		height: 30px;
+	}
+}

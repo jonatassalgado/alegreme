@@ -1,67 +1,72 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <title>Alegreme - Eventos e atividades em Porto Alegre</title>
-  <!-- <meta name="turbolinks-cache-control" content="no-preview"> -->
-  <meta name="theme-color" content="#5ecf80" />
-  <meta name="viewport"
+  <head>
+    <title>Alegreme - Eventos e atividades em Porto Alegre</title>
+    <!-- <meta name="turbolinks-cache-control" content="no-preview"> -->
+    <meta name="theme-color" content="#5ecf80" />
+    <meta name="viewport"
     content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <link rel="manifest" href="/manifest.json" />
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= stylesheet_link_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/css/embed.css" : ":3030/css/embed.css"), 'data-turbolinks-track': 'reload' %>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Cabin:400,500,600,700|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
-  <%= Gon::Base.render_data %>
-  <!-- <%= javascript_include_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/embed.js" : ":3030/embed.js"), defer: true %> -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js' data-turbolinks-track='reload'></script>
-  <script src='https://cdn.rawgit.com/showdownjs/showdown/1.7.4/dist/showdown.min.js' data-turbolinks-track='reload'>
-  </script>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
-  <%= javascript_include_tag 'bot/client', 'data-turbolinks-track': 'reload' %>
-</head>
-
-<body>
-  <div class="mdc-drawer-app-content">
-    <% if request.parameters['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
-    <%= render partial: "layouts/app-top-bar" %>
-    <%= render partial: 'layouts/hero' unless current_user %>
-    <section class="me-page__feed-section">
-      <div class="me-overlay"></div>
-      <%= render partial: 'layouts/bot' %>
-      <%= yield %>
-    </section>
-    <% elsif current_page?(controller: 'events', action: 'show') %>
-    <%= render partial: "layouts/app-top-bar", locals: {controller: 'events'} %>
-    <section class="me-page__events-section">
-      <div class="me-overlay"></div>
-      <%= yield %>
-    </section>
-    <% else %>
-    <%= render partial: "layouts/app-top-bar" %>
-    <section class="me-page__feed-section">
-      <%= render partial: 'layouts/bot' %>
-      <div class="me-overlay"></div>
-      <%= yield %>
-    </section>
-    <% end %>
-  </div>
-  <% if notice %>
-  <div data-controller="snackbar" class="me-snackbar mdc-snackbar">
-    <div class="mdc-snackbar__surface">
-      <div class="mdc-snackbar__label" role="status" aria-live="polite">
-        <%= notice %>
-      </div>
-      <div class="mdc-snackbar__actions">
-        <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
-      </div>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="manifest" href="/manifest.json" />
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/css/embed.css" : ":3030/css/embed.css"), 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Cabin:400,500,600,700|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+    <%= Gon::Base.render_data %>
+    <!-- <%= javascript_include_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/embed.js" : ":3030/embed.js"), defer: true %> -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js'
+    data-turbolinks-track='reload'></script>
+    <script src='https://cdn.rawgit.com/showdownjs/showdown/1.7.4/dist/showdown.min.js' data-turbolinks-track='reload'></script>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+    <%= javascript_include_tag 'bot/client', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <div class="mdc-drawer-app-content">
+      <% if params['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
+        <%= render partial: "layouts/app-top-bar" %>
+        <%= render partial: 'layouts/hero' unless current_user %>
+        <section class="me-page__feed-section">
+          <div class="me-overlay"></div>
+          <%= render partial: 'layouts/bot' %>
+          <%= yield %>
+        </section>
+      <% elsif params['controller'] == 'events' && params['action'] == 'show' %>
+        <%= render partial: "layouts/app-top-bar", locals: {controller: 'events'} %>
+        <section class="me-page__events-section">
+          <div class="me-overlay"></div>
+          <%= yield %>
+        </section>
+      <% elsif params['controller'] == 'feeds' && params['action'] == 'train' %>
+        <%= render partial: "layouts/app-top-bar" %>
+        <section class="me-page__train-section">
+          <%= render partial: 'layouts/bot' %>
+          <div class="me-overlay"></div>
+          <%= yield %>
+        </section>
+      <% else %>
+        <%= render partial: "layouts/app-top-bar" %>
+        <section class="me-page__feed-section">
+          <%= render partial: 'layouts/bot' %>
+          <div class="me-overlay"></div>
+          <%= yield %>
+        </section>
+      <% end %>
     </div>
-  </div>
-  <% end %>
-  <%= render partial: 'layouts/footer' %>
-</body>
-
+    <% if notice %>
+      <div data-controller="snackbar" class="me-snackbar mdc-snackbar">
+        <div class="mdc-snackbar__surface">
+          <div class="mdc-snackbar__label" role="status" aria-live="polite">
+            <%= notice %>
+          </div>
+          <div class="mdc-snackbar__actions">
+            <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <%= render partial: 'layouts/footer' %>
+  </body>
 </html>

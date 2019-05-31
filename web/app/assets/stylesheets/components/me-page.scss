@@ -9,6 +9,16 @@
     }
   }
   
+  &__train-section {
+    max-width: 95vw;
+    margin: auto;
+    // padding-top: 35px;
+    
+    @include mdc-layout-grid-media-query_("phone") {
+      padding-top: 45px;
+    }
+  }
+  
   &__events-section {
     max-width: 600px;
     margin: auto;

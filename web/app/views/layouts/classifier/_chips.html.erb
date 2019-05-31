@@ -1,0 +1,23 @@
+<% 
+	feature_name = case feature
+							   when 'categories' then "categories_primary_name"
+								 when 'personas' then "personas_primary_name"
+								 when 'themes' then "theme_name"
+								 end
+	
+	feature_score = case feature
+							    when 'categories' then "categories_primary_score"
+								  when 'personas' then "personas_primary_score"
+								  when 'themes' then "theme_score"
+								  end
+	
+	
+	%>
+<div data-controller="classifier-select" class="mdc-menu-surface--anchor">
+	<div class="mdc-chip" tabindex="0" style="background-color: <%= get_score_scale_color(event.public_send(feature_score)) %>">
+		<div data-target="classifier-select.moreButton" data-action="click->classifier-select#openMenu" class="mdc-chip__text">
+			<%= "#{event.public_send(feature_name)} (#{round_score event.public_send(feature_score), 2})" %>
+		</div>
+	</div>
+	<%= render partial: 'layouts/classifier/select', locals: {event: event, feature: feature} %>
+</div>

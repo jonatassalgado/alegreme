@@ -58,14 +58,15 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
   end
 
   create_table "events", force: :cascade do |t|
+    t.jsonb "theme", default: {"name"=>nil, "score"=>nil, "outlier"=>nil}, null: false
     t.jsonb "personas", default: {"outlier"=>nil, "primary"=>{"name"=>nil, "score"=>nil}, "secondary"=>{"name"=>nil, "score"=>nil}}, null: false
     t.jsonb "categories", default: {"outlier"=>nil, "primary"=>{"name"=>nil, "score"=>nil}, "secondary"=>{"name"=>nil, "score"=>nil}}, null: false
+    t.jsonb "kinds", default: [], null: false
+    t.jsonb "tags", default: {"things"=>[], "features"=>[], "activities"=>[]}, null: false
     t.jsonb "geographic", default: {"cep"=>nil, "city"=>nil, "latlon"=>[], "address"=>nil, "neighborhood"=>nil}, null: false
     t.jsonb "ocurrences", default: {"dates"=>[]}, null: false
     t.jsonb "details", default: {"name"=>nil, "prices"=>[], "source_url"=>nil, "description"=>nil}, null: false
     t.jsonb "entries", default: {"liked_by"=>[], "saved_by"=>[], "viewed_by"=>[], "disliked_by"=>[], "total_likes"=>0, "total_saves"=>0, "total_views"=>0, "total_dislikes"=>0}, null: false
-    t.jsonb "kinds", default: [], null: false
-    t.jsonb "tags", default: {"things"=>[], "features"=>[], "activities"=>[]}, null: false
     t.jsonb "image_data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
     t.index ["personas"], name: "index_events_on_personas", using: :gin
     t.index ["place_id"], name: "index_events_on_place_id"
     t.index ["tags"], name: "index_events_on_tags", using: :gin
+    t.index ["theme"], name: "index_events_on_theme", using: :gin
   end
 
   create_table "events_organizers", id: false, force: :cascade do |t|

@@ -1,0 +1,63 @@
+<div data-target="classifier-select.menu" class="mdc-menu mdc-menu-surface">
+	<ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+		<% if feature == 'themes' %>
+			<li class="mdc-list-item" role="menuitem">
+				<span class="mdc-list-item__text">
+					<%= link_to  "Tema correta", retrain_path(event_id: event.id, feature: 'themes', correct: true), remote: true %>
+				</span>
+			</li>
+			<li class="mdc-list-item" role="menuitem">
+				<span class="mdc-list-item__text">
+					<%= link_to  "Tema outlier", retrain_path(event_id: event.id, feature: 'themes', outlier: true), remote: true %>
+				</span>
+			</li>
+			<% Event::THEMES.each do |theme| %>
+				<li class="mdc-list-item" role="menuitem">
+					<span class="mdc-list-item__text">
+						<%= link_to  theme.capitalize, retrain_path(event_id: event.id, feature: 'themes', theme: theme), remote: true %>
+					</span>
+				</li>
+			<% end %>
+		<% end %>
+		<% if feature == 'personas' %>
+			<li class="mdc-list-item" role="menuitem">
+				<span class="mdc-list-item__text">
+					<%= link_to  "Persona correta", retrain_path(event_id: event.id, feature: 'personas', correct: true), remote: true %>
+				</span>
+			</li>
+			<li class="mdc-list-item" role="menuitem">
+				<span class="mdc-list-item__text">
+					<%= link_to  "Persona outlier", retrain_path(event_id: event.id, feature: 'personas', outlier: true), remote: true %>
+				</span>
+			</li>
+			<% Event::PERSONAS.each do |persona| %>
+				<li class="mdc-list-item" role="menuitem">
+					<span class="mdc-list-item__text">
+						<%= link_to  persona.capitalize, retrain_path(event_id: event.id, feature: 'personas', persona: persona), remote: true %>
+					</span>
+				</li>
+			<% end %>
+		<% end %>
+		<% if feature == 'categories' %>
+			<li class="mdc-list-item" role="menuitem">
+				<span class="mdc-list-item__text">
+					<%= link_to  "Categoria correta", retrain_path(event_id: event.id, feature: 'categories', correct: true), remote: true %>
+				</span>
+			</li>
+			<li class="mdc-list-item" role="menuitem">
+				<span class="mdc-list-item__text">
+					<%= link_to  "Categoria outlier", retrain_path(event_id: event.id, feature: 'categories', outlier: true), remote: true %>
+				</span>
+			</li>
+			<li class="mdc-list-divider" role="separator"></li>
+			<% Event::CATEGORIES.each do |category| %>
+				<li class="mdc-list-item" role="menuitem">
+					<span class="mdc-list-item__text">
+						<%= link_to  category.capitalize, retrain_path(event_id: event.id, feature: 'categories', category: category), remote: true %>
+					</span>
+				</li>
+			<% end %>
+		<% end %>
+	
+	</ul>
+</div>
