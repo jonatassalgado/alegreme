@@ -44,6 +44,7 @@ import {
   CacheSystem
 } from "modules/cache-system";
 
+
 CacheSystem.activateTurbolinks();
 
 const applicationScript = () => {
@@ -107,6 +108,7 @@ const applicationScript = () => {
   menus.forEach(menu => {
     new MDCMenu(menu);
   });
+ 
 }
 
 document.addEventListener("DOMContentLoaded", applicationScript, false);

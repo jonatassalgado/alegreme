@@ -173,6 +173,14 @@ class Event < ApplicationRecord
     self.personas["primary"]["name"]
   end
 
+  def kinds_names
+    self.kinds.map { |kind| kind['name'] }
+  end
+
+  def kinds_scores
+    self.kinds.map { |kind| kind['score'] }
+  end
+
   def theme_name
     self.theme["name"]
   end

@@ -11,11 +11,14 @@
 <% cache @events do %>
 	<% @events.each do |event| %>
 		<% cache(event) do %>
-			<tr>
+			<tr data-controller='classifier' data-classifier-identifier="<%= event.id %>">
 				<td><img src="<%= get_image_url event, :"list-mobile" %>"></td>
 				<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
 				<td><%= event.place_details_name %></td>
-				<td><%= limit_description_size event.details_description, 400 %></td>
+				<td data-target="classifier.dialogButton" data-action="click->classifier#openDialog">
+					<%= limit_description_size event.details_description, 400 %> <br/>
+					<%= event.kinds.map{|kind| kind['name']}.to_s %>
+				</td>
 				<td id="<%= dom_id event, 'chip_themes' %>">
 					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'themes'} %>
 				</td>
@@ -25,7 +28,9 @@
 				<td id="<%= dom_id event, 'chip_personas' %>">
 					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'personas'} %>
 				</td>
-				<td></td>
+				<td>
+					<%= render partial: 'layouts/classifier/kinds', locals: {event: event, button_text: 'Editar'} %>
+				</td>
 			</tr>
 		<% end %>
 	<% end %>

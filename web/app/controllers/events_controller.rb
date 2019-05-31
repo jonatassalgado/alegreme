@@ -83,14 +83,15 @@ class EventsController < ApplicationController
       @event.theme_outlier = params[:outlier] if params[:outlier]
       @event.theme_name = params[:theme] if params[:theme]
       @event.theme_score = 0.90 if params[:correct] || params[:theme]
-    # elsif @feature == "kinds"
-    #   @event.categories_outlier = params[:outlier] if params[:outlier]
-    #   @event.categories_primary_name = params[:category] if params[:category]
-    #   @event.categories_primary_score = 0.90 if params[:correct] || params[:category]
+    elsif @feature == "kinds"
+      @event.kinds = JSON.parse(params[:kinds]) if params[:kinds]
     end
 
     respond_to do |format|
       if @event.update(retrain_params)
+        format.json { 
+          render json: {'success': 'true', 'kinds': @event.kinds }
+        }
         format.js 
       end
     end

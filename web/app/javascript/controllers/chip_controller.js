@@ -1,6 +1,10 @@
-import { Controller } from "stimulus";
-import { MDCChipSet, MDCChipSetFoundation } from "@material/chips";
-import { stringify } from "query-string";
+import {
+  Controller
+} from "stimulus";
+import {
+  MDCChipSet
+} from "@material/chips";
+
 
 export default class ChipController extends Controller {
   static targets = ["chipContainer", "chip"];
@@ -11,12 +15,28 @@ export default class ChipController extends Controller {
 
   select() {
     const self = this;
+    const type = self.data.get('type');
 
-    this.filterController.filter()
+    switch (type) {
+      case 'filter':
+        this.filterController.filter();
+        break;
+      case 'classifier':
+        this.classifierController.classify();
+        break;
+    }
   }
 
 
   get filterController() {
-    return this.application.controllers.find((ctrl) => { return ctrl.context.identifier === 'filter' })
+    return this.application.controllers.find((ctrl) => {
+      return ctrl.context.identifier === 'filter';
+    })
+  }
+
+  get classifierController() {
+    return this.application.controllers.find((ctrl) => {
+      return ctrl.context.identifier === 'classifier';
+    })
   }
 }
