@@ -1,40 +1,44 @@
-<div data-target="classifier.dialog"
-     class="mdc-dialog"
-     role="alertdialog"
-     aria-modal="true"
-     aria-labelledby="my-dialog-title"
-     aria-describedby="my-dialog-content">
-	<div class="mdc-dialog__container">
-		<div class="mdc-dialog__surface">
-			<h2 class="mdc-dialog__title" id="my-dialog-title">Choose a Ringtone</h2>
-			<div class="mdc-dialog__content" id="my-dialog-content">
-				<div data-controller="chip" data-chip-type="classifier" data-target="chip.chipContainer classifier.kinds"
-         class="me-chip-set mdc-chip-set mdc-chip-set--filter">
-            <% Event::KINDS.each do |kind| %>
-              <div data-target="chip.chip" data-action="click->chip#select"
-                class="me-chip mdc-chip <%= event.kinds_names.include?(kind) ? 'mdc-chip--selected' : nil %>"
-                data-turbolinks-scroll="false">
-                <div class="mdc-chip__checkmark">
-                  <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-                    <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                  </svg>
-                </div>
-                <div class="mdc-chip__text">
-                  <%= kind.downcase %>
-                </div>
-              </div>
-            <% end %>
-          </div>
+<div data-controller='classifier' data-classifier-identifier="<%= event.id %>">
+	<span data-target="classifier.dialogButton" data-action="click->classifier#openDialog">
+		<%= event.kinds.map{|kind| kind['name']}.to_s %>
+	</span>
+	<div data-target="classifier.dialog"
+			class="mdc-dialog"
+			role="alertdialog"
+			aria-modal="true"
+			aria-labelledby="my-dialog-title"
+			aria-describedby="my-dialog-content">
+		<div class="mdc-dialog__container">
+			<div class="mdc-dialog__surface">
+				<h2 class="mdc-dialog__title" id="my-dialog-title">Choose a Ringtone</h2>
+				<div class="mdc-dialog__content" id="my-dialog-content">
+					<div data-controller="chip" data-chip-type="classifier" data-target="chip.chipContainer classifier.kinds" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
+							<% Event::KINDS.each do |kind| %>
+								<div data-target="chip.chip" data-action="click->chip#select"
+									class="me-chip mdc-chip <%= event.kinds_names.include?(kind) ? 'mdc-chip--selected' : nil %>"
+									data-turbolinks-scroll="false">
+									<div class="mdc-chip__checkmark">
+										<svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+											<path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+										</svg>
+									</div>
+									<div class="mdc-chip__text">
+										<%= kind.downcase %>
+									</div>
+								</div>
+							<% end %>
+						</div>
+				</div>
+				<footer class="mdc-dialog__actions">
+					<button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+						<span class="mdc-button__label">Cancel</span>
+					</button>
+					<button data-action="click->classifier#saveKindsSelected" type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
+						<span class="mdc-button__label">OK</span>
+					</button>
+				</footer>
 			</div>
-			<footer class="mdc-dialog__actions">
-				<button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
-					<span class="mdc-button__label">Cancel</span>
-				</button>
-				<button data-action="click->classifier#saveKindsSelected" type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
-					<span class="mdc-button__label">OK</span>
-				</button>
-			</footer>
 		</div>
+		<div class="mdc-dialog__scrim"></div>
 	</div>
-	<div class="mdc-dialog__scrim"></div>
 </div>

@@ -89,10 +89,11 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.update(retrain_params)
-        format.json { 
-          render json: {'success': 'true', 'kinds': @event.kinds }
-        }
-        format.js 
+        if @feature == 'kinds'
+          format.js { render 'layouts/classifier/kinds' }
+        else 
+          format.js { render 'layouts/classifier/chips' }
+        end
       end
     end
   end

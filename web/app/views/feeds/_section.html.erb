@@ -4,7 +4,7 @@
     <% if filters %>
       <div data-controller="filter" data-target="filter.filterContainer" class="me-filter">
         <% if filters[:personas] %>
-          <div data-controller="chip" data-chip-type="personas" data-target="chip.chipContainer filter.personas"
+          <div data-controller="chip" data-chip-type="filter" data-target="chip.chipContainer filter.personas"
         class="me-chip-set mdc-chip-set mdc-chip-set--filter">
             <% Event.active.collect(&:personas_primary_name).uniq.each do |persona| %>
               <div data-target="chip.chip" data-action="click->chip#select"
@@ -23,7 +23,7 @@
         <% end %>
         <% if filters[:categories] %>
           <%= titles[:categories] %>
-          <div data-controller="chip" data-chip-type="categories" data-target="chip.chipContainer filter.categories"
+          <div data-controller="chip" data-chip-type="filter" data-target="chip.chipContainer filter.categories"
         class="me-chip-set mdc-chip-set mdc-chip-set--filter">
             <% Event.with_personas(params[:personas]).collect(&:categories_primary_name).uniq.each do |category| %>
               <div data-target="chip.chip" data-action="click->chip#select"
@@ -43,7 +43,7 @@
         <% end %>
         <% if filters[:occurences] %>
           <%= titles[:occurences] %>
-          <div data-controller="chip" data-chip-type="ocurrences" data-target="chip.chipContainer filter.ocurrences"
+          <div data-controller="chip" data-chip-type="filter" data-target="chip.chipContainer filter.ocurrences"
         class="me-chip-set mdc-chip-set mdc-chip-set--filter">
             <% ['hoje', 'amanhã'].each do |ocurrence| %>
               <div data-target="chip.chip" data-action="click->chip#select"

@@ -37,6 +37,11 @@ $mdc-layout-grid-columns: (
     }
   }
 
+  & .me-chip-set {
+    display: contents;
+  }
+  
+
   & .mdc-typography--headline1 {
     @include mdc-layout-grid-media-query_("tablet") {
       padding: var(--mdc-layout-grid-margin-phone, 16px);

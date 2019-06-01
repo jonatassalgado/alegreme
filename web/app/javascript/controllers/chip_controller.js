@@ -10,33 +10,32 @@ export default class ChipController extends Controller {
   static targets = ["chipContainer", "chip"];
 
   initialize() {
-    this.MDCChipSet = new MDCChipSet(this.chipContainerTarget);
+    const self = this;
+    self.MDCChipSet = new MDCChipSet(this.chipContainerTarget);
   }
-
+  
   select() {
     const self = this;
     const type = self.data.get('type');
 
     switch (type) {
       case 'filter':
-        this.filterController.filter();
+        self.filterController.filter();
         break;
       case 'classifier':
-        this.classifierController.classify();
+        self.classifierController.classify();
         break;
     }
   }
 
 
   get filterController() {
-    return this.application.controllers.find((ctrl) => {
-      return ctrl.context.identifier === 'filter';
-    })
+    const parentFilter = this.context.element.closest('[data-controller="filter"]');
+    return this.application.getControllerForElementAndIdentifier(parentFilter, 'filter');
   }
 
   get classifierController() {
-    return this.application.controllers.find((ctrl) => {
-      return ctrl.context.identifier === 'classifier';
-    })
+    const parentClassifier = this.context.element.closest('[data-controller="classifier"]');
+    return this.application.getControllerForElementAndIdentifier(parentClassifier, 'classifier');
   }
 }

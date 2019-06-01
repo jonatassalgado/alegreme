@@ -9,9 +9,8 @@ export default class ClassifierController extends Controller {
 
   initialize() {
     const self = this;
-    self.dialog = new MDCDialog(self.dialogTarget);
   }
-
+  
   openMenu() {
     const self = this;
     const mdcMenu = new MDCMenu(self.menuTarget);
@@ -21,56 +20,71 @@ export default class ClassifierController extends Controller {
       mdcMenu.open = true;
     }
   }
-
+  
   openDialog() {
     const self = this;
+    self.dialog = new MDCDialog(self.dialogTarget);
     self.dialog.open();
   }
-
+  
   classify() {
     const self = this;
-    // let promises = [];
 
-    // if (self.hasKindsTarget) {
+    if (self.hasKindsTarget) {
       const selectedKindsValues = new Promise((resolve, reject) => {
-        resolve(self.kindsController.MDCChipSet.selectedChipIds.map(function(chipId) {
+        const result = self.kindsController.MDCChipSet.selectedChipIds.map(function(chipId) {
           const chipElement = self.kindsController.chipContainerTarget.querySelector( `#${chipId}` );
           return {name: chipElement.innerText.toLowerCase(), score: 0.9};
-        }))
-      });
-    // }
+        })
 
-    // if (promises.length) {
-    selectedKindsValues
-      .then(function(result) {
-        self.kindsSelected = JSON.stringify(result);
-        console.log(result);
-      })
-      .catch(function(err) {
-        console.log(err);
+        resolve(result);
       });
-    // }
+
+      selectedKindsValues
+        .then(function(result) {
+          self.kindsSelected = JSON.stringify(result);
+          console.log(result);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
   }
 
   saveKindsSelected() {
     const self = this;
     const urlWithFilters = stringify({kinds: self.kindsSelected, feature: 'kinds', event_id: self.data.get('identifier')}, {arrayFormat: 'bracket'});
 
-    Rails.ajax({
-      type: "GET",
-      url: `/retrain?${urlWithFilters}`,
-      success: function(response){
-        console.log(response);
-      },
-      error: function(response){
-        console.log(response)
-      }
-    })
+    fetch(`/retrain?${urlWithFilters}`, {
+        method: 'get',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Content-type': 'text/javascript; charset=UTF-8',
+          'X-CSRF-Token': Rails.csrfToken()
+        },
+        credentials: 'same-origin'
+      })
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' + response.status);
+            return;
+          }
+
+          response.text().then(function(data) {
+            eval(data);
+          });
+        }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
   }
 
   get kindsController() {
-    return this.application.getControllerForElementAndIdentifier(
-      this.kindsTarget,
+    const self = this;
+    return self.application.getControllerForElementAndIdentifier(
+      self.kindsTarget,
       "chip"
     );
   }

@@ -28,6 +28,7 @@ web/tmp/cache
 *.swo
 *.ods
 .pem
+.vscode/
 usr/
 web/storage
 structure.sql

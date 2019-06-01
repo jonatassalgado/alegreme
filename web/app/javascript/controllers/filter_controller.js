@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import { MDCChipSet, MDCChipSetFoundation } from "@material/chips";
 import { stringify } from "query-string";
 
 export default class FilterController extends Controller {
@@ -53,7 +52,7 @@ export default class FilterController extends Controller {
           }
         })
         .catch(function(err) {
-          console.log(err)
+          console.log(err);
         });
     }
 
@@ -61,17 +60,17 @@ export default class FilterController extends Controller {
 
 
   get personasController() {
-    return this.application.getControllerForElementAndIdentifier(this.personasTarget, 'chip')
+    return this.application.getControllerForElementAndIdentifier(this.personasTarget, 'chip');
   }
 
 
   get categoriesController() {
-    return this.application.getControllerForElementAndIdentifier(this.categoriesTarget, 'chip')
+    return this.application.getControllerForElementAndIdentifier(this.categoriesTarget, 'chip');
   }
 
 
   get ocurrencesController() {
-    return this.application.getControllerForElementAndIdentifier(this.ocurrencesTarget, 'chip')
+    return this.application.getControllerForElementAndIdentifier(this.ocurrencesTarget, 'chip');
   }
 
 }
