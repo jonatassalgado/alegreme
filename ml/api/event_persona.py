@@ -329,36 +329,7 @@ class EventPersonaPrediction(object):
 
         self.X = self.X_stemmed = descriptions_stemmed
 
-    def bag_of_words(self):
 
-        bag = []
-
-        for idx, description in enumerate(self.X_raw):
-            text_cleanned = self.X_cleanned[idx]
-            text_stemmed = self.X_stemmed[idx]
-            text_words_freq = self.__get_top_n_words([text_cleanned], 30)
-            text_nouns = self.__get_nouns(text_cleanned)
-            text_verbs = self.__get_verbs(text_cleanned)
-            similar_texts, text_top_tfifd = self.__get_similarity(idx)
-            #text_adjs = self.__get_adjs(text_cleanned)
-            #text_activities = self.__get_activities(text_cleanned)
-
-            item = {
-                'text': description,
-                'cleanned': text_cleanned,
-                'stemmed': text_stemmed,
-                'freq': text_words_freq,
-                'nouns': text_nouns,
-                'verbs': text_verbs,
-                'similar_texts': similar_texts,
-                'text_top_tfifd': text_top_tfifd
-                #'adjs': text_adjs,
-                #'activities': text_activities
-            }
-
-            bag.append(item)
-
-        return bag
 
     def train(self):
 
@@ -401,8 +372,8 @@ class EventPersonaPrediction(object):
 
     def predict(self, query):
         query = base64.b64decode(query).decode('utf-8')
-        query = self.__cleanning_text(query)
-        query = self.__stemming_text(query)
+        # query = self.__cleanning_text(query)
+        # query = self.__stemming_text(query)
 
         regex = re.compile(
             r'predict-event__persona-model-\d{8}-\d{6}\.joblib$')
@@ -417,8 +388,8 @@ class EventPersonaPrediction(object):
             best_labels_name = classificator.classes_[best_two_labels_index]
             best_labels_score = hq.nlargest(2, prediction)
 
-            output = [[best_labels_name[0], best_labels_score[0]],
-                      [best_labels_name[1], best_labels_score[1]]]
+            output = [[best_labels_name[0], round(best_labels_score[0], 6)],
+                      [best_labels_name[1], round(best_labels_score[1], 6)]]
             print(output)
             return output
 
@@ -464,9 +435,10 @@ class EventPersonaPrediction(object):
         return gs_classificator.best_params_
 
 
-#predictModel = EventPersonaPrediction()
-#predictModel.clean()
-#predictModel.train()
+# predictModel = EventPersonaPrediction()
+# predictModel.clean()
+# predictModel.train()
+# predictModel.predict('<span>Nossa Feira aterriza novamente na Casa de Cultura Mario Quintana como um grande mercado do alternativo, vintage e cultural.<br>Como sempre teremos expositores dos mais variados, um som gostoso e nostálgico e algumas atrações!<br><br>A arara convidada desta vez fica por conta da querida Carol Morandi que traz sua linha de peças em crochê, a Carol Morandi Handmade Crochet, marca local que também irá fazer um desfile pocket em nosso evento!<br><br>Na finaleira não podia faltar o agito dos Teachers Trio na pista, tocando o melhor da Jovem Guarda! Pedida mais que confirmada!<br><br>Não perde!<br><br>***Vai ser em <br>14/04 na Casa de Cultura Mario Quintana, Travessa dos Catavento<br>das 13h às 19h<br><br>ENTRADA FRANCA<br><br>***16h Desfile pocket da marca Carol Morandi Handmade Crochet<br><br>***17h show com a banda Teachers Trio<br><br>/////Em caso de chuva o evento será transferido\\\\\<br><br>Tem uma marca, trabalho artístico, brechó e que expor?<br>Entra em contato conosco pelo<br>mercadodepulgaspoa@gmail.com e manda teu portfólio!<br><br>*Breve mais informações S2<br></span>')
 #predictModel.debug
 #bagOfWords = predictModel.bag_of_words()
 
@@ -474,4 +446,3 @@ class EventPersonaPrediction(object):
 #mostFreq = predictModel.most_popular_words
 
 #
-#predictModel.predict('<span>Nossa Feira aterriza novamente na Casa de Cultura Mario Quintana como um grande mercado do alternativo, vintage e cultural.<br>Como sempre teremos expositores dos mais variados, um som gostoso e nostálgico e algumas atrações!<br><br>A arara convidada desta vez fica por conta da querida Carol Morandi que traz sua linha de peças em crochê, a Carol Morandi Handmade Crochet, marca local que também irá fazer um desfile pocket em nosso evento!<br><br>Na finaleira não podia faltar o agito dos Teachers Trio na pista, tocando o melhor da Jovem Guarda! Pedida mais que confirmada!<br><br>Não perde!<br><br>***Vai ser em <br>14/04 na Casa de Cultura Mario Quintana, Travessa dos Catavento<br>das 13h às 19h<br><br>ENTRADA FRANCA<br><br>***16h Desfile pocket da marca Carol Morandi Handmade Crochet<br><br>***17h show com a banda Teachers Trio<br><br>/////Em caso de chuva o evento será transferido\\\\\<br><br>Tem uma marca, trabalho artístico, brechó e que expor?<br>Entra em contato conosco pelo<br>mercadodepulgaspoa@gmail.com e manda teu portfólio!<br><br>*Breve mais informações S2<br></span>')

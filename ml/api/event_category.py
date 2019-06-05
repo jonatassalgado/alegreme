@@ -406,8 +406,8 @@ class EventCategoryPrediction(object):
 
     def predict(self, query):
         query = base64.b64decode(query).decode('utf-8')
-        query = self.__cleanning_text(query)
-        query = self.__stemming_text(query)
+        # query = self.__cleanning_text(query)
+        # query = self.__stemming_text(query)
 
         regex = re.compile(
             r'predict-event__category-model-\d{8}-\d{6}\.joblib$')
@@ -422,8 +422,8 @@ class EventCategoryPrediction(object):
             best_labels_name = classificator.classes_[best_two_labels_index]
             best_labels_score = hq.nlargest(2, prediction)
 
-            output = [[best_labels_name[0], best_labels_score[0]],
-                      [best_labels_name[1], best_labels_score[1]]]
+            output = [[best_labels_name[0], round(best_labels_score[0], 6)],
+                      [best_labels_name[1], round(best_labels_score[1], 6)]]
             print(output)
             return output
 

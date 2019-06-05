@@ -1,0 +1,46 @@
+<div data-controller='tags' data-tags-type="<%= type %>" data-tags-identifier="<%= event.id %>">
+	<span data-target="tags.dialogButton" data-action="click->tags#openDialog">
+		<p>
+			<b><%= type.capitalize %>:</b> <%= event.tags_of_type(type).join(' ') %>
+		</p>
+	</span>
+	<div data-target="tags.dialog"
+			class="mdc-dialog"
+			role="alertdialog"
+			aria-modal="true"
+			aria-labelledby="my-dialog-title"
+			aria-describedby="my-dialog-content">
+		<div class="mdc-dialog__container">
+			<div class="mdc-dialog__surface">
+				<h2 class="mdc-dialog__title" id="my-dialog-title"><%= type.capitalize %></h2>
+				<div class="mdc-dialog__content" id="my-dialog-content">
+					<div data-controller="chip" data-chip-type="tags" data-target="chip.chipContainer tags.tags" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
+						<% event.ml_data_all.each do |tag| %>
+							<div data-target="chip.chip" data-action="click->chip#select"
+								class="me-chip mdc-chip <%= event.tags_of_type(type).include?(tag) ? 'mdc-chip--selected' : nil %>"
+								data-chip-tag-type="things" data-turbolinks-scroll="false">
+								<div class="mdc-chip__checkmark">
+									<svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+										<path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+									</svg>
+								</div>
+								<div class="mdc-chip__text">
+									<%= tag.downcase %>
+								</div>
+							</div>
+						<% end %>
+					</div>
+				</div>
+				<footer class="mdc-dialog__actions">
+					<button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+						<span class="mdc-button__label">Cancel</span>
+					</button>
+					<button data-action="click->tags#saveTagsSelected" type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
+						<span class="mdc-button__label">OK</span>
+					</button>
+				</footer>
+			</div>
+		</div>
+		<div class="mdc-dialog__scrim"></div>
+	</div>
+</div>

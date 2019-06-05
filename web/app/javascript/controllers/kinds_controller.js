@@ -4,21 +4,11 @@ import { MDCDialog } from "@material/dialog";
 import { stringify } from "query-string";
 
 
-export default class ClassifierController extends Controller {
-  static targets = ["menuButton", "menu", "dialog", "kinds"];
+export default class KindsController extends Controller {
+  static targets = ["dialog", "kinds"];
 
   initialize() {
     const self = this;
-  }
-  
-  openMenu() {
-    const self = this;
-    const mdcMenu = new MDCMenu(self.menuTarget);
-    if (mdcMenu.open) {
-      mdcMenu.open = false;
-    } else {
-      mdcMenu.open = true;
-    }
   }
   
   openDialog() {

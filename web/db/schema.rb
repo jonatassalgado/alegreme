@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
     t.jsonb "ocurrences", default: {"dates"=>[]}, null: false
     t.jsonb "details", default: {"name"=>nil, "prices"=>[], "source_url"=>nil, "description"=>nil}, null: false
     t.jsonb "entries", default: {"liked_by"=>[], "saved_by"=>[], "viewed_by"=>[], "disliked_by"=>[], "total_likes"=>0, "total_saves"=>0, "total_views"=>0, "total_dislikes"=>0}, null: false
+    t.jsonb "ml_data", default: {"adjs"=>[], "freq"=>[], "nouns"=>[], "verbs"=>[], "stemmed"=>nil, "cleanned"=>nil}, null: false
+    t.jsonb "similar_to", default: [], null: false
     t.jsonb "image_data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -80,9 +82,11 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
     t.index ["geographic"], name: "index_events_on_geographic", using: :gin
     t.index ["image_data"], name: "index_events_on_image_data", using: :gin
     t.index ["kinds"], name: "index_events_on_kinds", using: :gin
+    t.index ["ml_data"], name: "index_events_on_ml_data", using: :gin
     t.index ["ocurrences"], name: "index_events_on_ocurrences", using: :gin
     t.index ["personas"], name: "index_events_on_personas", using: :gin
     t.index ["place_id"], name: "index_events_on_place_id"
+    t.index ["similar_to"], name: "index_events_on_similar_to", using: :gin
     t.index ["tags"], name: "index_events_on_tags", using: :gin
     t.index ["theme"], name: "index_events_on_theme", using: :gin
   end

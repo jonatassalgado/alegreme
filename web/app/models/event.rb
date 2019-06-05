@@ -9,6 +9,8 @@ class Event < ApplicationRecord
   include ImageUploader::Attachment.new(:image)
   include Rails.application.routes.url_helpers
 
+  validate :tags_should_be_a_hash
+
   after_save :reindex, if: proc { |event| event.details_changed? }
   after_destroy :reindex, :destroy_entries
 
@@ -173,6 +175,62 @@ class Event < ApplicationRecord
     self.personas["primary"]["name"]
   end
 
+  def ml_data_all
+    nouns = self.ml_data['nouns']
+    verbs = self.ml_data['verbs']
+    adjs = self.ml_data['adjs']
+
+    nouns.union(verbs, adjs)
+  end
+
+  def tags_all
+    things = self.tags['things']
+    features = self.tags['features']
+    activities = self.tags['activities']
+
+    things.union(features, activities) if things
+  end
+
+  def tags_of_type(type)
+    self.tags[type] || []
+  end
+
+  def tags_things
+    self.tags['things'] || []
+  end
+
+  def tags_things=(value)
+    if value.is_a? Array
+      self.tags['things'] = value
+    else
+      self.tags['things'] << value
+    end
+  end
+
+  def tags_features
+    self.tags['features'] || []
+  end
+
+  def tags_features=(value)
+    if value.is_a? Array
+      self.tags['features'] = value
+    else
+      self.tags['features'] << value
+    end
+  end
+
+  def tags_activities
+    self.tags['activities'] || []
+  end
+
+  def tags_activities=(value)
+    if value.is_a? Array
+      self.tags['activities'] = value
+    else
+      self.tags['activities'] << value
+    end
+  end
+
   def kinds_names
     self.kinds.map { |kind| kind['name'] }
   end
@@ -325,6 +383,12 @@ class Event < ApplicationRecord
     users.each do |user|
       user.taste["events"]["saved"].delete self.id
       user.taste["events"]["total_saves"] -= 1
+    end
+  end
+
+  def tags_should_be_a_hash
+    unless tags.is_a? Hash
+      errors.add(:tags, "precisam ser um Hash")
     end
   end
 end

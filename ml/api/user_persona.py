@@ -14,7 +14,7 @@ from sklearn.model_selection import GridSearchCV
 from joblib import dump
 from joblib import load
 
-class PersonaPrediction(object):
+class UserPersonaPrediction(object):
 
     def __init__(self):
         self.base = pd.read_csv('../svm-classification-personas-v3-events.csv')

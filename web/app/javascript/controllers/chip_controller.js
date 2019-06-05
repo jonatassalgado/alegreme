@@ -17,13 +17,17 @@ export default class ChipController extends Controller {
   select() {
     const self = this;
     const type = self.data.get('type');
-
+    
     switch (type) {
       case 'filter':
-        self.filterController.filter();
+      self.filterController.filter();
         break;
-      case 'classifier':
-        self.classifierController.classify();
+      case 'kinds':
+        self.kindsController.classify();
+        break;
+      case 'tags':
+        // const tagType = self.data.get('tag-type');
+        self.tagsController.classify();
         break;
     }
   }
@@ -34,8 +38,13 @@ export default class ChipController extends Controller {
     return this.application.getControllerForElementAndIdentifier(parentFilter, 'filter');
   }
 
-  get classifierController() {
-    const parentClassifier = this.context.element.closest('[data-controller="classifier"]');
-    return this.application.getControllerForElementAndIdentifier(parentClassifier, 'classifier');
+  get kindsController() {
+    const parentClassifier = this.context.element.closest('[data-controller="kinds"]');
+    return this.application.getControllerForElementAndIdentifier(parentClassifier, 'kinds');
+  }
+
+  get tagsController() {
+    const parentClassifier = this.context.element.closest('[data-controller="tags"]');
+    return this.application.getControllerForElementAndIdentifier(parentClassifier, 'tags');
   }
 }

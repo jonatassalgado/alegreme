@@ -34,14 +34,18 @@ export RAILS_ENV=$RAILS_ENV
 # Run script to up and down services
 echo "Executando comandos $1 a partir da pasta ${ROOT} ..."
 
+echo "Versão do ruby:"
+ruby -v
+
 if [[ $1 == "up" ]]; then
-  (cd "${ROOT}/web" && bundle install && rake assets:precompile && RAILS_ENV=development rails s) &
+  (cd "${ROOT}/web" rake assets:precompile && RAILS_ENV=development rails s) &
   (cd "${ROOT}" && systemctl is-active --quiet postgresql || service postgresql start) &
   (cd "${ROOT}/bot/eme" && NODE_ENV=development node bot.js) &
   (cd "${ROOT}/ml/api" && source "${CONDA}/bin/activate" alegreme && FLASK_ENV=development flask run) &&
   fg
 elif [[ $1 == "down" ]]; then
   (cd "${ROOT}" && sudo docker stop --name dev_splash) &
-  (cd "${ROOT}" && service postgresql stop) &
-  (cd "${ROOT}" && sudo kill $(sudo lsof -t -i:5000)) &
+  # (cd "${ROOT}" && service postgresql stop) &
+  (cd "${ROOT}" && sudo kill -9 $(sudo lsof -t -i:5000)) &
+  (cd "${ROOT}" && sudo kill -9 $(sudo lsof -t -i:3000)) &
 fi

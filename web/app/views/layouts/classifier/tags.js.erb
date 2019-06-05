@@ -1,0 +1,6 @@
+(function(){
+    let chipEventElem = document.getElementById('<%= dom_id @event, @type %>');
+
+    chipEventElem.innerHTML = "";
+    chipEventElem.insertAdjacentHTML('beforeend', '<%= j render partial: 'layouts/classifier/tags', locals: {event: @event, type: @type} %>');
+})()

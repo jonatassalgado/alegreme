@@ -15,6 +15,10 @@ class EventSpider(scrapy.Spider):
     name = 'event'
     allowed_domains = ['facebook.com']
     start_urls = ['https://www.facebook.com/pg/SerenataIluminada/events',
+                  'https://www.facebook.com/pg/cinemateca.capitolio/events',
+                  'https://www.facebook.com/pg/ksacentro/events',
+                  'https://www.facebook.com/pg/vilaflorespoa/events',
+                  'https://www.facebook.com/pg/casacinepoa/events',
                   'https://www.facebook.com/pg/picnicculturalnomuseu/events',
                   'https://www.facebook.com/pg/noitedosmuseus/events',
                   'https://www.facebook.com/pg/CCMQportoalegre/events',
@@ -22,6 +26,7 @@ class EventSpider(scrapy.Spider):
                   'https://www.facebook.com/pg/feiramegusta/events',
                   'https://www.facebook.com/pg/MegaRevelRS/events',
                   'https://www.facebook.com/pg/acasacc/events',
+                  'https://www.facebook.com/pg/agulha.poa/events',
                   'https://www.facebook.com/pg/cumbianarua/events',
                   'https://www.facebook.com/pg/cccev.rs/events',
                   'https://www.facebook.com/pg/forroderuadeportoalegre/events',

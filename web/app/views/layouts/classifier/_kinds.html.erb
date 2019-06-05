@@ -1,8 +1,8 @@
-<div data-controller='classifier' data-classifier-identifier="<%= event.id %>">
-	<span data-target="classifier.dialogButton" data-action="click->classifier#openDialog">
-		<%= event.kinds.map{|kind| kind['name']}.to_s %>
+<div data-controller='kinds' data-kinds-identifier="<%= event.id %>">
+	<span data-target="kinds.dialogButton" data-action="click->kinds#openDialog">
+		<%= event.kinds.blank? ? 'EDITAR' : event.kinds.map{|kind| kind['name']}.join(' ')  %>
 	</span>
-	<div data-target="classifier.dialog"
+	<div data-target="kinds.dialog"
 			class="mdc-dialog"
 			role="alertdialog"
 			aria-modal="true"
@@ -12,7 +12,7 @@
 			<div class="mdc-dialog__surface">
 				<h2 class="mdc-dialog__title" id="my-dialog-title">Choose a Ringtone</h2>
 				<div class="mdc-dialog__content" id="my-dialog-content">
-					<div data-controller="chip" data-chip-type="classifier" data-target="chip.chipContainer classifier.kinds" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
+					<div data-controller="chip" data-chip-type="kinds" data-target="chip.chipContainer kinds.kinds" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
 							<% Event::KINDS.each do |kind| %>
 								<div data-target="chip.chip" data-action="click->chip#select"
 									class="me-chip mdc-chip <%= event.kinds_names.include?(kind) ? 'mdc-chip--selected' : nil %>"
@@ -33,7 +33,7 @@
 					<button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
 						<span class="mdc-button__label">Cancel</span>
 					</button>
-					<button data-action="click->classifier#saveKindsSelected" type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
+					<button data-action="click->kinds#saveKindsSelected" type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
 						<span class="mdc-button__label">OK</span>
 					</button>
 				</footer>

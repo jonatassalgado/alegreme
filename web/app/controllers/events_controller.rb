@@ -70,6 +70,7 @@ class EventsController < ApplicationController
   def retrain
     @event = Event.find params["event_id"]
     @feature = params[:feature]
+    @type = params[:type]
 
     if @feature == "personas"
       @event.personas_outlier = params[:outlier] if params[:outlier]
@@ -85,14 +86,18 @@ class EventsController < ApplicationController
       @event.theme_score = 0.90 if params[:correct] || params[:theme]
     elsif @feature == "kinds"
       @event.kinds = JSON.parse(params[:kinds]) if params[:kinds]
+    elsif @feature == "tags"
+      @event.public_send("tags_#{@type}=", JSON.parse(params[:tags])) 
     end
 
     respond_to do |format|
       if @event.update(retrain_params)
         if @feature == 'kinds'
           format.js { render 'layouts/classifier/kinds' }
-        else 
+        elsif ['personas', 'categories', 'themes'].include?(@feature)
           format.js { render 'layouts/classifier/chips' }
+        elsif @feature == 'tags'
+          format.js { render 'layouts/classifier/tags' }
         end
       end
     end
@@ -121,6 +126,6 @@ class EventsController < ApplicationController
   end
 
   def retrain_params
-    params.permit(:personas_primary_name, :personas_primary_score, :categories_primary_name, :categories_primary_score, :personas_outlier)
+    params.permit(:personas_primary_name, :personas_primary_score, :categories_primary_name, :categories_primary_score, :personas_outlier, :tags_things)
   end
 end

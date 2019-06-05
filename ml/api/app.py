@@ -6,8 +6,11 @@ import json
 
 from datetime import datetime
 from flask import Flask
-from eventpersonaprediction import EventPersonaPrediction
-from eventcategoryprediction import EventCategoryPrediction
+from user_persona import UserPersonaPrediction
+from event_persona import EventPersonaPrediction
+from event_category import EventCategoryPrediction
+from event_features import EventFeatures
+from event_similar import EventSimilar
 from flask_restful import reqparse, abort, Api, Resource
 
 app = Flask(__name__)
@@ -16,13 +19,15 @@ api = Api(app)
 
 parser = reqparse.RequestParser()
 parser.add_argument('query')
+parser.add_argument('text')
+parser.add_argument('base')
 
-class PredictPersona(Resource):
+class UserPersonaRoute(Resource):
     def get(self):
         args = parser.parse_args()
         user_query = args['query']
 
-        prediction = EventPersonaPrediction.predict(self, query=user_query)
+        prediction = UserPersonaPrediction.predict(self, user_query)
         persona_output = np.array(prediction).tolist()
 
         return {
@@ -52,7 +57,7 @@ class PredictPersona(Resource):
             }   
         }
 
-class PredictEvent(Resource):
+class EventLabelRoute(Resource):
     def get(self):
         args = parser.parse_args()
         user_query = args['query']
@@ -93,8 +98,36 @@ class PredictEvent(Resource):
             }
 
 
-api.add_resource(PredictEvent, '/predict/event')
-api.add_resource(PredictPersona, '/predict/persona')
+class EventFeaturesRoute(Resource):
+    def get(self):
+        args = parser.parse_args()
+        query = args['query']
+        print(query)
+
+        eventFeatures = EventFeatures()
+        features = eventFeatures.extract_features(query)
+
+        return features
+            
+
+
+class EventSimilarRoute(Resource):
+    def get(self):
+        args = parser.parse_args()
+        text = args['text']
+        base = args['base']
+
+        eventSimilar = EventSimilar()
+        similar = eventSimilar.get_similarity(text, base)
+
+        return similar
+            
+
+
+api.add_resource(EventFeaturesRoute, '/event/features')
+api.add_resource(EventLabelRoute, '/event/label')
+api.add_resource(EventSimilarRoute, '/event/similar')
+api.add_resource(UserPersonaRoute, '/user/persona')
 
 
 if __name__ == '__main__':

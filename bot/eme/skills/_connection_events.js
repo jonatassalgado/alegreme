@@ -1899,7 +1899,7 @@ module.exports = function(controller) {
         const req = http.request(
           `http://${
             process.env.PRIVATE_IP
-          }:5000/predict/persona?query=${JSON.stringify(
+          }:5000/user/persona?query=${JSON.stringify(
             convo.vars.personaSuitability
           )}`,
           options,

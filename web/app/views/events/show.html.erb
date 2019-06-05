@@ -41,3 +41,9 @@
     </div>
   </div>
 </div>
+
+<ul>
+  <% @event.similar_to.each do |similar| %>
+    <li><%= Event.find(similar).details_name %></li>
+  <% end %>
+</ul>

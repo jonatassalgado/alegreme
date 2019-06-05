@@ -34,6 +34,7 @@ class FeedsController < ApplicationController
     @events  = Event.all.order("(categories -> 'primary' ->> 'score')::numeric ASC")
                         .order("(personas -> 'primary' ->> 'score')::numeric ASC")
                         .includes(:place)
+                        .limit(10)
 
     if current_user and !current_user.taste_events_saved.empty?
       @favorited_events = Event.where(id: current_user.taste_events_saved).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now).order("ocurrences -> 'dates' ->> 0 ASC").uniq

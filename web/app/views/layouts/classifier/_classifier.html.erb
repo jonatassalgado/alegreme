@@ -7,6 +7,7 @@
 	<td>Categoria</td>
 	<td>Persona</td>
 	<td>Tipo</td>
+	<td>Tags</td>
 </tr>
 <% cache @events do %>
 	<% @events.each do |event| %>
@@ -16,7 +17,7 @@
 				<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
 				<td><%= event.place_details_name %></td>
 				<td>
-					<%= limit_description_size event.details_description, 400 %> <br/>
+					<%= limit_description_size event.details_description, 140 %> <br/>
 				</td>
 				<td id="<%= dom_id event, 'chip_themes' %>">
 					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'themes'} %>
@@ -27,8 +28,19 @@
 				<td id="<%= dom_id event, 'chip_personas' %>">
 					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'personas'} %>
 				</td>
-				<td id="<%= dom_id event, 'classifier_kinds' %>">
+				<td id="<%= dom_id event, 'kinds' %>">
 					<%= render partial: 'layouts/classifier/kinds', locals: {event: event} %>
+				</td>
+				<td>
+					<div id="<%= dom_id event, 'things' %>">
+						<%= render partial: 'layouts/classifier/tags', locals: {event: event, type: 'things'} %>
+					</div>
+					<div id="<%= dom_id event, 'activities' %>">
+						<%= render partial: 'layouts/classifier/tags', locals: {event: event, type: 'activities'} %>
+					</div>
+					<div id="<%= dom_id event, 'features' %>">
+						<%= render partial: 'layouts/classifier/tags', locals: {event: event, type: 'features'} %>
+					</div>
 				</td>
 			</tr>
 		<% end %>
