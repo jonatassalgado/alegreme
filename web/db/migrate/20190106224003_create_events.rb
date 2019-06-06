@@ -69,7 +69,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
         verbs: [],
         adjs: []
       }
-      t.jsonb :similar_to, null: false, default: []
+      t.jsonb :similar_data, null: false, default: []
       t.jsonb :image_data, null: false, default: {}
       t.timestamps
     end
@@ -85,7 +85,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
     add_index  :events, "(tags -> 'things')", using: :gin,  name: 'index_events_on_tags_things'
     add_index  :events, "(tags -> 'features')", using: :gin,  name: 'index_events_on_tags_features'
     add_index  :events, "(tags -> 'activities')", using: :gin,  name: 'index_events_on_tags_activities'
-    add_index  :events, :similar_to, using: :gin
+    add_index  :events, :similar_data, using: :gin
     add_index  :events, :image_data, using: :gin
     add_index  :events, :ml_data, using: :gin
   end

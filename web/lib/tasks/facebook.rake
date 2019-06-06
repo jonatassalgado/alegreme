@@ -187,7 +187,7 @@ namespace :scrapy do
     
         if similar_response_is_success
           puts "SIMILARES AO EVENTO #{event.id} SÃO OS EVENTOS #{similar_data}"
-          event.update_attribute :similar_to, similar_data
+          event.update_attribute :similar_data, similar_data
         else
           puts "SIMILARES NÃO ENCONTRADOS"
         end

@@ -17,58 +17,52 @@ export default class TagsController extends Controller {
     self.dialog.open();
   }
   
-  classify() {
+  saveTagsSelected() {
     const self = this;
-
     if (self.hasTagsTarget) {
       const selectedTagsValues = new Promise((resolve, reject) => {
         const result = self.tagsController.MDCChipSet.selectedChipIds.map(function(chipId) {
-          const chipElement = self.tagsController.chipContainerTarget.querySelector( `#${chipId}` );
+          const chipElement = self.tagsController.chipsetTarget.querySelector( `#${chipId}` );
           return chipElement.innerText.toLowerCase();
         })
-
+  
         resolve(result);
       });
-
+  
       selectedTagsValues
         .then(function(result) {
-          self.tagsSelected = JSON.stringify(result);
-          console.log(result);
+          const urlWithFilters = stringify({tags: JSON.stringify(result), feature: 'tags', type: self.data.get('type'), event_id: self.data.get('identifier')}, {arrayFormat: 'bracket'});
+          
+          fetch(`/retrain?${urlWithFilters}`, {
+              method: 'get',
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-type': 'application/javascript; charset=UTF-8',
+                'X-CSRF-Token': Rails.csrfToken()
+              },
+              credentials: 'same-origin'
+            })
+            .then(
+              function(response) {
+                if (response.status !== 200) {
+                  console.log('Looks like there was a problem. Status Code: ' + response.status);
+                  return;
+                }
+      
+                response.text().then(function(data) {
+                  eval(data);
+                });
+              }
+            )
+            .catch(function(err) {
+              console.log('Fetch Error :-S', err);
+            });
         })
         .catch(function(err) {
           console.log(err);
         });
-    }
-  }
+      }
 
-  saveTagsSelected() {
-    const self = this;
-    const urlWithFilters = stringify({tags: self.tagsSelected, feature: 'tags', type: self.data.get('type'), event_id: self.data.get('identifier')}, {arrayFormat: 'bracket'});
-
-    fetch(`/retrain?${urlWithFilters}`, {
-        method: 'get',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'Content-type': 'application/javascript; charset=UTF-8',
-          'X-CSRF-Token': Rails.csrfToken()
-        },
-        credentials: 'same-origin'
-      })
-      .then(
-        function(response) {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' + response.status);
-            return;
-          }
-
-          response.text().then(function(data) {
-            eval(data);
-          });
-        }
-      )
-      .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });
   }
 
   get tagsController() {

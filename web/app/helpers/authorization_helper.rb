@@ -54,19 +54,19 @@ module AuthorizationHelper
                       personas: {
                         primary: {
                           name: 'hipster',
-                          score: '0.90'
+                          score: '1'
                         },
                         secondary: {
                           name: 'praieiro',
-                          score: '0.90'
+                          score: '1'
                         },
                         tertiary: {
                           name: 'underground',
-                          score: '0.90'
+                          score: '1'
                         },
                         quartenary: {
                           name: 'cult',
-                          score: '0.90'
+                          score: '1'
                         },
                         assortment: { 
                           finished: false 

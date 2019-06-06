@@ -71,19 +71,20 @@ class EventsController < ApplicationController
     @event = Event.find params["event_id"]
     @feature = params[:feature]
     @type = params[:type]
+    @action = params[:action]
 
     if @feature == "personas"
       @event.personas_outlier = params[:outlier] if params[:outlier]
       @event.personas_primary_name = params[:persona] if params[:persona]
-      @event.personas_primary_score = 0.90 if params[:correct] || params[:persona]
+      @event.personas_primary_score = 1 if params[:correct] || params[:persona]
     elsif @feature == "categories"
       @event.categories_outlier = params[:outlier] if params[:outlier]
       @event.categories_primary_name = params[:category] if params[:category]
-      @event.categories_primary_score = 0.90 if params[:correct] || params[:category]
+      @event.categories_primary_score = 1 if params[:correct] || params[:category]
     elsif @feature == "themes"
       @event.theme_outlier = params[:outlier] if params[:outlier]
       @event.theme_name = params[:theme] if params[:theme]
-      @event.theme_score = 0.90 if params[:correct] || params[:theme]
+      @event.theme_score = 1 if params[:correct] || params[:theme]
     elsif @feature == "kinds"
       @event.kinds = JSON.parse(params[:kinds]) if params[:kinds]
     elsif @feature == "tags"
@@ -91,7 +92,7 @@ class EventsController < ApplicationController
     end
 
     respond_to do |format|
-      if @event.update(retrain_params)
+      if @event.save!
         if @feature == 'kinds'
           format.js { render 'layouts/classifier/kinds' }
         elsif ['personas', 'categories', 'themes'].include?(@feature)
@@ -126,6 +127,6 @@ class EventsController < ApplicationController
   end
 
   def retrain_params
-    params.permit(:personas_primary_name, :personas_primary_score, :categories_primary_name, :categories_primary_score, :personas_outlier, :tags_things)
+    params.permit(:event_id, :feature, :personas_primary_name, :personas_primary_score, :categories_primary_name, :categories_primary_score, :personas_outlier, :kinds, :tags)
   end
 end

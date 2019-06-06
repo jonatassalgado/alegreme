@@ -15,7 +15,7 @@ export default class FilterController extends Controller {
 
     if (this.hasPersonasTarget) {
       let selectedPersonaValues = self.personasController.MDCChipSet.selectedChipIds.map(function(chipId) {
-          const chipElement = self.personasController.chipContainerTarget.querySelector(`#${chipId}`);
+          const chipElement = self.personasController.chipsetTarget.querySelector(`#${chipId}`);
           return chipElement.innerText.toLowerCase();
       });
 
@@ -24,7 +24,7 @@ export default class FilterController extends Controller {
 
     if (this.hasCategoriesTarget) {
       let selectedCategoryValues = self.categoriesController.MDCChipSet.selectedChipIds.map(function(chipId) {
-          const chipElement = self.categoriesController.chipContainerTarget.querySelector(`#${chipId}`);
+          const chipElement = self.categoriesController.chipsetTarget.querySelector(`#${chipId}`);
           return chipElement.innerText.toLowerCase();
       });
 
@@ -33,7 +33,7 @@ export default class FilterController extends Controller {
 
     if (this.hasOcurrencesTarget) {
       let selectedOcurrencesValues = self.ocurrencesController.MDCChipSet.selectedChipIds.map(function(chipId) {
-          const chipElement = self.ocurrencesController.chipContainerTarget.querySelector(`#${chipId}`);
+          const chipElement = self.ocurrencesController.chipsetTarget.querySelector(`#${chipId}`);
           return chipElement.innerText.toLowerCase();
       });
 

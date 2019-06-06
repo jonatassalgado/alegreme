@@ -9,7 +9,8 @@ class Event < ApplicationRecord
   include ImageUploader::Attachment.new(:image)
   include Rails.application.routes.url_helpers
 
-  validate :tags_should_be_a_hash
+  validate :validate_attrs_that_should_be_a_hash
+  validate :validate_attrs_that_should_be_a_array
 
   after_save :reindex, if: proc { |event| event.details_changed? }
   after_destroy :reindex, :destroy_entries
@@ -120,7 +121,7 @@ class Event < ApplicationRecord
         }
 
   scope "not_retrained", -> {
-          where("(categories -> 'primary' ->> 'score')::numeric < 0.90 OR (personas -> 'primary' ->> 'score')::numeric < 0.90")
+          where("(categories -> 'primary' ->> 'score')::numeric < 1 OR (personas -> 'primary' ->> 'score')::numeric < 1")
         }
 
   scope "favorited_by", ->(user = current_user) {
@@ -386,9 +387,21 @@ class Event < ApplicationRecord
     end
   end
 
-  def tags_should_be_a_hash
-    unless tags.is_a? Hash
-      errors.add(:tags, "precisam ser um Hash")
+  def validate_attrs_that_should_be_a_hash
+    ['theme', 'personas', 'categories', 'geographic', 'ocurrences', 'details', 'entries', 'ml_data', 'image_data', 'tags'].each do |attr|
+      unless self.public_send(attr).is_a? Hash
+        errors.add(attr, "precisam ser um Hash")
+      end
     end
   end
+
+  def validate_attrs_that_should_be_a_array
+    ['kinds'].each do |attr|
+      unless self.public_send(attr).is_a? Array
+        errors.add(attr, "precisam ser um Array")
+      end
+    end
+  end
+
+
 end
