@@ -1,10 +1,9 @@
 class Event < ApplicationRecord
   require "day_of_week"
 
-  THEMES = ["lazer", "saúde", "atividade física", "educação", "cultura", "alimentação", "compras"].freeze
-  PERSONAS = ["aventureiro", "cult", "geek", "hipster", "praieiro", "underground", "zeen"].freeze
-  CATEGORIES = ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "esporte", "meetup", "hackaton", "palestra",  "literatura", "festival", "brecho"].freeze
-  KINDS = ["noite", "bebida", "ar livre", "música", "bem-estar", "bicicleta", "skate", "aventura", "caminhada", "dança", "acadêmico", "profissional", "arte", "economia compartilhada"].freeze
+  THEMES = ["lazer", "saúde", "atividade física", "educação", "cultura", "alimentação", "compras", "outlier"].freeze
+  PERSONAS = ["aventureiro", "cult", "geek", "hipster", "praieiro", "underground", "zeen", "geral", "outlier"].freeze
+  CATEGORIES = ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "esporte", "meetup", "hackaton", "palestra",  "literatura", "festival", "brecho", "fórum", "outlier"].freeze
 
   include ImageUploader::Attachment.new(:image)
   include Rails.application.routes.url_helpers
@@ -159,8 +158,10 @@ class Event < ApplicationRecord
   def details_prices=(value)
     if value.is_a? Array
       self.details["prices"] = value
+    elsif value.is_a? String
+      self.details["prices"] |= [value]
     else
-      self.details["prices"] << value
+      raise Exception.new "#{value}:#{value.class} -> precisa ser uma string ou array"
     end
   end
 
@@ -200,11 +201,13 @@ class Event < ApplicationRecord
     self.tags['things'] || []
   end
 
-  def tags_things=(value)
+  def tags_things_add(value)
     if value.is_a? Array
-      self.tags['things'] = value
+      self.tags['things'] |= value
+    elsif value.is_a? String
+      self.tags['things'] |= [value]
     else
-      self.tags['things'] << value
+      raise Exception.new "#{value}:#{value.class} -> precisa ser uma string ou array"
     end
   end
 
@@ -212,11 +215,13 @@ class Event < ApplicationRecord
     self.tags['features'] || []
   end
 
-  def tags_features=(value)
+  def tags_features_add(value)
     if value.is_a? Array
-      self.tags['features'] = value
+      self.tags['features'] |= value
+    elsif value.is_a? String
+      self.tags['features'] |= [value]
     else
-      self.tags['features'] << value
+      raise Exception.new "#{value}:#{value.class} -> precisa ser uma string ou array"
     end
   end
 
@@ -224,11 +229,13 @@ class Event < ApplicationRecord
     self.tags['activities'] || []
   end
 
-  def tags_activities=(value)
+  def tags_activities_add(value)
     if value.is_a? Array
-      self.tags['activities'] = value
+      self.tags['activities'] |= value
+    elsif value.is_a? String
+      self.tags['activities'] |= [value]
     else
-      self.tags['activities'] << value
+      raise Exception.new "#{value}:#{value.class} -> precisa ser uma string ou array"
     end
   end
 

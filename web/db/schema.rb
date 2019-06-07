@@ -38,9 +38,12 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
   end
 
   create_table "artifacts", force: :cascade do |t|
-    t.string "name"
+    t.jsonb "details", default: {"name"=>nil, "type"=>nil}, null: false
+    t.jsonb "data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["data"], name: "index_artifacts_on_data", using: :gin
+    t.index ["details"], name: "index_artifacts_on_details", using: :gin
   end
 
   create_table "calendars_events", id: false, force: :cascade do |t|
@@ -68,7 +71,7 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
     t.jsonb "details", default: {"name"=>nil, "prices"=>[], "source_url"=>nil, "description"=>nil}, null: false
     t.jsonb "entries", default: {"liked_by"=>[], "saved_by"=>[], "viewed_by"=>[], "disliked_by"=>[], "total_likes"=>0, "total_saves"=>0, "total_views"=>0, "total_dislikes"=>0}, null: false
     t.jsonb "ml_data", default: {"adjs"=>[], "freq"=>[], "nouns"=>[], "verbs"=>[], "stemmed"=>nil, "cleanned"=>nil}, null: false
-    t.jsonb "similar_to", default: [], null: false
+    t.jsonb "similar_data", default: [], null: false
     t.jsonb "image_data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,7 +89,7 @@ ActiveRecord::Schema.define(version: 2019_05_06_032423) do
     t.index ["ocurrences"], name: "index_events_on_ocurrences", using: :gin
     t.index ["personas"], name: "index_events_on_personas", using: :gin
     t.index ["place_id"], name: "index_events_on_place_id"
-    t.index ["similar_to"], name: "index_events_on_similar_to", using: :gin
+    t.index ["similar_data"], name: "index_events_on_similar_data", using: :gin
     t.index ["tags"], name: "index_events_on_tags", using: :gin
     t.index ["theme"], name: "index_events_on_theme", using: :gin
   end

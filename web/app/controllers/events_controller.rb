@@ -86,9 +86,12 @@ class EventsController < ApplicationController
       @event.theme_name = params[:theme] if params[:theme]
       @event.theme_score = 1 if params[:correct] || params[:theme]
     elsif @feature == "kinds"
-      @event.kinds = JSON.parse(params[:kinds]) if params[:kinds]
+      kinds = JSON.parse(params[:kinds]) 
+      @event.kinds = kinds
+      Artifact.kinds_whitelist_add(kinds.map{|kinds| kinds['name']})
     elsif @feature == "tags"
-      @event.public_send("tags_#{@type}=", JSON.parse(params[:tags])) 
+      @event.public_send("tags_#{@type}_add", JSON.parse(params[:tags]))
+      Artifact.public_send("tags_whitelist_#{@type}_add", params[:tags])
     end
 
     respond_to do |format|

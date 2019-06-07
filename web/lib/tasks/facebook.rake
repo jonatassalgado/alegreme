@@ -53,14 +53,14 @@ namespace :scrapy do
           
           event_not_exist_yet = Event.where.contains(details: { source_url: item["source_url"] }).blank?
           
-          features_uri = URI("#{ENV["API_URL"]}:5000/features/event")
+          features_uri = URI("#{ENV["API_URL"]}:5000/event/features")
           features_uri.query = URI.encode_www_form(features_params)
           
           features_response = Net::HTTP.get_response(features_uri)
           ml_data = JSON.parse(features_response.body) if features_response.is_a?(Net::HTTPSuccess)
   
           features_response_is_success = features_response.is_a?(Net::HTTPSuccess)
-  
+
           if event_not_exist_yet && features_response_is_success
             @event = Event.new(
               details: {

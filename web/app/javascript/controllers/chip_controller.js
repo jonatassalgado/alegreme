@@ -75,6 +75,16 @@ export default class ChipController extends Controller {
       });
   }
 
+  get filterController() {
+    const parentClassifier = this.context.element.closest(
+      '[data-controller="filter"]'
+    );
+    return this.application.getControllerForElementAndIdentifier(
+      parentClassifier,
+      "filter"
+    );
+  }
+
   get kindsController() {
     const parentClassifier = this.context.element.closest(
       '[data-controller="kinds"]'

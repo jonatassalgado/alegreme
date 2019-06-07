@@ -11,7 +11,7 @@
 					<div data-controller="chip" data-target="kinds.chipsKinds">
 						<div data-chip-type="kinds" data-target="chip.chipset"
 							class="me-chip-set mdc-chip-set mdc-chip-set--filter mdc-chip-set--input">
-							<% Event::KINDS.each do |kind| %>
+							<% Artifact.kinds_whitelist.each do |kind| %>
 								<div data-target="chip.chip" data-action="click->chip#select"
 									class="me-chip mdc-chip <%= event.kinds_names.include?(kind) ? 'mdc-chip--selected' : nil %>"
 									data-turbolinks-scroll="false">

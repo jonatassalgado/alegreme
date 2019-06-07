@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import { MDCMenu } from "@material/menu";
+import { MDCTextField } from "@material/textfield";
 import { MDCDialog } from "@material/dialog";
 import { stringify } from "query-string";
 
@@ -14,6 +14,7 @@ export default class TagsController extends Controller {
   openDialog() {
     const self = this;
     self.dialog = new MDCDialog(self.dialogTarget);
+    self.chipsetInput = new MDCTextField(self.chipController.inputContainerTarget);
     self.dialog.open();
   }
   
@@ -21,8 +22,8 @@ export default class TagsController extends Controller {
     const self = this;
     if (self.hasTagsTarget) {
       const selectedTagsValues = new Promise((resolve, reject) => {
-        const result = self.tagsController.MDCChipSet.selectedChipIds.map(function(chipId) {
-          const chipElement = self.tagsController.chipsetTarget.querySelector( `#${chipId}` );
+        const result = self.chipController.MDCChipSet.selectedChipIds.map(function(chipId) {
+          const chipElement = self.chipController.chipsetTarget.querySelector( `#${chipId}` );
           return chipElement.innerText.toLowerCase();
         })
   
@@ -65,7 +66,7 @@ export default class TagsController extends Controller {
 
   }
 
-  get tagsController() {
+  get chipController() {
     const self = this;
     return self.application.getControllerForElementAndIdentifier(
       self.tagsTarget,
