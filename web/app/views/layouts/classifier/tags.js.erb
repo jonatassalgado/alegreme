@@ -1,6 +1,6 @@
 (function(){
-    let chipEventElem = document.getElementById('<%= dom_id @event, @type %>');
+	let chipEventElem = document.getElementById('<%= dom_id @event, @type %>');
 
-    chipEventElem.innerHTML = "";
-    chipEventElem.insertAdjacentHTML('beforeend', '<%= j render partial: 'layouts/classifier/tags', locals: {event: @event, type: @type} %>');
+	chipEventElem.innerHTML = "";
+	chipEventElem.insertAdjacentHTML('beforeend', '<%= j render partial: 'layouts/classifier/tags', locals: { event: @event, type: @type, tags_to_select: whitelist_tags_by_type(@event, @type)} %>');
 })()

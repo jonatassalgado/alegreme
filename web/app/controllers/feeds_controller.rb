@@ -3,7 +3,7 @@ class FeedsController < ApplicationController
 
   def index
     gon.user_id = current_user.try(:token) || current_or_guest_user.try(:id) || 'null'
-    
+
     if params[:q]
       @events = {
         user: Event.search(params[:q].downcase, highlight: true, limit: 23, includes: [:place]),
@@ -31,16 +31,15 @@ class FeedsController < ApplicationController
   end
 
   def train
-    @events  = Event.all.order("(categories -> 'primary' ->> 'score')::numeric ASC")
-                        .order("(personas -> 'primary' ->> 'score')::numeric ASC")
-                        .includes(:place)
-                        .limit(10)
+    events_not_trained_yet = Event.all.order("(categories -> 'primary' ->> 'score')::numeric ASC")
+                                  .order("(personas -> 'primary' ->> 'score')::numeric ASC")
+                                  .includes(:place)
 
-    if current_user and !current_user.taste_events_saved.empty?
-      @favorited_events = Event.where(id: current_user.taste_events_saved).where("ocurrences -> 'dates'->> 0 >= ?", DateTime.now).order("ocurrences -> 'dates' ->> 0 ASC").uniq
-    else
-      @favorited_events = []
-    end
+    @events_to_train = {
+      events: events_not_trained_yet.limit(10),
+      total_count: events_not_trained_yet.count
+    }
+    
   end
 
   protected

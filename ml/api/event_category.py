@@ -118,7 +118,7 @@ class EventCategoryPrediction(object):
                        os.listdir('/var/www/scrapy/data/classified/')))
             self.base = pd.read_csv('/var/www/scrapy/data/classified/' +
                                     last_file)
-            self.base = self.base.drop_duplicates(['event_url'])
+            self.base = self.base.drop_duplicates(['source_url'])
 
         else:
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
@@ -127,7 +127,7 @@ class EventCategoryPrediction(object):
                        os.listdir('../../../alegreme/scrapy/classified')))
             self.base = pd.read_csv('../../../alegreme/scrapy/classified/' +
                                     last_file)
-            self.base = self.base.drop_duplicates(['event_url'])
+            self.base = self.base.drop_duplicates(['source_url'])
 
     def __cleanning_text(self, text):
         def __downcase(text):

@@ -1,4 +1,4 @@
-<div data-controller='tags' data-tags-type="<%= type %>" data-tags-identifier="<%= event.id %>">
+<div data-controller="tags" data-tags-type="<%= type %>" data-tags-identifier="<%= event.id %>">
 	<span data-target="tags.dialogButton" data-action="click->tags#openDialog">
 		<p>
 			<b><%= type.capitalize %>:</b> <%= event.tags_of_type(type).join(' ') %>
@@ -16,7 +16,7 @@
 				<div class="mdc-dialog__content" id="my-dialog-content">
 					<div data-controller="chip" data-target="tags.tags">
 						<div data-chip-type="tags" data-target="chip.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
-							<% event.ml_data_all.each do |tag| %>
+							<% tags_to_select.each do |tag| %>
 								<div data-target="chip.chip" data-action="click->chip#select"
 									class="me-chip mdc-chip <%= event.tags_of_type(type).include?(tag) ? 'mdc-chip--selected' : nil %>"
 									data-chip-tag-type="things" data-turbolinks-scroll="false">

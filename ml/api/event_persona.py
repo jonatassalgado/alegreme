@@ -120,7 +120,7 @@ class EventPersonaPrediction(object):
             last_file = max(filter(regex.search, os.listdir('../../../alegreme/scrapy/classified')))
             self.base = pd.read_csv('../../../alegreme/scrapy/classified/' + last_file)
             
-        self.base = self.base.drop_duplicates(['event_url'])
+        self.base = self.base.drop_duplicates(['source_url'])
 
 
     def __cleanning_text(self, text):
@@ -300,10 +300,10 @@ class EventPersonaPrediction(object):
     def clean(self):
 
         self.base = self.base.loc[(self.base['description'].notna())
-                                  & (self.base['label'].notna())]
+                                  & (self.base['persona'].notna())]
         self.X = self.X_raw = self.base['name'].str.cat(
             self.base[['description']], sep=' ', na_rep='').values.astype(str)
-        self.y = self.base.loc[:, 'label'].values.astype(str)
+        self.y = self.base.loc[:, 'persona'].values.astype(str)
 
         descriptions_cleanned = []
         for description in self.X:

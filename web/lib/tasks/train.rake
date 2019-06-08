@@ -19,10 +19,18 @@ namespace :ml do
     events.each do |event|
       item = csv.find { |row| row[7] == event.details['source_url'] }
       if item
-        item[8] = (event.personas['outlier'] == 'true' || event.personas['primary']['score'].to_f < 0.90) ? nil : event.personas['primary']['name']
-        item[9] = (event.categories['outlier'] == 'true' || event.categories['primary']['score'].to_f < 0.90) ? nil : event.categories['primary']['name']
-        item[10] = event.geographic['neighborhood']
+        puts "Atualizando #{event.details['name']}..."
+        
+        item[8] = event.personas['primary']['name']
+        item[9] = event.theme['name']
+        item[10] = event.categories['primary']['name']
+        item[11] = event.kinds_names
+        item[12] = event.tags_things
+        item[13] = event.tags_activities
+        item[14] = event.tags_features
       else
+        puts "Adicionando #{event.details['name']}..."
+
         csv << [
                 event.details['name'],
                 event.geographic['address'],
@@ -32,17 +40,25 @@ namespace :ml do
                 event.details['description'],
                 nil,
                 event.details['source_url'],
-                (event.personas['outlier'] == 'true' || event.personas['primary']['score'].to_f < 0.90) ? nil : event.personas['primary']['name'],
-                (event.categories['outlier'] == 'true' || event.categories['primary']['score'].to_f < 0.90) ? nil : event.categories['primary']['name'],
-                event.geographic['neighborhood'],
-                nil]
+                event.personas['primary']['name'],
+                event.theme['name'],
+                event.categories['primary']['name'],
+                event.kinds_names,
+                event.tags_things,
+                event.tags_activities,
+                event.tags_features]
+        
       end
-
     end
 
 
     timestr = DateTime.now.strftime("%Y%m%d-%H%M%S")
-    artifact = Artifact.create(name: "svm-classification-events-#{timestr}")
+    artifact = Artifact.create(
+      details: {
+        name: "svm-classification-events-#{timestr}",
+        type: 'ml-classified'
+      }
+    )
     
     if ENV['IS_DOCKER'] == 'true'
       CSV.open('/var/www/scrapy/data/classified/svm-classification-events-' + timestr + '.csv', 'wb') do |row|
@@ -60,5 +76,6 @@ namespace :ml do
       artifact.file.attach(io: File.open("../scrapy/classified/svm-classification-events-#{timestr}.csv"), filename: "svm-classification-events-#{timestr}.csv", content_type: "text/csv")
     end
   
+    puts "Artefato criado: svm-classification-events-#{timestr}"
   end
 end

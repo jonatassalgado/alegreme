@@ -9,10 +9,12 @@ namespace :scrapy do
   require_relative "../../app/uploaders/image_uploader"
 
   uploader = ImageUploader.new(:store)
+  events_create_counter = 0
+  events_similar_counter = 0
 
   namespace :facebook do
     task create: :environment do
-      puts "Parsear JSON ****************************************"
+      STDERR.puts "Parsear JSON ****************************************"
   
       if ENV["IS_DOCKER"] == "true"
         files = Dir["/var/www/scrapy/data/scraped/*"]
@@ -24,34 +26,37 @@ namespace :scrapy do
       data = JSON.parse(current_file)
   
       data.each do |item|
-        puts "Criar lugar ****************************************"
-        geocode = Geocoder.search(Alegreme::Geographic.get_cep_from_address(item["address"])).first if item["address"]
-        place_not_exist_yet = Place.where.contains(details: { name: item["place"] }).blank?
-  
-        if place_not_exist_yet
+        # puts "Criar lugar ****************************************"
+        place = Place.where.contains(details: { name: item["place"] }).first
+        event = Event.where.contains(details: { source_url: item["source_url"] }).first
+        
+        if !place.blank?
+          STDERR.puts "LUGAR JÁ EXISTE #{place.details['name']}"
+        else
+          @geocode = Geocoder.search(Alegreme::Geographic.get_cep_from_address(item["address"])).first if item["address"]
+          
           @place = Place.create({
             details: {
               name: item["place"],
             },
             geographic: {
               address: item["address"],
-              latlon: geocode.try(:coordinates),
-              neighborhood: geocode.try(:suburb),
+              latlon: @geocode.try(:coordinates),
+              neighborhood: @geocode.try(:suburb),
               city: item["address"] ? item["address"][/Porto Alegre/] : nil,
               cep: Alegreme::Geographic.get_cep_from_address(item["address"]),
             },
           })
   
-          puts @place.inspect
+          # puts @place.inspect
         end
   
-        puts "Criar Evento ****************************************"
+        # puts "Criar Evento ****************************************"
   
         if item["description"]
           query = Base64.encode64(item["description"])
           features_params = { query: query }
           
-          event_not_exist_yet = Event.where.contains(details: { source_url: item["source_url"] }).blank?
           
           features_uri = URI("#{ENV["API_URL"]}:5000/event/features")
           features_uri.query = URI.encode_www_form(features_params)
@@ -59,9 +64,15 @@ namespace :scrapy do
           features_response = Net::HTTP.get_response(features_uri)
           ml_data = JSON.parse(features_response.body) if features_response.is_a?(Net::HTTPSuccess)
   
-          features_response_is_success = features_response.is_a?(Net::HTTPSuccess)
+          features_response_failed = !features_response.is_a?(Net::HTTPSuccess)
 
-          if event_not_exist_yet && features_response_is_success
+          if !event.blank?  
+            events_create_counter += 1
+            STDERR.puts "EVENTO JÁ EXISTE #{events_create_counter}: #{event.details['name']}"
+          elsif features_response_failed
+            events_create_counter += 1
+            STDERR.puts "FALHOU #{events_create_counter}: #{event.details['name']} falhou na classificação"
+          else
             @event = Event.new(
               details: {
                 name: item["name"],
@@ -82,8 +93,8 @@ namespace :scrapy do
               },
               geographic: {
                 address: item["address"],
-                latlon: geocode.try(:coordinates),
-                neighborhood: geocode.try(:suburb),
+                latlon: @geocode.try(:coordinates),
+                neighborhood: @geocode.try(:suburb),
                 city: item["address"] ? item["address"][/Porto Alegre/] : nil,
                 cep: Alegreme::Geographic.get_cep_from_address(item["address"]),
               }
@@ -102,7 +113,7 @@ namespace :scrapy do
     
               @place.events << @event unless @place.events.include?(@event)
     
-              puts "Criar organizador ****************************************"
+              # puts "Criar organizador ****************************************"
     
               item["organizers"].try(:each) do |organizer|
                 @organizer = Organizer.create_with({
@@ -111,10 +122,10 @@ namespace :scrapy do
                 }).find_or_create_by(name: organizer)
     
                 @event.organizers << @organizer unless @event.organizers.include?(@organizer)
-                puts organizer.inspect
+                # puts organizer.inspect
               end
               
-              puts "Classificar ****************************************"
+              # puts "Classificar ****************************************"
               
               label_query = Base64.encode64(ml_data['stemmed'])
               label_params = { query: label_query }
@@ -153,15 +164,14 @@ namespace :scrapy do
                 }
   
                 @event.save!
-  
-                puts @event.try(:inspect)
+                
+                events_create_counter += 1
+                STDERR.puts "CREATE #{events_create_counter}: #{@event.details['name'][0..60]}"
   
               else
-                puts "CLASSIFICAÇÃO NÃO REALIZADA"
+                STDERR.puts "CLASSIFICAÇÃO NÃO REALIZADA"
               end
             end
-          else
-            puts "NĂO FOI POSSÍVEL CRIAR O EVENTO"
           end
         end
       end
@@ -169,7 +179,7 @@ namespace :scrapy do
 
 
     task similar: :environment do
-      puts "Similares ****************************************"
+      STDERR.puts "Similares ****************************************"
       
       active_events = Event.all.active
       base_to_compare = active_events.map{|event| [event.ml_data['stemmed'], event.id]}
@@ -188,6 +198,9 @@ namespace :scrapy do
         if similar_response_is_success
           puts "SIMILARES AO EVENTO #{event.id} SÃO OS EVENTOS #{similar_data}"
           event.update_attribute :similar_data, similar_data
+
+          events_similar_counter += 1
+          puts "SIMILAR #{events_similar_counter}: #{@event.details['name'][0..60]}"
         else
           puts "SIMILARES NÃO ENCONTRADOS"
         end

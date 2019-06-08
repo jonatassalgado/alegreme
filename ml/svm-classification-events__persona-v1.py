@@ -65,10 +65,10 @@ import heapq as hq
 base = pd.read_csv('./svm-classification-events-v2-events.csv')
 
 # remove null values
-base = base.loc[(base['description'].notna()) & (base['label'].notna())]
+base = base.loc[(base['description'].notna()) & (base['persona'].notna())]
 
 X = base['name'].str.cat(base[['description', 'categories']], sep=' ', na_rep='').values.astype(str)
-y = base.loc[:, 'label'].values.astype(str)
+y = base.loc[:, 'persona'].values.astype(str)
 
 from nltk import download
 download('stopwords')

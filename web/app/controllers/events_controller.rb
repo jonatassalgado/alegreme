@@ -91,7 +91,7 @@ class EventsController < ApplicationController
       Artifact.kinds_whitelist_add(kinds.map{|kinds| kinds['name']})
     elsif @feature == "tags"
       @event.public_send("tags_#{@type}_add", JSON.parse(params[:tags]))
-      Artifact.public_send("tags_whitelist_#{@type}_add", params[:tags])
+      Artifact.public_send("tags_whitelist_#{@type}_add", JSON.parse(params[:tags]))
     end
 
     respond_to do |format|

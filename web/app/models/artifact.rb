@@ -44,11 +44,7 @@ class Artifact < ApplicationRecord
 					}
 				).first.data[list_type][tag_type]
 			end
-		end
-	end
-
-	['things', 'activities', 'features'].each do |tag_type|
-		['whitelist', 'blacklist'].each do |list_type|
+			
 			define_singleton_method :"tags_#{list_type}_#{tag_type}_add" do |tag|
 				artifact = Artifact.where.contains(
 					details:  {
@@ -67,9 +63,26 @@ class Artifact < ApplicationRecord
 				
 				artifact.save!
 			end
+			
+			define_singleton_method :"tags_#{list_type}_#{tag_type}=" do |tag|
+				artifact = Artifact.where.contains(
+					details:  {
+						name: 'tags',
+						type: 'list'
+					}
+				).first
+				
+				if tag.is_a? Array
+					artifact.data[list_type][tag_type] = tag
+				else
+					raise Exception.new "#{tag}:#{tag.class} -> precisa ser um array"
+				end
+				
+				artifact.save!
+			end
 		end
 	end
-	# end
+
 
 	private
 

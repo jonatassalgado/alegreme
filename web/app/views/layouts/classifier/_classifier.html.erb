@@ -1,3 +1,9 @@
+
+<p>
+	<%= "#{@events_to_train[:total_count]} eventos para treinamento" %>
+</p>
+
+
 <tr style="font-weight: bold">
 	<td>Cover</td>
 	<td>Nome</td>
@@ -9,8 +15,8 @@
 	<td>Tipo</td>
 	<td>Tags</td>
 </tr>
-<% cache @events do %>
-	<% @events.each do |event| %>
+<% cache @events_to_train[:events] do %>
+	<% @events_to_train[:events].each do |event| %>
 		<% cache(event) do %>
 			<tr>
 				<td><img src="<%= get_image_url event, :"list-mobile" %>"></td>
@@ -33,13 +39,27 @@
 				</td>
 				<td>
 					<div id="<%= dom_id event, 'things' %>">
-						<%= render partial: 'layouts/classifier/tags', locals: {event: event, type: 'things'} %>
+						<%= render partial: 'layouts/classifier/tags', locals: {
+							event: event, 
+							type: 'things',
+							tags_to_select: whitelist_tags_by_type(event, 'things')
+						} %>
 					</div>
 					<div id="<%= dom_id event, 'activities' %>">
-						<%= render partial: 'layouts/classifier/tags', locals: {event: event, type: 'activities'} %>
+						<%= 
+						render partial: 'layouts/classifier/tags', locals: {
+							event: event, 
+							type: 'activities', 
+							tags_to_select: whitelist_tags_by_type(event, 'activities')
+						} 
+						%>
 					</div>
 					<div id="<%= dom_id event, 'features' %>">
-						<%= render partial: 'layouts/classifier/tags', locals: {event: event, type: 'features'} %>
+						<%= render partial: 'layouts/classifier/tags', locals: {
+							event: event, 
+							type: 'features',
+							tags_to_select: whitelist_tags_by_type(event, 'features')
+							} %>
 					</div>
 				</td>
 			</tr>

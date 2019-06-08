@@ -50,4 +50,16 @@ module EventsHelper
     when 0.0 then '#cf5e75'
     end
   end
+
+  def whitelist_tags_by_type(event, type)
+	  case type
+		when 'activities' 
+			Artifact.tags_whitelist_activities
+		when 'features'
+			Artifact.tags_whitelist_features
+		when 'things'
+			event.ml_data_all
+		end
+	end
+
 end
