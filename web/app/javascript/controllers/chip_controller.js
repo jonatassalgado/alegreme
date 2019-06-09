@@ -8,6 +8,13 @@ export default class ChipController extends Controller {
   initialize() {
     const self = this;
     self.MDCChipSet = new MDCChipSet(this.chipsetTarget);
+    if (self.hasInputTarget) {
+      self.inputTarget.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+          self.create();
+        }
+      });
+    }
   }
 
   select() {

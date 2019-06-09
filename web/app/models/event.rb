@@ -1,9 +1,9 @@
 class Event < ApplicationRecord
   require "day_of_week"
 
-  THEMES = ["lazer", "saúde", "atividade física", "educação", "cultura", "alimentação", "compras", "outlier"].freeze
-  PERSONAS = ["aventureiro", "cult", "geek", "hipster", "praieiro", "underground", "zeen", "geral", "outlier"].freeze
-  CATEGORIES = ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "esporte", "meetup", "hackaton", "palestra",  "literatura", "festival", "brecho", "fórum", "outlier"].freeze
+  THEMES = ["lazer", "saúde", "atividade física", "educação", "cultura", "alimentação", "compras", "cidadania", "outlier", "spam"].sort.freeze
+  PERSONAS = ["aventureiro", "cult", "geek", "hipster", "praieiro", "underground", "zeen", "geral", "outlier"].sort.freeze
+  CATEGORIES = ["anúncio","festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "esporte", "meetup", "hackaton", "palestra",  "sarau", "festival", "brecho", "fórum", "slam", "protesto", "outlier"].sort.freeze
 
   include ImageUploader::Attachment.new(:image)
   include Rails.application.routes.url_helpers
@@ -27,11 +27,21 @@ class Event < ApplicationRecord
   searchkick callbacks: false, language: "portuguese", highlight: [:name, :description]
 
   scope "for_user", ->(user) {
-          where("(personas -> 'primary' ->> 'name') IN (?, ?, ?, ?)", user.personas_primary_name, user.personas_secondary_name, user.personas_tertiary_name, user.personas_quartenary_name)
+          where("(personas -> 'primary' ->> 'name') IN (?, ?, ?, ?, 'geral')", user.personas_primary_name, user.personas_secondary_name, user.personas_tertiary_name, user.personas_quartenary_name)
         }
 
   scope "saved_by_user", ->(user) {
           where(id: user.taste_events_saved)
+        }
+
+  scope "in_theme", ->(themes = [], options = {'not_in': []}) {
+          # if !themes || themes.empty?
+          #   Event.active
+          if !options[:not_in].empty?
+            where("(theme ->> 'name') NOT IN (?)", options[:not_in])
+          else
+            where("(theme ->> 'name') IN (?)", themes)
+          end
         }
 
   scope "with_personas", ->(personas) {
@@ -98,11 +108,16 @@ class Event < ApplicationRecord
           where("((personas ->> 'outlier') IS NULL OR (personas ->> 'outlier') = 'false') AND (personas -> ? ->> 'name') = ?", position, persona)
         }
 
-  scope "by_category", ->(category, position = "primary", options = { 'not_in': [] }) {
+  scope "by_category", ->(categories, position = "primary", options = { 'not_in': [], 'group_by': 1 }) {
           if options[:not_in].empty?
-            where("(categories -> :position ->> 'name') IN (:category) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false')", { category: category, position: position })
+            # where("(categories -> :position ->> 'name') IN (:category) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false')", { category: category, position: position })
           else
-            where("(categories -> :position ->> 'name') NOT IN (:notin) AND (categories -> :position ->> 'name') IN (:category) AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false')", { category: category, position: position, notin: options[:not_in] })
+            queries = []
+            categories.each do |category|
+              queries << where("(categories -> :position ->> 'name') NOT IN (:notin) AND (categories -> :position ->> 'name') = :category AND ((personas -> 'outlier') IS NULL OR (personas -> 'outlier') = 'false')", { category: category, position: position, notin: options[:not_in] }).limit(options[:group_by])
+            end
+
+            return Event.union(queries)
           end
         }
 
@@ -203,7 +218,7 @@ class Event < ApplicationRecord
 
   def tags_things_add(value)
     if value.is_a? Array
-      self.tags['things'] |= value
+      self.tags['things'] = value
     elsif value.is_a? String
       self.tags['things'] |= [value]
     else
@@ -217,7 +232,7 @@ class Event < ApplicationRecord
 
   def tags_features_add(value)
     if value.is_a? Array
-      self.tags['features'] |= value
+      self.tags['features'] = value
     elsif value.is_a? String
       self.tags['features'] |= [value]
     else
@@ -231,7 +246,7 @@ class Event < ApplicationRecord
 
   def tags_activities_add(value)
     if value.is_a? Array
-      self.tags['activities'] |= value
+      self.tags['activities'] = value
     elsif value.is_a? String
       self.tags['activities'] |= [value]
     else

@@ -23,7 +23,7 @@
 				<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
 				<td><%= event.place_details_name %></td>
 				<td>
-					<%= limit_description_size event.details_description, 140 %> <br/>
+					<%= limit_description_size event.details_description, 565 %> <br/>
 				</td>
 				<td id="<%= dom_id event, 'chip_themes' %>">
 					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'themes'} %>

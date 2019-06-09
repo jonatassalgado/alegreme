@@ -54,11 +54,11 @@ module EventsHelper
   def whitelist_tags_by_type(event, type)
 	  case type
 		when 'activities' 
-			Artifact.tags_whitelist_activities
+			(Artifact.tags_whitelist_activities | event.ml_data['verbs']).sort
 		when 'features'
-			Artifact.tags_whitelist_features
+			Artifact.tags_whitelist_features.sort
 		when 'things'
-			event.ml_data_all
+			(event.ml_data['nouns'] | event.ml_data['adjs']).sort
 		end
 	end
 

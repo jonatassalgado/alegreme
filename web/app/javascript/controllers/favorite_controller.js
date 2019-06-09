@@ -30,7 +30,7 @@ export default class FavoriteController extends Controller {
     html`
     ${events.length > 0
       ? html `
-      <h2 data-target="favorite.header" class="mdc-typography--headline2">
+      <h2 data-target="favorite.header" class="mdc-typography--headline6">
       Eventos salvos
       </h2>
       <div class="me-icon__group">

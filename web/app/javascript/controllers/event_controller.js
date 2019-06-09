@@ -66,7 +66,9 @@ export default class EventController extends Controller {
       type: self.isFavorited,
       url: `/events/${self.identifier}/favorite`,
       success: function(response) {
+        self.activeLikeButton = response.currentEventFavorited;
         self.data.set("favorited", response.currentEventFavorited);
+
         if (self.favoriteController) {
           self.favoriteController.updateList = response.events;
         }
@@ -98,6 +100,18 @@ export default class EventController extends Controller {
   get favoriteController() {
     return this.application.controllers.find(function(controller) {
       return controller.context.identifier === "favorite";
+    });
+  }
+
+  set activeLikeButton(value) {
+    const self = this; 
+    document.querySelectorAll(`[data-event-identifier="${self.identifier}"]`).forEach((event) => {
+      event.setAttribute('data-event-favorited', value);
+      if (value) {
+        event.querySelector('[data-target="event.likeButton"]').classList.add('mdc-icon-button--on')
+      } else {
+        event.querySelector('[data-target="event.likeButton"]').classList.remove('mdc-icon-button--on')
+      }
     });
   }
 

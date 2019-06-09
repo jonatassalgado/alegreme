@@ -16,7 +16,7 @@
         <i class="material-icons-outlined">star_border</i>
       </div>
       <div class="me-floa-menu__label">
-        Para voc?
+        Para você
       </div>
     </div>
     <% end %>
@@ -43,9 +43,12 @@
   <% if params[:q] %>
     <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos encontrados para \"#{params[:q]}\""}, identifier: 'busca', type: :large, filters: false } %>
   <% elsif current_user && current_user.personas_assortment_finished? %>
-    <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos recomendados para você"}, identifier: 'recomendados', type: :large, filters: false } %>
+    <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos recomendados para vocÃª"}, identifier: 'recomendados', type: :large, filters: false } %>
     <%= render partial: "section", locals: { events: @events[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: { personas: false, categories: true, occurences: true } } if @events[:categories] %>
   <% else %>
+    <section id="hoje-e-amanha">
+      <%= render partial: "section", locals: { events: @events[:today], titles: {principal: "Eventos acontecendo hoje e amanhã"}, identifier: 'hoje-e-amanha', type: :large, filters: { categories: true, occurences: true } } %>
+    </section>
     <%= render partial: "section", locals: { events: @events[:user], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'recomendados', type: :large, filters: { categories: true, occurences: true } } %>
   <% end %>
 </div>

@@ -1,4 +1,4 @@
-<div id="<%= identifier %>" class="me-feed__section">
+<div class="me-feed__section">
   <h2 class="mdc-typography--<%= type == :large ? 'headline4' : 'headline5' %>">
     <%= titles[:principal] %>
     <% if filters %>
@@ -131,6 +131,9 @@
               <div class="me-card__place" data-target="event.place">
                 <%= limit_place_name_size event.place_details_name %>
               </div>
+              <% if current_user.admin? %>
+                <%= event.personas %>
+              <% end %>
             </div>
           </div>
         </div>
