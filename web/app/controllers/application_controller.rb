@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include AuthorizationHelper
 
+  etag {current_or_guest_user.try :id}
+
   # Sentry
   if Rails.env.production?
     before_action :set_raven_context

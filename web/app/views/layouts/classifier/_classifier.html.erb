@@ -1,6 +1,6 @@
 
 <p>
-	<%= "#{@events_to_train[:total_count]} eventos para treinamento" %>
+	<%= "#{@items[:total_count]} eventos para treinamento" %>
 </p>
 
 
@@ -15,8 +15,8 @@
 	<td>Tipo</td>
 	<td>Tags</td>
 </tr>
-<% cache @events_to_train[:events] do %>
-	<% @events_to_train[:events].each do |event| %>
+<% cache @items[:events] do %>
+	<% @items[:events].each do |event| %>
 		<% cache(event) do %>
 			<tr>
 				<td><img src="<%= get_image_url event, :"list-mobile" %>"></td>

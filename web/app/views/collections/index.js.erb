@@ -1,0 +1,7 @@
+(function() {
+
+  let sectionElem = document.getElementById('<%= @locals[:identifier] %>');
+
+  sectionElem.innerHTML = '<%= j render partial: "feeds/section", locals: @locals %>'
+
+})()

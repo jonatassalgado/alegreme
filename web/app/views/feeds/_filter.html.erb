@@ -1,0 +1,38 @@
+<div data-controller="chip"
+     data-chip-default-value="<%= initial_filters.to_json %>"
+     data-chip-type="filter"
+     data-target="chip.chipset filter.<%= type %>"
+     class="me-chip-set <%= (['kinds'].include?(type)) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'filter' %>">
+    <i class="material-icons">
+      <%= icon_type %>
+    </i>
+  <% filters_that_exist_in_events.each do |filter| %>
+    <% if type == 'ocurrences' %>
+      <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter['original'] %>"
+           class="me-chip mdc-chip <%= params_filters and params_filters.include?(filter['original'].to_s) ? 'mdc-chip--selected' : nil %>"
+           data-turbolinks-scroll="false">
+        <div class="mdc-chip__checkmark">
+          <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+            <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+          </svg>
+        </div>
+        <div class="mdc-chip__text">
+          <%= filter['formatted'].try(:capitalize) %>
+        </div>
+      </div>
+    <% else %>
+      <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter %>"
+           class="me-chip mdc-chip <%= params_filters and params_filters.include?(filter) ? 'mdc-chip--selected' : nil %>"
+           data-turbolinks-scroll="false">
+        <div class="mdc-chip__checkmark">
+          <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+            <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+          </svg>
+        </div>
+        <div class="mdc-chip__text">
+          <%= filter.capitalize %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

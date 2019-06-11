@@ -24,7 +24,7 @@ namespace :ml do
         item[8] = event.personas['primary']['name']
         item[9] = event.theme['name']
         item[10] = event.categories['primary']['name']
-        item[11] = event.kinds_names
+        item[11] = event.kinds_name
         item[12] = event.tags_things
         item[13] = event.tags_activities
         item[14] = event.tags_features
@@ -43,7 +43,7 @@ namespace :ml do
                 event.personas['primary']['name'],
                 event.theme['name'],
                 event.categories['primary']['name'],
-                event.kinds_names,
+                event.kinds_name,
                 event.tags_things,
                 event.tags_activities,
                 event.tags_features]

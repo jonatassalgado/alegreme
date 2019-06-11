@@ -19,11 +19,11 @@ module EventsHelper
     DateTime.parse(datetime).strftime("%Y-%m-%dT%H:%M")
   end
 
-  def get_image_url(event, type = :feed)
-    begin 
-      event.image[type].url if event.image && event.image[type].exists?
-    rescue
-      ""
+  def get_image_style_attr(event, type = :feed)
+    if event.image && event.image[type].exists?
+      "background-color: #{event.image_data[type.to_s]["metadata"]["dominant_color"]}; background-image: url('#{event.image[type].url}')"
+    else
+      "background-color: #f1f1f1"
     end
   end
 

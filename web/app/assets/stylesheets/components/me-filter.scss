@@ -16,22 +16,42 @@
     font-weight: 400;
   }
 
+  & .mdc-chip-set {
+
+    & .material-icons {
+      padding: 6px;
+    }
+
+    & .mdc-chip {
+      margin: 6px 0;
+      @include mdc-layout-grid-media-query_("phone") {
+        margin: 4px;
+      }
+    }
+  }
+
+  &--grid2{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 16px;
+  }
+
+
+  &--grid3{
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-column-gap: 16px;
+  }
+
   & .mdc-chip {
     color: $font-secondary-color;
     background-color: $surface-color;
     border: 1px solid $border-color;
     font-weight: 400;
-    font-size: 16px;
-    text-transform: lowercase;
+    font-size: 10px;
+    text-transform: uppercase;
     @include mdc-layout-grid-media-query_("phone") {
       border: unset;
-    }
-  }
-
-  & .mdc-chip-set .mdc-chip {
-    margin: 4px 0;
-    @include mdc-layout-grid-media-query_("phone") {
-      margin: 4px; 
     }
   }
 

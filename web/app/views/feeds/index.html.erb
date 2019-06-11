@@ -35,20 +35,52 @@
 
 
 
-<%= render partial: "saves", locals: { favorited_events: @favorited_events } %>
+<%#= render partial: "saves", locals: {favorited_events: @favorited_events} %>
 
 
 
 <div class="me-feed">
   <% if params[:q] %>
-    <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos encontrados para \"#{params[:q]}\""}, identifier: 'busca', type: :large, filters: false } %>
-  <% elsif current_user && current_user.personas_assortment_finished? %>
-    <%= render partial: "section", locals: { events: @events[:user], titles: {principal: "Eventos recomendados para vocÃª"}, identifier: 'recomendados', type: :large, filters: false } %>
-    <%= render partial: "section", locals: { events: @events[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: { personas: false, categories: true, occurences: true } } if @events[:categories] %>
+    <%= render partial: "section", locals: {items: @items[:user], titles: {principal: "Eventos encontrados para \"#{params[:q]}\""}, identifier: 'busca', type: :large, filters: false} %>
+  <% elsif current_user&.personas_assortment_finished? %>
+    <%#= render partial: "section", locals: {items: @items[:user], titles: {principal: "Eventos recomendados para vocÃª"}, identifier: 'recomendados', type: :large, filters: false} %>
+    <%#= render partial: "section", locals: {items: @items[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: {personas: false, categories: true, ocurrences: true}} if @items[:categories] %>
   <% else %>
-    <section id="hoje-e-amanha">
-      <%= render partial: "section", locals: { events: @events[:today], titles: {principal: "Eventos acontecendo hoje e amanhã"}, identifier: 'hoje-e-amanha', type: :large, filters: { categories: true, occurences: true } } %>
+    <section id="today-and-tomorrow">
+      <%= render partial: "section",
+                 locals: {items: @items[:today],
+                          titles: {
+                              principal: "Eventos acontecendo hoje e amanhã"
+                          },
+                          identifier: 'today-and-tomorrow',
+                          type: :large,
+                          filters: {
+                              categories: true,
+                              kinds: true
+                          }
+                 } %>
     </section>
-    <%= render partial: "section", locals: { events: @events[:user], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'recomendados', type: :large, filters: { categories: true, occurences: true } } %>
+    <section id="cinema">
+      <%= render partial: "section", locals: {items: @items[:cinema], titles: {principal: "Cinema nesta semana"}, identifier: 'cinema', type: :large, filters: {ocurrences: true}} %>
+    </section>
+    <section id="show-and-party">
+      <%= render partial: "section", locals: {items: @items[:show_and_party], titles: {principal: "Shows e festa no mês"}, identifier: 'show-and-party', type: :large, filters: {ocurrences: true}} %>
+    </section>
+    <section id="user-personas">
+      <%= render partial: "section",
+                 locals: {items: @items[:user_personas],
+                          titles: {
+                              principal: "Indicados para você no mês"
+                          },
+                          identifier: 'user-personas',
+                          type: :large,
+                          filters: {
+                              categories: true,
+                              ocurrences: true,
+                              kinds: true
+                          }
+                 } %>
+    </section>
+    <%# render partial: "section", locals: { events: @events[:user], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'recomendados', type: :large, filters: { categories: true, occurences: true } } %>
   <% end %>
 </div>

@@ -1,46 +1,56 @@
 class FeedsController < ApplicationController
+  include EventsService
+
   before_action :authorize_admin, only: [:train]
 
   def index
     gon.user_id = current_user.try(:token) || current_or_guest_user.try(:id) || 'null'
+    collections ||= EventsService::Collection.new(current_or_guest_user, params)
 
     if params[:q]
-      @events = {
-        user: Event.search(params[:q].downcase, highlight: true, limit: 23, includes: [:place]),
-      }
-    elsif current_user && current_user.personas_assortment_finished?
-      @events = {
-        user: Event.feed_for_user(current_user),
-        categories: Event.with_categories(params[:categories]).in_days(params[:ocurrences]).active.includes(:place).order_by_date.limit(18).uniq,
-      }
-    elsif params[:personas] || params[:categories] || params[:ocurrences]
-      @events = {
-        user: Event.with_personas(params[:personas]).with_categories(params[:categories]).in_days(params[:ocurrences]).active.includes(:place).order_by_date.limit(15).uniq,
-      }
+      @items = get_events_for_search_query
     else
-      @events = {
-        user: Event.feed_for_user(current_or_guest_user),
-        today: Event.in_days(['hoje','amanhã']).in_theme([], {'not_in': ['educação', 'saúde', 'alimentação']}).by_category(['teatro', 'show', 'feira', 'fórum', 'cinema', 'brecho', 'meetup', 'sarau', 'slam', 'exposição', 'palestra', 'literatura'], "primary", { 'not_in': ["curso"], 'group_by': 2 }).for_user(current_user).order_by_score
+      @items = {
+          today: collections.events_for_today(group_by: 5, limit: 10),
+          cinema: collections.events_for_cinema(group_by: 10),
+          show_and_party: collections.events_for_show_and_party(group_by: 5),
+          user_personas: collections.events_for_user_personas(group_by: 3, limit: 50)
       }
     end
 
-    if current_user and !current_user.taste_events_saved.empty?
-      @favorited_events = Event.saved_by_user(current_user).active.order_by_date.uniq
-    else
-      @favorited_events = []
-    end
+    @favorited_events = get_favorited_events
   end
 
   def train
-    events_not_trained_yet = Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
-                                  .order("(categories -> 'primary' ->> 'score')::numeric  DESC, (personas -> 'primary' ->> 'score')::numeric DESC")
-                                  .includes(:place)
+    events_not_trained_yet = get_events_not_trained_yet
 
-    @events_to_train = {
-      events: events_not_trained_yet.limit(20),
-      total_count: events_not_trained_yet.count
+    @items = {
+        events: events_not_trained_yet.limit(20),
+        total_count: events_not_trained_yet.count
     }
-    
+  end
+
+
+  private
+
+  def get_events_not_trained_yet
+    Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
+        .order("(categories -> 'primary' ->> 'score')::numeric  DESC, (personas -> 'primary' ->> 'score')::numeric DESC")
+        .includes(:place)
+  end
+
+  def get_events_for_search_query
+    {
+        user: Event.search(params[:q].downcase, highlight: true, limit: 23, includes: [:place])
+    }
+  end
+
+  def get_favorited_events
+    if current_user && !current_user.taste_events_saved.empty?
+      Event.saved_by_user(current_user).active.order_by_date.uniq
+    else
+      []
+    end
   end
 
   protected

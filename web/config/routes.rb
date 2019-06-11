@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # match "/manifest.json"
   
   resources :users
+  resources :collections, only: [:index]
   resources :calendars
   resources :categories
   resources :organizers

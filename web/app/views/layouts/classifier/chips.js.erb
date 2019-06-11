@@ -1,6 +1,5 @@
 (function(){
     let chipEventElem = document.getElementById('<%= dom_id @event, "chip_#{@feature}" %>');
 
-    chipEventElem.innerHTML = "";
-    chipEventElem.insertAdjacentHTML('beforeend', '<%= j render partial: 'layouts/classifier/chips', locals: {event: @event, feature: @feature} %>');
+    chipEventElem.innerHTML = '<%= j render partial: 'layouts/classifier/chips', locals: {event: @event, feature: @feature} %>';
 })()

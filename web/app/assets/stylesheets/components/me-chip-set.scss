@@ -1,6 +1,22 @@
 @import "../_variables";
-@import "@material/top-app-bar/_mixins";
 
 .me-chip-set {
-  // display: contents;
+
+  &--small {
+
+    & .mdc-chip {
+      padding: 1px 8px;
+      background: $elevated-surface-color;
+      height: unset;
+
+     & .material-icons {
+        padding: 4px;
+      }
+
+      &--selected {
+        border: 1px solid $border-color;
+      }
+    }
+
+  }
 }

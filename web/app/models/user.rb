@@ -4,134 +4,138 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
+  def personas_name
+    features['psychographic']['personas'].map { |persona| persona[1]['name'] }.compact
+  end
+
   def personas_primary_name
-    self.features["psychographic"]["personas"]["primary"]["name"] if self.features["psychographic"]
+    features['psychographic']['personas']['primary']['name'] if features['psychographic']
   end
 
   def personas_primary_name=(value)
-    self.features["psychographic"]["personas"]["primary"]["name"] = value
+    features['psychographic']['personas']['primary']['name'] = value
   end
 
   def personas_secondary_name
-    self.features["psychographic"]["personas"]["secondary"]["name"] if self.features["psychographic"]
+    features['psychographic']['personas']['secondary']['name'] if features['psychographic']
   end
 
   def personas_secondary_name=(value)
-    self.features["psychographic"]["personas"]["secondary"]["name"] = value
+    features['psychographic']['personas']['secondary']['name'] = value
   end
 
   def personas_primary_score
-    self.features["psychographic"]["personas"]["primary"]["score"] if self.features["psychographic"]
+    features['psychographic']['personas']['primary']['score'] if features['psychographic']
   end
 
   def personas_primary_score=(value)
-    self.features["psychographic"]["personas"]["primary"]["score"] = value
+    features['psychographic']['personas']['primary']['score'] = value
   end
 
   def personas_secondary_score
-    self.features["psychographic"]["personas"]["secondary"]["score"] if self.features["psychographic"]
+    features['psychographic']['personas']['secondary']['score'] if features['psychographic']
   end
 
   def personas_secondary_score=(value)
-    self.features["psychographic"]["personas"]["secondary"]["score"] = value
+    features['psychographic']['personas']['secondary']['score'] = value
   end
 
   def personas_tertiary_name
-    self.features["psychographic"]["personas"]["tertiary"]["name"] if self.features["psychographic"]
+    features['psychographic']['personas']['tertiary']['name'] if features['psychographic']
   end
 
   def personas_tertiary_name=(value)
-    self.features["psychographic"]["personas"]["tertiary"]["name"] = value
+    features['psychographic']['personas']['tertiary']['name'] = value
   end
 
   def personas_quartenary_name
-    self.features["psychographic"]["personas"]["quartenary"]["name"] if self.features["psychographic"]
+    features['psychographic']['personas']['quartenary']['name'] if features['psychographic']
   end
 
   def personas_quartenary_name=(value)
-    self.features["psychographic"]["personas"]["quartenary"]["name"] = value
+    features['psychographic']['personas']['quartenary']['name'] = value
   end
 
   def personas_tertiary_score
-    self.features["psychographic"]["personas"]["tertiary"]["score"] if self.features["psychographic"]
+    features['psychographic']['personas']['tertiary']['score'] if features['psychographic']
   end
 
   def personas_tertiary_score=(value)
-    self.features["psychographic"]["personas"]["tertiary"]["score"] = value
+    features['psychographic']['personas']['tertiary']['score'] = value
   end
 
   def personas_quartenary_score
-    self.features["psychographic"]["personas"]["quartenary"]["score"] if self.features["psychographic"]
+    features['psychographic']['personas']['quartenary']['score'] if features['psychographic']
   end
 
   def personas_quartenary_score=(value)
-    self.features["psychographic"]["personas"]["quartenary"]["score"] = value
+    features['psychographic']['personas']['quartenary']['score'] = value
   end
 
   def personas_assortment_finished?
-    self.features["psychographic"]["personas"]["assortment"]["finished"] if self.features["psychographic"]
+    features['psychographic']['personas']['assortment']['finished'] if features['psychographic']
   end
 
   def personas_assortment_finished=(value)
-    self.features["psychographic"]["personas"]["assortment"]["finished"] = value
+    features['psychographic']['personas']['assortment']['finished'] = value
   end
 
   def taste_events_save(event_id)
     event = Event.find event_id.to_i
 
     ActiveRecord::Base.transaction do
-      event.entries["saved_by"] << self.id
-      event.entries["total_saves"] += 1
+      event.entries['saved_by'] << id
+      event.entries['total_saves'] += 1
 
-      validate_taste_existence "events"
-      self.taste["events"]["saved"] << event_id.to_i
-      self.taste["events"]["total_saves"] += 1
+      validate_taste_existence 'events'
+      taste['events']['saved'] << event_id.to_i
+      taste['events']['total_saves'] += 1
 
-      return event.save && self.save
+      return event.save && save
     end
   rescue ActiveRecord::RecordInvalid
-    puts "Não foi possível salvar sua ação (ERRO 7813)!"
+    puts 'Não foi possível salvar sua ação (ERRO 7813)!'
   end
 
   def taste_events_unsave(event_id)
     event = Event.find event_id.to_i
 
     ActiveRecord::Base.transaction do
-      event.entries["saved_by"].delete self.id
-      event.entries["total_saves"] -= 1
+      event.entries['saved_by'].delete id
+      event.entries['total_saves'] -= 1
 
-      validate_taste_existence "events"
-      self.taste["events"]["saved"].delete event_id.to_i
-      self.taste["events"]["total_saves"] -= 1
+      validate_taste_existence 'events'
+      taste['events']['saved'].delete event_id.to_i
+      taste['events']['total_saves'] -= 1
 
-      return event.save && self.save
+      return event.save && save
     end
   rescue ActiveRecord::RecordInvalid
-    puts "Não foi possível salvar sua ação (ERRO 7814)!"
+    puts 'Não foi possível salvar sua ação (ERRO 7814)!'
   end
 
   def taste_events_saved?(event_id)
-    if self.taste["events"]
-      self.taste["events"]["saved"].include? event_id.to_i
+    if taste['events']
+      taste['events']['saved'].include? event_id.to_i
     else
-      return false
+      false
     end
   end
 
   def taste_events_saved
-    self.taste["events"]["saved"]
+    taste['events']['saved']
   end
 
   def self.from_omniauth(access_token, guest_user, params)
     data = access_token.info
-    user = User.where(email: data["email"]).first
-    state = Base64.urlsafe_decode64(params["state"])
+    user = User.where(email: data['email']).first
+    state = Base64.urlsafe_decode64(params['state'])
 
     Rails.logger.debug "PERSONAS STATE: #{state.inspect} "
-    raise Exception.new("JSON de personas com enconding incorreto!") unless ["UTF-8", "US-ASCII", "ASCII-8BIT"].include? state.encoding.name
+    raise Exception, 'JSON de personas com enconding incorreto!' unless ['UTF-8', 'US-ASCII', 'ASCII-8BIT'].include? state.encoding.name
 
     @personas ||= begin
-                    YAML.load(state)
+                    YAML.safe_load(state)
                   rescue Psych::SyntaxError
                     {}
                   end
@@ -141,57 +145,58 @@ class User < ApplicationRecord
 
     if @personas.empty?
       return user if user
-      return User.create(email: data["email"], password: Devise.friendly_token[0, 20], features: guest_user.features)
-    elsif @personas && @personas["assortment"]["finished"]
+
+      return User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: guest_user.features)
+    elsif @personas && @personas['assortment']['finished']
       features = {
         psychographic: {
           personas: {
             primary: {
-              name: @personas["primary"]["name"],
-              score: @personas["primary"]["score"],
+              name: @personas['primary']['name'],
+              score: @personas['primary']['score']
             },
             secondary: {
-              name: @personas["secondary"]["name"],
-              score: @personas["secondary"]["score"],
+              name: @personas['secondary']['name'],
+              score: @personas['secondary']['score']
             },
             tertiary: {
-              name: @personas["tertiary"]["name"],
-              score: @personas["tertiary"]["score"],
+              name: @personas['tertiary']['name'],
+              score: @personas['tertiary']['score']
             },
             quartenary: {
-              name: @personas["quartenary"]["name"],
-              score: @personas["quartenary"]["score"],
+              name: @personas['quartenary']['name'],
+              score: @personas['quartenary']['score']
             },
             assortment: {
-              finished: @personas["assortment"]["finished"],
-              finished_at: @personas["assortment"]["finished_at"],
-            },
-          },
-        },
+              finished: @personas['assortment']['finished'],
+              finished_at: @personas['assortment']['finished_at']
+            }
+          }
+        }
       }
 
       if user
         user if user.update_attributes(features: features)
       else
-        User.create(email: data["email"], password: Devise.friendly_token[0, 20], features: features)
+        User.create(email: data['email'], password: Devise.friendly_token[0, 20], features: features)
       end
     end
   end
 
   private
 
-  def validate_taste_existence(dictionary = "events")
-    self.taste[dictionary] ||= {}
+  def validate_taste_existence(dictionary = 'events')
+    taste[dictionary] ||= {}
 
-    if dictionary == "events"
-      self.taste[dictionary]["saved"] ||= []
-      self.taste[dictionary]["liked"] ||= []
-      self.taste[dictionary]["viewed"] ||= []
-      self.taste[dictionary]["disliked"] ||= []
-      self.taste[dictionary]["total_saves"] ||= 0
-      self.taste[dictionary]["total_likes"] ||= 0
-      self.taste[dictionary]["total_views"] ||= 0
-      self.taste[dictionary]["total_dislikes"] ||= 0
+    if dictionary == 'events'
+      taste[dictionary]['saved'] ||= []
+      taste[dictionary]['liked'] ||= []
+      taste[dictionary]['viewed'] ||= []
+      taste[dictionary]['disliked'] ||= []
+      taste[dictionary]['total_saves'] ||= 0
+      taste[dictionary]['total_likes'] ||= 0
+      taste[dictionary]['total_views'] ||= 0
+      taste[dictionary]['total_dislikes'] ||= 0
     end
   end
 end

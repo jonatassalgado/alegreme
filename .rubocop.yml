@@ -1,0 +1,16 @@
+Layout/Tab:
+  Enabled: false
+Layout/IndentationWidth:
+  Enabled: false
+Style/WordArray:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Layout/DefEndAlignment:
+  Enabled: false
+Metrics/LineLength:
+  Enabled: false

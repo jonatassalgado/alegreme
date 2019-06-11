@@ -16,6 +16,7 @@ web/tmp/
 web/db/schema.rb
 web/db/test.sqlite3
 web/db/development.sqlite3
+web/.idea/workspace.xml
 .scrapy/
 ml/__pycache__
 web/tmp/pids

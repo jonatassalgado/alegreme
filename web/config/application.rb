@@ -12,6 +12,7 @@ module App
     config.load_defaults 5.2
     config.i18n.default_locale = 'pt-BR'
     config.encoding = 'utf-8'
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/services)
 
     # config.filter_parameters << :password
 
