@@ -18,7 +18,7 @@ class FeedsController < ApplicationController
       }
     end
 
-    @favorited_events = get_favorited_events
+    @favorited_events = current_user.favorited_events
   end
 
   def train
@@ -45,13 +45,6 @@ class FeedsController < ApplicationController
     }
   end
 
-  def get_favorited_events
-    if current_user && !current_user.taste_events_saved.empty?
-      Event.saved_by_user(current_user).active.order_by_date.uniq
-    else
-      []
-    end
-  end
 
   protected
 

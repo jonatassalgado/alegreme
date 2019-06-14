@@ -80,6 +80,16 @@ $description-color: $font-secondary-color;
       min-height: 165px;
     }
 
+    &-is-saved {
+      content: close-quote;
+      background: #63d0841a;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      border-radius: 6px;
+      transform: scale(1.1, 1.1);
+    }
+
     &__place {
     }
 

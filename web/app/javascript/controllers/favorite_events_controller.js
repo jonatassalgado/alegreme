@@ -2,7 +2,6 @@ import { Controller } from "stimulus"
 import {MDCRipple} from '@material/ripple';
 
 
-
 export default class FavoriteEventsController extends Controller {
   static targets = [ "event", "overlay", "title", "date", "remove" ];
 
@@ -24,33 +23,29 @@ export default class FavoriteEventsController extends Controller {
 
 
   remove() {
-    const self = this
+    const self = this;
 
-    Rails.ajax({
-      type: "DELETE",
-      url: `/events/${self.identifier}/favorite`,
-      success: function(response){
-        
-        document.querySelectorAll(`[data-event-identifier="${self.identifier}"]`).forEach((event) => {
-          event.setAttribute('data-event-favorited', false);
-          event.querySelector('[data-target="event.likeButton"]').classList.remove('mdc-icon-button--on')
-        });
-
-        if (self.favoriteController) {
-          self.favoriteController.updateList = response.events
-        }
+    fetch(`/events/${self.identifier}/favorite`, {
+      method: 'delete',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-type': 'text/javascript; charset=UTF-8',
+        'X-CSRF-Token': Rails.csrfToken()
       },
-      error: function(response){
-        console.log(response)
-      }
+      credentials: 'same-origin'
     })
-  }
+    .then(
+        function(response) {
+          response.text().then(function(data) {
+            eval(data);
+          });
+        }
+    )
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });
 
 
-  get favoriteController() {
-    return this.application.controllers.find(function(controller) {
-      return controller.context.identifier === 'favorite'
-    })
   }
 
 

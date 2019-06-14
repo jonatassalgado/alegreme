@@ -60,9 +60,9 @@
     <div class="mdc-layout-grid__inner">
       <% items[:events].each do |event| %>
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
-          <div class="me-card--feed mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event"
+          <div id="<%= dom_id event %>" class="me-card--feed mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event"
                data-target="event.event" data-action="mouseover->event#showEventDetails"
-               data-event-favorited="<%= current_or_guest_user.taste_events_saved? event.id if current_user %>"
+               data-event-favorited="<%= current_user.taste_events_saved? event.id if current_user %>"
                data-event-identifier="<%= event.id %>">
             <% if current_user %>
               <div class="me-card__like-button" data-action="click->event#like">

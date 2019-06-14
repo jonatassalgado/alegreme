@@ -22,6 +22,10 @@ export default class EventController extends Controller {
   initialize() {
     const self = this;
 
+    self.eventTarget.addEventListener('eventLiked', function(event){
+      self.updateLikeStatus(event, self)
+    });
+
     self.md = new MobileDetect(window.navigator.userAgent);
 
     self.activeInteractions = true;
@@ -59,37 +63,48 @@ export default class EventController extends Controller {
     }
   }
 
-  like() {
-    const self = this;
 
-    Rails.ajax({
-      type: self.isFavorited,
-      url: `/events/${self.identifier}/favorite`,
-      success: function(response) {
-        self.activeLikeButton = response.currentEventFavorited;
-        self.data.set("favorited", response.currentEventFavorited);
+  updateLikeStatus(event, self) {
+    self.activeLikeButton = event.detail.currentEventFavorited;
+    self.data.set("favorited", event.detail.currentEventFavorited);
 
-        if (self.favoriteController) {
-          self.favoriteController.updateList = response.events;
-        }
-
-        CacheSystem.clearCache(["feed-page", "events-page"], {
-          event: {
-            identifier: self.identifier
-          }
-        });
-      },
-      error: function(response) {
-        console.log(response);
+    CacheSystem.clearCache(["feed-page", "events-page"], {
+      event: {
+        identifier: self.identifier
       }
     });
   }
 
+  like() {
+    const self = this;
+
+    fetch(`/events/${self.identifier}/favorite`, {
+      method: self.isFavorited,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-type': 'text/javascript; charset=UTF-8',
+        'X-CSRF-Token': Rails.csrfToken()
+      },
+      credentials: 'same-origin'
+    })
+    .then(
+        function(response) {
+          response.text().then(function(data) {
+            eval(data);
+          });
+        }
+    )
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });
+
+  }
+
   get isFavorited() {
     if (this.data.get("favorited") == "true") {
-      return "DELETE";
+      return "delete";
     } else {
-      return "POST";
+      return "post";
     }
   }
 

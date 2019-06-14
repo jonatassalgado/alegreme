@@ -4,16 +4,34 @@ class FavoritesController < ApplicationController
   def create
     current_user.taste_events_save favorite_params['event_id'].to_i    
 
+    @locals = {
+        identifier: 'salvos',
+        event_identifier: "event_#{favorite_params['event_id'].to_i}",
+        event_id: favorite_params['event_id'].to_i,
+        user: current_user,
+        current_event_favorited: true,
+        favorited_events: current_user.favorited_events
+    }
+
     respond_to do |format|
-      format.json { render partial: 'events/favorited_events', locals: {user: current_user, currentEventFavorited: true} }
+      format.js { render 'favorites/favorites' }
     end
   end
 
   def destroy
     current_user.taste_events_unsave favorite_params['event_id'].to_i
-    
+
+    @locals = {
+        identifier: 'salvos',
+        event_identifier: "event_#{favorite_params['event_id'].to_i}",
+        event_id: favorite_params['event_id'].to_i,
+        user: current_user,
+        current_event_favorited: false,
+        favorited_events: current_user.favorited_events
+    }
+
     respond_to do |format|
-      format.json { render partial: 'events/favorited_events', locals: {user: current_user, currentEventFavorited: false} }
+      format.js { render 'favorites/favorites' }
     end
   end
 

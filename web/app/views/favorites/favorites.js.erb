@@ -1,0 +1,18 @@
+(function () {
+
+	const eventLiked = new CustomEvent('eventLiked', {
+		'detail': {
+			'currentEventFavorited': <%= @locals[:current_event_favorited] %>,
+			'eventId': <%= @locals[:event_id] %>
+		}
+	});
+
+	let savesWrapper = document.getElementById('<%= @locals[:identifier] %>');
+	let savesElem = savesWrapper.querySelector('[data-controller="favorite"]')
+	savesElem.dispatchEvent(eventLiked);
+
+	let eventElem = document.getElementById('<%= @locals[:event_identifier] %>');
+	eventElem.dispatchEvent(eventLiked);
+
+	savesWrapper.innerHTML = '<%= j render partial: "feeds/saves", locals: @locals %>'
+})()

@@ -21,6 +21,7 @@ web/.idea/workspace.xml
 ml/__pycache__
 web/tmp/pids
 web/tmp/cache
+web/.idea/workspace.xml
 .~lock*
 *.jpeg~
 *.png~

@@ -4,6 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
+  def favorited_events
+    if self && !self.taste_events_saved.empty?
+      Event.saved_by_user(self).active.order_by_date.uniq
+    else
+      []
+    end
+  end
+
   def personas_name
     features['psychographic']['personas'].map { |persona| persona[1]['name'] }.compact
   end
