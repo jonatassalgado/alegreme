@@ -114,15 +114,21 @@ namespace :scrapy do
               @place.events << @event unless @place.events.include?(@event)
     
               # puts "Criar organizador ****************************************"
-    
-              item["organizers"].try(:each) do |organizer|
-                @organizer = Organizer.create_with({
-                  name: item["organizer"],
-                  source_url: item["organizer_url"],
-                }).find_or_create_by(name: organizer)
-    
-                @event.organizers << @organizer unless @event.organizers.include?(@organizer)
-                # puts organizer.inspect
+
+              item["organizers"].try(:each) do |organizer_item|
+                organizer = Organizer.where.contains(details: { name: organizer_item }).first
+
+                if !organizer.blank?
+                  STDERR.puts "ORGANIZADOR JÁ EXISTE: #{organizer.details['name']}"
+                  @event.organizers << organizer unless @event.organizers.include?(organizer)
+                else
+                  organizer = Organizer.new(details: {
+                                                 name: organizer_item
+                                             })
+
+                  STDERR.puts "ORGANIZADOR CRIADO: #{organizer.details['name']}"
+                  @event.organizers << organizer unless @event.organizers.include?(organizer)
+                end
               end
               
               # puts "Classificar ****************************************"
@@ -200,7 +206,7 @@ namespace :scrapy do
           event.update_attribute :similar_data, similar_data
 
           events_similar_counter += 1
-          puts "SIMILAR #{events_similar_counter}: #{@event.details['name'][0..60]}"
+          puts "SIMILAR #{events_similar_counter}: #{event.details['name'][0..60]}"
         else
           puts "SIMILARES NÃO ENCONTRADOS"
         end

@@ -5,26 +5,8 @@
   </h2>
   <div class="me-feed__divider"></div>
     <% if filters %>
-    <div data-controller="filter" data-filter-section-identifier="<%= identifier %>" data-target="filter.filterContainer" class="me-filter">
-      <% if filters[:personas] %>
-        <div data-controller="chip" data-chip-type="filter" data-target="chip.chipset filter.personas"
-             class="me-chip-set mdc-chip-set mdc-chip-set--filter">
-          <% Event.active.collect(&:personas_primary_name).uniq.each do |persona| %>
-            <div data-target="chip.chip" data-action="click->chip#select"
-                 class="me-chip mdc-chip <%= params[:personas] and params[:personas].include?(persona) ? 'mdc-chip--selected' : nil %>">
-              <div class="mdc-chip__checkmark">
-                <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-                  <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-                </svg>
-              </div>
-              <div class="mdc-chip__text">
-                <%= persona.capitalize %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-      <% if filters[:categories] %>
+    <div data-controller="filter" data-filter-section-identifier="<%= identifier %>" data-filter-title="<%= titles[:principal] %>" data-target="filter.filterContainer" class="me-filter">
+      <% if filters[:categories] && items[:filters] %>
         <%= titles[:categories] %>
         <%= render partial: 'feeds/filter', locals: {
             initial_filters:              items[:categories],
@@ -34,7 +16,7 @@
             type:                         'categories'
         } %>
       <% end %>
-      <% if filters[:kinds] && params[:categories] %>
+      <% if filters[:kinds] && params[:categories] && params[:kinds] && items[:kinds] %>
         <%= titles[:kinds] %>
         <%= render partial: 'feeds/filter', locals: {
             initial_filters:              items[:kinds],
@@ -44,7 +26,7 @@
             type:                         'kinds'
         } %>
       <% end %>
-      <% if filters[:ocurrences] %>
+      <% if filters[:ocurrences] && items[:ocurrences] %>
         <%= titles[:ocurrences] %>
         <%= render partial: 'feeds/filter', locals: {
             initial_filters:              items[:ocurrences],
@@ -58,7 +40,8 @@
   <% end %>
     <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-      <% items[:events].each do |event| %>
+      <% unless items.empty? %>
+        <% items[:events].each do |event| %>
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
           <div id="<%= dom_id event %>" class="me-card--feed mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event"
                data-target="event.event" data-action="mouseover->event#showEventDetails"
@@ -105,7 +88,7 @@
               </span>
               <span aria-hidden="true"> · </span>
               <span class="me-card__date" data-target="event.date">
-                <%= event.day_of_week['formatted'] %> <%= format_hour event.first_day_time %>
+                <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
                 <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
               </span>
             </div>
@@ -120,12 +103,19 @@
               <div class="me-card__place" data-target="event.place">
                 <%= limit_place_name_size event.place_details_name %>
               </div>
+              <div class="me-card__organizer" data-target="event.organizer">
+                <% event.organizers.each do |organizer| %>
+                  <%= link_to organizer.details['name'], organizer_path(organizer) %>
+                <% end %>
+              </div>
               <%# if current_user&.admin? %>
               <%#= event.personas %>
+              <!--              <%#= event.first_day_time %> | <%#= event.first_day_time.to_date.yday %>-->
               <%# end %>
             </div>
           </div>
         </div>
+      <% end %>
       <% end %>
     </div>
       <% if items.empty? %>

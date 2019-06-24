@@ -1,11 +1,42 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+#---
+#jon:
+#  id: 9
+#  email: test@gmail.com
+#  encrypted_password: "$2a$11$7BXOwZr.Tamvzw/muk9AL.9MR8AexspLvm5/XTvUmrOh4ZMU/bdrq"
+#  created_at: !ruby/object:ActiveSupport::TimeWithZone
+#    utc: &1 2019-06-14 21:37:49.316346000 Z
+#    zone: &2 !ruby/object:ActiveSupport::TimeZone
+#      name: Etc/UTC
+#    time: *1
+#  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+#    utc: &3 2019-06-16 14:46:09.060099000 Z
+#    zone: *2
+#    time: *3
+#  features:
+#    psychographic:
+#      personas:
+#        primary:
+#          name: hipster
+#          score: '1'
+#        tertiary:
+#          name: underground
+#          score: '1'
+#        secondary:
+#          name: praieiro
+#          score: '1'
+#        assortment:
+#          finished: false
+#        quartenary:
+#          name: cult
+#          score: '1'
+#  taste:
+#    events:
+#      liked: []
+#      saved: []
+#      viewed: []
+#      disliked: []
+#      total_likes: 0
+#      total_saves: 0
+#      total_views: 0
+#      total_dislikes: 0
+#  admin: true

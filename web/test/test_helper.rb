@@ -1,10 +1,47 @@
-ENV['RAILS_ENV'] ||= 'test'
+ENV['RAILS_ENV'] = 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
+require 'database_cleaner'
+require 'awesome_print'
+require 'devise'
 
-class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
+# include Devise::Test::ControllerHelpers
+# include Devise::Test::IntegrationHelpers
+include FactoryBot::Syntax::Methods
+
+
+DatabaseCleaner.clean_with :truncation
+DatabaseCleaner.strategy = :transaction
+
+class ActionDispatch::IntegrationTest
+  def setup
+    DatabaseCleaner.start
+  end
+
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  def teardown
+    Timecop.return
+    DatabaseCleaner.clean
+  end
+
+  def sign_in(user)
+    post user_session_path \
+      "user[email]"    => user.email,
+      "user[password]" => user.password
+  end
+end
+
+
+class ActiveSupport::TestCase
+  def setup
+    DatabaseCleaner.start
+  end
+
+  fixtures :all
+
+  def teardown
+    Timecop.return
+    DatabaseCleaner.clean
+  end
 end

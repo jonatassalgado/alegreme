@@ -11,11 +11,11 @@
     <%= csp_meta_tag %>
     <link rel="manifest" href="/manifest.json" />
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/css/embed.css" : ":3030/css/embed.css"), 'data-turbolinks-track': 'reload' %>
+    <%#= stylesheet_link_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/css/embed.css" : ":3030/css/embed.css"), 'data-turbolinks-track': 'reload' %>
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/icon?family=Cabin:400,500,600,700|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
     <%= Gon::Base.render_data %>
-    <!-- <%= javascript_include_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/embed.js" : ":3030/embed.js"), defer: true %> -->
+    <%#= javascript_include_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/embed.js" : ":3030/embed.js"), defer: true %>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js'
     data-turbolinks-track='reload'></script>
     <script src='https://cdn.rawgit.com/showdownjs/showdown/1.7.4/dist/showdown.min.js' data-turbolinks-track='reload'></script>
@@ -42,14 +42,14 @@
       <% elsif params['controller'] == 'feeds' && params['action'] == 'train' %>
         <%= render partial: "layouts/app-top-bar" %>
         <section class="me-page__train-section">
-          <%= render partial: 'layouts/bot' %>
+          <%#= render partial: 'layouts/bot' %>
           <div class="me-overlay"></div>
           <%= yield %>
         </section>
       <% else %>
         <%= render partial: "layouts/app-top-bar" %>
         <section class="me-page__feed-section">
-          <%= render partial: 'layouts/bot' %>
+          <%#= render partial: 'layouts/bot' %>
           <div class="me-overlay"></div>
           <%= yield %>
         </section>

@@ -8,8 +8,9 @@
 
 kinds = ["noite", "bebida", "ar livre", "música", "bem-estar", "bicicleta", "skate", "aventura", "caminhada", "dança", "acadêmico", "profissional", "arte", "economia compartilhada"]
 
-User.create(
+User.create!(
 	email: "test@gmail.com",
+	password: "123456",
 	features: { 
 		"psychographic": {
 			"personas": {
@@ -38,7 +39,7 @@ User.create(
 	admin: true
 )
 
-Artifact.create(
+Artifact.create!(
 	details: {
 		name: 'kinds',
 		type: 'list'
@@ -49,7 +50,7 @@ Artifact.create(
 	}
 )
 
-Artifact.create(
+Artifact.create!(
 	details: {
 		name: 'tags',
 		type: 'list'
@@ -68,7 +69,7 @@ Artifact.create(
 	}
 )
 
-Artifact.create(
+Artifact.create!(
 	details: {
 		name: 'description',
 		type: 'list'

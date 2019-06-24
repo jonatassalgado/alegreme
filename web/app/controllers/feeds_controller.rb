@@ -1,54 +1,74 @@
 class FeedsController < ApplicationController
-  include EventsService
+	before_action :authorize_admin, only: [:train]
 
-  before_action :authorize_admin, only: [:train]
+	def index
+		respond_to do |format|
+			format.js do
+				Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+					collection = EventServices::CollectionCreator.new(current_or_guest_user, params)
+					@items     = collection.call(params[:identifier])
+				end
 
-  def index
-    gon.user_id = current_user.try(:token) || current_or_guest_user.try(:id) || 'null'
-    collections ||= EventsService::Collection.new(current_or_guest_user, params)
+				@locals = {
+						items:      @items,
+						titles:     {
+								principal: params[:title]
+						},
+						identifier: params[:identifier],
+						type:       :large,
+						filters:    @items[:filters]
+				}
 
-    if params[:q]
-      @items = get_events_for_search_query
-    else
-      @items = {
-          today: collections.events_for_today(group_by: 5, limit: 10),
-          cinema: collections.events_for_cinema(group_by: 10),
-          show_and_party: collections.events_for_show_and_party(group_by: 5),
-          user_personas: collections.events_for_user_personas(group_by: 3, limit: 50)
-      }
-    end
+				render 'collections/index'
+			end
 
-    @favorited_events = current_user.favorited_events
-  end
+			format.html do
+				gon.user_id = current_user.try(:token) || current_or_guest_user.try(:id) || 'null'
+				collections ||= EventServices::CollectionCreator.new(current_or_guest_user, params)
 
-  def train
-    events_not_trained_yet = get_events_not_trained_yet
+				@items = if params[:q]
+					         get_events_for_search_query
+					       else
+						       {
+								       today: collections.call('today-and-tomorrow', group_by: 5),
+								       # cinema: collections.events_for_cinema(group_by: 10),
+								       # show_and_party: collections.events_for_show_and_party(group_by: 5),
+								       user_personas: collections.call('user-personas', all_existing_filters: true)
+						       }
+				         end
 
-    @items = {
-        events: events_not_trained_yet.limit(20),
-        total_count: events_not_trained_yet.count
-    }
-  end
+				@favorited_events = current_or_guest_user.favorited_events
+			end
+		end
 
+	end
 
-  private
+	def train
+		events_not_trained_yet = get_events_not_trained_yet
 
-  def get_events_not_trained_yet
-    Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
-        .order("(categories -> 'primary' ->> 'score')::numeric  DESC, (personas -> 'primary' ->> 'score')::numeric DESC")
-        .includes(:place)
-  end
+		@items = {
+				events:      events_not_trained_yet.limit(20),
+				total_count: events_not_trained_yet.count
+		}
+	end
 
-  def get_events_for_search_query
-    {
-        user: Event.search(params[:q].downcase, highlight: true, limit: 23, includes: [:place])
-    }
-  end
+	private
 
+	def get_events_not_trained_yet
+		Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
+				.order("(categories -> 'primary' ->> 'score')::numeric  ASC, (personas -> 'primary' ->> 'score')::numeric ASC")
+				.includes(:place)
+	end
 
-  protected
+	def get_events_for_search_query
+		{
+				user: Event.search(params[:q].downcase, highlight: true, limit: 23, includes: [:place])
+		}
+	end
 
-  def search_params
-    params.permit(:categories, :personas, categories: [], personas: [])
-  end
+	protected
+
+	def search_params
+		params.permit(:categories, :personas, categories: [], personas: [])
+	end
 end

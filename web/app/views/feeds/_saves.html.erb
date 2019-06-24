@@ -41,7 +41,7 @@
               <div data-target="favorite-events.overlay" class="me-card__overlay mdc-ripple-surface	"></div>
             </div>
             <div class="me-card__date" data-target="favorite-events.date">
-              <%= event.day_of_week['formatted'] %>
+              <%= event.day_of_week['decorator'] %>
             </div>
             <div class="me-card__title mdc-card__title" data-target="favorite-events.title">
               <%= limit_name_size event.details_name, 30 %>

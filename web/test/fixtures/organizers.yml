@@ -1,9 +1,44 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+---
+Organizer_1:
+  id: 1
+  details:
+    name: 
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 18:47:17.474440000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 18:47:17.474440000 Z
+    zone: *2
+    time: *3
 
-one:
-  name: MyString
-  url: MyString
+---
+Organizer_2:
+  id: 2
+  details:
+    name: 
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 18:47:17.494800000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 18:47:17.494800000 Z
+    zone: *2
+    time: *3
 
-two:
-  name: MyString
-  url: MyString
+---
+Organizer_3:
+  id: 3
+  details:
+    name: 
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 18:47:17.510549000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 18:47:17.510549000 Z
+    zone: *2
+    time: *3

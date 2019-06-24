@@ -1,9 +1,69 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+---
+Place_1:
+  id: 1
+  details:
+    name: Casa De Cultura Mario Quintana
+  geographic:
+    cep: 90020-004
+    city: Porto Alegre
+    latlon:
+    - 60.4547512
+    - 22.2697112218368
+    address: Andradas 736, 90020-004 Porto Alegre
+    neighborhood: VI
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 18:46:11.553273000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 18:46:11.553273000 Z
+    zone: *2
+    time: *3
 
-one:
-  name: MyString
-  address: MyString
+---
+Place_2:
+  id: 2
+  details:
+    name: Redenção - Parque Farroupilha
+  geographic:
+    cep: 90040-480
+    city: Porto Alegre
+    latlon: 
+    address: Avenida João Pessoa, 90040-480 Porto Alegre
+    neighborhood: 
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 18:47:13.504671000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 18:47:13.504671000 Z
+    zone: *2
+    time: *3
 
-two:
-  name: MyString
-  address: MyString
+---
+Place_3:
+  id: 3
+  details:
+    name: Cinemateca Capitolio
+  geographic:
+    cep: 90010-283
+    city: Porto Alegre
+    latlon:
+    - -30.033306501378
+    - -51.2256161433965
+    address: Rua Demétrio Ribeiro 1085 - Esq. com Borges de Medeiros, 90010-283 Porto
+      Alegre
+    neighborhood: Historic District
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 18:47:26.683436000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 18:47:26.683436000 Z
+    zone: *2
+    time: *3
+
+---

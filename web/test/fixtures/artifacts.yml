@@ -1,7 +1,93 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+---
+Artifact_1:
+  id: 1
+  details:
+    name: kinds
+    type: list
+  data:
+    blacklist: []
+    whitelist:
+    - noite
+    - bebida
+    - ar livre
+    - música
+    - bem-estar
+    - bicicleta
+    - skate
+    - aventura
+    - caminhada
+    - dança
+    - acadêmico
+    - profissional
+    - arte
+    - economia compartilhada
+    - cidadania
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 19:37:01.059044000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 23:48:21.619016000 Z
+    zone: *2
+    time: *3
 
-one:
-  name: MyString
+---
+Artifact_2:
+  id: 2
+  details:
+    name: tags
+    type: list
+  data:
+    blacklist:
+      things: []
+      features: []
+      activities: []
+    whitelist:
+      things:
+      - poesia
+      - jazz
+      - rock
+      - autodesenvolvimento
+      - reggae
+      - forró
+      - frevo
+      - gentrificação
+      - urbanismo
+      - desenho
+      - inovação
+      features:
+      - romântico
+      - tradicionalista
+      - cultural
+      activities:
+      - dançar
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 19:37:01.086928000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 23:50:41.337158000 Z
+    zone: *2
+    time: *3
 
-two:
-  name: MyString
+---
+Artifact_3:
+  id: 3
+  details:
+    name: description
+    type: list
+  data:
+    blacklist: []
+    whitelist: []
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2019-06-14 19:37:01.104709000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2019-06-14 19:37:01.104709000 Z
+    zone: *2
+    time: *3
+

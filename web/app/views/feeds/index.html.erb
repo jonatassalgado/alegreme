@@ -54,7 +54,7 @@
                    type:       :large,
                    filters:    false
                } %>
-  <% elsif current_user&.personas_assortment_finished? %>
+  <%# elsif current_user&.personas_assortment_finished? %>
     <%#= render partial: "section", locals: {items: @items[:user], titles: {principal: "Eventos recomendados para vocÃª"}, identifier: 'recomendados', type: :large, filters: false} %>
     <%#= render partial: "section", locals: {items: @items[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: {personas: false, categories: true, ocurrences: true}} if @items[:categories] %>
   <% else %>
@@ -74,7 +74,7 @@
                  } %>
     </section>
     <section id="cinema">
-      <%= render partial: "section",
+      <%#= render partial: "section",
                  locals:  {
                      items:      @items[:cinema],
                      titles:     {
@@ -88,7 +88,7 @@
                  } %>
     </section>
     <section id="show-and-party">
-      <%= render partial: "section",
+      <%#= render partial: "section",
                  locals:  {
                      items:      @items[:show_and_party],
                      titles:     {

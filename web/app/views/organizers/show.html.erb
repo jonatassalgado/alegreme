@@ -1,14 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @organizer.name %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @organizer.url %>
-</p>
-
-<%= link_to 'Edit', edit_organizer_path(@organizer) %> |
-<%= link_to 'Back', organizers_path %>
+<section id=<%= @locals[:identifier] %>>
+      <%= render partial: "feeds/section", locals: @locals %>
+</section>

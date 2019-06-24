@@ -19,7 +19,7 @@
 	<% @items[:events].each do |event| %>
 		<% cache(event) do %>
 			<tr>
-				<td><img src="<%= get_image_url event, :"list-mobile" %>"></td>
+				<td><img src="<%= event.cover_url :feed %>"></td>
 				<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
 				<td><%= event.place_details_name %></td>
 				<td>

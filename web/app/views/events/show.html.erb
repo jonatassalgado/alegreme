@@ -3,40 +3,55 @@
   <a href="<%= @event.url %>/edit">Editar</a>
   <a href="/train">Treinar</a>
 <% end %>
-<div class="me-card me-card--single mdc-card event-<%= @event.id %>" data-controller="event" data-target="event.event"
-  data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
-  data-event-identifier="<%= @event.id %>"
-  data-event-modifier="single">
+<div class="me-card me-card--single mdc-card event-<%= @event.id %>"
+     data-controller="event"
+     data-target="event.event"
+     data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
+     data-event-identifier="<%= @event.id %>"
+     data-event-modifier="single">
   <div class="mdc-card__media mdc-card__media--16-9" style="<%= get_image_style_attr @event, :single %>">
     <% if current_user %>
-    <div class="me-card__like-button" data-action="click->event#like">
-      <div data-target="event.like">
-        <button data-target="event.likeButton" id="add-to-favorites"
-          class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(@event.id) %>"
-          aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
-          <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
-          <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
-        </button>
+      <div class="me-card__like-button" data-action="click->event#like">
+        <div data-target="event.like">
+          <button data-target="event.likeButton" id="add-to-favorites"
+                  class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(@event.id) %>"
+                  aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
+            <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
+            <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
+          </button>
+        </div>
       </div>
-    </div>
     <% end %>
   </div>
-  <div class="me-card__primary">
-    <h2 class="mdc-card__title mdc-typography--headline6">
-      <%= @event.details_name %>
-    </h2>
-  </div>
   <div class="me-card__secondary">
-    <h3 class="mdc-card__subtitle mdc-typography--subtitle1">
-    </h3>
-    <div class="mdc-typography--body2">
-      <b>Quando:</b> <%= @event.day_of_week %><br>
+    <div class="me-card__primary">
+      <h2 class="mdc-card__title mdc-typography--headline6">
+        <%= @event.details_name %>
+      </h2>
+    </div>
+    <div class="me-card__organizer" data-target="event.organizer">
+      <div class="mdc-chip-set">
+        <% @event.organizers.each do |organizer| %>
+          <%= link_to organizer_path(organizer) do %>
+            <div class="mdc-chip">
+              <div class="mdc-chip__text">
+                <%= organizer.details['name'] %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="me-card__ocurrence">
+      Quando: <%= @event.day_of_week['decorator'] %>
+    </div>
+    <div class="me-card__place">
       <% if @event.place %>
-        <b>Local:</b> <%= @event.place_details_name %><br>
-        <b>Endereço:</b> <%= @event.geographic['address'] %><br>
+        Local: <%= @event.place_details_name %><br>
+        Endereço: <%= @event.geographic['address'] %><br>
       <% end %>
-      <br>
-      <br>
+    </div>
+    <div class="me-card__description">
       <%= @event.details_description.html_safe %><br>
     </div>
   </div>

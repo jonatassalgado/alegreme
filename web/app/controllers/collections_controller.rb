@@ -1,9 +1,8 @@
 class CollectionsController < ApplicationController
-  include EventsService
 
   def index
-    @collections ||= EventsService::Collection.new(current_or_guest_user, params)
-    response = params[:section]
+    @collections ||= EventServices::CollectionCreator.new(current_or_guest_user, params)
+    response = params[:identifier]
 
 
     send "#{response.underscore}"
@@ -14,7 +13,7 @@ class CollectionsController < ApplicationController
   private
 
   def today_and_tomorrow
-    @items = @collections.events_for_today
+    @items = @collections.call('today-and-tomorrow')
     @locals = {
         items: @items,
         titles: {
@@ -70,7 +69,7 @@ class CollectionsController < ApplicationController
 
   def user_personas
     Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
-      @items = @collections.events_for_user_personas(group_by: 3, limit: 50)
+      @items = @collections.call('user-personas', all_existing_filters: true)
     end
 
     @locals = {
