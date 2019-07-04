@@ -16,14 +16,23 @@ module EventServices
 		def call(collection, opts = {})
 			return {} if collection.blank?
 
-			@collection      = collection
+			if collection.is_a?(Hash) && collection.key?(:identifier)
+				@collection = collection[:collection]
+				@identifier = collection[:identifier]
+			else
+				@identifier = collection
+				@collection = collection
+			end
+
 			@opts            = default_options(opts)
-			@default_filters = default_filters
 			@dynamic_filters = default_filters.merge(get_filters_for_collection)
 
+
 			events = if is_a_activerecord_relation?
-				         EventFetcher.new(@collection, @default_filters).call
+				         STDOUT.puts "ACTIVE RECORD: #{@dynamic_filters}"
+				         EventFetcher.new(@collection, @dynamic_filters).call
 				       else
+					       STDOUT.puts "COLLECTION: #{@dynamic_filters}"
 					       EventFetcher.new(Event.all, @dynamic_filters).call
 			         end
 
@@ -53,27 +62,43 @@ module EventServices
 							order_by_persona: true
 					},
 					'user-personas'      => {
+							for_user:         CollectionCreator.user,
 							in_days:          set_initial_dates_filter,
 							order_by_persona: true
+					},
+					'follow'             => {
+							in_days:            set_initial_dates_filter,
+							order_by_persona:   true,
+							in_follow_features: true,
+							group_by:           calculate_items_for_group(5, auto_balance: true)
 					}
 			}
 
-			collections[@collection] || {}
+			if collections.key?(@identifier)
+				collections[@identifier]
+			else
+				{}
+			end
 		end
 
 		def default_options(opts)
-			return {} if is_a_activerecord_relation?
-
 			default_opts = {
 					'today-and-tomorrow' => {
 							all_existing_filters: false
 					},
 					'user-personas'      => {
 							all_existing_filters: true
+					},
+					'follow'             => {
+							all_existing_filters: true
 					}
 			}
 
-			default_opts[@collection].merge(opts) || {}
+			if default_opts.key?(@identifier)
+				default_opts[@identifier].merge(opts)
+			else
+				{all_existing_filters: false}
+			end
 		end
 
 		def get_filters_toggle_for_collection
@@ -86,10 +111,15 @@ module EventServices
 							categories: true,
 							kinds:      true,
 							ocurrences: true
+					},
+					'follow'             => {
+							categories: true,
+							kinds:      true,
+							ocurrences: true
 					}
 			}
 
-			filters[@collection] || {
+			filters[@identifier] || {
 					categories: false,
 					kinds:      false,
 					ocurrences: false
@@ -151,13 +181,13 @@ module EventServices
 					defaults[type]
 				when 'kinds'
 					if params_filter_category_exist?
-						events.map(&:kinds_name).flatten.uniq
+						events.map { |e| e.kinds.map { |c| c.details['name'] } }.flatten.uniq
 					else
 						defaults[type]
 					end
 				when 'ocurrences'
 					if params_filter_category_exist? || params_filter_kind_exist?
-						Event.day_of_week(events, active_range: active_range?).sort_by_order.uniq.values
+						Event.day_of_week(events, active_range: active_range?).sort_by_order.compact_range.uniq.values
 					else
 						defaults[type]
 					end
@@ -168,22 +198,22 @@ module EventServices
 					if @opts[:all_existing_filters]
 						CollectionCreator.categories
 					else
-						events.map(&:categories_primary_name).uniq
+						events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
 					end
 				when 'kinds'
-					events.map(&:kinds_name).flatten.uniq
+					# events.map(&:kinds_name).flatten.uniq
 				when 'ocurrences'
 					if @opts[:all_existing_filters]
 						Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_order.compact_range.uniq.values
 					else
-						Event.day_of_week(events, active_range: active_range?).sort_by_date.uniq.values
+						Event.day_of_week(events, active_range: active_range?).sort_by_date.compact_range.uniq.values
 					end
 				end
 			end
 		end
 
 		def active_range?
-			!is_a_activerecord_relation?
+			true
 		end
 
 		def is_a_activerecord_relation?
@@ -207,13 +237,13 @@ module EventServices
 			when 'test'
 				CollectionCreator.user          = current_user
 				CollectionCreator.active_events = Event.active
-				CollectionCreator.kinds         = CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
-				CollectionCreator.categories    = CollectionCreator.active_events.map(&:categories_primary_name).sort.uniq.freeze
+				CollectionCreator.kinds         = CollectionCreator.active_events.map { |e| e.kinds.map { |c| c.details['name'] } }.flatten.uniq.freeze
+				CollectionCreator.categories    = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq.freeze
 			else
 				CollectionCreator.user          ||= current_user
-				CollectionCreator.active_events ||= Event.active
-				CollectionCreator.kinds         ||= CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
-				CollectionCreator.categories    ||= CollectionCreator.active_events.map(&:categories_primary_name).sort.uniq.freeze
+				CollectionCreator.active_events ||= Event.includes(:place, :categories, :organizers).active
+				# CollectionCreator.kinds         ||= CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
+				CollectionCreator.categories ||= CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
 			end
 		end
 	end

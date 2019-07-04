@@ -4,6 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
+  acts_as_follower
+
+  include UserDecorators::Following
+
   def favorited_events
     if self && !self.taste_events_saved.empty?
       Event.saved_by_user(self).active.order_by_date.uniq

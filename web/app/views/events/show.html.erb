@@ -1,9 +1,10 @@
+
 <p id="notice"><%= notice %></p>
 <% if current_user && current_user.admin? %>
   <a href="<%= @event.url %>/edit">Editar</a>
   <a href="/train">Treinar</a>
 <% end %>
-<div class="me-card me-card--single mdc-card event-<%= @event.id %>"
+<div id="event" class="me-card me-card--single mdc-card event-<%= @event.id %>"
      data-controller="event"
      data-target="event.event"
      data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
@@ -23,32 +24,23 @@
       </div>
     <% end %>
   </div>
-  <div class="me-card__secondary">
-    <div class="me-card__primary">
-      <h2 class="mdc-card__title mdc-typography--headline6">
-        <%= @event.details_name %>
-      </h2>
+  <div class="me-card__content">
+    <h2 class="mdc-card__name mdc-typography--headline6">
+      <%= @event.details_name %>
+    </h2>
+    <div class="me-card__organizer" data-target="event.organizer">
+      <%= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.categories, type: 'categories' } %>
     </div>
     <div class="me-card__organizer" data-target="event.organizer">
-      <div class="mdc-chip-set">
-        <% @event.organizers.each do |organizer| %>
-          <%= link_to organizer_path(organizer) do %>
-            <div class="mdc-chip">
-              <div class="mdc-chip__text">
-                <%= organizer.details['name'] %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+      <%= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.organizers, type: 'organizers' } %>
     </div>
     <div class="me-card__ocurrence">
-      Quando: <%= @event.day_of_week['decorator'] %>
+      <b>Quando:</b> <%= "#{@event.day_of_week['decorator']} (#{@event.day_of_week['string']})" %>
     </div>
     <div class="me-card__place">
       <% if @event.place %>
-        Local: <%= @event.place_details_name %><br>
-        Endereço: <%= @event.geographic['address'] %><br>
+        <b>Local:</b> <%= @event.place_details_name %><br>
+        <b>Endereço:</b> <%= @event.geographic['address'] %><br>
       <% end %>
     </div>
     <div class="me-card__description">

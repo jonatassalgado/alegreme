@@ -30,10 +30,9 @@ class FeedsController < ApplicationController
 					         get_events_for_search_query
 					       else
 						       {
-								       today: collections.call('today-and-tomorrow', group_by: 5),
-								       # cinema: collections.events_for_cinema(group_by: 10),
-								       # show_and_party: collections.events_for_show_and_party(group_by: 5),
-								       user_personas: collections.call('user-personas', all_existing_filters: true)
+								       today:         collections.call('today-and-tomorrow', group_by: 5),
+								       follow:        collections.call({identifier: 'follow', collection: current_user.events_from_followed_features}),
+								       user_personas: collections.call('user-personas')
 						       }
 				         end
 

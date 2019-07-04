@@ -1,176 +1,176 @@
-import { Controller } from "stimulus";
-import { MDCMenu } from "@material/menu";
-import { MDCRipple } from "@material/ripple";
-import { CacheSystem } from "modules/cache-system";
+import {Controller}      from "stimulus";
+import {MDCMenu}         from "@material/menu";
+import {MDCRipple}       from "@material/ripple";
+import {CacheSystem}     from "modules/cache-system";
 import * as MobileDetect from "mobile-detect";
-import * as mdc from "material-components-web";
+import * as mdc          from "material-components-web";
 
 export default class EventController extends Controller {
-  static targets = [
-    "event",
-    "overlay",
-    "name",
-    "place",
-    "date",
-    "like",
-    "likeButton",
-    "likeCount",
-    "moreButton",
-    "menu"
-  ];
+	static targets = [
+		"event",
+		"overlay",
+		"name",
+		"place",
+		"date",
+		"like",
+		"likeButton",
+		"likeCount",
+		"moreButton",
+		"menu"
+	];
 
-  initialize() {
-    const self = this;
+	initialize() {
+		const self = this;
 
-    self.eventTarget.addEventListener('eventLiked', function(event){
-      self.updateLikeStatus(event, self)
-    });
+		self.eventTarget.addEventListener('eventLiked', function (event) {
+			self.updateLikeStatus(event, self)
+		});
 
-    self.md = new MobileDetect(window.navigator.userAgent);
+		self.md = new MobileDetect(window.navigator.userAgent);
 
-    self.activeInteractions = true;
-    self.adjustForDevice = self.md.mobile();
+		self.activeInteractions = true;
+		self.adjustForDevice    = self.md.mobile();
 
-    document.addEventListener("turbolinks:before-cache", () => {
-      self.activeInteractions = false;
-    });
-  }
+		document.addEventListener("turbolinks:before-cache", () => {
+			self.activeInteractions = false;
+		});
+	}
 
-  showEventDetails() {
-    const self = this;
+	showEventDetails() {
+		const self = this;
 
-    if (this.md.mobile()) {
-    } else {
-      if (self.data.get("favorited") == "false") {
-        self.likeButtonTarget.style.display = "inline";
-      }
+		if (this.md.mobile()) {
+		} else {
+			if (self.data.get("favorited") == "false") {
+				self.likeButtonTarget.style.display = "inline";
+			}
 
-      self.eventTarget.addEventListener("mouseout", function() {
-        if (self.data.get("favorited") == "false") {
-          self.likeButtonTarget.style.display = "none";
-        }
-      });
-    }
-  }
+			self.eventTarget.addEventListener("mouseout", function () {
+				if (self.data.get("favorited") == "false") {
+					self.likeButtonTarget.style.display = "none";
+				}
+			});
+		}
+	}
 
-  openMenu() {
-    const self = this;
-    const mdcMenu = new MDCMenu(self.menuTarget);
-    if (mdcMenu.open) {
-      mdcMenu.open = false;
-    } else {
-      mdcMenu.open = true;
-    }
-  }
+	openMenu() {
+		const self    = this;
+		const mdcMenu = new MDCMenu(self.menuTarget);
+		if (mdcMenu.open) {
+			mdcMenu.open = false;
+		} else {
+			mdcMenu.open = true;
+		}
+	}
 
 
-  updateLikeStatus(event, self) {
-    self.activeLikeButton = event.detail.currentEventFavorited;
-    self.data.set("favorited", event.detail.currentEventFavorited);
+	updateLikeStatus(event, self) {
+		self.activeLikeButton = event.detail.currentEventFavorited;
+		self.data.set("favorited", event.detail.currentEventFavorited);
 
-    CacheSystem.clearCache(["feed-page", "events-page"], {
-      event: {
-        identifier: self.identifier
-      }
-    });
-  }
+		CacheSystem.clearCache(["feed-page", "events-page"], {
+			event: {
+				identifier: self.identifier
+			}
+		});
+	}
 
-  like() {
-    const self = this;
+	like() {
+		const self = this;
 
-    fetch(`/events/${self.identifier}/favorite`, {
-      method: self.isFavorited,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-type': 'text/javascript; charset=UTF-8',
-        'X-CSRF-Token': Rails.csrfToken()
-      },
-      credentials: 'same-origin'
-    })
-    .then(
-        function(response) {
-          response.text().then(function(data) {
-            eval(data);
-          });
-        }
-    )
-    .catch(function(err) {
-      console.log('Fetch Error :-S', err);
-    });
+		fetch(`/events/${self.identifier}/favorite`, {
+			method     : self.isFavorited,
+			headers    : {
+				'X-Requested-With': 'XMLHttpRequest',
+				'Content-type'    : 'text/javascript; charset=UTF-8',
+				'X-CSRF-Token'    : Rails.csrfToken()
+			},
+			credentials: 'same-origin'
+		})
+			.then(
+				function (response) {
+					response.text().then(function (data) {
+						eval(data);
+					});
+				}
+			)
+			.catch(function (err) {
+				console.log('Fetch Error :-S', err);
+			});
 
-  }
+	}
 
-  get isFavorited() {
-    if (this.data.get("favorited") == "true") {
-      return "delete";
-    } else {
-      return "post";
-    }
-  }
+	get isFavorited() {
+		if (this.data.get("favorited") == "true") {
+			return "delete";
+		} else {
+			return "post";
+		}
+	}
 
-  get identifier() {
-    return this.data.get("identifier");
-  }
+	get identifier() {
+		return this.data.get("identifier");
+	}
 
-  get favoriteController() {
-    return this.application.controllers.find(function(controller) {
-      return controller.context.identifier === "favorite";
-    });
-  }
+	get favoriteController() {
+		return this.application.controllers.find(function (controller) {
+			return controller.context.identifier === "favorite";
+		});
+	}
 
-  set activeLikeButton(value) {
-    const self = this; 
-    document.querySelectorAll(`[data-event-identifier="${self.identifier}"]`).forEach((event) => {
-      event.setAttribute('data-event-favorited', value);
-      if (value) {
-        event.querySelector('[data-target="event.likeButton"]').classList.add('mdc-icon-button--on')
-      } else {
-        event.querySelector('[data-target="event.likeButton"]').classList.remove('mdc-icon-button--on')
-      }
-    });
-  }
+	set activeLikeButton(value) {
+		const self = this;
+		document.querySelectorAll(`[data-event-identifier="${self.identifier}"]`).forEach((event) => {
+			event.setAttribute('data-event-favorited', value);
+			if (value) {
+				event.querySelector('[data-target="event.likeButton"]').classList.add('mdc-icon-button--on')
+			} else {
+				event.querySelector('[data-target="event.likeButton"]').classList.remove('mdc-icon-button--on')
+			}
+		});
+	}
 
-  set likeCount(value) {
-    const likeElementsCounts = document.querySelectorAll(
-      `[data-event-identifier="${value.event_id}"] .me-like-count`
-    );
-    likeElementsCounts.forEach(count => {
-      count.textContent = value.event_likes_count;
-    });
-  }
+	set likeCount(value) {
+		const likeElementsCounts = document.querySelectorAll(
+			`[data-event-identifier="${value.event_id}"] .me-like-count`
+		);
+		likeElementsCounts.forEach(count => {
+			count.textContent = value.event_likes_count;
+		});
+	}
 
-  set activeInteractions(value) {
-    const self = this;
+	set activeInteractions(value) {
+		const self = this;
 
-    if (value) {
-      if (self.hasOverlayTarget && !self.overlayRipple) {
-        self.overlayRipple = new MDCRipple(self.overlayTarget);
-      }
-      if (self.hasLikeButtonTarget) {
-        self.toggleLikeButton = new mdc.iconButton.MDCIconButtonToggle(
-          self.likeButtonTarget
-        );
-      }
-    } else {
-      if (self.overlayRipple) {
-        self.overlayRipple.destroy();
-      }
-      if (self.likeButtonRipple) {
-        self.likeButtonRipple.destroy();
-      }
-    }
-  }
+		if (value) {
+			if (self.hasOverlayTarget && !self.overlayRipple) {
+				self.overlayRipple = new MDCRipple(self.overlayTarget);
+			}
+			if (self.hasLikeButtonTarget) {
+				self.toggleLikeButton = new mdc.iconButton.MDCIconButtonToggle(
+					self.likeButtonTarget
+				);
+			}
+		} else {
+			if (self.overlayRipple) {
+				self.overlayRipple.destroy();
+			}
+			if (self.likeButtonRipple) {
+				self.likeButtonRipple.destroy();
+			}
+		}
+	}
 
-  set adjustForDevice(isMobile) {
-    const self = this;
-    const isFavorited = self.data.get("favorited") == "false";
-    const isSingle = self.data.get("modifier") == "single";
+	set adjustForDevice(isMobile) {
+		const self        = this;
+		const isFavorited = self.data.get("favorited") == "false";
+		const isSingle    = self.data.get("modifier") == "single";
 
-    if (isMobile) {
-    } else {
-      if (isFavorited && !isSingle) {
-        self.likeButtonTarget.style.display = "none";
-      }
-    }
-  }
+		if (isMobile) {
+		} else {
+			if (isFavorited && !isSingle) {
+				self.likeButtonTarget.style.display = "none";
+			}
+		}
+	}
 }

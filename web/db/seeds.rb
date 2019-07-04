@@ -7,75 +7,86 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 kinds = ["noite", "bebida", "ar livre", "música", "bem-estar", "bicicleta", "skate", "aventura", "caminhada", "dança", "acadêmico", "profissional", "arte", "economia compartilhada"]
+categories = ['anúncio', 'festa', 'curso', 'teatro', 'show', 'cinema', 'exposição', 'feira', 'esporte', 'meetup', 'hackaton', 'palestra', 'sarau', 'festival', 'brecho', 'fórum', 'slam', 'protesto', 'outlier']
 
 User.create!(
-	email: "test@gmail.com",
-	password: "123456",
-	features: { 
-		"psychographic": {
-			"personas": {
-				"primary": {
-					"name": "hipster", 
-					"score": "1"
-				}, 
-				"tertiary": {
-					"name": "underground", 
-					"score": "1"
-				}, 
-				"secondary": {
-					"name": "praieiro", 
-					"score": "1"
-				}, 
-				"assortment": {
-					"finished": false
-				}, 
-				"quartenary": {
-					"name": "cult", 
-					"score": "1"
+		email:    "test@gmail.com",
+		password: "123456",
+		features: {
+				"psychographic": {
+						"personas": {
+								"primary":    {
+										"name":  "hipster",
+										"score": "1"
+								},
+								"tertiary":   {
+										"name":  "underground",
+										"score": "1"
+								},
+								"secondary":  {
+										"name":  "praieiro",
+										"score": "1"
+								},
+								"assortment": {
+										"finished": false
+								},
+								"quartenary": {
+										"name":  "cult",
+										"score": "1"
+								}
+						}
 				}
-			}
-		}
-	},  
-	admin: true
-)
-
-Artifact.create!(
-	details: {
-		name: 'kinds',
-		type: 'list'
-	},
-	data: {
-		whitelist: kinds,
-		blacklist: []
-	}
-)
-
-Artifact.create!(
-	details: {
-		name: 'tags',
-		type: 'list'
-	},
-	data: {
-		whitelist: {
-			things: [],
-			activities: [],
-			features: []
 		},
-		blacklist: {
-			things: [],
-			activities: [],
-			features: []
+		admin:    true
+)
+
+kinds.each do |kind|
+	Kind.create!(details: {name: kind})
+end
+
+categories.each do |category|
+  Category.create!(details: {
+		  name: category
+  })
+end
+
+Artifact.create!(
+		details: {
+				name: 'kinds',
+				type: 'list'
+		},
+		data:    {
+				whitelist: kinds,
+				blacklist: []
 		}
-	}
 )
 
 Artifact.create!(
-	details: {
-		name: 'description',
-		type: 'list'
-	},
-	data: {
-		whitelist: [],
-		blacklist: []
-	}
+		details: {
+				name: 'tags',
+				type: 'list'
+		},
+		data:    {
+				whitelist: {
+						things:     [],
+						activities: [],
+						features:   []
+				},
+				blacklist: {
+						things:     [],
+						activities: [],
+						features:   []
+				}
+		}
+)
+
+Artifact.create!(
+		details: {
+				name: 'description',
+				type: 'list'
+		},
+		data:    {
+				whitelist: [],
+				blacklist: []
+		}
 )

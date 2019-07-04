@@ -22,7 +22,7 @@
   &__events-section {
     max-width: 600px;
     margin: auto;
-    padding-top: 85px;
+    //padding-top: 85px;
     
     @include mdc-layout-grid-media-query_("phone") {
       padding-top: 45px;

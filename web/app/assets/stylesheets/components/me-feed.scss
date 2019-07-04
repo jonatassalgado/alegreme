@@ -28,6 +28,7 @@ $mdc-layout-grid-columns: (
     & .me-filter {
       display: block;
       margin: 16px 0;
+      min-height: 90px;
     }
 
     & .me-feed__divider {

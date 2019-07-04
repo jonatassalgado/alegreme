@@ -1,0 +1,43 @@
+@import 'variables';
+
+.me-follow-chip-set {
+
+  & .mdc-chip {
+    background: none;
+    border: 1px solid $border-color;
+
+    &__text {
+      transition: color 0.4s ease;
+    }
+
+    & .mdc-chip__icon--leading {
+      width: 0;
+      opacity: 0;
+      //transition: opacity 0.4s ease;
+    }
+
+    &:hover {
+      & .mdc-chip__icon--leading {
+        width: 18px;
+        opacity: 1;
+      }
+    }
+
+    &--selected {
+      border-color: $brand-color;
+
+      & .mdc-chip__text {
+        color: $brand-color-in-white;
+      }
+
+
+      & .mdc-chip__icon--leading {
+        color: $brand-color-in-white;
+        width: 18px;
+        opacity: 1;
+        //margin: 0 -4px 0 4px;
+      }
+    }
+
+  }
+}

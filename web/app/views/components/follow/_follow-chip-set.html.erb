@@ -1,0 +1,41 @@
+<%
+
+  return if chips.blank? || type.blank?
+
+  leading = local_assigns.fetch(:trailing, 'add')
+  type = local_assigns.fetch(:type)
+
+  def followable_name(followable, type)
+    if type == 'categories'
+      followable
+    else
+      followable
+    end
+  end
+
+%>
+
+<div class="me-follow-chip-set mdc-chip-set mdc-chip-set--filter"
+     data-controller="follow-chipset"
+     data-target="follow-chipset.chipset"
+     id="follow-chip-set__<%= type %>">
+  <% chips.each do |followable| %>
+    <div class="mdc-chip <%= 'mdc-chip--selected' if user.following?(followable) %>"
+         data-followed="<%= user.following?(followable) %>"
+         data-followable="<%= followable.id %>"
+         data-type="<%= type %>"
+         data-target="follow-chipset.chip">
+      <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"
+         data-action="click->follow-chipset#follow"
+         data-target="follow-chipset.trailing"
+         role="button"
+         tabindex="0"><%= leading %></i>
+      <%#= link_to organizer_path(followable) do %>
+      <div class="mdc-chip__text">
+        <%= followable.details['name'] %>
+      </div>
+      <%# end %>
+    </div>
+  <% end %>
+</div>
+

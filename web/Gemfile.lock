@@ -13,6 +13,14 @@ GIT
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
 
+GIT
+  remote: https://github.com/tcocca/acts_as_follower.git
+  revision: c5ac7b9601c4af01eb4d9112330b27be4d694ecc
+  branch: master
+  specs:
+    acts_as_follower (0.2.1)
+      activerecord (>= 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -92,9 +100,6 @@ GEM
     bootsnap (1.4.4)
       msgpack (~> 1.0)
     builder (3.2.3)
-    bullet (6.0.0)
-      activesupport (>= 3.0.0)
-      uniform_notifier (~> 1.11)
     byebug (11.0.1)
     callsite (0.0.11)
     capybara (3.22.0)
@@ -331,7 +336,6 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
-    uniform_notifier (1.12.1)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (3.7.0)
@@ -352,10 +356,10 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_extended
+  acts_as_follower!
   awesome_print
   aws-sdk-s3
   bootsnap (>= 1.1.0)
-  bullet
   byebug
   capybara (>= 2.15)
   chromedriver-helper

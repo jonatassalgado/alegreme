@@ -26,28 +26,35 @@ class CollectionCreatorTest < ActiveSupport::TestCase
 
 
 	test 'should return collection of personas events' do
-		in_persona          = create(:event, personas: {
-				'outlier':   false,
-				'primary':   {
-						'name':  'hipster',
-						'score': '0.996777',
-				},
-				'secondary': {
-						'name':  'zeen',
-						'score': '0.003223',
+		in_persona          = create(:event, ml_data: {
+				personas: {
+						'outlier':   false,
+						'primary':   {
+								'name':  'hipster',
+								'score': '0.996777',
+						},
+						'secondary': {
+								'name':  'zeen',
+								'score': '0.003223',
+						}
 				}
 		})
-		not_in_user_persona = create(:event, personas: {
-				'outlier':   false,
-				'primary':   {
-						'name':  'geek',
-						'score': '0.996777',
-				},
-				'secondary': {
-						'name':  'zeen',
-						'score': '0.003223',
+		not_in_user_persona = create(:event, ml_data: {
+				personas: {
+						'outlier':   false,
+						'primary':   {
+								'name':  'geek',
+								'score': '0.996777',
+						},
+						'secondary': {
+								'name':  'zeen',
+								'score': '0.003223',
+						}
 				}
 		})
+		category = create(:category)
+		in_persona.categories << category
+
 
 		collection = EventServices::CollectionCreator.new(@user)
 
@@ -59,26 +66,30 @@ class CollectionCreatorTest < ActiveSupport::TestCase
 	end
 
 	test 'should return collection of personas events limited by 1' do
-		create(:event, personas: {
-				'outlier':   false,
-				'primary':   {
-						'name':  'hipster',
-						'score': '0.996777',
-				},
-				'secondary': {
-						'name':  'zeen',
-						'score': '0.003223',
+		create(:event, ml_data: {
+				personas: {
+						'outlier':   false,
+						'primary':   {
+								'name':  'hipster',
+								'score': '0.996777',
+						},
+						'secondary': {
+								'name':  'zeen',
+								'score': '0.003223',
+						}
 				}
 		})
-		create(:event, personas: {
-				'outlier':   false,
-				'primary':   {
-						'name':  'hipster',
-						'score': '0.996777',
-				},
-				'secondary': {
-						'name':  'zeen',
-						'score': '0.003223',
+		create(:event, ml_data: {
+				personas: {
+						'outlier':   false,
+						'primary':   {
+								'name':  'hipster',
+								'score': '0.996777',
+						},
+						'secondary': {
+								'name':  'zeen',
+								'score': '0.003223',
+						}
 				}
 		})
 

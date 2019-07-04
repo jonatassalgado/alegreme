@@ -19,11 +19,12 @@
   & .mdc-chip-set {
 
     & .material-icons {
-      padding: 6px;
+      vertical-align: middle;
+      padding: 0 6px 0 16px;
     }
 
     & .mdc-chip {
-      margin: 6px 0;
+      margin: 4px 0;
       @include mdc-layout-grid-media-query_("phone") {
         margin: 4px;
       }

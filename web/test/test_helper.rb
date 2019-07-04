@@ -30,6 +30,7 @@ class ActionDispatch::IntegrationTest
       "user[email]"    => user.email,
       "user[password]" => user.password
   end
+
 end
 
 
@@ -44,4 +45,13 @@ class ActiveSupport::TestCase
     Timecop.return
     DatabaseCleaner.clean
   end
+
+  def context(should, &block)
+    block.call(should.upcase)
+  end
+
+  def is(action, &block)
+    block.call(action.upcase)
+  end
+
 end

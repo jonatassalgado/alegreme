@@ -1,0 +1,11 @@
+(function () {
+	let chipEventElem = document.getElementById('follow-chip-set__<%= @type %>');
+
+	setTimeout(function () {
+		morphdom(chipEventElem, '<%= j render(partial: 'components/follow/follow-chip-set', locals: {user: @user, chips: @chips, type: @type}) %>'.trim(), {
+			onBeforeElUpdated: function (fromEl, toEl) {
+				new MDC.MDCChipSet(toEl);
+			}
+		})
+	}, 250)
+})()

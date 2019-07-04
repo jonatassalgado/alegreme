@@ -13,6 +13,7 @@ module EventServices
 			in_kinds_on       = sockets[:in_kinds]
 			days_on           = sockets[:in_days]
 			user_on           = sockets[:for_user]
+			follow_on         = sockets[:in_follow_features]
 			order_personas_on = sockets[:order_by_persona]
 			days              = @params[:in_days]
 			user              = @params[:for_user]
@@ -24,9 +25,14 @@ module EventServices
 			group_by          = @params[:group_by]
 
 			@relation
+					.active
 					.in_days(
 							days,
 							'turn_on': days_on
+					)
+					.follow_features_by_user(
+							user,
+							'turn_on': follow_on
 					)
 					.for_user(
 							user,
@@ -53,7 +59,9 @@ module EventServices
 							limit
 					)
 					.includes(
-							:place
+							:place,
+							:organizers,
+							:categories
 					)
 
 		end
@@ -73,13 +81,14 @@ module EventServices
 			end
 
 			default_sockets = {
-					in_days:          false,
-					for_user:         false,
-					in_kinds:         false,
-					in_categories:    false,
-					order_by_date:    false,
-					order_by_persona: false,
-					group_by:         false
+					in_days:            false,
+					for_user:           false,
+					in_kinds:           false,
+					in_categories:      false,
+					in_follow_features: false,
+					order_by_date:      false,
+					order_by_persona:   false,
+					group_by:           false
 			}
 
 			default_sockets.merge(toggles)

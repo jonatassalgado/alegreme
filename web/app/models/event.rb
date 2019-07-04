@@ -9,15 +9,18 @@ class Event < ApplicationRecord
 	include Rails.application.routes.url_helpers
 	include EventDecorators::Ocurrences
 
+	acts_as_followable
 
-	validate :validate_attrs_that_should_be_a_hash
-	validate :validate_attrs_that_should_be_a_array
+	# validate :validate_attrs_that_should_be_a_hash
+	# validate :validate_attrs_that_should_be_a_array
 
 	after_save :reindex, if: proc { |event| event.details_changed? }
 	after_destroy :reindex, :destroy_entries
 
 	belongs_to :place
 	has_and_belongs_to_many :organizers
+	has_and_belongs_to_many :categories
+	has_and_belongs_to_many :kinds
 
 	accepts_nested_attributes_for :place, :organizers
 
@@ -27,12 +30,22 @@ class Event < ApplicationRecord
 
 	scope 'for_user', lambda { |user, opts = {}|
 		opts = {'turn_on': true}.merge(opts)
-
 		if opts[:turn_on]
-			where("(personas -> 'primary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary, 'geral') OR
-           (personas -> 'secondary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary, 'geral')",
+			where("(ml_data -> 'personas' -> 'primary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary, 'geral') OR
+           (ml_data -> 'personas' -> 'secondary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary, 'geral')",
 			      primary:  user.personas_primary_name, secondary: user.personas_secondary_name,
 			      tertiary: user.personas_tertiary_name, quartenary: user.personas_quartenary_name)
+		else
+			all
+		end
+
+	}
+
+	scope 'follow_features_by_user', lambda { |user, opts = {}|
+		opts = {'turn_on': true}.merge(opts)
+
+		if opts[:turn_on]
+			user.events_from_followed_features
 		else
 			all
 		end
@@ -65,7 +78,7 @@ class Event < ApplicationRecord
 		opts = {'turn_on': true}.merge(opts)
 
 		if opts[:turn_on]
-			where("(personas -> 'primary' ->> 'name') IN (?)", personas)
+			where("(ml_data -> 'personas' -> 'primary' ->> 'name') IN (?)", personas)
 		else
 			all
 		end
@@ -76,7 +89,7 @@ class Event < ApplicationRecord
 		opts = {'turn_on': true}.merge(opts)
 
 		if opts[:turn_on]
-			where("(categories -> 'primary' ->> 'name') IN (?)", categories)
+			includes(:categories).where("(categories.details ->> 'name') IN (?)", categories).references(:categories)
 		else
 			all
 		end
@@ -108,7 +121,7 @@ class Event < ApplicationRecord
 		opts = {'turn_on': true}.merge(opts)
 
 		if opts[:turn_on]
-			order(Arel.sql"(personas -> 'primary' ->> 'score')::numeric DESC")
+			order(Arel.sql "(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC")
 		else
 			all
 		end
@@ -123,21 +136,21 @@ class Event < ApplicationRecord
 			# contains_range = ocurrences.any? { |ocurr| ocurr[0] == '[' }
 
 			# if contains_range
-				ocurrences.map do |ocurr|
-					is_array            = ocurr[0] == '['
+			ocurrences.map do |ocurr|
+				is_array = ocurr[0] == '['
 
-					if is_array
-						ocurr = JSON.parse ocurr
-						ocurrences_to_query << (ocurr[0].to_date..ocurr[1].to_date).to_a.map(&:yday)
-					else
-						ocurrences_to_query << ocurr.to_date.yday
-					end
+				if is_array
+					ocurr = JSON.parse ocurr
+					ocurrences_to_query << (ocurr[0].to_date..ocurr[1].to_date).to_a.map(&:yday)
+				else
+					ocurrences_to_query << ocurr.to_date.yday
 				end
+			end
 
-				# ocurrences_to_query.flatten
+			# ocurrences_to_query.flatten
 
 
-				where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences_to_query.flatten)
+			where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences_to_query.flatten)
 			# else
 			# 	ocurrences_to_query = ocurrences.map(&:to_date).map(&:yday)
 			# 	where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences_to_query)
@@ -181,7 +194,7 @@ class Event < ApplicationRecord
 		if active && !opts[:personas].blank?
 			order_by = ["case"]
 			opts[:personas].each_with_index.map do |persona, index|
-				order_by << "WHEN (personas -> 'primary' ->> 'name') = '#{persona}' THEN #{index}"
+				order_by << "WHEN (ml_data -> 'personas' -> 'primary' ->> 'name') = '#{persona}' THEN #{index}"
 			end
 			order_by << "end"
 			order(Arel.sql ActiveRecord::Base::sanitize_sql(order_by.join(" "))).order_by_score
@@ -193,7 +206,7 @@ class Event < ApplicationRecord
 
 	scope 'by_persona', lambda { |persona, position = 'primary'|
 		all
-		# where("((personas -> ? ->> 'name') = ?", position, persona)
+		# where("((ml_data -> 'personas' -> ? ->> 'name') = ?", position, persona)
 	}
 
 	scope 'in_categories', lambda { |categories, opts = {}|
@@ -201,23 +214,14 @@ class Event < ApplicationRecord
 		categories = categories || []
 
 		if opts[:turn_on] && !categories.blank?
-			if categories.count == 1
-				Event.where("(categories -> 'primary' ->> 'name') = :category ", category: categories.first)
-						.active(opts[:active])
-						.order_by_persona(true, {personas: opts[:personas]})
-						.order_by_date
-						.limit(opts[:group_by])
-			else
-				queries = []
-				categories.each do |category|
-					queries << Event.where("(categories -> 'primary' ->> 'name') = :category ", category: category)
-							           .active(opts[:active])
-							           .order_by_persona(true, {personas: opts[:personas]})
-							           .order_by_date
-							           .limit(opts[:group_by])
-				end
-				Event.union(*queries)
-			end
+			Event.includes(:categories)
+					.where("(categories.details ->> 'name') IN (:categories) ", categories: categories)
+					.references(:categories)
+					.active(opts[:active])
+					.order_by_persona(true, {personas: opts[:personas]})
+					.order_by_date
+					.limit(opts[:group_by])
+
 		else
 			all
 		end
@@ -237,14 +241,14 @@ class Event < ApplicationRecord
 	scope 'with_low_score', lambda { |feature|
 		case feature
 		when :personas
-			where("(personas -> 'primary' ->> 'score')::numeric < 0.51")
+			where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.51")
 		when :categories
-			where("(categories -> 'primary' ->> 'score')::numeric < 0.51")
+			where("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.51")
 		end
 	}
 
 	scope 'not_retrained', lambda {
-		where("(categories -> 'primary' ->> 'score')::numeric < 1 OR (personas -> 'primary' ->> 'score')::numeric < 1")
+		where("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 1 OR (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 1")
 	}
 
 	scope 'favorited_by', lambda { |user = current_user|
@@ -295,7 +299,7 @@ class Event < ApplicationRecord
 	end
 
 	def personas_primary_name
-		personas['primary']['name']
+		ml_data['personas']['primary']['name']
 	end
 
 	def ml_data_all
@@ -360,13 +364,14 @@ class Event < ApplicationRecord
 		end
 	end
 
-	def kinds_name
-		kinds.map { |kind| kind['name'] }
-	end
-
-	def kinds_scores
-		kinds.map { |kind| kind['score'] }
-	end
+	#
+	# def kinds_name
+	# 	kinds.map { |kind| kind['name'] }
+	# end
+	#
+	# def kinds_scores
+	# 	kinds.map { |kind| kind['score'] }
+	# end
 
 	def theme_name
 		theme['name']
@@ -393,39 +398,39 @@ class Event < ApplicationRecord
 	end
 
 	def personas_primary_name=(value)
-		personas['primary']['name'] = value
+		ml_data['personas']['primary']['name'] = value
 	end
 
 	def personas_secondary_name
-		personas['secondary']['name']
+		ml_data['personas']['secondary']['name']
 	end
 
 	def personas_secondary_name=(value)
-		personas['secondary']['name'] = value
+		ml_data['personas']['secondary']['name'] = value
 	end
 
 	def personas_primary_score
-		personas['primary']['score']
+		ml_data['personas']['primary']['score']
 	end
 
 	def personas_primary_score=(value)
-		personas['primary']['score'] = value
+		ml_data['personas']['primary']['score'] = value
 	end
 
 	def personas_secondary_score
-		personas['secondary']['score']
+		ml_data['personas']['secondary']['score']
 	end
 
 	def personas_secondary_score=(value)
-		personas['secondary']['score'] = value
+		ml_data['personas']['secondary']['score'] = value
 	end
 
 	def categories_primary_name
-		categories['primary']['name']
+		ml_data['categories']['primary']['name']
 	end
 
 	def categories_primary_name=(value)
-		categories['primary']['name'] = value
+		ml_data['categories']['primary']['name'] = value
 	end
 
 	def categories_secondary_name
@@ -437,11 +442,11 @@ class Event < ApplicationRecord
 	end
 
 	def categories_primary_score
-		categories['primary']['score']
+		ml_data['categories']['primary']['score']
 	end
 
 	def categories_primary_score=(value)
-		categories['primary']['score'] = value
+		ml_data['categories']['primary']['score'] = value
 	end
 
 	def categories_secondary_score
@@ -452,12 +457,17 @@ class Event < ApplicationRecord
 		categories['secondary']['score'] = value
 	end
 
+	def categories_as_model
+		event_categories = categories.values_at('primary', 'secondary').map { |category| category['name'] }
+		Category.where("(details ->> 'name') IN (:categories)", categories: event_categories)
+	end
+
 	def personas_outlier
-		personas['outlier']
+		ml_data['personas']['outlier']
 	end
 
 	def personas_outlier=(value)
-		personas['outlier'] = value
+		ml_data['personas']['outlier'] = value
 	end
 
 	def categories_outlier
@@ -509,16 +519,16 @@ class Event < ApplicationRecord
 			user.taste['events']['total_saves'] -= 1
 		end
 	end
-
-	def validate_attrs_that_should_be_a_hash
-		['theme', 'personas', 'categories', 'geographic', 'ocurrences', 'details', 'entries', 'ml_data', 'image_data', 'tags'].each do |attr|
-			errors.add(attr, 'precisam ser um Hash') unless public_send(attr).is_a? Hash
-		end
-	end
-
-	def validate_attrs_that_should_be_a_array
-		['kinds'].each do |attr|
-			errors.add(attr, 'precisam ser um Array') unless public_send(attr).is_a? Array
-		end
-	end
+	#
+	# def validate_attrs_that_should_be_a_hash
+	# 	['theme', 'personas', 'categories', 'geographic', 'ocurrences', 'details', 'entries', 'ml_data', 'image_data', 'tags'].each do |attr|
+	# 		errors.add(attr, 'precisam ser um Hash') unless public_send(attr).is_a? Hash
+	# 	end
+	# end
+	#
+	# def validate_attrs_that_should_be_a_array
+	# 	['kinds'].each do |attr|
+	# 		errors.add(attr, 'precisam ser um Array') unless public_send(attr).is_a? Array
+	# 	end
+	# end
 end

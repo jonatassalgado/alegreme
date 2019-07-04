@@ -6,14 +6,18 @@
     "@rails/webpacker": "https://github.com/rails/webpacker",
     "botkit": "^0.7.0",
     "default-passive-events": "^1.0.10",
+    "flipping": "^1.1.0",
     "lit-html": "^0.14.0",
     "material-components-web": "^0.43.0",
     "mobile-detect": "^1.4.3",
+    "morphdom": "^2.5.4",
+    "postal": "^2.0.5",
     "query-string": "^6.4.2",
     "stimulus": "^1.1.1",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
+    "expose-loader": "^0.7.5",
     "webpack-dev-server": "^3.1.14"
   }
 }

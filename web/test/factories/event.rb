@@ -1,5 +1,3 @@
-
-
 FactoryBot.define do
 	factory :event do
 		sequence :id do |n|
@@ -16,42 +14,6 @@ FactoryBot.define do
 					'score':   '',
 					'outlier': ''
 			}
-		}
-		personas {
-			{
-					'outlier':   false,
-					'primary':   {
-							'name':  'hipster',
-							'score': '0.996777',
-					},
-					'secondary': {
-							'name':  'zeen',
-							'score': '0.003223',
-					}
-			}
-		}
-		categories {
-			{
-					'outlier':   false,
-					'primary':   {
-							'name':  'festa',
-							'score': '0.999241',
-					},
-					'secondary': {
-							'name':  'meetup',
-							'score': '0.000759',
-					}
-			}
-		}
-		tags {
-			{
-					'things':     [],
-					'features':   [],
-					'activities': []
-			}
-		}
-		kinds {
-			['acadêmico']
 		}
 		geographic {
 			{
@@ -85,6 +47,52 @@ FactoryBot.define do
 					'total_dislikes': 0,
 			}
 		}
+		ml_data {
+			{
+					'personas':   {
+							'outlier':   false,
+							'primary':   {
+									'name':  'hipster',
+									'score': '0.996777',
+							},
+							'secondary': {
+									'name':  'zeen',
+									'score': '0.003223',
+							}
+
+					},
+					'categories': {
+
+							'outlier':   false,
+							'primary':   {
+									'name':  'festa',
+									'score': '0.999241',
+							},
+							'secondary': {
+									'name':  'meetup',
+									'score': '0.000759',
+							}
+
+					},
+					'tags':       {
+							'things':     [],
+							'features':   [],
+							'activities': []
+					},
+					'kinds':      ['acadêmico']
+			}
+
+		}
+		# factory :event_with_place do
 		place
+		# end
+		factory :event_with_organizers do
+			transient do
+				organizers_count { 5 }
+			end
+			after(:create) do |event, evaluator|
+				create_list(:organizer, evaluator.organizers_count, events: [event])
+			end
+		end
 	end
 end

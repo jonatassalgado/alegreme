@@ -1,7 +1,26 @@
-(function() {
+(function () {
 
-  let sectionElem = document.getElementById('<%= @locals[:identifier] %>');
 
-  sectionElem.innerHTML = '<%= j render partial: "feeds/section", locals: @locals %>'
+	const promise = new Promise(function (resolve, reject) {
+		const sectionElem = document.getElementById('<%= @locals[:identifier] %>');
+
+		const morph = morphdom.default(sectionElem, '<%= j render partial: "feeds/section", locals: @locals %>'.trim(), {
+			onBeforeElUpdated: function (fromEl, toEl) {
+				return !fromEl.isEqualNode(toEl);
+			}
+		});
+
+		resolve(morph)
+	})
+
+	promise.then(function (value) {
+
+		postal.publish({
+			channel: "<%= @locals[:identifier] %>",
+			topic  : "<%= @locals[:identifier] %>.updated",
+			data   : {}
+		});
+
+	})
 
 })()

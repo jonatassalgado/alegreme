@@ -16,12 +16,13 @@ web/tmp/
 web/db/schema.rb
 web/db/test.sqlite3
 web/db/development.sqlite3
-web/.idea/workspace.xml
+web/.idea/
 .scrapy/
 ml/__pycache__
 web/tmp/pids
 web/tmp/cache
 web/.idea/workspace.xml
+web/public/packs-test/
 .~lock*
 *.jpeg~
 *.png~

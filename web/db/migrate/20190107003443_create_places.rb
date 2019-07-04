@@ -12,6 +12,7 @@ class CreatePlaces < ActiveRecord::Migration[5.2]
         city: nil,
         cep: nil
       }
+
       t.timestamps
     end
     add_index  :places, :details, using: :gin

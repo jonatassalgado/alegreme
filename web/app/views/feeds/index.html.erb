@@ -1,3 +1,4 @@
+
 <div class="me-float-menu">
   <div class="me-float-menu__nav">
     <% if current_user and !current_user.taste_events_saved.empty? %>
@@ -58,7 +59,7 @@
     <%#= render partial: "section", locals: {items: @items[:user], titles: {principal: "Eventos recomendados para vocÃª"}, identifier: 'recomendados', type: :large, filters: false} %>
     <%#= render partial: "section", locals: {items: @items[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: {personas: false, categories: true, ocurrences: true}} if @items[:categories] %>
   <% else %>
-    <section id="today-and-tomorrow">
+    <section>
       <%= render partial: "section",
                  locals:  {
                      items:      @items[:today],
@@ -73,7 +74,7 @@
                      }
                  } %>
     </section>
-    <section id="cinema">
+    <section>
       <%#= render partial: "section",
                  locals:  {
                      items:      @items[:cinema],
@@ -87,7 +88,7 @@
                      }
                  } %>
     </section>
-    <section id="show-and-party">
+    <section>
       <%#= render partial: "section",
                  locals:  {
                      items:      @items[:show_and_party],
@@ -101,7 +102,23 @@
                      }
                  } %>
     </section>
-    <section id="user-personas">
+    <section>
+      <%= render partial: "section",
+                 locals:  {
+                     items:      @items[:follow],
+                     titles:     {
+                         principal: "Seguidos"
+                     },
+                     identifier: 'follow',
+                     type:       :large,
+                     filters:    {
+                         categories: true,
+                         ocurrences: true,
+                         kinds:      true
+                     }
+                 } %>
+    </section>
+    <section>
       <%= render partial: "section",
                  locals:  {
                      items:      @items[:user_personas],

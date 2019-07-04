@@ -6,58 +6,72 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e4956d9-1a94-454c-820d-c7ef2ddf2cd0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/services/event_services/collection_creator.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/event_services/event_fetcher.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/tasks/db_fixtures_dump.rake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/controllers/feeds_controller_test.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/factories/event.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/factories/place.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/factories/user.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/services/event_services/collection_creator_test.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.rakeTasks" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.rakeTasks" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/components/me-follow-chip-set.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/follow_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/decorators/user_decorators/following.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/javascript/controllers/follow_chipset_controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/javascript/controllers/section_controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/category.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/kind.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/tag.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/services/follow_services/association_creator.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/components/follow/_follow-chip-set.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/follow/chip-set.js.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/initializers/numeric.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/initializers/string.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/controllers/follow_controller_test.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/decorators/user_decorator_test.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/factories/category.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/factories/organizer.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/services/follow_services/association_creator_test.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/web.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/events.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/events.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/_variables.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/components/me-card.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/components/me-card.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/collections_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/collections_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/components/me-components.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/components/me-components.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/components/me-feed.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/components/me-feed.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/components/me-filter.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/components/me-filter.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/components/me-page.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/components/me-page.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/feeds_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/feeds_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/organizers_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/organizers_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/controllers/chip_controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/controllers/chip_controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/controllers/event_controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/controllers/event_controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/javascript/controllers/filter_controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/controllers/filter_controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/packs/application.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/packs/application.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models/event.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/event.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/events/_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/events/_form.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/organizer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/organizer.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/event_services/collection_creator.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/event_services/collection_creator.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/event_services/event_fetcher.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/event_services/event_fetcher.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/collections/index.js.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/collections/index.js.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/events/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/events/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/feeds/_filter.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/feeds/_filter.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/feeds/_section.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/feeds/_section.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/feeds/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/feeds/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/organizers/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/organizers/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/organizers/index.json.jbuilder" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/organizers/index.json.jbuilder" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/organizers/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/organizers/show.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/application.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/application.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/environments/development.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/environments/development.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/initializers/assets.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/initializers/assets.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/webpack/environment.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/webpack/environment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20190106224003_create_events.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/migrate/20190106224003_create_events.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20190107003443_create_places.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/migrate/20190107003443_create_places.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20190107003540_create_organizers.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/migrate/20190107003540_create_organizers.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20190107011635_create_join_table_event_category.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20190107011704_create_join_table_event_calendar.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20190412202726_add_features_to_user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/migrate/20190412202726_add_features_to_user.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/seeds.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/seeds.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/event_model.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/decorators/event_decorators/ocurrences.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/events_repository.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/events_service.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/wip.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/tasks/facebook.rake" beforeDir="false" afterPath="$PROJECT_DIR$/lib/tasks/facebook.rake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/tasks/train.rake" beforeDir="false" afterPath="$PROJECT_DIR$/lib/tasks/train.rake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/test.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/test.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controllers/artifacts_controller_test.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controllers/categories_controller_test.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controllers/events_controller_test.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controllers/organizers_controller_test.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controllers/places_controller_test.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fixtures/artifacts.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/fixtures/artifacts.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fixtures/categories.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fixtures/events.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/fixtures/events.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fixtures/organizers.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/fixtures/organizers.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fixtures/places.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/fixtures/places.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fixtures/users.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/fixtures/users.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/system/artifacts_test.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/system/categories_test.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/system/organizers_test.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/system/places_test.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/packs-test/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/packs-test/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controllers/feeds_controller_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/feeds_controller_test.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/factories/event.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/factories/event.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/models/event_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/models/event_test.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/services/event_services/collection_creator_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/services/event_services/collection_creator_test.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.bundle/" />
     <ignored path="$PROJECT_DIR$/components/" />
@@ -74,59 +88,40 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/feeds/_section.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="105" column="14" selection-start-line="105" selection-start-column="14" selection-end-line="109" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/events/show.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>database_cleaner</find>
-      <find>DATABASE_URL</find>
-      <find>Date.today</find>
-      <find>active</find>
-      <find>hoje</find>
-      <find>byebu</find>
-      <find>date</find>
-      <find>dates</find>
-      <find>CollectionCreator::</find>
-      <find>ocurrences</find>
-      <find>Event::</find>
-      <find>events_for_today_and_tomorrow</find>
-      <find>events_for_user_personas</find>
-      <find>days</find>
-      <find>EventsRepository</find>
-      <find>all_existing_filters</find>
-      <find>assert_equal 3, collection.call</find>
-      <find>EventOcurrences</find>
-      <find>EventFetcher</find>
-      <find>bulletFooterText</find>
-      <find>identifier:</find>
-      <find>parameterize</find>
-      <find>bullet</find>
-      <find>section</find>
-      <find>set_initial_categories_filter</find>
-      <find>CollectionCreator</find>
-      <find>.call</find>
-      <find>action</find>
-      <find>is_range</find>
+      <find>person</find>
+      <find>personas -&gt;</find>
+      <find>- &gt;</find>
+      <find>categories -&gt;</find>
+      <find>categories.</find>
+      <find>.name</find>
+      <find>from</find>
+      <find>categories</find>
+      <find>sec</find>
+      <find>categories.details</find>
+      <find>timestamptz</find>
+      <find>imestamptz ASC) )) events WHERE ((ml_data</find>
+      <find>for_user</find>
+      <find>ml_da</find>
+      <find>events</find>
+      <find>ml_data</find>
+      <find>follows_features</find>
+      <find>follow</find>
       <find>range</find>
+      <find>personas</find>
+      <find>Arel</find>
+      <find>sectionUpdated</find>
+      <find>identi</find>
+      <find>postal</find>
+      <find>emit</find>
+      <find>adap</find>
+      <find>morphdom</find>
+      <find>default</find>
+      <find>turbolinks:</find>
+      <find>opaci</find>
     </findStrings>
     <replaceStrings>
       <replace>@current_user</replace>
@@ -140,7 +135,18 @@
       <replace>EventServices::CollectionCreator</replace>
       <replace>EventFetcher</replace>
       <replace>Event::</replace>
+      <replace>followableId</replace>
+      <replace>ml_data['categories']['primary']</replace>
+      <replace>ml_data['personas'][</replace>
+      <replace>ml_data</replace>
+      <replace>ml_data - &gt; 'personas' -&gt;</replace>
+      <replace>-&gt;</replace>
+      <replace>events_from_followed_features</replace>
+      <replace>.details -&gt;&gt; 'name'</replace>
     </replaceStrings>
+    <dirStrings>
+      <dir>$USER_HOME$/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/activesupport-5.2.3/lib/active_support/core_ext/numeric</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -148,57 +154,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/views/layouts/classifier/_select.html.erb" />
-        <option value="$PROJECT_DIR$/app/helpers/feeds_helper.rb" />
-        <option value="$PROJECT_DIR$/lib/tasks/db_fixtures_dump.rake" />
-        <option value="$PROJECT_DIR$/test/fixtures/places.yml" />
-        <option value="$PROJECT_DIR$/test/fixtures/organizers.yml" />
-        <option value="$PROJECT_DIR$/test/models/event_test.rb" />
-        <option value="$PROJECT_DIR$/test/models/artifact_test.rb" />
-        <option value="$PROJECT_DIR$/test/models/calendar_test.rb" />
-        <option value="$PROJECT_DIR$/test/fixtures/users.yml" />
-        <option value="$PROJECT_DIR$/test/fixtures/events.yml" />
+        <option value="$PROJECT_DIR$/app/controllers/follow_controller.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630155310_create_join_table_event_category.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630155422_create_join_table_event_kind.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630155452_create_join_table_event_tag.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190106224003_create_events.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630015647_create_category.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630020155_create_kind.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630024323_create_tag.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20190107003443_create_places.rb" />
-        <option value="$PROJECT_DIR$/test/factories/place.rb" />
-        <option value="$PROJECT_DIR$/test/factories/user.rb" />
-        <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
-        <option value="$PROJECT_DIR$/db/seeds.rb" />
-        <option value="$PROJECT_DIR$/app/views/feeds/_filter.html.erb" />
-        <option value="$PROJECT_DIR$/config/database.yml" />
-        <option value="$PROJECT_DIR$/lib/event_model.rb" />
-        <option value="$PROJECT_DIR$/test/test_helper.rb" />
-        <option value="$PROJECT_DIR$/lib/services/events_service.rb" />
-        <option value="$PROJECT_DIR$/app/services/event/event.rb" />
-        <option value="$PROJECT_DIR$/app/services/event/collection_creator.rb" />
-        <option value="$PROJECT_DIR$/test/services/events_service_test.rb" />
-        <option value="$PROJECT_DIR$/app/services/event_services/events_repository.rb" />
-        <option value="$PROJECT_DIR$/lib/event_decorator.rb" />
-        <option value="$PROJECT_DIR$/lib/event_decorators.rb" />
-        <option value="$PROJECT_DIR$/config/application.rb" />
-        <option value="$PROJECT_DIR$/app/decorators/event_decorators/event_ocurrences.rb" />
-        <option value="$PROJECT_DIR$/app/views/organizers/index.json.jbuilder" />
-        <option value="$PROJECT_DIR$/app/views/organizers/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/organizers/show.js.erb" />
-        <option value="$PROJECT_DIR$/app/services/event_services/event_fetcher.rb" />
-        <option value="$PROJECT_DIR$/app/models/event.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190107003540_create_organizers.rb" />
+        <option value="$PROJECT_DIR$/app/models/category.rb" />
+        <option value="$PROJECT_DIR$/lib/tasks/facebook.rake" />
+        <option value="$PROJECT_DIR$/app/models/kind.rb" />
+        <option value="$PROJECT_DIR$/app/models/wip.rb" />
+        <option value="$PROJECT_DIR$/app/views/events/show.html.erb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630233215_create_follows.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630233216_create_likes.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630233217_create_mentions.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/organizers/show.html.erb" />
-        <option value="$PROJECT_DIR$/config/environments/development.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/collections_controller.rb" />
-        <option value="$PROJECT_DIR$/app/javascript/controllers/filter_controller.js" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/components/me-card.scss" />
-        <option value="$PROJECT_DIR$/test/services/event_services/collection_creator_test.rb" />
-        <option value="$PROJECT_DIR$/test/controllers/events_controller_test.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20190630235333_acts_as_follower_migration.rb" />
+        <option value="$PROJECT_DIR$/app/services/follow_services/association_creator.rb" />
+        <option value="$PROJECT_DIR$/app/views/components/follow/_follow-chip-set.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/user.rb" />
+        <option value="$PROJECT_DIR$/app/models/organizer.rb" />
+        <option value="$PROJECT_DIR$/test/factories/category.rb" />
         <option value="$PROJECT_DIR$/test/factories/event.rb" />
+        <option value="$PROJECT_DIR$/test/decorators/user_decorator_test.rb" />
+        <option value="$PROJECT_DIR$/app/views/feeds/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/decorators/user_decorators/following.rb" />
+        <option value="$PROJECT_DIR$/app/models/event.rb" />
+        <option value="$PROJECT_DIR$/test/services/event_services/collection_creator_test.rb" />
+        <option value="$PROJECT_DIR$/test/services/follow_services/association_creator_test.rb" />
+        <option value="$PROJECT_DIR$/config/routes.rb" />
+        <option value="$PROJECT_DIR$/test/controllers/follow_controller_test.rb" />
         <option value="$PROJECT_DIR$/test/controllers/feeds_controller_test.rb" />
         <option value="$PROJECT_DIR$/app/controllers/feeds_controller.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/organizers_controller.rb" />
-        <option value="$PROJECT_DIR$/app/decorators/event_decorators/ocurrences.rb" />
-        <option value="$PROJECT_DIR$/app/services/event_services/collection_creator.rb" />
+        <option value="$PROJECT_DIR$/config/webpack/environment.js" />
+        <option value="$PROJECT_DIR$/app/javascript/controllers/follow_chipset_controller.js" />
+        <option value="$PROJECT_DIR$/app/services/event_services/event_fetcher.rb" />
         <option value="$PROJECT_DIR$/app/views/feeds/_section.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/feeds/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/events/show.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/components/me-feed.scss" />
+        <option value="$PROJECT_DIR$/app/javascript/controllers/chip_controller.js" />
+        <option value="$PROJECT_DIR$/app/javascript/packs/application.js" />
+        <option value="$PROJECT_DIR$/app/javascript/controllers/event_controller.js" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/components/me-card.scss" />
+        <option value="$PROJECT_DIR$/app/views/collections/index.js.erb" />
+        <option value="$PROJECT_DIR$/app/views/feeds/_filter.html.erb" />
+        <option value="$PROJECT_DIR$/app/javascript/controllers/filter_controller.js" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/components/me-filter.scss" />
+        <option value="$PROJECT_DIR$/app/services/event_services/collection_creator.rb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/components/me-follow-chip-set.scss" />
       </list>
     </option>
   </component>
@@ -221,6 +227,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -237,12 +244,57 @@
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="decorators" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="decorators" type="462c0819:PsiDirectoryNode" />
+              <item name="event_decorators" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="javascript" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="javascript" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="javascript" type="462c0819:PsiDirectoryNode" />
+              <item name="packs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -250,7 +302,7 @@
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
-              <item name="event_services" type="462c0819:PsiDirectoryNode" />
+              <item name="follow_services" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
@@ -270,6 +322,28 @@
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="follow" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="events" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="feeds" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -277,14 +351,14 @@
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="organizers" type="462c0819:PsiDirectoryNode" />
+              <item name="follow" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="places" type="462c0819:PsiDirectoryNode" />
+              <item name="layouts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
@@ -294,73 +368,29 @@
             <path>
               <item name="web" type="b2602c69:ProjectViewProjectNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="webpack" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="migrate" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="factories" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="helpers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="integration" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="mailers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-              <item name="event_services" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="RailsProjectView" />
     </panes>
   </component>
@@ -368,6 +398,7 @@
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.last.introduce.type" value="CONST" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -376,15 +407,16 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.HTML" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config/initializers" />
+      <recent name="$PROJECT_DIR$/app/views/follow" />
       <recent name="$PROJECT_DIR$/app/decorators/event_decorators" />
       <recent name="$PROJECT_DIR$/app/services/event_services" />
       <recent name="$PROJECT_DIR$/test/services/event_services" />
-      <recent name="$PROJECT_DIR$/app/services/event" />
-      <recent name="$PROJECT_DIR$/app" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -622,7 +654,11 @@
       <workItem from="1560564619910" duration="2100000" />
       <workItem from="1560566751124" duration="74647000" />
       <workItem from="1561389486471" duration="102037000" />
-      <workItem from="1561653020378" duration="1058000" />
+      <workItem from="1561653020378" duration="25704000" />
+      <workItem from="1561735040449" duration="32928000" />
+      <workItem from="1561823181777" duration="78123000" />
+      <workItem from="1562082866807" duration="63855000" />
+      <workItem from="1562255634569" duration="2101000" />
     </task>
     <servers />
   </component>
@@ -659,7 +695,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="386123000" />
+    <option name="totallyTimeSpent" value="587776000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -671,10 +707,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1495" y="-4" width="1311" height="772" extended-state="6" />
-    <editor active="true" />
+    <frame x="1494" y="-11" width="1313" height="780" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.498503" weight="0.22644497" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.498503" visible="true" weight="0.22644497" />
       <window_info id="Structure" order="1" sideWeight="0.50149703" side_tool="true" weight="0.20823437" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="0" weight="0.32784432" />
@@ -692,35 +727,12 @@
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32784432" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" weight="0.32803467" />
       <window_info anchor="bottom" id="Duplicates" order="14" weight="0.9041916" />
+      <window_info anchor="bottom" id="TypeScript" order="15" weight="0.32934132" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24940617" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.498503" visible="true" weight="0.22644497" />
-      <window_info id="Structure" order="1" sideWeight="0.50149703" side_tool="true" weight="0.20823437" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.32784432" />
-      <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" auto_hide="true" x="55" y="24" width="1385" height="876" id="Run" maximized="true" order="3" type="WINDOWED" weight="0.26946107" />
-      <window_info anchor="bottom" id="Find" order="4" weight="0.6257485" />
-      <window_info anchor="bottom" id="Debug" order="5" weight="0.39884394" />
-      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="8" weight="0.32934132" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.26946107" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32934132" />
-      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32784432" />
-      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" weight="0.32803467" />
-      <window_info anchor="bottom" id="Duplicates" order="14" weight="0.9041916" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24940617" />
-      <window_info anchor="right" id="Database" order="3" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -739,318 +751,370 @@
     <SUITE FILE_PATH="coverage/web@test_events_for_today__web.rcov" NAME="test_events_for_today: web Coverage Results" MODIFIED="1561649952638" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="web" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/db/migrate/20190412202726_add_features_to_user.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="83" column="5" lean-forward="true" selection-start-line="72" selection-start-column="61" selection-end-line="83" selection-end-column="5" />
+        <state relative-caret-position="-1445">
+          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20190107003443_create_places.rb">
+    <entry file="file://$PROJECT_DIR$/test/decorators/user_decorator_test.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="39" column="52" lean-forward="true" selection-start-line="39" selection-start-column="52" selection-end-line="39" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/factories/user.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20190106224003_create_events.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="60" column="29" selection-start-line="60" selection-start-column="29" selection-end-line="60" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/services/event_services/collection_creator_test.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="45" column="32" lean-forward="true" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/follow_services/association_creator.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="9" lean-forward="true" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/services/follow_services/association_creator_test.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="47" selection-start-line="24" selection-start-column="47" selection-end-line="24" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/follow_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="88" selection-start-line="19" selection-start-column="88" selection-end-line="19" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/controllers/follow_controller_test.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
-          <caret line="13" column="7" selection-start-line="7" selection-start-column="49" selection-end-line="13" selection-end-column="7" />
+          <caret line="13" column="90" selection-start-line="13" selection-start-column="90" selection-end-line="13" selection-end-column="90" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/models/user_test.rb">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/models/place_test.rb">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/system/artifacts_test.rb" />
-    <entry file="file://$PROJECT_DIR$/test/models/event_test.rb">
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="374">
+          <caret line="21" column="71" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="71" />
+          <caret line="22" column="75" selection-start-line="22" selection-start-column="60" selection-end-line="22" selection-end-column="75" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/system/events_test.rb">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/database_cleaner-1.7.0/lib/database_cleaner/configuration.rb">
+    <entry file="file://$PROJECT_DIR$/test/controllers/feeds_controller_test.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/environment.rb">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
+    <entry file="file://$PROJECT_DIR$/test/factories/event.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-272">
-          <caret line="17" column="32" lean-forward="true" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+        <state relative-caret-position="1122">
+          <caret line="66" column="14" selection-start-line="51" selection-start-column="10" selection-end-line="66" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/events_helper.rb">
+    <entry file="file://$PROJECT_DIR$/app/decorators/user_decorators/following.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/factories/place.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/database.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/minitest-5.11.3/lib/minitest/test.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="181" column="10" selection-start-line="181" selection-start-column="10" selection-end-line="181" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/minitest-5.11.3/lib/minitest/assertions.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="553" column="8" selection-start-line="553" selection-start-column="8" selection-end-line="553" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/activesupport-5.2.3/lib/active_support/test_case.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="56" column="35" lean-forward="true" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/services/wip.rb" />
-    <entry file="file://$PROJECT_DIR$/config/application.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="66" selection-start-line="14" selection-start-column="66" selection-end-line="14" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/geographic.rb">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/organizers/index.json.jbuilder">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/places_controller.rb">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/places/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/organizers/show.js.erb" />
-    <entry file="file://$PROJECT_DIR$/app/views/feeds/_filter.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="34" lean-forward="true" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/railties-5.2.3/lib/rails/templates/layouts/application.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="105" column="3" lean-forward="true" selection-start-line="105" selection-start-column="3" selection-end-line="105" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/organizers/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="55" lean-forward="true" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="67" column="4" selection-start-line="67" selection-start-column="6" selection-end-line="71" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/collections/index.js.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="58" selection-start-line="4" selection-start-column="58" selection-end-line="4" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/organizers/show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="170">
+          <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/event.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="236" column="44" lean-forward="true" selection-start-line="236" selection-start-column="44" selection-end-line="236" selection-end-column="44" />
+        <state relative-caret-position="273">
+          <caret line="47" column="36" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+    <entry file="file://$APPLICATION_HOME_DIR$/rubystubs26/object.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-537">
-          <caret line="11" column="49" lean-forward="true" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
+        <state relative-caret-position="213">
+          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/components/me-card.scss">
+    <entry file="file://$PROJECT_DIR$/app/views/feeds/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1296">
-          <caret line="228" column="23" selection-start-line="228" selection-start-column="23" selection-end-line="228" selection-end-column="23" />
+        <state relative-caret-position="213">
+          <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/collections_controller.rb">
+    <entry file="file://$PROJECT_DIR$/config/webpacker.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/favorite_controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="79" column="36" selection-start-line="79" selection-start-column="36" selection-end-line="79" selection-end-column="36" />
+        <state>
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/filter_controller.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/morphdom/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="67" column="47" lean-forward="true" selection-start-line="67" selection-start-column="47" selection-end-line="67" selection-end-column="47" />
+        <state>
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/section_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/morphdom/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/postal/lib/postal.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/morphdom/dist/morphdom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11689" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@material/chips/dist/mdc.chips.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1182">
+          <caret line="2185" column="32" selection-start-line="2185" selection-start-column="28" selection-end-line="2185" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/morphdom/dist/morphdom-umd.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="268" column="20" selection-start-line="268" selection-start-column="13" selection-end-line="268" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/morphdom/dist/morphdom-factory.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/morphdom/dist/morphdom-esm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="714" column="14" selection-start-line="714" selection-start-column="7" selection-end-line="714" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/webpack/environment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="62" lean-forward="true" selection-start-line="20" selection-start-column="62" selection-end-line="20" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/follow_chipset_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/services/event_services/event_fetcher.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        <state relative-caret-position="357">
+          <caret line="27" selection-start-line="27" selection-end-line="27" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_helper.rb">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/components/me-feed.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
+        <state relative-caret-position="344">
+          <caret line="30" column="23" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+    <entry file="file://$PROJECT_DIR$/app/javascript/packs/application.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="112" column="42" selection-start-line="112" selection-start-column="27" selection-end-line="112" selection-end-column="42" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#517#533#0" expanded="true" />
+            <element signature="e#646#693#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/chip_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1853">
+          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-end-line="12" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/tags_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/favorite_events_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-98">
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/flipping/src/Flipping.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="109" column="32" selection-start-line="109" selection-start-column="25" selection-end-line="109" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/flipping/lib/Flipping.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
+          <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/feeds_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/event_controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/services/event_services/collection_creator.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2754">
-          <caret line="162" column="13" selection-start-line="162" selection-start-column="13" selection-end-line="162" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/decorators/event_decorators/ocurrences.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="63" selection-start-line="26" selection-start-column="63" selection-end-line="26" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/organizers_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="18" column="105" selection-start-line="18" selection-start-column="105" selection-end-line="18" selection-end-column="105" />
-          <caret line="27" column="105" selection-start-line="27" selection-start-column="105" selection-end-line="27" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/controllers/feeds_controller_test.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" column="32" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/services/event_services/collection_creator_test.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="6" selection-start-line="12" selection-start-column="19" selection-end-line="14" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/factories/user.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/factories/event.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="67" column="44" selection-start-line="67" selection-start-column="44" selection-end-line="67" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/feeds/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="64" column="34" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="34" />
+        <state relative-caret-position="2533">
+          <caret line="154" column="34" selection-start-line="154" selection-start-column="21" selection-end-line="154" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/feeds/_section.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="105" column="14" selection-start-line="105" selection-start-column="14" selection-end-line="109" selection-end-column="20" />
+        <state relative-caret-position="510">
+          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/events/show.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/views/feeds/_filter.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
+        <state relative-caret-position="493">
+          <caret line="29" column="6" lean-forward="true" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/decorators/event_decorators/ocurrences.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" column="10" selection-start-line="45" selection-start-column="10" selection-end-line="45" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/components/me-follow-chip-set.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/event_services/collection_creator.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-611">
+          <caret line="57" column="19" selection-start-line="57" selection-start-column="19" selection-end-line="57" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascript/controllers/filter_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="59" column="26" lean-forward="true" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/components/me-filter.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="21" lean-forward="true" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/components/me-card.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="148" column="7" selection-start-line="148" selection-start-column="7" selection-end-line="148" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/collections/index.js.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="45" lean-forward="true" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/collections_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="19" lean-forward="true" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/feeds_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="52" selection-start-line="32" selection-start-column="52" selection-end-line="32" selection-end-column="52" />
         </state>
       </provider>
     </entry>

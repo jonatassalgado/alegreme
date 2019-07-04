@@ -19,5 +19,7 @@ Rails.application.routes.draw do
   resources :events do
     resource :favorite, only: [:create, :destroy]
   end
+  get ':type/:resource_id/follow', to: 'follow#follow', :defaults => { :format => 'js' }, as: :follow
+  get ':type/:resource_id/unfollow', to: 'follow#unfollow', :defaults => { :format => 'js' }, as: :unfollow
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

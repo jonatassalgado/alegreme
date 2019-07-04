@@ -21,7 +21,7 @@ namespace :ml do
       if item
         puts "Atualizando #{event.details['name']}..."
         
-        item[8] = event.personas['primary']['name']
+        item[8] = event.ml_data['personas']['primary']['name']
         item[9] = event.theme['name']
         item[10] = event.categories['primary']['name']
         item[11] = event.kinds_name
@@ -40,7 +40,7 @@ namespace :ml do
                 event.details['description'],
                 nil,
                 event.details['source_url'],
-                event.personas['primary']['name'],
+                event.ml_data['personas']['primary']['name'],
                 event.theme['name'],
                 event.categories['primary']['name'],
                 event.kinds_name,

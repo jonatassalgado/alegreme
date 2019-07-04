@@ -9,21 +9,11 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 	test "should get index with personas events" do
 		Timecop.freeze('2019-05-28 12:00:00')
 
-		@event = create(:event,
-		                personas:   {
-				                'outlier':   false,
-				                'primary':   {
-						                'name':  'hipster',
-						                'score': '0.996777',
-				                },
-				                'secondary': {
-						                'name':  'zeen',
-						                'score': '0.003223',
-				                }
-		                },
-		                ocurrences: {
-				                'dates': ['2019-05-28 12:00:00']
-		                })
+		@event = create(:event, {
+				ocurrences: {
+						'dates': ['2019-05-28 12:00:00']
+				}
+		})
 
 		get root_url
 
@@ -37,15 +27,17 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 	test "should get index without personas events" do
 		Timecop.freeze('2019-05-28 12:00:00')
 
-		@event = create(:event, personas: {
-				'outlier':   false,
-				'primary':   {
-						'name':  'geek',
-						'score': '0.996777',
-				},
-				'secondary': {
-						'name':  'zeen',
-						'score': '0.003223',
+		@event = create(:event, details: {
+				personas: {
+						'outlier':   false,
+						'primary':   {
+								'name':  'geek',
+								'score': '0.996777',
+						},
+						'secondary': {
+								'name':  'zeen',
+								'score': '0.003223',
+						}
 				}
 		})
 

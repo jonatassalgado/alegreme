@@ -1,5 +1,5 @@
 <% cache [current_user, identifier, params[:categories], params[:kinds], params[:ocurrences]], expires_in: 1.day do %>
-  <div class="me-feed__section">
+  <div id="<%= identifier %>" class="me-feed__section" data-controller="section" data-target="section.section">
   <h2 class="mdc-typography--<%= type == :large ? 'headline4' : 'headline5' %>">
     <%= titles[:principal] %>
   </h2>
@@ -43,7 +43,7 @@
       <% unless items.empty? %>
         <% items[:events].each do |event| %>
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
-          <div id="<%= dom_id event %>" class="me-card--feed mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event"
+          <div data-flip-key="<%= "#{identifier}-#{dom_id(event)}" %>" id="<%= dom_id event %>" class="me-card--feed mdc-card mdc-card--outlined event-<%= event.id %>" data-controller="event"
                data-target="event.event" data-action="mouseover->event#showEventDetails"
                data-event-favorited="<%= current_user.taste_events_saved? event.id if current_user %>"
                data-event-identifier="<%= event.id %>">
@@ -109,7 +109,7 @@
                 <% end %>
               </div>
               <%# if current_user&.admin? %>
-              <%#= event.personas %>
+              <%#= event.ml_data['categories'] %>
               <!--              <%#= event.first_day_time %> | <%#= event.first_day_time.to_date.yday %>-->
               <%# end %>
             </div>
