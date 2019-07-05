@@ -31,7 +31,7 @@ class FeedsController < ApplicationController
 					       else
 						       {
 								       today:         collections.call('today-and-tomorrow', group_by: 5),
-								       follow:        collections.call({identifier: 'follow', collection: current_user.events_from_followed_features}),
+								       follow:        collections.call({identifier: 'follow', collection: current_or_guest_user.events_from_followed_features}),
 								       user_personas: collections.call('user-personas')
 						       }
 				         end

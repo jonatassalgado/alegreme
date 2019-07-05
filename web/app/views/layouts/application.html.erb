@@ -21,7 +21,7 @@
     <script src='https://cdn.rawgit.com/showdownjs/showdown/1.7.4/dist/showdown.min.js' data-turbolinks-track='reload'></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
-    <%= javascript_include_tag 'bot/client', 'data-turbolinks-track': 'reload' %>
+    <%#= javascript_include_tag 'bot/client', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
     <div class="mdc-drawer-app-content">
@@ -30,7 +30,7 @@
         <%= render partial: 'layouts/hero' unless current_user %>
         <section class="me-page__feed-section">
           <div class="me-overlay"></div>
-          <%= render partial: 'layouts/bot' %>
+          <%#= render partial: 'layouts/bot' %>
           <%= yield %>
         </section>
       <% elsif params['controller'] == 'events' && params['action'] == 'show' %>

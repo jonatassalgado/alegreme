@@ -55,7 +55,8 @@
                           class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(event.id) %>"
                           aria-label="Add to favorites"
                           aria-hidden="true"
-                          aria-pressed="false">
+                          aria-pressed="false"
+                          style="<%= 'display: inline' if current_or_guest_user.taste_events_saved?(event.id) %>">
                     <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
                     <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
                   </button>
@@ -103,11 +104,11 @@
               <div class="me-card__place" data-target="event.place">
                 <%= limit_place_name_size event.place_details_name %>
               </div>
-              <div class="me-card__organizer" data-target="event.organizer">
-                <% event.organizers.each do |organizer| %>
-                  <%= link_to organizer.details['name'], organizer_path(organizer) %>
-                <% end %>
-              </div>
+<!--              <div class="me-card__organizer" data-target="event.organizer">-->
+                <%# event.organizers.each do |organizer| %>
+                  <%#= link_to organizer.details['name'], organizer_path(organizer) %>
+                <%# end %>
+<!--              </div>-->
               <%# if current_user&.admin? %>
               <%#= event.ml_data['categories'] %>
               <!--              <%#= event.first_day_time %> | <%#= event.first_day_time.to_date.yday %>-->

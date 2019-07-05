@@ -16,34 +16,46 @@ export default class FilterController extends Controller {
 			topic   : `${sectionIdentifier}.updated`,
 			callback: function (data, envelope) {
 
-				self.flipping.flip();
+				const flipPromise = new Promise((resolve, reject) => {
+					self.flipping.flip();
 
-				document.querySelectorAll('.me-card--feed').forEach(function (el) {
-					if (self.flipping.states[el.dataset.flipKey] && self.flipping.states[el.dataset.flipKey]['type'] == 'MOVE' && self.flipping.states[el.dataset.flipKey]['delta']) {
-						el.style.transition = '';
-						el.style.transform  = `translateY(${self.flipping.states[el.dataset.flipKey]['delta']['top']}px) translateX(${self.flipping.states[el.dataset.flipKey]['delta']['left']}px)`;
-					}
-					if (self.flipping.states[el.dataset.flipKey] && self.flipping.states[el.dataset.flipKey]['type'] == 'ENTER') {
-						el.style.opacity   = 0;
-						el.style.transform = `scale(0.8)`;
-					}
-				});
+					let delay = 0.035;
+					const flipped = Object.keys(self.flipping.states).forEach(function (key) {
+						const state = self.flipping.states[key];
 
-				requestAnimationFrame(function () {
-
-					document.querySelectorAll('.me-card--feed').forEach(function (el) {
-						if (self.flipping.states[el.dataset.flipKey] && self.flipping.states[el.dataset.flipKey]['type'] == 'MOVE' && self.flipping.states[el.dataset.flipKey]['delta']) {
-							el.style.transition = 'all 0.6s cubic-bezier(.54,.01,.45,.99)';
-							el.style.transform  = '';
-							el.style.opacity    = 1;
+						if (state.type === 'MOVE' && state.delta) {
+							state.element.style.transition = '';
+							state.element.style.transform  = `translateY(${state.delta.top}px) translateX(${state.delta.left}px)`;
 						}
-						if (self.flipping.states[el.dataset.flipKey] && self.flipping.states[el.dataset.flipKey]['type'] == 'ENTER') {
-							el.style.transition = 'all 0.4s cubic-bezier(0,.16,.45,.99) 0.350s';
-							el.style.transform  = '';
-							el.style.opacity    = 1;
+						if (state.type === 'ENTER') {
+							state.element.style.opacity   = 0;
+							state.element.style.transform = `scale(0.8)`;
 						}
+
+						requestAnimationFrame(function () {
+
+							if (state.type === 'MOVE' && state.delta) {
+								state.element.style.transition = `transform 0.6s cubic-bezier(.54,.01,.45,.99)`;
+								state.element.style.transform  = '';
+								state.element.style.opacity    = 1;
+							}
+							if (state.type === 'ENTER') {
+								state.element.style.transition = `transform 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s, opacity 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s`;
+								state.element.style.transform  = '';
+								state.element.style.opacity    = 1;
+							}
+
+							delay = delay + 0.035;
+						});
 					});
+
+					resolve(flipped)
 				});
+
+				flipPromise.then(() => {
+
+				});
+
 
 			}
 		});

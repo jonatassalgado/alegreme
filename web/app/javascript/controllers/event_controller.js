@@ -19,41 +19,49 @@ export default class EventController extends Controller {
 		"menu"
 	];
 
-	initialize() {
+	initialize = () => {
 		const self = this;
 
-		self.eventTarget.addEventListener('eventLiked', function (event) {
-			self.updateLikeStatus(event, self)
-		});
-
-		self.md = new MobileDetect(window.navigator.userAgent);
-
-		self.activeInteractions = true;
+		self.md                 = new MobileDetect(window.navigator.userAgent);
 		self.adjustForDevice    = self.md.mobile();
+		self.activeInteractions = true;
+
+
+		self.subscription = postal.subscribe({
+			channel : `saves`,
+			topic   : `saves.updated`,
+			callback: function (data, envelope) {
+				// noinspection EqualityComparisonWithCoercionJS
+				if (data.detail.eventId == self.identifier) {
+					self.likeStatus = data.detail.currentEventFavorited;
+					self.updateLikeButtonStyle(data.detail.eventId);
+				}
+			}
+		});
 
 		document.addEventListener("turbolinks:before-cache", () => {
 			self.activeInteractions = false;
 		});
-	}
+	};
 
-	showEventDetails() {
+	showEventDetails = () => {
 		const self = this;
 
 		if (this.md.mobile()) {
 		} else {
-			if (self.data.get("favorited") == "false") {
+			if (self.data.get("favorited") === "false") {
 				self.likeButtonTarget.style.display = "inline";
 			}
 
 			self.eventTarget.addEventListener("mouseout", function () {
-				if (self.data.get("favorited") == "false") {
+				if (self.data.get("favorited") === "false") {
 					self.likeButtonTarget.style.display = "none";
 				}
 			});
 		}
-	}
+	};
 
-	openMenu() {
+	openMenu = () => {
 		const self    = this;
 		const mdcMenu = new MDCMenu(self.menuTarget);
 		if (mdcMenu.open) {
@@ -61,22 +69,32 @@ export default class EventController extends Controller {
 		} else {
 			mdcMenu.open = true;
 		}
-	}
+	};
 
 
-	updateLikeStatus(event, self) {
-		self.activeLikeButton = event.detail.currentEventFavorited;
-		self.data.set("favorited", event.detail.currentEventFavorited);
+	updateLikeButtonStyle = (eventId) => {
+		const self   = this;
+		const active = self.data.get('favorited');
 
-		CacheSystem.clearCache(["feed-page", "events-page"], {
-			event: {
-				identifier: self.identifier
+		if (active === 'true') {
+			self.likeButtonTarget.style.display = 'inline';
+			self.likeButtonTarget.classList.add('mdc-icon-button--on')
+		} else {
+			self.likeButtonTarget.classList.remove('mdc-icon-button--on');
+			if (eventId != self.identifier) {
+				self.likeButtonTarget.style.display = 'none';
 			}
-		});
-	}
+		}
+	};
 
 	like() {
 		const self = this;
+
+		postal.publish({
+			channel: "event",
+			topic  : "event.like",
+			data   : {}
+		});
 
 		fetch(`/events/${self.identifier}/favorite`, {
 			method     : self.isFavorited,
@@ -101,7 +119,7 @@ export default class EventController extends Controller {
 	}
 
 	get isFavorited() {
-		if (this.data.get("favorited") == "true") {
+		if (this.data.get("favorited") === "true") {
 			return "delete";
 		} else {
 			return "post";
@@ -114,20 +132,26 @@ export default class EventController extends Controller {
 
 	get favoriteController() {
 		return this.application.controllers.find(function (controller) {
-			return controller.context.identifier === "favorite";
+			return controller.context.identifier === 'favorite';
 		});
 	}
 
-	set activeLikeButton(value) {
+	set likeStatus(status) {
+		// self.activeLikeButton = status;
 		const self = this;
-		document.querySelectorAll(`[data-event-identifier="${self.identifier}"]`).forEach((event) => {
-			event.setAttribute('data-event-favorited', value);
-			if (value) {
-				event.querySelector('[data-target="event.likeButton"]').classList.add('mdc-icon-button--on')
-			} else {
-				event.querySelector('[data-target="event.likeButton"]').classList.remove('mdc-icon-button--on')
-			}
-		});
+		self.data.set("favorited", status);
+
+		// const self = this;
+		//
+		// self.data.set('favorited', active);
+		//
+		// if (active) {
+		// 	self.likeButtonTarget.style.display = 'inline';
+		// 	self.likeButtonTarget.classList.add('mdc-icon-button--on')
+		// } else {
+		// 	self.likeButtonTarget.classList.remove('mdc-icon-button--on');
+		// 	self.likeButtonTarget.style.display = 'none';
+		// }
 	}
 
 	set likeCount(value) {
@@ -163,8 +187,8 @@ export default class EventController extends Controller {
 
 	set adjustForDevice(isMobile) {
 		const self        = this;
-		const isFavorited = self.data.get("favorited") == "false";
-		const isSingle    = self.data.get("modifier") == "single";
+		const isFavorited = self.data.get("favorited") === "false";
+		const isSingle    = self.data.get("modifier") === "single";
 
 		if (isMobile) {
 		} else {

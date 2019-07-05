@@ -1,46 +1,44 @@
-
 <div class="me-float-menu">
   <div class="me-float-menu__nav">
     <% if current_user and !current_user.taste_events_saved.empty? %>
-    <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#salvos`)">
-      <div class="me-float-menu__icon">
-        <i class="material-icons-sharp">sentiment_satisfied</i>
+      <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#salvos`)">
+        <div class="me-float-menu__icon">
+          <i class="material-icons-sharp">sentiment_satisfied</i>
+        </div>
+        <div class="me-floa-menu__label">
+          Salvos
+        </div>
       </div>
-      <div class="me-floa-menu__label">
-        Salvos
-      </div>
-    </div>
     <% end %>
     <% if current_user and current_user.personas_assortment_finished? %>
-    <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#recomendados`)">
-      <div class="me-float-menu__icon">
-        <i class="material-icons-outlined">star_border</i>
+      <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#recomendados`)">
+        <div class="me-float-menu__icon">
+          <i class="material-icons-outlined">star_border</i>
+        </div>
+        <div class="me-floa-menu__label">
+          Para você
+        </div>
       </div>
-      <div class="me-floa-menu__label">
-        Para você
-      </div>
-    </div>
     <% end %>
     <% if current_user and current_user.personas_assortment_finished? %>
-    <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#categorias`)">
-      <div class="me-float-menu__icon">
-        <i class="material-icons-outlined">category</i>
+      <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#categorias`)">
+        <div class="me-float-menu__icon">
+          <i class="material-icons-outlined">category</i>
+        </div>
+        <div class="me-floa-menu__label">
+          Categorias
+        </div>
       </div>
-      <div class="me-floa-menu__label">
-        Categorias
-      </div>
-    </div>
     <% end %>
   </div>
 </div>
 
-<div id="salvos">
-  <%= render partial: "saves",
-             locals: {
-                 identifier: 'salvos',
-                 favorited_events: @favorited_events
-             } %>
-</div>
+<%= render partial: "saves",
+           locals:  {
+               identifier:       'salvos',
+               favorited_events: @favorited_events
+           } %>
+
 
 
 <div class="me-feed">
@@ -55,7 +53,7 @@
                    type:       :large,
                    filters:    false
                } %>
-  <%# elsif current_user&.personas_assortment_finished? %>
+    <%# elsif current_user&.personas_assortment_finished? %>
     <%#= render partial: "section", locals: {items: @items[:user], titles: {principal: "Eventos recomendados para vocÃª"}, identifier: 'recomendados', type: :large, filters: false} %>
     <%#= render partial: "section", locals: {items: @items[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: {personas: false, categories: true, ocurrences: true}} if @items[:categories] %>
   <% else %>

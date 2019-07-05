@@ -1,18 +1,47 @@
 (function () {
 
-	const eventLiked = new CustomEvent('eventLiked', {
-		'detail': {
-			'currentEventFavorited': <%= @locals[:current_event_favorited] %>,
-			'eventId': <%= @locals[:event_id] %>
-		}
-	});
+//	const eventLiked = new CustomEvent('eventLiked', {
+//		'detail': {
+//			'currentEventFavorited': <%#= @locals[:current_event_favorited] %>,
+//			'eventId'              : <%#= @locals[:event_id] %>
+//		}
+//	});
 
-	let savesWrapper = document.getElementById('<%= @locals[:identifier] %>');
-	let savesElem = savesWrapper.querySelector('[data-controller="favorite"]')
-	savesElem.dispatchEvent(eventLiked);
+	const promise = new Promise(function (resolve, reject) {
+		const savesWrapperEl = document.getElementById('saves');
 
-	let eventElem = document.getElementById('<%= @locals[:event_identifier] %>');
-	eventElem.dispatchEvent(eventLiked);
 
-	savesWrapper.innerHTML = '<%= j render partial: "feeds/saves", locals: @locals %>'
+		const morph = morphdom.default(savesWrapperEl, '<%= j render partial: "feeds/saves", locals: @locals %>'.trim(), {
+			onBeforeElUpdated: function (fromEl, toEl) {
+				return !fromEl.isEqualNode(toEl);
+			}
+		});
+
+		resolve(morph)
+
+	})
+
+	promise.then(function (value) {
+		postal.publish({
+			channel: "saves",
+			topic  : "saves.updated",
+			data   : {
+				detail: {
+					currentEventFavorited: <%= @locals[:current_event_favorited] %>,
+					eventId              : <%= @locals[:event_id] %>
+				}
+			}
+		});
+	})
+
+
+//	let savesElem    = savesWrapper.querySelector('[data-controller="favorite"]')
+
+//	savesElem.dispatchEvent(eventLiked);
+
+//	let eventElem = document.getElementById('<%= @locals[:event_identifier] %>');
+
+//	eventElem.dispatchEvent(eventLiked);
+
+
 })()
