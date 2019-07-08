@@ -4,6 +4,10 @@ $brand-color-in-white: darken($brand-color, 10%);
 $font-primary-font: 'Cabin';
 $font-secondary-font: 'helvetica', 'Cabin';
 
+$background-color: #f1f1f1;
+$surface-color: #ffffff;
+$surface-secondary-color: #f7f7f7;
+
 $font-primary-color: #000100;
 $font-secondary-color: transparentize($font-primary-color, 0.35);
 $font-tertiary-color: transparentize($font-secondary-color, 0.20);
@@ -15,16 +19,13 @@ $chip-transition: background 0.5s cubic-bezier(.29,.01,.4,.99), border 0.5s cubi
 
 $link-color: $brand-color;
 
-$icon-color: #616161;
-$icon-dark-color: #383838;
-$icon-light-color: #949494;
-$icon-background-color: #f0f0f0;
+$icon-color: transparentize($font-primary-color, 0.30);
+$icon-dark-color: transparentize($font-primary-color, 0.10);
+$icon-light-color: transparentize($font-primary-color, 0.60);
+$icon-background-color: $background-color;
 
 $border-color: #e0e0e0;
 
-$background-color: #f1f1f1;
-$surface-color: #ffffff;
-$surface-secondary-color: #f7f7f7;
 
 $elevated-surface-color: #f9f9f9;
 

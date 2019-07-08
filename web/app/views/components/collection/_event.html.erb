@@ -30,8 +30,8 @@
                   aria-hidden="true"
                   aria-pressed="false"
                   style="<%= 'display: inline' if current_user.taste_events_saved?(event.id) %>">
-            <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
-            <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
+            <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
+            <i class="material-icons mdc-icon-button__icon">star</i>
           </button>
         </div>
       </div>
@@ -52,8 +52,8 @@
                     aria-label="Add to favorites"
                     aria-hidden="true"
                     aria-pressed="false">
-              <i class="material-icons-sharp mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
-              <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
+              <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
+              <i class="material-icons mdc-icon-button__icon">star</i>
             </button>
           </div>
         </div>
@@ -65,7 +65,8 @@
                 <%= event.categories_primary_name.capitalize %>
               </span>
       <span aria-hidden="true"> · </span>
-      <span class="me-card__date" data-target="event.date">
+      <span class="me-card__date"
+            data-target="event.date">
                 <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
         <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
               </span>

@@ -1,7 +1,8 @@
-<header id="top-bar" class="me-top-app-bar mdc-top-app-bar <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>">
+<header class="me-top-app-bar mdc-top-app-bar mdc-top-app-bar--fixed <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>"
+        id="top-bar">
   <div class="mdc-top-app-bar__row">
     <section
-			class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+      class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
       <span class="me-top-app-bar__title">
         <a href="/">
           <%= image_tag 'logo.svg', class: "me-top-app-bar__logo" %>
@@ -10,7 +11,8 @@
     </section>
     <% if mobile_device? && controller == 'events' %>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
-        <span class="me-top-app-bar__back-button" onclick="window.history.back()">
+        <span class="me-top-app-bar__back-button"
+              onclick="window.history.back()">
           <i class="material-icons">keyboard_backspace</i>
         </span>
         <span class="mdc-top-app-bar__title">
@@ -21,10 +23,13 @@
       </section>
     <% else %>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
-        <div data-controller="chat" data-target="chat.field" class="me-search-field me-search-field mdc-text-field"
-				id="me-chat" data-turbolinks-permanent>
+        <div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"
+             data-controller="chat"
+             data-target="chat.field"
+             data-turbolinks-permanent
+             id="me-chat">
           <%# unless current_user.try('personas_assortment_finished?') %>
-            <!-- <input data-target="chat.input" data-action="click->chat#showBot" id="text-field-shape-one" class="mdc-text-field__input" autocomplete="off" type="text" placeholder="Oi, tem alguem ai?">
+          <!-- <input data-target="chat.input" data-action="click->chat#showBot" id="text-field-shape-one" class="mdc-text-field__input" autocomplete="off" type="text" placeholder="Oi, tem alguem ai?">
             <div data-target="chat.botConversation" class="me-search-field__bot">
               <iframe id="botkit_client" referrerpolicy="no-referrer" src="<%= request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/chat.html" : ":3030/chat.html") %>"></iframe>
             </div>
@@ -36,52 +41,66 @@
               <span>Fechar</span>
             </div> -->
           <%# else %>
-            <form data-target="chat.form" data-action="submit->chat#search" method="get" name="search" action=""
-              style="width: 100%">
-              <input data-target="chat.input" autocomplete="false" type="text"
-						placeholder="O que você está buscando hoje?" id="text-field-shape-one"
-						class="mdc-text-field__input">
-              <input type="submit" style="display: none;" />
-            </form>
+          <form action=""
+                data-action="submit->chat#search"
+                data-target="chat.form"
+                method="get"
+                name="search"
+                style="width: 100%">
+            <i class="material-icons mdc-text-field__icon">search</i>
+            <input autocomplete="false"
+                   class="mdc-text-field__input"
+                   data-target="chat.input"
+                   id="text-field-shape-one"
+                   placeholder="O que você está buscando hoje?"
+                   type="text">
+            <input style="display: none;"
+                   type="submit"/>
+          </form>
           <%# end %>
         </div>
       </section>
     <% end %>
     <section
-			class="me-top-app-bar__section me-top-app-bar__section--right mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+      class="me-top-app-bar__section me-top-app-bar__section--right mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
       <% if current_user %>
         <%= link_to current_user.email.split(/@|&|\+/).first, edit_user_path(current_user) %>
         (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)
       <% else %>
-        <div class="g-signin2" data-onsuccess="onSuccess" data-gapiscan="true" data-onload="true">
-          <div onclick="CacheSystem.clearCache(); location.assign('/users/auth/google_oauth2')" style="height:36px;width:185px;"
-					class="abcRioButton">
+        <div class="g-signin2"
+             data-gapiscan="true"
+             data-onload="true"
+             data-onsuccess="onSuccess">
+          <div class="abcRioButton"
+               onclick="CacheSystem.clearCache(); location.assign('/users/auth/google_oauth2')"
+               style="height:36px;width:185px;">
             <div class="abcRioButtonContentWrapper">
               <div class="abcRioButtonIcon" style="padding:8px">
                 <div style="width:18px;height:18px;"
-								class="abcRioButtonSvgImageWithFallback abcRioButtonIconImage abcRioButtonIconImage18">
+                     class="abcRioButtonSvgImageWithFallback abcRioButtonIconImage abcRioButtonIconImage18">
                   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px"
-									viewBox="0 0 48 48" class="abcRioButtonSvg">
+                       viewBox="0 0 48 48" class="abcRioButtonSvg">
                     <g>
                       <path fill="#EA4335"
-											d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
                       </path>
                       <path fill="#4285F4"
-											d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
                       </path>
                       <path fill="#FBBC05"
-											d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                            d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
                       </path>
                       <path fill="#34A853"
-											d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                            d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
                       </path>
                       <path fill="none" d="M0 0h48v48H0z"></path>
                     </g>
-                  </svg></div>
+                  </svg>
+                </div>
               </div>
               <span style="font-size:13px;line-height:34px;" class="abcRioButtonContents"><span
-								id="not_signed_inri7nuxjddxks">Entrar com Google</span><span id="connectedri7nuxjddxks"
-								style="display:none">Signed in</span></span>
+                id="not_signed_inri7nuxjddxks">Entrar com Google</span><span id="connectedri7nuxjddxks"
+                                                                             style="display:none">Signed in</span></span>
             </div>
           </div>
         </div>

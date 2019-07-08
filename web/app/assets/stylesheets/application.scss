@@ -74,6 +74,10 @@ $mdc-theme-primary: $brand-color;
 @import "@material/elevation/mdc-elevation";
 @import "@material/snackbar/mdc-snackbar";
 @import "@material/dialog/mdc-dialog";
+@import "@material/tab-bar/mdc-tab-bar";
+@import "@material/tab-scroller/mdc-tab-scroller";
+@import "@material/tab-indicator/mdc-tab-indicator";
+@import "@material/tab/mdc-tab";
 @import "components/me-components";
 
 

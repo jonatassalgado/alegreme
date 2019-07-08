@@ -1,12 +1,13 @@
 <%
 
-  similar_to = params[:similar] || false
-  order = params[:insert_after] || 3
+  similar_to = params.fetch(:similar, false)
+  order = params.fetch(:insert_after, 3)
+  user = local_assigns.fetch(:user, current_user)
 
   if similar_to
-    event              = events.detect { |event| event.id == similar_to.to_i }
+    event              = events.detect { |event| event.id == similar_to.to_i } || Event.find(similar_to)
     similar_events_ids = event.similar_data[0...6]
-    similar_events     = Event.where(id: similar_events_ids).includes(:place)
+    similar_events     = Event.where(id: similar_events_ids).not_in_saved(user).includes(:place)
     identifier         = local_assigns.fetch(:identifier, 'similar')
   end
 

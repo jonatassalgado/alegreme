@@ -1,37 +1,4 @@
-<div class="me-float-menu">
-  <div class="me-float-menu__nav">
-    <% if current_user and !current_user.taste_events_saved.empty? %>
-      <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#salvos`)">
-        <div class="me-float-menu__icon">
-          <i class="material-icons-sharp">sentiment_satisfied</i>
-        </div>
-        <div class="me-floa-menu__label">
-          Salvos
-        </div>
-      </div>
-    <% end %>
-    <% if current_user and current_user.personas_assortment_finished? %>
-      <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#recomendados`)">
-        <div class="me-float-menu__icon">
-          <i class="material-icons-outlined">star_border</i>
-        </div>
-        <div class="me-floa-menu__label">
-          Para você
-        </div>
-      </div>
-    <% end %>
-    <% if current_user and current_user.personas_assortment_finished? %>
-      <div class="me-float-menu__item" onclick="location.assign(`${location.origin}/#categorias`)">
-        <div class="me-float-menu__icon">
-          <i class="material-icons-outlined">category</i>
-        </div>
-        <div class="me-floa-menu__label">
-          Categorias
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= render partial: "feeds/float_menu" %>
 
 <%= render partial: "saves",
            locals:  {

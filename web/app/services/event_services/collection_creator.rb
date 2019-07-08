@@ -244,7 +244,7 @@ module EventServices
 				CollectionCreator.kinds         = CollectionCreator.active_events.map { |e| e.kinds.map { |c| c.details['name'] } }.flatten.uniq.freeze
 				CollectionCreator.categories    = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq.freeze
 			else
-				CollectionCreator.user          ||= current_user
+				CollectionCreator.user          = current_user
 				CollectionCreator.active_events ||= Event.includes(:place, :categories, :organizers).active
 				# CollectionCreator.kinds         ||= CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
 				CollectionCreator.categories ||= CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq

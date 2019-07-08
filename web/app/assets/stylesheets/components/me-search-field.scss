@@ -6,11 +6,12 @@ $border-color: #e0e0e0;
 
 .me-search-field {
   align-self: center;
-  width: 100%;
+  width: 70%;
   height: 48px;
   border-radius: 0;
-  align-self: baseline;
   transition: height 0.2s linear;
+  padding: 0 12px;
+  margin: auto;
 
   @include mdc-layout-grid-media-query_("phone") {
     border-radius: 3px;
@@ -113,6 +114,10 @@ $border-color: #e0e0e0;
     }
   }
 
+  & .material-icons {
+    vertical-align: middle;
+  }
+
   &.mdc-text-field--focused {
     @include mdc-text-field-label-color($color: $font-primary-color);
     @include mdc-text-field-caret-color($color: $font-primary-color);
@@ -121,10 +126,10 @@ $border-color: #e0e0e0;
   & .mdc-text-field__input {
     caret-color: $font-primary-color;
     font-size: 16px;
-    padding: 0 25px;
+    padding: 0 12px;
     box-sizing: border-box;
     height: 48px;
-    width: 100%;
+    width: 90%;
     font-weight: 400;
     outline: none;
     background: transparent;
@@ -138,28 +143,28 @@ $border-color: #e0e0e0;
     }
   }
 
-  & .search-icon {
-    color: $icon-color;
-    position: absolute;
-    top: 13px;
-    left: 24px;
-    z-index: 3;
-    display: -ms-inline-flexbox;
-    display: -webkit-inline-flex;
-    display: inline-flex;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    position: relative;
-    vertical-align: middle;
-    fill: currentcolor;
-    stroke: none;
-    width: 24px;
-    height: 24px;
-  }
+  //& .search-icon {
+  //  color: $icon-color;
+  //  position: absolute;
+  //  top: 13px;
+  //  left: 24px;
+  //  z-index: 3;
+  //  display: -ms-inline-flexbox;
+  //  display: -webkit-inline-flex;
+  //  display: inline-flex;
+  //  -ms-flex-align: center;
+  //  -webkit-align-items: center;
+  //  align-items: center;
+  //  -ms-flex-pack: center;
+  //  -webkit-justify-content: center;
+  //  justify-content: center;
+  //  position: relative;
+  //  vertical-align: middle;
+  //  fill: currentcolor;
+  //  stroke: none;
+  //  width: 24px;
+  //  height: 24px;
+  //}
 
   &--bot-on {
     height: 450px;
