@@ -1,0 +1,92 @@
+<% unless items[:events].empty? %>
+  <% cache [current_user, identifier, params[:categories], params[:kinds], params[:ocurrences]], expires_in: 1.day do %>
+    <div class="me-feed__section"
+         data-controller="section"
+         data-target="section.section"
+         data-section-items-count="<%= detail[:events_in_collection] if detail %>"
+         id="<%= identifier %>">
+      <h2 class="mdc-typography--<%= type == :large ? 'headline4' : 'headline5' %>">
+        <%= titles[:principal] %>
+      </h2>
+      <div class="me-feed__divider"></div>
+      <% if filters %>
+        <div class="me-filter"
+             data-controller="filter"
+             data-filter-section-identifier="<%= identifier %>"
+             data-filter-title="<%= titles[:principal] %>"
+             data-target="filter.filterContainer section.filter">
+          <% if filters[:categories] && items[:filters] %>
+            <%= titles[:categories] %>
+            <%= render partial: 'feeds/filter', locals: {
+                initial_filters:              items[:categories],
+                params_filters:               params[:categories],
+                filters_that_exist_in_events: items[:categories],
+                icon_type:                    'filter_none',
+                type:                         'categories'
+            } %>
+          <% end %>
+          <% if filters[:kinds] && params[:categories] && params[:kinds] && items[:kinds] %>
+            <%= titles[:kinds] %>
+            <%= render partial: 'feeds/filter', locals: {
+                initial_filters:              items[:kinds],
+                params_filters:               params[:kinds],
+                filters_that_exist_in_events: items[:kinds],
+                icon_type:                    'filter_list',
+                type:                         'kinds'
+            } %>
+          <% end %>
+          <% if filters[:ocurrences] && items[:ocurrences] %>
+            <%= titles[:ocurrences] %>
+            <%= render partial: 'feeds/filter', locals: {
+                initial_filters:              items[:ocurrences],
+                params_filters:               params[:ocurrences],
+                filters_that_exist_in_events: items[:ocurrences],
+                icon_type:                    'today',
+                type:                         'ocurrences'
+            } %>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+          <% unless items.empty? %>
+            <%= render partial: 'components/collection/event', collection: items[:events], as: :event, locals: {
+                identifier: identifier
+            } %>
+
+            <%= render partial: 'components/collection/similar', locals: {
+                events: items[:events],
+                identifier: identifier
+            } %>
+
+          <% end %>
+        </div>
+        <% if detail[:events_in_collection] >= 8 %>
+          <div class="me-feed__load-more"
+               data-action="click->section#loadMore"
+               data-target="section.loadMoreButton">
+            <button class="mdc-button">
+              <span class="mdc-button__label">mostrar mais</span>
+            </button>
+          </div>
+        <% end %>
+        <% if items.empty? %>
+          <div class="me-card me-card--notice mdc-card mdc-card--outlined">
+            <div class="me-card__primary-section">
+              <i class="material-icons">
+                info
+              </i>
+              Nenhum evento com as características selecionadas
+            </div>
+            <div class="me-card__secondary-section">
+              Tente remover alguns filtros, usar filtros diferentes ou volte para a listagem completa sem filtros.
+            </div>
+            <div class="me-card__primary-action">
+              Voltar para listagem completa
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

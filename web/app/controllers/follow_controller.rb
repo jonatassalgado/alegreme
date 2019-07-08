@@ -2,27 +2,33 @@ class FollowController < ApplicationController
 	before_action :authorize_user
 
 	def follow
-		@type = params[:type]
+		@type     = params[:type]
+		@location = params[:location]
 
 		followable  = resource_class
 		association = FollowServices::AssociationCreator.new(current_user.id, followable).call
 
-		@user  = association.user
-		@chips = Event.find(params[:event_id]).public_send(@type)
+		if (@location == 'single-page')
+			@user  = association.user
+			@chips = Event.find(params[:event_id]).public_send(@type).sort
 
-		render_component(association)
+			render_component(association)
+		end
 	end
 
 	def unfollow
-		@type = params[:type]
+		@type     = params[:type]
+		@location = params[:location]
 
 		followable  = resource_class
 		association = FollowServices::AssociationCreator.new(current_user.id, followable).call(destroy: true)
 
-		@user  = association.user
-		@chips = Event.find(params[:event_id]).public_send(@type).sort
+		if (@location == 'single-page')
+			@user  = association.user
+			@chips = Event.find(params[:event_id]).public_send(@type).sort
 
-		render_component(association)
+			render_component(association)
+		end
 	end
 
 	private

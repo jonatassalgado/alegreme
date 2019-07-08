@@ -6,6 +6,7 @@ $gutter: 6px;
 
 .me-favorite {
   position: relative;
+  margin-bottom: 65px;
   @include mdc-layout-grid-media-query_("phone") {
     display: none;
   }
@@ -50,6 +51,11 @@ $gutter: 6px;
         opacity: 1;
       }
     }
+  }
+
+  & .mdc-typography--headline6 {
+    margin: 0;
+    font-weight: 800;
   }
 
   & .mdc-layout-grid {
@@ -128,6 +134,11 @@ $gutter: 6px;
       cursor: pointer;
       display: none;
       z-index: 1;
+    }
+
+    & .mdc-card__media {
+      border-radius: 3px;
+      overflow: hidden;
     }
   }
 

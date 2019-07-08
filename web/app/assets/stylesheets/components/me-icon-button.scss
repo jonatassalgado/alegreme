@@ -8,59 +8,60 @@ $fill-color: #ffffff;
 }
 
 .me-feed {
-  .me-icon-button {
-
-    &.mdc-icon-button {
-      background: $fill-color;
-      transition: 0.2s all ease 0s;
-      border-radius: 100%;
-      @include mdc-icon-button-ink-color($color: $icon-light-color);
-      @include mdc-icon-button-size($width: 30px, $height: 30px, $padding: 0);
-
-      @include mdc-layout-grid-media-query_("phone") {
-        @include mdc-icon-button-ink-color($color: $icon-light-color);
-        @include mdc-icon-button-size($width: 30px, $height: 30px, $padding: 0);
-        background: none;
-      }
-
-      &:hover {}
-
-      &--on {
-        @include mdc-icon-button-ink-color($color: $brand-color);
-      }
-
-      & .material-icons-sharp {
-        font-size: 30px;
-        background: $surface-color;
-      }
-    }
-  }
+  //.me-icon-button {
+  //
+  //  &.mdc-icon-button {
+  //    background: $fill-color;
+  //    transition: 0.2s all ease 0s;
+  //    border-radius: 100%;
+  //    @include mdc-icon-button-ink-color($color: $icon-light-color);
+  //    @include mdc-icon-button-size($width: 30px, $height: 30px, $padding: 0);
+  //
+  //    @include mdc-layout-grid-media-query_("phone") {
+  //      @include mdc-icon-button-ink-color($color: $icon-light-color);
+  //      @include mdc-icon-button-size($width: 30px, $height: 30px, $padding: 0);
+  //      background: none;
+  //    }
+  //
+  //    &:hover {}
+  //
+  //    &--on {
+  //      @include mdc-icon-button-ink-color($color: $brand-color);
+  //    }
+  //
+  //    & .material-icons-sharp {
+  //      font-size: 30px;
+  //      background: $surface-color;
+  //      border-radius: 100%;
+  //    }
+  //  }
+  //}
 }
 
 .me-card--single {
-  .me-icon-button {
-
-    &.mdc-icon-button {
-      background: $icon-background-color;
-      transition: 0.2s all ease 0s;
-      border-radius: 100%;
-      @include mdc-icon-button-ink-color($color: $icon-light-color);
-      @include mdc-icon-button-size($width: 38px, $height: 38px, $padding: 6px);
-      @include mdc-elevation($z-value: 4);
-      
-      &:hover {
-        @include mdc-elevation($z-value: 2);
-      }
-      
-      &--on {
-        background: $icon-background-color;
-        @include mdc-icon-button-ink-color($color: $brand-color);
-        @include mdc-elevation($z-value: 2);
-      }
-
-      & .material-icons-sharp {
-        font-size: 38px;
-      }
-    }
-  }
+  //.me-icon-button {
+  //
+  //  &.mdc-icon-button {
+  //    background: $icon-background-color;
+  //    transition: 0.2s all ease 0s;
+  //    border-radius: 100%;
+  //    @include mdc-icon-button-ink-color($color: $icon-light-color);
+  //    @include mdc-icon-button-size($width: 38px, $height: 38px, $padding: 6px);
+  //    @include mdc-elevation($z-value: 4);
+  //
+  //    &:hover {
+  //      @include mdc-elevation($z-value: 2);
+  //    }
+  //
+  //    &--on {
+  //      background: $icon-background-color;
+  //      @include mdc-icon-button-ink-color($color: $brand-color);
+  //      @include mdc-elevation($z-value: 2);
+  //    }
+  //
+  //    & .material-icons-sharp {
+  //      font-size: 38px;
+  //    }
+  //  }
+  //}
 }

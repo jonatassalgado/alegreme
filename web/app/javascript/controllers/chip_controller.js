@@ -1,8 +1,6 @@
 import {Controller}   from "stimulus";
 import {MDCChipSet}   from "@material/chips";
 import {html, render} from "lit-html";
-// import Flipping       from 'flipping';
-
 
 export default class ChipController extends Controller {
 	static targets = ["chipset", "container", "chip", "input", "inputContainer"];
@@ -12,48 +10,15 @@ export default class ChipController extends Controller {
 		const sectionIdentifier = self.chipsetTarget.parentElement.dataset.filterSectionIdentifier;
 
 		self.MDCChipSet = new MDCChipSet(self.chipsetTarget);
-		// window.flipping = window.flipping || new Flipping();
 
 		postal.subscribe({
 			channel : `${sectionIdentifier}`,
 			topic   : `${sectionIdentifier}.updated`,
 			callback: function (data, envelope) {
 
-				// console.log('ANTES');
-				// console.log(flipping);
-				//
-				// flipping.flip();
-				// console.log('DEPOIS');
-				// console.log(flipping);
-				//
-				// document.querySelectorAll('.me-card--feed').forEach(function (el) {
-				// 	if (flipping.states[el.dataset.flipKey] && flipping.states[el.dataset.flipKey]['type'] == 'MOVE' && flipping.states[el.dataset.flipKey]['delta']) {
-				// 		el.style.transition = '';
-				// 		el.style.transform  = `translateY(${flipping.states[el.dataset.flipKey]['delta']['top']}px)`;
-				//
-				// 	}
-				// 	if (flipping.states[el.dataset.flipKey] && flipping.states[el.dataset.flipKey]['type'] == 'ENTER') {
-				// 		el.style.opacity = 0;
-				// 	}
-				// });
-				//
-				// requestAnimationFrame(function () {
-				//
-				// 	// setTimeout(function () {
-				// 	document.querySelectorAll('.me-card--feed').forEach(function (el) {
-				// 		el.style.transition = 'all 2s ease';
-				// 		el.style.transform  = '';
-				// 		el.style.opacity    = 1;
-				// 	});
-				// 	// }, 50);
-				// });
-				//
-				// //
-
-
 				setTimeout(function () {
 					self.MDCChipSet = new MDCChipSet(self.chipsetTarget);
-				}, 150)
+				}, 550)
 
 			}
 		});

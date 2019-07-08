@@ -1,0 +1,44 @@
+<%
+
+  similar_to = params[:similar] || false
+  order = params[:insert_after] || 3
+
+  if similar_to
+    event              = events.detect { |event| event.id == similar_to.to_i }
+    similar_events_ids = event.similar_data[0...6]
+    similar_events     = Event.where(id: similar_events_ids).includes(:place)
+    identifier         = local_assigns.fetch(:identifier, 'similar')
+  end
+
+%>
+
+<% if similar_to %>
+  <div id="similar-to-<%= similar_to %>"
+       class="me-similar"
+       style="order: <%= order %>">
+    <h3 class="mdc-typography--headline6">
+      Eventos parecidos com <%= link_to(limit_name_size(event.details['name'], 30), event_path(event)) %>
+    </h3>
+
+    <div class="me-similar__organizers">
+      <%= render partial: 'components/follow/follow-chip-set', locals: {
+          user:  current_user,
+          chips: event.organizers[0..5],
+          type:  'organizers'
+      } %>
+    </div>
+
+    <div class="me-similar__events">
+      <%= render partial:    'components/collection/event',
+                 collection: similar_events,
+                 as:         :event,
+                 locals:     {
+                     display_similar: false,
+                     display_place:   false,
+                     identifier:      identifier,
+                     type:            'similar'
+                 } %>
+    </div>
+
+  </div>
+<% end %>

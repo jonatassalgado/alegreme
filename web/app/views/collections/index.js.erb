@@ -4,7 +4,7 @@
 	const promise = new Promise(function (resolve, reject) {
 		const sectionElem = document.getElementById('<%= @locals[:identifier] %>');
 
-		const morph = morphdom.default(sectionElem, '<%= j render partial: "feeds/section", locals: @locals %>'.trim(), {
+		const morph = morphdom.default(sectionElem, '<%= j render partial: "components/collection/collection", locals: @locals %>'.trim(), {
 			onBeforeElUpdated: function (fromEl, toEl) {
 				return !fromEl.isEqualNode(toEl);
 			}
@@ -18,7 +18,12 @@
 		postal.publish({
 			channel: "<%= @locals[:identifier] %>",
 			topic  : "<%= @locals[:identifier] %>.updated",
-			data   : {}
+			data   : {
+				itemsCount: <%= @locals[:items].count %>,
+				params    : {
+					similar: <%= params[:similar] || {} %>
+				}
+			}
 		});
 
 	})

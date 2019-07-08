@@ -6,18 +6,20 @@ class FeedsController < ApplicationController
 			format.js do
 				Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 					collection = EventServices::CollectionCreator.new(current_or_guest_user, params)
-					@items     = collection.call(params[:identifier])
+					@events    = collection.call(params[:identifier])
 				end
 
 				@locals = {
-						items:      @items,
+						items:      @events,
 						titles:     {
 								principal: params[:title]
 						},
 						identifier: params[:identifier],
 						type:       :large,
-						filters:    @items[:filters]
+						filters:    @events[:filters],
+						detail:     @events[:detail]
 				}
+
 
 				render 'collections/index'
 			end
@@ -31,7 +33,7 @@ class FeedsController < ApplicationController
 					       else
 						       {
 								       today:         collections.call('today-and-tomorrow', group_by: 5),
-								       follow:        collections.call({identifier: 'follow', collection: current_or_guest_user.events_from_followed_features}),
+								       follow:        collections.call({identifier: 'follow', collection: current_user.events_from_followed_features}),
 								       user_personas: collections.call('user-personas')
 						       }
 				         end

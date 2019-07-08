@@ -27,16 +27,15 @@ module EventServices
 			@opts            = default_options(opts)
 			@dynamic_filters = default_filters.merge(get_filters_for_collection)
 
+			@events = if is_a_activerecord_relation?
+				          # STDERR.puts "ACTIVE RECORD: #{@dynamic_filters}"
+				          EventFetcher.new(@collection, @dynamic_filters).call
+				        else
+					        # STDERR.puts "COLLECTION: #{@dynamic_filters}"
+					        EventFetcher.new(Event.all, @dynamic_filters).call
+			          end
 
-			events = if is_a_activerecord_relation?
-				         STDOUT.puts "ACTIVE RECORD: #{@dynamic_filters}"
-				         EventFetcher.new(@collection, @dynamic_filters).call
-				       else
-					       STDOUT.puts "COLLECTION: #{@dynamic_filters}"
-					       EventFetcher.new(Event.all, @dynamic_filters).call
-			         end
-
-			mount_response(events)
+			mount_response
 		end
 
 
@@ -87,17 +86,17 @@ module EventServices
 							all_existing_filters: false
 					},
 					'user-personas'      => {
-							all_existing_filters: true
+							all_existing_filters: false
 					},
 					'follow'             => {
-							all_existing_filters: true
+							all_existing_filters: false
 					}
 			}
 
 			if default_opts.key?(@identifier)
 				default_opts[@identifier].merge(opts)
 			else
-				{all_existing_filters: false}
+				{all_existing_filters: false}.merge(opts)
 			end
 		end
 
@@ -131,20 +130,23 @@ module EventServices
 		end
 
 		def set_limit
-			@opts[:limit] || 10
+			@params[:limit] || @opts[:limit] || 8
 		end
 
 		def group_by_or_kinds_not_exist?(opts)
 			@params[:categories] || (!opts[:group_by].blank? || @params[:kinds].blank?)
 		end
 
-		def mount_response(events)
+		def mount_response
 			{
-					events:     events,
-					categories: get_filters_from_exist_events(events, 'categories'),
-					kinds:      get_filters_from_exist_events(events, 'kinds'),
-					ocurrences: get_filters_from_exist_events(events, 'ocurrences'),
-					filters:    get_filters_toggle_for_collection
+					events:     @events,
+					categories: get_filters_from_exist_events(@events, 'categories'),
+					kinds:      get_filters_from_exist_events(@events, 'kinds'),
+					ocurrences: get_filters_from_exist_events(@events, 'ocurrences'),
+					filters:    get_filters_toggle_for_collection,
+					detail:     {
+							events_in_collection: @events.size
+					}
 			}
 		end
 
@@ -161,11 +163,13 @@ module EventServices
 		end
 
 		def calculate_items_for_group(number = 2, opts = {})
-			if opts[:auto_balance] && params_filter_category_exist?
-				categories = @params.fetch(:categories, [])
-				categories.count < 5 ? (10 / categories.count) : 2
+			if opts[:auto_balance] && @opts[:limit]
+				(@opts[:limit] / 8) * 2
+			elsif opts[:auto_balance] && params_filter_category_exist?
+				categories = @params.fetch(:categories) || CollectionCreator.categories
+				categories.count < 5 ? (8 / categories.count) : 2
 			elsif params_filter_kind_exist?
-				10
+				8
 			elsif number
 				number
 			else

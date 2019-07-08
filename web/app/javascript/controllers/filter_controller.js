@@ -7,21 +7,26 @@ export default class FilterController extends Controller {
 	static targets = ["filterContainer", "personas", "categories", "ocurrences", "kinds"];
 
 	initialize() {
-		const self              = this;
-		const sectionIdentifier = self.data.get('sectionIdentifier');
+		const self         = this;
+		self.flipping      = new Flipping({
+			attribute: `data-collection-${self.sectionIdentifier}-flip-key`
+		});
+		self.subscriptions = {};
 
-		self.flipping     = new Flipping();
-		self.subscription = postal.subscribe({
-			channel : `${sectionIdentifier}`,
-			topic   : `${sectionIdentifier}.updated`,
+		self.subscriptions.sectionUpdated = postal.subscribe({
+			channel : `${self.sectionIdentifier}`,
+			topic   : `${self.sectionIdentifier}.updated`,
 			callback: function (data, envelope) {
 
 				const flipPromise = new Promise((resolve, reject) => {
 					self.flipping.flip();
 
-					let delay = 0.035;
+					let delay     = 0.035;
 					const flipped = Object.keys(self.flipping.states).forEach(function (key) {
 						const state = self.flipping.states[key];
+						if (state.element === undefined) {
+							return;
+						}
 
 						if (state.type === 'MOVE' && state.delta) {
 							state.element.style.transition = '';
@@ -55,19 +60,27 @@ export default class FilterController extends Controller {
 				flipPromise.then(() => {
 
 				});
-
-
 			}
 		});
 
+		self.subscriptions.filterCreate = postal.subscribe(
+			{
+				channel : `${self.sectionIdentifier}`,
+				topic   : `${self.sectionIdentifier}.create`,
+				callback: function (data, envelope) {
+					self.filter(data);
+				}
+			});
+
 		document.addEventListener("turbolinks:before-cache", () => {
-			self.subscription.unsubscribe();
+			self.subscriptions.sectionUpdated.unsubscribe();
+			self.subscriptions.filterCreate.unsubscribe();
 		});
 
 	}
 
 
-	filter() {
+	filter(opts = {}) {
 		const self   = this;
 		let promises = [];
 
@@ -120,13 +133,16 @@ export default class FilterController extends Controller {
 			       .then(function (resultsArray) {
 				       const urlWithFilters = stringify(
 					       {
-						       personas  : resultsArray[0],
-						       categories: resultsArray[1],
-						       ocurrences: resultsArray[2],
-						       kinds     : resultsArray[3],
-						       identifier: self.data.get('sectionIdentifier'),
-						       title     : self.data.get('title'),
-						       defaults  : self.defaultValue
+						       personas    : resultsArray[0],
+						       categories  : resultsArray[1],
+						       ocurrences  : resultsArray[2],
+						       kinds       : resultsArray[3],
+						       identifier  : self.sectionIdentifier,
+						       title       : self.title,
+						       defaults    : self.defaultValue,
+						       similar     : opts.similar,
+						       insert_after: opts.insert_after,
+						       limit       : opts.limit
 					       },
 					       {
 						       arrayFormat: 'bracket'
@@ -191,6 +207,14 @@ export default class FilterController extends Controller {
 		};
 
 		return JSON.stringify(defaults)
+	}
+
+	get sectionIdentifier() {
+		return this.data.get('sectionIdentifier');
+	}
+
+	get title() {
+		return this.data.get('title')
 	}
 
 }

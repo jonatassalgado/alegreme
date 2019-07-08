@@ -1,9 +1,17 @@
-$brand-color: #5ecf80;
-$brand-color-in-white: #00651e;
+$brand-color: #26B679;
+$brand-color-in-white: darken($brand-color, 10%);
 
-$font-primary-color: #000000;
-$font-secondary-color: #4a4a4a;
-$font-tertiary-color: #909090;
+$font-primary-font: 'Cabin';
+$font-secondary-font: 'helvetica', 'Cabin';
+
+$font-primary-color: #000100;
+$font-secondary-color: transparentize($font-primary-color, 0.35);
+$font-tertiary-color: transparentize($font-secondary-color, 0.20);
+
+$chip-font-color: darken($brand-color, 25%);
+$chip-background-color: transparentize($brand-color, 0.65);
+$chip-border-color: transparentize($brand-color, 0.45);
+$chip-transition: background 0.5s cubic-bezier(.29,.01,.4,.99), border 0.5s cubic-bezier(.29,.01,.4,.99);
 
 $link-color: $brand-color;
 
@@ -21,3 +29,6 @@ $surface-secondary-color: #f7f7f7;
 $elevated-surface-color: #f9f9f9;
 
 $filter-background-color: $background-color;
+
+$mdc-theme-primary: $brand-color;
+

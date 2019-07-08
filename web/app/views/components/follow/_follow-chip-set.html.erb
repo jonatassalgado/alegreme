@@ -4,6 +4,7 @@
 
   leading = local_assigns.fetch(:trailing, 'add')
   type = local_assigns.fetch(:type)
+  location = local_assigns.fetch(:location, 'single-page')
 
   def followable_name(followable, type)
     if type == 'categories'
@@ -18,6 +19,7 @@
 <div class="me-follow-chip-set mdc-chip-set mdc-chip-set--filter"
      data-controller="follow-chipset"
      data-target="follow-chipset.chipset"
+     data-follow-chipset-location="<%= location %>"
      id="follow-chip-set__<%= type %>">
   <% chips.each do |followable| %>
     <div class="mdc-chip <%= 'mdc-chip--selected' if user.following?(followable) %>"

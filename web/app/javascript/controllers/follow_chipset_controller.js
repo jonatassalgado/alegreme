@@ -1,13 +1,26 @@
 import {Controller} from "stimulus";
 import {MDCChipSet} from '@material/chips';
+import * as mdc     from "material-components-web";
 
 
 export default class FollowChipsetController extends Controller {
 	static targets = ['chipset', "chip"];
 
 	initialize() {
-		const self      = this;
-		self.chipSet    = new MDCChipSet(self.chipsetTarget);
+		const self         = this;
+		self.subscriptions = {};
+		// self.chipSet       = new MDCChipSet(self.chipsetTarget);
+
+		self.subscriptions.filterUpdated = postal.subscribe(
+			{
+				channel : `${self.sectionIdentifier}`,
+				topic   : `${self.sectionIdentifier}.updated`,
+				callback: function (data, envelope) {
+					setTimeout(() => {
+						self.chipSet = new MDCChipSet(self.chipsetTarget);
+					}, 550)
+				}
+			});
 	}
 
 
@@ -21,8 +34,9 @@ export default class FollowChipsetController extends Controller {
 				eventElem   : document.getElementById('event'),
 				followable  : event.target.parentElement.dataset.followable,
 				type        : event.target.parentElement.dataset.type,
+				location    : self.location,
 				action      : event.target.parentElement.dataset.followed === 'true' ? 'unfollow' : 'follow',
-				eventId     : document.getElementById('event').dataset.eventIdentifier
+				eventId     : self.eventId
 			};
 
 			if (Object.values(data).map((value) => {
@@ -48,15 +62,36 @@ export default class FollowChipsetController extends Controller {
 					function (response) {
 						response.text().then(function (data) {
 							eval(data);
+							CacheSystem.clearCache(['feed-page']);
 						});
 					}
 				)
 				.catch(function (err) {
 					console.log('Fetch Error :-S', err);
 				});
-		})
+		});
+
+		document.addEventListener("turbolinks:before-cache", () => {
+			self.chipSet.destroy();
+		});
 
 
+	}
+
+	get eventId() {
+		const self    = this;
+		const eventEl = document.getElementById('event');
+		if (eventEl) {
+			return eventEl.dataset.eventIdentifier;
+		}
+	}
+
+	get location() {
+		return this.data.get('location')
+	}
+
+	get sectionIdentifier() {
+		return this.chipsetTarget.closest('[data-controller="section"]').id;
 	}
 
 

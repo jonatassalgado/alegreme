@@ -25,6 +25,14 @@ class ActionDispatch::IntegrationTest
     DatabaseCleaner.clean
   end
 
+  def context(should, &block)
+    block.call(should.upcase)
+  end
+
+  def is(action, &block)
+    block.call(action.upcase)
+  end
+
   def sign_in(user)
     post user_session_path \
       "user[email]"    => user.email,

@@ -27,6 +27,14 @@ module EventsHelper
     end
   end
 
+  def get_image_dominant_color(event)
+    if event.image && event.image[:feed].exists?
+      event.image_data['feed']['metadata']['dominant_color']
+    else
+      '#f1f1f1'
+    end
+  end
+
   def round_score(score, precision = 6)
     return 0.0 if score.nil?
     return score.to_f.round(precision) if score.is_a? String

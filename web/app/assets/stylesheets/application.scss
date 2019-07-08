@@ -13,7 +13,13 @@
 
 */
 
-$mdc-typography-font-family: "Cabin";
+@import 'variables';
+
+$mdc-typography-font-family: 'Cabin';
+$mdc-theme-primary: $brand-color;
+//$mdc-theme-secondary: #feeae6;
+//$mdc-theme-on-primary: #442b2d;
+//$mdc-theme-on-secondary: #442b2d;
 
 // $mdc-typography-styles-headline1: (
 // font-size: 1.8rem,
