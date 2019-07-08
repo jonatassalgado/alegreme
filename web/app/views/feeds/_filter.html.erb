@@ -11,7 +11,6 @@
       <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter['string'] %>"
            class="me-chip mdc-chip <%= params_filters and filter_exist_in_ocurrences?(params_filters, filter['string']) ? 'mdc-chip--selected' : nil %>"
            data-turbolinks-scroll="false">
-
         <div class="mdc-chip__text">
           <%= filter['decorator'].try(:capitalize) %>
         </div>

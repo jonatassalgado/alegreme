@@ -12,6 +12,7 @@ module EventServices
 			categories_on     = sockets[:in_categories]
 			in_kinds_on       = sockets[:in_kinds]
 			days_on           = sockets[:in_days]
+			not_in_saved      = sockets[:not_in_saved]
 			user_on           = sockets[:for_user]
 			follow_on         = sockets[:in_follow_features]
 			order_personas_on = sockets[:order_by_persona]
@@ -26,6 +27,10 @@ module EventServices
 
 			@relation
 					.active
+					.not_in_saved(
+							user,
+							'turn_on': not_in_saved
+					)
 					.in_days(
 							days,
 							'turn_on': days_on
@@ -88,7 +93,8 @@ module EventServices
 					in_follow_features: false,
 					order_by_date:      false,
 					order_by_persona:   false,
-					group_by:           false
+					group_by:           false,
+					not_in_saved:       true
 			}
 
 			default_sockets.merge(toggles)

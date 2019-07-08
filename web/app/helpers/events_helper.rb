@@ -1,5 +1,5 @@
 module EventsHelper
-  def limit_name_size(name, limit = 40)
+  def limit_name_size(name, limit = 30)
     name.truncate(limit, separator: " ") if name
   end
 
@@ -8,7 +8,7 @@ module EventsHelper
   end
 
   def limit_place_name_size(place_name)
-    place_name.truncate(22, separator: " ")
+    place_name.truncate(25, separator: " ")
   end
 
   def format_hour(datetime)

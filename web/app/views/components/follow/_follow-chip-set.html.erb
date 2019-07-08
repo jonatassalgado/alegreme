@@ -31,12 +31,14 @@
          data-action="click->follow-chipset#follow"
          data-target="follow-chipset.trailing"
          role="button"
-         tabindex="0"><%= leading %></i>
-      <%#= link_to organizer_path(followable) do %>
-      <div class="mdc-chip__text">
-        <%= followable.details['name'] %>
-      </div>
-      <%# end %>
+         tabindex="0"
+         title="Siga o tópico '<%= followable.details['name'] %>'"><%= leading %></i>
+      <%= link_to organizer_path(followable) do %>
+        <div class="mdc-chip__text"
+             title="Veja todos os eventos do tópico '<%= followable.details['name'] %>'">
+          <%= followable.details['name'] %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 </div>

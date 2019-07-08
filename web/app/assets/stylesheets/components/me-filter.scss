@@ -10,6 +10,12 @@
     justify-content: flex-start;
   }
 
+  &:hover {
+    & .mdc-chip-set .material-icons {
+      opacity: 1;
+    }
+  }
+
   &__label {
     align-self: center;
     margin: 0 6px 0 0px;
@@ -24,7 +30,8 @@
       vertical-align: middle;
       padding: 0 6px 0 0;
       color: $font-tertiary-color;
-      display: none;
+      opacity: 0;
+      transition: opacity 0.2s ease-in;
     }
 
     & .mdc-chip {

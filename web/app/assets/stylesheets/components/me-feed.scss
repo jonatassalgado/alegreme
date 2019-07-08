@@ -25,11 +25,14 @@ $mdc-layout-grid-columns: (
     & .mdc-typography--headline4 {
       margin: 12px 0;
       font-weight: 800;
+      max-width: 55%;
+      line-height: 0.9em;
     }
 
     & .me-filter {
       display: block;
       margin: 12px 0;
+      text-align: right;
       //min-height: 90px;
     }
 
@@ -37,6 +40,12 @@ $mdc-layout-grid-columns: (
       margin: 0;
     }
 
+  }
+
+  &__section-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
   }
 
   &__load-more {

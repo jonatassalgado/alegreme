@@ -72,7 +72,8 @@
     </div>
     <div class="me-card__secondary-section">
       <div class="me-card__title"
-           data-target="event.name">
+           data-target="event.name"
+           title="<%= event.details_name %>">
         <a href="<%= event.url %>">
           <%= limit_name_size event.details_name %>
         </a>
@@ -81,7 +82,8 @@
     <div class="me-card__tertiary-section">
       <% if display_place %>
         <div class="me-card__place"
-             data-target="event.place">
+             data-target="event.place"
+             title="<%= event.place_details_name %>">
           <%= limit_place_name_size event.place_details_name %>
         </div>
       <% end %>
@@ -100,7 +102,8 @@
     <% if display_similar %>
       <div class="me-card__similar"
            data-action="click->event#showSimilar"
-           data-target="event.similar">
+           data-target="event.similar"
+           title="Mostrar eventos parecidos">
         <i class="material-icons">
           expand_more
         </i>

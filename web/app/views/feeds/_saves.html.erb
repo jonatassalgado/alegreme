@@ -2,6 +2,9 @@
   <% if current_user and !current_user.taste_events_saved.empty? %>
     <h3 data-target="favorite.header" class="mdc-typography--headline6">
       Eventos salvos
+      <i class="material-icons">
+        chevron_right
+      </i>
     </h3>
     <div class="me-icon__group">
       <div data-target="favorite.scrollLeft" data-action="click->favorite#scrollLeft"

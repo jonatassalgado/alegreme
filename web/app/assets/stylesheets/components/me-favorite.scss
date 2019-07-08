@@ -6,7 +6,7 @@ $gutter: 6px;
 
 .me-favorite {
   position: relative;
-  margin-bottom: 65px;
+  margin-bottom: 35px;
   @include mdc-layout-grid-media-query_("phone") {
     display: none;
   }
@@ -51,6 +51,10 @@ $gutter: 6px;
         opacity: 1;
       }
     }
+  }
+
+  & .material-icons {
+    vertical-align: middle;
   }
 
   & .mdc-typography--headline6 {
@@ -127,13 +131,14 @@ $gutter: 6px;
     &__remove {
       background: $icon-background-color;
       position: absolute;
-      top: 3px;
+      top: 29px;
       right: 3px;
       width: 16px;
       height: 16px;
       cursor: pointer;
       display: none;
       z-index: 1;
+      border-radius: 100%;
     }
 
     & .mdc-card__media {
