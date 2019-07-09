@@ -34,7 +34,22 @@ $border-color: #e0e0e0;
     }
   }
 
-  &__title {}
+  &__name {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  &__picture {
+    border-radius: 100%;
+    width: 35px;
+    height: 35px;
+    margin: 0 8px 0 0;
+  }
+
+  &__logout {
+    color: $font-tertiary-color;
+    font-size: 12px;
+  }
 
   &__section {
     flex: 1 1 0;

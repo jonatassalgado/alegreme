@@ -64,8 +64,11 @@
     <section
       class="me-top-app-bar__section me-top-app-bar__section--right mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
       <% if current_user %>
-        <%= link_to current_user.email.split(/@|&|\+/).first, edit_user_path(current_user) %>
-        (<%= link_to "Sair", destroy_user_session_path, method: :delete %>)
+        <img class="me-top-app-bar__picture" src="<%= current_user.picture %>" alt="<%= current_user.name %>">
+        <div style="flex-direction: row">
+          <%= link_to current_user.name, edit_user_path(current_user), class: "me-top-app-bar__name" %> <br>
+          <%= link_to "Sair", destroy_user_session_path, method: :delete, class: "me-top-app-bar__logout" %>
+        </div>
       <% else %>
         <div class="g-signin2"
              data-gapiscan="true"
@@ -98,9 +101,12 @@
                   </svg>
                 </div>
               </div>
-              <span style="font-size:13px;line-height:34px;" class="abcRioButtonContents"><span
-                id="not_signed_inri7nuxjddxks">Entrar com Google</span><span id="connectedri7nuxjddxks"
-                                                                             style="display:none">Signed in</span></span>
+              <span class="abcRioButtonContents"
+                    style="font-size:13px;line-height:34px;">
+                <span
+                  id="not_signed_inri7nuxjddxks">Entrar com Google</span>
+                <span id="connectedri7nuxjddxks"
+                      style="display:none">Signed in</span></span>
             </div>
           </div>
         </div>
