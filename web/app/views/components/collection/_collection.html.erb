@@ -14,6 +14,7 @@
                data-controller="filter"
                data-filter-section-identifier="<%= identifier %>"
                data-filter-title="<%= titles[:principal] %>"
+               data-filter-init-filters-applyed="<%= items[:detail][:init_filters_applyed] %>"
                data-target="filter.filterContainer section.filter">
             <% if filters[:categories] && items[:filters] %>
               <%= titles[:categories] %>

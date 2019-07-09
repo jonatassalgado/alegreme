@@ -28,10 +28,8 @@ module EventServices
 			@dynamic_filters = default_filters.merge(get_filters_for_collection)
 
 			@events = if is_a_activerecord_relation?
-				          # STDERR.puts "ACTIVE RECORD: #{@dynamic_filters}"
 				          EventFetcher.new(@collection, @dynamic_filters).call
 				        else
-					        # STDERR.puts "COLLECTION: #{@dynamic_filters}"
 					        EventFetcher.new(Event.all, @dynamic_filters).call
 			          end
 
@@ -43,13 +41,14 @@ module EventServices
 
 		def default_filters
 			{
-					for_user:         CollectionCreator.user,
+					for_user:         get_current_user,
 					in_categories:    set_initial_categories_filter,
 					in_days:          set_initial_dates_filter,
 					in_kinds:         set_initial_kinds_filter,
 					order_by_date:    false,
 					order_by_persona: false,
 					group_by:         calculate_items_for_group(2, auto_balance: true),
+					not_in:           set_not_in,
 					limit:            set_limit
 			}
 		end
@@ -145,21 +144,32 @@ module EventServices
 					ocurrences: get_filters_from_exist_events(@events, 'ocurrences'),
 					filters:    get_filters_toggle_for_collection,
 					detail:     {
-							events_in_collection: @events.size
+							events_in_collection: @events.size,
+							events_ids:           @events.map(&:id),
+							init_filters_applyed: filters_without_sensitive_info.to_json
 					}
 			}
 		end
 
 		def set_initial_categories_filter
-			@params[:categories] || @opts[:categories]
+			@params[:categories] || @opts[:categories] || []
 		end
 
 		def set_initial_kinds_filter
-			@params[:kinds] || @opts[:kinds]
+			@params[:kinds] || @opts[:kinds] || []
 		end
 
 		def set_initial_dates_filter
-			@params[:ocurrences] || @opts[:ocurrences]
+			@params[:ocurrences] || @opts[:ocurrences] || []
+		end
+
+		def set_not_in
+			if @params.include?(:init_filters_applyed)
+				init_filters_applyed = JSON.parse(@params[:init_filters_applyed])
+				init_filters_applyed['not_in']
+			else
+				@opts[:not_in] || []
+			end
 		end
 
 		def calculate_items_for_group(number = 2, opts = {})
@@ -234,6 +244,12 @@ module EventServices
 
 		def params_filters_exist?
 			!@params[:categories].blank? || !@params[:kinds].blank? || !@params[:ocurrences].blank?
+		end
+
+		def filters_without_sensitive_info
+			filters_cleanned = @dynamic_filters
+			filters_cleanned.store :for_user, @dynamic_filters[:for_user].slice(:id)
+			filters_cleanned
 		end
 
 		def cache_variables(current_user)

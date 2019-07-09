@@ -31,10 +31,14 @@ class FeedsController < ApplicationController
 				@items = if params[:q]
 					         get_events_for_search_query
 					       else
+						       collection_today    = collections.call('today-and-tomorrow', {group_by: 5})
+						       collection_follow   = collections.call({identifier: 'follow', collection: current_user.events_from_followed_features}, {not_in: collection_today[:detail][:events_ids]})
+						       collection_personas = collections.call('user-personas', {not_in: collection_follow[:detail][:events_ids]})
+
 						       {
-								       today:         collections.call('today-and-tomorrow', group_by: 5),
-								       follow:        collections.call({identifier: 'follow', collection: current_user.events_from_followed_features}),
-								       user_personas: collections.call('user-personas')
+								       today:         collection_today,
+								       follow:        collection_follow,
+								       user_personas: collection_personas
 						       }
 				         end
 

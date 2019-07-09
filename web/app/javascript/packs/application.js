@@ -38,9 +38,6 @@ import {
 import {
 	MDCSnackbar
 } from "@material/snackbar";
-import {
-	MDCTabBar
-} from '@material/tab-bar';
 
 import {
 	CacheSystem
@@ -53,9 +50,6 @@ const applicationScript = () => {
 	// TopAppBar
 	const topAppBarElement = document.querySelector(".mdc-top-app-bar");
 	const topAppBar        = new MDCTopAppBar(topAppBarElement);
-
-	//Tab Bar
-	const tabBar           = new MDCTabBar(document.querySelector('.mdc-tab-bar'));
 
 	// Button
 	const buttons = document.querySelectorAll(".mdc-button");

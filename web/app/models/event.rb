@@ -43,12 +43,20 @@ class Event < ApplicationRecord
 
 	scope 'not_in_saved', lambda { |user, opts = {}|
 		opts = {'turn_on': true}.merge(opts)
-		if opts[:turn_on]
+		if opts[:turn_on] && user
 			where.not(id: user.taste_events_saved)
 		else
 			all
 		end
+	}
 
+	scope 'not_in', lambda { |ids, opts = {}|
+		opts = {'turn_on': true}.merge(opts)
+		if opts[:turn_on] && !ids.blank?
+			where.not(id: ids)
+		else
+			all
+		end
 	}
 
 	scope 'follow_features_by_user', lambda { |user, opts = {}|
@@ -76,7 +84,7 @@ class Event < ApplicationRecord
 	scope 'in_theme', lambda { |themes, opts = {}|
 		opts = {'turn_on': true}.merge(opts)
 
-		if opts[:turn_on]
+		if opts[:turn_on] && !themes.blank?
 			where("(theme ->> 'name') IN (?)", themes)
 		else
 			all
@@ -176,7 +184,7 @@ class Event < ApplicationRecord
 		opts       = {'turn_on': true}.merge(opts)
 		ocurrences = ocurrences.map(&:to_date).map(&:yday)
 
-		if opts[:turn_on]
+		if opts[:turn_on] && !ocurrences.blank?
 			where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) NOT IN (?)", ocurrences)
 		else
 			all

@@ -20,9 +20,7 @@
                    type:       :large,
                    filters:    false
                } %>
-    <%# elsif current_user&.personas_assortment_finished? %>
-    <%#= render partial: "section", locals: {items: @items[:user], titles: {principal: "Eventos recomendados para vocÃª"}, identifier: 'recomendados', type: :large, filters: false} %>
-    <%#= render partial: "section", locals: {items: @items[:categories], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'categorias', type: :large, filters: {personas: false, categories: true, ocurrences: true}} if @items[:categories] %>
+
   <% else %>
     <section>
       <%= render partial: "components/collection/collection",

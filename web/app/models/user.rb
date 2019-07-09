@@ -16,6 +16,10 @@ class User < ApplicationRecord
     end
   end
 
+  # def insensitive_attributes
+  #   attributes.slice(:id,)
+  # end
+
   def personas_name
     features['psychographic']['personas'].map { |persona| persona[1]['name'] }.compact
   end

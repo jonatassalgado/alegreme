@@ -12,7 +12,6 @@ module EventServices
 			categories_on     = sockets[:in_categories]
 			in_kinds_on       = sockets[:in_kinds]
 			days_on           = sockets[:in_days]
-			not_in_saved      = sockets[:not_in_saved]
 			user_on           = sockets[:for_user]
 			follow_on         = sockets[:in_follow_features]
 			order_personas_on = sockets[:order_by_persona]
@@ -20,6 +19,9 @@ module EventServices
 			user              = @params[:for_user]
 			personas          = user.try(:personas_name)
 			categories        = @params[:in_categories]
+			not_in_saved_on   = sockets[:not_in_saved_on]
+			not_in            = @params[:not_in]
+			not_in_on         = sockets[:not_in]
 			limit             = @params[:limit]
 			kinds             = @params[:in_kinds]
 			order_by_date     = sockets[:order_by_date]
@@ -29,7 +31,11 @@ module EventServices
 					.active
 					.not_in_saved(
 							user,
-							'turn_on': not_in_saved
+							'turn_on': not_in_saved_on
+					)
+					.not_in(
+							not_in,
+							'turn_on': not_in_on
 					)
 					.in_days(
 							days,
@@ -94,7 +100,8 @@ module EventServices
 					order_by_date:      false,
 					order_by_persona:   false,
 					group_by:           false,
-					not_in_saved:       true
+					not_in_saved_on:    true,
+					not_in_on:          false
 			}
 
 			default_sockets.merge(toggles)

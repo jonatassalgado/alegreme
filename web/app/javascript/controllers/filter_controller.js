@@ -133,16 +133,17 @@ export default class FilterController extends Controller {
 			       .then(function (resultsArray) {
 				       const urlWithFilters = stringify(
 					       {
-						       personas    : resultsArray[0],
-						       categories  : resultsArray[1],
-						       ocurrences  : resultsArray[2],
-						       kinds       : resultsArray[3],
-						       identifier  : self.sectionIdentifier,
-						       title       : self.title,
-						       defaults    : self.defaultValue,
-						       similar     : opts.similar,
-						       insert_after: opts.insert_after,
-						       limit       : opts.limit
+						       personas            : resultsArray[0],
+						       categories          : resultsArray[1],
+						       ocurrences          : resultsArray[2],
+						       kinds               : resultsArray[3],
+						       identifier          : self.sectionIdentifier,
+						       title               : self.title,
+						       defaults            : self.defaultValue,
+						       init_filters_applyed: self.initFiltersApplyed,
+						       similar             : opts.similar,
+						       insert_after        : opts.insert_after,
+						       limit               : opts.limit
 					       },
 					       {
 						       arrayFormat: 'bracket'
@@ -207,6 +208,12 @@ export default class FilterController extends Controller {
 		};
 
 		return JSON.stringify(defaults)
+	}
+
+	get initFiltersApplyed() {
+		const self = this;
+
+		return self.data.get('initFiltersApplyed');
 	}
 
 	get sectionIdentifier() {
