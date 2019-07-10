@@ -145,8 +145,7 @@ module EventServices
 					filters:    get_filters_toggle_for_collection,
 					detail:     {
 							events_in_collection: @events.size,
-							events_ids:           @events.map(&:id),
-							init_filters_applyed: filters_without_sensitive_info.to_json
+							init_filters_applyed: filters_without_sensitive_info
 					}
 			}
 		end
@@ -249,6 +248,7 @@ module EventServices
 		def filters_without_sensitive_info
 			filters_cleanned = @dynamic_filters
 			filters_cleanned.store :for_user, @dynamic_filters[:for_user].slice(:id)
+			filters_cleanned.store :events_ids, @events.map(&:id)
 			filters_cleanned
 		end
 

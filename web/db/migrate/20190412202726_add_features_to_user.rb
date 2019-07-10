@@ -82,6 +82,12 @@ class AddFeaturesToUser < ActiveRecord::Migration[5.2]
 						total_dislikes: 0
 				}
 		}
+		add_column :users, :suggestions, :jsonb, null: false, default: {
+				events: [],
+				places: [],
+				topics: [],
+				users:  []
+		}
 		add_column :users, :following, :jsonb, null: false, default: {
 				places:     [],
 				organizers: [],
@@ -92,6 +98,7 @@ class AddFeaturesToUser < ActiveRecord::Migration[5.2]
 		}
 		add_column :users, :admin, :boolean, default: false
 		add_index :users, :features, using: :gin
+		add_index :users, :suggestions, using: :gin
 		add_index :users, "(features -> 'psychographic')", using: :gin, name: 'index_users_on_features_psychographic'
 		add_index :users, "(features -> 'psychographic' -> 'personas')", using: :gin, name: 'index_users_on_features_psychographic_personas'
 		add_index :users, "(features -> 'psychographic' -> 'personas' -> 'primary')", using: :gin, name: 'index_users_on_features_psychographic_personas_primary'

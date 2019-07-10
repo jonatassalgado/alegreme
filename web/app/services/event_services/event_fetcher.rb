@@ -4,7 +4,7 @@ module EventServices
 
 		def initialize(relation, params)
 			@params   = params
-			@relation = relation
+			@relation = get_event_active_record(relation)
 		end
 
 		def call
@@ -78,6 +78,14 @@ module EventServices
 		end
 
 		private
+
+		def get_event_active_record(relation)
+			if relation.is_a? Array
+				Event.where(id: relation)
+			elsif  relation.is_a? ActiveRecord::Relation
+				relation
+			end
+		end
 
 		def get_sockets_status(sockets = {})
 			toggles    = {}

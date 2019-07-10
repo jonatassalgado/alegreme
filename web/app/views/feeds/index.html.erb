@@ -3,7 +3,7 @@
 <%= render partial: "saves",
            locals:  {
                identifier:       'salvos',
-               favorited_events: @favorited_events
+               saved_events: @favorited_events
            } %>
 
 
@@ -70,6 +70,25 @@
                          kinds:      true
                      },
                      detail:     @items[:user_personas][:detail]
+                 } %>
+
+    </section>
+
+    <section>
+      <%= render partial: "components/collection/collection",
+                 locals:  {
+                     items:      @items[:suggestions],
+                     titles:     {
+                         principal: "Sugestões"
+                     },
+                     identifier: 'suggestions',
+                     type:       :large,
+                     filters:    {
+                         categories: true,
+                         ocurrences: true,
+                         kinds:      false
+                     },
+                     detail:     @items[:suggestions][:detail]
                  } %>
 
     </section>

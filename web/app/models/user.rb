@@ -8,9 +8,17 @@ class User < ApplicationRecord
 
 	include UserDecorators::Following
 
-	def favorited_events
+	def saved_events
 		if self && !self.taste_events_saved.empty?
 			Event.saved_by_user(self).active.order_by_date.uniq
+		else
+			[]
+		end
+	end
+
+	def saved_events_ids
+		if self && !self.taste_events_saved.empty?
+			Event.saved_by_user(self).active.order_by_date.uniq.pluck(:id)
 		else
 			[]
 		end
@@ -128,8 +136,10 @@ class User < ApplicationRecord
 			taste['events']['saved'] << event_id.to_i
 			taste['events']['total_saves'] += 1
 
-			return event.save && save
+			event.save && save
 		end
+
+		UpdateUserEventsSuggestionsJob.perform_later(self.id)
 	rescue ActiveRecord::RecordInvalid
 		puts 'Não foi possível salvar sua ação (ERRO 7813)!'
 	end
@@ -145,8 +155,11 @@ class User < ApplicationRecord
 			taste['events']['saved'].delete event_id.to_i
 			taste['events']['total_saves'] -= 1
 
-			return event.save && save
+			event.save && save
 		end
+
+		UpdateUserEventsSuggestionsJob.perform_later(self.id)
+
 	rescue ActiveRecord::RecordInvalid
 		puts 'Não foi possível salvar sua ação (ERRO 7814)!'
 	end

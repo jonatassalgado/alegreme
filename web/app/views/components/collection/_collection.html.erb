@@ -1,5 +1,6 @@
 <% unless items[:events].empty? %>
   <% cache [current_user, identifier, params[:categories], params[:kinds], params[:ocurrences]], expires_in: 1.day do %>
+
     <div class="me-feed__section"
          data-controller="section"
          data-target="section.section"
@@ -14,7 +15,7 @@
                data-controller="filter"
                data-filter-section-identifier="<%= identifier %>"
                data-filter-title="<%= titles[:principal] %>"
-               data-filter-init-filters-applyed="<%= items[:detail][:init_filters_applyed] %>"
+               data-filter-init-filters-applyed="<%= items[:detail][:init_filters_applyed].to_json %>"
                data-target="filter.filterContainer section.filter">
             <% if filters[:categories] && items[:filters] %>
               <%= titles[:categories] %>

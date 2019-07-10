@@ -10,7 +10,7 @@ class FavoritesController < ApplicationController
 				event_id:                favorite_params['event_id'].to_i,
 				user:                    current_user,
 				current_event_favorited: true,
-				favorited_events:        current_user.favorited_events
+				saved_events:            current_user.saved_events
 		}
 
 		respond_to do |format|
@@ -27,7 +27,7 @@ class FavoritesController < ApplicationController
 				event_id:                favorite_params['event_id'].to_i,
 				user:                    current_user,
 				current_event_favorited: false,
-				favorited_events:        current_user.favorited_events
+				saved_events:            current_user.saved_events
 		}
 
 		respond_to do |format|
