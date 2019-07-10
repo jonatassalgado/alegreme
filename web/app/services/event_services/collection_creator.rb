@@ -21,17 +21,15 @@ module EventServices
 				@identifier = collection[:identifier]
 			else
 				@identifier = collection
-				@collection = collection
+				@collection = Event.all
 			end
 
 			@opts            = default_options(opts)
 			@dynamic_filters = default_filters.merge(get_filters_for_collection)
-
-			@events = if is_a_activerecord_relation?
-				          EventFetcher.new(@collection, @dynamic_filters).call
-				        else
-					        EventFetcher.new(Event.all, @dynamic_filters).call
-			          end
+			@events          = EventFetcher.new(@collection, @dynamic_filters).call
+				                 # else
+					               #   EventFetcher.new(Event.all, @dynamic_filters).call
+			                   # end
 
 			mount_response
 		end
@@ -41,7 +39,6 @@ module EventServices
 
 		def default_filters
 			{
-					for_user:         get_current_user,
 					in_categories:    set_initial_categories_filter,
 					in_days:          set_initial_dates_filter,
 					in_kinds:         set_initial_kinds_filter,
@@ -57,10 +54,11 @@ module EventServices
 			collections = {
 					'today-and-tomorrow' => {
 							in_days:          [@today.to_s, @tomorrow.to_s],
+							in_user_personas: get_current_user,
 							order_by_persona: true
 					},
 					'user-personas'      => {
-							for_user:         CollectionCreator.user,
+							in_user_personas: CollectionCreator.user,
 							in_days:          set_initial_dates_filter,
 							order_by_persona: true
 					},
@@ -69,7 +67,12 @@ module EventServices
 							order_by_persona:   true,
 							in_follow_features: true,
 							group_by:           calculate_items_for_group(5, auto_balance: true)
-					}
+					},
+					'user-suggestions'   => {
+							in_user_suggestions: CollectionCreator.user,
+							in_days:             set_initial_dates_filter,
+							order_by_persona:    false
+					},
 			}
 
 			if collections.key?(@identifier)
@@ -88,6 +91,9 @@ module EventServices
 							all_existing_filters: false
 					},
 					'follow'             => {
+							all_existing_filters: false
+					},
+					'user-suggestions'   => {
 							all_existing_filters: false
 					}
 			}
@@ -111,6 +117,11 @@ module EventServices
 							ocurrences: true
 					},
 					'follow'             => {
+							categories: true,
+							kinds:      true,
+							ocurrences: true
+					},
+					'user-suggestions'   => {
 							categories: true,
 							kinds:      true,
 							ocurrences: true
@@ -247,7 +258,7 @@ module EventServices
 
 		def filters_without_sensitive_info
 			filters_cleanned = @dynamic_filters
-			filters_cleanned.store :for_user, @dynamic_filters[:for_user].slice(:id)
+			filters_cleanned.store :in_user_personas, @dynamic_filters[:in_user_personas].slice(:id) if @dynamic_filters[:in_user_personas]
 			filters_cleanned.store :events_ids, @events.map(&:id)
 			filters_cleanned
 		end

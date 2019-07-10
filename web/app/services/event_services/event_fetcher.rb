@@ -8,24 +8,25 @@ module EventServices
 		end
 
 		def call
-			sockets           = get_sockets_status @params
-			categories_on     = sockets[:in_categories]
-			in_kinds_on       = sockets[:in_kinds]
-			days_on           = sockets[:in_days]
-			user_on           = sockets[:for_user]
-			follow_on         = sockets[:in_follow_features]
-			order_personas_on = sockets[:order_by_persona]
-			days              = @params[:in_days]
-			user              = @params[:for_user]
-			personas          = user.try(:personas_name)
-			categories        = @params[:in_categories]
-			not_in_saved_on   = sockets[:not_in_saved_on]
-			not_in            = @params[:not_in]
-			not_in_on         = sockets[:not_in]
-			limit             = @params[:limit]
-			kinds             = @params[:in_kinds]
-			order_by_date     = sockets[:order_by_date]
-			group_by          = @params[:group_by]
+			sockets             = get_sockets_status @params
+			user                = @params[:in_user_personas] || @params[:in_user_suggestions]
+			personas            = user.try(:personas_name)
+			categories_on       = sockets[:in_categories]
+			in_kinds_on         = sockets[:in_kinds]
+			days_on             = sockets[:in_days]
+			user_personas_on    = sockets[:in_user_personas]
+			user_suggestions_on = sockets[:in_user_suggestions]
+			follow_on           = sockets[:in_follow_features]
+			order_personas_on   = sockets[:order_by_persona]
+			not_in_saved_on     = sockets[:not_in_saved_on]
+			not_in_on           = sockets[:not_in]
+			order_by_date       = sockets[:order_by_date]
+			days                = @params[:in_days]
+			categories          = @params[:in_categories]
+			not_in              = @params[:not_in]
+			limit               = @params[:limit]
+			kinds               = @params[:in_kinds]
+			group_by            = @params[:group_by]
 
 			@relation
 					.active
@@ -45,9 +46,13 @@ module EventServices
 							user,
 							'turn_on': follow_on
 					)
-					.for_user(
+					.in_user_suggestions(
 							user,
-							'turn_on': user_on
+							'turn_on': user_suggestions_on
+					)
+					.in_user_personas(
+							user,
+							'turn_on': user_personas_on
 					)
 					.in_categories(
 							categories,
@@ -82,7 +87,7 @@ module EventServices
 		def get_event_active_record(relation)
 			if relation.is_a? Array
 				Event.where(id: relation)
-			elsif  relation.is_a? ActiveRecord::Relation
+			elsif relation.is_a? ActiveRecord::Relation
 				relation
 			end
 		end
@@ -100,16 +105,17 @@ module EventServices
 			end
 
 			default_sockets = {
-					in_days:            false,
-					for_user:           false,
-					in_kinds:           false,
-					in_categories:      false,
-					in_follow_features: false,
-					order_by_date:      false,
-					order_by_persona:   false,
-					group_by:           false,
-					not_in_saved_on:    true,
-					not_in_on:          false
+					in_days:             false,
+					in_user_personas:    false,
+					in_user_suggestions: false,
+					in_kinds:            false,
+					in_categories:       false,
+					in_follow_features:  false,
+					order_by_date:       false,
+					order_by_persona:    false,
+					group_by:            false,
+					not_in_saved_on:     true,
+					not_in_on:           false
 			}
 
 			default_sockets.merge(toggles)

@@ -52,19 +52,14 @@ class FeedsController < ApplicationController
 								       })
 
 						       collection_suggestions = collections.call(
-								       {
-										       identifier: 'suggestions',
-										       collection: Event.where(id: current_or_guest_user.suggestions['events'])
-								       },
-								       {
-										       limit: 16
-								       })
+								       'user-suggestions',
+								       {})
 
 						       {
 								       today:         collection_today,
 								       follow:        collection_follow,
 								       user_personas: collection_personas,
-								       suggestions:   collection_suggestions
+								       user_suggestions:   collection_suggestions
 						       }
 				         end
 

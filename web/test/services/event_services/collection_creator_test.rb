@@ -149,24 +149,8 @@ class CollectionCreatorTest < ActiveSupport::TestCase
 						             limit: 16
 				             })
 
-		assert_equal 16, collection[:events].count, 'should return 10 ocurrences'
+		assert_equal 16, collection[:events].count, 'should return 16 ocurrences'
 	end
 
-	test 'requested more events with similar' do
-		Timecop.freeze('2019-05-28 12:00:00')
-
-		16.times.each do
-			create(:event, ocurrences: {
-					'dates': ['2019-05-28 12:00:00']
-			})
-		end
-
-		collection = EventServices::CollectionCreator.new(@user)
-				             .call('user-personas', {
-						             similar: Event.first.id
-				             })
-
-		assert_equal 5, collection[:similars].count, 'should return 5 ocurrences'
-	end
 
 end

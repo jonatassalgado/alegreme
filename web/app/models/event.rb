@@ -28,9 +28,19 @@ class Event < ApplicationRecord
 
 	searchkick callbacks: false, language: 'portuguese', highlight: %i[name description]
 
-	scope 'for_user', lambda { |user, opts = {}|
+	scope 'in_user_suggestions', lambda { |user, opts = {}|
 		opts = {'turn_on': true}.merge(opts)
-		if opts[:turn_on]
+
+		if opts[:turn_on] && user
+			where(id: user.suggestions['events'])
+		else
+			all
+		end
+	}
+
+	scope 'in_user_personas', lambda { |user, opts = {}|
+		opts = {'turn_on': true}.merge(opts)
+		if opts[:turn_on] && user
 			where("(ml_data -> 'personas' -> 'primary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary, 'geral') OR
            (ml_data -> 'personas' -> 'secondary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary, 'geral')",
 			      primary:  user.personas_primary_name, secondary: user.personas_secondary_name,
@@ -62,7 +72,7 @@ class Event < ApplicationRecord
 	scope 'follow_features_by_user', lambda { |user, opts = {}|
 		opts = {'turn_on': true}.merge(opts)
 
-		if opts[:turn_on]
+		if opts[:turn_on] && user
 			user.events_from_followed_features
 		else
 			all
@@ -73,7 +83,7 @@ class Event < ApplicationRecord
 	scope 'saved_by_user', lambda { |user, opts = {}|
 		opts = {'turn_on': true}.merge(opts)
 
-		if opts[:turn_on]
+		if opts[:turn_on] && user
 			where(id: user.taste_events_saved)
 		else
 			all

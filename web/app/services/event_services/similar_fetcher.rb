@@ -46,6 +46,7 @@ module EventServices
 			base_to_compare = @base.map { |event| [event.ml_data['stemmed'], event.id] }
 
 			@similar_to.each_with_index do |event, index|
+				base_to_compare.unshift([event.ml_data['stemmed'], event.id])
 				params_to_compare = {text: index, base: Base64.encode64(base_to_compare.to_s)}
 
 				similar_api       = URI("#{ENV["API_URL"]}:5000/event/similar")
