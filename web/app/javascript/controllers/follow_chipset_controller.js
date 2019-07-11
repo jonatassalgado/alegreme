@@ -7,17 +7,15 @@ export default class FollowChipsetController extends Controller {
 	static targets = ['chipset', "chip"];
 
 	initialize() {
-		const self         = this;
-		self.subscriptions = {};
-		// self.chipSet       = new MDCChipSet(self.chipsetTarget);
+		this.subscriptions = {};
 
-		self.subscriptions.filterUpdated = postal.subscribe(
+		this.subscriptions.filterUpdated = postal.subscribe(
 			{
-				channel : `${self.sectionIdentifier}`,
-				topic   : `${self.sectionIdentifier}.updated`,
-				callback: function (data, envelope) {
+				channel : `${this.sectionIdentifier}`,
+				topic   : `${this.sectionIdentifier}.updated`,
+				callback: (data, envelope) => {
 					setTimeout(() => {
-						self.chipSet = new MDCChipSet(self.chipsetTarget);
+						this.chipSet = new MDCChipSet(this.chipsetTarget);
 					}, 550)
 				}
 			});
@@ -25,18 +23,16 @@ export default class FollowChipsetController extends Controller {
 
 
 	follow(event) {
-		const self = this;
-
-		const followPromise = new Promise(function (resolve, reject) {
+		const followPromise = new Promise((resolve, reject) => {
 			const data = {
 				chipIconElem: event.target,
 				chipElem    : event.target.parentElement,
 				eventElem   : document.getElementById('event'),
 				followable  : event.target.parentElement.dataset.followable,
 				type        : event.target.parentElement.dataset.type,
-				location    : self.location,
+				location    : this.location,
 				action      : event.target.parentElement.dataset.followed === 'true' ? 'unfollow' : 'follow',
-				eventId     : self.eventId
+				eventId     : this.eventId
 			};
 
 			if (Object.values(data).map((value) => {
@@ -59,27 +55,26 @@ export default class FollowChipsetController extends Controller {
 				credentials: 'same-origin'
 			})
 				.then(
-					function (response) {
-						response.text().then(function (data) {
+					response => {
+						response.text().then(data => {
 							eval(data);
 							CacheSystem.clearCache(['feed-page']);
 						});
 					}
 				)
-				.catch(function (err) {
+				.catch(err => {
 					console.log('Fetch Error :-S', err);
 				});
 		});
 
 		document.addEventListener("turbolinks:before-cache", () => {
-			self.chipSet.destroy();
+			this.chipSet.destroy();
 		});
 
 
 	}
 
 	get eventId() {
-		const self    = this;
 		const eventEl = document.getElementById('event');
 		if (eventEl) {
 			return eventEl.dataset.eventIdentifier;

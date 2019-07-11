@@ -7,23 +7,22 @@ export default class FilterController extends Controller {
 	static targets = ["filterContainer", "personas", "categories", "ocurrences", "kinds"];
 
 	initialize() {
-		const self         = this;
-		self.flipping      = new Flipping({
-			attribute: `data-collection-${self.sectionIdentifier}-flip-key`
+		this.flipping      = new Flipping({
+			attribute: `data-collection-${this.sectionIdentifier}-flip-key`
 		});
-		self.subscriptions = {};
+		this.subscriptions = {};
 
-		self.subscriptions.sectionUpdated = postal.subscribe({
-			channel : `${self.sectionIdentifier}`,
-			topic   : `${self.sectionIdentifier}.updated`,
-			callback: function (data, envelope) {
+		this.subscriptions.sectionUpdated = postal.subscribe({
+			channel : `${this.sectionIdentifier}`,
+			topic   : `${this.sectionIdentifier}.updated`,
+			callback: (data, envelope) => {
 
 				const flipPromise = new Promise((resolve, reject) => {
-					self.flipping.flip();
+					this.flipping.flip();
 
 					let delay     = 0.035;
-					const flipped = Object.keys(self.flipping.states).forEach(function (key) {
-						const state = self.flipping.states[key];
+					const flipped = Object.keys(this.flipping.states).forEach((key) => {
+						const state = this.flipping.states[key];
 						if (state.element === undefined) {
 							return;
 						}
@@ -37,7 +36,7 @@ export default class FilterController extends Controller {
 							state.element.style.transform = `scale(0.8)`;
 						}
 
-						requestAnimationFrame(function () {
+						requestAnimationFrame(() => {
 
 							if (state.type === 'MOVE' && state.delta) {
 								state.element.style.transition = `transform 0.6s cubic-bezier(.54,.01,.45,.99)`;
@@ -63,84 +62,75 @@ export default class FilterController extends Controller {
 			}
 		});
 
-		self.subscriptions.filterCreate = postal.subscribe(
+		this.subscriptions.filterCreate = postal.subscribe(
 			{
-				channel : `${self.sectionIdentifier}`,
-				topic   : `${self.sectionIdentifier}.create`,
-				callback: function (data, envelope) {
-					self.filter(data);
+				channel : `${this.sectionIdentifier}`,
+				topic   : `${this.sectionIdentifier}.create`,
+				callback: (data, envelope) => {
+					this.filter(data);
 				}
 			});
 
 		document.addEventListener("turbolinks:before-cache", () => {
-			self.subscriptions.sectionUpdated.unsubscribe();
-			self.subscriptions.filterCreate.unsubscribe();
+			this.subscriptions.sectionUpdated.unsubscribe();
+			this.subscriptions.filterCreate.unsubscribe();
 		});
 
 	}
 
 
 	filter(opts = {}) {
-		const self   = this;
 		let promises = [];
 
-		self.flipping.read();
+		this.flipping.read();
 
 		if (this.hasPersonasTarget) {
-			let selectedPersonaValues = self.personasController.MDCChipSet.selectedChipIds.map(function (chipId) {
-				const chipElement = self.personasController.chipsetTarget.querySelector(`#${chipId}`);
+			promises[0] = this.personasController.MDCChipSet.selectedChipIds.map((chipId) => {
+				const chipElement = this.personasController.chipsetTarget.querySelector(`#${chipId}`);
 				if (chipElement) {
 					return chipElement.innerText.toLowerCase();
 				}
 			});
-
-			promises[0] = selectedPersonaValues;
 		}
 
 		if (this.hasCategoriesTarget) {
-			let selectedCategoryValues = self.categoriesController.MDCChipSet.selectedChipIds.map(function (chipId) {
-				const chipElement = self.categoriesController.chipsetTarget.querySelector(`#${chipId}`);
+			promises[1] = this.categoriesController.MDCChipSet.selectedChipIds.map((chipId) => {
+				const chipElement = this.categoriesController.chipsetTarget.querySelector(`#${chipId}`);
 				if (chipElement) {
 					return chipElement.innerText.toLowerCase();
 				}
 			});
-
-			promises[1] = selectedCategoryValues;
 		}
 
 		if (this.hasOcurrencesTarget) {
-			let selectedOcurrencesValues = self.ocurrencesController.MDCChipSet.selectedChipIds.map(function (chipId) {
-				const chipElement = self.ocurrencesController.chipsetTarget.querySelector(`#${chipId}`);
+			promises[2] = this.ocurrencesController.MDCChipSet.selectedChipIds.map((chipId) => {
+				const chipElement = this.ocurrencesController.chipsetTarget.querySelector(`#${chipId}`);
 				if (chipElement) {
 					return chipElement.dataset.chipValue.toLowerCase();
 				}
 			});
-
-			promises[2] = selectedOcurrencesValues;
 		}
 
 		if (this.hasKindsTarget) {
-			let selectedKindsValues = self.kindsController.MDCChipSet.selectedChipIds.map(function (chipId) {
-				const chipElement = self.kindsController.chipsetTarget.querySelector(`#${chipId}`);
+			promises[3] = this.kindsController.MDCChipSet.selectedChipIds.map((chipId) => {
+				const chipElement = this.kindsController.chipsetTarget.querySelector(`#${chipId}`);
 				return chipElement.innerText.toLowerCase();
 			});
-
-			promises[3] = selectedKindsValues;
 		}
 
 		if (promises.length) {
 			Promise.all(promises)
-			       .then(function (resultsArray) {
+			       .then((resultsArray) => {
 				       const urlWithFilters = stringify(
 					       {
 						       personas            : resultsArray[0],
 						       categories          : resultsArray[1],
 						       ocurrences          : resultsArray[2],
 						       kinds               : resultsArray[3],
-						       identifier          : self.sectionIdentifier,
-						       title               : self.title,
-						       defaults            : self.defaultValue,
-						       init_filters_applyed: self.initFiltersApplyed,
+						       identifier          : this.sectionIdentifier,
+						       title               : this.title,
+						       defaults            : this.defaultValue,
+						       init_filters_applyed: this.initFiltersApplyed,
 						       similar             : opts.similar,
 						       insert_after        : opts.insert_after,
 						       limit               : opts.limit
@@ -159,19 +149,19 @@ export default class FilterController extends Controller {
 					       credentials: 'same-origin'
 				       })
 					       .then(
-						       function (response) {
-							       response.text().then(function (data) {
+						       (response) => {
+							       response.text().then((data) => {
 								       eval(data);
 							       });
 						       }
 					       )
-					       .catch(function (err) {
+					       .catch(err => {
 						       console.log('Fetch Error :-S', err);
 					       });
 
 				       // }
 			       })
-			       .catch(function (err) {
+			       .catch(err => {
 				       console.log(err);
 			       });
 		}
@@ -198,22 +188,18 @@ export default class FilterController extends Controller {
 	}
 
 	get defaultValue() {
-		const self = this;
-
 		const defaults = {
-			categories: self.hasCategoriesTarget ? JSON.parse(self.categoriesController.data.get('defaultValue')) : [],
-			personas  : self.hasPersonasTarget ? JSON.parse(self.personasController.data.get('defaultValue')) : [],
-			ocurrences: self.hasOcurrencesTarget ? JSON.parse(self.ocurrencesController.data.get('defaultValue')) : [],
-			kinds     : self.hasKindsTarget ? JSON.parse(self.kindsController.data.get('defaultValue')) : []
+			categories: this.hasCategoriesTarget ? JSON.parse(this.categoriesController.data.get('defaultValue')) : [],
+			personas  : this.hasPersonasTarget ? JSON.parse(this.personasController.data.get('defaultValue')) : [],
+			ocurrences: this.hasOcurrencesTarget ? JSON.parse(this.ocurrencesController.data.get('defaultValue')) : [],
+			kinds     : this.hasKindsTarget ? JSON.parse(this.kindsController.data.get('defaultValue')) : []
 		};
 
 		return JSON.stringify(defaults)
 	}
 
 	get initFiltersApplyed() {
-		const self = this;
-
-		return self.data.get('initFiltersApplyed');
+		return this.data.get('initFiltersApplyed');
 	}
 
 	get sectionIdentifier() {

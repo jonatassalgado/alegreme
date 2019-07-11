@@ -13,19 +13,15 @@ export default class FavoriteEventsController extends Controller {
 
 
 	showEventDetails(event) {
-		const self = this;
-
-		self.removeTarget.style.display = "inline";
-		self.eventTarget.addEventListener("mouseout", function () {
-			self.removeTarget.style.display = "none";
+		this.removeTarget.style.display = "inline";
+		this.eventTarget.addEventListener("mouseout", () => {
+			this.removeTarget.style.display = "none";
 		})
 	}
 
 
 	remove() {
-		const self = this;
-
-		fetch(`/events/${self.identifier}/favorite`, {
+		fetch(`/events/${this.identifier}/favorite`, {
 			method     : 'delete',
 			headers    : {
 				'X-Requested-With': 'XMLHttpRequest',
@@ -35,13 +31,13 @@ export default class FavoriteEventsController extends Controller {
 			credentials: 'same-origin'
 		})
 			.then(
-				function (response) {
-					response.text().then(function (data) {
+				response => {
+					response.text().then(data => {
 						eval(data);
 					});
 				}
 			)
-			.catch(function (err) {
+			.catch(err => {
 				console.log('Fetch Error :-S', err);
 			});
 

@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require activestorage
+// require activestorage
 //= require materialize
 
 //= require serviceworker-companion

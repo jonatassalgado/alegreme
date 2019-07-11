@@ -6,41 +6,39 @@ export default class ChipController extends Controller {
 	static targets = ["chipset", "container", "chip", "input", "inputContainer"];
 
 	initialize() {
-		const self              = this;
-		const sectionIdentifier = self.chipsetTarget.parentElement.dataset.filterSectionIdentifier;
+		const sectionIdentifier = this.chipsetTarget.parentElement.dataset.filterSectionIdentifier;
 
-		self.MDCChipSet = new MDCChipSet(self.chipsetTarget);
+		this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
 
 		postal.subscribe({
 			channel : `${sectionIdentifier}`,
 			topic   : `${sectionIdentifier}.updated`,
-			callback: function (data, envelope) {
+			callback: (data, envelope) => {
 
-				setTimeout(function () {
-					self.MDCChipSet = new MDCChipSet(self.chipsetTarget);
+				setTimeout(() => {
+					this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
 				}, 550)
 
 			}
 		});
 
-		if (self.hasInputTarget) {
-			self.inputTarget.addEventListener('keydown', function (event) {
+		if (this.hasInputTarget) {
+			this.inputTarget.addEventListener('keydown', event => {
 				if (event.key === 'Enter' || event.keyCode === 13) {
-					self.create();
+					this.create();
 				}
 			});
 		}
 	}
 
 	select() {
-		const self = this;
-		const type = self.data.get("type");
+		const type = this.data.get("type");
 
 		switch (type) {
 			case "filter":
 				// flipping.read();
-				setTimeout(function () {
-					self.filterController.filter();
+				setTimeout(() => {
+					this.filterController.filter();
 				}, 250);
 				break;
 			case "kinds":
@@ -53,24 +51,20 @@ export default class ChipController extends Controller {
 	}
 
 	create() {
-		const self = this;
-
-		if (self.hasChipTarget) {
+		if (this.hasChipTarget) {
 
 			const chipEl = document.createElement("div");
 			chipEl.classList.add("me-chip", "mdc-chip", "mdc-chip--selected");
 			chipEl.dataset.target = "chip.chip";
 			chipEl.dataset.action = "click->chip#select";
 
-			self.chipsetTarget.appendChild(chipEl);
-			self.MDCChipSet.addChip(chipEl);
-			self.setSelected(chipEl);
+			this.chipsetTarget.appendChild(chipEl);
+			this.MDCChipSet.addChip(chipEl);
+			this.setSelected(chipEl);
 		}
 	}
 
 	setSelected(chipEl) {
-		const self = this;
-
 		const chipTemplate          = (text) => html`
 		      <div class="mdc-chip__checkmark">
 		        <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
@@ -82,33 +76,22 @@ export default class ChipController extends Controller {
 		      </div>
 		    `;
 		const currentMDCChipPromise = new Promise((resolve, reject) => {
-			const currentMDCChip = self.MDCChipSet.chips.filter(function (chip) {
-				return chip.id == chipEl.id;
-			})
+			const currentMDCChip = this.MDCChipSet.chips.filter(chip => chip.id == chipEl.id);
 
 			resolve(currentMDCChip[0]);
 		});
 
 		currentMDCChipPromise
-			.then(function (currentMDCChip) {
+			.then((currentMDCChip) => {
 				currentMDCChip.selected = true;
-				render(chipTemplate(self.inputTarget.value.toLowerCase()), chipEl)
-				self.inputTarget.value = '';
+				render(chipTemplate(this.inputTarget.value.toLowerCase()), chipEl)
+				this.inputTarget.value = '';
 			})
-			.catch(function (err) {
+			.catch((err) => {
 				console.log(err);
 			});
 	}
 
-	// get sectionController() {
-	// 	const parentSection = this.context.element.closest(
-	// 		'[data-controller="section"]'
-	// 	);
-	// 	return this.application.getControllerForElementAndIdentifier(
-	// 		parentSection,
-	// 		"section"
-	// 	);
-	// }
 
 	get filterController() {
 		const parentClassifier = this.context.element.closest(

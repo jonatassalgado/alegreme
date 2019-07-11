@@ -20,111 +20,97 @@ export default class EventController extends Controller {
 	];
 
 	initialize = () => {
-		const self = this;
-
-		self.md                 = new MobileDetect(window.navigator.userAgent);
-		self.adjustForDevice    = self.md.mobile();
-		self.subscriptions      = {};
-		self.activeInteractions = true;
+		this.md                 = new MobileDetect(window.navigator.userAgent);
+		this.adjustForDevice    = this.md.mobile();
+		this.subscriptions      = {};
+		this.activeInteractions = true;
 
 
-		self.subscriptions.savesUpdated = postal.subscribe({
+		this.subscriptions.savesUpdated = postal.subscribe({
 			channel : `saves`,
 			topic   : `saves.updated`,
-			callback: function (data, envelope) {
-				if (data.detail.eventId == self.identifier) {
-					self.likeStatus = data.detail.currentEventFavorited;
-					self.updateLikeButtonStyle(data.detail.eventId);
+			callback: (data, envelope) => {
+				if (data.detail.eventId == this.identifier) {
+					this.likeStatus = data.detail.currentEventFavorited;
+					this.updateLikeButtonStyle(data.detail.eventId);
 				}
 			}
 		});
 
-		self.subscriptions.filterUpdated = postal.subscribe(
+		this.subscriptions.filterUpdated = postal.subscribe(
 			{
-				channel : `${self.sectionIdentifier}`,
-				topic   : `${self.sectionIdentifier}.updated`,
-				callback: function (data, envelope) {
-					if(data.params.similar == self.identifier) {
-						self.isSimilarOpen = true;
+				channel : `${this.sectionIdentifier}`,
+				topic   : `${this.sectionIdentifier}.updated`,
+				callback: (data, envelope) => {
+					if (data.params.similar == this.identifier) {
+						this.isSimilarOpen = true;
 					}
 				}
 			});
 
 		document.addEventListener("turbolinks:before-cache", () => {
-			self.activeInteractions = false;
+			this.activeInteractions = false;
 
-			self.subscriptions.filterUpdated.unsubscribe();
-			self.subscriptions.savesUpdated.unsubscribe();
+			this.subscriptions.filterUpdated.unsubscribe();
+			this.subscriptions.savesUpdated.unsubscribe();
 		});
 	};
 
 	showEventDetails = () => {
-		const self = this;
-
 		if (this.md.mobile()) {
 		} else {
-			if (self.data.get("favorited") === "false") {
-				self.likeButtonTarget.style.display = "inline";
+			if (this.data.get("favorited") === "false") {
+				this.likeButtonTarget.style.display = "inline";
 			}
 
-			self.eventTarget.addEventListener("mouseout", function () {
-				if (self.data.get("favorited") === "false") {
-					self.likeButtonTarget.style.display = "none";
+			this.eventTarget.addEventListener("mouseout", () => {
+				if (this.data.get("favorited") === "false") {
+					this.likeButtonTarget.style.display = "none";
 				}
 			});
 		}
 	};
 
 	showSimilar = () => {
-		const self = this;
-
 		postal.publish({
-			channel: `${self.sectionIdentifier}`,
-			topic  : `${self.sectionIdentifier}.create`,
+			channel: `${this.sectionIdentifier}`,
+			topic  : `${this.sectionIdentifier}.create`,
 			data   : {
-				similar     : self.identifier,
-				insert_after: self.insertAfter
+				similar     : this.identifier,
+				insert_after: this.insertAfter
 			}
 		});
 	};
 
 	openMenu = () => {
-		const self    = this;
-		const mdcMenu = new MDCMenu(self.menuTarget);
-		if (mdcMenu.open) {
-			mdcMenu.open = false;
-		} else {
-			mdcMenu.open = true;
-		}
+		const mdcMenu = new MDCMenu(this.menuTarget);
+		mdcMenu.open  = !mdcMenu.open;
 	};
 
 
 	updateLikeButtonStyle = (eventId) => {
-		const self   = this;
-		const active = self.data.get('favorited');
+		const active = this.data.get('favorited');
 
 		if (active === 'true') {
-			self.likeButtonTarget.style.display = 'inline';
-			self.likeButtonTarget.classList.add('mdc-icon-button--on')
+			this.likeButtonTarget.style.display = 'inline';
+			this.likeButtonTarget.classList.add('mdc-icon-button--on')
 		} else {
-			self.likeButtonTarget.classList.remove('mdc-icon-button--on');
-			if (eventId != self.identifier) {
-				self.likeButtonTarget.style.display = 'none';
+			this.likeButtonTarget.classList.remove('mdc-icon-button--on');
+			if (eventId != this.identifier) {
+				this.likeButtonTarget.style.display = 'none';
 			}
 		}
 	};
 
 	like() {
-		const self = this;
-
 		postal.publish({
 			channel: "event",
 			topic  : "event.like",
 			data   : {}
 		});
 
-		fetch(`/events/${self.identifier}/favorite`, {
-			method     : self.isFavorited,
+		fetch(`/events/${this.identifier}/favorite`, {
+			method     : this.isFavorited,
 			headers    : {
 				'X-Requested-With': 'XMLHttpRequest',
 				'Content-type'    : 'text/javascript; charset=UTF-8',
@@ -133,21 +119,20 @@ export default class EventController extends Controller {
 			credentials: 'same-origin'
 		})
 			.then(
-				function (response) {
-					response.text().then(function (data) {
+				response => {
+					response.text().then(data => {
 						eval(data);
 					});
 				}
 			)
-			.catch(function (err) {
+			.catch(err => {
 				console.log('Fetch Error :-S', err);
 			});
 
 	}
 
 	get insertAfter() {
-		const self  = this;
-		const order = parseInt(self.eventTarget.parentElement.style.order);
+		const order = parseInt(this.eventTarget.parentElement.style.order);
 
 		if (order <= 3) {
 			return 3
@@ -169,8 +154,6 @@ export default class EventController extends Controller {
 	}
 
 	set isSimilarOpen(value) {
-		self.isSimilarOpen = true;
-
 		this.data.set("similar-open", value);
 	}
 
@@ -179,9 +162,7 @@ export default class EventController extends Controller {
 	}
 
 	get favoriteController() {
-		return this.application.controllers.find(function (controller) {
-			return controller.context.identifier === 'favorite';
-		});
+		return this.application.controllers.find(controller => controller.context.identifier === 'favorite');
 	}
 
 	get sectionIdentifier() {
@@ -189,8 +170,7 @@ export default class EventController extends Controller {
 	}
 
 	set likeStatus(status) {
-		const self = this;
-		self.data.set("favorited", status);
+		this.data.set("favorited", status);
 	}
 
 	set likeCount(value) {
@@ -203,36 +183,33 @@ export default class EventController extends Controller {
 	}
 
 	set activeInteractions(value) {
-		const self = this;
-
 		if (value) {
-			if (self.hasOverlayTarget && !self.overlayRipple) {
-				self.overlayRipple = new MDCRipple(self.overlayTarget);
+			if (this.hasOverlayTarget && !this.overlayRipple) {
+				this.overlayRipple = new MDCRipple(this.overlayTarget);
 			}
-			if (self.hasLikeButtonTarget) {
-				self.toggleLikeButton = new mdc.iconButton.MDCIconButtonToggle(
-					self.likeButtonTarget
+			if (this.hasLikeButtonTarget) {
+				this.toggleLikeButton = new mdc.iconButton.MDCIconButtonToggle(
+					this.likeButtonTarget
 				);
 			}
 		} else {
-			if (self.overlayRipple) {
-				self.overlayRipple.destroy();
+			if (this.overlayRipple) {
+				this.overlayRipple.destroy();
 			}
-			if (self.likeButtonRipple) {
-				self.likeButtonRipple.destroy();
+			if (this.likeButtonRipple) {
+				this.likeButtonRipple.destroy();
 			}
 		}
 	}
 
 	set adjustForDevice(isMobile) {
-		const self        = this;
-		const isFavorited = self.data.get("favorited") === "false";
-		const isSingle    = self.data.get("modifier") === "single";
+		const isFavorited = this.data.get("favorited") === "false";
+		const isSingle    = this.data.get("modifier") === "single";
 
 		if (isMobile) {
 		} else {
 			if (isFavorited && !isSingle) {
-				self.likeButtonTarget.style.display = "none";
+				this.likeButtonTarget.style.display = "none";
 			}
 		}
 	}
