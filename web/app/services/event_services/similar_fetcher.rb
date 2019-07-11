@@ -31,23 +31,29 @@ module EventServices
 
 		def create_mixed_suggestions
 			if @opts[:mixed_suggestions]
-				resources_quantity = calculate_quantity
-				mixed_suggestions  = []
+				# resources_quantity = calculate_quantity
+				mixed_suggestions = []
 
-				@responses[:resources].each do |resource|
-					mixed_suggestions << resource[1][:similar][0..resources_quantity]
+				counter = 0
+				limit   = @responses[:resources].keys.size
+
+				until mixed_suggestions.size >= 15 || counter >= 10 do
+					@responses[:resources].keys.each do |key|
+						mixed_suggestions |= [@responses[:resources][key][:similar][counter]]
+					end
+					counter += 1
 				end
 
-				@responses[:mixed_suggestions] = mixed_suggestions.flatten
+				@responses[:mixed_suggestions] = mixed_suggestions.flatten.compact
 			end
 		end
 
 		def fetch_similar_resources
 			base_to_compare = @base.map { |event| [event.ml_data['stemmed'], event.id] }
 
-			@similar_to.each_with_index do |event, index|
-				base_to_compare.unshift([event.ml_data['stemmed'], event.id])
-				params_to_compare = {text: index, base: Base64.encode64(base_to_compare.to_s)}
+			@similar_to.each do |event|
+				event_to_search_similar_index = base_to_compare.find_index { |e| e[1] == event.id }
+				params_to_compare             = {text: event_to_search_similar_index, base: Base64.encode64(base_to_compare.to_s)}
 
 				similar_api       = URI("#{ENV["API_URL"]}:5000/event/similar")
 				similar_api.query = URI.encode_www_form(params_to_compare)

@@ -27,9 +27,9 @@ module EventServices
 			@opts            = default_options(opts)
 			@dynamic_filters = default_filters.merge(get_filters_for_collection)
 			@events          = EventFetcher.new(@collection, @dynamic_filters).call
-				                 # else
-					               #   EventFetcher.new(Event.all, @dynamic_filters).call
-			                   # end
+			# else
+			#   EventFetcher.new(Event.all, @dynamic_filters).call
+			# end
 
 			mount_response
 		end
@@ -39,6 +39,7 @@ module EventServices
 
 		def default_filters
 			{
+					user:             get_current_user,
 					in_categories:    set_initial_categories_filter,
 					in_days:          set_initial_dates_filter,
 					in_kinds:         set_initial_kinds_filter,
@@ -54,7 +55,7 @@ module EventServices
 			collections = {
 					'today-and-tomorrow' => {
 							in_days:          [@today.to_s, @tomorrow.to_s],
-							in_user_personas: get_current_user,
+							in_user_personas: true,
 							order_by_persona: true
 					},
 					'user-personas'      => {
@@ -69,7 +70,7 @@ module EventServices
 							group_by:           calculate_items_for_group(5, auto_balance: true)
 					},
 					'user-suggestions'   => {
-							in_user_suggestions: CollectionCreator.user,
+							in_user_suggestions: true,
 							in_days:             set_initial_dates_filter,
 							order_by_persona:    false
 					},
@@ -258,7 +259,7 @@ module EventServices
 
 		def filters_without_sensitive_info
 			filters_cleanned = @dynamic_filters
-			filters_cleanned.store :in_user_personas, @dynamic_filters[:in_user_personas].slice(:id) if @dynamic_filters[:in_user_personas]
+			filters_cleanned.store :in_user_personas, @dynamic_filters[:user].slice(:id) if @dynamic_filters[:user]
 			filters_cleanned.store :events_ids, @events.map(&:id)
 			filters_cleanned
 		end

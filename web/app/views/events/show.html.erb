@@ -51,6 +51,6 @@
 
 <ul>
   <% @event.similar_data.each do |similar| %>
-    <li><%= Event.find(similar).details_name %></li>
+    <li><%= "#{Event.find(similar).id} #{Event.find(similar).details_name}" %></li>
   <% end %>
 </ul>

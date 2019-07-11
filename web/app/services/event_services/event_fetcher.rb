@@ -9,7 +9,7 @@ module EventServices
 
 		def call
 			sockets             = get_sockets_status @params
-			user                = @params[:in_user_personas] || @params[:in_user_suggestions]
+			user                = @params[:user]
 			personas            = user.try(:personas_name)
 			categories_on       = sockets[:in_categories]
 			in_kinds_on         = sockets[:in_kinds]
