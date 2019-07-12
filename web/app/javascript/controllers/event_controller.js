@@ -80,6 +80,11 @@ export default class EventController extends Controller {
 				insert_after: this.insertAfter
 			}
 		});
+
+		setTimeout(() => {
+			window.scrollTo(0, this.eventTarget.offsetTop);
+		}, 300)
+
 	};
 
 	openMenu = () => {

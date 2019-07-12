@@ -23,6 +23,10 @@ export default class SectionController extends Controller {
 		})
 	}
 
+	closeLoadMore() {
+
+	}
+
 	hasMoreEventsToLoad() {
 		const self = this;
 

@@ -4,7 +4,7 @@
   position: fixed;
   top: 64px;
   bottom: 90px;
-  left: 6px;
+  left: 0;
   z-index: 1;
   will-change: transform;
   color: $icon-light-color;
@@ -36,18 +36,25 @@
   &__item {
     width: 48px;
     height: 48px;
-    display: flex;
+    display: none;
     justify-content: center;
     margin-bottom: 20px;
     cursor: pointer;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+
+    &.is-active {
+      color: $icon-color;
+    }
   }
 
   &__label {
     display: block;
     overflow: hidden;
     display: -webkit-box;
+    font-family: $font-secondary-font;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     margin-top: 4px;

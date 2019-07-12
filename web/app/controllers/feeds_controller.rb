@@ -6,13 +6,15 @@ class FeedsController < ApplicationController
 			format.js do
 				Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 					collection = EventServices::CollectionCreator.new(current_or_guest_user, params)
+					@title     = JSON.parse(params[:title])
 					@events    = collection.call(params[:identifier])
 				end
 
 				@locals = {
 						items:      @events,
-						titles:     {
-								principal: params[:title]
+						title:      {
+								principal: @title['principal'],
+								secondary: @title['secondary']
 						},
 						identifier: params[:identifier],
 						type:       :large,
@@ -56,10 +58,10 @@ class FeedsController < ApplicationController
 								       {})
 
 						       {
-								       today:         collection_today,
-								       follow:        collection_follow,
-								       user_personas: collection_personas,
-								       user_suggestions:   collection_suggestions
+								       today:            collection_today,
+								       follow:           collection_follow,
+								       user_personas:    collection_personas,
+								       user_suggestions: collection_suggestions
 						       }
 				         end
 

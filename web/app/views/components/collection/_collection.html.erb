@@ -5,20 +5,24 @@
          data-controller="section"
          data-target="section.section"
          data-section-items-count="<%= detail[:events_in_collection] if detail %>"
+         data-observable="float-menu.section"
          id="<%= identifier %>">
       <div class="me-feed__section-head">
         <h2 class="mdc-typography--<%= type == :large ? 'headline4' : 'headline5' %>">
-          <%= titles[:principal] %>
+          <%= title[:principal] %>
+          <span>
+            <%= title[:secondary] %>
+          </span>
         </h2>
         <% if filters %>
           <div class="me-filter"
                data-controller="filter"
                data-filter-section-identifier="<%= identifier %>"
-               data-filter-title="<%= titles[:principal] %>"
+               data-filter-title="<%= title.to_json %>"
                data-filter-init-filters-applyed="<%= items[:detail][:init_filters_applyed].to_json %>"
                data-target="filter.filterContainer section.filter">
             <% if filters[:categories] && items[:filters] %>
-              <%= titles[:categories] %>
+              <%= title[:categories] %>
               <%= render partial: 'feeds/filter', locals: {
                   initial_filters:              items[:categories],
                   params_filters:               params[:categories],
@@ -28,7 +32,7 @@
               } %>
             <% end %>
             <% if filters[:kinds] && params[:categories] && params[:kinds] && items[:kinds] %>
-              <%= titles[:kinds] %>
+              <%= title[:kinds] %>
               <%= render partial: 'feeds/filter', locals: {
                   initial_filters:              items[:kinds],
                   params_filters:               params[:kinds],
@@ -38,7 +42,7 @@
               } %>
             <% end %>
             <% if filters[:ocurrences] && items[:ocurrences] %>
-              <%= titles[:ocurrences] %>
+              <%= title[:ocurrences] %>
               <%= render partial: 'feeds/filter', locals: {
                   initial_filters:              items[:ocurrences],
                   params_filters:               params[:ocurrences],

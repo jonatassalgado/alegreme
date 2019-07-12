@@ -35,7 +35,7 @@
     }
 
     & .mdc-chip {
-      margin: 2px 0;
+      margin: 2px;
       @include mdc-layout-grid-media-query_("phone") {
         margin: 4px;
       }
@@ -57,7 +57,7 @@
 
   & .mdc-chip {
     color: $font-secondary-color;
-    background-color: $surface-color;
+    background-color: darken($background-color, 5%);
     border: 1px solid $border-color;
     font-weight: 400;
     font-size: 10px;

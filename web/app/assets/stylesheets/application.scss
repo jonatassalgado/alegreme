@@ -80,6 +80,9 @@ $mdc-theme-primary: $brand-color;
 @import "@material/tab/mdc-tab";
 @import "components/me-components";
 
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   height: 100vh;
@@ -87,7 +90,8 @@ body {
   margin: 0;
   font-family: Cabin, Arial;
   font-size: 14px;
-  color: #212121;
+  background: #fafafa;
+  color: $font-primary-color;
   
   @include mdc-layout-grid-media-query_("phone") {
     background: $background-color;

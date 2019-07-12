@@ -90,7 +90,7 @@ export default class FavoriteController extends Controller {
 		this.listTarget.scrollBy(amount, 0);
 		setTimeout(() => {
 			this.listTarget.dispatchEvent(this.scrollLeftEvent)
-		}, 400);
+		}, 350);
 	}
 
 
@@ -99,7 +99,7 @@ export default class FavoriteController extends Controller {
 		this.listTarget.scrollBy(amount, 0);
 		setTimeout(() => {
 			this.listTarget.dispatchEvent(this.scrollRightEvent)
-		}, 400);
+		}, 350);
 	}
 
 	static scrolledToLeft(event) {

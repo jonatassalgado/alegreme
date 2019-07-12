@@ -254,7 +254,7 @@ module EventServices
 		end
 
 		def params_filters_exist?
-			!@params[:categories].blank? || !@params[:kinds].blank? || !@params[:ocurrences].blank?
+			!@params[:init_filters_applyed].blank?
 		end
 
 		def filters_without_sensitive_info

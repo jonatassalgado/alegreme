@@ -27,6 +27,13 @@ $mdc-layout-grid-columns: (
       font-weight: 800;
       max-width: 55%;
       line-height: 0.9em;
+
+      & span {
+        font-size: 16px;
+        display: block;
+        font-weight: 400;
+        color: $font-tertiary-color;
+      }
     }
 
     & .me-filter {
@@ -46,6 +53,7 @@ $mdc-layout-grid-columns: (
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    margin-bottom: 15px;
   }
 
   &__load-more {
@@ -101,7 +109,7 @@ $mdc-layout-grid-columns: (
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
-    --mdc-layout-grid-gutter-desktop: 16px;
+    //--mdc-layout-grid-gutter-desktop: 16px;
 
     @include mdc-layout-grid-media-query_("phone") {
       background-color: $surface-color;
@@ -117,25 +125,25 @@ $mdc-layout-grid-columns: (
   }
 
   & .mdc-layout-grid__inner {
-    @include mdc-layout-grid-media-query_("desktop") {
-      @include mdc-layout-grid-inner(
-        $size: "desktop",
-        $margin: 0,
-        $gutter: 15px
-      );
-    }
-    @include mdc-layout-grid-media-query_("tablet") {
-      @include mdc-layout-grid-inner(
-        $size: "tablet",
-        $margin: 0,
-        $gutter: 15px
-      );
-    }
-    @include mdc-layout-grid-media-query_("phone") {
-      @include mdc-layout-grid-inner($size: "phone", $margin: 0, $gutter: 15px);
-      & .mdc-layout-grid__cell:first-child {
-        grid-column-end: span 8;
-      }
-    }
+    //@include mdc-layout-grid-media-query_("desktop") {
+    //  @include mdc-layout-grid-inner(
+    //    $size: "desktop",
+    //    $margin: 0,
+    //    $gutter: 15px
+    //  );
+    //}
+    //@include mdc-layout-grid-media-query_("tablet") {
+    //  @include mdc-layout-grid-inner(
+    //    $size: "tablet",
+    //    $margin: 0,
+    //    $gutter: 15px
+    //  );
+    //}
+    //@include mdc-layout-grid-media-query_("phone") {
+    //  @include mdc-layout-grid-inner($size: "phone", $margin: 0, $gutter: 15px);
+    //  & .mdc-layout-grid__cell:first-child {
+    //    grid-column-end: span 8;
+    //  }
+    //}
   }
 }
