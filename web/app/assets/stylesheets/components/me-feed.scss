@@ -33,6 +33,8 @@ $mdc-layout-grid-columns: (
         display: block;
         font-weight: 400;
         color: $font-tertiary-color;
+        line-height: 1.4em;
+        margin-top: 12px;
       }
     }
 
@@ -54,6 +56,12 @@ $mdc-layout-grid-columns: (
     align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 15px;
+
+    & i {
+      font-style: normal;
+      color: $font-secondary-color;
+      font-weight: 500;
+    }
   }
 
   &__load-more {

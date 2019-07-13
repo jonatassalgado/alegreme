@@ -1,4 +1,5 @@
 class FeedsController < ApplicationController
+
 	before_action :authorize_admin, only: [:train]
 
 	def index
@@ -14,7 +15,7 @@ class FeedsController < ApplicationController
 						items:      @events,
 						title:      {
 								principal: @title['principal'],
-								secondary: @title['secondary']
+								secondary: @title['secondary'].html_safe
 						},
 						identifier: params[:identifier],
 						type:       :large,
@@ -42,7 +43,7 @@ class FeedsController < ApplicationController
 						       collection_follow = collections.call(
 								       {
 										       identifier: 'follow',
-										       collection: current_or_guest_user.events_from_followed_features
+										       collection: current_or_guest_user.events_from_following_features
 								       },
 								       {
 										       not_in: collection_today[:detail][:init_filters_applyed][:events_ids]

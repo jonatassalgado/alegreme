@@ -12,15 +12,15 @@
   &__events {
     grid-column: 12 span;
     display: grid;
-    margin: 0 0 12px 0;
+    margin: 6px 0 12px 0;
     grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
   &__organizers {
-    grid-column-end: 6 span;
-    justify-self: right;
-    padding: 12px 0 0 0;
+    //margin: 6px 0 12px 0;
+    grid-column-end: 12 span;
+    justify-self: left;
     animation-name: show-in;
     animation-duration: 1s;
 
@@ -29,7 +29,10 @@
     }
 
     & .me-follow-chip-set {
-      justify-content: flex-end;
+      justify-content: center;
+      padding: 0 15%;
+      padding-bottom: 15px;
+      border-bottom: 1px solid darken($background-color, 5%);
     }
   }
 
@@ -45,7 +48,7 @@
     text-align: center;
     justify-content: center;
     font-size: 11px;
-    margin: 0 0 95px 0;
+    margin: 0 0 75px 0;
     padding: 0 12px;
 
     & i {
@@ -85,7 +88,7 @@
     left: 0;
     animation-name: show-in;
     animation-duration: 1.5s;
-    border-bottom: 1px solid darken($surface-color, 5%);
+    //border-bottom: 1px solid darken($surface-color, 5%);
   }
 
   & .mdc-layout-grid__cell--span-3, .mdc-layout-grid__cell--span-3-desktop {
@@ -93,9 +96,8 @@
   }
 
   & .mdc-typography--headline6 {
-    grid-column-end: 6 span;
+    grid-column-end: 12 span;
     font-size: 16px;
-    margin-block-end: -12px;
     color: $font-tertiary-color;
     line-height: 1.2em;
     z-index: 2;

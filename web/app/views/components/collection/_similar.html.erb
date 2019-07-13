@@ -18,16 +18,8 @@
        class="me-similar"
        style="order: <%= order %>">
     <h3 class="mdc-typography--headline6">
-      Eventos parecidos com <%= link_to(limit_name_size(event.details['name'], 30), event_path(event)) %>
+      Eventos parecidos com <%= link_to(limit_name_size(event.details['name'], 60), event_path(event)) %>
     </h3>
-
-    <div class="me-similar__organizers">
-      <%= render partial: 'components/follow/follow-chip-set', locals: {
-          user:  current_user,
-          chips: event.organizers[0..5],
-          type:  'organizers'
-      } %>
-    </div>
 
     <div class="me-similar__events">
       <%= render partial:    'components/collection/event',
@@ -48,6 +40,18 @@
           <span>Estes são todos os eventos similares que encontrei.</span>
         </div>
       <% end %>
+    </div>
+
+    <h3 class="mdc-typography--headline6">
+      Tópicos parecidos com os do <%= link_to(limit_name_size(event.details['name'], 60), event_path(event)) %>
+    </h3>
+
+    <div class="me-similar__organizers">
+      <%= render partial: 'components/follow/follow-chip-set', locals: {
+          user:  current_user,
+          chips: similar_events.map{|similar| similar.organizers[0..3]}.flatten.uniq[0..6],
+          type:  'organizers'
+      } %>
     </div>
 
   </div>

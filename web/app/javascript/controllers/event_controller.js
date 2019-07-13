@@ -82,7 +82,7 @@ export default class EventController extends Controller {
 		});
 
 		setTimeout(() => {
-			window.scrollTo(0, this.eventTarget.offsetTop);
+			window.scrollTo(0, this.eventTarget.offsetTop + 100);
 		}, 300)
 
 	};

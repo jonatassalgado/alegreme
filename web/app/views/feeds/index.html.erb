@@ -44,7 +44,7 @@
                      items:      @items[:follow],
                      title:     {
                          principal: "Tópicos que você segue",
-                         secondary: "Explore os eventos de organizadores, locais e tags que você segue."
+                         secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
                      },
                      identifier: 'follow',
                      type:       :large,
@@ -62,7 +62,7 @@
                  locals:  {
                      items:      @items[:user_suggestions],
                      title:     {
-                         principal: "Indicados para você",
+                         principal: "Indicados para #{current_user.name}",
                          secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
                      },
                      identifier: 'user-suggestions',

@@ -141,7 +141,7 @@ module EventServices
 		end
 
 		def set_limit
-			@params[:limit] || @opts[:limit] || 8
+			@params[:limit] || @opts[:limit] || 4
 		end
 
 		def group_by_or_kinds_not_exist?(opts)
