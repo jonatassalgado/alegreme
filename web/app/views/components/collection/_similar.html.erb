@@ -39,6 +39,15 @@
                      identifier:      identifier,
                      type:            'similar'
                  } %>
+
+      <% if similar_events.size < 6 %>
+        <div class="me-similar__empty">
+          <i class="material-icons-sharp sentiment-satisfied">
+            sentiment_satisfied
+          </i>
+          <span>Estes são todos os eventos similares que encontrei.</span>
+        </div>
+      <% end %>
     </div>
 
   </div>

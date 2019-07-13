@@ -7,9 +7,9 @@ $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
 
 $mdc-layout-grid-columns: (
-  desktop: 12,
-  tablet: 18,
-  phone: 8
+        desktop: 12,
+        tablet: 18,
+        phone: 8
 );
 
 .me-feed {
@@ -72,11 +72,30 @@ $mdc-layout-grid-columns: (
     border-radius: 1px;
     margin: 12px 0 26px 0;
     @include mdc-layout-grid-media-query_("tablet") {
-      margin: 12px var(--mdc-layout-grid-margin-phone, 16px) 26px
-        var(--mdc-layout-grid-margin-phone, 16px);
+      margin: 12px var(--mdc-layout-grid-margin-phone, 16px) 26px var(--mdc-layout-grid-margin-phone, 16px);
     }
     @include mdc-layout-grid-media-query_("phone") {
       display: none;
+    }
+  }
+
+  &__empty {
+    background: darken($background-color, 3%);
+    color: $font-secondary-color;
+    order: 8;
+    border-radius: 5px;
+    grid-column-end: span 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 12px;
+    padding: 0 12px;
+    margin: 0 0 95px 0;
+
+    & i {
+      font-size: 2em;
     }
   }
 
@@ -86,7 +105,7 @@ $mdc-layout-grid-columns: (
     //border-radius: 3px;
     //display: inline;
   }
-  
+
 
   & .mdc-typography--headline1 {
     @include mdc-layout-grid-media-query_("tablet") {

@@ -63,6 +63,15 @@
             </div>
           </div>
         <% end %>
+
+        <% if saved_events.size < 6 %>
+          <div class="me-favorite__empty">
+            <i class="material-icons-sharp sentiment-satisfied">
+              sentiment_satisfied
+            </i>
+            <span>Explore as coleções de eventos abaixo e os salve para ver aqui.</span>
+          </div>
+        <% end %>
       </div>
     </div>
 

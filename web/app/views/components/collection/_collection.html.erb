@@ -66,6 +66,15 @@
                 identifier: identifier
             } %>
 
+            <% if detail[:events_in_collection] < 8 %>
+              <div class="me-feed__empty">
+                <i class="material-icons-sharp sentiment-satisfied">
+                  sentiment_satisfied
+                </i>
+                <span>Estes são todos os eventos disponíveis para esta coleção. Experimente explorar mais ou diminuir os filtros.</span>
+              </div>
+            <% end %>
+
           <% end %>
         </div>
         <% if detail[:events_in_collection] >= 8 %>
