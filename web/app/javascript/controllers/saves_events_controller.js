@@ -2,7 +2,7 @@ import {Controller} from "stimulus"
 import {MDCRipple}  from '@material/ripple';
 
 
-export default class FavoriteEventsController extends Controller {
+export default class SavesEventsController extends Controller {
 	static targets = ["event", "overlay", "title", "date", "remove"];
 
 	initialize() {

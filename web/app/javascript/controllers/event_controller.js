@@ -167,7 +167,7 @@ export default class EventController extends Controller {
 	}
 
 	get favoriteController() {
-		return this.application.controllers.find(controller => controller.context.identifier === 'favorite');
+		return this.application.controllers.find(controller => controller.context.identifier === 'saves');
 	}
 
 	get sectionIdentifier() {

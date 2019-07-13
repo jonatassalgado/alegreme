@@ -4,7 +4,7 @@
 
 $gutter: 6px;
 
-.me-favorite {
+.me-saves {
   position: relative;
   margin-bottom: 85px;
   @include mdc-layout-grid-media-query_("phone") {
@@ -41,13 +41,13 @@ $gutter: 6px;
     }
 
     &--at-initital {
-      &.me-favorite__list::before {
+      &.me-saves__list::before {
         opacity: 1;
       }
     }
 
     &--at-end {
-      &.me-favorite__list::after {
+      &.me-saves__list::after {
         opacity: 1;
       }
     }

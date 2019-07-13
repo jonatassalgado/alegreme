@@ -1,7 +1,7 @@
 import {Controller} from "stimulus"
 import Flipping     from "flipping"
 
-export default class FavoriteController extends Controller {
+export default class SavesController extends Controller {
 	static targets = ["saves", "list", "title", "date", "remove", "scrollLeft", "scrollRight", "header"];
 
 	initialize() {
@@ -29,8 +29,6 @@ export default class FavoriteController extends Controller {
 			channel : `saves`,
 			topic   : `saves.updated`,
 			callback: (data, envelope) => {
-				console.log(this.flipping);
-
 				const flipPromise = new Promise((resolve, reject) => {
 					this.flipping.flip();
 
@@ -75,8 +73,8 @@ export default class FavoriteController extends Controller {
 		});
 
 		if (this.hasListTarget) {
-			this.listTarget.addEventListener('scrolledLeft', FavoriteController.scrolledToLeft);
-			this.listTarget.addEventListener('scrolledRight', FavoriteController.scrolledToRight);
+			this.listTarget.addEventListener('scrolledLeft', SavesController.scrolledToLeft);
+			this.listTarget.addEventListener('scrolledRight', SavesController.scrolledToRight);
 		}
 
 		document.addEventListener("turbolinks:before-cache", () => {
@@ -128,22 +126,22 @@ export default class FavoriteController extends Controller {
 		const switchLeftButton = (turnOn = true) => {
 			if (turnOn) {
 				this.scrollLeftTarget.classList.remove('me-icon--off');
-				this.listTarget.classList.remove('me-favorite__list--at-end');
-				this.listTarget.classList.add('me-favorite__list--at-initital');
+				this.listTarget.classList.remove('me-saves__list--at-end');
+				this.listTarget.classList.add('me-saves__list--at-initital');
 			} else {
 				this.scrollLeftTarget.classList.add('me-icon--off');
-				this.listTarget.classList.remove('me-favorite__list--at-initital');
+				this.listTarget.classList.remove('me-saves__list--at-initital');
 			}
 		};
 
 		const switchRightButton = (turnOn = true) => {
 			if (turnOn) {
 				this.scrollRightTarget.classList.remove('me-icon--off');
-				this.listTarget.classList.add('me-favorite__list--at-end');
-				this.listTarget.classList.remove('me-favorite__list--at-initital');
+				this.listTarget.classList.add('me-saves__list--at-end');
+				this.listTarget.classList.remove('me-saves__list--at-initital');
 			} else {
 				this.scrollRightTarget.classList.add('me-icon--off');
-				this.listTarget.classList.remove('me-favorite__list--at-end');
+				this.listTarget.classList.remove('me-saves__list--at-end');
 			}
 
 		};
@@ -167,7 +165,7 @@ export default class FavoriteController extends Controller {
 
 	removeRepeatedDates() {
 		if (this.hasListTarget) {
-			const dates = document.querySelectorAll('.me-favorite .me-card__date');
+			const dates = document.querySelectorAll('.me-saves .me-card__date');
 			var lastDay = dates[0].innerText;
 			for (var i = 0; i < dates.length - 1; i++) {
 				if (lastDay !== dates[i + 1].innerText) {
