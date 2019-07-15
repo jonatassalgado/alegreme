@@ -18,6 +18,7 @@
        data-event-favorited="<%= current_user.taste_events_saved? event.id if current_user %>"
        data-event-identifier="<%= event.id %>"
        data-event-similar-open="<%= is_similar_open %>"
+       data-event-dominant-color="<%= get_image_dominant_color event %>"
        data-target="event.event"
        id="<%= dom_id event %>">
     <% if current_user %>

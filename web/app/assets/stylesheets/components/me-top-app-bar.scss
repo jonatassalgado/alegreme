@@ -26,6 +26,15 @@ $border-color: #e0e0e0;
     display: flex;
     height: 22px;
 
+    &-icon {
+      height: 45px;
+    }
+
+    &-text{
+      fill: $brand-secondary-color;
+      height: 25px;
+    }
+
     @include mdc-layout-grid-media-query_("phone") {
       // position: relative;
       // margin: auto;

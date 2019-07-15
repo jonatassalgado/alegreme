@@ -90,7 +90,7 @@ body {
   margin: 0;
   font-family: Cabin, Arial;
   font-size: 14px;
-  background: #fafafa;
+  background: $background-color;
   color: $font-primary-color;
   
   @include mdc-layout-grid-media-query_("phone") {
@@ -105,7 +105,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #212121;
+  color: $font-primary-color;
 }
 
 .mdc-drawer-app-content {

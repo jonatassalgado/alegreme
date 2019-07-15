@@ -4,7 +4,7 @@
 
   & .mdc-chip {
     background: $background-color;
-    border: 1px solid $border-color;
+    border: $chip-border-size solid $border-color;
 
     &__text {
       transition: color 0.3s ease-in;
@@ -24,15 +24,15 @@
     }
 
     &--selected {
-      border: 1px solid $brand-color;
+      border: $chip-border-size solid $brand-color-high-contrast;
 
       & .mdc-chip__text {
-        color: $brand-color-in-white;
+        color: $brand-color-high-contrast;
       }
 
 
       & .mdc-chip__icon--leading {
-        color: $brand-color-in-white;
+        color: $brand-color-high-contrast;
         //width: 18px;
         opacity: 1;
         //margin: 0 -4px 0 4px;

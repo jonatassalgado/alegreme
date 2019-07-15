@@ -16,7 +16,10 @@
   }
 
   &:hover {
-    background: darken($color: $icon-background-color, $amount: 5%);
+    & .iron-icon {
+      fill: $font-primary-color-high-contrast;
+    }
+    //background: $background-color;
   }
 
   &--scroll-left, &--scroll-right {
@@ -27,7 +30,7 @@
     transition: opacity 0.4s ease;
 
     & .iron-icon {
-      fill: $font-tertiary-color;
+      fill: $font-primary-color;
     }
   }
 

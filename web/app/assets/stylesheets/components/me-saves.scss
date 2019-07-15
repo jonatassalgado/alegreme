@@ -54,7 +54,6 @@ $gutter: 6px;
   }
 
   &__empty {
-    background: darken($background-color, 3%);
     color: $font-secondary-color;
     order: 10;
     border-radius: 3px;
@@ -79,7 +78,7 @@ $gutter: 6px;
 
   & .mdc-typography--headline6 {
     margin: 0;
-    font-size: 1.3em;
+    font-size: 1.6em;
     font-weight: 800;
   }
 
@@ -133,7 +132,7 @@ $gutter: 6px;
     }
 
     &__title {
-      color: $font-primary-color;
+      color: $font-secondary-color;
       font-size: 13px;
       margin: 12px 0 0 0;
       font-weight: 400;
@@ -166,7 +165,7 @@ $gutter: 6px;
       border-radius: 3px;
       overflow: hidden;
       //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+      box-shadow: $media-box-shadow;
 
       &:hover {
         //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);

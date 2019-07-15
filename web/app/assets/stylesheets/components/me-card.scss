@@ -14,34 +14,46 @@ $description-color: $font-secondary-color;
     //transform-origin: center;
 
     & .me-card__secondary-section a {
-      color: $brand-color
+      color: $font-primary-color-high-contrast
     ;
     }
 
     & .me-card__similar {
       transform: translate(0px, 15px) scale(1.5);
       opacity: 1;
-      color: $brand-color;
+      color: $font-primary-color-high-contrast;
     }
   }
 
   &[data-event-similar-open="true"]::before {
-    //background: darken($surface-color, 3%);
-    //height: 100%;
-    //width: 100%;
     //content: close-quote;
+    //border: 2px solid $font-primary-color;
+    //height: 100%;
     //position: absolute;
-    //transform: scale(1.05);
+    //width: 100%;
+    //transform: scale(1.1, 1.1);
     //transform-origin: center;
-    //top: 0;
-    //left: 0;
-    //z-index: -1;
-    //border-radius: 13px;
-    //box-shadow: 0 0 1px 0 darken($surface-color, 6%);
+    //border-radius: 8px;
+    //left: -2px;
+    //animation-name: show-in-similar-border;
+    //animation-duration: 400ms;
+    //animation-timing-function: ease-out;
+    //
+    //@keyframes show-in-similar-border {
+    //  from {
+    //    opacity: 0;
+    //    //transform: scale(1.1, 1.1) translate(0px, -25px);
+    //  }
+    //
+    //  to {
+    //    opacity: 1;
+    //    //transform: scale(1.1, 1.1) translate(0, 0);
+    //  }
+    //}
   }
 
   &::before {
-    transition: transform 0.4s ease;
+    //transition: transform 0.4s ease;
   }
 
   &:hover {
@@ -69,7 +81,7 @@ $description-color: $font-secondary-color;
     color: $font-secondary-color;
     text-transform: uppercase;
     font-size: 11px;
-    margin: 8px 0 0 0px;
+    margin: 12px 0 0 0px;
     font-weight: 800;
     @extend .me-card__section;
   }
@@ -91,6 +103,14 @@ $description-color: $font-secondary-color;
     @extend .me-card__section;
   }
 
+  &__category {
+    color: $font-secondary-color-high-contrast
+    //color: $font-primary-color-high-contrast;
+  }
+
+  &__date {
+  }
+
   &__organizer {
     a {
       text-decoration: none;
@@ -102,13 +122,13 @@ $description-color: $font-secondary-color;
     align-self: center;
     cursor: pointer;
     color: $font-tertiary-color;
-    min-height: 28px;
+    min-height: 35px;
     opacity: 0;
     transition: opacity 0.15s ease, transform 0.15s ease-in;
     transform: translate(0px, -10px);
 
     &:hover {
-      color: $brand-color;
+      color: $font-primary-color-high-contrast;
     }
   }
 
@@ -209,7 +229,7 @@ $description-color: $font-secondary-color;
 
     & .mdc-card__media {
       //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+      box-shadow: $media-box-shadow;
 
       &:hover {
         //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
@@ -391,3 +411,4 @@ $description-color: $font-secondary-color;
     right: -10px;
   }
 }
+

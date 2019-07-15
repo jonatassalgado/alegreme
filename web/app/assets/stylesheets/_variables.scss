@@ -1,20 +1,26 @@
-$brand-color: #26B679;
-$brand-color-in-white: darken($brand-color, 10%);
+$brand-color: #FEE103; // #5EEDDE; // #31916C; // #26B679
+$brand-secondary-color: #02C4A2;
+$brand-color-high-contrast: #0C0F0A; //darken($brand-color, 10%);
 
 $font-primary-font: 'Cabin';
 $font-secondary-font: 'helvetica', 'Cabin';
 
-$background-color: #fafafa;
+$background-color: #FDFFFC;
 $surface-color: #ffffff;
 $surface-secondary-color: #f7f7f7;
 
-$font-primary-color: #000100;
+$font-primary-color: $brand-color-high-contrast; // #1D2A4C; // #000100;
+$font-primary-color-high-contrast: #2191FB;
 $font-secondary-color: transparentize($font-primary-color, 0.35);
+$font-secondary-color-high-contrast: #8F1717;
 $font-tertiary-color: transparentize($font-secondary-color, 0.20);
 
-$chip-font-color: darken($brand-color, 25%);
-$chip-background-color: transparentize($brand-color, 0.65);
-$chip-border-color: transparentize($brand-color, 0.45);
+$media-box-shadow: unset; // 0 0 0 1px rgba(0, 0, 0, 0.12);
+
+$chip-font-color: $brand-color-high-contrast; // darken($brand-color, 25%);
+$chip-background-color: $brand-color; // transparentize($brand-color, 0.65);
+$chip-border-color: $brand-color-high-contrast; //transparentize($brand-color, 0.45);
+$chip-border-size: 2px;
 $chip-transition: background 0.5s cubic-bezier(.29,.01,.4,.99), border 0.5s cubic-bezier(.29,.01,.4,.99);
 
 $link-color: $brand-color;

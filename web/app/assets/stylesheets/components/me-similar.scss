@@ -23,6 +23,7 @@
     justify-self: left;
     animation-name: show-in;
     animation-duration: 1s;
+    width: 100%;
 
     & .mdc-chip__text {
       font-size: 11px;
@@ -32,12 +33,11 @@
       justify-content: center;
       padding: 0 15%;
       padding-bottom: 15px;
-      border-bottom: 1px solid darken($background-color, 5%);
+      //border-bottom: 1px solid darken($background-color, 5%);
     }
   }
 
   &__empty {
-    background: darken($background-color, 3%);
     color: $font-secondary-color;
     order: 10;
     border-radius: 3px;
@@ -68,6 +68,10 @@
 
     &__secondary-section {
       font-size: 12px;
+
+      & a {
+        color: $font-secondary-color;
+      }
     }
 
     &__like-button {
@@ -98,14 +102,14 @@
   & .mdc-typography--headline6 {
     grid-column-end: 12 span;
     font-size: 16px;
-    color: $font-tertiary-color;
+    color: $font-primary-color;
     line-height: 1.2em;
     z-index: 2;
     animation-name: show-in;
     animation-duration: 1s;
 
     & a:hover {
-      color: $brand-color;
+      color: $font-primary-color-high-contrast;
     }
   }
 }

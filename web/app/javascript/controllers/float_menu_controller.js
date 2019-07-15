@@ -17,7 +17,7 @@ export default class Float_menu_controller extends Controller {
 				})
 			},
 			{
-				threshold: [0.5]
+				threshold: [0.85]
 			}
 		);
 

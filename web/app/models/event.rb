@@ -13,7 +13,7 @@ class Event < ApplicationRecord
 	include EventDecorators::Categories
 	include EventDecorators::Tags
 
-	include EventQueries::Event
+	include EventQueries::Scopes
 
 	acts_as_followable
 

@@ -1,5 +1,5 @@
 module EventQueries
-	module Event
+	module Scopes
 		extend ActiveSupport::Concern
 
 		THEMES     = ['lazer', 'saúde', 'atividade física', 'educação', 'cultura', 'alimentação', 'compras', 'cidadania', 'outlier', 'spam'].sort.freeze
