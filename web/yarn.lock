@@ -7464,6 +7464,11 @@ regjsparser@^0.6.0:
   dependencies:
     jsesc "~0.5.0"
 
+rellax@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/rellax/-/rellax-1.10.0.tgz#0308b813b458f9175d37ffb4272e1f616eab1341"
+  integrity sha512-BtxD9b8cAQcTs6iat1fqKvHMjIZ8CaxjsC5U/cIIVHC4LjkIsr0ZmeqxUm5ZvBvyjLwfPbU8Wcryp77sR5C8QA==
+
 rematrix@^0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/rematrix/-/rematrix-0.1.3.tgz#0fd9477a9c1774e86595808f56cf2b122f1786c3"
@@ -7702,6 +7707,11 @@ scmp@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/scmp/-/scmp-2.0.0.tgz#247110ef22ccf897b13a3f0abddb52782393cd6a"
   integrity sha1-JHEQ7yLM+JexOj8KvdtSeCOTzWo=
+
+scrollbooster@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/scrollbooster/-/scrollbooster-1.1.0.tgz#7da2febe93cb9035c0d36b8bee96a4a0cc890291"
+  integrity sha512-6JHNzOYbPIJUtVcLYMtN1PVaO3FSBmTObbskM5boY78DX2hlBLOa/iqMyfChIB9m/F9NCD1xQ/jNSmeJDkry0A==
 
 scss-tokenizer@^0.2.3:
   version "0.2.3"

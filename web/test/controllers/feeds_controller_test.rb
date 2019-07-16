@@ -15,7 +15,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 				}
 		})
 
-		get root_url
+		get feed_url
 
 		assert_response :success, 'should open feed with success'
 		assert_match 'Eventos e atividades em Porto Alegre', @response.body, 'should render onboarding component'
@@ -41,7 +41,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 				}
 		})
 
-		get root_url
+		get feed_url
 
 		assert_response :success, 'should open feed with success'
 		assert_match 'Eventos e atividades em Porto Alegre', @response.body, 'should render onboarding component'

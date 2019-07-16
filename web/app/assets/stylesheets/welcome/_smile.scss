@@ -1,0 +1,72 @@
+.smile{
+
+}
+
+.smile__body {
+
+}
+
+.smile__left-eye {
+  animation-name: eyes;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  transform-origin: center bottom;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-delay: 10s;
+}
+
+.smile__right-eye {
+  animation-name: eyes;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  transform-origin: center bottom;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-delay: 10s;
+}
+
+.smile__mouth {
+  animation-name: smile;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  transform-origin: center bottom;
+  animation-timing-function: ease;
+  animation-direction: alternate;
+  animation-delay: 10s;
+}
+
+@keyframes smile {
+  0% {
+    transform: scale(0.8) translateX(8px) translateY(-3px) rotate(-20deg);
+  }
+  97% {
+    transform: scale(1) translateX(0px) translateY(2px) rotate(0deg);
+  }
+
+  100% {
+    transform: scale(0.95) translateY(2px) rotate(0deg);
+  }
+}
+
+@keyframes eyes {
+  0% {
+    /* opacity: 0; */
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  98% {
+    /* opacity: 1; */
+    opacity: 1;
+    transform: translate(3px, 2px);
+  }
+  99% {
+    /* opacity: 1; */
+    opacity: 0;
+    transform: translate(3px, 2px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0px, 0px);
+  }
+}
