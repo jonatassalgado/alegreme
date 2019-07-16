@@ -1,4 +1,5 @@
 @import "normalize";
+@import "media-queries";
 @import "smile";
 
 .template__container {
@@ -8,6 +9,9 @@
   flex-direction: column;
   align-items: center;
   background: url('/images/welcome/bg-top.jpg') no-repeat top center;
+  @include mobile-only {
+    background: url('/images/welcome/bg-top-mobile.jpg') no-repeat top center;
+  }
 }
 
 section {
@@ -23,6 +27,10 @@ section {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  @include mobile-only {
+    margin: 30px 0 25px 0;
+  }
 
   &__logo {
     position: relative;
@@ -51,12 +59,20 @@ section {
   font-style: normal;
   font-weight: bold;
   text-align: center;
+  @include mobile-only {
+    padding: 0 25px;
+  }
 
   & h1 {
     font-size: 48px;
     line-height: 58px;
     margin: 0;
     padding: 0;
+
+    @include mobile-only {
+      font-size: 28px;
+      line-height: 30px;
+    }
   }
 
   & h2 {
@@ -65,49 +81,75 @@ section {
     line-height: 29px;
     margin: 10px 0 0 0;
     max-width: 1080px;
+    @include mobile-only {
+      font-size: 14px;
+      line-height: 20px;
+    }
   }
 }
 
 .features {
-  width: 1120px;
-  height: 330px;
-  position: relative;
   margin: 75px 0 0 100px;
+  position: relative;
+  @include mobile-only {
+    margin: 25px 0 0 0;
+    overflow-x: scroll;
+    width: 100vw;
+  }
+
+  &__scroll-view {
+    position: relative;
+    width: 1120px;
+    height: 330px;
+    @include mobile-only {
+      width: 1100px;
+      height: 275px;
+      margin: 0 25px;
+    }
+  }
 }
 
 .feature {
   background: #FFFFFF;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
-
   width: 220px;
   height: 105px;
   padding: 12px 25px;
-
   font-style: normal;
   text-align: center;
   color: rgba(0, 0, 0, 0.8);
   position: absolute;
   z-index: 2;
-
   transition: transform 0.4s ease, opacity 0.4s ease;
-
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  @include mobile-only {
+    width: 200px;
+    height: 100px;
+  }
 
   &--activities {
     position: absolute;
     left: 0%;
     top: 54.07%;
     z-index: 3;
+    @include mobile-only {
+      top: 47.07%;
+    }
   }
 
   &--events {
     position: absolute;
     left: 17.35%;
     top: 0%;
+    @include mobile-only {
+      left: 12.35%;
+      top: 7%;
+    }
   }
 
   &--topics {
@@ -115,12 +157,20 @@ section {
     left: 31.6%;
     top: 45.27%;
     z-index: 3;
+    @include mobile-only {
+      left: 31.6%;
+      top: 38.27%;
+    }
   }
 
   &--friends {
     position: absolute;
     left: 53.25%;
     top: 14.62%;
+    @include mobile-only {
+      left: 64.25%;
+      top: 8.62%;
+    }
   }
 
   &--movie {
@@ -128,6 +178,10 @@ section {
     left: 68.86%;
     top: 61.21%;
     z-index: 3;
+    @include mobile-only {
+      left: 74.86%;
+      top: 49.21%;
+    }
   }
 
 
@@ -141,6 +195,10 @@ section {
     font-weight: bold;
     font-size: 16px;
     line-height: 19px;
+    @include mobile-only {
+      font-size: 14px;
+      line-height: 18px;
+    }
   }
 }
 
@@ -150,6 +208,10 @@ section {
   //display: flex;
   //justify-content: center;
   //position: relative;
+
+  @include mobile-only {
+    display: none;
+  }
 }
 
 .macbook {
@@ -178,6 +240,10 @@ section {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  @include mobile-only {
+    margin: 100px auto 0 auto;
+    padding-bottom: 120px;
+  }
 
   &__counter {
     font-style: normal;
@@ -186,6 +252,11 @@ section {
     line-height: 29px;
     margin: 20px 0 0 0;
     text-align: center;
+    @include mobile-only {
+      font-size: 18px;
+      line-height: 21px;
+      padding: 0 25px;
+    }
   }
 
   &__details {
@@ -196,6 +267,12 @@ section {
     color: rgba(12, 15, 9, 0.7);
     margin: 16px 0 0 0;
     text-align: center;
+    @include mobile-only {
+      font-size: 14px;
+      line-height: 16px;
+      margin: 6px 0 0 0;
+      padding: 0 30px;
+    }
   }
 
   &__cta {
@@ -218,6 +295,11 @@ section {
     margin: 85px auto 0 auto;
     cursor: pointer;
     transition: box-shadow 0.4s ease, transform 0.4s ease;
+    @include mobile-only {
+      width: 195px;
+      height: 50px;
+      font-size: 14px;
+    }
 
     &:hover {
       box-shadow: 0 0 45px rgba(0, 0, 0, 0.35);
@@ -233,12 +315,23 @@ section {
       top: 0px;
       right: -20px;
       transition: transform 0.4s ease;
+      @include mobile-only {
+        display: none;
+      }
     }
   }
 
   &__google-details {
     text-align: center;
-    margin: 10px 0 0 0;
+    margin: 10px auto 0 auto;
+    width: 381px;
+    height: 35px;
+    background: url("/images/welcome/google-details.png") no-repeat center;
+    @include mobile-only {
+      width: 220px;
+      height: 51px;
+      background: url("/images/welcome/google-details-mobile.png") no-repeat center;
+    }
   }
 
   & .people {
@@ -246,6 +339,11 @@ section {
     position: relative;
     width: 375px;
     height: 70px;
+    z-index: 2;
+    @include mobile-only {
+      width: 220px;
+      height: 40px;
+    }
 
     &__person-face {
       width: 65px;
@@ -256,6 +354,10 @@ section {
       left: 0;
       background: #6d6d6d;
       //transition: transform 2s ease;
+      @include mobile-only {
+        width: 35px;
+        height: 35px;
+      }
     }
   }
 }
@@ -263,8 +365,16 @@ section {
 .questions {
   width: 100%;
   height: 920px;
-  background: url(/images/welcome/bg-footer.jpg) top center;
+  background: url(/images/welcome/bg-footer.jpg) no-repeat top center;
   position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  @include mobile-only {
+    background: url(/images/welcome/bg-footer-mobile.jpg) no-repeat bottom center
+  }
 
   & h2 {
     font-weight: bold;
@@ -273,13 +383,17 @@ section {
     margin: 140px auto 0 auto;
     padding: 0;
     text-align: center;
+    @include mobile-only {
+      font-size: 31px;
+      line-height: 0;
+      margin: 65px auto 0 auto;
+    }
   }
 
   & h3 {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    @include mobile-only {
+      font-size: 15px;
+    }
   }
 
   &__grid {
@@ -293,6 +407,14 @@ section {
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-areas: "q1 q1 q2 q2 q2" "q3 q3 q3 q3 q3" "q4 q4 q4 q5 q5";
     position: relative;
+    @include mobile-only {
+      width: 90%;
+      grid-row-gap: 10px;
+      grid-column-gap: 10px;
+      grid-template-columns: 100%;
+      grid-template-areas: "q1" "q2" "q3" "q4" "q5";
+      margin: 55px auto 0 auto;
+    }
   }
 
   &__grid-item {
@@ -363,6 +485,9 @@ section {
     margin: auto;
     display: none;
     text-align: left;
+    @include mobile-only {
+      max-width: 90%;
+    }
 
     & h3 {
       font-size: 26px;
@@ -376,6 +501,9 @@ section {
       font-size: 18px;
       line-height: 1.6em;
       margin: 0 0px 30px 0;
+      @include mobile-only {
+        font-size: 16px;
+      }
     }
 
     & li {
@@ -415,7 +543,7 @@ section {
   justify-content: center;
 
   &__logo-icon {
-
+    position: relative;
   }
 }
 

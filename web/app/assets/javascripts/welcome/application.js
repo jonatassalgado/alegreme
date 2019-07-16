@@ -1,39 +1,46 @@
 // require flipping/dist/flipping.js
 //= require rellax/rellax.js
+//= require mobile-detect/mobile-detect.js
 
 
 document.addEventListener('DOMContentLoaded', function () {
 
-	const pimbaEl     = document.querySelector('.brand__pimba');
-	const brandLogoEl = document.querySelector('.brand__logo');
-	const peopleEls   = document.querySelectorAll('.people__person-face');
-	const answerEl    = document.querySelector('.answer');
-	const featuresEl  = document.querySelectorAll('.feature');
+	const md = new MobileDetect(window.navigator.userAgent);
 
-	brandLogoEl.addEventListener('click', () => {
+	const brandLogoEls = document.querySelectorAll('.js-logo');
+	const pimbaEls     = document.querySelectorAll('.js-pimba');
+	const peopleEls    = document.querySelectorAll('.people__person-face');
+	const answerEl     = document.querySelector('.answer');
+	const featuresEl   = document.querySelectorAll('.feature');
 
+	brandLogoEls.forEach((brandLogoEl) => {
+		brandLogoEl.addEventListener('click', () => {
+			pimbaEls.forEach((pimbaEl) => {
+				const promise = new Promise((resolve, reject) => {
+					const x                  = Math.random() * -20;
+					const y                  = Math.random() * 50;
 
-		const promise = new Promise((resolve, reject) => {
-			pimbaEl.style.opacity    = '1';
-			pimbaEl.style.transition = '';
-			pimbaEl.style.color      = '#2192f6';
-			pimbaEl.style.transform  = `translate(${Math.random() * -20}px, ${Math.random() * 50}px)`;
+					pimbaEl.style.opacity    = '1';
+					pimbaEl.style.transition = '';
+					pimbaEl.style.color      = '#2192f6';
+					pimbaEl.style.transform  = `translate(${x}px, ${y}px)`;
 
-			if(pimbaEl.style.transform) {
-				resolve();
-			}
+					if (x !== undefined && y !== undefined) {
+						resolve();
+					}
+				});
+
+				promise.then(() => {
+					requestAnimationFrame(() => {
+						pimbaEl.style.transition = 'opacity 0.5s linear, color 0.5s linear';
+						pimbaEl.style.opacity    = '0';
+						pimbaEl.style.color      = '#2dc877'
+					})
+				});
+
+			});
+
 		});
-
-		promise.then(() => {
-			requestAnimationFrame(() => {
-				pimbaEl.style.transition = 'opacity 0.5s linear, color 0.5s linear';
-				pimbaEl.style.opacity    = '0';
-				pimbaEl.style.color      = '#2dc877'
-			})
-		});
-
-
-
 	});
 
 
@@ -41,9 +48,18 @@ document.addEventListener('DOMContentLoaded', function () {
 		var index = 0;
 
 		peopleEls.forEach(function (person) {
-			if (index > 0) {
-				person.style.transform = `translateX(${34 * index}px)`;
-				person.style.zIndex    = `${index * -1}`;
+			if (md.mobile()) {
+				const distance = 20;
+				if (index > 0) {
+					person.style.transform = `translateX(${distance * index}px)`;
+					person.style.zIndex    = `${index * -1}`;
+				}
+			} else {
+				const distance = 34;
+				if (index > 0) {
+					person.style.transform = `translateX(${distance * index}px)`;
+					person.style.zIndex    = `${index * -1}`;
+				}
 			}
 
 			index = index + 1;
@@ -61,8 +77,13 @@ document.addEventListener('DOMContentLoaded', function () {
 				answer.style.display = 'none';
 
 			});
-			document.body.style.paddingRight = '0';
-			document.body.style.overflow     = 'auto';
+			document.body.style.overflow = 'auto';
+
+			if (md.mobile()) {
+			} else {
+				document.body.style.paddingRight = '0';
+			}
+
 		}, 590);
 	});
 
@@ -76,8 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 				answerEl.querySelector(`[data-answer=${item.dataset.question}]`).style.display = 'block';
 
-				document.body.style.overflow     = 'hidden';
-				document.body.style.paddingRight = '16px';
+				document.body.style.overflow = 'hidden';
+
+				if (md.mobile()) {
+
+				} else {
+					document.body.style.paddingRight = '16px';
+				}
 
 				setTimeout(() => {
 					answerEl.classList.remove('is-showin');
@@ -86,12 +112,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	});
 
+	if (md.mobile()) {
 
-	document.querySelector('.invite__cta').addEventListener('mouseover', () => {
-		requestAnimationFrame(() => {
-			document.querySelector('.skatista').style.transform = '';
+	} else {
+		document.querySelector('.invite__cta').addEventListener('mouseover', () => {
+			requestAnimationFrame(() => {
+				document.querySelector('.skatista').style.transform = '';
+			});
 		});
-	});
+	}
 
 
 	featuresEl.forEach((feature) => {
@@ -104,7 +133,14 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	setTimeout(() => {
-		new Rellax('.rellax');
+		if (md.mobile()) {
+			// new Rellax('.rellax', {
+			// 	horizontal: true,
+			// 	vertical: false
+			// });
+		} else {
+			new Rellax('.rellax');
+		}
 	}, 1000)
 
 
