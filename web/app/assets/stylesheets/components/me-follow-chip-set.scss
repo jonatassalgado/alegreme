@@ -1,6 +1,7 @@
 @import 'variables';
 
 .me-follow-chip-set {
+  user-select: none;
 
   & .mdc-chip {
     background: $background-color;
@@ -24,15 +25,15 @@
     }
 
     &--selected {
-      border: $chip-border-size solid $brand-color-high-contrast;
+      border: $chip-border-size solid $font-secondary-color;
 
       & .mdc-chip__text {
-        color: $brand-color-high-contrast;
+        color: $font-secondary-color;
       }
 
 
       & .mdc-chip__icon--leading {
-        color: $brand-color-high-contrast;
+        color: $font-secondary-color;
         //width: 18px;
         opacity: 1;
         //margin: 0 -4px 0 4px;

@@ -27,9 +27,6 @@ module EventServices
 			@opts            = default_options(opts)
 			@dynamic_filters = default_filters.merge(get_filters_for_collection)
 			@events          = EventFetcher.new(@collection, @dynamic_filters).call
-			# else
-			#   EventFetcher.new(Event.all, @dynamic_filters).call
-			# end
 
 			mount_response
 		end
@@ -141,7 +138,7 @@ module EventServices
 		end
 
 		def set_limit
-			@params[:limit] || @opts[:limit] || 4
+			@params[:limit] || @opts[:limit] || 5
 		end
 
 		def group_by_or_kinds_not_exist?(opts)

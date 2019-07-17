@@ -86,7 +86,10 @@ export default class FollowChipsetController extends Controller {
 	}
 
 	get sectionIdentifier() {
-		return this.chipsetTarget.closest('[data-controller="section"]').id;
+		const section = this.chipsetTarget.closest('[data-controller="section"]');
+		if (this.hasChipsetTarget && section) {
+			return section.id;
+		}
 	}
 
 

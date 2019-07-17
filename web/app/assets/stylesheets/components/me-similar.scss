@@ -1,7 +1,7 @@
 @import "variables";
 
 .me-similar {
-  grid-column: 12 span;
+  grid-column: 15 span;
   display: grid;
   margin: 0 0 12px 0;
   //grid-gap: 0 12px;
@@ -48,8 +48,9 @@
     text-align: center;
     justify-content: center;
     font-size: 11px;
-    margin: 0 0 75px 0;
+    margin: 0 0 50px 0;
     padding: 0 12px;
+    border: 1px solid $border-color;
 
     & i {
       font-size: 1.6em;
@@ -62,12 +63,12 @@
     border-radius: 2px;
 
     &__primary-section {
-      font-size: 9px;
-      font-weight: 100;
+      //font-size: 9px;
+      //font-weight: 100;
     }
 
     &__secondary-section {
-      font-size: 12px;
+      font-size: 13px;
 
       & a {
         color: $font-secondary-color;
@@ -75,8 +76,7 @@
     }
 
     &__like-button {
-      top: 37px;
-      right: 11px;
+
     }
 
     & .mdc-card__media {

@@ -3,6 +3,7 @@
 
 .me-filter {
   display: inline;
+  user-select: none;
   @include mdc-layout-grid-media-query_("phone") {
     display: flex;
     flex-wrap: wrap;
@@ -29,7 +30,7 @@
     & .material-icons {
       vertical-align: middle;
       padding: 0 6px 0 0;
-      color: $font-tertiary-color;
+      color: $font-secondary-color;
       opacity: 0;
       transition: opacity 0.2s ease-in;
     }
@@ -69,9 +70,9 @@
   }
 
   & .mdc-chip--selected {
-    color: $chip-font-color;
-    background-color: $chip-background-color;
-    border: $chip-border-size solid $chip-border-color;
+    color: $font-primary-color-high-contrast;
+    background-color: $background-color;
+    border: $chip-border-size solid $font-primary-color-high-contrast;
     @include mdc-layout-grid-media-query_("phone") {
       border: unset;
     }

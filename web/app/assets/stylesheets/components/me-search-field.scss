@@ -50,8 +50,8 @@ $border-color: #e0e0e0;
 
   &__reply {
     border-radius: 30px;
-    color: $brand-color;
-    border: 1px solid $brand-color;
+    color: $brand-color-left;
+    border: 1px solid $brand-color-left;
     position: absolute;
     align-self: center;
     padding: 4px 6px;
@@ -73,7 +73,7 @@ $border-color: #e0e0e0;
     }
 
     &:hover {
-      background-color: $brand-color;
+      background-color: $brand-color-left;
       color: white;
     }
   }

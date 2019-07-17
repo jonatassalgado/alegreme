@@ -7,31 +7,35 @@ $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
 
 $mdc-layout-grid-columns: (
-        desktop: 12,
+        desktop: 15,
         tablet: 18,
         phone: 8
 );
 
 .me-feed {
 
+  & section {
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 50px;
+  }
+
   &__section {
-    margin: 0 0 125px 0;
-    //min-height: 700px;
 
     @include mdc-layout-grid-media-query_("phone") {
       margin: 0;
     }
 
     & .mdc-typography--headline4 {
-      margin: 12px 0;
-      font-weight: 800;
+      margin: 15px 0;
+      font-weight: 700;
       max-width: 55%;
-      line-height: 0.9em;
+      line-height: 1em;
+      font-size: 1.5em;
 
       & span {
-        font-size: 16px;
+        font-size: 0.7em;
         display: block;
-        font-weight: 400;
+        font-weight: 100;
         color: $font-tertiary-color;
         line-height: 1.4em;
         margin-top: 16px;
@@ -55,11 +59,11 @@ $mdc-layout-grid-columns: (
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 6px;
 
     & i {
       font-style: normal;
-      color: $font-primary-color-high-contrast;
+      color: $font-secondary-color-high-contrast;
       font-weight: 500;
     }
   }
@@ -76,7 +80,7 @@ $mdc-layout-grid-columns: (
     display: none;
     width: 100px;
     height: 2px;
-    background: $brand-color;
+    background: $brand-color-left;
     border-radius: 1px;
     margin: 12px 0 26px 0;
     @include mdc-layout-grid-media-query_("tablet") {
@@ -88,7 +92,6 @@ $mdc-layout-grid-columns: (
   }
 
   &__empty {
-    background: darken($background-color, 3%);
     color: $font-secondary-color;
     order: 8;
     border-radius: 5px;
@@ -100,7 +103,8 @@ $mdc-layout-grid-columns: (
     justify-content: center;
     font-size: 12px;
     padding: 0 12px;
-    margin: 0 0 95px 0;
+    margin: 0 0 115px 0;
+    border: 1px solid $border-color;
 
     & i {
       font-size: 2em;
@@ -136,7 +140,7 @@ $mdc-layout-grid-columns: (
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
-    //--mdc-layout-grid-gutter-desktop: 16px;
+    --mdc-layout-grid-gutter-desktop: 0 24px;
 
     @include mdc-layout-grid-media-query_("phone") {
       background-color: $surface-color;
@@ -152,13 +156,13 @@ $mdc-layout-grid-columns: (
   }
 
   & .mdc-layout-grid__inner {
-    //@include mdc-layout-grid-media-query_("desktop") {
-    //  @include mdc-layout-grid-inner(
-    //    $size: "desktop",
-    //    $margin: 0,
-    //    $gutter: 15px
-    //  );
-    //}
+    @include mdc-layout-grid-media-query_("desktop") {
+      @include mdc-layout-grid-inner(
+        $size: "desktop",
+        $margin: 0,
+        $gutter: 15px
+      );
+    }
     //@include mdc-layout-grid-media-query_("tablet") {
     //  @include mdc-layout-grid-inner(
     //    $size: "tablet",

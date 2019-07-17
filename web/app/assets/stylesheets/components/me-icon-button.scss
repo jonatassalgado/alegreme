@@ -26,7 +26,7 @@ $fill-color: #ffffff;
   //    &:hover {}
   //
   //    &--on {
-  //      @include mdc-icon-button-ink-color($color: $brand-color);
+  //      @include mdc-icon-button-ink-color($color: $brand-color-left);
   //    }
   //
   //    & .material-icons-sharp {
@@ -55,7 +55,7 @@ $fill-color: #ffffff;
   //
   //    &--on {
   //      background: $icon-background-color;
-  //      @include mdc-icon-button-ink-color($color: $brand-color);
+  //      @include mdc-icon-button-ink-color($color: $brand-color-left);
   //      @include mdc-elevation($z-value: 2);
   //    }
   //

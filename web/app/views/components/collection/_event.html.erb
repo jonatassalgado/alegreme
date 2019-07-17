@@ -21,23 +21,23 @@
        data-event-dominant-color="<%= get_image_dominant_color event %>"
        data-target="event.event"
        id="<%= dom_id event %>">
-    <% if current_user %>
-      <div class="me-card__like-button" data-action="click->event#like">
-        <div data-target="event.like">
-          <button data-target="event.likeButton"
-                  id="add-to-favorites"
-                  class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_events_saved?(event.id) %>"
-                  aria-label="Add to favorites"
-                  aria-hidden="true"
-                  aria-pressed="false"
-                  style="<%= 'display: inline' if current_user.taste_events_saved?(event.id) %>">
-            <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
-            <i class="material-icons mdc-icon-button__icon">star_border</i>
-          </button>
-        </div>
-      </div>
-    <% end %>
     <div class="mdc-card__media mdc-card__media--16-9" style="<%= get_image_style_attr event %>">
+      <% if current_user %>
+        <div class="me-card__like-button" data-action="click->event#like">
+          <div data-target="event.like">
+            <button data-target="event.likeButton"
+                    id="add-to-favorites"
+                    class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_events_saved?(event.id) %>"
+                    aria-label="Add to favorites"
+                    aria-hidden="true"
+                    aria-pressed="false"
+                    style="<%= 'display: inline' if current_user.taste_events_saved?(event.id) %>">
+              <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">mood</i>
+              <i class="material-icons-sharp mdc-icon-button__icon">sentiment_satisfied</i>
+            </button>
+          </div>
+        </div>
+      <% end %>
       <a href="<%= event.url %>">
         <div class="me-card__overlay mdc-ripple-surface"
              style="background: linear-gradient(to top, <%= "#{get_image_dominant_color(event)}a1" %> 25%, <%= "#{get_image_dominant_color(event)}30" %>)"
@@ -61,16 +61,27 @@
       <% end %>
     </div>
     <div class="me-card__primary-section">
-              <span class="me-card__category"
-                    data-target="event.category">
-                <%= event.categories_primary_name.capitalize %>
-              </span>
-      <span aria-hidden="true"> · </span>
-      <span class="me-card__date"
-            data-target="event.date">
-                <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
-        <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
-              </span>
+      <% if event.day_of_week['decorator'] == 'hoje' %>
+        <span class="me-card__date is-today"
+          data-target="event.date">
+          <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %> <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
+        </span>
+        <span aria-hidden="true"> · </span>
+        <span class="me-card__category"
+              data-target="event.category">
+          <%= event.categories_primary_name.capitalize %>
+        </span>
+      <% else %>
+        <span class="me-card__category"
+            data-target="event.category">
+          <%= event.categories_primary_name.capitalize %>
+        </span>
+        <span aria-hidden="true"> · </span>
+        <span class="me-card__date"
+              data-target="event.date">
+          <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %> <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
+        </span>
+      <% end %>
     </div>
     <div class="me-card__secondary-section">
       <div class="me-card__title"

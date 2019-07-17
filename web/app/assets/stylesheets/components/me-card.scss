@@ -19,7 +19,7 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__similar {
-      transform: translate(0px, 15px) scale(1.5);
+      transform: translate(0px, 15px) scale(1.4);
       opacity: 1;
       color: $font-primary-color-high-contrast;
     }
@@ -68,6 +68,7 @@ $description-color: $font-secondary-color;
     height: 100%;
     background: linear-gradient(to top, #ffffff38, transparent);
     overflow: hidden;
+    border-radius: $media-border-radius;
     @include mdc-ripple-surface;
     @include mdc-ripple-radius-bounded;
     @include mdc-states;
@@ -83,7 +84,7 @@ $description-color: $font-secondary-color;
     font-size: 11px;
     margin: 12px 0 0 0px;
     font-weight: 800;
-    @extend .me-card__section;
+    //@extend .me-card__section;
   }
 
   &__secondary-section {
@@ -91,7 +92,7 @@ $description-color: $font-secondary-color;
     font-size: 15px;
     margin: 6px 0 0 0px;
     font-weight: 500;
-    @extend .me-card__section;
+    //@extend .me-card__section;
   }
 
   &__tertiary-section {
@@ -100,7 +101,7 @@ $description-color: $font-secondary-color;
     margin: 3px 0 0 0px;
     font-weight: 200;
     max-width: 80%;
-    @extend .me-card__section;
+    //@extend .me-card__section;
   }
 
   &__category {
@@ -109,6 +110,14 @@ $description-color: $font-secondary-color;
   }
 
   &__date {
+
+    &.is-today {
+      background: $brand-color-intersect;
+      padding: 1px 1px 1px 3px;
+      border-radius: 3px;
+      color: white;
+      margin: 0 3px 0 0;
+    }
   }
 
   &__organizer {
@@ -126,17 +135,23 @@ $description-color: $font-secondary-color;
     opacity: 0;
     transition: opacity 0.15s ease, transform 0.15s ease-in;
     transform: translate(0px, -10px);
+    margin: 6px 0 0 0;
+    user-select: none;
 
     &:hover {
       color: $font-primary-color-high-contrast;
+    }
+
+    & .material-icons {
+      font-size: 30px;
     }
   }
 
   &__like-button {
     position: absolute;
-    top: 75px;
-    right: 8px;
     z-index: 2;
+    bottom: 8px;
+    right: 8px;
   }
 
   &--feed {
@@ -179,7 +194,7 @@ $description-color: $font-secondary-color;
       }
 
       &--on {
-        @include mdc-icon-button-ink-color($color: $brand-color);
+        @include mdc-icon-button-ink-color($color: $brand-color-left);
       }
 
       & .material-icons-sharp {
@@ -229,7 +244,7 @@ $description-color: $font-secondary-color;
 
     & .mdc-card__media {
       //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: $media-box-shadow;
+      //box-shadow: $media-box-shadow;
 
       &:hover {
         //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
@@ -283,9 +298,11 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__like-button {
-      bottom: -22px;
+      bottom: -25px;
       right: 16px;
       position: absolute;
+      top: auto;
+      z-index: 2;
     }
 
     & .me-card__primary {
@@ -316,7 +333,7 @@ $description-color: $font-secondary-color;
 
         &--on {
           background: $icon-background-color;
-          @include mdc-icon-button-ink-color($color: $brand-color);
+          @include mdc-icon-button-ink-color($color: $brand-color-left);
           @include mdc-elevation($z-value: 2);
         }
 
@@ -327,7 +344,7 @@ $description-color: $font-secondary-color;
     }
 
     & .mdc-fab {
-      @include mdc-fab-container-color($brand-color);
+      @include mdc-fab-container-color($brand-color-left);
     }
 
     & .mdc-typography--body2 {
@@ -366,7 +383,7 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__primary-action {
-      color: $brand-color;
+      color: $brand-color-left;
       border-top: 1px solid $border-color;
       width: 100%;
       text-align: center;
@@ -401,8 +418,9 @@ $description-color: $font-secondary-color;
   }
 
   & .mdc-card__media {
-    border-radius: 5px;
-    overflow: hidden;
+    border-radius: $media-border-radius;
+    border: 1px solid $border-color;
+    //overflow: hidden;
   }
 
   & .mdc-card__actions {

@@ -81,9 +81,9 @@ export default class EventController extends Controller {
 			}
 		});
 
-		setTimeout(() => {
-			window.scrollTo(0, this.eventTarget.offsetTop + 100);
-		}, 300)
+		// setTimeout(() => {
+		// 	window.scrollTo(0, this.eventTarget.offsetTop + 100);
+		// }, 300)
 
 	};
 
@@ -139,8 +139,8 @@ export default class EventController extends Controller {
 	get insertAfter() {
 		const order = parseInt(this.eventTarget.parentElement.style.order);
 
-		if (order <= 3) {
-			return 3
+		if (order <= 4) {
+			return 4
 		} else {
 			return 7
 		}
@@ -171,7 +171,11 @@ export default class EventController extends Controller {
 	}
 
 	get sectionIdentifier() {
-		return this.eventTarget.closest('[data-controller="section"]').id;
+		const section = this.eventTarget.closest('[data-controller="section"]');
+
+		if (this.hasEventTarget && section) {
+			return section.id;
+		}
 	}
 
 	set likeStatus(status) {

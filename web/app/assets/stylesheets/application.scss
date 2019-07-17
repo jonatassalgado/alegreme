@@ -16,7 +16,7 @@
 @import 'variables';
 
 $mdc-typography-font-family: 'Cabin';
-$mdc-theme-primary: $brand-color;
+$mdc-theme-primary: $brand-color-left;
 //$mdc-theme-secondary: #feeae6;
 //$mdc-theme-on-primary: #442b2d;
 //$mdc-theme-on-secondary: #442b2d;
@@ -81,7 +81,7 @@ $mdc-theme-primary: $brand-color;
 @import "components/me-components";
 
 html {
-  scroll-behavior: smooth;
+  //scroll-behavior: smooth;
 }
 
 body {

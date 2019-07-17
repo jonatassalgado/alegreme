@@ -2,17 +2,10 @@
 
   return if chips.blank? || type.blank?
 
-  leading = local_assigns.fetch(:trailing, 'add')
   type = local_assigns.fetch(:type)
   location = local_assigns.fetch(:location, 'single-page')
 
-  def followable_name(followable, type)
-    if type == 'categories'
-      followable
-    else
-      followable
-    end
-  end
+
 
 %>
 
@@ -32,7 +25,7 @@
          data-target="follow-chipset.trailing"
          role="button"
          tabindex="0"
-         title="Siga o tópico '<%= followable.details['name'] %>'"><%= leading %></i>
+         title="Siga o tópico '<%= followable.details['name'] %>'"><%= user.following?(followable) ? 'check' : 'add' %></i>
       <%= link_to organizer_path(followable) do %>
         <div class="mdc-chip__text"
              title="Veja todos os eventos do tópico '<%= followable.details['name'] %>'">

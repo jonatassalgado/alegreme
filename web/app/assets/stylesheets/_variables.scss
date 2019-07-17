@@ -1,5 +1,6 @@
-$brand-color: #FEE103; // #5EEDDE; // #31916C; // #26B679
-$brand-secondary-color: #02C4A2;
+$brand-color-left: #2ECC71; // #5EEDDE; // #31916C; // #26B679
+$brand-color-intersect: #2bb3ae;
+$brand-color-right: #2191FB;
 $brand-color-high-contrast: #0C0F0A; //darken($brand-color, 10%);
 
 $font-primary-font: 'Cabin';
@@ -16,14 +17,15 @@ $font-secondary-color-high-contrast: #8F1717;
 $font-tertiary-color: transparentize($font-secondary-color, 0.20);
 
 $media-box-shadow: unset; // 0 0 0 1px rgba(0, 0, 0, 0.12);
+$media-border-radius: 3px;
 
 $chip-font-color: $brand-color-high-contrast; // darken($brand-color, 25%);
-$chip-background-color: $brand-color; // transparentize($brand-color, 0.65);
+$chip-background-color: $brand-color-left; // transparentize($brand-color, 0.65);
 $chip-border-color: $brand-color-high-contrast; //transparentize($brand-color, 0.45);
 $chip-border-size: 2px;
 $chip-transition: background 0.5s cubic-bezier(.29,.01,.4,.99), border 0.5s cubic-bezier(.29,.01,.4,.99);
 
-$link-color: $brand-color;
+$link-color: $brand-color-left;
 
 $icon-color: transparentize($font-primary-color, 0.30);
 $icon-dark-color: transparentize($font-primary-color, 0.10);
@@ -37,5 +39,5 @@ $elevated-surface-color: #f9f9f9;
 
 $filter-background-color: $background-color;
 
-$mdc-theme-primary: $brand-color;
+$mdc-theme-primary: $brand-color-left;
 

@@ -7,32 +7,41 @@ export default class Float_menu_controller extends Controller {
 	];
 
 	initialize() {
-		this.observer = new IntersectionObserver((entries, observer) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						document.querySelector(`[data-collection-identifier="${entry.target.id}"]`).classList.add('is-active')
-					} else {
-						document.querySelector(`[data-collection-identifier="${entry.target.id}"]`).classList.remove('is-active')
+
+		const observableSectionEls = document.querySelectorAll('[data-observable="float-menu.section"]');
+
+		if (this.hasMenuTarget && observableSectionEls !== undefined) {
+
+			this.observer = new IntersectionObserver((entries, observer) => {
+					entries.forEach((entry) => {
+						const collectionEl = document.querySelector(`[data-collection-identifier="${entry.target.id}"]`);
+
+						if (collectionEl) {
+							if (entry.isIntersecting) {
+								collectionEl.classList.add('is-active')
+							} else {
+								collectionEl.classList.remove('is-active')
+							}
+						}
+					})
+				},
+				{
+					threshold: [0.85]
+				}
+			);
+
+			observableSectionEls.forEach((section) => {
+				this.observer.observe(section);
+				requestAnimationFrame(() => {
+					const item = document.querySelector(`[data-collection-identifier="${section.id}"]`);
+
+					if (item) {
+						item.style.display = 'flex';
+						item.style.opacity = 1;
 					}
-				})
-			},
-			{
-				threshold: [0.85]
-			}
-		);
-
-		document.querySelectorAll('[data-observable="float-menu.section"]').forEach((section) => {
-			this.observer.observe(section);
-
-			requestAnimationFrame(() => {
-				const item         = document.querySelector(`[data-collection-identifier="${section.id}"]`);
-				item.style.display = 'flex';
-				item.style.opacity = 1;
-
+				});
 			});
-		});
-
-
+		}
 	};
 
 	scrollTo(event) {

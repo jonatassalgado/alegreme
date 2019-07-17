@@ -1,7 +1,7 @@
 .me-page {
   &__feed-section {
-    max-width: 900px;
-    margin: auto;
+    max-width: 85%;
+    margin: 0 0 0 10%;
     // padding-top: 35px;
     
     @include mdc-layout-grid-media-query_("phone") {

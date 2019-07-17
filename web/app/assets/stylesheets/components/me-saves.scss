@@ -6,7 +6,7 @@ $gutter: 6px;
 
 .me-saves {
   position: relative;
-  margin-bottom: 85px;
+  margin-bottom: 50px;
   @include mdc-layout-grid-media-query_("phone") {
     display: none;
   }
@@ -64,8 +64,9 @@ $gutter: 6px;
     text-align: center;
     justify-content: center;
     font-size: 11px;
-    margin: 33px 0 45px 0;
+    margin: 26px 0 55px 0;
     padding: 0 12px;
+    border: 1px solid $border-color;
 
     & i {
       font-size: 1.6em;
@@ -78,7 +79,7 @@ $gutter: 6px;
 
   & .mdc-typography--headline6 {
     margin: 0;
-    font-size: 1.6em;
+    font-size: 1.3em;
     font-weight: 800;
   }
 
@@ -106,7 +107,7 @@ $gutter: 6px;
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: normal;
     width: auto;
   }
 
@@ -132,7 +133,7 @@ $gutter: 6px;
     }
 
     &__title {
-      color: $font-secondary-color;
+      color: $font-primary-color;
       font-size: 13px;
       margin: 12px 0 0 0;
       font-weight: 400;

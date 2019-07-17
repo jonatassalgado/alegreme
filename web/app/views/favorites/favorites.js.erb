@@ -10,14 +10,17 @@
 	const promise = new Promise(function (resolve, reject) {
 		const savesWrapperEl = document.getElementById('saves');
 
+    if (savesWrapperEl) {
+	    const morph = morphdom.default(savesWrapperEl, '<%= j render partial: "feeds/saves", locals: @locals %>'.trim(), {
+		    onBeforeElUpdated: function (fromEl, toEl) {
+			    return !fromEl.isEqualNode(toEl);
+		    }
+	    });
 
-		const morph = morphdom.default(savesWrapperEl, '<%= j render partial: "feeds/saves", locals: @locals %>'.trim(), {
-			onBeforeElUpdated: function (fromEl, toEl) {
-				return !fromEl.isEqualNode(toEl);
-			}
-		});
-
-		resolve(morph)
+	    resolve(morph)
+    } else {
+    	resolve()
+    }
 
 	})
 
