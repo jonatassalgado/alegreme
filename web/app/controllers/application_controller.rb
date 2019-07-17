@@ -17,6 +17,9 @@ class ApplicationController < ActionController::Base
     redirect_to feed_path, notice: 'Acesso somente para administradores' unless current_user && current_user.admin?
   end
 
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) || feed_path
+  end
 
   private
 

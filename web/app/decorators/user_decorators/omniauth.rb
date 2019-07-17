@@ -32,56 +32,59 @@ module UserDecorators
 				if @personas.empty?
 					return user if user
 
-					return User.create(email:    data.email,
-					                   password: Devise.friendly_token[0, 20],
-					                   features: {
-							                   psychographic: guest_user.features['psychographic'],
-							                   demographic:   {
-									                   name:    data.name,
-									                   picture: data.picture
-							                   }
-					                   })
+					user = User.create(email:    data.email,
+					                   password: Devise.friendly_token[0, 20])
+
+					user.features.deep_merge!({
+							                         'psychographic' => guest_user.features['psychographic'],
+							                         'demographic'   => {
+									                         'name'    => data.name,
+									                         'picture' => data.picture
+							                         }
+					                         })
+
 
 				elsif @personas && @personas['assortment']['finished']
 					features = {
-							psychographic: {
-									personas: {
-											primary:    {
-													name:  @personas['primary']['name'],
-													score: @personas['primary']['score']
+							'psychographic' => {
+									'personas' => {
+											'primary'    => {
+													'name'  => @personas['primary']['name'],
+													'score' => @personas['primary']['score']
 											},
-											secondary:  {
-													name:  @personas['secondary']['name'],
-													score: @personas['secondary']['score']
+											'secondary'  => {
+													'name'  => @personas['secondary']['name'],
+													'score' => @personas['secondary']['score']
 											},
-											tertiary:   {
-													name:  @personas['tertiary']['name'],
-													score: @personas['tertiary']['score']
+											'tertiary'   => {
+													'name'  => @personas['tertiary']['name'],
+													'score' => @personas['tertiary']['score']
 											},
-											quartenary: {
-													name:  @personas['quartenary']['name'],
-													score: @personas['quartenary']['score']
+											'quartenary' => {
+													'name'  => @personas['quartenary']['name'],
+													'score' => @personas['quartenary']['score']
 											},
-											assortment: {
-													finished:    @personas['assortment']['finished'],
-													finished_at: @personas['assortment']['finished_at']
+											'assortment' => {
+													'finished'    => @personas['assortment']['finished'],
+													'finished_at' => @personas['assortment']['finished_at']
 											}
 									}
 							},
-							demographic:   {
-									name:    data.name,
-									picture: data.picture
+							'demographic'   => {
+									'name'    => data.name,
+									'picture' => data.picture
 							}
 					}
 
 					if user
-						user if user.update_attributes(
-								features: features
-						)
+						user.features.deep_merge!(features)
+						user if user.save
 					else
-						User.create(email:    data.email,
-						            password: Devise.friendly_token[0, 20],
-						            features: features)
+						user = User.new(email:    data.email,
+						                password: Devise.friendly_token[0, 20])
+
+						user.features.deep_merge!(features)
+						user.save
 					end
 				end
 			end

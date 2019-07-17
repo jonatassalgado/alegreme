@@ -245,6 +245,24 @@ section {
     padding-bottom: 120px;
   }
 
+  &__status {
+    transition: transform 0.8s ease;
+  }
+
+  &.is-invited {
+    .invite__cta {
+      opacity: 0;
+    }
+
+    .invite__google-details {
+      opacity: 0;
+    }
+
+    .invite__share {
+      opacity: 1;
+    }
+  }
+
   &__counter {
     font-style: normal;
     font-weight: normal;
@@ -267,6 +285,7 @@ section {
     color: rgba(12, 15, 9, 0.7);
     margin: 16px 0 0 0;
     text-align: center;
+    transition: opacity 0.4s ease;
     @include mobile-only {
       font-size: 14px;
       line-height: 16px;
@@ -294,7 +313,7 @@ section {
     border-radius: 60px;
     margin: 85px auto 0 auto;
     cursor: pointer;
-    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
     @include mobile-only {
       width: 195px;
       height: 50px;
@@ -327,11 +346,20 @@ section {
     width: 381px;
     height: 35px;
     background: url("/images/welcome/google-details.png") no-repeat center;
+    transition: opacity 0.4s ease;
     @include mobile-only {
       width: 220px;
       height: 51px;
       background: url("/images/welcome/google-details-mobile.png") no-repeat center;
     }
+  }
+
+  &__share {
+    opacity: 0;
+    width: 100%;
+    margin: 25px 0 0 0;
+    text-align: center;
+    transition: opacity 0.4s ease;
   }
 
   & .people {
@@ -352,7 +380,7 @@ section {
       border-radius: 100%;
       position: absolute;
       left: 0;
-      background: #6d6d6d;
+      background: #f1f1f1;
       //transition: transform 2s ease;
       @include mobile-only {
         width: 35px;

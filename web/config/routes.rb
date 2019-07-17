@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 	devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
 
 	root to: 'welcome#index'
+	get '/invite', to: 'welcome#invite'
 	get '/feed', to: 'feeds#index'
 	get '/train', to: 'feeds#train'
 	get '/retrain', to: 'events#retrain'

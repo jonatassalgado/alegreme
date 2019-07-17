@@ -70,23 +70,18 @@
   </section>
 
   <section class="invite">
-    <div class="people">
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-      <div class="people__person-face"></div>
-    </div>
-    <div class="invite__counter">
-      623 pessoas solicitaram convite para o alegreme
-    </div>
-    <div class="invite__details">
-      Na versão beta vamos liberar até 100 convites por semana
+    <div class="invite__status">
+      <div class="people">
+        <% @last_people.each do |person| %>
+          <div class="people__person-face" style="background: url('<%= person.demographic['picture']%>') no-repeat center center" title="<%= person.demographic['name'] %>"></div>
+        <% end  %>
+      </div>
+      <div class="invite__counter">
+        <%= @invites_count %> pessoas solicitaram convite para o alegreme
+      </div>
+      <div class="invite__details">
+        Na versão beta vamos liberar até 100 convites por semana
+      </div>
     </div>
     <div class="invite__cta">
       Pegar Convite
@@ -96,6 +91,7 @@
     </div>
     <div class="invite__google-details">
     </div>
+    <div class="sharethis-inline-share-buttons invite__share"></div>
     <div class="skatista" style="transform: translate(-1900px, -50px);">
     </div>
   </section>
