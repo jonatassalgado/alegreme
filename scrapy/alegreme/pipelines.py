@@ -39,8 +39,9 @@ class AlegremePipeline(object):
             pass
 
         if 'organizers' not in item:
-            item['organizers'] = item['organizers_fallback_a']
-            pass
+            if 'organizers_fallback_a' in item:
+                item['organizers'] = item['organizers_fallback_a']
+                pass
 
         if 'dates' in item:
             item['datetimes'] = []

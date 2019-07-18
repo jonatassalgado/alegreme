@@ -93,6 +93,10 @@ $border-color: #e0e0e0;
     cursor: pointer;
   }
 
+  &.mdc-top-app-bar--fixed-scrolled {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  }
+
   &--events {
     @include mdc-layout-grid-media-query_("phone") {
       background-color: $fill-color;

@@ -3,13 +3,44 @@ import scrapy
 import base64
 import json
 import os
+import random
 
 from urllib.parse import urljoin
 from alegreme.items import Event
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
 
-
+lua_script = """
+        function main(splash, args)
+            splash.private_mode_enabled = false
+            splash.images_enabled = false
+            splash.plugins_enabled = false
+            splash.html5_media_enabled = false
+            splash.media_source_enabled = false
+            
+            splash.resource_timeout = 60
+            
+            assert(splash:go(splash.args.url))
+                
+                        assert(splash:wait(1))
+            splash.scroll_position = {y=500}
+    
+            result, error = splash:wait_for_resume([[
+                function main(splash) {
+                    var checkExist = setInterval(function() {
+                        if (document.querySelector("._63ew").innerText) {
+                            clearInterval(checkExist);
+                                                    splash.resume();
+                        }
+                    }, 1000);
+                }
+            ]], 30)
+                
+            assert(splash:wait(0.5))
+                
+            return splash:html()
+        end
+    """
 
 class EventSpider(scrapy.Spider):
     name = 'event'
@@ -66,6 +97,8 @@ class EventSpider(scrapy.Spider):
                   'https://www.facebook.com/pg/SindilojasPOA/events',
                   'https://www.facebook.com/pg/ligadesaudedesportiva/events',
                   'https://www.facebook.com/pg/centrodeeventospucrs/events/']
+    
+    random.shuffle(start_urls)
 
     def start_requests(self):
         for url in self.start_urls:
@@ -84,7 +117,10 @@ class EventSpider(scrapy.Spider):
             })
 
 
+    
+
     def parse_page(self, response):
+       
         events_in_page = response.xpath('//*[contains(@id, "recurring_events_card")]//*[contains(@class, "_2l3f")]/a/@href | //*[@id="upcoming_events_card"]//*[contains(@class, "_4dmk")]/a/@href')
 
         for event_link in events_in_page.extract():
@@ -92,15 +128,21 @@ class EventSpider(scrapy.Spider):
                 yield SplashRequest(
                     url=urljoin(response.url, event_link),
                     callback=self.parse_event,
+                    endpoint='execute',
                     args={
-                    'wait': 12,
-                    'html': 1,
-                    'images_enabled': 0
+                    'lua_source': lua_script,
                     }
                 )
                 pass
             else:
                 pass
+
+
+    # def parse_result(self, response):
+    #     imgdata = base64.b64decode(response.data['png'])
+    #     filename = 'some_image.png'
+    #     with open(filename, 'wb') as f:
+    #         f.write(imgdata)
 
 
     def parse_event(self, response):
@@ -137,11 +179,10 @@ class EventSpider(scrapy.Spider):
             if event_link is not None:
                 yield SplashRequest(
                     url=urljoin(response.url, event_link),
-                    callback=self.parse_event,
+                     callback=self.parse_event,
+                    endpoint='execute',
                     args={
-                    'wait': 12,
-                    'html': 1,
-                    'images_enabled': 0
+                        'lua_source': lua_script,
                     }
                 )
                 pass

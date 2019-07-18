@@ -1,5 +1,9 @@
+@import "variables";
+
 .me-page {
-  &__feed-section {
+  color: $font-primary-color;
+
+  &--feed-section {
     max-width: 85%;
     margin: 0 0 0 10%;
     // padding-top: 35px;
@@ -9,7 +13,7 @@
     }
   }
   
-  &__train-section {
+  &--train-section {
     max-width: 95vw;
     margin: auto;
     // padding-top: 35px;
@@ -19,7 +23,7 @@
     }
   }
   
-  &__events-section {
+  &--events-section {
     max-width: 600px;
     margin: auto;
     //padding-top: 85px;

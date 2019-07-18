@@ -10,7 +10,7 @@ $background-color: #FDFFFC;
 $surface-color: #ffffff;
 $surface-secondary-color: #f7f7f7;
 
-$font-primary-color: $brand-color-high-contrast; // #1D2A4C; // #000100;
+$font-primary-color: lighten($brand-color-high-contrast, 10%); // #1D2A4C; // #000100;
 $font-primary-color-high-contrast: #2191FB;
 $font-secondary-color: transparentize($font-primary-color, 0.35);
 $font-secondary-color-high-contrast: #8F1717;
@@ -22,7 +22,7 @@ $media-border-radius: 3px;
 $chip-font-color: $brand-color-high-contrast; // darken($brand-color, 25%);
 $chip-background-color: $brand-color-left; // transparentize($brand-color, 0.65);
 $chip-border-color: $brand-color-high-contrast; //transparentize($brand-color, 0.45);
-$chip-border-size: 2px;
+$chip-border-size: 1px;
 $chip-transition: background 0.5s cubic-bezier(.29,.01,.4,.99), border 0.5s cubic-bezier(.29,.01,.4,.99);
 
 $link-color: $brand-color-left;
