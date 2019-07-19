@@ -227,6 +227,20 @@ section {
     background: #ffffff;
     position: relative;
     top: 45px;
+
+    & img {
+      width: inherit;
+    }
+  }
+
+  &__beta-explanation {
+    width: 259px;
+    height: 137px;
+    background: url(/images/welcome/beta-explanation.png) no-repeat center top;
+    position: absolute;
+    right: -180px;
+    top: 95px;
+    background-size: 85%;
   }
 }
 
@@ -380,7 +394,9 @@ section {
       border-radius: 100%;
       position: absolute;
       left: 0;
-      background: #f1f1f1;
+      background-color: #2294f340;
+      background-blend-mode: soft-light;
+      background-size: cover;
       //transition: transform 2s ease;
       @include mobile-only {
         width: 35px;
@@ -596,4 +612,9 @@ section {
   //    transform: translate(1900px, 50px);
   //  }
   //}
+}
+
+.has-helper i {
+  border-bottom: 2px dotted #59616e;
+  cursor: help;
 }

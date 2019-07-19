@@ -63,27 +63,32 @@
     </div>
   </section>
 
-  <section class="demo">
-    <div class="macbook rellax" data-rellax-speed="2">
-      <div class="macbook__screen"></div>
-    </div>
-  </section>
+  <% unless mobile_device? %>
+    <section class="demo">
+      <div class="macbook rellax" data-rellax-speed="1">
+        <div class="macbook__screen">
+          <div class="macbook__beta-explanation"></div>
+          <img src="/images/welcome/demo-2.gif" alt="">
+        </div>
+      </div>
+    </section>
+  <% end %>
 
   <section class="invite">
     <div class="invite__status">
       <div class="people">
         <% @last_people.each do |person| %>
-          <div class="people__person-face" style="background: url('<%= person.demographic['picture']%>') no-repeat center center" title="<%= person.demographic['name'] %>"></div>
+          <div class="people__person-face" style="background-image: url('<%= person.demographic['picture']%>')" title="<%= person.demographic['name'] %>"></div>
         <% end  %>
       </div>
       <div class="invite__counter">
         <%= @invites_count %> pessoas solicitaram convite para o alegreme
       </div>
-      <div class="invite__details">
-        Na versão beta vamos liberar até 100 convites por semana
+      <div class="invite__details has-helper">
+        Na versão <i title="Versão de testes do aplicativo ainda em desenvolvimento e validações">beta</i> vamos liberar até 100 convites por semana
       </div>
     </div>
-    <div class="invite__cta">
+    <div class="invite__cta" title="Seja um Beta tester!">
       Pegar Convite
       <span>
         <img src="/images/welcome/right-arrow.png" alt="seta">
