@@ -8,9 +8,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: url('/assets/images/welcome/bg-top.jpg') no-repeat top center;
+  background-image: asset_url('welcome/bg-top.jpg');
+  background-repeat: no-repeat;
+  background-position: top center;
   @include mobile-only {
-    background: url('/assets/images/welcome/bg-top-mobile.jpg') no-repeat top center;
+    background-image: asset_url('welcome/bg-top-mobile.jpg');
+    background-repeat: no-repeat;
+    background-position: top center;
   }
 }
 
@@ -217,7 +221,8 @@ section {
 .macbook {
   width: 800px;
   height: 440px;
-  background: url("/assets/images/welcome/laptop.png") center top;
+  background-image: asset_url("welcome/laptop.png");
+  background-position: center top;
   margin: 95px 0 0 0;
 
   &__screen {
@@ -236,7 +241,9 @@ section {
   &__beta-explanation {
     width: 259px;
     height: 137px;
-    background: url(/assets/images/welcome/beta-explanation.png) no-repeat center top;
+    background-image: asset_url('welcome/beta-explanation.png');
+    background-repeat: no-repeat;
+    background-position: center top;
     position: absolute;
     right: -180px;
     top: 95px;
@@ -359,12 +366,16 @@ section {
     margin: 10px auto 0 auto;
     width: 381px;
     height: 35px;
-    background: url("/assets/images/welcome/google-details.png") no-repeat center;
+    background-image: asset_url("welcome/google-details.png");
+    background-repeat: no-repeat;
+    background-position: center;
     transition: opacity 0.4s ease;
     @include mobile-only {
       width: 220px;
       height: 51px;
-      background: url("/assets/images/welcome/google-details-mobile.png") no-repeat center;
+      background-image: asset_url("welcome/google-details-mobile.png");
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
 
@@ -409,7 +420,9 @@ section {
 .questions {
   width: 100%;
   height: 920px;
-  background: url(/assets/images/welcome/bg-footer.jpg) no-repeat top center;
+  background-image: asset_url('welcome/bg-footer.jpg');
+  background-repeat: no-repeat;
+  background-position: top center;
   position: relative;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -417,7 +430,9 @@ section {
   user-select: none;
 
   @include mobile-only {
-    background: url(/assets/images/welcome/bg-footer-mobile.jpg) no-repeat bottom center
+    background-image: asset_url('welcome/bg-footer-mobile.jpg');
+    background-repeat: no-repeat;
+    background-position: bottom center;
   }
 
   & h2 {
@@ -594,7 +609,7 @@ section {
 .skatista {
   width: 98px;
   height: 152px;
-  background: url(/assets/images/welcome/skatista.png);
+  background-image: asset_url('welcome/skatista.png');
   position: absolute;
   bottom: 35px;
   right: -100px;

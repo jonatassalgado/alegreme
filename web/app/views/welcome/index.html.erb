@@ -18,7 +18,7 @@
       <div class="brand__pimba js-pimba" style="opacity: 0;">Pimba</div>
     </div>
     <div class="brand__letter">
-      <%= image_tag "/assets/images/logo-letter.png" %>
+      <%= image_tag "welcome/logo-letter.png" %>
     </div>
   </section>
 
@@ -32,31 +32,31 @@
     <div class="features__scroll-view">
       <div class="feature feature--activities rellax" data-rellax-speed="3" style="transform: translate(-150px, 150px); opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "/assets/images/welcome/bike-icon.png", alt: 'bicicleta' %>
+          <%= image_tag "welcome/bike-icon.png", alt: 'bicicleta' %>
         </div>
         <div class="feature__title">Atividades recorrentes para praticar na cidade</div>
       </div>
       <div class="feature feature--events rellax" data-rellax-speed="1" style="transform: translate(-100px, -150px); opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "/assets/images/welcome/calendar-icon.png", alt: "calendário" %>
+          <%= image_tag "welcome/calendar-icon.png", alt: "calendário" %>
         </div>
         <div class="feature__title">Eventos sugeridos com base no seu gosto individual</div>
       </div>
       <div class="feature feature--topics rellax" data-rellax-speed="1" style="transform: translate(0px, 150px); opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "/assets/images/welcome/hearth-icon.png", alt: "coração" %>
+          <%= image_tag "welcome/hearth-icon.png", alt: "coração" %>
         </div>
         <div class="feature__title">Siga os tópicos que você gosta e fique sempre por dentro</div>
       </div>
       <div class="feature feature--friends rellax" data-rellax-speed="1" style="transform: translate(100px, -150px); opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "/assets/images/welcome/friends-icon.png", alt: "amigos" %>
+          <%= image_tag "welcome/friends-icon.png", alt: "amigos" %>
         </div>
         <div class="feature__title">Compartilhe com seus melhores amigos seus planos</div>
       </div>
       <div class="feature feature--movie rellax" data-rellax-speed="3" style="transform: translate(150px, 150px); opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "/assets/images/welcome/movie-icon.png", alt: "filme" %>
+          <%= image_tag "welcome/movie-icon.png", alt: "filme" %>
         </div>
         <div class="feature__title">Filmes do Mario Quintana, Capitólio e Cinemark</div>
       </div>
@@ -68,7 +68,7 @@
       <div class="macbook rellax" data-rellax-speed="1">
         <div class="macbook__screen">
           <div class="macbook__beta-explanation"></div>
-          <%= image_tag "/assets/images/welcome/demo-2.gif", alt: "demonstração" %>
+          <%= image_tag "welcome/demo-2.gif", alt: "demonstração" %>
         </div>
       </div>
     </section>
@@ -78,7 +78,7 @@
     <div class="invite__status">
       <div class="people">
         <% @last_people.each do |person| %>
-          <div class="people__person-face" style="background-image: url('<%= person.demographic['picture']%>')" title="<%= person.demographic['name'] %>"></div>
+          <div class="people__person-face" style="background-image: url('<%= image_path person.demographic['picture']%>')" title="<%= person.demographic['name'] %>"></div>
         <% end  %>
       </div>
       <div class="invite__counter">
@@ -91,7 +91,7 @@
     <div class="invite__cta" title="Seja um Beta tester!">
       Pegar Convite
       <span>
-        <%= image_tag "/assets/images/welcome/right-arrow.png", alt: "seta" %>
+        <%= image_tag "welcome/right-arrow.png", alt: "seta" %>
       </span>
     </div>
     <div class="invite__google-details">

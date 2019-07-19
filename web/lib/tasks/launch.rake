@@ -6,47 +6,47 @@ namespace :launch do
 				{
 						email:   'fake1@gmail.com',
 						name:    'User Silva',
-						picture: "/assets/images/welcome/fk-users/Ellipse-1.jpg"
+						picture: "welcome/fk-users/Ellipse-1.jpg"
 				},
 				{
 						email:   'fake2@gmail.com',
 						name:    'Marcelo Englert',
-						picture: "/assets/images/welcome/fk-users/Ellipse-2.jpg"
+						picture: "welcome/fk-users/Ellipse-2.jpg"
 				},
 				{
 						email:   'fake3@gmail.com',
 						name:    'Juliana Mello',
-						picture: "/assets/images/welcome/fk-users/Ellipse-3.jpg"
+						picture: "welcome/fk-users/Ellipse-3.jpg"
 				},
 				{
 						email:   'fake4@gmail.com',
 						name:    'Pietra R. Godoy ',
-						picture: "/assets/images/welcome/fk-users/Ellipse-4.jpg"
+						picture: "welcome/fk-users/Ellipse-4.jpg"
 				},
 				{
 						email:   'fake5@gmail.com',
 						name:    'Henrique Salazar',
-						picture: "/assets/images/welcome/fk-users/Ellipse-5.jpg"
+						picture: "welcome/fk-users/Ellipse-5.jpg"
 				},
 				{
 						email:   'fake6@gmail.com',
 						name:    'Gustavo da Silva',
-						picture: "/assets/images/welcome/fk-users/Ellipse-6.jpg"
+						picture: "welcome/fk-users/Ellipse-6.jpg"
 				},
 				{
 						email:   'fake7@gmail.com',
 						name:    'Enzo',
-						picture: "/assets/images/welcome/fk-users/Ellipse-7.jpg"
+						picture: "welcome/fk-users/Ellipse-7.jpg"
 				},
 				{
 						email:   'fake8@gmail.com',
 						name:    'Patrícia Pereira',
-						picture: "/assets/images/welcome/fk-users/Ellipse-8.jpg"
+						picture: "welcome/fk-users/Ellipse-8.jpg"
 				},
 				{
 						email:   'fake9@gmail.com',
 						name:    'Emilaine Henrich',
-						picture: "/assets/images/welcome/fk-users/Ellipse-9.jpg"
+						picture: "welcome/fk-users/Ellipse-9.jpg"
 				}
 		]
 
