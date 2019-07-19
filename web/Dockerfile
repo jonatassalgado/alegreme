@@ -56,7 +56,6 @@ RUN apt-get update && apt-get install -y mysql-client postgresql-client libsqlit
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install yarn
-RUN yarn install --check-files
 
 
 # INSTALL POSTGRES 11
@@ -85,8 +84,8 @@ ENV BUNDLE_PATH=/bundle \
     BUNDLE_BIN=/bundle/bin \
     GEM_HOME=/bundle
 ENV PATH="${BUNDLE_BIN}:${PATH}"
-ENV RAILS_ENV='production'
-ENV RACK_ENV='production'
+# ENV RAILS_ENV='production'
+# ENV RACK_ENV='production'
 
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
@@ -94,6 +93,7 @@ RUN bundle install --jobs 20 --retry 5
 
 COPY . .
 
+RUN yarn install --check-files
 RUN bundle update --bundler
 RUN bundle exec rake webpacker:clobber
 RUN bundle exec rake assets:precompile
