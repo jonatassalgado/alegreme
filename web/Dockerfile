@@ -14,10 +14,10 @@ RUN echo $TZ > /etc/timezone && \
   dpkg-reconfigure -f noninteractive tzdata && \
   apt-get clean
 
-ENV RUBY_MAJOR="2.5" \
-    RUBY_VERSION="2.5.3" \
+ENV RUBY_MAJOR="2.6" \
+    RUBY_VERSION="2.6.1" \
     DB_PACKAGES="libsqlite3-dev" \
-    RUBY_PACKAGES="ruby2.5.3 ruby2.5.3-dev"
+    RUBY_PACKAGES="ruby2.6.1 ruby2.6.1-dev"
 
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
