@@ -94,6 +94,7 @@ RUN bundle install --jobs 20 --retry 5
 
 COPY . .
 
+RUN bundle update --bundler
 RUN bundle exec rake webpacker:clobber
 RUN bundle exec rake assets:precompile
 
