@@ -9,6 +9,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+
+  <%= favicon_link_tag asset_path 'apple-touch-icon.png', sizes="180x180" %>
+  <%= favicon_link_tag asset_path 'favicon-32x32.png', sizes="32x32" %>
+  <%= favicon_link_tag asset_path 'favicon-16x16.png', sizes="16x16" %>
+
+  <link rel="manifest" href="/site.webmanifest">
+
   <link rel="manifest" href="/manifest.json"/>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%#= stylesheet_link_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/css/embed.css" : ":3030/css/embed.css"), 'data-turbolinks-track': 'reload' %>
