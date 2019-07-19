@@ -224,9 +224,26 @@ module EventQueries
 				else
 					all
 				end
-
-
 			}
+
+
+			scope 'in_organizers', lambda { |organizers, opts = {}|
+				opts       = {'turn_on': true, 'active': true}.merge(opts)
+				organizers = organizers || []
+
+				raise ArgumentError unless organizers.is_a? Array
+
+				if opts[:turn_on] && !organizers.blank?
+					Event.includes(:organizers)
+							.where(organizers: {id: organizers})
+							.references(:organizers)
+							.active(opts[:active])
+							.order_by_date
+				else
+					all
+				end
+			}
+
 
 			scope 'active', lambda { |turn_on = true|
 

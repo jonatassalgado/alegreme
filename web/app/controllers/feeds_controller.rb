@@ -15,7 +15,7 @@ class FeedsController < ApplicationController
 						items:      @events,
 						title:      {
 								principal: @title['principal'],
-								secondary: @title['secondary'].html_safe
+								secondary: @title['secondary'].try(:html_safe)
 						},
 						identifier: params[:identifier],
 						type:       :large,

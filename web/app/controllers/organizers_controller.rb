@@ -16,7 +16,7 @@ class OrganizersController < ApplicationController
 			format.js do
 				Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 					events      = @organizer.events.active
-					@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, )
+					@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events)
 				end
 
 				@locals = mount_section_attrs
@@ -25,7 +25,7 @@ class OrganizersController < ApplicationController
 			format.html do
 				Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 					events      = @organizer.events.active
-					@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, )
+					@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]])
 
 					@locals = mount_section_attrs
 					render 'show'
@@ -89,7 +89,7 @@ class OrganizersController < ApplicationController
 	def mount_section_attrs
 		{
 				items:      @collection,
-				titles:     {
+				title:     {
 						principal: @organizer.details['name']
 				},
 				identifier: @organizer.details['name'].parameterize,

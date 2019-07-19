@@ -12,6 +12,7 @@ module EventServices
 			user                = @params[:user]
 			personas            = user.try(:personas_name)
 			categories_on       = sockets[:in_categories]
+			organizers_on       = sockets[:in_organizers]
 			in_kinds_on         = sockets[:in_kinds]
 			days_on             = sockets[:in_days]
 			user_personas_on    = sockets[:in_user_personas]
@@ -22,6 +23,7 @@ module EventServices
 			not_in_on           = sockets[:not_in]
 			order_by_date       = sockets[:order_by_date]
 			days                = @params[:in_days]
+			organizers          = @params[:in_organizers]
 			categories          = @params[:in_categories]
 			not_in              = @params[:not_in]
 			limit               = @params[:limit]
@@ -53,6 +55,10 @@ module EventServices
 					.in_user_personas(
 							user,
 							'turn_on': user_personas_on
+					)
+					.in_organizers(
+							organizers,
+							'turn_on': organizers_on
 					)
 					.in_categories(
 							categories,
@@ -110,6 +116,7 @@ module EventServices
 					in_user_suggestions: false,
 					in_kinds:            false,
 					in_categories:       false,
+					in_organizers:       false,
 					in_follow_features:  false,
 					order_by_date:       false,
 					order_by_persona:    false,

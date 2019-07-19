@@ -27,13 +27,15 @@
                  locals:  {
                      items:      @items[:today],
                      title:      {
-                         principal: "Eventos acontecendo hoje e amanhã"
+                         principal: "Eventos acontecendo hoje e amanhã",
+                         secondary: "Acontecendo hoje (quinta) ou amanhã (sexta). Use os filtros ao lado para buscar tópicos que deseja."
                      },
                      identifier: 'today-and-tomorrow',
                      type:       :large,
                      filters:    {
                          categories: true,
-                         kinds:      true
+                         kinds:      true,
+                         ocurrences: true
                      },
                      detail:     @items[:today][:detail]
                  } %>

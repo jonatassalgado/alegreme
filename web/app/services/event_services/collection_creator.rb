@@ -9,7 +9,7 @@ module EventServices
 			cache_variables(current_user)
 
 			@params   = request_params || {}
-			@today    = Date.current
+			@today    = Date.today
 			@tomorrow = @today + 1
 		end
 
@@ -40,6 +40,7 @@ module EventServices
 					in_categories:    set_initial_categories_filter,
 					in_days:          set_initial_dates_filter,
 					in_kinds:         set_initial_kinds_filter,
+					in_organizers:    set_initial_organizers_filter,
 					order_by_date:    false,
 					order_by_persona: false,
 					group_by:         calculate_items_for_group(2, auto_balance: true),
@@ -169,6 +170,10 @@ module EventServices
 
 		def set_initial_dates_filter
 			@params[:ocurrences] || @opts[:ocurrences] || []
+		end
+
+		def set_initial_organizers_filter
+			@params[:organizers] || @opts[:organizers] || []
 		end
 
 		def set_not_in
