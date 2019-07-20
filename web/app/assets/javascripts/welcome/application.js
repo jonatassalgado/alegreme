@@ -104,7 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			requestAnimationFrame(() => {
 				answerEl.style.display = 'flex';
 				answerEl.classList.add('is-showin');
-				answerEl.style.background = item.dataset.color;
+				// answerEl.style.background = item.dataset.color;
+				answerEl.style.background = '#ffffff';
 
 				answerEl.querySelector(`[data-answer=${item.dataset.question}]`).style.display = 'block';
 
