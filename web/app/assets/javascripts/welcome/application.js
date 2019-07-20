@@ -23,33 +23,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 	brandLogoEls.forEach((brandLogoEl) => {
-		brandLogoEl.addEventListener('click', () => {
-			pimbaEls.forEach((pimbaEl) => {
-				const promise = new Promise((resolve, reject) => {
-					const x = Math.random() * -20;
-					const y = Math.random() * 50;
+		['click', 'touchstart'].forEach((e) => {
+			brandLogoEl.addEventListener(e, () => {
+				pimbaEls.forEach((pimbaEl) => {
+					const promise = new Promise((resolve, reject) => {
+						pimbaEl.style.opacity    = '1';
+						pimbaEl.style.transition = '';
+						pimbaEl.style.color      = '#2192f6';
 
-					pimbaEl.style.opacity    = '1';
-					pimbaEl.style.transition = '';
-					pimbaEl.style.color      = '#2192f6';
-					pimbaEl.style.transform  = `translate(${x}px, ${y}px)`;
+						const x = Math.random() * -20;
+						const y = Math.random() * 50;
+						pimbaEl.style.transform  = `translate(${x}px, ${y}px)`;
 
-					if (x !== undefined && y !== undefined) {
-						resolve();
-					}
-				});
+						if (x !== undefined && y !== undefined) {
+							resolve();
+						}
+					});
 
-				promise.then(() => {
-					requestAnimationFrame(() => {
-						pimbaEl.style.transition = 'opacity 0.5s linear, color 0.5s linear';
-						pimbaEl.style.opacity    = '0';
-						pimbaEl.style.color      = '#2dc877'
-					})
+					promise.then(() => {
+						requestAnimationFrame(() => {
+							pimbaEl.style.transition = 'opacity 0.5s linear, color 0.5s linear';
+							pimbaEl.style.opacity    = '0';
+							pimbaEl.style.color      = '#2dc877'
+						})
+					});
+
 				});
 
 			});
-
-		});
+		})
 	});
 
 

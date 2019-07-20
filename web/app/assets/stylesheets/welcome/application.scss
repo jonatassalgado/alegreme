@@ -280,7 +280,7 @@ section {
     }
 
     .invite__share {
-      opacity: 1;
+      opacity: 1 !important;
     }
   }
 
@@ -318,7 +318,6 @@ section {
   &__cta {
     width: 292px;
     height: 70px;
-    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -380,7 +379,7 @@ section {
   }
 
   &__share {
-    opacity: 0;
+    opacity: 0 !important;
     width: 100%;
     margin: 25px 0 0 0;
     text-align: center;
