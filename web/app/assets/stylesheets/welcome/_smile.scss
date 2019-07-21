@@ -24,6 +24,7 @@
   animation-timing-function: linear;
   animation-direction: alternate;
   animation-delay: 10s;
+  will-change: transform, opacity;
 }
 
 .smile__mouth {
@@ -34,6 +35,7 @@
   animation-timing-function: ease;
   animation-direction: alternate;
   animation-delay: 10s;
+  will-change: transform;
 }
 
 @keyframes smile {

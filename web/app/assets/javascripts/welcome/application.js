@@ -135,13 +135,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 
+	var delay = 500;
 	featuresEl.forEach((feature) => {
 		setTimeout(() => {
 			requestAnimationFrame(() => {
 				feature.style.transform = '';
 				feature.style.opacity   = 1;
 			});
-		}, 500);
+		}, delay);
+		delay = delay + 100;
 	});
 
 	setTimeout(() => {

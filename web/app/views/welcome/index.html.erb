@@ -15,13 +15,13 @@
 
   <section class="features">
     <div class="features__scroll-view">
-      <div class="feature feature--activities rellax" data-rellax-speed="3" style="transform: translate(-150px, 150px); opacity: 0">
+      <div class="feature feature--activities rellax" data-rellax-speed="3" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(-150px, 150px)' %> ; opacity: 0">
         <div class="feature__icon">
           <%= image_tag "welcome/bike-icon.png", alt: 'bicicleta' %>
         </div>
         <div class="feature__title">Atividades recorrentes para praticar na cidade</div>
       </div>
-      <div class="feature feature--events rellax" data-rellax-speed="1" style="transform: translate(-100px, -150px); opacity: 0">
+      <div class="feature feature--events rellax" data-rellax-speed="1" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(-100px, -150px)' %>; opacity: 0">
         <div class="feature__icon">
           <%= image_tag "welcome/calendar-icon.png", alt: "calendário" %>
         </div>
