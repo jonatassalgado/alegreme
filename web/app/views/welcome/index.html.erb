@@ -27,7 +27,7 @@
         </div>
         <div class="feature__title">Eventos sugeridos com base no seu gosto individual</div>
       </div>
-      <div class="feature feature--topics rellax" data-rellax-speed="1" style="transform: translate(0px, 150px); opacity: 0">
+      <div class="feature feature--topics rellax" data-rellax-speed="1" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(0px, 150px)' %>; opacity: 0">
         <div class="feature__icon">
           <%= image_tag "welcome/hearth-icon.png", alt: "coração" %>
         </div>
