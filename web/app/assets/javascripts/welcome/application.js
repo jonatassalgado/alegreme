@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	const pimbaEls              = document.querySelectorAll('.js-pimba');
 	const peopleEls             = document.querySelectorAll('.people__person-face');
 	const answerEl              = document.querySelector('.answer');
-	const featuresEl            = document.querySelectorAll('.feature');
+	// const featuresEl            = document.querySelectorAll('.feature');
 	const inviteEl              = document.querySelector('.invite');
 	const inviteCtaEl           = document.querySelector('.invite__cta');
-	const inviteGoogleDetailsEl = document.querySelector('.invite__google-details');
+	// const inviteGoogleDetailsEl = document.querySelector('.invite__google-details');
 	const inviteDetailsEl       = document.querySelector('.invite__details');
 	const inviteCounterEl       = document.querySelector('.invite__counter');
 	const inviteStatusEl        = document.querySelector('.invite__status');
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 				});
 
-			});
+			}, {passive: true});
 		})
 	});
 
@@ -135,16 +135,16 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 
-	var delay = 500;
-	featuresEl.forEach((feature) => {
-		setTimeout(() => {
-			requestAnimationFrame(() => {
-				feature.style.transform = '';
-				feature.style.opacity   = 1;
-			});
-		}, delay);
-		delay = delay + 100;
-	});
+	// var delay = 0;
+	// featuresEl.forEach((feature) => {
+	// 	setTimeout(() => {
+	// 		requestAnimationFrame(() => {
+	// 			feature.style.transform = '';
+	// 			feature.style.opacity   = 1;
+	// 		});
+	// 	}, delay);
+	// 	delay = delay + 100;
+	// });
 
 	setTimeout(() => {
 		if (md.mobile()) {
