@@ -17,7 +17,7 @@
   <link rel="manifest" href="/site.webmanifest">
 
   <link rel="manifest" href="/manifest.json"/>
-  <%= stylesheet_link_tag 'welcome/application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%#= stylesheet_link_tag request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/css/embed.css" : ":3030/css/embed.css"), 'data-turbolinks-track': 'reload' %>
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/icon?family=Cabin:400,500,600,700|Roboto:300,400,700|Material+Icons|Material+Icons+Round|Material+Icons+Sharp">
@@ -30,7 +30,8 @@
   <%#= javascript_include_tag 'bot/client', 'data-turbolinks-track': 'reload' %>
 </head>
 <body>
-<div class="mdc-drawer-app-content">
+<!--<div class="mdc-drawer-app-content">-->
+  <div style="height: 64px; width: 100%"></div>
   <% if params['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
     <%= render partial: "layouts/app-top-bar" %>
     <%= render partial: 'layouts/hero' unless current_user %>
@@ -60,7 +61,7 @@
       <%= yield %>
     </section>
   <% end %>
-</div>
+<!--</div>-->
 <% if notice %>
   <div data-controller="snackbar" class="me-snackbar mdc-snackbar">
     <div class="mdc-snackbar__surface">

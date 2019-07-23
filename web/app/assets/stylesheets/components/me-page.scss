@@ -3,9 +3,18 @@
 .me-page {
   color: $font-primary-color;
 
+  &__section {
+    padding: 35px 0;
+    background: $background-z1-color;
+
+    &--z0 {
+      background: $background-z0-color;
+    }
+  }
+
   &--feed-section {
-    max-width: 85%;
-    margin: 0 0 0 10%;
+    //max-width: 85%;
+    //margin: 0 0 0 10%;
     // padding-top: 35px;
     
     @include mdc-layout-grid-media-query_("phone") {

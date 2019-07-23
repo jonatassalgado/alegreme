@@ -7,7 +7,16 @@ $brand-color-high-contrast: #0C0F0A; //darken($brand-color, 10%);
 $font-primary-font: 'Cabin';
 $font-secondary-font: 'helvetica', 'Cabin';
 
+@mixin section-constraints {
+  max-width: 95%;
+  padding: 0 0 0 10%;
+}
+
 $background-color: #FDFFFC;
+$background-z0-color: #FAFAFA;
+$background-z1-color: #ffffff;
+
+$surface-z10-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.07);
 $surface-color: #ffffff;
 $surface-secondary-color: #f7f7f7;
 
@@ -24,7 +33,7 @@ $chip-font-color: $brand-color-high-contrast; // darken($brand-color, 25%);
 $chip-background-color: $brand-color-left; // transparentize($brand-color, 0.65);
 $chip-border-color: $brand-color-high-contrast; //transparentize($brand-color, 0.45);
 $chip-border-size: 1px;
-$chip-transition: background 0.5s cubic-bezier(.29,.01,.4,.99), border 0.5s cubic-bezier(.29,.01,.4,.99);
+$chip-transition: background 0.5s cubic-bezier(.29, .01, .4, .99), border 0.5s cubic-bezier(.29, .01, .4, .99);
 
 $link-color: $brand-color-left;
 

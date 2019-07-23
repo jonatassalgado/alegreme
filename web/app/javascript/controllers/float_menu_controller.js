@@ -48,7 +48,7 @@ export default class Float_menu_controller extends Controller {
 		const identifier = event.target.closest('.me-float-menu__item').dataset.collectionIdentifier;
 		const sectionEl  = document.getElementById(identifier);
 
-		window.scrollTo(0, sectionEl.offsetTop);
+		window.scrollTo(0, sectionEl.offsetTop - 100);
 	}
 
 }

@@ -13,6 +13,7 @@ $mdc-layout-grid-columns: (
 );
 
 .me-feed {
+  @include section-constraints;
 
   & section {
     border-bottom: 1px solid #e0e0e0;
@@ -20,7 +21,7 @@ $mdc-layout-grid-columns: (
   }
 
   &__section {
-
+    padding: 0 0 25px 0;
     @include mdc-layout-grid-media-query_("phone") {
       margin: 0;
     }
@@ -29,22 +30,22 @@ $mdc-layout-grid-columns: (
       margin: 8px 0;
       font-weight: 700;
       max-width: 55%;
-      line-height: 1em;
-      font-size: 1.5em;
+      line-height: 1.3em;
+      font-size: 24px;
 
       & span {
-        font-size: 0.7em;
+        font-size: 16px;
         display: block;
         font-weight: 100;
-        color: $font-tertiary-color;
-        line-height: 1.4em;
+        color: $font-secondary-color;
+        line-height: 1.6em;
         margin-top: 16px;
       }
     }
 
     & .me-filter {
       display: block;
-      margin: 12px 0;
+      margin: 0 0 12px 0;
       text-align: right;
       //min-height: 90px;
     }

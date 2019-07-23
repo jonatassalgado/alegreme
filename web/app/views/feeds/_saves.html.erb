@@ -48,17 +48,17 @@
               </div>
               <a href="<%= event.url %>"
                  title="<%= event.details_name %>">
-                <div class="me-card__date" data-target="saves-events.date">
-                  <%= event.day_of_week['decorator'] %>
-                </div>
                 <div class="mdc-card__media mdc-card__media--16-9" style="<%= get_image_style_attr event %>">
                   <div class="me-card__overlay"
                        data-target="saves-events.overlay"></div>
                 </div>
-                <div class="me-card__title mdc-card__title"
-                     data-target="saves-events.title">
-                  <%= limit_name_size event.details_name, 32 %>
+                <div class="me-card__date" data-target="saves-events.date">
+                  <%= event.day_of_week['decorator'] %>
                 </div>
+<!--                <div class="me-card__title mdc-card__title"-->
+<!--                     data-target="saves-events.title">-->
+                  <%#= limit_name_size event.details_name, 32 %>
+<!--                </div>-->
               </a>
             </div>
           </div>

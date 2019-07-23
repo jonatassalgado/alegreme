@@ -12,6 +12,7 @@ $description-color: $font-secondary-color;
   &[data-event-similar-open="true"], &[data-event-similar-open="true"]:hover {
     //transform: scale(0.9);
     //transform-origin: center;
+    border-bottom: 3px solid $brand-color-right;
 
     & .me-card__secondary-section a {
       color: $font-primary-color-high-contrast
@@ -19,9 +20,12 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__similar {
-      transform: translate(0px, 15px) scale(1.4);
+      transform: translate(0px, 18px);
       opacity: 1;
       color: $font-primary-color-high-contrast;
+      & svg {
+        fill: $font-primary-color-high-contrast;
+      }
     }
   }
 
@@ -131,12 +135,15 @@ $description-color: $font-secondary-color;
     align-self: center;
     cursor: pointer;
     color: $font-tertiary-color;
-    min-height: 35px;
+    //min-height: 35px;
     opacity: 0;
-    transition: opacity 0.15s ease, transform 0.15s ease-in;
-    transform: translate(0px, -10px);
+    transition: opacity 0.15s ease;
+    //transform: translate(0px, -10px);
     margin: 6px 0 0 0;
     user-select: none;
+    & svg {
+      fill: $font-secondary-color;
+    }
 
     &:hover {
       color: $font-primary-color-high-contrast;

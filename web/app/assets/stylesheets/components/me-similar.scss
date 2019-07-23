@@ -3,7 +3,7 @@
 .me-similar {
   grid-column: 15 span;
   display: grid;
-  margin: 0 0 12px 0;
+  margin: 35px 0 12px 0;
   //grid-gap: 0 12px;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   height: auto;
@@ -12,7 +12,7 @@
   &__events {
     grid-column: 12 span;
     display: grid;
-    margin: 6px 0 12px 0;
+    margin: 6px 0 25px 0;
     grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
@@ -101,7 +101,8 @@
 
   & .mdc-typography--headline6 {
     grid-column-end: 12 span;
-    font-size: 16px;
+    font-size: 14px;
+    text-transform: uppercase;
     color: $font-primary-color;
     line-height: 1.2em;
     z-index: 2;

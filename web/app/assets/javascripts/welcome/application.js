@@ -2,7 +2,10 @@
 //= require rails-ujs
 //= require rellax/rellax.js
 //= require mobile-detect/mobile-detect.js
+//= require lazysizes/lazysizes.min.js
 // require query-string/index.js
+
+lazySizes.cfg.expand = 10;
 
 document.addEventListener('DOMContentLoaded', function () {
 

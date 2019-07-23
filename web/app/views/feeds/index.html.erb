@@ -1,107 +1,111 @@
 <%= render partial: "feeds/float_menu" %>
 
-<%= render partial: "saves",
-           locals:  {
-               identifier:   'salvos',
-               saved_events: @favorited_events
-           } %>
+<section class="me-page__section me-page__section--z0">
+  <%= render partial: "saves",
+             locals:  {
+                 identifier:   'salvos',
+                 saved_events: @favorited_events
+             } %>
+</section>
 
 
+<section class="me-page__section">
 
-<div class="me-feed">
-  <% if params[:q] %>
-    <%= render partial: "components/collection/collection",
-               locals:  {
-                   items:      @items[:user],
-                   title:      {
-                       principal: "Eventos encontrados para \"#{params[:q]}\""
-                   },
-                   identifier: 'busca',
-                   type:       :large,
-                   filters:    false
-               } %>
-
-  <% else %>
-    <section>
+  <div class="me-feed">
+    <% if params[:q] %>
       <%= render partial: "components/collection/collection",
                  locals:  {
-                     items:      @items[:today],
+                     items:      @items[:user],
                      title:      {
-                         principal: "Eventos acontecendo hoje e amanhã",
-                         secondary: "Acontecendo hoje (quinta) ou amanhã (sexta). Use os filtros ao lado para buscar tópicos que deseja."
+                         principal: "Eventos encontrados para \"#{params[:q]}\""
                      },
-                     identifier: 'today-and-tomorrow',
+                     identifier: 'busca',
                      type:       :large,
-                     filters:    {
-                         categories: true,
-                         kinds:      true,
-                         ocurrences: true
-                     },
-                     detail:     @items[:today][:detail]
+                     filters:    false
                  } %>
-    </section>
-    <% if current_user %>
+
+    <% else %>
       <section>
         <%= render partial: "components/collection/collection",
                    locals:  {
-                       items:      @items[:follow],
+                       items:      @items[:today],
                        title:      {
-                           principal: "Tópicos que você segue",
-                           secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
+                           principal: "Eventos acontecendo hoje e amanhã",
+                           secondary: "Acontecendo hoje (quinta) ou amanhã (sexta). Use os filtros ao lado para buscar tópicos que deseja."
                        },
-                       identifier: 'follow',
+                       identifier: 'today-and-tomorrow',
+                       type:       :large,
+                       filters:    {
+                           categories: true,
+                           kinds:      true,
+                           ocurrences: true
+                       },
+                       detail:     @items[:today][:detail]
+                   } %>
+      </section>
+      <% if current_user %>
+        <section>
+          <%= render partial: "components/collection/collection",
+                     locals:  {
+                         items:      @items[:follow],
+                         title:      {
+                             principal: "Tópicos que você segue",
+                             secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
+                         },
+                         identifier: 'follow',
+                         type:       :large,
+                         filters:    {
+                             categories: true,
+                             ocurrences: true,
+                             kinds:      true
+                         },
+                         detail:     @items[:follow][:detail]
+                     } %>
+        </section>
+
+
+        <section>
+          <%= render partial: "components/collection/collection",
+                     locals:  {
+                         items:      @items[:user_suggestions],
+                         title:      {
+                             principal: "Indicados para #{current_user.name}",
+                             secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
+                         },
+                         identifier: 'user-suggestions',
+                         type:       :large,
+                         filters:    {
+                             categories: true,
+                             ocurrences: true,
+                             kinds:      false
+                         },
+                         detail:     @items[:user_suggestions][:detail]
+                     } %>
+
+        </section>
+      <% end %>
+
+      <section>
+        <%= render partial: "components/collection/collection",
+                   locals:  {
+                       items:      @items[:user_personas],
+                       title:      {
+                           principal: "Gostos parecidos",
+                           secondary: "Explore os eventos que pessoas com gostos parecidos estão salvando"
+                       },
+                       identifier: 'user-personas',
                        type:       :large,
                        filters:    {
                            categories: true,
                            ocurrences: true,
                            kinds:      true
                        },
-                       detail:     @items[:follow][:detail]
-                   } %>
-      </section>
-
-
-      <section>
-        <%= render partial: "components/collection/collection",
-                   locals:  {
-                       items:      @items[:user_suggestions],
-                       title:      {
-                           principal: "Indicados para #{current_user.name}",
-                           secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
-                       },
-                       identifier: 'user-suggestions',
-                       type:       :large,
-                       filters:    {
-                           categories: true,
-                           ocurrences: true,
-                           kinds:      false
-                       },
-                       detail:     @items[:user_suggestions][:detail]
+                       detail:     @items[:user_personas][:detail]
                    } %>
 
       </section>
+
+      <%# render partial: "section", locals: { events: @events[:user], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'recomendados', type: :large, filters: { categories: true, occurences: true } } %>
     <% end %>
-
-    <section>
-      <%= render partial: "components/collection/collection",
-                 locals:  {
-                     items:      @items[:user_personas],
-                     title:      {
-                         principal: "Gostos parecidos",
-                         secondary: "Explore os eventos que pessoas com gostos parecidos estão salvando"
-                     },
-                     identifier: 'user-personas',
-                     type:       :large,
-                     filters:    {
-                         categories: true,
-                         ocurrences: true,
-                         kinds:      true
-                     },
-                     detail:     @items[:user_personas][:detail]
-                 } %>
-
-    </section>
-
-    <%# render partial: "section", locals: { events: @events[:user], titles: {categories: "Eventos nas categorias", occurences: "acontecendo"}, identifier: 'recomendados', type: :large, filters: { categories: true, occurences: true } } %>
-  <% end %>
-</div>
+  </div>
+</section>

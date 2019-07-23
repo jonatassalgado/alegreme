@@ -2,13 +2,17 @@
 
 .me-float-menu {
   position: fixed;
-  top: 65px;
+  top: 155px;
   bottom: 90px;
   left: 2px;
   z-index: 1;
   will-change: transform;
   color: $icon-color;
   user-select: none;
+  height: max-content;
+  background: $background-z1-color;
+  box-shadow: $surface-z10-box-shadow;
+  border-radius: 0 15px 15px 0;
 
   @include mdc-layout-grid-media-query_("phone") {
     display: none;
@@ -19,7 +23,7 @@
     flex-direction: column;
     align-items: center;
     width: 72px;
-    padding: 45px 0 0 0;
+    padding: 25px 0 0 0;
     text-align: center;
     font-size: 10px;
   }
@@ -47,7 +51,7 @@
     transition: opacity 0.2s ease-in;
 
     &.is-active {
-      color: $brand-color-intersect;
+      color: $brand-color-right;
     }
   }
 
