@@ -7,7 +7,7 @@
   if similar_to
     event              = events.detect { |event| event.id == similar_to.to_i } || Event.find(similar_to)
     similar_events_ids = event.similar_data[0...6]
-    similar_events     = Event.where(id: similar_events_ids).not_in_saved(user).includes(:place)
+    similar_events     = Event.where(id: similar_events_ids).not_in_saved(user)
     identifier         = local_assigns.fetch(:identifier, 'similar')
   end
 
@@ -48,9 +48,11 @@
 
     <div class="me-similar__organizers">
       <%= render partial: 'components/follow/follow-chip-set', locals: {
-          user:  current_user,
-          chips: similar_events.map{|similar| similar.organizers[0..3]}.flatten.uniq[0..6],
-          type:  'organizers'
+          user:              current_user,
+          event_id:          event.id,
+          chips:             similar_events.map { |similar| similar.organizers[0..3] }.flatten.uniq[0..6].sort,
+          type:              'organizers',
+          expand_to_similar: true
       } %>
     </div>
 

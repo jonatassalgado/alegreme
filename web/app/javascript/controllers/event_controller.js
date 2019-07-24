@@ -136,6 +136,10 @@ export default class EventController extends Controller {
 
 	}
 
+	readMore() {
+		this.data.set('description-open', true);
+	}
+
 	get insertAfter() {
 		const order = parseInt(this.eventTarget.parentElement.style.order);
 

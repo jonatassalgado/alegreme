@@ -8,6 +8,7 @@
     border: $chip-border-size solid $border-color;
 
     &__text {
+      text-transform: lowercase;
       transition: color 0.3s ease-in;
     }
 
@@ -25,15 +26,16 @@
     }
 
     &--selected {
-      border: $chip-border-size solid $font-secondary-color;
+      border: $chip-border-size solid $chip-follow-border-color;
+      background: $chip-follow-background-color;
 
       & .mdc-chip__text {
-        color: $font-secondary-color;
+        color: $chip-follow-color;
       }
 
 
       & .mdc-chip__icon--leading {
-        color: $font-secondary-color;
+        color: $chip-follow-color;
         //width: 18px;
         opacity: 1;
         //margin: 0 -4px 0 4px;

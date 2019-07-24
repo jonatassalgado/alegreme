@@ -12,17 +12,17 @@ $description-color: $font-secondary-color;
   &[data-event-similar-open="true"], &[data-event-similar-open="true"]:hover {
     //transform: scale(0.9);
     //transform-origin: center;
-    border-bottom: 3px solid $brand-color-right;
+    //border-bottom: 3px solid $brand-color-right;
 
     & .me-card__secondary-section a {
-      color: $font-primary-color-high-contrast
-    ;
+      //color: $font-primary-color-high-contrast;
     }
 
     & .me-card__similar {
       transform: translate(0px, 18px);
       opacity: 1;
       color: $font-primary-color-high-contrast;
+
       & svg {
         fill: $font-primary-color-high-contrast;
       }
@@ -116,7 +116,7 @@ $description-color: $font-secondary-color;
   &__date {
 
     &.is-today {
-      background: $brand-color-intersect;
+      background: $brand-color-left;
       padding: 1px 1px 1px 3px;
       border-radius: 3px;
       color: white;
@@ -141,6 +141,7 @@ $description-color: $font-secondary-color;
     //transform: translate(0px, -10px);
     margin: 6px 0 0 0;
     user-select: none;
+
     & svg {
       fill: $font-secondary-color;
     }
@@ -279,20 +280,70 @@ $description-color: $font-secondary-color;
   }
 
   &--single {
-    margin: 35px 0;
+    padding: 35px 0;
     font-size: 16px;
     line-height: 1.4em;
-    border-radius: 20px;
-    overflow: hidden;
+    //border-radius: 20px;
+    //overflow: hidden;
 
-    & .me-card__name, .me-card__place, .me-card__ocurrence, .me-card__description {
-      padding: 12px 0;
+    &[data-event-description-open="true"] {
+
+      & .me-card__description-wrapper {
+        max-height: unset;
+        text-align: left;
+
+        & br {
+          content: unset;
+        }
+
+        &::before {
+          display: none;
+        }
+      }
+
+      & .me-card__description {
+        & button {
+          display: none;
+        }
+      }
     }
 
-    & .me-card__organizer {
+    & .me-card__head {
+      display: flex;
+      flex-direction: column;
+      align-items: baseline;
+      height: 130px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-content: flex-start;
+      position: relative;
+    }
+
+    & .me-card__media {
+      width: 30%;
+      height: 120px;
+      background-size: cover;
+      background-position: center;
+      border-radius: $media-border-radius;
+      box-shadow: 0px -5px 20px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    & .me-card__name {
+      padding: 0;
+      margin: 0 0 30px 15px;
+      width: calc(70% - 85px);
+      line-height: 1.2em;
+      font-size: 18px;
+    }
+
+
+    & .me-card__topics {
+      text-align: center;
+      max-width: 85%;
+      margin: auto;
+
       & .mdc-chip-set {
-        padding: 0px;
-        margin: 0 -4px;
+        display: inline;
       }
 
       & .mdc-chip__text {
@@ -300,23 +351,82 @@ $description-color: $font-secondary-color;
       }
     }
 
-    & .me-card__content {
-      padding: 0.5rem 1rem 1rem 1em;
-    }
-
     & .me-card__like-button {
-      bottom: -25px;
+      bottom: 0;
       right: 16px;
       position: absolute;
       top: auto;
       z-index: 2;
     }
 
-    & .me-card__primary {
-      padding: 2.5rem 1rem 1rem;
+    & .me-card__primary-section {
+      color: $font-primary-color;
+      text-transform: none;
+      display: flex;
+      margin: 50px 0;
+    }
+
+    & .me-card__place, .me-card__date {
+      background: $background-z0-color;
+      padding: 10px;
+      margin: 0 15px 0 0;
+      border-radius: 5px;
+      width: 50%;
+
+      & i {
+        float: left;
+        margin: 8px 10px 0 3px;
+      }
+
+      & h3 {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        margin: 0;
+        line-height: 1em;
+      }
+
+      & span {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+      }
+    }
+
+    & .me-card__date {
+      margin: 0;
     }
 
     & .me-card__description {
+      margin: 35px 0;
+
+      & button {
+        margin: auto;
+        display: block;
+      }
+    }
+
+    & .me-card__description-wrapper {
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 1.6em;
+      position: relative;
+      max-height: 150px;
+      overflow: hidden;
+      text-align: justify;
+
+      & br {
+        content: close-quote;
+      }
+
+      &::before {
+        content: close-quote;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: linear-gradient(0deg, #FFFFFF 15%, transparent 100%);
+        z-index: 2;
+      }
 
       & a {
         text-decoration: underline;
@@ -331,7 +441,7 @@ $description-color: $font-secondary-color;
         transition: 0.2s all ease 0s;
         border-radius: 100%;
         @include mdc-icon-button-ink-color($color: $icon-light-color);
-        @include mdc-icon-button-size($width: 38px, $height: 38px, $padding: 6px);
+        @include mdc-icon-button-size($width: 32px, $height: 32px, $padding: 6px);
         @include mdc-elevation($z-value: 4);
 
         &:hover {
@@ -345,7 +455,7 @@ $description-color: $font-secondary-color;
         }
 
         & .material-icons-sharp {
-          font-size: 38px;
+          font-size: 32px;
         }
       }
     }

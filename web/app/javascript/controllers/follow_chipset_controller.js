@@ -25,14 +25,14 @@ export default class FollowChipsetController extends Controller {
 	follow(event) {
 		const followPromise = new Promise((resolve, reject) => {
 			const data = {
-				chipIconElem: event.target,
-				chipElem    : event.target.parentElement,
-				eventElem   : document.getElementById('event'),
-				followable  : event.target.parentElement.dataset.followable,
-				type        : event.target.parentElement.dataset.type,
-				location    : this.location,
-				action      : event.target.parentElement.dataset.followed === 'true' ? 'unfollow' : 'follow',
-				eventId     : this.eventId
+				chipIconElem   : event.target,
+				chipElem       : event.target.parentElement,
+				eventElem      : document.getElementById('event'),
+				followable     : event.target.parentElement.dataset.followable,
+				type           : event.target.parentElement.dataset.type,
+				expandToSimilar: this.expandToSimilar,
+				action         : event.target.parentElement.dataset.followed === 'true' ? 'unfollow' : 'follow',
+				eventId        : this.eventId
 			};
 
 			if (Object.values(data).map((value) => {
@@ -45,7 +45,7 @@ export default class FollowChipsetController extends Controller {
 		});
 
 		followPromise.then((data) => {
-			fetch(`/${data.type}/${data.followable}/${data.action}?event_id=${data.eventId}`, {
+			fetch(`/${data.type}/${data.followable}/${data.action}?event_id=${data.eventId}&expand_to_similar=${data.expandToSimilar}`, {
 				method     : 'get',
 				headers    : {
 					'X-Requested-With': 'XMLHttpRequest',
@@ -77,12 +77,14 @@ export default class FollowChipsetController extends Controller {
 	get eventId() {
 		const eventEl = document.getElementById('event');
 		if (eventEl) {
-			return eventEl.dataset.eventIdentifier;
+			return eventEl.dataset.eventIdentifier || null;
+		} else {
+			return this.data.get('similar-to') || null;
 		}
 	}
 
-	get location() {
-		return this.data.get('location')
+	get expandToSimilar() {
+		return this.data.get('expand-to-similar');
 	}
 
 	get sectionIdentifier() {

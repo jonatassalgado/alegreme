@@ -1,0 +1,18 @@
+.is-first-section {
+  margin-top: 50px;
+}
+
+.with-section-constraints {
+  max-width: 95%;
+  padding: 0 0 0 10%;
+
+  & .mdc-layout-grid {
+    padding: 0;
+  }
+}
+
+.with-5-columns {
+  .mdc-layout-grid__inner {
+    grid-template-columns: repeat(15, minmax(0, 1fr));
+  }
+}

@@ -3,7 +3,9 @@
   <div class="mdc-top-app-bar__row">
     <section
       class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-      <%= image_tag 'welcome/logo-letter.png', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
+      <a href="/">
+        <%= image_tag 'welcome/logo-letter.png', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
+      </a>
     </section>
     <% if mobile_device? && controller == 'events' %>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">

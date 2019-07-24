@@ -1,5 +1,5 @@
-<p id="notice"><%= notice %></p>
+<%= notice %>
 
-<section id=<%= @locals[:identifier] %>>
-      <%= render partial: "components/collection/collection", locals: @locals %>
+<section class="with-section-constraints with-5-columns is-first-section">
+  <%= render partial: "components/collection/collection", locals: @locals %>
 </section>

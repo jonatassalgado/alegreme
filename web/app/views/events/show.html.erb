@@ -1,16 +1,21 @@
-
-<p id="notice"><%= notice %></p>
+<%= notice %>
 <% if current_user && current_user.admin? %>
   <a href="<%= @event.url %>/edit">Editar</a>
   <a href="/train">Treinar</a>
 <% end %>
-<div id="event" class="me-card me-card--single mdc-card event-<%= @event.id %>"
+<div id="event" class="me-card me-card--single event-<%= @event.id %>"
      data-controller="event"
      data-target="event.event"
      data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
      data-event-identifier="<%= @event.id %>"
+     data-event-description-open="false"
      data-event-modifier="single">
-  <div class="mdc-card__media mdc-card__media--16-9" style="<%= get_image_style_attr @event, :single %>">
+
+  <div class="me-card__head">
+    <div class="me-card__media" style="<%= get_image_style_attr @event, :single %>"></div>
+    <h2 class="me-card__name">
+      <%= @event.details_name %>
+    </h2>
     <% if current_user %>
       <div class="me-card__like-button" data-action="click->event#like">
         <div data-target="event.like">
@@ -24,33 +29,69 @@
       </div>
     <% end %>
   </div>
+
   <div class="me-card__content">
-    <h2 class="mdc-card__name mdc-typography--headline6">
-      <%= @event.details_name %>
-    </h2>
-    <div class="me-card__organizer" data-target="event.organizer">
-      <%= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.categories, type: 'categories' } %>
+    <!--    <h2 class="mdc-card__name mdc-typography--headline6">-->
+    <%#= @event.details_name %>
+    <!--    </h2>-->
+
+
+    <!--    <div class="me-card__ocurrence">-->
+    <!--      <b>Quando:</b> <%#= "#{@event.day_of_week['decorator']} (#{@event.day_of_week['string']})" %>-->
+    <!--    </div>-->
+    <!--    <div class="me-card__place">-->
+    <div class="me-card__primary-section">
+      <div class="me-card__place">
+        <% if @event.place %>
+          <i class="material-icons">
+            place
+          </i>
+          <div>
+            <h3>
+              <%= @event.place_details_name %>
+            </h3>
+            <span>
+            <%= @event.geographic['address'] %>
+          </span>
+          </div>
+        <% end %>
+      </div>
+      <div class="me-card__date">
+        <% if @event.place %>
+          <i class="material-icons">
+            today
+          </i>
+          <div>
+            <h3>
+              <%= "#{@event.day_of_week['decorator']}" %>
+            </h3>
+            <span>
+              <%= "#{@event.day_of_week['string']}" %>
+          </span>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <div class="me-card__organizer" data-target="event.organizer">
-      <%= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.organizers, type: 'organizers' } %>
+
+    <div class="me-card__topics">
+      <%#= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.categories.sort, event_id: @event.id, type: 'categories' } %>
+      <%= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.organizers.sort, event_id: @event.id, type: 'organizers' } %>
     </div>
-    <div class="me-card__ocurrence">
-      <b>Quando:</b> <%= "#{@event.day_of_week['decorator']} (#{@event.day_of_week['string']})" %>
-    </div>
-    <div class="me-card__place">
-      <% if @event.place %>
-        <b>Local:</b> <%= @event.place_details_name %><br>
-        <b>Endereço:</b> <%= @event.geographic['address'] %><br>
-      <% end %>
-    </div>
+
+
     <div class="me-card__description">
-      <%= @event.details_description.html_safe %><br>
+      <div class="me-card__description-wrapper">
+        <%= @event.details_description.html_safe %>
+      </div>
+      <button data-action="click->event#readMore" class="mdc-button">
+        <span class="mdc-button__label">MOSTRAR MAIS</span>
+      </button>
     </div>
   </div>
 </div>
 
-<ul>
-  <% @event.similar_data.each do |similar| %>
-    <li><%= "#{Event.find(similar).id} #{Event.find(similar).details_name}" %></li>
-  <% end %>
-</ul>
+<!--<ul>-->
+<%# @event.similar_data.each do |similar| %>
+<!--    <li><%#= "#{Event.find(similar).id} #{Event.find(similar).details_name}" %></li>-->
+<%# end %>
+<!--</ul>-->

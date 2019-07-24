@@ -1,10 +1,10 @@
 (function () {
-	let chipEventElem = document.getElementById('follow-chip-set__<%= @type %>');
+	let chipEventElem = document.getElementById('<%= "follow-chip-set__#{@locals[:type]}-#{@locals[:event_id]}" %>');
 
 	setTimeout(function () {
-		morphdom(chipEventElem, '<%= j render(partial: 'components/follow/follow-chip-set', locals: {user: @user, chips: @chips, type: @type}) %>'.trim(), {
+		morphdom.default(chipEventElem, '<%= j render(partial: 'components/follow/follow-chip-set', locals: @locals) %>'.trim(), {
 			onBeforeElUpdated: function (fromEl, toEl) {
-				new MDC.MDCChipSet(toEl);
+		    return !fromEl.isEqualNode(toEl);
 			}
 		})
 	}, 250)

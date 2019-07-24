@@ -78,6 +78,7 @@ $mdc-theme-primary: $brand-color-left;
 @import "@material/tab-scroller/mdc-tab-scroller";
 @import "@material/tab-indicator/mdc-tab-indicator";
 @import "@material/tab/mdc-tab";
+@import "template";
 @import "components/me-components";
 
 html {
@@ -90,7 +91,7 @@ body {
   margin: 0;
   font-family: Cabin, Arial;
   font-size: 14px;
-  background: $background-color;
+  background: $background-z1-color;
   color: $font-primary-color;
   
   @include mdc-layout-grid-media-query_("phone") {

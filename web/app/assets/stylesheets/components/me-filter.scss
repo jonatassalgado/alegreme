@@ -60,6 +60,7 @@
     color: $font-secondary-color;
     background-color: $background-color;
     border: $chip-border-size solid $border-color;
+    border-radius: $media-border-radius;
     font-weight: 400;
     font-size: 10px;
     text-transform: uppercase;
@@ -70,9 +71,9 @@
   }
 
   & .mdc-chip--selected {
-    color: $font-primary-color-high-contrast;
-    background-color: $background-color;
-    border: $chip-border-size solid $font-primary-color-high-contrast;
+    color: $chip-filter-color;
+    background-color: $chip-filter-background-color;
+    border: $chip-border-size solid $chip-filter-border-color;
     @include mdc-layout-grid-media-query_("phone") {
       border: unset;
     }

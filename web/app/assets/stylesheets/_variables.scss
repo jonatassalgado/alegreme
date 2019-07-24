@@ -1,6 +1,6 @@
 $brand-color-left: #2ECC71; // #5EEDDE; // #31916C; // #26B679
 $brand-shadow-color-left: #2BBE69;
-$brand-color-intersect: #2bb3ae;
+//$brand-color-intersect: #2bb3ae;
 $brand-color-right: #2191FB;
 $brand-color-high-contrast: #0C0F0A; //darken($brand-color, 10%);
 
@@ -28,6 +28,14 @@ $font-tertiary-color: transparentize($font-secondary-color, 0.20);
 
 $media-box-shadow: unset; // 0 0 0 1px rgba(0, 0, 0, 0.12);
 $media-border-radius: 3px;
+
+$chip-follow-color: darken($brand-color-left, 28%);
+$chip-follow-border-color: $brand-color-left;
+$chip-follow-background-color: lighten($chip-follow-border-color, 40%);
+
+$chip-filter-color: darken($brand-color-right, 26%);
+$chip-filter-border-color: $brand-color-right;
+$chip-filter-background-color: lighten($chip-filter-border-color, 38%);
 
 $chip-font-color: $brand-color-high-contrast; // darken($brand-color, 25%);
 $chip-background-color: $brand-color-left; // transparentize($brand-color, 0.65);
