@@ -1,0 +1,41 @@
+<div data-controller="swipable" data-target="swipable.swipable" class="me-swipable">
+  <div id="stacked-cards-block" class="stackedcards stackedcards--animatable init">
+    <div class="stackedcards-container">
+      <% @swipable_items.each do |item| %>
+        <div id="<%= item[:id] %>" class="card-item">
+          <div class="me-swipable__item" style="background-image: url('<%= image_path item[:image_url] %>'); background-color: <%= item[:dominant_color] %>">
+            <div class="me-swipable__item-overlay" style="background: linear-gradient(to top, <%= item[:dominant_color] %>cb 30%, <%= item[:dominant_color] %>89);"></div>
+            <div class="me-swipable__item-title"><%= item[:name] %></div>
+            <div class="me-swipable__item-description"><%= item[:description] %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="stackedcards--animatable stackedcards-overlay left">
+      <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_down</i>
+    </div>
+    <div class="stackedcards--animatable stackedcards-overlay right">
+      <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
+    </div>
+    <div class="stackedcards--animatable stackedcards-overlay top">
+      TALVEZ
+    </div>
+  </div>
+  <div class="global-actions">
+    <button class="mdc-button mdc-button__icon left-action">
+      <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_down</i>
+      <span class="mdc-button__label">Não Iria</span>
+    </button>
+    <button class="mdc-button mdc-button__icon top-action">
+<!--      <i class="material-icons mdc-button__icon" aria-hidden="true">star_rate</i>-->
+      <span class="mdc-button__label">Talvez</span>
+    </button>
+    <button class="mdc-button mdc-button__icon right-action">
+      <span class="mdc-button__label">Iria Certo</span>
+      <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
+    </button>
+  </div>
+  <div class="final-state hidden">
+    <h2>Pronto! Agora já consigo te indicar eventos com maior precisão <br> Aperta F5 e veja as novas indicações</h2>
+  </div>
+</div>

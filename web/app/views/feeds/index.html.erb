@@ -1,11 +1,14 @@
 <%= render partial: "feeds/float_menu" %>
 
 <section class="me-page__section me-page__section--z0">
-  <%= render partial: "saves",
-             locals:  {
-                 identifier:   'salvos',
-                 saved_events: @favorited_events
-             } %>
+
+  <%= render partial: 'components/swipable/swipable' %>
+
+<!--  <#%= render partial: "saves",-->
+<!--             locals:  {-->
+<!--                 identifier:   'salvos',-->
+<!--                 saved_events: @favorited_events-->
+<!--             } %>-->
 </section>
 
 

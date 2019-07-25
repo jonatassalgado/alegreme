@@ -1,0 +1,234 @@
+.me-swipable {
+  z-index: 2;
+  max-width: 540px;
+  margin: auto;
+  position: relative;
+
+  &__item {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: luminosity;
+    color: #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    padding: 25px 50px 25px 25px;
+
+    &-title, &-description {
+      z-index: 3;
+    }
+
+    &-title {
+      font-size: 28px;
+      font-weight: 800;
+      padding-bottom: 6px;
+    }
+
+    &-description {
+      font-size: 16px;
+      line-height: 1.2em;
+      font-weight: 100;
+    }
+
+    &-overlay {
+      content: close-quote;
+      width: inherit;
+      height: inherit;
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  & .no-transition {
+    -webkit-transition: none ! important;
+    -o-transition: none ! important;
+    transition: none ! important;
+  }
+
+  & .stackedcards-overflow {
+    overflow-y: hidden !important;
+  }
+
+  & .stackedcards.init {
+    opacity: 0; /* set the opacity to 0 if you want a fade-in effect to stacked cards on page load */
+  }
+
+  & .stackedcards {
+    position: relative;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+
+  & .stackedcards * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  & .stackedcards--animatable {
+    -webkit-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
+  }
+
+  & .stackedcards-overlay {
+    & .material-icons {
+      font-size: 52px;
+    }
+  }
+
+  & .stackedcards .stackedcards-container > *, .stackedcards-overlay {
+    position: absolute;
+    width: 100%; /* set 100% */
+    height: 300px; /* set 100% */
+    will-change: transform, opacity;
+    top: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  & .stackedcards-overlay.left > div, .stackedcards-overlay.right > div, .stackedcards-overlay.top > div {
+    width: 100%;
+    height: 100%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  & .stackedcards-overlay.left, .stackedcards-overlay.right, .stackedcards-overlay.top {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    opacity: 0;
+    top: 0;
+    height: 100%;
+    letter-spacing: 3px;
+    font-size: 24px; /* this style was added only for better preview */
+    text-transform: uppercase; /* this style was added only for better preview */
+    font-weight: 800; /* this style was added only for better preview */
+    color: #fff; /* this style was added only for better preview */
+  }
+
+  & .stackedcards-overlay.top {
+    background: $maybe-color;
+  }
+
+  & .stackedcards-overlay.right {
+    background: $like-color;
+  }
+
+  & .stackedcards-overlay.left {
+    background: $dislike-color;
+  }
+
+  & .stackedcards-overlay.left:empty, .stackedcards-overlay.right:empty, .stackedcards-overlay.top:empty {
+    display: none !important;
+  }
+
+  & .stackedcards-overlay-hidden {
+    display: none;
+  }
+
+  & .stackedcards-origin-bottom {
+    -webkit-transform-origin: bottom;
+    -ms-transform-origin: bottom;
+    transform-origin: bottom;
+  }
+
+  & .stackedcards-origin-top {
+    -webkit-transform-origin: top;
+    -ms-transform-origin: top;
+    transform-origin: top;
+  }
+
+  & .stackedcards-bottom, .stackedcards-top, .stackedcards-none {
+    background: #fff; /* set card background background */
+    height: 100%;
+  }
+
+  & .stackedcards .stackedcards-container > :nth-child(1) {
+    position: relative;
+    display: block;
+  }
+
+  /* global actions buttons*/
+  & .global-actions {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    top: 12px;
+
+    &.hidden {
+      display: none;
+    }
+
+    & > button {
+      margin: 0 16px;
+      @include mdc-button-ink-color($font-secondary-color);
+      //@include mdc-button-outline-color($font-secondary-color)
+    }
+  }
+
+  & .right-action {
+    @include mdc-button-ink-color($like-color);
+    @include mdc-states-base-color($like-color);
+  }
+
+  & .top-action {
+    @include mdc-button-ink-color($maybe-color);
+    @include mdc-states-base-color($maybe-color);
+  }
+
+  & .left-action {
+    @include mdc-button-ink-color($dislike-color);
+    @include mdc-states-base-color($dislike-color);
+  }
+
+
+
+  /* elements on stacked cards */
+  & .card-item {
+    background: #d6d6d6;
+  }
+
+  & .final-state.active {
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: opacity 400ms ease;
+  }
+
+  & .final-state.hidden {
+    opacity: 0;
+    display: none;
+  }
+}
