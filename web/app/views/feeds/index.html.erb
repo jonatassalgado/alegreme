@@ -25,8 +25,15 @@
                          principal: "Eventos encontrados para \"#{params[:q]}\""
                      },
                      identifier: 'busca',
-                     type:       :large,
-                     filters:    false
+                     opts: {
+                         type:       :large,
+                         filters:    {
+                             categories: true,
+                             kinds:      true,
+                             ocurrences: true
+                         },
+                         detail: @items[:user][:detail]
+                     }
                  } %>
 
     <% else %>
@@ -39,13 +46,15 @@
                            secondary: "Acontecendo hoje (quinta) ou amanhã (sexta). Use os filtros ao lado para buscar tópicos que deseja."
                        },
                        identifier: 'today-and-tomorrow',
-                       type:       :large,
-                       filters:    {
-                           categories: true,
-                           kinds:      true,
-                           ocurrences: true
-                       },
-                       detail:     @items[:today][:detail]
+                       opts: {
+                           type:       :large,
+                           filters:    {
+                               categories: true,
+                               kinds:      true,
+                               ocurrences: true
+                           },
+                           detail: @items[:today][:detail]
+                       }
                    } %>
       </section>
       <% if current_user %>
@@ -58,13 +67,15 @@
                              secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
                          },
                          identifier: 'follow',
-                         type:       :large,
-                         filters:    {
-                             categories: true,
-                             ocurrences: true,
-                             kinds:      true
-                         },
-                         detail:     @items[:follow][:detail]
+                         opts: {
+                             type:       :large,
+                             filters:    {
+                                 categories: true,
+                                 kinds:      true,
+                                 ocurrences: true
+                             },
+                             detail: @items[:follow][:detail]
+                         }
                      } %>
         </section>
 
@@ -78,13 +89,15 @@
                              secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
                          },
                          identifier: 'user-suggestions',
-                         type:       :large,
-                         filters:    {
-                             categories: true,
-                             ocurrences: true,
-                             kinds:      false
-                         },
-                         detail:     @items[:user_suggestions][:detail]
+                         opts: {
+                             type:       :large,
+                             filters:    {
+                                 categories: true,
+                                 kinds:      true,
+                                 ocurrences: false
+                             },
+                             detail: @items[:today][:detail]
+                         }
                      } %>
 
         </section>
@@ -99,13 +112,15 @@
                            secondary: "Explore os eventos que pessoas com gostos parecidos estão salvando"
                        },
                        identifier: 'user-personas',
-                       type:       :large,
-                       filters:    {
-                           categories: true,
-                           ocurrences: true,
-                           kinds:      true
-                       },
-                       detail:     @items[:user_personas][:detail]
+                       opts: {
+                           type:       :large,
+                           filters:    {
+                               categories: true,
+                               kinds:      true,
+                               ocurrences: true
+                           },
+                           detail: @items[:user_personas][:detail]
+                       }
                    } %>
 
       </section>

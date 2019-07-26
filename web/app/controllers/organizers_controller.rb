@@ -93,11 +93,12 @@ class OrganizersController < ApplicationController
 						principal: @organizer.details['name']
 				},
 				identifier: @organizer.details['name'].parameterize,
-				type:       :large,
-				filters:    {
-						ocurrences: true,
-						kinds:      true,
-						categories: true
+				opts: {
+						filters:    {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						}
 				}
 		}
 	end

@@ -1,10 +1,22 @@
+<%
+
+  raise ArgumentError unless identifier && items && title
+
+  type = opts[:type] || :large
+  filters = opts[:filters] || {categories: true, kinds: true, ocurrences: true}
+  events_in_collection = opts.dig(:detail, :events_in_collection) || 0
+  filters_applyed = opts.dig(:detail, :init_filters_applyed) || {}
+
+%>
+
+
 <% unless items[:events].empty? %>
   <% cache [current_user, identifier, params[:categories], params[:kinds], params[:ocurrences]], expires_in: 1.day do %>
 
     <div class="me-feed__section"
          data-controller="section"
          data-target="section.section"
-         data-section-items-count="<%= items[:detail][:events_in_collection]  %>"
+         data-section-items-count="<%= events_in_collection %>"
          data-observable="float-menu.section"
          id="<%= identifier %>">
       <div class="me-feed__section-head">
@@ -19,7 +31,7 @@
                data-controller="filter"
                data-filter-section-identifier="<%= identifier %>"
                data-filter-title="<%= title.to_json %>"
-               data-filter-init-filters-applyed="<%= items[:detail][:init_filters_applyed].to_json %>"
+               data-filter-init-filters-applyed="<%= filters_applyed.to_json %>"
                data-target="filter.filterContainer section.filter">
             <% if filters[:categories] && items[:filters] %>
               <%= title[:categories] %>
@@ -66,7 +78,7 @@
                 identifier: identifier
             } %>
 
-            <% if items[:detail][:events_in_collection] < 4 %>
+            <% if events_in_collection < 4 %>
               <div class="me-feed__empty">
                 <i class="material-icons-sharp sentiment-satisfied">
                   sentiment_satisfied
@@ -77,7 +89,7 @@
 
           <% end %>
         </div>
-        <% if items[:detail][:events_in_collection] >= 8 %>
+        <% if events_in_collection >= 5 %>
           <div class="me-feed__load-more"
                data-action="click->section#loadMore"
                data-target="section.loadMoreButton">

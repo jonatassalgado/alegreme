@@ -18,9 +18,10 @@ class FeedsController < ApplicationController
 								secondary: @title['secondary'].try(:html_safe)
 						},
 						identifier: params[:identifier],
-						type:       :large,
-						filters:    @events[:filters],
-						detail:     @events[:detail]
+						opts:       {
+								filters: @events[:filters],
+								detail:  @events[:detail]
+						}
 				}
 
 
