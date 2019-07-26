@@ -73,6 +73,7 @@ export default class SavesController extends Controller {
 		});
 
 		if (this.hasListTarget) {
+			this.flipping.read();
 			this.listTarget.addEventListener('scrolledLeft', SavesController.scrolledToLeft);
 			this.listTarget.addEventListener('scrolledRight', SavesController.scrolledToRight);
 		}
