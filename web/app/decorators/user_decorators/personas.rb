@@ -83,6 +83,14 @@ module UserDecorators
 				personas_jsonb['assortment']['finished'] = value
 			end
 
+			def personas_assortment_finished_at
+				personas_jsonb['assortment']['finished_at']
+			end
+
+			def personas_assortment_finished_at=(value)
+				personas_jsonb['assortment']['finished_at'] = value
+			end
+
 			private
 
 			def personas_jsonb

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 	end
 
 	root to: 'welcome#index'
+
 	get '/invite', to: 'welcome#invite'
 	get '/feed', to: 'feeds#index'
 	get '/train', to: 'feeds#train'

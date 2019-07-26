@@ -12,9 +12,14 @@ from event_category import EventCategoryPrediction
 from event_features import EventFeatures
 from event_similar import EventSimilar
 from flask_restful import reqparse, abort, Api, Resource
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
 api = Api(app)
+
 
 
 parser = reqparse.RequestParser()

@@ -28,7 +28,7 @@ class FeedsController < ApplicationController
 			end
 
 			format.html do
-				gon.user_id = current_user.try(:token) || current_or_guest_user.try(:id) || 'null'
+				gon.push(:user => current_or_guest_user)
 				collections ||= EventServices::CollectionCreator.new(current_or_guest_user, params)
 
 				@swipable_items = [

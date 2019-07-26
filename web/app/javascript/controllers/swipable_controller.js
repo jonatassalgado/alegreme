@@ -1,17 +1,26 @@
 import {Controller} from "stimulus";
+import {stringify}  from "query-string";
+
 
 export default class SwipableController extends Controller {
 	static targets = ["swipable"];
+
 	initialize() {
-		document.addEventListener("DOMContentLoaded", () => {
-			this.stackedCards();
+		["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
+			document.addEventListener(eventName, () => {
+				window.SwipableApi = this.stackedCards();
+				setTimeout(() => {
+					if (this.hasSwipableTarget) {
+						this.swipableTarget.style.minHeight = `${this.swipableTarget.offsetHeight}px`;
+					}
+				}, 500);
+			});
 		});
 	}
 
 
-
 	stackedCards() {
-
+		const PRIVATE_IP     = 'localhost';
 		const stackedOptions = 'Top'; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
 		const rotate         = true; //Activate the elements' rotation for each move on stacked cards.
 		let items            = 4; //Number of visible elements when the stacked options are bottom or top.
@@ -20,6 +29,8 @@ export default class SwipableController extends Controller {
 		let maxElements; //Total of stacked cards on DOM.
 		let currentPosition  = 0; //Keep the position of active stacked card.
 		const velocity       = 0.3; //Minimum velocity allowed to trigger a swipe.
+		let answers          = [];
+		let isFirstTime      = true;
 		let topObj; //Keep the swipe top properties.
 		let rightObj; //Keep the swipe right properties.
 		let leftObj; //Keep the swipe left properties.
@@ -27,7 +38,6 @@ export default class SwipableController extends Controller {
 		let listElNodesWidth; //Keep the stacked cards width.
 		let currentElementObj; //Keep the stacked card element to swipe.
 		let stackedCardsObj;
-		let isFirstTime     = true;
 		let elementHeight;
 		let obj;
 		let elTrans;
@@ -139,6 +149,7 @@ export default class SwipableController extends Controller {
 				}
 			}
 		}
+
 		// Usable functions
 		function countElements() {
 			maxElements = listElNodesObj.length;
@@ -146,26 +157,86 @@ export default class SwipableController extends Controller {
 				items = maxElements;
 			}
 		}
+
 		//Keep the active card.
 		function currentElement() {
 			currentElementObj = listElNodesObj[currentPosition];
 		}
+
 		function changeStages() {
-			if(currentPosition == maxElements){
+			if (currentPosition === maxElements) {
 				//Event listener created to know when transition ends and changes states
-				listElNodesObj[maxElements - 1].addEventListener('transitionend', function(){
-					document.body.classList.add("background-7");
-					document.querySelector('.stackedcards').classList.add('hidden');
-					document.querySelector('.global-actions').classList.add('hidden');
-					document.querySelector('.final-state').classList.remove('hidden');
-					document.querySelector('.final-state').classList.add('active');
-					listElNodesObj[maxElements - 1].removeEventListener('transitionend', null, false);
-				});
+
+				fetch(`http://${PRIVATE_IP}:5000/user/persona?query=${JSON.stringify(answers)}`, {
+					method : 'GET',
+					headers: {
+						'Content-type': 'text/javascript; charset=UTF-8'
+					}
+				})
+					.then(response => {
+							response.json().then(data => {
+
+								const params = {
+									'user': {
+										'personas_primary_name'          : data.classification.personas.primary.name,
+										'personas_secondary_name'        : data.classification.personas.secondary.name,
+										'personas_tertiary_name'         : data.classification.personas.tertiary.name,
+										'personas_quartenary_name'       : data.classification.personas.quartenary.name,
+										'personas_primary_score'         : data.classification.personas.primary.score,
+										'personas_secondary_score'       : data.classification.personas.secondary.score,
+										'personas_tertiary_score'        : data.classification.personas.tertiary.score,
+										'personas_quartenary_score'      : data.classification.personas.quartenary.score,
+										'personas_assortment_finished'   : true,
+										'personas_assortment_finished_at': new Date().toJSON()
+
+									}
+								};
+
+								fetch(`${location.origin}/users/${gon.user.id}`, {
+									method     : 'PATCH',
+									headers    : {
+										'Content-type'    : 'application/json; charset=UTF-8',
+										'Accept'          : 'application/json',
+										'X-Requested-With': 'XMLHttpRequest',
+										'X-CSRF-Token'    : Rails.csrfToken()
+									},
+									credentials: 'same-origin',
+									body       : JSON.stringify(params)
+								})
+									.then(
+										response => {
+											response.text().then(data => {
+												console.log(data);
+
+												// listElNodesObj[maxElements - 1].addEventListener('transitionend', function () {
+													document.body.classList.add("background-7");
+													document.querySelector('.stackedcards').classList.add('hidden');
+													document.querySelector('.global-actions').classList.add('hidden');
+													document.querySelector('.final-state').classList.remove('hidden');
+													document.querySelector('.final-state').classList.add('active');
+													// listElNodesObj[maxElements - 1].removeEventListener('transitionend', null, false);
+												// });
+											});
+										}
+									)
+									.catch(err => {
+										console.log('Fetch Error :-S', err);
+									});
+							});
+						}
+					)
+					.catch(err => {
+						console.log('Fetch Error :-S', err);
+					});
 			}
 		}
-		//Functions to swipe left elements on logic external action.
+
+//Functions to swipe left elements on logic external action.
 		function onActionLeft() {
 			if (!(currentPosition >= maxElements)) {
+
+				answers.push('-1');
+
 				if (useOverlays) {
 					leftObj.classList.remove('no-transition');
 					topObj.classList.remove('no-transition');
@@ -180,9 +251,12 @@ export default class SwipableController extends Controller {
 				}, 300);
 			}
 		}
-		//Functions to swipe right elements on logic external action.
+
+//Functions to swipe right elements on logic external action.
 		function onActionRight() {
 			if (!(currentPosition >= maxElements)) {
+				answers.push('1');
+
 				if (useOverlays) {
 					rightObj.classList.remove('no-transition');
 					topObj.classList.remove('no-transition');
@@ -196,9 +270,12 @@ export default class SwipableController extends Controller {
 				}, 300);
 			}
 		}
-		//Functions to swipe top elements on logic external action.
+
+//Functions to swipe top elements on logic external action.
 		function onActionTop() {
 			if (!(currentPosition >= maxElements)) {
+				answers.push('0');
+
 				if (useOverlays) {
 					leftObj.classList.remove('no-transition');
 					rightObj.classList.remove('no-transition');
@@ -213,7 +290,8 @@ export default class SwipableController extends Controller {
 				}, 300); //wait animations end
 			}
 		}
-		//Swipe active card to left.
+
+//Swipe active card to left.
 		function onSwipeLeft() {
 			removeNoTransition();
 			transformUi(-1000, 0, 0, currentElementObj);
@@ -228,7 +306,8 @@ export default class SwipableController extends Controller {
 			changeStages();
 			setActiveHidden();
 		}
-		//Swipe active card to right.
+
+//Swipe active card to right.
 		function onSwipeRight() {
 			removeNoTransition();
 			transformUi(1000, 0, 0, currentElementObj);
@@ -244,7 +323,8 @@ export default class SwipableController extends Controller {
 			changeStages();
 			setActiveHidden();
 		}
-		//Swipe active card to top.
+
+//Swipe active card to top.
 		function onSwipeTop() {
 			removeNoTransition();
 			transformUi(0, -1000, 0, currentElementObj);
@@ -261,7 +341,8 @@ export default class SwipableController extends Controller {
 			changeStages();
 			setActiveHidden();
 		}
-		//Remove transitions from all elements to be moved in each swipe movement to improve perfomance of stacked cards.
+
+//Remove transitions from all elements to be moved in each swipe movement to improve perfomance of stacked cards.
 		function removeNoTransition() {
 			if (listElNodesObj[currentPosition]) {
 
@@ -276,7 +357,8 @@ export default class SwipableController extends Controller {
 			}
 
 		}
-		//Move the overlay left to initial position.
+
+//Move the overlay left to initial position.
 		function resetOverlayLeft() {
 			if (!(currentPosition >= maxElements)) {
 				if (useOverlays) {
@@ -317,7 +399,8 @@ export default class SwipableController extends Controller {
 				}
 			}
 		}
-		//Move the overlay right to initial position.
+
+//Move the overlay right to initial position.
 		function resetOverlayRight() {
 			if (!(currentPosition >= maxElements)) {
 				if (useOverlays) {
@@ -359,7 +442,8 @@ export default class SwipableController extends Controller {
 				}
 			}
 		}
-		//Move the overlays to initial position.
+
+//Move the overlays to initial position.
 		function resetOverlays() {
 			if (!(currentPosition >= maxElements)) {
 				if (useOverlays) {
@@ -405,6 +489,7 @@ export default class SwipableController extends Controller {
 				}
 			}
 		}
+
 		function setActiveHidden() {
 			if (!(currentPosition >= maxElements)) {
 				listElNodesObj[currentPosition - 1].classList.remove('stackedcards-active');
@@ -412,14 +497,16 @@ export default class SwipableController extends Controller {
 				listElNodesObj[currentPosition].classList.add('stackedcards-active');
 			}
 		}
-		//Set the new z-index for specific card.
+
+//Set the new z-index for specific card.
 		function setZindex(zIndex) {
 			if (listElNodesObj[currentPosition]) {
 				listElNodesObj[currentPosition].style.zIndex = zIndex;
 			}
 		}
-		// Remove element from the DOM after swipe. To use this method you need to call this function in onSwipeLeft, onSwipeRight and onSwipeTop and put the method just above the variable 'currentPosition = currentPosition + 1'.
-		//On the actions onSwipeLeft, onSwipeRight and onSwipeTop you need to remove the currentPosition variable (currentPosition = currentPosition + 1) and the function setActiveHidden
+
+// Remove element from the DOM after swipe. To use this method you need to call this function in onSwipeLeft, onSwipeRight and onSwipeTop and put the method just above the variable 'currentPosition = currentPosition + 1'.
+//On the actions onSwipeLeft, onSwipeRight and onSwipeTop you need to remove the currentPosition variable (currentPosition = currentPosition + 1) and the function setActiveHidden
 
 		function removeElement() {
 			currentElementObj.remove();
@@ -427,7 +514,8 @@ export default class SwipableController extends Controller {
 				listElNodesObj[currentPosition].classList.add('stackedcards-active');
 			}
 		}
-		//Add translate X and Y to active card for each frame.
+
+//Add translate X and Y to active card for each frame.
 		function transformUi(moveX, moveY, opacity, elementObj) {
 			requestAnimationFrame(function () {
 				const element = elementObj;
@@ -469,11 +557,12 @@ export default class SwipableController extends Controller {
 				}
 			});
 		}
-		//Action to update all elements on the DOM for each stacked card.
+
+//Action to update all elements on the DOM for each stacked card.
 		function updateUi() {
 			requestAnimationFrame(function () {
 				elTrans          = 0;
-				let elZindex = 5;
+				let elZindex     = 5;
 				let elScale      = 1;
 				let elOpac       = 1;
 				let elTransTop   = items;
@@ -526,7 +615,8 @@ export default class SwipableController extends Controller {
 			});
 
 		}
-		//Touch events block
+
+//Touch events block
 		var element         = obj;
 		let startTime;
 		let startX;
@@ -594,6 +684,7 @@ export default class SwipableController extends Controller {
 			}
 
 		}
+
 		function gestureMove(evt) {
 			currentX = evt.changedTouches[0].pageX;
 			currentY = evt.changedTouches[0].pageY;
@@ -630,6 +721,7 @@ export default class SwipableController extends Controller {
 			}
 
 		}
+
 		function gestureEnd(evt) {
 
 			if (!touchingElement) {
@@ -672,12 +764,13 @@ export default class SwipableController extends Controller {
 				}
 			}
 		}
+
 		element.addEventListener('touchstart', gestureStart, false);
 		element.addEventListener('touchmove', gestureMove, false);
 		element.addEventListener('touchend', gestureEnd, false);
 
-		//Add listeners to call global action for swipe cards
-		const buttonLeft = document.querySelector('.left-action');
+//Add listeners to call global action for swipe cards
+		const buttonLeft  = document.querySelector('.left-action');
 		const buttonTop   = document.querySelector('.top-action');
 		const buttonRight = document.querySelector('.right-action');
 
@@ -687,9 +780,11 @@ export default class SwipableController extends Controller {
 		}
 		buttonRight.addEventListener('click', onActionRight, false);
 
+
+		return {
+			answers: answers
+		}
 	}
-
-
 
 
 }
