@@ -24,6 +24,7 @@ export default class EventController extends Controller {
 		this.adjustForDevice    = this.md.mobile();
 		this.subscriptions      = {};
 		this.activeInteractions = true;
+		this.itemsPerRow        = 5;
 
 
 		this.subscriptions.savesUpdated = postal.subscribe({
@@ -143,11 +144,7 @@ export default class EventController extends Controller {
 	get insertAfter() {
 		const order = parseInt(this.eventTarget.parentElement.style.order);
 
-		if (order <= 4) {
-			return 4
-		} else {
-			return 7
-		}
+		return (Math.ceil(order / this.itemsPerRow)) * this.itemsPerRow
 	}
 
 	get isFavorited() {

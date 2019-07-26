@@ -98,7 +98,8 @@ class OrganizersController < ApplicationController
 								ocurrences: true,
 								kinds:      true,
 								categories: true
-						}
+						},
+						detail: @collection[:detail]
 				}
 		}
 	end
