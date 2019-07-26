@@ -85,7 +85,7 @@ $border-color: #e0e0e0;
 
     &--right {
       @include mdc-layout-grid-media-query_("phone") {
-        display: none;
+        //display: none;
       }
     }
   }

@@ -536,7 +536,7 @@ $description-color: $font-secondary-color;
 
   & .mdc-card__media {
     border-radius: $media-border-radius;
-    border: 1px solid $border-color;
+    border: $media-border-width solid $border-color;
     //overflow: hidden;
   }
 

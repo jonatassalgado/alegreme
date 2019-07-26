@@ -2,13 +2,15 @@
 
 <section class="me-page__section me-page__section--z0">
 
-  <%= render partial: 'components/swipable/swipable' unless current_user.personas_assortment_finished? %>
+  <%= render partial: 'components/swipable/swipable' unless current_user&.personas_assortment_finished? %>
 
-  <%= render partial: 'saves',
-             locals:  {
-                 identifier:   'salvos',
-                 saved_events: @favorited_events
-             } if current_user.personas_assortment_finished? %>
+  <div class="with-section-constraints">
+    <%= render partial: 'saves',
+               locals:  {
+                   identifier:   'salvos',
+                   saved_events: @favorited_events
+               } if current_user&.personas_assortment_finished? %>
+  </div>
 </section>
 
 

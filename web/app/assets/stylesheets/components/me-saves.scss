@@ -9,15 +9,15 @@ $gutter: 6px;
   //margin-bottom: 50px;
   //padding: 35px 0 70px 0;
   //background: $background-z0-color;
-  @include section-constraints;
+  //@include section-constraints;
   @include mdc-layout-grid-media-query_("phone") {
-    display: none;
+    //display: none;
   }
 
   &__list {
     &::before {
       content: close-quote;
-      background: linear-gradient(to left, transparent, $background-color);
+      background: linear-gradient(to left, transparent, $background-z0-color);
       width: 126px;
       height: 90%;
       position: absolute;
@@ -31,7 +31,7 @@ $gutter: 6px;
 
     &::after {
       content: close-quote;
-      background: linear-gradient(to right, transparent, $background-color);
+      background: linear-gradient(to right, transparent, $background-z0-color);
       width: 126px;
       height: 90%;
       position: absolute;
@@ -182,7 +182,19 @@ $gutter: 6px;
 
   & .me-icon__group {
     position: absolute;
-    right: 0;
-    top: 0;
+    top: 57px;
+    width: 100%;
+  }
+
+  & .me-icon--scroll-left, .me-icon--scroll-right {
+    position: absolute;
+  }
+
+  & .me-icon--scroll-left {
+    left: -22px;
+  }
+
+  & .me-icon--scroll-right {
+    right: -22px;
   }
 }

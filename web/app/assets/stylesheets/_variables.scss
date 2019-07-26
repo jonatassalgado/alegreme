@@ -32,6 +32,7 @@ $font-tertiary-color: transparentize($font-secondary-color, 0.20);
 
 $media-box-shadow: unset; // 0 0 0 1px rgba(0, 0, 0, 0.12);
 $media-border-radius: 3px;
+$media-border-width: 0;
 
 $chip-follow-color: darken($brand-color-left, 28%);
 $chip-follow-border-color: $brand-color-left;
