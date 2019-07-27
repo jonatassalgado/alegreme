@@ -208,6 +208,19 @@ module EventQueries
 				# where("((ml_data -> 'personas' -> ? ->> 'name') = ?", position, persona)
 			}
 
+			scope 'in_places', lambda { |places, opts = {}|
+				raise ArgumentError unless places.is_a? Array
+
+				opts   = {'turn_on': true}.merge(opts)
+				places = places || []
+
+				if opts[:turn_on] && !places.blank?
+					Event.includes(:place).where(places: {id: places})
+				else
+					all
+				end
+			}
+
 			scope 'in_categories', lambda { |categories, opts = {}|
 				opts       = {'turn_on': true, 'group_by': 5, 'active': true, 'personas': PERSONAS}.merge(opts)
 				categories = categories || []

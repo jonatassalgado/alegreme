@@ -1,14 +1,5 @@
-<p id="notice"><%= notice %></p>
+<%= notice %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @place.details_name %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @place.address %>
-</p>
-
-<%= link_to 'Edit', edit_place_path(@place) %> |
-<%= link_to 'Back', places_path %>
+<section class="with-section-constraints with-5-columns is-first-section">
+  <%= render partial: "components/collection/collection", locals: @locals %>
+</section>

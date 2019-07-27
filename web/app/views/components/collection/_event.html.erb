@@ -63,7 +63,7 @@
     <div class="me-card__primary-section">
       <% if event.day_of_week['decorator'] == 'hoje' %>
         <span class="me-card__date is-today"
-          data-target="event.date">
+              data-target="event.date">
           <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %> <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
         </span>
         <span aria-hidden="true"> · </span>
@@ -73,7 +73,7 @@
         </span>
       <% else %>
         <span class="me-card__category"
-            data-target="event.category">
+              data-target="event.category">
           <%= event.categories_primary_name.capitalize %>
         </span>
         <span aria-hidden="true"> · </span>
@@ -87,9 +87,7 @@
       <div class="me-card__title"
            data-target="event.name"
            title="<%= event.details_name %>">
-        <a href="<%= event.url %>">
-          <%= limit_name_size event.details_name %>
-        </a>
+        <%= link_to limit_name_size(event.details_name), event_path(event) %>
       </div>
     </div>
     <div class="me-card__tertiary-section">
@@ -97,7 +95,7 @@
         <div class="me-card__place"
              data-target="event.place"
              title="<%= event.place_details_name %>">
-          <%= limit_place_name_size event.place_details_name %>
+          <%= link_to limit_place_name_size(event.place_details_name), place_path(event.place) %>
         </div>
       <% end %>
 
@@ -117,11 +115,11 @@
            data-action="click->event#showSimilar"
            data-target="event.similar"
            title="Mostrar eventos parecidos">
-<!--        <svg width="28" height="11" viewBox="0 0 28 11" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--          <path d="M14 11L0 0H28L14 11Z"/>-->
-<!--        </svg>-->
+        <!--        <svg width="28" height="11" viewBox="0 0 28 11" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+        <!--          <path d="M14 11L0 0H28L14 11Z"/>-->
+        <!--        </svg>-->
 
-                <i class="material-icons">
+        <i class="material-icons">
           expand_more
         </i>
       </div>

@@ -1,5 +1,5 @@
 class PlacesController < ApplicationController
-  before_action :authorize_admin
+  before_action :authorize_admin, except: :show
   before_action :set_place, only: [:show, :edit, :update, :destroy]
 
   # GET /places
@@ -11,6 +11,26 @@ class PlacesController < ApplicationController
   # GET /places/1
   # GET /places/1.json
   def show
+    respond_to do |format|
+      format.js do
+        Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+          events      = @place.events.active
+          @collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]], limit: 20)
+        end
+
+        @locals = mount_section_attrs
+        render 'collections/index'
+      end
+      format.html do
+        Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+          events      = @place.events.active
+          @collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]], limit: 20)
+
+          @locals = mount_section_attrs
+          render 'show'
+        end
+      end
+    end
   end
 
   # GET /places/new
@@ -63,6 +83,25 @@ class PlacesController < ApplicationController
   end
 
   private
+
+  def mount_section_attrs
+    {
+        items:      @collection,
+        title:     {
+            principal: @place.details['name']
+        },
+        identifier: @place.details['name'].parameterize,
+        opts: {
+            filters:    {
+                ocurrences: true,
+                kinds:      true,
+                categories: true
+            },
+            detail: @collection[:detail]
+        }
+    }
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_place
       @place = Place.find(params[:id])
