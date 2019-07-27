@@ -139,6 +139,8 @@ module EventServices
 		end
 
 		def set_limit
+			return 10 if params_filter_category_exist? || params_filters_ocurrences_exist?
+
 			@params[:limit] || @opts[:limit] || 5
 		end
 
@@ -201,8 +203,10 @@ module EventServices
 		end
 
 		def get_filters_from_exist_events(events, type)
-			if params_filters_exist?
+			if init_filters_applyed_exist?
+
 				defaults = JSON.parse @params[:defaults]
+
 				case type
 				when 'categories'
 					defaults[type]
@@ -255,7 +259,11 @@ module EventServices
 			!@params[:kinds].blank?
 		end
 
-		def params_filters_exist?
+		def params_filters_ocurrences_exist?
+			!@params[:ocurrences].blank?
+		end
+
+		def init_filters_applyed_exist?
 			!@params[:init_filters_applyed].blank?
 		end
 
