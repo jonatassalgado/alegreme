@@ -52,7 +52,7 @@ class FollowController < ApplicationController
 	def get_topics
 		if @expand_to_similar
 			similar_events_ids = Event.find(@event_id).similar_data[0...6]
-			similar_events     = Event.where(id: similar_events_ids).not_in_saved(current_user)
+			similar_events     = Event.where(id: similar_events_ids).active.not_in_saved(current_user)
 			similar_events.map { |similar| similar.organizers[0..6] }.flatten.uniq[0..6].sort
 		else
 			Event.find(@event_id).public_send(@type).sort
