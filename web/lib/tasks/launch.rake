@@ -66,5 +66,7 @@ namespace :launch do
 
 		end
 
+		puts "Usuários criados com sucesso"
+
 	end
 end

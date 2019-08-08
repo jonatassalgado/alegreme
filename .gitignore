@@ -17,6 +17,9 @@ web/db/schema.rb
 web/db/test.sqlite3
 web/db/development.sqlite3
 web/.idea/
+.idea/
+wip.py
+data/
 .scrapy/
 ml/__pycache__
 web/tmp/pids
@@ -33,6 +36,7 @@ web/public/packs-test/
 .pem
 .vscode/
 usr/
+storage/
 web/storage
 structure.sql
 ml/api/__pycache__/

@@ -7,8 +7,10 @@ RUN mkdir -p $ML_ROOT
 
 WORKDIR $ML_ROOT
 
-ADD . $ML_ROOT
+COPY ./requirements.txt ./requirements.txt
 RUN pip install -r $ML_ROOT/requirements.txt
+
+ADD . $ML_ROOT
 
 WORKDIR $API_ROOT
 

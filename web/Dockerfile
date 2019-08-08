@@ -59,11 +59,11 @@ RUN apt-get update && apt-get install yarn
 
 
 # INSTALL POSTGRES 11
-RUN apt-get install -y wget \ 
-                       ca-certificates
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
-RUN apt-get update && apt-get install -y postgresql postgresql-contrib
+#RUN apt-get install -y wget \
+#                       ca-certificates
+#RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+#RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
+#RUN apt-get update && apt-get install -y postgresql postgresql-contrib
 
 
 ENV RAILS_VERSION 5.2.1
@@ -84,8 +84,6 @@ ENV BUNDLE_PATH=/bundle \
     BUNDLE_BIN=/bundle/bin \
     GEM_HOME=/bundle
 ENV PATH="${BUNDLE_BIN}:${PATH}"
-# ENV RAILS_ENV='production'
-# ENV RACK_ENV='production'
 
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock

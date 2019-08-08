@@ -17,38 +17,41 @@ services:
       dockerfile: ./Dockerfile
     depends_on:
       - db
-      - api
-      - search
+      # - api
+      # - search
       # - bot
-      - scrapy
+      # - scrapy
     volumes:
       - scrapy_shared:/var/www/scrapy/data
       - bundle_cache:/bundle
-      # - ./web/app:/var/www/alegreme/app
+      - ./web/app:/var/www/alegreme/app
       - ./web/db/backups:/var/www/alegreme/db/backups
       - ./storage:/var/www/alegreme/storage
     environment:
-      RAILS_ENV: production
-      RACK_ENV: production
+      RAILS_ENV: development
+      RACK_ENV: development
       RAILS_SERVE_STATIC_FILES: 'false'
       PGHOST: db
       PGUSER: postgres
+      # AWS_ACCESS_KEY_ID: REMOVED
+      # AWS_SECRET_ACCESS_KEY: REMOVED
+      # AWS_BUCKET: alegreme-event-cover
       API_URL: http://api
       ELASTICSEARCH_URL: http://search:9200
       IS_DOCKER: 'true'
       HTTP_HOST: 'www.alegreme.com'
-      NODE_ENV: production
+      NODE_ENV: development
     links:
-      - api
+      # - api
       - db
-      - search
+      # - search
     restart: always
-    # ports:
-    #   - 3000:3000
+    ports:
+      - 3000:3000
   db:
     image: postgres
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
@@ -58,19 +61,19 @@ services:
     ports:
       - 5432:5432
     restart: always
-  web:
-    build:
-      context: ./web
-      dockerfile: ./docker/web/Dockerfile
-    depends_on:
-      - app
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    restart: always
+  # web:
+  #   build:
+  #     context: ./web
+  #     dockerfile: ./docker/web/Dockerfile
+  #   depends_on:
+  #     - app
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   volumes:
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
+  #   restart: always
   # certbot:
   #   image: certbot/certbot
   #   volumes:
@@ -103,17 +106,17 @@ services:
   #   restart: always
   #   depends_on:
   #     - mongo
-  search:
-    build:
-      context: ./search
-      dockerfile: ./Dockerfile
-    environment:
-      discovery.type: single-node
-    ports:
-      - "9200:9200"
-    volumes:
-      - search_data:/var/www/search/data
-    restart: always
+  # search:
+  #   build:
+  #     context: ./search
+  #     dockerfile: ./Dockerfile
+  #   environment:
+  #     discovery.type: single-node
+  #   ports:
+  #     - "9200:9200"
+  #   volumes:
+  #     - search_data:/var/www/search/data
+  #   restart: always
   scrapy:
     build:
       context: ./scrapy
@@ -121,8 +124,8 @@ services:
     environment:
         SPLASH_URL: http://splash:8050
         IS_DOCKER: 'true'
-        PRIVATE_IP: '172.26.14.59'
-        PUBLIC_IP: '3.209.95.87'
+        # PRIVATE_IP: '172.26.14.59'
+        # PUBLIC_IP: '3.209.95.87'
     depends_on:
       - splash
     volumes:

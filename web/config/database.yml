@@ -5,34 +5,22 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV['DATABASE_URL'] %>
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  pool: 5
   timeout: 5000
+  user: Rails.application.credentials[Rails.env.to_sym][:db_user]
+  password: Rails.application.credentials[Rails.env.to_sym][:db_password]
 
 development:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: development
-  pool: 5
-  timeout: 5000
-  user: <%= ENV['RAILS_ROOT']  ? 'postgres': 'jon' %>
-  password: <%= ENV['RAILS_ROOT'] ? 'docker': nil %>
 
 production:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: production
-  pool: 5
-  timeout: 5000
-  user: postgres
-  password: docker
 
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: test
-  pool: 5
-  timeout: 5000
-  user: <%= ENV['RAILS_ROOT']  ? 'postgres': 'jon' %>
-  password: <%= ENV['RAILS_ROOT'] ? 'docker': nil %>
