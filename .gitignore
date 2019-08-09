@@ -17,6 +17,7 @@ web/db/schema.rb
 web/db/test.sqlite3
 web/db/development.sqlite3
 web/.idea/
+web/db/backups/
 .idea/
 wip.py
 data/

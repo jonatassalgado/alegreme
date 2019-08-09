@@ -14,11 +14,12 @@
 # end
 #
 every 1.day, at: '23:00 pm' do
-  rake "db:exists && db:dump"
+  rake "db:dump"
 end
 
 every 1.day, at: '02:00 am' do
-  rake "scrapy:facebook"
+  rake "scrapy:facebook:create"
+  rake "scrapy:facebook:similar"
 end
 
 # Learn more: http://github.com/javan/whenever
