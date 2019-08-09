@@ -25,6 +25,7 @@ services:
       - scrapy_shared:/var/www/scrapy/data
       - bundle_cache:/bundle
       - ./web/app:/var/www/alegreme/app
+      - ./web/config:/var/www/alegreme/config
       - ./web/db/backups:/var/www/alegreme/db/backups
       - ./storage:/var/www/alegreme/storage
     environment:

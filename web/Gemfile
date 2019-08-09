@@ -89,6 +89,9 @@ gem 'active_record_extended'
 
 group :production do
   gem 'aws-sdk-s3'
+end
+
+group :development, :production do
   gem 'sentry-raven'
 end
 

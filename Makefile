@@ -1,5 +1,6 @@
 APP := app
 RUN := docker-compose -f docker-compose.development.yml run --rm $(APP)
+EXEC := docker exec -it alegreme_app_1
 env := development
 service := app
 
@@ -18,6 +19,12 @@ up:
 
 down:
 	docker-compose -f docker-compose.development.yml down
+
+console:
+	$(EXEC) bash
+
+logs:
+	$(EXEC) bash -c "tail -f log/development.log"
 
 remove-volumes:
 	docker-compose -f docker-compose.development.yml down -v

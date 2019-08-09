@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   etag {current_or_guest_user.try :id}
 
   # Sentry
-  if Rails.env.production?
+  if Rails.env.production? 
     before_action :set_raven_context
   end
 

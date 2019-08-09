@@ -18,10 +18,9 @@ module App
 		config.assets.configure do |env|
 			env.register_mime_type('application/manifest+json', extensions: ['.webmanifest'])
 		end
-		# config.filter_parameters << :password
 
-		# Sentry
-		# config.dsn = 'https://REMOVED:REMOVED@sentry.io/1454550'
+		config.filter_parameters << :password
+
 		# Settings in config/environments/* take precedence over those specified here.
 		# Application configuration can go into files in config/initializers
 		# -- all .rb files in that directory are automatically loaded after loading
