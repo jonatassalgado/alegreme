@@ -6,8 +6,8 @@ ENV SCRAPY_ROOT /var/www/scrapy
 RUN mkdir -p $SCRAPY_ROOT
 
 WORKDIR $SCRAPY_ROOT
+COPY . $SCRAPY_ROOT
 
-ADD . $SCRAPY_ROOT
 
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
@@ -25,4 +25,4 @@ COPY . .
 
 EXPOSE 7654
 
-CMD ["scrapy-do", "-n", "scrapy-do", "--config", "scrapydo.conf"]
+CMD ["scrapy-do", "-n", "scrapy-do", "--pidfile", "--config", "scrapydo.conf"]

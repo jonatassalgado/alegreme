@@ -19,10 +19,13 @@ stages:
 build-image:
   stage: build
   script:
-    - docker-compose down -v
-    - docker-compose up --build
+    - docker-compose -f docker-compose.development.yml build
+  only:
+    - development
 
 test-image:
   stage: test
   script:
-    - docker-compose -f docker-compose.development.yml run --rm app bash -c "bundle exec rake db:setup db:migrate db:seed RAILS_ENV=test && rails test"
+    - docker-compose -f docker-compose.test.yml run --rm app bash -c "bundle exec rake db:migrate db:seed RAILS_ENV=test && rails test RAILS_ENV=test"
+  only:
+    - development

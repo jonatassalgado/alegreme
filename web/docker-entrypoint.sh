@@ -7,7 +7,10 @@ set -e
 # echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
 
 bundle check || bundle install --binstubs="$BUNDLE_BIN"
-# Ensure all gems installed. Add binstubs to bin which has been added to PATH in Dockerfile.
+
+# bundle exec rake webpacker:clobber
+
+# bundle exec rake assets:precompile
 
 rake db:exists && rake db:migrate || rake db:setup db:migrate
 
