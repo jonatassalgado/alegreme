@@ -21,7 +21,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 		assert_match 'Eventos e atividades em Porto Alegre', @response.body, 'should render onboarding component'
 		assert_match 'Eventos acontecendo hoje e amanhã', @response.body, 'should render today and tomorrow section'
 		assert_match 'Serenata Iluminada', @response.body, 'should load one event'
-		assert_match 'Indicados para você no mês', @response.body, 'should render user personas section'
+		assert_match 'Explore os eventos que pessoas com gostos parecidos estão salvando', @response.body, 'should render user personas section'
 	end
 
 	test "should get index without personas events" do
@@ -47,7 +47,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 		assert_match 'Eventos e atividades em Porto Alegre', @response.body, 'should render onboarding component'
 		assert_match 'Eventos acontecendo hoje e amanhã', @response.body, 'should render today and tomorrow section'
 		refute_match 'Serenata Iluminada', @response.body, 'should not load events'
-		assert_match 'Indicados para você no mês', @response.body, 'should render user personas section'
+		assert_match 'Explore os eventos que pessoas com gostos parecidos estão salvando', @response.body, 'should render user personas section'
 	end
 
 

@@ -37,7 +37,7 @@ class FollowController < ApplicationController
 		@event_id          = params[:event_id]
 		@type              = params[:type]
 		@location          = params[:location]
-		@expand_to_similar = JSON.parse params[:expand_to_similar]
+		@expand_to_similar = params[:expand_to_similar] ? JSON.parse(params[:expand_to_similar]) : false
 	end
 
 	def get_followable

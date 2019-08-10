@@ -5,13 +5,24 @@ image:
 services:
   - docker:dind
 
+variables:
+  DOCKER_HOST: tcp://docker:2375
+
 before_script:
   - docker version
   - docker-compose version
 
-build:
+stages:
+- build
+- test
+
+build-image:
   stage: build
   script:
-    - docker-compose down
-    - docker-compose build
-    - docker-compose up app
+    - docker-compose down -v
+    - docker-compose up --build
+
+test-image:
+  stage: test
+  script:
+    - docker-compose -f docker-compose.development.yml run --rm app bash -c "bundle exec rake db:setup db:migrate db:seed RAILS_ENV=test && rails test"

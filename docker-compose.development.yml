@@ -27,6 +27,7 @@ services:
       - ./web/app:/var/www/alegreme/app
       - ./web/config:/var/www/alegreme/config
       - ./web/db/backups:/var/www/alegreme/db/backups
+      - ./web/test:/var/www/alegreme/test
       - ./storage:/var/www/alegreme/storage
     environment:
       RAILS_ENV: development

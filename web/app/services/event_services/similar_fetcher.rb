@@ -65,14 +65,14 @@ module EventServices
 				mount_response(data, event, success)
 			end
 
-			veirify_success
+			verify_success
 		end
 
 		def mount_response(data, event, success)
 			@responses[:resources][event.id] = {success: success, similar: data}
 		end
 
-		def veirify_success
+		def verify_success
 			@responses[:all_success] = @responses[:resources].all? { |resource| resource[1][:success] }
 		end
 

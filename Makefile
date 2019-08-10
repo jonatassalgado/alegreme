@@ -38,5 +38,8 @@ db-create:
 credentials:
 	$(RUN) bash -c "EDITOR=vim rails credentials:edit"
 
+test:
+	$(RUN) bash -c "rails test"
+
 prune:
 	docker image prune
