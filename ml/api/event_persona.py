@@ -114,7 +114,7 @@ class EventPersonaPrediction(object):
         if 'IS_DOCKER' in os.environ and os.environ['IS_DOCKER'] == 'true':
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
             last_file = max(filter(regex.search, os.listdir('/var/www/scrapy/data/classified/')))
-            self.base = pd.read_csv('/var/www/scrapy/data/classified/' + last_file)        
+            self.base = pd.read_csv('/var/www/scrapy/data/classified/' + last_file)
         else:
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
             last_file = max(filter(regex.search, os.listdir('../../../alegreme/scrapy/classified')))

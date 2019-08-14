@@ -23,6 +23,7 @@ class AlegremePipeline(object):
         timestr = time.strftime("%Y%m%d-%H%M%S")
         pwd = settings.get('PWD')
         self.file = open(pwd + '/scraped/events-' + timestr + '.json', 'wb')
+#         self.file = open('/var/www/scrapy/data/scraped/events-' + timestr + '.json', 'wb')
 
         self.exporter = JsonItemExporter(self.file)
         self.exporter.start_exporting()

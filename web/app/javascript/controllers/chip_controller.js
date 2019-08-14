@@ -6,13 +6,14 @@ export default class ChipController extends Controller {
 	static targets = ["chipset", "container", "chip", "input", "inputContainer"];
 
 	initialize() {
-		const sectionIdentifier = this.chipsetTarget.parentElement.dataset.filterSectionIdentifier;
+		// const sectionIdentifier = this.chipsetTarget.parentElement.dataset.filterSectionIdentifier;
 
-		this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
+		this.subscriptions = {};
+		this.MDCChipSet    = new MDCChipSet(this.chipsetTarget);
 
-		postal.subscribe({
-			channel : `${sectionIdentifier}`,
-			topic   : `${sectionIdentifier}.updated`,
+		this.subscriptions.sectionUpdated = postal.subscribe({
+			channel : `${this.sectionIdentifier}`,
+			topic   : `${this.sectionIdentifier}.updated`,
 			callback: (data, envelope) => {
 
 				setTimeout(() => {
@@ -29,6 +30,17 @@ export default class ChipController extends Controller {
 				}
 			});
 		}
+
+		document.addEventListener("turbolinks:load", () => {
+			// setTimeout(() => {
+			// 	this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
+			// }, 350)
+		});
+
+		document.addEventListener("turbolinks:before-cache", () => {
+			this.subscriptions.sectionUpdated.unsubscribe();
+			// this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
+		});
 	}
 
 	select() {
@@ -121,6 +133,13 @@ export default class ChipController extends Controller {
 			parentClassifier,
 			"tags"
 		);
+	}
+
+	get sectionIdentifier() {
+		const section = this.chipsetTarget.closest('[data-controller="section"]');
+		if (this.hasChipsetTarget && section) {
+			return section.id;
+		}
 	}
 
 }

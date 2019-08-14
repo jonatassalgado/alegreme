@@ -1,3 +1,4 @@
+scrapy/scraped
 web/*.rbc
 web/capybara-*.html
 web/.rspec

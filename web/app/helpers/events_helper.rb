@@ -20,7 +20,7 @@ module EventsHelper
   end
 
   def get_image_style_attr(event, type = :feed)
-    if event.image && event.image[type].exists?
+    if event.image && event.image_data[type.to_s]
       "background-color: #{event.image_data[type.to_s]["metadata"]["dominant_color"]}; background-image: url('#{event.image[type].url}')"
     else
       "background-color: #f1f1f1"

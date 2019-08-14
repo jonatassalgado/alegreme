@@ -27,13 +27,13 @@ private_ip = os.environ.get('PRIVATE_IP')
 home = os.environ.get('HOME')
 
 # if home == '/home/jon':
-SPLASH_URL = 'http://0.0.0.0:8050'
-IS_DOCKER = 'false'
-PWD = '/home/jon/Projects/alegreme/scrapy/'
+SPLASH_URL = 'http://splash:8050'
+IS_DOCKER = 'true'
+# PWD = '/home/jon/Projects/alegreme/scrapy/'
 # else:
 #    SPLASH_URL = 'http://172.26.14.59:8050'
 #    IS_DOCKER = 'true'
-#    PWD = '/var/www/scrapy/data'
+PWD = '/var/www/scrapy/data'
 
 
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'

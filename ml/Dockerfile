@@ -9,6 +9,7 @@ WORKDIR $ML_ROOT
 
 COPY ./requirements.txt ./requirements.txt
 RUN pip install -r $ML_ROOT/requirements.txt
+RUN python -m spacy download pt
 
 ADD . $ML_ROOT
 

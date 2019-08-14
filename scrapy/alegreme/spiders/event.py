@@ -10,37 +10,77 @@ from alegreme.items import Event
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
 
-lua_script = """
-        function main(splash, args)
-            splash.private_mode_enabled = false
-            splash.images_enabled = false
-            splash.plugins_enabled = false
-            splash.html5_media_enabled = false
-            splash.media_source_enabled = false
-            
-            splash.resource_timeout = 60
-            
-            assert(splash:go(splash.args.url))
-                
-                        assert(splash:wait(1))
-            splash.scroll_position = {y=500}
-    
-            result, error = splash:wait_for_resume([[
-                function main(splash) {
-                    var checkExist = setInterval(function() {
-                        if (document.querySelector("._63ew").innerText) {
-                            clearInterval(checkExist);
-                                                    splash.resume();
-                        }
-                    }, 1000);
-                }
-            ]], 30)
-                
-            assert(splash:wait(0.5))
-                
-            return splash:html()
-        end
-    """
+parse_event_script = """
+    function main(splash, args)
+        splash.private_mode_enabled = false
+        splash.images_enabled = false
+        splash.plugins_enabled = false
+        splash.html5_media_enabled = false
+        splash.media_source_enabled = false
+        splash.resource_timeout = 60
+        splash:set_custom_headers({
+                            ['user-agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/602.1 (KHTML, like Gecko) splash Version/9.0 Safari/602.1',
+                            ['accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                            ['accept-language'] = 'en-US,en;q=0.9,pt;q=0.8'
+                            })
+
+        assert(splash:go(splash.args.url))
+
+        assert(splash:wait(1))
+        splash.scroll_position = {y=500}
+
+        result, error = splash:wait_for_resume([[
+            function main(splash) {
+                var checkExist = setInterval(function() {
+                    if (document.querySelector("._63ew").innerText) {
+                        clearInterval(checkExist);
+                                                splash.resume();
+                    }
+                }, 1000);
+            }
+        ]], 30)
+
+        assert(splash:wait(0.5))
+
+        return splash:html()
+    end
+"""
+
+parse_page_script = """
+    function main(splash, args)
+        splash.private_mode_enabled = false
+        splash.images_enabled = false
+        splash.plugins_enabled = false
+        splash.html5_media_enabled = false
+        splash.media_source_enabled = false
+        splash.resource_timeout = 60
+        splash:set_custom_headers({
+                            ['user-agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/602.1 (KHTML, like Gecko) splash Version/9.0 Safari/602.1',
+                            ['accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                            ['accept-language'] = 'en-US,en;q=0.9,pt;q=0.8'
+                            })
+
+        assert(splash:go(splash.args.url))
+
+        assert(splash:wait(1))
+        splash.scroll_position = {y=500}
+
+        result, error = splash:wait_for_resume([[
+        function main(splash) {
+            var checkExist = setInterval(function() {
+                if (document.querySelector(".upcoming_events_card").innerHTML) {
+                    clearInterval(checkExist);
+                     splash.resume();
+                    }
+                }, 1000);
+            }
+        ]], 30)
+
+        assert(splash:wait(0.5))
+
+        return splash:html()
+    end
+"""
 
 class EventSpider(scrapy.Spider):
     name = 'event'
@@ -105,16 +145,12 @@ class EventSpider(scrapy.Spider):
             yield SplashRequest(
                 url=url,
                 callback=self.parse_page,
-                headers={
-                    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/602.1 (KHTML, like Gecko) splash Version/9.0 Safari/602.1',
-                    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                    'accept-language': 'en-US,en;q=0.9,pt;q=0.8'
-                    },
+                endpoint='execute',
                 args={
-                'wait': 12,
-                'html': 1,
-                'images_enabled': 0
-            })
+                'timeout': 90,
+                'lua_source': parse_page_script,
+                }
+            )
 
 
     
@@ -130,7 +166,8 @@ class EventSpider(scrapy.Spider):
                     callback=self.parse_event,
                     endpoint='execute',
                     args={
-                    'lua_source': lua_script,
+                    'timeout': 90,
+                    'lua_source': parse_event_script,
                     }
                 )
                 pass
@@ -182,7 +219,7 @@ class EventSpider(scrapy.Spider):
                      callback=self.parse_event,
                     endpoint='execute',
                     args={
-                        'lua_source': lua_script,
+                        'lua_source': parse_event_script,
                     }
                 )
                 pass

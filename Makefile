@@ -1,8 +1,8 @@
 APP := app
+SERVICE := alegreme_app_1
 RUN := docker-compose -f docker-compose.development.yml run --rm $(APP)
-EXEC := docker exec -it alegreme_app_1
-env := development
-service := app
+EXEC := docker exec -it $(SERVICE)
+ENV := development
 
 
 run:
@@ -12,7 +12,7 @@ build:
 	docker-compose -f docker-compose.development.yml up --build
 
 build-service:
-	docker-compose -f docker-compose.development.yml up -d --no-deps --build $(service)
+	docker-compose -f docker-compose.development.yml up -d --no-deps --build $(APP)
 
 up:
 	docker-compose -f docker-compose.development.yml up
@@ -36,7 +36,10 @@ db-create:
 	$(RUN) bash -c "rake db:migrate && rake db:seed"
 
 credentials:
-	$(RUN) bash -c "EDITOR=vim rails credentials:edit"
+	$(EXEC) bash -c "EDITOR=vim rails credentials:edit"
+
+scrapy-run:
+	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event"
 
 test:
 	$(RUN) bash -c "rails test"

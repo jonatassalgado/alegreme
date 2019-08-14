@@ -15,14 +15,16 @@ RUN pip install -r requirements.txt
 
 RUN mkdir -p data/scraped
 RUN mkdir -p data/classified
+
 COPY ./classified ./data/classified
+COPY ./scraped ./data/scraped
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-COPY . .
+#COPY . .
 
 EXPOSE 7654
 
-CMD ["scrapy-do", "-n", "scrapy-do", "--pidfile", "--config", "scrapydo.conf"]
+CMD ["scrapy-do", "-n", "scrapy-do", "--config", "scrapydo.conf"]
