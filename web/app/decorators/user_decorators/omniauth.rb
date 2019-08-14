@@ -30,20 +30,18 @@ module UserDecorators
 				Rails.logger.debug "GOOGLE DATA: #{data.inspect} "
 
 				if @personas.empty?
-					return user if user
-
-					user = User.create(email:    data.email,
-					                   password: Devise.friendly_token[0, 20])
+					unless user
+						user = User.create(email:    data.email,
+						                   password: Devise.friendly_token[0, 20])
+					end
 
 					user.features.deep_merge!({
-							                         'psychographic' => guest_user.features['psychographic'],
-							                         'demographic'   => {
-									                         'name'    => data.name,
-									                         'picture' => data.picture
-							                         }
-					                         })
-
-
+							                          'psychographic' => guest_user.features['psychographic'],
+							                          'demographic'   => {
+									                          'name'    => data.name,
+									                          'picture' => data.picture
+							                          }
+					                          })
 				elsif @personas && @personas['assortment']['finished']
 					features = {
 							'psychographic' => {
@@ -78,15 +76,16 @@ module UserDecorators
 
 					if user
 						user.features.deep_merge!(features)
-						user if user.save
 					else
 						user = User.new(email:    data.email,
 						                password: Devise.friendly_token[0, 20])
 
 						user.features.deep_merge!(features)
-						user.save
 					end
 				end
+
+				user.save
+				user
 			end
 		end
 
