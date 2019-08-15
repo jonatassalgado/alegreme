@@ -1,51 +1,51 @@
-#!/bin/bash
-
-# Local variables
-ROOT=${PWD}
-CONDA=/home/jon/anaconda3
-
-# Environment variables
-PRIVATE_IP=localhost
-STATIC_IP=localhost
-RAILS_SERVE_STATIC_FILES='true'
-API_URL=http://localhost
-ELASTICSEARCH_URL=http://localhost:9200
-IS_DOCKER='false'
-HTTP_HOST='localhost'
-NODE_ENV=development
-RAILS_ENV=development
-
-# Add variables to environment
-unset PGHOST
-unset PGUSER
-export PRIVATE_IP=$PRIVATE_IP
-export STATIC_IP=$STATIC_IP
-export RAILS_SERVE_STATIC_FILES=$RAILS_SERVE_STATIC_FILES
-export PGHOST=$PGHOST
-export PGUSER=$PGUSER
-export API_URL=$API_URL
-export ELASTICSEARCH_URL=$ELASTICSEARCH_URL
-export IS_DOCKER=$IS_DOCKER
-export HTTP_HOST=$HTTP_HOST
-export NODE_ENV=$NODE_ENV
-export RAILS_ENV=$RAILS_ENV
-
-
-# Run script to up and down services
-echo "Executando comandos $1 a partir da pasta ${ROOT} ..."
-
-echo "Versão do ruby:"
-ruby -v
-
-if [[ $1 == "up" ]]; then
-  (cd "${ROOT}/web" rake assets:precompile && RAILS_ENV=development rails s) &
-  (cd "${ROOT}" && systemctl is-active --quiet postgresql || service postgresql start) &
-  (cd "${ROOT}/bot/eme" && NODE_ENV=development node bot.js) &
-  (cd "${ROOT}/ml/api" && source "${CONDA}/bin/activate" alegreme && FLASK_ENV=development flask run) &&
-  fg
-elif [[ $1 == "down" ]]; then
-  (cd "${ROOT}" && sudo docker stop --name dev_splash) &
-  # (cd "${ROOT}" && service postgresql stop) &
-  (cd "${ROOT}" && sudo kill -9 $(sudo lsof -t -i:5000)) &
-  (cd "${ROOT}" && sudo kill -9 $(sudo lsof -t -i:3000)) &
-fi
+# #!/bin/bash
+#
+# # Local variables
+# ROOT=${PWD}
+# CONDA=/home/jon/anaconda3
+#
+# # Environment variables
+# PRIVATE_IP=localhost
+# STATIC_IP=localhost
+# RAILS_SERVE_STATIC_FILES='true'
+# API_URL=http://localhost
+# ELASTICSEARCH_URL=http://localhost:9200
+# IS_DOCKER='false'
+# HTTP_HOST='localhost'
+# NODE_ENV=development
+# RAILS_ENV=development
+#
+# # Add variables to environment
+# unset PGHOST
+# unset PGUSER
+# export PRIVATE_IP=$PRIVATE_IP
+# export STATIC_IP=$STATIC_IP
+# export RAILS_SERVE_STATIC_FILES=$RAILS_SERVE_STATIC_FILES
+# export PGHOST=$PGHOST
+# export PGUSER=$PGUSER
+# export API_URL=$API_URL
+# export ELASTICSEARCH_URL=$ELASTICSEARCH_URL
+# export IS_DOCKER=$IS_DOCKER
+# export HTTP_HOST=$HTTP_HOST
+# export NODE_ENV=$NODE_ENV
+# export RAILS_ENV=$RAILS_ENV
+#
+#
+# # Run script to up and down services
+# echo "Executando comandos $1 a partir da pasta ${ROOT} ..."
+#
+# echo "Versão do ruby:"
+# ruby -v
+#
+# if [[ $1 == "up" ]]; then
+#   (cd "${ROOT}/web" rake assets:precompile && RAILS_ENV=development rails s) &
+#   (cd "${ROOT}" && systemctl is-active --quiet postgresql || service postgresql start) &
+#   (cd "${ROOT}/bot/eme" && NODE_ENV=development node bot.js) &
+#   (cd "${ROOT}/ml/api" && source "${CONDA}/bin/activate" alegreme && FLASK_ENV=development flask run) &&
+#   fg
+# elif [[ $1 == "down" ]]; then
+#   (cd "${ROOT}" && sudo docker stop --name dev_splash) &
+#   # (cd "${ROOT}" && service postgresql stop) &
+#   (cd "${ROOT}" && sudo kill -9 $(sudo lsof -t -i:5000)) &
+#   (cd "${ROOT}" && sudo kill -9 $(sudo lsof -t -i:3000)) &
+# fi

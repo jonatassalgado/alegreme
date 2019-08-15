@@ -40,16 +40,18 @@ User.create!(
 		admin:    true
 )
 
+puts "test@gmail.com 123456 - Usuário administrador criado".blue
+
 kinds.each do |kind|
 	kind = Kind.create!(details: {name: kind})
-	puts "#{kind.details[:name]} criado."
+	puts "#{kind.details['name']} - Tipo criado".green
 end
 
 categories.each do |category|
   category = Category.create!(details: {
 		  name: category
   })
-	puts "#{category.details[:name]} criado."
+	puts "#{category.details['name']} - Categoria criada".green
 end
 
 Artifact.create!(
@@ -156,6 +158,7 @@ fake_users.each do |fake_user|
 
 	user.save!
 
+	puts "#{fake_user[:name]} - Usuário criado".green
 end
 
 puts "Usuários criados com sucesso"

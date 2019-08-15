@@ -7,16 +7,14 @@ set -e
 # echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
 
 bundle check || bundle install --binstubs="$BUNDLE_BIN"
-
-# bundle exec rake webpacker:clobber
-
-# bundle exec rake assets:precompile
+#bundle exec rake webpacker:clobber
+#bundle exec rake assets:precompile
 
 rake db:exists && rake db:migrate || rake db:setup db:migrate
 
 #rake db:exists RAILS_ENV=development && rails runner "Event.reindex"
 
-# whenever --update-crontab
+whenever
 
 exec "$@"
 # Finally call command issued to the docker service

@@ -26,17 +26,17 @@ class ImageUploader < Shrine
     # image_optim = ImageOptim.new(pngout: false, svgo: false)
     # image_optim.optimize_image!(io.download)
     # io.open
-    
+
     versions = { 'original': io }
 
     io.download do |original|
       pipeline = ImageProcessing::MiniMagick.source(original)
 
       versions['feed'] = pipeline.resize_to_fill!(171, 96)
-      versions['feed-mobile'] = pipeline.resize_to_fill!(183, 103)
+      # versions['feed-mobile'] = pipeline.resize_to_fill!(183, 103)
       versions['single'] = pipeline.resize_to_fill!(600, 338)
-      versions['single-mobile'] = pipeline.resize_to_fill!(414, 232)
-      versions['list-mobile'] = pipeline.resize_to_fill!(116, 66)
+      # versions['single-mobile'] = pipeline.resize_to_fill!(414, 232)
+      # versions['list-mobile'] = pipeline.resize_to_fill!(116, 66)
     end
 
      versions

@@ -3,7 +3,7 @@
     <div class="stackedcards-container">
       <% @swipable_items.each do |item| %>
         <div id="<%= item[:id] %>" class="card-item">
-          <div class="me-swipable__item" style="background-image: url('<%= image_path item[:image_url] %>'); background-color: <%= item[:dominant_color] %>">
+          <div class="me-swipable__item" style="background-image: url('<%= image_url item[:image_url] %>'); background-color: <%= item[:dominant_color] %>">
             <div class="me-swipable__item-overlay" style="background: linear-gradient(to top, <%= item[:dominant_color] %>cb 30%, <%= item[:dominant_color] %>89);"></div>
             <div class="me-swipable__item-title"><%= item[:name] %></div>
             <div class="me-swipable__item-description"><%= item[:description] %></div>

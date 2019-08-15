@@ -10,7 +10,7 @@ default: &default
   host: db
   pool: 5
   timeout: 5000
-  user: <%= Rails.application.credentials[Rails.env.to_sym][:db_user] %>
+  username: <%= Rails.application.credentials[Rails.env.to_sym][:db_user] %>
   password: <%= Rails.application.credentials[Rails.env.to_sym][:db_password] %>
 development:
   <<: *default

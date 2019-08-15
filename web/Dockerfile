@@ -92,14 +92,11 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 
 COPY Gemfile Gemfile
-# COPY Gemfile.lock Gemfile.lock
+COPY Gemfile.lock Gemfile.lock
 
-# RUN gem install bundler:2.0.2
-# RUN bundle update --bundler
-# RUN gem update --system
-
+RUN gem install bundler -v '2.0.2'
 RUN bundle install --jobs 20 --retry 5
-
+RUN bundle update --bundler
 
 COPY . .
 
@@ -111,6 +108,6 @@ RUN yarn install
 RUN rake webpacker:clobber
 RUN rake assets:precompile
 
-# EXPOSE 3000
+EXPOSE 3000
 
-# CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

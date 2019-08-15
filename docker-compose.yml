@@ -32,7 +32,7 @@ services:
       RACK_ENV: production
       RAILS_SERVE_STATIC_FILES: 'false'
       PGHOST: db
-      PGUSER: postgres
+      PGUSER: jon
       API_URL: http://api
       ELASTICSEARCH_URL: http://search:9200
       IS_DOCKER: 'true'
@@ -43,18 +43,20 @@ services:
       - db
       - search
     restart: always
-    # ports:
-    #   - 3000:3000
+    ports:
+      - 3000:3000
   db:
     image: postgres:10
     volumes:
       - ./data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: docker
-      POSTGRES_DB: db
+      POSTGRES_USER: jon
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: production
       TZ: 'America/Sao_Paulo'
       PGTZ: 'America/Sao_Paulo'
+      PRIVATE_IP: '172.26.7.70'
+      PUBLIC_IP: '3.223.33.161'
     ports:
       - 5432:5432
     restart: always
@@ -71,11 +73,11 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     restart: always
-  # certbot:
-  #   image: certbot/certbot
-  #   volumes:
-  #     - ./data/certbot/conf:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
   api:
     build:
       context: ./ml
@@ -121,8 +123,8 @@ services:
     environment:
         SPLASH_URL: http://splash:8050
         IS_DOCKER: 'true'
-        PRIVATE_IP: '172.26.14.59'
-        PUBLIC_IP: '3.209.95.87'
+        PRIVATE_IP: '172.26.7.70'
+        PUBLIC_IP: '3.223.33.161'
     depends_on:
       - splash
     volumes:

@@ -41,8 +41,14 @@ credentials:
 scrapy-run:
 	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event"
 
+# scrapy-do-project:
+# 	$(RUN)
+
 test:
 	$(RUN) bash -c "rails test"
+
+aws:
+	ssh ubuntu@3.223.33.161
 
 prune:
 	docker image prune

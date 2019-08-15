@@ -17,9 +17,9 @@ every 1.day, at: '23:00 pm' do
   rake "db:dump"
 end
 
-every 1.day, at: '02:00 am' do
-  rake "scrapy:facebook:create"
-  rake "scrapy:facebook:similar"
+every 1.day, at: '04:00 am' do
+  rake "populate:facebook"
+  rake "similar:events"
 end
 
 # Learn more: http://github.com/javan/whenever
