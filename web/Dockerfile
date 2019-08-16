@@ -92,16 +92,15 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 
 COPY Gemfile Gemfile
-COPY Gemfile.lock Gemfile.lock
+# COPY Gemfile.lock Gemfile.lock
 
-RUN gem install bundler -v '2.0.2'
+
 RUN bundle install --jobs 20 --retry 5
 RUN bundle update --bundler
+# RUN gem update --system
+
 
 COPY . .
-
-
-# RUN gem update --system
 
 
 RUN yarn install

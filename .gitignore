@@ -21,7 +21,6 @@ web/.idea/
 web/db/backups/
 .idea/
 wip.py
-data/
 .scrapy/
 ml/__pycache__
 web/tmp/pids

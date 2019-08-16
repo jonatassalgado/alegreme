@@ -1,4 +1,4 @@
-# require 'colorize'
+require 'colorize'
 require 'json'
 require 'open-uri'
 require 'net/http'
@@ -21,24 +21,27 @@ namespace :populate do
 
 		begin
 			data = JSON.parse(@current_file)
-
-			data.each do |item|
-				place = create_place(item)
-
-				next unless item['description']
-
-				event, ml_data = create_event(item)
-
-				next unless event
-				next unless set_cover(item, event)
-
-				associate_event_place(event, place)
-				create_organizer(item, event)
-				classify_event(event, ml_data)
-				save_event(event)
-			end
 		rescue JSON::ParserError => e
-			return puts "Erro ao ler arquivo JSON: #{e}"
+			puts "Erro ao ler arquivo JSON: #{e}".red
+			return
+		else
+			puts "Arquivo JSON parseado".green
+		end
+
+		data.each do |item|
+			place = create_place(item)
+
+			next unless item['description']
+
+			event, ml_data = create_event(item)
+
+			next unless event
+			next unless set_cover(item, event)
+
+			associate_event_place(event, place)
+			create_organizer(item, event)
+			classify_event(event, ml_data)
+			save_event(event)
 		end
 	end
 end
@@ -177,6 +180,16 @@ end
 def read_file
 	files     = Dir['/var/www/scrapy/data/scraped/*']
 	last_file = (files.select { |file| file[/events-\d{8}-\d{6}\.json$/] }).max
+
+	timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
+	artifact = Artifact.create(
+			details: {
+					name: "scraped-#{last_file}",
+					type: 'scraped'
+			}
+	)
+
+	artifact.file.attach(io: File.open("#{last_file}"), filename: "scraped-events-#{timestr}.json", content_type: "application/json")
 
 	puts "Lendo arquivo JSON #{last_file}".blue
 

@@ -1,7 +1,7 @@
 version: '3.2'
 volumes:
   bundle_cache: {}
-  scrapy_shared:
+  # scrapy_shared:
   db_data:
   db_backup:
   api_data:
@@ -22,12 +22,12 @@ services:
       # - bot
       - scrapy
     volumes:
-      - scrapy_shared:/var/www/scrapy/data
+      - ./scrapy/data:/var/www/scrapy/data
       - bundle_cache:/bundle
       - ./web/app:/var/www/alegreme/app
       - ./web/config:/var/www/alegreme/config
       - ./web/lib:/var/www/alegreme/lib
-      - ./web/scrapy:/var/www/scrapy/data/scraped
+      # - ./web/scrapy:/var/www/scrapy/data/scraped
       - ./web/public/uploads:/var/www/alegreme/public/uploads
       - ./web/db/backups:/var/www/alegreme/db/backups
       - ./web/test:/var/www/alegreme/test
@@ -93,7 +93,7 @@ services:
       - "5000:5000"
     volumes:
       - api_data:/var/www/api/data
-      - scrapy_shared:/var/www/scrapy/data
+      - ./scrapy/data:/var/www/scrapy/data
       - ./ml/api:/var/www/ml/api
     environment:
       IS_DOCKER: 'true'
@@ -136,10 +136,10 @@ services:
     depends_on:
       - splash
     volumes:
-      - ./scrapy/classified:/var/www/scrapy/data/classified
-      - ./scrapy/scraped:/var/www/scrapy/data/scraped
+      # - ./scrapy/classified:/var/www/scrapy/data/classified
+      # - ./scrapy/scraped:/var/www/scrapy/data/scraped
       - ./scrapy/alegreme:/var/www/scrapy/alegreme
-      - scrapy_shared:/var/www/scrapy/data
+      - ./scrapy/data:/var/www/scrapy/data
       - scrapydo_data:/var/www/scrapy/projects
     ports:
       - "7654:7654"
