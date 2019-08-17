@@ -119,8 +119,7 @@ services:
     ports:
       - "7654:7654"
     restart: always
-    command:
-      ["scrapy-do", "--pidfile", "-n", "scrapy-do", "--config", "scrapydo.conf"]
+    command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
   splash:
     image: scrapinghub/splash
     ports:

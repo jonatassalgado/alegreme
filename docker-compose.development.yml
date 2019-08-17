@@ -53,7 +53,7 @@ services:
     restart: always
     ports:
       - 3000:3000
-    command: ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+    command: bundle exec puma -C config/puma.rb
   db:
     image: postgres
     volumes:

@@ -13,18 +13,13 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
 
-# RUN mkdir -p data/scraped
-# RUN mkdir -p data/classified
-
-# COPY ./classified ./data/classified
-# COPY ./scraped ./data/scraped
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-#COPY . .
 
 EXPOSE 7654
 
-CMD ["scrapy-do", "--pidfile", "-n", "scrapy-do", "--config", "scrapydo.conf"]
+
+CMD scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf

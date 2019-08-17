@@ -19,17 +19,17 @@ module EventsHelper
     DateTime.parse(datetime).strftime("%Y-%m-%dT%H:%M")
   end
 
-  def get_image_style_attr(event, type = 'feed')
-    if event.image_data[type].empty?
-      "background-color: #f1f1f1"
+  def get_image_style_attr(event, type = :feed)
+    if event&.image[type]
+      "background-color: #{event.image_data.dig("feed","metadata", "dominant_color")}; background-image: url('#{event.image[type].url}')"
     else
-      "background-color: #{event.image_data[type]["metadata"]["dominant_color"]}; background-image: url('#{event.image_data[type].url}')"
+      "background-color: #f1f1f1"
     end
   end
 
   def get_image_dominant_color(event)
-    if event.image && event.image_data['feed']
-      event.image_data['feed']['metadata']['dominant_color']
+    if event&.image_data['feed']
+      event.image_data.dig('feed', 'metadata', 'dominant_color')
     else
       '#f1f1f1'
     end

@@ -41,6 +41,12 @@ credentials:
 scrapy-run:
 	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event"
 
+scrapy-up:
+	docker exec alegreme_scrapy_1 bash -c "scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf"
+
+scrapy-push-project:
+	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://3.223.33.161:7654 push-project"
+
 scrapy-schedule-job:
 	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://3.223.33.161:7654 schedule-job --project alegreme --spider event --when 'every day at 01:00'"
 
