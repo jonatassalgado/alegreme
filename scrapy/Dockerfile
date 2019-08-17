@@ -27,4 +27,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 7654
 
-CMD ["scrapy-do", "-n", "scrapy-do", "--config", "scrapydo.conf"]
+CMD ["scrapy-do", "--pidfile", "-n", "scrapy-do", "--config", "scrapydo.conf"]

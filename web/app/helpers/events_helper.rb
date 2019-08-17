@@ -19,16 +19,16 @@ module EventsHelper
     DateTime.parse(datetime).strftime("%Y-%m-%dT%H:%M")
   end
 
-  def get_image_style_attr(event, type = :feed)
-    if event.image && event.image_data[type.to_s]
-      "background-color: #{event.image_data[type.to_s]["metadata"]["dominant_color"]}; background-image: url('#{event.image[type].url}')"
-    else
+  def get_image_style_attr(event, type = 'feed')
+    if event.image_data[type].empty?
       "background-color: #f1f1f1"
+    else
+      "background-color: #{event.image_data[type]["metadata"]["dominant_color"]}; background-image: url('#{event.image_data[type].url}')"
     end
   end
 
   def get_image_dominant_color(event)
-    if event.image && event.image[:feed].exists?
+    if event.image && event.image_data['feed']
       event.image_data['feed']['metadata']['dominant_color']
     else
       '#f1f1f1'
@@ -38,7 +38,7 @@ module EventsHelper
   def round_score(score, precision = 6)
     return 0.0 if score.nil?
     return score.to_f.round(precision) if score.is_a? String
-    score.round(precision) 
+    score.round(precision)
   end
 
   def get_score_scale_color(scale = 1.0)
@@ -61,7 +61,7 @@ module EventsHelper
 
   def whitelist_tags_by_type(event, type)
 	  case type
-		when 'activities' 
+		when 'activities'
 			(Artifact.tags_whitelist_activities | event.ml_data['verbs']).sort
 		when 'features'
 			Artifact.tags_whitelist_features.sort

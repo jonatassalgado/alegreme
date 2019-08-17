@@ -69,12 +69,12 @@
         <span aria-hidden="true"> · </span>
         <span class="me-card__category"
               data-target="event.category">
-          <%= event.categories_primary_name.capitalize %>
+          <%= event.categories_primary_name.try(:capitalize) %>
         </span>
       <% else %>
         <span class="me-card__category"
               data-target="event.category">
-          <%= event.categories_primary_name.capitalize %>
+          <%= event.categories_primary_name.try(:capitalize) %>
         </span>
         <span aria-hidden="true"> · </span>
         <span class="me-card__date"
