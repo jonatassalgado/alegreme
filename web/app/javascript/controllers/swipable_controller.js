@@ -20,7 +20,7 @@ export default class SwipableController extends Controller {
 
 
 	stackedCards() {
-		const PUBLIC_IP      = document.location.host;
+		const HOST           = document.location.host;
 		const stackedOptions = 'Top'; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
 		const rotate         = true; //Activate the elements' rotation for each move on stacked cards.
 		let items            = 4; //Number of visible elements when the stacked options are bottom or top.
@@ -167,7 +167,7 @@ export default class SwipableController extends Controller {
 			if (currentPosition === maxElements) {
 				//Event listener created to know when transition ends and changes states
 
-				fetch(`http://${PUBLIC_IP}:5000/user/persona?query=${JSON.stringify(answers)}`, {
+				fetch(`http://${HOST}/ml/user/persona?query=${JSON.stringify(answers)}`, {
 					method : 'GET',
 					headers: {
 						'Content-type': 'text/javascript; charset=UTF-8'

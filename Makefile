@@ -39,7 +39,7 @@ credentials:
 	$(EXEC) bash -c "EDITOR=vim rails credentials:edit"
 
 scrapy-run:
-	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event -s"
+	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event"
 
 scrapy-run-test:
 	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event -s CLOSESPIDER_ITEMCOUNT=10"
