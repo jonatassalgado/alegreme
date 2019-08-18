@@ -20,7 +20,7 @@ export default class SwipableController extends Controller {
 
 
 	stackedCards() {
-		const PUBLIC_IP      = '172.26.7.70';
+		const PUBLIC_IP      = document.location.host;
 		const stackedOptions = 'Top'; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
 		const rotate         = true; //Activate the elements' rotation for each move on stacked cards.
 		let items            = 4; //Number of visible elements when the stacked options are bottom or top.
