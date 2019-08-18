@@ -1,15 +1,13 @@
-version: '3.2'
+version: '2.3'
 volumes:
   bundle_cache: {}
   # scrapy_shared:
   db_data:
   db_backup:
   api_data:
-  # bot_data:
   # search_data:
   scrapydo_data:
   splash_data:
-  # mongo_data:
 services:
   app:
     build:
@@ -56,6 +54,7 @@ services:
     ports:
       - 3000:3000
     command: bundle exec puma -C config/puma.rb
+    mem_limit: 6048000000
   db:
     image: postgres
     volumes:
@@ -100,22 +99,7 @@ services:
       - ./logs/api:/var/www/ml/api/log
     environment:
       IS_DOCKER: 'true'
-  # bot:
-  #   build:
-  #     context: ./bot
-  #     dockerfile: ./Dockerfile
-  #   ports:
-  #     - "3030:3030"
-  #   volumes:
-  #     - bot_data:/var/www/bot/data
-  #   environment:
-  #     MONGO_URI: mongodb://jon:password@mongo:27017
-  #     PRIVATE_IP: '172.26.14.59'
-  #     PUBLIC_IP: '3.209.95.87'
-  #     WEB_DOMAIN: 'https://www.alegreme.com'
-  #   restart: always
-  #   depends_on:
-  #     - mongo
+    mem_limit: 2048000000
   # search:
   #   build:
   #     context: ./search
@@ -147,6 +131,7 @@ services:
     ports:
       - "7654:7654"
     restart: always
+    mem_limit: 4048000000
     command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
   splash:
     image: scrapinghub/splash
@@ -156,11 +141,5 @@ services:
     restart: always
     volumes:
       - splash_data:/var/www/splash/data
-  # mongo:
-  #   image: mongo:4.1
-  #   restart: always
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: jon
-  #     MONGO_INITDB_ROOT_PASSWORD: password
-  #   volumes:
-  #     - mongo_data:/data/db
+    mem_limit: 2048000000
+    command: --maxrss 2048 --max-timeout 300 --disable-lua-sandbox

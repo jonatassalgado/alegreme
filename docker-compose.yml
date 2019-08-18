@@ -1,4 +1,4 @@
-version: '3.2'
+version: '2.3'
 volumes:
   bundle_cache: {}
   # scrapy_shared:
@@ -48,6 +48,7 @@ services:
     restart: always
     ports:
       - 3000:3000
+    mem_limit: 6048000000
   db:
     image: postgres:10
     volumes:
@@ -94,6 +95,7 @@ services:
       - ./logs/api:/var/www/ml/api/log
     environment:
       IS_DOCKER: 'true'
+    mem_limit: 2048000000
   # search:
   #   build:
   #     context: ./search
@@ -123,6 +125,7 @@ services:
       - "7654:7654"
     restart: always
     command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
+    mem_limit: 4048000000
   splash:
     image: scrapinghub/splash
     ports:
@@ -131,3 +134,5 @@ services:
     restart: always
     volumes:
       - splash_data:/var/www/splash/data
+    mem_limit: 3048000000
+    command: --maxrss 2048 --max-timeout 300 --disable-lua-sandbox
