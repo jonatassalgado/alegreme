@@ -2,6 +2,7 @@ import sys
 import pandas as pd
 import numpy as np
 import json
+import logging
 
 
 from datetime import datetime
@@ -14,6 +15,7 @@ from event_similar import EventSimilar
 from flask_restful import reqparse, abort, Api, Resource
 from flask_cors import CORS
 
+logging.basicConfig(filename='log/error.log',level=logging.DEBUG)
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -59,7 +61,7 @@ class UserPersonaRoute(Resource):
                         'finished_at' : datetime.strftime(datetime.today(), '%Y-%m-%d %H:%M:%S')
                     }
                 }
-            }   
+            }
         }
 
 class EventLabelRoute(Resource):
@@ -113,7 +115,7 @@ class EventFeaturesRoute(Resource):
         features = eventFeatures.extract_features(query)
 
         return features
-            
+
 
 
 class EventSimilarRoute(Resource):
@@ -126,7 +128,7 @@ class EventSimilarRoute(Resource):
         similar = eventSimilar.get_similarity(text, base)
 
         return similar
-            
+
 
 
 api.add_resource(EventFeaturesRoute, '/event/features')

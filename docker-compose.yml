@@ -28,6 +28,7 @@ services:
       - ./web/lib:/var/www/alegreme/lib
       - ./web/public/uploads:/var/www/alegreme/public/uploads
       - ./web/db/backups:/var/www/alegreme/db/backups
+      - ./logs/app:/var/www/alegreme/log
       - ./storage:/var/www/alegreme/storage
     environment:
       RAILS_ENV: production
@@ -74,6 +75,7 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+      - ./logs/web:/var/www/alegreme/log
     restart: always
   certbot:
     image: certbot/certbot
@@ -89,6 +91,7 @@ services:
     volumes:
       - api_data:/var/www/api/data
       - ./scrapy/data:/var/www/scrapy/data
+      - ./logs/api:/var/www/ml/api/log
     environment:
       IS_DOCKER: 'true'
   search:

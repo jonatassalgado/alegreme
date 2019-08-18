@@ -1,3 +1,4 @@
+logs/
 scrapy/scraped
 web/Gemfile.lock
 web/*.rbc
