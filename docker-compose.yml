@@ -6,7 +6,7 @@ volumes:
   db_backup:
   api_data:
   # bot_data:
-  search_data:
+  # search_data:
   scrapydo_data:
   splash_data:
   # mongo_data:
@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
       - api
-      - search
+      # - search
       - scrapy
     volumes:
       - bundle_cache:/bundle
@@ -37,14 +37,14 @@ services:
       PGHOST: db
       PGUSER: jon
       API_URL: http://api
-      ELASTICSEARCH_URL: http://search:9200
+      # ELASTICSEARCH_URL: http://search:9200
       IS_DOCKER: 'true'
       HTTP_HOST: 'www.alegreme.com'
       NODE_ENV: production
     links:
       - api
       - db
-      - search
+      # - search
     restart: always
     ports:
       - 3000:3000
@@ -94,17 +94,17 @@ services:
       - ./logs/api:/var/www/ml/api/log
     environment:
       IS_DOCKER: 'true'
-  search:
-    build:
-      context: ./search
-      dockerfile: ./Dockerfile
-    environment:
-      discovery.type: single-node
-    ports:
-      - "9200:9200"
-    volumes:
-      - search_data:/var/www/search/data
-    restart: always
+  # search:
+  #   build:
+  #     context: ./search
+  #     dockerfile: ./Dockerfile
+  #   environment:
+  #     discovery.type: single-node
+  #   ports:
+  #     - "9200:9200"
+  #   volumes:
+  #     - search_data:/var/www/search/data
+  #   restart: always
   scrapy:
     build:
       context: ./scrapy

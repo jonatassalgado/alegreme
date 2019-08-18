@@ -20,8 +20,8 @@ class Event < ApplicationRecord
 	# validate :validate_attrs_that_should_be_a_hash
 	# validate :validate_attrs_that_should_be_a_array
 
-	after_save :reindex, if: proc { |event| event.details_changed? }
-	after_destroy :reindex, :destroy_entries
+	# after_save :reindex, if: proc { |event| event.details_changed? }
+	# after_destroy :reindex, :destroy_entries
 
 	belongs_to :place
 	has_and_belongs_to_many :organizers
