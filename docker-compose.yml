@@ -17,6 +17,7 @@ services:
       dockerfile: ./Dockerfile
     depends_on:
       - db
+      - web
       - api
       - search
       - scrapy

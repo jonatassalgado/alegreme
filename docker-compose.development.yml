@@ -22,16 +22,17 @@ services:
       # - bot
       - scrapy
     volumes:
-      - ./scrapy/data:/var/www/scrapy/data
       - bundle_cache:/bundle
-      - ./web/app:/var/www/alegreme/app
-      - ./web/config:/var/www/alegreme/config
-      - ./web/lib:/var/www/alegreme/lib
-      # - ./web/scrapy:/var/www/scrapy/data/scraped
-      - ./web/public/uploads:/var/www/alegreme/public/uploads
-      - ./web/db/backups:/var/www/alegreme/db/backups
-      - ./web/test:/var/www/alegreme/test
+      - ./scrapy/data:/var/www/scrapy/data
+      - ./web:/var/www/alegreme
+      # - ./web/app:/var/www/alegreme/app
+      # - ./web/config:/var/www/alegreme/config
+      # - ./web/lib:/var/www/alegreme/lib
+      # - ./web/public/uploads:/var/www/alegreme/public/uploads
+      # - ./web/db/backups:/var/www/alegreme/db/backups
+      # - ./web/test:/var/www/alegreme/test
       - ./storage:/var/www/alegreme/storage
+      # - ./web/scrapy:/var/www/scrapy/data/scraped
     environment:
       RAILS_ENV: development
       RACK_ENV: development

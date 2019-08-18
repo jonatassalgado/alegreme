@@ -3,6 +3,7 @@ require 'json'
 require 'open-uri'
 require 'net/http'
 require 'down'
+require 'jsonl'
 
 require_relative '../../geographic.rb'
 require_relative '../../../config/initializers/shrine.rb'
@@ -20,7 +21,7 @@ namespace :populate do
 		read_file
 
 		begin
-			data = JSON.parse(@current_file)
+			data = JSONL.parse(@current_file)
 		rescue JSON::ParserError => e
 			puts "Erro ao ler arquivo JSON: #{e}".red
 			return
@@ -179,7 +180,7 @@ end
 
 def read_file
 	files     = Dir['/var/www/scrapy/data/scraped/*']
-	last_file = (files.select { |file| file[/events-\d{8}-\d{6}\.json$/] }).max
+	last_file = (files.select { |file| file[/events-\d{8}-\d{6}\.jsonl$/] }).max
 
 	timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
 	artifact = Artifact.create(

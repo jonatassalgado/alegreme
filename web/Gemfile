@@ -29,8 +29,9 @@ gem 'sidekiq'
 gem 'devise'
 gem 'omniauth-google-oauth2'
 
-
 gem 'lupa', git: 'https://github.com/edelpero/lupa.git'
+
+gem 'jsonl'
 
 gem 'geocoder'
 
