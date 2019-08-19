@@ -8,8 +8,8 @@ $like-color: $brand-color-left;
 $dislike-color: #8F1717;
 $maybe-color: $brand-color-right;
 
-$font-primary-font: 'Cabin';
-$font-secondary-font: 'helvetica', 'Cabin';
+$font-primary-font: 'Montserrat', sans-serif;
+$font-secondary-font: 'Roboto', sans-serif;
 
 @mixin section-constraints {
   max-width: 95%;
