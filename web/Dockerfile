@@ -110,4 +110,4 @@ RUN rake assets:precompile
 
 EXPOSE 3000
 
-CMD cron -f && bundle exec puma -C config/puma.rb
+CMD bundle exec puma -C config/puma.rb
