@@ -93,20 +93,18 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 
 COPY Gemfile Gemfile
-# COPY Gemfile.lock Gemfile.lock
 
 
 RUN bundle install --jobs 20 --retry 5
 RUN bundle update --bundler
-# RUN gem update --system
 
 
 COPY . .
 
 
-RUN yarn install
 RUN rake webpacker:clobber
 RUN rake assets:precompile
+RUN yarn install
 
 EXPOSE 3000
 

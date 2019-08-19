@@ -156,9 +156,9 @@ document.addEventListener('DOMContentLoaded', function () {
 			// 	vertical: false
 			// });
 		} else {
-			new Rellax('.rellax');
+			// new Rellax('.rellax');
 		}
-	}, 1000);
+	}, 1500);
 
 	var startGoogleAuth = function () {
 		gapi.load('auth2', function () {
