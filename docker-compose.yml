@@ -48,6 +48,7 @@ services:
     restart: always
     ports:
       - 3000:3000
+    command: cron -f && bundle exec puma -C config/puma.rb
     mem_limit: 6048000000
   db:
     image: postgres:10

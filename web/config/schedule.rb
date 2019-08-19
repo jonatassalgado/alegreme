@@ -5,21 +5,23 @@
 
 # Example:
 #
-# set :output, "/path/to/my/cron_log.log"
-#
+
+ENV.each { |k, v| env(k, v) }
+
+set :output, "/var/www/alegreme/log/cron_log.log"
+
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
 #   runner "MyModel.some_method"
 #   rake "some:great:rake:task"
 # end
 #
-every 1.day, at: '23:00 pm' do
+every 1.day, at: '1:00 am' do
   rake "db:dump"
 end
 
 every 1.day, at: '04:00 am' do
-  rake "populate:facebook"
-  rake "similar:events"
+  rake "populate:facebook similar:events"
 end
 
 # Learn more: http://github.com/javan/whenever
