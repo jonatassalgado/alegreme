@@ -167,7 +167,7 @@ export default class SwipableController extends Controller {
 			if (currentPosition === maxElements) {
 				//Event listener created to know when transition ends and changes states
 
-				fetch(`http://${HOST}/ml/user/persona?query=${JSON.stringify(answers)}`, {
+				fetch(`https://${HOST}/ml/user/persona?query=${JSON.stringify(answers)}`, {
 					method : 'GET',
 					headers: {
 						'Content-type': 'text/javascript; charset=UTF-8'
