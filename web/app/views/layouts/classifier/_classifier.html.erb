@@ -15,9 +15,9 @@
 	<td>Tipo</td>
 	<td>Tags</td>
 </tr>
-<% cache @items[:events] do %>
+<%# cache @items[:events] do %>
 	<% @items[:events].each do |event| %>
-		<% cache(event) do %>
+		<%# cache(event) do %>
 			<tr>
 				<td><img src="<%= event.cover_url :feed %>"></td>
 				<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
@@ -40,29 +40,29 @@
 				<td>
 					<div id="<%= dom_id event, 'things' %>">
 						<%= render partial: 'layouts/classifier/tags', locals: {
-							event: event, 
+							event: event,
 							type: 'things',
 							tags_to_select: whitelist_tags_by_type(event, 'things')
 						} %>
 					</div>
 					<div id="<%= dom_id event, 'activities' %>">
-						<%= 
+						<%=
 						render partial: 'layouts/classifier/tags', locals: {
-							event: event, 
-							type: 'activities', 
+							event: event,
+							type: 'activities',
 							tags_to_select: whitelist_tags_by_type(event, 'activities')
-						} 
+						}
 						%>
 					</div>
 					<div id="<%= dom_id event, 'features' %>">
 						<%= render partial: 'layouts/classifier/tags', locals: {
-							event: event, 
+							event: event,
 							type: 'features',
 							tags_to_select: whitelist_tags_by_type(event, 'features')
 							} %>
 					</div>
 				</td>
 			</tr>
-		<% end %>
+		<%# end %>
 	<% end %>
-<% end %>
+<%# end %>

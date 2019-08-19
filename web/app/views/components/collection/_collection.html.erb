@@ -6,12 +6,13 @@
   filters = opts[:filters] || {categories: true, kinds: true, ocurrences: true}
   events_in_collection = opts.dig(:detail, :events_in_collection) || 0
   filters_applyed = opts.dig(:detail, :init_filters_applyed) || {}
+  cache_keys = params[:defaults] ? JSON.parse(params[:defaults]) : {}
 
 %>
 
 
 <% unless items[:events].empty? %>
-  <% cache [current_user, identifier, params[:categories], params[:kinds], params[:ocurrences]], expires_in: 1.day do %>
+  <%# cache [current_user, identifier, cache_keys[:categories], cache_keys[:kinds], cache_keys[:ocurrences]] do %>
 
     <div class="me-feed__section"
          data-controller="section"
@@ -119,5 +120,5 @@
         <% end %>
       </div>
     </div>
-  <% end %>
+  <%# end %>
 <% end %>

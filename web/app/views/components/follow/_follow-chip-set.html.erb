@@ -1,5 +1,7 @@
 <%
 
+  return unless user
+
   raise ArgumentError if chips.blank? || type.blank?
 
   type = local_assigns.fetch(:type)
@@ -36,4 +38,3 @@
     </div>
   <% end %>
 </div>
-
