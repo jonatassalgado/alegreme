@@ -15,13 +15,16 @@ build-service:
 	docker-compose -f docker-compose.development.yml up -d --no-deps --build $(APP)
 
 up:
-	docker-compose -f docker-compose.development.yml up
+	docker-compose -f docker-compose.development.yml up -d
 
 down:
 	docker-compose -f docker-compose.development.yml down
 
 console:
 	$(EXEC) bash
+
+debug-app:
+	docker attach alegreme_app_1
 
 logs:
 	$(EXEC) bash -c "tail -f log/development.log"

@@ -53,6 +53,8 @@ services:
     restart: always
     ports:
       - 3000:3000
+    stdin_open: true
+    tty: true
     command: bundle exec puma -C config/puma.rb
     mem_limit: 6048000000
   db:
@@ -68,6 +70,7 @@ services:
     ports:
       - 5432:5432
     restart: always
+    mem_limit: 2048000000
   # web:
   #   build:
   #     context: ./web
@@ -141,5 +144,5 @@ services:
     restart: always
     volumes:
       - splash_data:/var/www/splash/data
-    mem_limit: 2048000000
-    command: --maxrss 2048 --max-timeout 300 --disable-lua-sandbox
+    mem_limit: 3048000000
+    command: --maxrss 3048 --max-timeout 300 --disable-lua-sandbox

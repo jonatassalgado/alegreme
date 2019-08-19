@@ -64,6 +64,7 @@ services:
     ports:
       - 5432:5432
     restart: always
+    mem_limit: 2048000000
   web:
     build:
       context: ./web
@@ -78,6 +79,7 @@ services:
       - ./data/certbot/www:/var/www/certbot
       - ./logs/web:/var/www/alegreme/log
     restart: always
+    mem_limit: 1048000000
   certbot:
     image: certbot/certbot
     volumes:
@@ -95,7 +97,7 @@ services:
       - ./logs/api:/var/www/ml/api/log
     environment:
       IS_DOCKER: 'true'
-    mem_limit: 2048000000
+    mem_limit: 3048000000
   # search:
   #   build:
   #     context: ./search
@@ -125,7 +127,7 @@ services:
       - "7654:7654"
     restart: always
     command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
-    mem_limit: 4048000000
+    mem_limit: 3048000000
   splash:
     image: scrapinghub/splash
     ports:
@@ -134,5 +136,5 @@ services:
     restart: always
     volumes:
       - splash_data:/var/www/splash/data
-    mem_limit: 3048000000
-    command: --maxrss 2048 --max-timeout 300 --disable-lua-sandbox
+    mem_limit: 4048000000
+    command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
