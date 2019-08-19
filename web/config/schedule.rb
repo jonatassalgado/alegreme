@@ -10,17 +10,15 @@ ENV.each { |k, v| env(k, v) }
 
 set :output, "/var/www/alegreme/log/cron_log.log"
 
-# every 2.hours do
-#   command "/usr/bin/some_great_command"
-#   runner "MyModel.some_method"
-#   rake "some:great:rake:task"
-# end
+every 1.hour do
+  command "echo 'Tá funcionando'"
+end
 #
-every 1.day, at: '1:00 am' do
+every 1.day, at: '15:00 pm' do
   rake "db:dump"
 end
 
-every 1.day, at: '04:00 am' do
+every 1.day, at: '15:30 am' do
   rake "populate:facebook similar:events"
 end
 
