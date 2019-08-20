@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 	get '/retrain', to: 'events#retrain'
 	get '/service-worker.js', to: redirect('service-worker.js')
 	get '/manifest.json', to: redirect('manifest.json')
+	get '/privacy', to: 'welcome#privacy'
+	get '/terms', to: 'welcome#terms'
 	# match "/manifest.json"
 
 	resources :users

@@ -21,6 +21,12 @@ class WelcomeController < ApplicationController
 		end
 	end
 
+	def privacy
+	end
+
+	def terms
+	end
+
 	private
 
 	def count_invites
@@ -42,4 +48,3 @@ class WelcomeController < ApplicationController
 
 
 end
-

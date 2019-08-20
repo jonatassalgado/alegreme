@@ -419,6 +419,15 @@
   &__logo-icon {
     position: relative;
   }
+
+  &__links {
+    margin: 60px 0 12px 0;
+    font-size: 12px;
+    font-family: $font-secondary-family;
+    & a {
+      color: $font-tertiary-color;
+    }
+  }
 }
 
 .skatista {

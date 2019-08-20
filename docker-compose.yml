@@ -1,6 +1,7 @@
 version: '2.3'
 volumes:
   bundle_cache: {}
+  public-files:
   # scrapy_shared:
   db_data:
   db_backup:
@@ -22,6 +23,7 @@ services:
       - scrapy
     volumes:
       - bundle_cache:/bundle
+      - public-files:/var/www/alegreme/public:ro
       - ./scrapy/data:/var/www/scrapy/data
       - ./web/app:/var/www/alegreme/app
       - ./web/config:/var/www/alegreme/config
@@ -79,6 +81,7 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - ./logs/web:/var/www/alegreme/log
+      - public-files:/var/www/alegreme/public:ro
     restart: always
     mem_limit: 1048000000
   certbot:
