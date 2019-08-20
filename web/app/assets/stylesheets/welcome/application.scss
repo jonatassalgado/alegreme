@@ -111,6 +111,7 @@
     text-align: center;
     transition: opacity 0.4s ease;
     @include mobile-only {
+      display: none;
       font-size: 14px;
       line-height: 16px;
       margin: 6px 0 0 0;
@@ -138,9 +139,9 @@
     cursor: pointer;
     transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
     @include mobile-only {
-      width: 195px;
-      height: 50px;
-      font-size: 14px;
+      width: 245px;
+      height: 65px;
+      font-size: 18px;
       margin: 35px auto 0 auto;
     }
 
@@ -166,19 +167,19 @@
 
   &__google-details {
     text-align: center;
-    margin: 10px auto 0 auto;
-    width: 406px;
-    height: 35px;
-    background-image: asset_url("welcome/google-details.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    margin: 20px auto 0 auto;
+    // width: 406px;
+    // height: 35px;
+    // background-image: asset_url("welcome/google-details.png");
+    // background-repeat: no-repeat;
+    // background-position: center;
     transition: opacity 0.4s ease;
     @include mobile-only {
-      width: 220px;
-      height: 51px;
-      background-image: asset_url("welcome/google-details-mobile.png");
-      background-repeat: no-repeat;
-      background-position: center;
+      // width: 220px;
+      // height: 51px;
+      // background-image: asset_url("welcome/google-details-mobile.png");
+      // background-repeat: no-repeat;
+      // background-position: center;
     }
   }
 

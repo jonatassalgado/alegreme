@@ -39,6 +39,7 @@ gem 'gon'
 
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 
+gem 'picture_tag'
 
 # Webpacker
 gem 'webpacker', git: 'https://github.com/rails/webpacker.git'

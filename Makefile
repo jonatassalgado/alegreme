@@ -17,6 +17,9 @@ build-service:
 up:
 	docker-compose -f docker-compose.development.yml up -d
 
+restart:
+	docker-compose -f docker-compose.development.yml restart
+
 down:
 	docker-compose -f docker-compose.development.yml down
 

@@ -75,8 +75,10 @@ section {
     padding: 0;
 
     @include mobile-only {
-      font-size: 28px;
+      font-size: 26px;
       line-height: 30px;
+      text-align: left;
+      max-width: 80%;
     }
   }
 
@@ -89,7 +91,8 @@ section {
     max-width: 1080px;
     @include mobile-only {
       font-size: 14px;
-      line-height: 20px;
+      text-align: left;
+      line-height: 1.6em;
     }
   }
 }

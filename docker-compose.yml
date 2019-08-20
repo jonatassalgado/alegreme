@@ -23,7 +23,7 @@ services:
       - scrapy
     volumes:
       - bundle_cache:/bundle
-      - public-files:/var/www/alegreme/public:ro
+      - public-files:/var/www/alegreme/public
       - ./scrapy/data:/var/www/scrapy/data
       - ./web/app:/var/www/alegreme/app
       - ./web/config:/var/www/alegreme/config

@@ -3,7 +3,8 @@
 
   <section class="brand">
     <div class="brand__letter">
-      <%= image_tag "welcome/logo-letter.png", alt: 'logo' %>
+
+      <%= responsive_image_tag 'welcome/logo-letter', alt: 'logo', title: 'Oie!' %>
     </div>
   </section>
 
@@ -17,31 +18,31 @@
     <div class="features__scroll-view">
       <div class="feature feature--activities rellax" data-rellax-speed="2" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(-150px, 150px)' %> ; opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "welcome/bike-icon.png", alt: 'bicicleta' %>
+          <%= responsive_image_tag "welcome/bike-icon", alt: 'bicicleta' %>
         </div>
         <div class="feature__title">Atividades recorrentes para praticar na cidade</div>
       </div>
       <div class="feature feature--events rellax" data-rellax-speed="1" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(-100px, -150px)' %>; opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "welcome/calendar-icon.png", alt: "calendário" %>
+          <%= responsive_image_tag "welcome/calendar-icon", alt: "calendário" %>
         </div>
         <div class="feature__title">Eventos sugeridos com base no seu gosto individual</div>
       </div>
       <div class="feature feature--topics rellax" data-rellax-speed="1" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(0px, 150px)' %>; opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "welcome/hearth-icon.png", alt: "coração" %>
+          <%= responsive_image_tag "welcome/hearth-icon", alt: "coração" %>
         </div>
         <div class="feature__title">Siga os tópicos que você gosta e fique sempre por dentro</div>
       </div>
       <div class="feature feature--friends rellax" data-rellax-speed="1" style="transform: translate(100px, -150px); opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "welcome/friends-icon.png", alt: "amigos" %>
+          <%= responsive_image_tag "welcome/friends-icon", alt: "amigos" %>
         </div>
         <div class="feature__title">Compartilhe com seus melhores amigos seus planos</div>
       </div>
       <div class="feature feature--movie rellax" data-rellax-speed="2" style="transform: translate(150px, 150px); opacity: 0">
         <div class="feature__icon">
-          <%= image_tag "welcome/movie-icon.png", alt: "filme" %>
+          <%= responsive_image_tag "welcome/movie-icon", alt: "filme" %>
         </div>
         <div class="feature__title">Filmes do Mario Quintana, Capitólio e Cinemark</div>
       </div>
@@ -82,6 +83,7 @@
       </span>
     </div>
     <div class="invite__google-details">
+      <%= responsive_image_tag "welcome/google-details", alt: 'conta do google' %>
     </div>
     <div class="sharethis-inline-share-buttons invite__share"></div>
     <div class="skatista" style="transform: translate(-1900px, -50px);">
@@ -163,14 +165,14 @@
 
     <section class="footer">
       <div class="footer__logo-icon js-logo">
-        <%= image_tag "welcome/footer-logo-icon.png", alt: 'logo' %>
+        <%= responsive_image_tag "welcome/footer-logo-icon", alt: 'logo', title: 'Pimba!' %>
         <div class="brand__pimba js-pimba" style="opacity: 0;">Pimba</div>
       </div>
       <div class="footer__links">
         <a href="/privacy">Política de privacidade</a>
         <a href="/terms">Termos de serviço</a>
       </div>
-      <%= image_tag "welcome/footer-message.png", alt: 'footer message' %>
+      <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!' %>
     </section>
   </section>
 
