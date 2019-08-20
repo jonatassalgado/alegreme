@@ -1,19 +1,44 @@
 @import "variables";
 
 .me-similar {
-  grid-column: 15 span;
+  grid-column: 12 span;
   display: grid;
-  margin: 35px 0 12px 0;
+  margin: 35px 0 12px -13%;
   //grid-gap: 0 12px;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   height: auto;
   min-height: 260px;
+  padding: 20px 35px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  width: 126%;
+
+  & h3 {
+    font-family: $font-secondary-family;
+    color: $font-secondary-color;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    grid-column-end: 12 span;
+    line-height: 1.2em;
+    z-index: 2;
+    animation-name: show-in;
+    animation-duration: 1s;
+
+    & a {
+      color: $font-secondary-color;
+    }
+
+    & a:hover {
+      color: $font-primary-color;
+    }
+  }
 
   &__events {
     grid-column: 12 span;
     display: grid;
     margin: 6px 0 25px 0;
-    grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
+    grid-gap: 12px;
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
@@ -63,12 +88,12 @@
     border-radius: 2px;
 
     &__primary-section {
-      //font-size: 9px;
-      //font-weight: 100;
+      font-size: 10px;
+      font-weight: 500;
     }
 
     &__secondary-section {
-      font-size: 13px;
+      font-size: 14px;
 
       & a {
         color: $font-secondary-color;
@@ -80,7 +105,7 @@
     }
 
     & .mdc-card__media {
-      border-radius: 3px;
+      border-radius: 2px;
     }
   }
 
@@ -99,20 +124,6 @@
     grid-column-end: span 2;
   }
 
-  & .mdc-typography--headline6 {
-    grid-column-end: 12 span;
-    font-size: 14px;
-    text-transform: uppercase;
-    color: $font-primary-color;
-    line-height: 1.2em;
-    z-index: 2;
-    animation-name: show-in;
-    animation-duration: 1s;
-
-    & a:hover {
-      color: $font-primary-color-high-contrast;
-    }
-  }
 }
 
 @keyframes show-in {

@@ -12,19 +12,19 @@ $description-color: $font-secondary-color;
   &[data-event-similar-open="true"], &[data-event-similar-open="true"]:hover {
     //transform: scale(0.9);
     //transform-origin: center;
-    //border-bottom: 3px solid $brand-color-right;
+    //border-bottom: 3px solid $brand-color-left;
 
     & .me-card__secondary-section a {
-      //color: $font-primary-color-high-contrast;
+      //color: $brand-color-left;
     }
 
     & .me-card__similar {
       transform: translate(0px, 18px);
       opacity: 1;
-      color: $font-primary-color-high-contrast;
+      color: $brand-color-left;
 
       & svg {
-        fill: $font-primary-color-high-contrast;
+        fill: $brand-color-left;
       }
     }
   }
@@ -83,34 +83,43 @@ $description-color: $font-secondary-color;
   }
 
   &__primary-section {
-    color: $font-secondary-color;
+    color: $font-tertiary-color;
     text-transform: uppercase;
-    font-size: 11px;
+    font-size: 12px;
     margin: 12px 0 0 0px;
     font-weight: 800;
     //@extend .me-card__section;
+    & a {
+      color: $font-tertiary-color;
+    }
   }
 
   &__secondary-section {
-    color: $font-primary-color;
-    font-size: 15px;
+    color: $font-secondary-color;
+    font-size: 18px;
     margin: 6px 0 0 0px;
     font-weight: 500;
     //@extend .me-card__section;
+    & a {
+      color: $font-secondary-color;
+    }
   }
 
   &__tertiary-section {
-    color: $font-tertiary-color;
+    color: $font-secondary-color;
     font-size: 14px;
-    margin: 3px 0 0 0px;
-    font-weight: 200;
+    margin: 3px 0 0 0;
+    font-weight: 300;
     max-width: 80%;
     //@extend .me-card__section;
+    & a {
+      color: $font-secondary-color;
+    }
   }
 
   &__category {
     color: $font-secondary-color-high-contrast
-    //color: $font-primary-color-high-contrast;
+    //color: $brand-color-left;
   }
 
   &__date {
@@ -147,7 +156,7 @@ $description-color: $font-secondary-color;
     }
 
     &:hover {
-      color: $font-primary-color-high-contrast;
+      color: $brand-color-left;
     }
 
     & .material-icons {
@@ -158,8 +167,8 @@ $description-color: $font-secondary-color;
   &__like-button {
     position: absolute;
     z-index: 2;
-    bottom: 8px;
-    right: 8px;
+    top: 10px;
+    right: 10px;
   }
 
   &--feed {
@@ -186,29 +195,26 @@ $description-color: $font-secondary-color;
 
     & .me-icon-button.mdc-icon-button {
       display: none;
-      background: $surface-color;
+      color: $save-icon-color;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
-      @include mdc-icon-button-ink-color($color: $icon-light-color);
+
+      //@include mdc-icon-button-ink-color($color: $icon-light-color);
       @include mdc-icon-button-size($width: 26px, $height: 26px, $padding: 4px);
 
       @include mdc-layout-grid-media-query_("phone") {
-        @include mdc-icon-button-ink-color($color: $icon-light-color);
+        //@include mdc-icon-button-ink-color($color: $icon-light-color);
         @include mdc-icon-button-size($width: 26px, $height: 26px, $padding: 4px);
         background: none;
       }
 
+
       &:hover {
+        color: $save-icon-fill-hover;
       }
 
       &--on {
-        @include mdc-icon-button-ink-color($color: $brand-color-left);
-      }
-
-      & .material-icons-sharp {
-        //font-size: 30px;
-        background: $surface-color;
-        border-radius: 100%;
+        color: $save-icon-fill-active;
       }
     }
 
@@ -437,7 +443,7 @@ $description-color: $font-secondary-color;
     & .me-icon-button {
 
       &.mdc-icon-button {
-        background: $icon-background-color;
+        //background: $icon-background-color;
         transition: 0.2s all ease 0s;
         border-radius: 100%;
         @include mdc-icon-button-ink-color($color: $icon-light-color);
@@ -449,13 +455,14 @@ $description-color: $font-secondary-color;
         }
 
         &--on {
-          background: $icon-background-color;
+          //background: $icon-background-color;
           @include mdc-icon-button-ink-color($color: $brand-color-left);
           @include mdc-elevation($z-value: 2);
         }
 
         & .material-icons-sharp {
           font-size: 32px;
+          color: #ffffff;
         }
       }
     }

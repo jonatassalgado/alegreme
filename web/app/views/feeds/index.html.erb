@@ -1,6 +1,6 @@
 <%= render partial: "feeds/float_menu" %>
 
-<section class="me-page__section me-page__section--z0">
+<section class="me-page__section">
 
   <%= render partial: 'components/swipable/swipable' unless current_user&.personas_assortment_finished? %>
 
@@ -9,7 +9,7 @@
                locals:  {
                    identifier:   'salvos',
                    saved_events: @favorited_events
-               } if current_user&.personas_assortment_finished? %>
+               } if current_user %>
   </div>
 </section>
 
@@ -96,7 +96,7 @@
                                  kinds:      true,
                                  ocurrences: false
                              },
-                             detail: @items[:today][:detail]
+                             detail: @items[:user_suggestions][:detail]
                          }
                      } %>
 

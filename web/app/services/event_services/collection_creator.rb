@@ -140,9 +140,9 @@ module EventServices
 		end
 
 		def set_limit
-			return 10 if params_filter_category_exist? || params_filters_ocurrences_exist?
+			return 8 if params_filter_category_exist? || params_filters_ocurrences_exist?
 
-			@params[:limit] || @opts[:limit] || 5
+			@params[:limit] || @opts[:limit] || 4
 		end
 
 		def group_by_or_kinds_not_exist?(opts)

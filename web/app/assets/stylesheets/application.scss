@@ -15,7 +15,7 @@
 
 @import 'variables';
 
-$mdc-typography-font-family: 'Cabin';
+$mdc-typography-font-family: $font-secondary-family;
 $mdc-theme-primary: $brand-color-left;
 //$mdc-theme-secondary: #feeae6;
 //$mdc-theme-on-primary: #442b2d;
@@ -89,10 +89,10 @@ body {
   height: 100vh;
   // overflow: hidden;
   margin: 0;
-  font-family: Cabin, Arial;
+  font-family: $font-secondary-family;
   font-size: 14px;
   background: $background-z1-color;
-  color: $font-primary-color;
+  color: $font-secondary-color;
   
   @include mdc-layout-grid-media-query_("phone") {
     background: $background-color;

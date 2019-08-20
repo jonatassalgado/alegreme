@@ -4,12 +4,14 @@ $brand-color-right: #2191FB;
 $brand-color-high-contrast: #0C0F0A; //darken($brand-color, 10%);
 //$brand-color-intersect: #2bb3ae;
 
+$border-color: #E1E1E1;
+
 $like-color: $brand-color-left;
 $dislike-color: #8F1717;
-$maybe-color: $brand-color-right;
+$maybe-color: $brand-color-left;
 
-$font-primary-font: 'Montserrat', sans-serif;
-$font-secondary-font: 'Roboto', sans-serif;
+$font-primary-family: 'Montserrat', sans-serif;
+$font-secondary-family: 'Roboto', sans-serif;
 
 @mixin section-constraints {
   max-width: 95%;
@@ -25,22 +27,33 @@ $surface-color: #ffffff;
 $surface-secondary-color: #f7f7f7;
 
 $font-primary-color: lighten($brand-color-high-contrast, 10%); // #1D2A4C; // #000100;
-$font-primary-color-high-contrast: #2191FB;
-$font-secondary-color: transparentize($font-primary-color, 0.35);
+//$brand-color-left: #2191FB;
+$font-secondary-color: #4B4B4B; // transparentize($font-primary-color, 0.35);
 $font-secondary-color-high-contrast: #8F1717;
-$font-tertiary-color: transparentize($font-secondary-color, 0.20);
+$font-tertiary-color: #7D7D7D; // transparentize($font-secondary-color, 0.20);
 
 $media-box-shadow: unset; // 0 0 0 1px rgba(0, 0, 0, 0.12);
 $media-border-radius: 3px;
 $media-border-width: 0;
 
-$chip-follow-color: darken($brand-color-left, 28%);
-$chip-follow-border-color: $brand-color-left;
-$chip-follow-background-color: lighten($chip-follow-border-color, 40%);
+$save-icon-fill: none;
+$save-icon-fill-hover: #ffffff;
+$save-icon-fill-active: $brand-color-left;
+$save-icon-color: #ffffff;
+$save-icon-color-hover: #ffffff;
+$save-icon-color-active: $brand-color-left;
 
-$chip-filter-color: darken($brand-color-right, 26%);
-$chip-filter-border-color: $brand-color-right;
-$chip-filter-background-color: lighten($chip-filter-border-color, 38%);
+$chip-follow-color: darken($brand-color-left, 10%);
+$chip-follow-border-color: $brand-color-left;
+$chip-follow-background-color: rgba(0, 173, 84, 0.15);
+
+$chip-filter-color: $font-secondary-color;
+$chip-filter-border-color: $border-color; // $brand-color-left;
+$chip-filter-background: #ffffff;
+$chip-filter-color-active: darken($brand-color-left, 10%);
+$chip-filter-border-color-active: $brand-color-left;
+$chip-filter-background-active: rgba(0, 173, 84, 0.15);
+$chip-filter-radius: 1px;
 
 $chip-font-color: $brand-color-high-contrast; // darken($brand-color, 25%);
 $chip-background-color: $brand-color-left; // transparentize($brand-color, 0.65);
@@ -54,8 +67,6 @@ $icon-color: transparentize($font-primary-color, 0.30);
 $icon-dark-color: transparentize($font-primary-color, 0.10);
 $icon-light-color: transparentize($font-primary-color, 0.60);
 $icon-background-color: $background-color;
-
-$border-color: #e0e0e0;
 
 
 $elevated-surface-color: #f9f9f9;

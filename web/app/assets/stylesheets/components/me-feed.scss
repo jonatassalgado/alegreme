@@ -7,7 +7,7 @@ $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
 
 $mdc-layout-grid-columns: (
-        desktop: 15,
+        desktop: 12,
         tablet: 18,
         phone: 8
 );
@@ -16,31 +16,35 @@ $mdc-layout-grid-columns: (
   @include section-constraints;
 
   & section {
-    border-bottom: 1px solid #e0e0e0;
+    //border-bottom: 1px solid #e0e0e0;
     margin-bottom: 50px;
   }
 
   &__section {
+    max-width: 960px;
+    margin: auto;
     padding: 0 0 25px 0;
     @include mdc-layout-grid-media-query_("phone") {
       margin: 0;
     }
 
-    & .mdc-typography--headline4 {
+    & h2 {
       margin: 8px 0;
-      font-weight: 700;
+      font-weight: 800;
       max-width: 55%;
       line-height: 1.3em;
       font-size: 24px;
-      font-family: $font-primary-font;
+      color: $font-secondary-color;
+      font-family: $font-primary-family;
 
       & span {
         font-size: 16px;
         display: block;
-        font-weight: 100;
+        font-weight: 300;
+        font-family: $font-secondary-family;
         color: $font-secondary-color;
         line-height: 1.6em;
-        margin-top: 16px;
+        margin-top: 8px;
       }
     }
 
@@ -71,9 +75,10 @@ $mdc-layout-grid-columns: (
   }
 
   &__load-more {
+    text-align: center;
 
     & .mdc-button {
-      font-family: $font-secondary-font;
+      font-family: $font-secondary-family;
       font-size: 12px;
     }
   }
@@ -142,7 +147,7 @@ $mdc-layout-grid-columns: (
 
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
-    --mdc-layout-grid-gutter-desktop: 0 24px;
+    --mdc-layout-grid-gutter-desktop: 0 16px;
 
     @include mdc-layout-grid-media-query_("phone") {
       background-color: $surface-color;

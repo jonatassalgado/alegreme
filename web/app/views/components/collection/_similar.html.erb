@@ -3,10 +3,11 @@
   similar_to = params.fetch(:similar, false)
   order = params.fetch(:insert_after, 4)
   user = local_assigns.fetch(:user, current_user)
+  similar_to_show = 6
 
   if similar_to
     event              = events.detect { |event| event.id == similar_to.to_i } || Event.find(similar_to)
-    similar_events_ids = event.similar_data[0...6]
+    similar_events_ids = event.similar_data[0...similar_to_show]
     similar_events     = Event.where(id: similar_events_ids).active.not_in_saved(user)
     identifier         = local_assigns.fetch(:identifier, 'similar')
   end
@@ -17,7 +18,7 @@
   <div id="similar-to-<%= similar_to %>"
        class="me-similar"
        style="order: <%= order %>">
-    <h3 class="mdc-typography--headline6">
+    <h3>
       Eventos parecidos com <%= link_to(limit_name_size(event.details['name'], 60), event_path(event)) %>
     </h3>
 
@@ -32,7 +33,7 @@
                      type:            'similar'
                  } %>
 
-      <% if similar_events.size < 6 %>
+      <% if similar_events.size < similar_to_show %>
         <div class="me-similar__empty">
           <i class="material-icons-sharp sentiment-satisfied">
             sentiment_satisfied

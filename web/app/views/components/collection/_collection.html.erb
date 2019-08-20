@@ -90,15 +90,12 @@
 
           <% end %>
         </div>
-        <% if events_in_collection >= 5 %>
+        <% if events_in_collection >= 4 %>
           <div class="me-feed__load-more"
                data-action="click->section#loadMore"
                data-target="section.loadMoreButton">
             <button class="mdc-button">
               <span class="mdc-button__label">mostrar mais</span>
-              <i class="material-icons">
-                expand_more
-              </i>
             </button>
           </div>
         <% end %>

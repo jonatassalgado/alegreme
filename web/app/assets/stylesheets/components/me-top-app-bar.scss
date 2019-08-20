@@ -7,12 +7,15 @@ $border-color: #e0e0e0;
 
 .me-top-app-bar {
   background-color: $fill-color;
-  box-shadow: $surface-z10-box-shadow;
   color: $font-color;
   position: fixed;
-  //border-bottom: 1px solid $border-color;
   top: 0;
   user-select: none;
+
+  &.mdc-top-app-bar--fixed-scrolled {
+    border-bottom: 1px solid $border-color;
+    box-shadow: unset;
+  }
 
   @include mdc-layout-grid-media-query_("phone") {
     background-color: $background-color;
@@ -33,8 +36,8 @@ $border-color: #e0e0e0;
     }
 
     &-text{
-      //height: 22px;
-      margin: 2px 0 0 115px;
+      height: 26px;
+      //margin: 0;
       //display: none;
     }
 
@@ -95,7 +98,7 @@ $border-color: #e0e0e0;
   }
 
   &.mdc-top-app-bar--fixed-scrolled {
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    //box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   }
 
   &--events {

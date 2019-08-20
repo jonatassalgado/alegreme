@@ -121,7 +121,7 @@
   &__cta {
     width: 366px;
     height: 87px;
-    font-family: $font-primary-font;
+    font-family: $font-primary-family;
     font-style: normal;
     font-weight: 900;
     font-size: 28px;
@@ -295,7 +295,7 @@
     transition: transform 0.4s ease;
 
     h3 {
-      font-family: $font-primary-font;
+      font-family: $font-primary-family;
     }
 
     &:hover {
