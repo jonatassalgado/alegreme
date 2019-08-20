@@ -102,6 +102,14 @@ RUN bundle update --bundler
 COPY . .
 
 
+RUN mkdir -p log
+WORKDIR log
+RUN touch cron.log
+
+
+WORKDIR $RAILS_ROOT
+
+
 RUN rake webpacker:clobber
 RUN rake assets:precompile
 RUN yarn install
