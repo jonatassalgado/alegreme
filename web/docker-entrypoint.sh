@@ -16,7 +16,7 @@ rake db:exists && rake db:migrate || rake db:setup db:migrate
 
 #rake db:exists RAILS_ENV=development && rails runner "Event.reindex"
 
-whenever
+bundle exec clockworkd -c clock.rb -d /var/www/alegreme --log-dir /var/www/alegreme/log --log start
 
 exec "$@"
 # Finally call command issued to the docker service

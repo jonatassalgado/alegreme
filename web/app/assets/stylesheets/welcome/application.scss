@@ -241,6 +241,7 @@
   }
 
   & h2 {
+    font-family: $font-primary-family;
     font-weight: bold;
     font-size: 48px;
     line-height: 58px;
@@ -271,7 +272,9 @@
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-areas: "q1 q1 q2 q2 q2" "q3 q3 q3 q3 q3" "q4 q4 q4 q5 q5";
     position: relative;
+    left: -50px;
     @include mobile-only {
+      left: auto;
       width: 90%;
       grid-row-gap: 10px;
       grid-column-gap: 10px;
@@ -296,7 +299,7 @@
     transition: transform 0.4s ease;
 
     h3 {
-      font-family: $font-primary-family;
+      font-family: $font-secondary-family;
     }
 
     &:hover {
@@ -360,6 +363,7 @@
     text-align: left;
     @include mobile-only {
       max-width: 90%;
+      margin: 0px 20px;
     }
 
     & h3 {
@@ -458,4 +462,5 @@
 .has-helper i {
   border-bottom: 2px dotted #59616e;
   cursor: help;
+  font-style: normal;
 }

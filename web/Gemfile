@@ -77,13 +77,15 @@ gem 'image_processing', '~> 1.0'
 
 gem 'rack-cors'
 
-gem 'whenever', require: false
-
 gem 'shrine'
 gem 'mimemagic'
 gem 'shrine-color'
 
 gem 'facets', require: false
+
+gem 'clockwork', require: false
+gem 'daemons'
+
 
 gem 'active_record_extended'
 
