@@ -1,12 +1,15 @@
 {
     "name": "Alegreme",
+    "description": "Aproveite a cidade de Porto Alegre",
     "short_name": "Alegreme",
     "theme_color": "#ffffff",
-    "background_color": "#fffff",
-    "display": "standalone",
+    "background_color": "#ffffff",
+    "display": "fullscreen",
     "orientation": "portrait",
-    "Scope": "/",
+    "scope": "/",
     "start_url": "/?utm_source=pwa",
+    "lang": "pt-BR",
+    "categories": ["lifestyle", "entertainment"],
     "icons": [
       {
         "src": "images/icons/icon-72x72.png",
