@@ -2,7 +2,7 @@ version: '2.3'
 volumes:
   bundle_cache: {}
   public-files:
-  # scrapy_shared:
+  scrapy_data:
   db_data:
   db_backup:
   api_data:
@@ -24,6 +24,7 @@ services:
     volumes:
       - bundle_cache:/bundle
       - public-files:/var/www/alegreme/public
+      - scrapy_data:/var/www/scrapy/data:ro
       - ./scrapy/data:/var/www/scrapy/data
       - ./web/app:/var/www/alegreme/app
       - ./web/config:/var/www/alegreme/config
@@ -125,7 +126,7 @@ services:
     depends_on:
       - splash
     volumes:
-      - ./scrapy/data:/var/www/scrapy/data
+      - scrapy_data:/var/www/scrapy/data
       - scrapydo_data:/var/www/scrapy/projects
     ports:
       - "7654:7654"
