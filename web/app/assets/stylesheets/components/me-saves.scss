@@ -12,6 +12,7 @@ $gutter: 6px;
   //@include section-constraints;
   @include mdc-layout-grid-media-query_("phone") {
     //display: none;
+    margin: 25px 0;
   }
 
   &__list {
@@ -82,10 +83,21 @@ $gutter: 6px;
     font-size: 21px;
   }
 
-  & .mdc-typography--headline6 {
+  & h3 {
     margin: 0 0 15px 0;
     font-size: 1.3em;
     font-weight: 800;
+    @include mdc-layout-grid-media-query_("phone") {
+      font-size: 22px;
+      padding: 0 $section-padding-phone;
+      font-family: $font-primary-family;
+    }
+
+    & i {
+      @include mdc-layout-grid-media-query_("phone") {
+        display: none;
+      }
+    }
   }
 
   & .mdc-layout-grid {
@@ -93,6 +105,9 @@ $gutter: 6px;
     --mdc-layout-grid-gutter-desktop: 8px;
     @include add-horizontal-scroll();
     @include no-scroll-bar();
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 0;
+    }
   }
 
   & .mdc-layout-grid__inner {
@@ -105,6 +120,9 @@ $gutter: 6px;
     padding-bottom: calc(0.75 * #{$gutter});
     margin-bottom: calc(-0.25 * #{$gutter});
     // @include add-horizontal-scroll();
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 0 $section-padding-phone;
+    }
   }
 
   & .mdc-layout-grid__cell--span-2 {
@@ -114,6 +132,9 @@ $gutter: 6px;
     flex-direction: column;
     justify-content: normal;
     width: auto;
+    @include mdc-layout-grid-media-query_("phone") {
+      scroll-snap-align: none;
+    }
   }
 
   & .me-card {
@@ -188,6 +209,9 @@ $gutter: 6px;
 
   & .me-icon--scroll-left, .me-icon--scroll-right {
     position: absolute;
+    @include mdc-layout-grid-media-query_("phone") {
+      display: none;
+    }
   }
 
   & .me-icon--scroll-left {

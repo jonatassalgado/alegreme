@@ -1,12 +1,19 @@
 <header class="me-top-app-bar mdc-top-app-bar mdc-top-app-bar--fixed <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>"
         id="top-bar">
   <div class="mdc-top-app-bar__row">
-    <section
-      class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-      <a href="/">
-        <%= image_tag 'logo.png', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
-      </a>
-    </section>
+    <% if mobile_device? && params[:controller] == 'feeds' && params[:action] == 'index' %>
+      <section
+        class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <a href="/">
+          <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
+        </a>
+      </section>
+    <% else %>
+      <span class="me-top-app-bar__back-button"
+            onclick="window.history.back()">
+        <i class="material-icons">keyboard_backspace</i>
+      </span>
+    <% end %>
     <% if mobile_device? && controller == 'events' %>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
         <span class="me-top-app-bar__back-button"
@@ -68,6 +75,9 @@
           <%= link_to "Sair", destroy_user_session_path, method: :delete, class: "me-top-app-bar__logout" %>
         </div>
       <% else %>
+        <div class="me-top-app-bar__signin-link">
+          <span onclick="CacheSystem.clearCache(); location.assign('/users/auth/google_oauth2')">Entrar</span>
+        </div>
         <div class="g-signin2"
              data-gapiscan="true"
              data-onload="true"

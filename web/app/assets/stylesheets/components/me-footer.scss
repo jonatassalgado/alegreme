@@ -2,8 +2,11 @@
 
 .me-footer {
   text-align: center;
-  padding: 15px 0 35px 0;
+  padding: 35px 0;
   color: $font-secondary-color;
+  @include mdc-layout-grid-media-query_("phone") {
+    display: none;
+  }
 
   & span {
     margin: 0 12px;

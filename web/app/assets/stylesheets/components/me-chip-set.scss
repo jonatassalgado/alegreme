@@ -1,6 +1,22 @@
 @import "../_variables";
 
 .me-chip-set {
+  text-align: right;
+  @include mdc-layout-grid-media-query_("phone") {
+    text-align: left;
+    width: max-content;
+  }
+
+  &__wrapper {
+    @include mdc-layout-grid-media-query_("phone") {
+      overflow-x: scroll;
+    }
+    &::-webkit-scrollbar{
+      @include mdc-layout-grid-media-query_("phone") {
+        display: none;
+      }
+    }
+  }
 
   &--small {
 
@@ -9,7 +25,7 @@
       background: $elevated-surface-color;
       height: unset;
 
-     & .material-icons {
+      & .material-icons {
         padding: 4px;
       }
 

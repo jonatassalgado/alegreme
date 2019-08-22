@@ -3,6 +3,11 @@
   max-width: 540px;
   margin: auto;
   position: relative;
+  padding: 0 $section-padding-phone;
+  @include mdc-layout-grid-media-query_("phone") {
+    margin: 25px 0 35px 0;
+    display: inline-block;
+  }
 
   &__item {
     width: 100%;
@@ -16,6 +21,9 @@
     flex-wrap: wrap;
     align-content: flex-end;
     padding: 25px 50px 25px 25px;
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 15px;
+    }
 
     &-title, &-description {
       z-index: 3;
@@ -25,12 +33,18 @@
       font-size: 28px;
       font-weight: 800;
       padding-bottom: 6px;
+      @include mdc-layout-grid-media-query_("phone") {
+        font-size: 24px;
+      }
     }
 
     &-description {
       font-size: 16px;
       line-height: 1.2em;
       font-weight: 100;
+      @include mdc-layout-grid-media-query_("phone") {
+        font-size: 12px;
+      }
     }
 
     &-overlay {
@@ -60,6 +74,7 @@
 
   & .stackedcards {
     position: relative;
+    display: inline-block;
 
     &.hidden {
       display: none;
@@ -94,6 +109,9 @@
     top: 0;
     border-radius: 10px;
     overflow: hidden;
+    @include mdc-layout-grid-media-query_("phone") {
+      height: 190px;
+    }
   }
 
   & .stackedcards-overlay.left > div, .stackedcards-overlay.right > div, .stackedcards-overlay.top > div {
@@ -179,15 +197,21 @@
     justify-content: center;
     width: 100%;
     position: relative;
-    top: 12px;
+    margin: 15px 0 0 0;
+    @include mdc-layout-grid-media-query_("phone") {
+      margin: 15px 0 25px 0;
+    }
 
     &.hidden {
       display: none;
     }
 
     & > button {
-      margin: 0 16px;
-      @include mdc-button-ink-color($font-secondary-color);
+      margin: 0 12px;
+      display: grid;
+      text-align: center;
+      height: 55px;
+      @include mdc-button-ink-color($font-tertiary-color);
       //@include mdc-button-outline-color($font-secondary-color)
     }
   }
@@ -230,5 +254,21 @@
   & .final-state.hidden {
     opacity: 0;
     display: none;
+  }
+
+  & .mdc-button__icon {
+    margin: 0;
+    width: auto;
+  }
+
+  & .mdc-button__icon {
+    font-size: 26px;
+    height: auto;
+    margin-bottom: 6px;
+  }
+
+  & .mdc-button__label {
+    font-size: 11px;
+    height: auto;
   }
 }

@@ -28,7 +28,7 @@ export default class SwipableController extends Controller {
 		const useOverlays    = true; //Enable or disable the overlays for swipe elements.
 		let maxElements; //Total of stacked cards on DOM.
 		let currentPosition  = 0; //Keep the position of active stacked card.
-		const velocity       = 0.3; //Minimum velocity allowed to trigger a swipe.
+		const velocity       = 0.1; //Minimum velocity allowed to trigger a swipe.
 		let answers          = [];
 		let isFirstTime      = true;
 		let topObj; //Keep the swipe top properties.

@@ -1,29 +1,31 @@
-<div data-controller="chip"
-     data-chip-default-value="<%= initial_filters.to_json %>"
-     data-chip-type="filter"
-     data-target="chip.chipset filter.<%= type %>"
-     class="me-chip-set <%= (['kinds'].include?(type)) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'filter' %>">
-  <i class="material-icons">
-    <%= icon_type %>
-  </i>
-  <% Array(filters_that_exist_in_events).each do |filter| %>
-    <% if type == 'ocurrences' %>
-      <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter['string'] %>"
-           class="me-chip mdc-chip <%= params_filters and filter_exist_in_ocurrences?(params_filters, filter['string']) ? 'mdc-chip--selected' : nil %>"
-           data-turbolinks-scroll="false">
-        <div class="mdc-chip__text">
-          <%= filter['decorator'].try(:capitalize) %>
+<div class="me-chip-set__wrapper">
+  <div data-controller="chip"
+       data-chip-default-value="<%= initial_filters.to_json %>"
+       data-chip-type="filter"
+       data-target="chip.chipset filter.<%= type %>"
+       class="me-chip-set <%= (['kinds'].include?(type)) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'filter' %>">
+    <i class="material-icons">
+      <%= icon_type %>
+    </i>
+    <% Array(filters_that_exist_in_events).each do |filter| %>
+      <% if type == 'ocurrences' %>
+        <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter['string'] %>"
+             class="me-chip mdc-chip <%= params_filters and filter_exist_in_ocurrences?(params_filters, filter['string']) ? 'mdc-chip--selected' : nil %>"
+             data-turbolinks-scroll="false">
+          <div class="mdc-chip__text">
+            <%= filter['decorator'].try(:capitalize) %>
+          </div>
         </div>
-      </div>
-    <% else %>
-      <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter %>"
-           class="me-chip mdc-chip <%= params_filters.try(:to_s) and params_filters.include?(filter) ? 'mdc-chip--selected' : nil %>"
-           data-turbolinks-scroll="false">
+      <% else %>
+        <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter %>"
+             class="me-chip mdc-chip <%= params_filters.try(:to_s) and params_filters.include?(filter) ? 'mdc-chip--selected' : nil %>"
+             data-turbolinks-scroll="false">
 
-        <div class="mdc-chip__text">
-          <%= filter.capitalize %>
+          <div class="mdc-chip__text">
+            <%= filter.capitalize %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>

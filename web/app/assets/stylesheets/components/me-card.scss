@@ -19,7 +19,7 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__similar {
-      transform: translate(0px, 18px);
+      // transform: translate(0px, 6px);
       opacity: 1;
       color: $brand-color-left;
 
@@ -88,6 +88,7 @@ $description-color: $font-secondary-color;
     font-size: 12px;
     margin: 12px 0 0 0px;
     font-weight: 800;
+    line-height: 1.3em;
     //@extend .me-card__section;
     & a {
       color: $font-tertiary-color;
@@ -99,7 +100,10 @@ $description-color: $font-secondary-color;
     font-size: 18px;
     margin: 6px 0 0 0px;
     font-weight: 500;
-    //@extend .me-card__section;
+    @include mdc-layout-grid-media-query_("phone") {
+      font-size: 16px;
+    }
+
     & a {
       color: $font-secondary-color;
     }
@@ -126,7 +130,7 @@ $description-color: $font-secondary-color;
 
     &.is-today {
       background: $brand-color-left;
-      padding: 1px 1px 1px 3px;
+      padding: 0 3px 0 0;
       border-radius: 3px;
       color: white;
       margin: 0 3px 0 0;
@@ -150,6 +154,10 @@ $description-color: $font-secondary-color;
     //transform: translate(0px, -10px);
     margin: 6px 0 0 0;
     user-select: none;
+    @include mdc-layout-grid-media-query_("phone") {
+      opacity: 1;
+    }
+
 
     & svg {
       fill: $font-secondary-color;
@@ -176,7 +184,7 @@ $description-color: $font-secondary-color;
     font-size: 14px;
     border: 0;
     box-shadow: none;
-    background: $background-color;
+    // background: $background-color;
     position: relative;
     //margin: 0 0 25px 0;
 
@@ -198,6 +206,9 @@ $description-color: $font-secondary-color;
       color: $save-icon-color;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
+      @include mdc-layout-grid-media-query_("phone") {
+        display: block;
+      }
 
       //@include mdc-icon-button-ink-color($color: $icon-light-color);
       @include mdc-icon-button-size($width: 26px, $height: 26px, $padding: 4px);
@@ -289,8 +300,9 @@ $description-color: $font-secondary-color;
     padding: 35px 0;
     font-size: 16px;
     line-height: 1.4em;
-    //border-radius: 20px;
-    //overflow: hidden;
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 0;
+    }
 
     &[data-event-description-open="true"] {
 
@@ -323,6 +335,12 @@ $description-color: $font-secondary-color;
       justify-content: flex-end;
       align-content: flex-start;
       position: relative;
+      @include mdc-layout-grid-media-query_("phone") {
+        height: auto;
+        align-content: center;
+        justify-content: center;
+        flex-direction: row;
+      }
     }
 
     & .me-card__media {
@@ -331,21 +349,31 @@ $description-color: $font-secondary-color;
       background-size: cover;
       background-position: center;
       border-radius: $media-border-radius;
-      box-shadow: 0px -5px 20px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+      @include mdc-layout-grid-media-query_("phone") {
+        width: 200px;
+      }
     }
 
     & .me-card__name {
       padding: 0;
       margin: 0 0 30px 15px;
       width: calc(70% - 85px);
-      line-height: 1.2em;
+      line-height: 1.3em;
+      font-family: $font-primary-family;
+      font-weight: 800;
       font-size: 18px;
+      @include mdc-layout-grid-media-query_("phone") {
+        font-size: 24px;
+        width: 90%;
+        text-align: center;
+        margin: 15px 0 0 0;
+      }
     }
 
 
     & .me-card__topics {
       text-align: center;
-      max-width: 85%;
       margin: auto;
 
       & .mdc-chip-set {
@@ -358,11 +386,8 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__like-button {
-      bottom: 0;
-      right: 16px;
-      position: absolute;
-      top: auto;
-      z-index: 2;
+      top: 2px;
+      right: 2px;
     }
 
     & .me-card__primary-section {
@@ -370,6 +395,9 @@ $description-color: $font-secondary-color;
       text-transform: none;
       display: flex;
       margin: 50px 0;
+      @include mdc-layout-grid-media-query_("phone") {
+        flex-direction: column;
+      }
     }
 
     & .me-card__place, .me-card__date {
@@ -378,10 +406,17 @@ $description-color: $font-secondary-color;
       margin: 0 15px 0 0;
       border-radius: 5px;
       width: 50%;
+      @include mdc-layout-grid-media-query_("phone") {
+        width: auto;
+        margin: 0 0 16px 0;
+      }
 
       & i {
         float: left;
         margin: 8px 10px 0 3px;
+        @include mdc-layout-grid-media-query_("phone") {
+          margin: 2px 10px 0 3px;
+        }
       }
 
       & h3 {
@@ -448,16 +483,16 @@ $description-color: $font-secondary-color;
         border-radius: 100%;
         @include mdc-icon-button-ink-color($color: $icon-light-color);
         @include mdc-icon-button-size($width: 32px, $height: 32px, $padding: 6px);
-        @include mdc-elevation($z-value: 4);
+        // @include mdc-elevation($z-value: 4);
 
         &:hover {
-          @include mdc-elevation($z-value: 2);
+          // @include mdc-elevation($z-value: 2);
         }
 
         &--on {
           //background: $icon-background-color;
           @include mdc-icon-button-ink-color($color: $brand-color-left);
-          @include mdc-elevation($z-value: 2);
+          // @include mdc-elevation($z-value: 2);
         }
 
         & .material-icons-sharp {
@@ -553,4 +588,3 @@ $description-color: $font-secondary-color;
     right: -10px;
   }
 }
-

@@ -36,7 +36,7 @@ $border-color: #e0e0e0;
     }
 
     &-text{
-      height: 26px;
+      height: 30px;
       //margin: 0;
       //display: none;
     }
@@ -52,6 +52,9 @@ $border-color: #e0e0e0;
   &__name {
     font-size: 14px;
     width: 100%;
+    @include mdc-layout-grid-media-query_("phone") {
+      display: none;
+    }
   }
 
   &__picture {
@@ -59,19 +62,25 @@ $border-color: #e0e0e0;
     width: 35px;
     height: 35px;
     margin: 0 8px 0 0;
+    @include mdc-layout-grid-media-query_("phone") {
+      margin: 0;
+    }
   }
 
   &__logout {
     color: $font-tertiary-color;
     font-size: 12px;
+    @include mdc-layout-grid-media-query_("phone") {
+      display: none;
+    }
   }
 
   &__section {
     flex: 1 1 0;
+    padding: 0;
 
     &--left {
       @include mdc-layout-grid-media-query_("phone") {
-        display: none;
       }
     }
 
@@ -81,20 +90,37 @@ $border-color: #e0e0e0;
       flex: none;
 
       @include mdc-layout-grid-media-query_("phone") {
+        display: none;
         padding: 8px 12px;
         flex: 1 1 0;
       }
     }
 
     &--right {
+      & .me-top-app-bar__signin-link {
+        display: none;
+      }
       @include mdc-layout-grid-media-query_("phone") {
-        //display: none;
+        & .me-top-app-bar__signin-link {
+          display: inline;
+        }
+        & .g-signin2 {
+          display: none;
+        }
       }
     }
   }
 
   &__back-button {
-    cursor: pointer;
+    display: none;
+    @include mdc-layout-grid-media-query_("phone") {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      width: 60px;
+      margin: 0 0 0 (-$section-padding-phone);
+      padding: 0 0 0 $section-padding-phone;
+    }
   }
 
   &.mdc-top-app-bar--fixed-scrolled {
@@ -139,6 +165,7 @@ $border-color: #e0e0e0;
     padding: 0 12px;
     @include mdc-layout-grid-media-query_("phone") {
       height: 65px;
+      padding: 0 $section-padding-phone;
     }
   }
 

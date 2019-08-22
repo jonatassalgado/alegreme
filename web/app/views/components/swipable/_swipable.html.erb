@@ -1,4 +1,4 @@
-<div data-controller="swipable" data-target="swipable.swipable" class="me-swipable">
+<div data-controller="swipable" data-target="swipable.swipable" class="me-swipable me-page__section">
   <div id="stacked-cards-block" class="stackedcards stackedcards--animatable init">
     <div class="stackedcards-container">
       <% @swipable_items.each do |item| %>
@@ -24,15 +24,15 @@
   <div class="global-actions">
     <button class="mdc-button mdc-button__icon left-action">
       <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_down</i>
-      <span class="mdc-button__label">Não Iria</span>
+      <span class="mdc-button__label">Não</span>
     </button>
     <button class="mdc-button mdc-button__icon top-action">
 <!--      <i class="material-icons mdc-button__icon" aria-hidden="true">star_rate</i>-->
-      <span class="mdc-button__label">Talvez</span>
+      <span class="mdc-button__label" style="opacity: 0.6">Talvez</span>
     </button>
     <button class="mdc-button mdc-button__icon right-action">
-      <span class="mdc-button__label">Iria Certo</span>
       <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
+      <span class="mdc-button__label">Sim</span>
     </button>
   </div>
   <div class="final-state hidden">

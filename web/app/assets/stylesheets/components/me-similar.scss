@@ -12,6 +12,12 @@
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   width: 126%;
+  @include mdc-layout-grid-media-query_("phone") {
+    width: auto;
+    padding: 6px 0;
+    margin: 12px;
+  }
+
 
   & h3 {
     font-family: $font-secondary-family;
@@ -24,6 +30,9 @@
     z-index: 2;
     animation-name: show-in;
     animation-duration: 1s;
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 0 12px;
+    }
 
     & a {
       color: $font-secondary-color;
@@ -40,6 +49,37 @@
     margin: 6px 0 25px 0;
     grid-gap: 12px;
     grid-template-columns: repeat(12, minmax(0, 1fr));
+    @include mdc-layout-grid-media-query_("phone") {
+      grid-template-columns: repeat(20, minmax(15vw, 1fr));
+      overflow-x: scroll;
+      padding: 0 ($section-padding-phone / 2);
+    }
+
+    &::-webkit-scrollbar {
+      @include mdc-layout-grid-media-query_("phone") {
+        display: none;
+      }
+    }
+
+    & .me-card__like-button {
+      top: 2px;
+      right: 2px;
+    }
+
+    & .mdc-layout-grid__cell {
+      @include mdc-layout-grid-cell(
+        $size: "desktop",
+        $default-span: 2,
+        $gutter: 16px
+      );
+      @include mdc-layout-grid-media-query_("phone") {
+        @include mdc-layout-grid-cell(
+        $size: "phone",
+        $default-span: 2,
+        $gutter: 12px
+        );
+      }
+    }
   }
 
   &__organizers {
@@ -58,6 +98,9 @@
       justify-content: center;
       padding: 0 15%;
       padding-bottom: 15px;
+      @include mdc-layout-grid-media-query_("phone") {
+        padding: 0;
+      }
       //border-bottom: 1px solid darken($background-color, 5%);
     }
   }
@@ -137,4 +180,3 @@
     //transform: translate(0, 0);
   }
 }
-
