@@ -102,8 +102,6 @@ RUN bundle update --bundler
 COPY . .
 
 
-WORKDIR $RAILS_ROOT
-
 
 RUN rake assets:clobber
 RUN rake webpacker:clobber

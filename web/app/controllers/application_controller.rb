@@ -4,21 +4,21 @@ class ApplicationController < ActionController::Base
   etag {current_or_guest_user.try :id}
 
   # Sentry
-  if Rails.env.production? 
+  if Rails.env.production?
     before_action :set_raven_context
   end
 
 
   def authorize_user
-    redirect_to feed_path, notice: 'Acesso somente para usuários logados' unless current_user
+    redirect_to root_path, notice: 'Acesso somente para usuários logados' unless current_user
   end
 
   def authorize_admin
-    redirect_to feed_path, notice: 'Acesso somente para administradores' unless current_user && current_user.admin?
+    redirect_to root_path, notice: 'Acesso somente para administradores' unless current_user && current_user.admin?
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || feed_path
+    stored_location_for(resource) || root_path
   end
 
   private
