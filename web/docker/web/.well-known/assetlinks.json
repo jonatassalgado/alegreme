@@ -1,5 +1,5 @@
 [{
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target" : { "namespace": "android_app", "package_name": "com.alegreme.app",
-               "sha256_cert_fingerprints": ["58:82:BA:6D:95:84:B6:60:FA:11:56:63:84:D2:7B:F6:B4:22:EA:3D:E2:C8:7D:BF:92:74:8C:24:0F:FA:E5:58"] }
+               "sha256_cert_fingerprints": ["E5:CB:47:75:E8:0F:D9:FD:6B:28:FE:CE:F5:51:08:D1:58:A7:DF:30:0C:96:E8:99:3F:05:3B:60:C7:47:C1:5D"] }
 }]

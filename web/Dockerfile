@@ -99,7 +99,7 @@ RUN bundle install --jobs 20 --retry 5
 RUN bundle update --bundler
 
 
-ADD . $RAILS_ROOT
+COPY . $RAILS_ROOT
 
 
 RUN rake assets:clobber
