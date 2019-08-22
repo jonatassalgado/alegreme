@@ -49,18 +49,23 @@
     </div>
   </section>
 
-  <% unless mobile_device? %>
     <section class="demo">
-      <div class="macbook">
-        <div class="macbook__screen">
-          <img data-src="<%= image_url 'welcome/demo-2.gif' %>" alt="demonstração" class="lazyload">
+      <% unless mobile_device? %>
+        <div class="macbook">
+          <div class="macbook__screen">
+            <%= image_tag 'welcome/desktop-screen', alt: "demonstração" %>
+          </div>
+        </div>
+      <% end %>
+      <div class="android">
+        <div class="android__screen">
+          <%= responsive_image_tag 'welcome/android-screen', alt: 'demonstração', only: {'1.5x' => true} %>
         </div>
       </div>
-      <div class="macbook__beta-explanation">
+      <!-- <div class="macbook__beta-explanation">
         Demonstração da versão beta
-      </div>
+      </div> -->
     </section>
-  <% end %>
 
   <section class="invite">
     <div class="invite__status">

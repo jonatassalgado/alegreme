@@ -8,15 +8,15 @@ set -e
 
 bundle check || bundle install --binstubs="$BUNDLE_BIN"
 
-# bundle exec rake webpacker:clobber
-# yarn install
-# bundle exec rake assets:precompile
-
 rake db:exists && rake db:migrate || rake db:setup db:migrate
 
 #rake db:exists RAILS_ENV=development && rails runner "Event.reindex"
 
 bundle exec clockworkd -c clock.rb -d /var/www/alegreme --log-dir /var/www/alegreme/log --log start
+
+bundle exec rake webpacker:compile
+bundle exec rake assets:precompile
+# yarn install
 
 exec "$@"
 # Finally call command issued to the docker service

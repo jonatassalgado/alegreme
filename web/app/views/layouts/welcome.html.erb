@@ -12,17 +12,18 @@
   <title>Alegreme - Aproveite a cidade de Porto Alegre</title>
 
   <meta name="Description" content="Atividades de rua, meetups profissionais, os rolês que só avisam no dia, aquele filme no Mario Quintana... Um feed para as pessoas que gostam de explorar coisas novas e de não perder o que já conhecem.">
-  <meta name="theme-color" content="#5ecf80"/>
+  <!-- <meta name="theme-color" content="#5ecf80"/> -->
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=5.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= favicon_link_tag asset_path 'apple-touch-icon.png', sizes: "180x180" %>
+  <link rel="apple-touch-icon" href="<%= image_url 'icons/icon-192x192.png' %>">
   <%= favicon_link_tag asset_path 'favicon-32x32.png', sizes: "32x32" %>
   <%= favicon_link_tag asset_path 'favicon-16x16.png', sizes: "16x16" %>
 
+  <link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
 
   <%= inline_css 'welcome/fcp.css' %>
   <%= inline_js 'welcome/fcp.js' %>
@@ -54,7 +55,7 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat:800,900|Roboto:400,500,700&display=swap" rel="stylesheet">
 <%= javascript_include_tag 'welcome/application.js', defer: true %>
 <script src="https://apis.google.com/js/api:client.js?onload=init" defer></script>
-<script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5d2f4bbe364d580011c349e5&product=inline-share-buttons' async='async'></script>
+<!-- <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5d2f4bbe364d580011c349e5&product=inline-share-buttons' async='async'></script> -->
 
 </body>
 </html>

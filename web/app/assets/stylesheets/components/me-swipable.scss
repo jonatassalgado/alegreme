@@ -33,8 +33,9 @@
       font-size: 28px;
       font-weight: 800;
       padding-bottom: 6px;
+      font-family: $font-primary-family;
       @include mdc-layout-grid-media-query_("phone") {
-        font-size: 24px;
+        font-size: 22px;
       }
     }
 

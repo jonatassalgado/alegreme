@@ -106,6 +106,12 @@ section {
     width: 100vw;
   }
 
+  &::-webkit-scrollbar{
+    @include mobile-only {
+      display: none;
+    }
+  }
+
   &__scroll-view {
     position: relative;
     width: 1120px;

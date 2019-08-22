@@ -11,6 +11,13 @@ caches.open("v1:sw-cache-feed-page").then(function(cache) {
   });
 });
 
+  workbox.routing.registerRoute(
+    "/",
+    new workbox.strategies.NetworkFirst({
+      cacheName: CACHE_NAME + "welcome-page"
+    })
+  );
+
 
 // self.addEventListener("message", function(event) {
   // if (event == "turbolinks:load") {
@@ -60,9 +67,9 @@ caches.open("v1:sw-cache-feed-page").then(function(cache) {
         plugins: [
           new workbox.expiration.Plugin({
             // Cache only 20 images.
-            maxEntries: 100,
+            maxEntries: 30,
             // Cache for a maximum of a week.
-            maxAgeSeconds: 7 * 24 * 60 * 60
+            maxAgeSeconds: 1 * 24 * 60 * 60
           })
         ]
       })

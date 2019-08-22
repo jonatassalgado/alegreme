@@ -10,11 +10,11 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= favicon_link_tag asset_path 'apple-touch-icon.png', sizes: "180x180" %>
+  <link rel="apple-touch-icon" href="<%= image_url 'icons/icon-192x192.png' %>">
   <%= favicon_link_tag asset_path 'favicon-32x32.png', sizes: "32x32" %>
   <%= favicon_link_tag asset_path 'favicon-16x16.png', sizes: "16x16" %>
 
-  <link rel="manifest" href="/manifest.json"/>
+  <link rel="manifest" href="<%= assets_url 'manifest.json' %>"/>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Montserrat:800,900|Roboto:300,400,500,700|Material+Icons|Material+Icons+Round|Material+Icons+Sharp">

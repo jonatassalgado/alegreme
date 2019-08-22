@@ -1,13 +1,34 @@
 // require flipping/dist/flipping.js
 //= require rails-ujs
-//= require rellax/rellax.js
+// require rellax/rellax.js
 //= require mobile-detect/mobile-detect.js
 //= require lazysizes/lazysizes.min.js
+//= require serviceworker-companion.js
 // require query-string/index.js
 
 lazySizes.cfg.expand = 10;
 
+window.addEventListener('beforeinstallprompt', (e) => {
+	e.preventDefault();
+	deferredPrompt = e;
+	const btnAdd = document.querySelector(".footer__logo-icon");
+	btnAdd.addEventListener('click', (e) => {
+		deferredPrompt.prompt();
+
+		deferredPrompt.userChoice
+		.then((choiceResult) => {
+			if (choiceResult.outcome === 'accepted') {
+				console.log('User accepted the A2HS prompt');
+			} else {
+				console.log('User dismissed the A2HS prompt');
+			}
+			deferredPrompt = null;
+		});
+	});
+});
+
 document.addEventListener('DOMContentLoaded', function () {
+
 
 	const md = new MobileDetect(window.navigator.userAgent);
 
@@ -242,5 +263,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
-
-

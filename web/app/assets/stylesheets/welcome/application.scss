@@ -6,30 +6,31 @@
 
 
 .demo {
-  //width: 100%;
-  //display: flex;
-  //justify-content: center;
-  //position: relative;
+  position: relative;
 
-  @include mobile-only {
-    display: none;
-  }
+  // @include mobile-only {
+  //   display: none;
+  // }
 }
 
 .macbook {
-  width: 800px;
-  height: 440px;
-  background-image: asset_url("welcome/laptop.png");
+  width: 720px;
+  height: 464px;
+  background-image: asset_url("welcome/mockup-macbook.png");
   background-position: center top;
   margin: 95px 0 0 0;
+  z-index: 1;
+  @include mobile-only {
+    display: none;
+  }
 
   &__screen {
-    width: 608px;
-    height: 336px;
-    margin: auto;
+    width: 593px;
+    height: 313px;
     background: #ffffff;
     position: relative;
-    top: 45px;
+    top: 105px;
+    left: 23px;
 
     & img {
       width: inherit;
@@ -42,15 +43,39 @@
     font-weight: normal;
     color: #7D7D7D;
     font-size: 12px;
-    //width: 259px;
-    //height: 137px;
-    //background-image: asset_url('welcome/beta-explanation.png');
-    //background-repeat: no-repeat;
-    //background-position: center top;
-    //position: absolute;
-    //right: -180px;
-    //top: 95px;
-    //background-size: 85%;
+  }
+}
+
+.android {
+  width: 176px;
+  height: 324px;
+  background-image: asset_url("welcome/mockup-android.png");
+  background-position: center top;
+  margin: 95px 0 0 0;
+  z-index: 2;
+  position: absolute;
+  top: 180px;
+  right: 10px;
+  @include mobile-only {
+    position: relative;
+    top: 0;
+    right: 10px;
+    transform: scale(1.7);
+    margin: 200px 0 110px 0;
+  }
+
+  &__screen {
+    width: 124px;
+    height: 248px;
+    background: #ffffff;
+    position: relative;
+    top: 35px;
+    left: 27px;
+    border-radius: 5px;
+
+    & img, picture {
+      width: inherit;
+    }
   }
 }
 

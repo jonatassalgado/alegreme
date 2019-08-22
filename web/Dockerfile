@@ -106,7 +106,10 @@ WORKDIR $RAILS_ROOT
 
 
 RUN rake assets:clobber
-RUN rake assets:precompile
+RUN rake webpacker:clobber
+# RUN rake assets:precompile
+# RUN rake webpacker:compile
+
 RUN yarn install
 
 EXPOSE 3000
