@@ -9,6 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				feature.style.opacity   = 1;
 			});
 		}, delay);
-		delay = delay + 85;
+		delay = delay + 185;
 	});
 });
