@@ -5,11 +5,11 @@ importScripts(
 var CACHE_VERSION = "v1";
 var CACHE_NAME = CACHE_VERSION + ":sw-cache-";
 
-caches.open("v1:sw-cache-feed-page").then(function(cache) {
-  cache.add("/").then(() => {
-    console.log('Feed added to cache');
-  });
-});
+// caches.open("v1:sw-cache-feed-page").then(function(cache) {
+//   cache.add("/").then(() => {
+//     console.log('Feed added to cache');
+//   });
+// });
 
   workbox.routing.registerRoute(
     "/",
@@ -85,7 +85,7 @@ caches.open("v1:sw-cache-feed-page").then(function(cache) {
     );
 
     workbox.routing.registerRoute(
-      /(feed)+.*/,
+      /.+(feed\/)+.*/,
       new workbox.strategies.StaleWhileRevalidate({
         cacheName: CACHE_NAME + "feed-page"
       })

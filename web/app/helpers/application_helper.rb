@@ -13,7 +13,7 @@ module ApplicationHelper
     content_tag(:picture) do
 			concat content_tag(:source, nil, media: "(max-width: 480px)", srcset: "#{image_url(image + '@2x')} 2x", alt: opts[:alt], title: opts[:title]) if opts.dig(:only, '2x')
 			concat content_tag(:source, nil, media: "(max-width: 480px)", srcset: "#{image_url(image + '@1.5x')} 1.5x", alt: opts[:alt], title: opts[:title]) if opts.dig(:only, '1.5x')
-      concat image_tag image, alt: opts[:alt], title: opts[:title], class: opts[:class]
+      concat image_tag image, alt: opts[:alt], title: opts[:title], class: opts[:class], loading: 'lazy'
     end
   end
 end
