@@ -4,7 +4,7 @@
 set -e
 # Exit on fail
 
-# echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
+# echo fs.inotify.max_user_watches=52exit4288 | tee -a /etc/sysctl.conf && sysctl -p
 
 bundle check || bundle install --binstubs="$BUNDLE_BIN"
 
