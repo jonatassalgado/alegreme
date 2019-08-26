@@ -40,10 +40,12 @@ services:
       PGHOST: db
       PGUSER: jon
       API_URL: http://api
-      # ELASTICSEARCH_URL: http://search:9200
       IS_DOCKER: 'true'
       HTTP_HOST: 'www.alegreme.com'
       NODE_ENV: production
+      WEB_CONCURRENCY: 2
+      RAILS_MAX_THREADS: 6
+      # ELASTICSEARCH_URL: http://search:9200
     links:
       - api
       - db
@@ -52,7 +54,8 @@ services:
     ports:
       - 3000:3000
     command: bundle exec puma -C config/puma.rb
-    mem_limit: 6048000000
+    mem_limit: 4gb
+    memswap_limit: 5gb
   db:
     image: postgres:10
     volumes:
@@ -68,7 +71,8 @@ services:
     ports:
       - 5432:5432
     restart: always
-    mem_limit: 2048000000
+    mem_limit: 2gb
+    memswap_limit: 3gb
   web:
     build:
       context: ./web
@@ -84,7 +88,8 @@ services:
       - ./logs/web:/var/www/alegreme/log
       - public-files:/var/www/alegreme/public:ro
     restart: always
-    mem_limit: 1048000000
+    mem_limit: 2gb
+    memswap_limit: 3gb
   certbot:
     image: certbot/certbot
     volumes:
@@ -102,7 +107,8 @@ services:
       - ./logs/api:/var/www/ml/api/log
     environment:
       IS_DOCKER: 'true'
-    mem_limit: 3048000000
+    mem_limit: 3gb
+    memswap_limit: 4gb
   # search:
   #   build:
   #     context: ./search
@@ -132,7 +138,8 @@ services:
       - "7654:7654"
     restart: always
     command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
-    mem_limit: 3048000000
+    mem_limit: 3gb
+    memswap_limit: 4gb
   splash:
     image: scrapinghub/splash
     ports:
@@ -141,5 +148,6 @@ services:
     restart: always
     volumes:
       - splash_data:/var/www/splash/data
-    mem_limit: 4048000000
+    mem_limit: 4gb
+    memswap_limit: 5gb
     command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
