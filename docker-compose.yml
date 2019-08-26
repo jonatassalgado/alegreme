@@ -25,10 +25,6 @@ services:
       - bundle_cache:/bundle
       - public-files:/var/www/alegreme/public
       - scrapy_data:/var/www/scrapy/data:ro
-      - ./scrapy/data:/var/www/scrapy/data
-      - ./web/app:/var/www/alegreme/app
-      - ./web/config:/var/www/alegreme/config
-      - ./web/lib:/var/www/alegreme/lib
       - ./web/public/uploads:/var/www/alegreme/public/uploads
       - ./web/db/backups:/var/www/alegreme/db/backups
       - ./logs/app:/var/www/alegreme/log
@@ -56,6 +52,8 @@ services:
     command: bundle exec puma -C config/puma.rb
     mem_limit: 4gb
     memswap_limit: 5gb
+    mem_reservation: 256m
+    cpu_percent: 75
   db:
     image: postgres:10
     volumes:
@@ -73,6 +71,7 @@ services:
     restart: always
     mem_limit: 2gb
     memswap_limit: 3gb
+    cpu_percent: 50
   web:
     build:
       context: ./web
@@ -90,6 +89,7 @@ services:
     restart: always
     mem_limit: 2gb
     memswap_limit: 3gb
+    cpu_percent: 50
   certbot:
     image: certbot/certbot
     volumes:
@@ -109,6 +109,7 @@ services:
       IS_DOCKER: 'true'
     mem_limit: 3gb
     memswap_limit: 4gb
+    cpu_percent: 50
   # search:
   #   build:
   #     context: ./search
@@ -140,6 +141,7 @@ services:
     command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
     mem_limit: 3gb
     memswap_limit: 4gb
+    cpu_percent: 50
   splash:
     image: scrapinghub/splash
     ports:
@@ -150,4 +152,6 @@ services:
       - splash_data:/var/www/splash/data
     mem_limit: 4gb
     memswap_limit: 5gb
+    mem_reservation: 256m
+    cpu_percent: 50
     command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
