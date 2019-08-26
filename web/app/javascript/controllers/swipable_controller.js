@@ -8,8 +8,8 @@ export default class SwipableController extends Controller {
 	initialize() {
 		["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
 			document.addEventListener(eventName, () => {
-				window.SwipableApi = this.stackedCards();
 				setTimeout(() => {
+					window.SwipableApi = this.stackedCards();
 					if (this.hasSwipableTarget) {
 						this.swipableTarget.style.minHeight = `${this.swipableTarget.offsetHeight}px`;
 					}
@@ -28,6 +28,7 @@ export default class SwipableController extends Controller {
 		const useOverlays    = true; //Enable or disable the overlays for swipe elements.
 		let maxElements; //Total of stacked cards on DOM.
 		let currentPosition  = 0; //Keep the position of active stacked card.
+		let counter          = 0;
 		const velocity       = 0.1; //Minimum velocity allowed to trigger a swipe.
 		let answers          = [];
 		let isFirstTime      = true;
@@ -164,7 +165,7 @@ export default class SwipableController extends Controller {
 		}
 
 		function changeStages() {
-			if (currentPosition === maxElements) {
+			if (counter === maxElements) {
 				//Event listener created to know when transition ends and changes states
 
 				fetch(`${HOST}/user/persona?query=${JSON.stringify(answers)}`, {
@@ -236,10 +237,7 @@ export default class SwipableController extends Controller {
 
 //Functions to swipe left elements on logic external action.
 		function onActionLeft() {
-			if (!(currentPosition >= maxElements)) {
-
-				answers.push('-1');
-
+			if (!(counter >= maxElements)) {
 				if (useOverlays) {
 					leftObj.classList.remove('no-transition');
 					topObj.classList.remove('no-transition');
@@ -257,9 +255,7 @@ export default class SwipableController extends Controller {
 
 //Functions to swipe right elements on logic external action.
 		function onActionRight() {
-			if (!(currentPosition >= maxElements)) {
-				answers.push('1');
-
+			if (!(counter >= maxElements)) {
 				if (useOverlays) {
 					rightObj.classList.remove('no-transition');
 					topObj.classList.remove('no-transition');
@@ -276,9 +272,7 @@ export default class SwipableController extends Controller {
 
 //Functions to swipe top elements on logic external action.
 		function onActionTop() {
-			if (!(currentPosition >= maxElements)) {
-				answers.push('0');
-
+			if (!(counter >= maxElements)) {
 				if (useOverlays) {
 					leftObj.classList.remove('no-transition');
 					rightObj.classList.remove('no-transition');
@@ -296,6 +290,8 @@ export default class SwipableController extends Controller {
 
 //Swipe active card to left.
 		function onSwipeLeft() {
+			answers.push('-1');
+
 			removeNoTransition();
 			transformUi(-1000, 0, 0, currentElementObj);
 			if (useOverlays) {
@@ -303,15 +299,17 @@ export default class SwipableController extends Controller {
 				transformUi(-1000, 0, 0, topObj); //Move topOverlay
 				resetOverlayLeft();
 			}
-			currentPosition = currentPosition + 1;
+			counter = counter + 1
+			removeElement();
 			updateUi();
 			currentElement();
 			changeStages();
-			setActiveHidden();
 		}
 
 //Swipe active card to right.
 		function onSwipeRight() {
+			answers.push('1');
+
 			removeNoTransition();
 			transformUi(1000, 0, 0, currentElementObj);
 			if (useOverlays) {
@@ -319,16 +317,17 @@ export default class SwipableController extends Controller {
 				transformUi(1000, 0, 0, topObj); //Move topOverlay
 				resetOverlayRight();
 			}
-
-			currentPosition = currentPosition + 1;
+			counter = counter + 1
+			removeElement();
 			updateUi();
 			currentElement();
 			changeStages();
-			setActiveHidden();
 		}
 
 //Swipe active card to top.
 		function onSwipeTop() {
+			answers.push('0');
+
 			removeNoTransition();
 			transformUi(0, -1000, 0, currentElementObj);
 			if (useOverlays) {
@@ -337,12 +336,11 @@ export default class SwipableController extends Controller {
 				transformUi(0, -1000, 0, topObj); //Move topOverlay
 				resetOverlays();
 			}
-
-			currentPosition = currentPosition + 1;
+			counter = counter + 1
+			removeElement();
 			updateUi();
 			currentElement();
 			changeStages();
-			setActiveHidden();
 		}
 
 //Remove transitions from all elements to be moved in each swipe movement to improve perfomance of stacked cards.
@@ -513,9 +511,9 @@ export default class SwipableController extends Controller {
 
 		function removeElement() {
 			currentElementObj.remove();
-			if (!(currentPosition >= maxElements)) {
-				listElNodesObj[currentPosition].classList.add('stackedcards-active');
-			}
+			// if (!(currentPosition >= maxElements)) {
+			// 	listElNodesObj[currentPosition].classList.add('stackedcards-active');
+			// }
 		}
 
 //Add translate X and Y to active card for each frame.
@@ -677,7 +675,7 @@ export default class SwipableController extends Controller {
 						topObj.classList.add('no-transition');
 					}
 
-					if ((currentPosition + 1) < maxElements) {
+					if ((currentPosition + 1) < maxElements && listElNodesObj[currentPosition + 1]) {
 						listElNodesObj[currentPosition + 1].style.opacity = '1';
 					}
 
