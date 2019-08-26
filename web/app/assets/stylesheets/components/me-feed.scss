@@ -42,7 +42,7 @@ phone: 8
       max-width: 55%;
       line-height: 1.3em;
       font-size: 24px;
-      color: $font-secondary-color;
+      color: $font-primary-color;
       font-family: $font-primary-family;
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 22px;

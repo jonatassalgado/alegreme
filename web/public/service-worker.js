@@ -11,12 +11,12 @@ var CACHE_NAME = CACHE_VERSION + ":sw-cache-";
 //   });
 // });
 
-  workbox.routing.registerRoute(
-    "/",
-    new workbox.strategies.NetworkFirst({
-      cacheName: CACHE_NAME + "welcome-page"
-    })
-  );
+  // workbox.routing.registerRoute(
+  //   "/",
+  //   new workbox.strategies.NetworkFirst({
+  //     cacheName: CACHE_NAME + "welcome-page"
+  //   })
+  // );
 
 
 // self.addEventListener("message", function(event) {

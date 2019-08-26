@@ -93,7 +93,7 @@ body {
   font-size: 14px;
   background: $background-z1-color;
   color: $font-secondary-color;
-  
+
   @include mdc-layout-grid-media-query_("phone") {
     background: $background-color;
     user-select: none;
@@ -124,7 +124,7 @@ a {
 
 .turbolinks-progress-bar {
   height: 5px;
-  background-color: #5ecf80;
+  background-color: $brand-color-left;
 }
 
 
@@ -275,4 +275,3 @@ a {
 .abcRioButtonErrorState .abcRioButtonWorkingWrapper {
   display: none
 }
-

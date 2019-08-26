@@ -32,9 +32,9 @@ class ImageUploader < Shrine
     io.download do |original|
       pipeline = ImageProcessing::MiniMagick.source(original)
 
-      versions['feed'] = pipeline.resize_to_fill!(171, 96)
+      versions['feed'] = pipeline.resize_to_fill!(230, 130)
       # versions['feed-mobile'] = pipeline.resize_to_fill!(183, 103)
-      versions['single'] = pipeline.resize_to_fill!(600, 338)
+      # versions['single'] = pipeline.resize_to_fill!(600, 338)
       # versions['single-mobile'] = pipeline.resize_to_fill!(414, 232)
       # versions['list-mobile'] = pipeline.resize_to_fill!(116, 66)
     end

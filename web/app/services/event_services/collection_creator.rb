@@ -71,7 +71,7 @@ module EventServices
 					'user-suggestions'   => {
 							in_user_suggestions: true,
 							in_days:             set_initial_dates_filter,
-							order_by_persona:    false
+							order_by_persona:    true
 					},
 			}
 
@@ -142,7 +142,7 @@ module EventServices
 		def set_limit
 			return 8 if params_filter_category_exist? || params_filters_ocurrences_exist?
 
-			@params[:limit] || @opts[:limit] || 4
+			@params[:limit] || @opts[:limit] || 8
 		end
 
 		def group_by_or_kinds_not_exist?(opts)

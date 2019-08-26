@@ -30,6 +30,7 @@ class FeedsController < ApplicationController
 
 			format.html do
 				gon.push(:user => current_or_guest_user)
+				gon.push(:env => Rails.env)
 				collections ||= EventServices::CollectionCreator.new(current_or_guest_user, params)
 
 				@swipable_items = [
@@ -236,7 +237,7 @@ class FeedsController < ApplicationController
 
 	def get_events_not_trained_yet
 		Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
-				.order("(categories -> 'primary' ->> 'score')::numeric  ASC, (personas -> 'primary' ->> 'score')::numeric ASC")
+				.order("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric  ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC")
 				.includes(:place)
 	end
 

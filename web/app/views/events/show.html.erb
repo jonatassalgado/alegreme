@@ -51,7 +51,7 @@
           </i>
           <div>
             <h3>
-              <%= @event.place_details_name %>
+              <%= link_to @event.place_details_name, place_path(@event.place) %>
             </h3>
             <span>
             <%= @event.geographic['address'] %>

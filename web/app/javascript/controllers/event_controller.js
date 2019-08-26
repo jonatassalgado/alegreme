@@ -24,7 +24,7 @@ export default class EventController extends Controller {
 		this.adjustForDevice    = this.md.mobile();
 		this.subscriptions      = {};
 		this.activeInteractions = true;
-		this.itemsPerRow        = 5;
+		this.itemsPerRow        = 4;
 
 
 		this.subscriptions.savesUpdated = postal.subscribe({

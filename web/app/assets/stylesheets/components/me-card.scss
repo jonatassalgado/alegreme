@@ -326,14 +326,21 @@ $description-color: $font-secondary-color;
       }
     }
 
+    & .me-card__primary-section {
+      color: $font-secondary-color;
+      & a {
+        color: $font-secondary-color;
+      }
+    }
+
     & .me-card__head {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: baseline;
-      height: 130px;
+      height: 185px;
       flex-wrap: wrap;
-      justify-content: flex-end;
-      align-content: flex-start;
+      justify-content: center;
+      align-content: baseline;
       position: relative;
       @include mdc-layout-grid-media-query_("phone") {
         height: auto;
@@ -357,12 +364,14 @@ $description-color: $font-secondary-color;
 
     & .me-card__name {
       padding: 0;
-      margin: 0 0 30px 15px;
-      width: calc(70% - 85px);
+      margin: 25px 0 30px 15px;
+      width: 100%;
+      text-align: center;
       line-height: 1.3em;
       font-family: $font-primary-family;
       font-weight: 800;
       font-size: 18px;
+      color: $font-primary-color;
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 24px;
         width: 90%;

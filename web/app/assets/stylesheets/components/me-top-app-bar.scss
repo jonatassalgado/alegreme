@@ -29,14 +29,14 @@ $border-color: #e0e0e0;
 
   &__logo {
     display: flex;
-    height: 22px;
+    // height: 22px;
 
     &-icon {
-      height: 30px;
+      // height: 30px;
     }
 
     &-text{
-      height: 30px;
+      // height: 30px;
       //margin: 0;
       //display: none;
     }
@@ -77,7 +77,10 @@ $border-color: #e0e0e0;
 
   &__section {
     flex: 1 1 0;
-    padding: 0;
+    padding: 0 12px;
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 0;
+    }
 
     &--left {
       @include mdc-layout-grid-media-query_("phone") {

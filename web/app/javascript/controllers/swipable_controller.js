@@ -20,7 +20,7 @@ export default class SwipableController extends Controller {
 
 
 	stackedCards() {
-		const HOST           = document.location.host;
+		const HOST           = gon.env == "development" ? `http://localhost:5000` : `https://${document.location.host}/ml`;
 		const stackedOptions = 'Top'; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
 		const rotate         = true; //Activate the elements' rotation for each move on stacked cards.
 		let items            = 4; //Number of visible elements when the stacked options are bottom or top.
@@ -167,7 +167,7 @@ export default class SwipableController extends Controller {
 			if (currentPosition === maxElements) {
 				//Event listener created to know when transition ends and changes states
 
-				fetch(`https://${HOST}/ml/user/persona?query=${JSON.stringify(answers)}`, {
+				fetch(`${HOST}/user/persona?query=${JSON.stringify(answers)}`, {
 					method : 'GET',
 					headers: {
 						'Content-type': 'text/javascript; charset=UTF-8'
@@ -214,6 +214,9 @@ export default class SwipableController extends Controller {
 													document.querySelector('.global-actions').classList.add('hidden');
 													document.querySelector('.final-state').classList.remove('hidden');
 													document.querySelector('.final-state').classList.add('active');
+													setTimeout(() => {
+														Turbolinks.visit(location.toString());
+													}, 1500)
 													// listElNodesObj[maxElements - 1].removeEventListener('transitionend', null, false);
 												// });
 											});

@@ -82,7 +82,7 @@ class UsersController < ApplicationController
 
 	def authorize_admin_and_user
 		unless @user.id == current_user.id || current_user.admin? == true
-			flash[:notice] = 'Você não tem permissão para realizar esta operação'
+			flash.now[:notice] = 'Você não tem permissão para realizar esta operação'
 			redirect_to root_path
 		end
 	end

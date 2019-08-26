@@ -3,29 +3,19 @@
   <div class="mdc-top-app-bar__row">
     <% if mobile_device? && params[:controller] == 'feeds' && params[:action] == 'index' %>
       <section
-        class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+      class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <a href="/">
           <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
         </a>
       </section>
     <% else %>
-      <span class="me-top-app-bar__back-button"
-            onclick="window.history.back()">
-        <i class="material-icons">keyboard_backspace</i>
-      </span>
+    <span class="me-top-app-bar__back-button"
+      onclick="window.history.back()">
+      <i class="material-icons">keyboard_backspace</i>
+    </span>
     <% end %>
     <% if mobile_device? && controller == 'events' %>
-      <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
-        <span class="me-top-app-bar__back-button"
-              onclick="window.history.back()">
-          <i class="material-icons">keyboard_backspace</i>
-        </span>
-        <span class="mdc-top-app-bar__title">
-          <a href="/">
-            <%= image_tag 'logo.svg', class: "me-top-app-bar__logo" %>
-          </a>
-        </span>
-      </section>
+
     <% else %>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
         <div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"

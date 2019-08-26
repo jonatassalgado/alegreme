@@ -3,7 +3,7 @@
     <div class="stackedcards-container">
       <% @swipable_items.each do |item| %>
         <div id="<%= item[:id] %>" class="card-item">
-          <div class="me-swipable__item" style="background-image: url('<%= image_url item[:image_url] %>'); background-color: <%= item[:dominant_color] %>">
+          <div class="me-swipable__item" style="background-image: url('<%= image_url item[:image_url] %>')">
             <div class="me-swipable__item-overlay" style="background: linear-gradient(to top, <%= item[:dominant_color] %>cb 30%, <%= item[:dominant_color] %>89);"></div>
             <div class="me-swipable__item-title"><%= item[:name] %></div>
             <div class="me-swipable__item-description"><%= item[:description] %></div>
@@ -36,6 +36,6 @@
     </button>
   </div>
   <div class="final-state hidden">
-    <h2>Pronto! Agora já consigo te indicar eventos com maior precisão <br> Aperta F5 e veja as novas indicações</h2>
+    <h2>Carregando novas sugestões...</h2>
   </div>
 </div>
