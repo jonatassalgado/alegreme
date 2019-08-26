@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 								inviteCounterEl.innerText          = `${backendData.invitesCount} pessoas e ${userName} solicitaram convite para o Alegreme!`
 								inviteDetailsEl.innerText          = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
-								firstPersonFaceEl.style.background = `url("${googleUserData.picture}") no-repeat center center`;
+								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
 							}
 
 							if (backendData.invitationAlreadyRequested) {
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 								inviteCounterEl.innerText          = `${userName}? Você e outras ${backendData.invitesCount} pessoas já estão na fila`;
 								inviteDetailsEl.innerText          = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez`;
-								firstPersonFaceEl.style.background = `url("${googleUserData.picture}") no-repeat center center`;
+								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
 							}
 						});
 					}

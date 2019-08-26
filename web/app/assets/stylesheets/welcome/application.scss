@@ -74,7 +74,7 @@
     left: 27px;
     border-radius: 5px;
 
-    & img, picture {
+    & img, picture, video {
       width: inherit;
     }
   }
@@ -164,6 +164,8 @@
     margin: 85px auto 0 auto;
     cursor: pointer;
     transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
     @include mobile-only {
       width: 245px;
       height: 65px;
