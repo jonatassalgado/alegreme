@@ -11,12 +11,12 @@ var CACHE_NAME = CACHE_VERSION + ":sw-cache-";
 //   });
 // });
 
-  // workbox.routing.registerRoute(
-  //   "/",
-  //   new workbox.strategies.NetworkFirst({
-  //     cacheName: CACHE_NAME + "welcome-page"
-  //   })
-  // );
+  workbox.routing.registerRoute(
+    "/",
+    new workbox.strategies.NetworkFirst({
+      cacheName: CACHE_NAME + "welcome-page"
+    })
+  );
 
 
 // self.addEventListener("message", function(event) {
@@ -79,21 +79,21 @@ var CACHE_NAME = CACHE_VERSION + ":sw-cache-";
   // if (event == "turbolinks:before-cache") {
     workbox.routing.registerRoute(
       /.+(events\/)+.*/,
-      new workbox.strategies.StaleWhileRevalidate({
+      new workbox.strategies.NetworkFirst({
         cacheName: CACHE_NAME + "events-page"
       })
     );
 
     workbox.routing.registerRoute(
-      /.+(feed\/)+.*/,
-      new workbox.strategies.StaleWhileRevalidate({
+      /.+feed/,
+      new workbox.strategies.NetworkFirst({
         cacheName: CACHE_NAME + "feed-page"
       })
     );
 
     workbox.routing.registerRoute(
       /.+(\?(categories\[\]|ocurrences\[\]|personas\[\])+.*)|\/?$/,
-      new workbox.strategies.StaleWhileRevalidate({
+      new workbox.strategies.NetworkFirst({
         cacheName: CACHE_NAME + "filters-page"
       })
     );

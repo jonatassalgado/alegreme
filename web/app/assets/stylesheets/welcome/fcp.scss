@@ -21,6 +21,14 @@ section {
   min-height: 50px;
 }
 
+.menu {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 11px;
+  color: #d1d1d1;
+}
+
 .brand {
   display: flex;
   margin: 40px 0 50px 0;
