@@ -1,7 +1,7 @@
 version: '2.3'
 volumes:
   bundle_cache: {}
-  public-files:
+  # public-files:
   scrapy_data:
   db_data:
   db_backup:
@@ -23,7 +23,7 @@ services:
       - scrapy
     volumes:
       - bundle_cache:/bundle
-      - public-files:/var/www/alegreme/public
+      # - public-files:/var/www/alegreme/public
       - scrapy_data:/var/www/scrapy/data:ro
       - ./web/public/uploads:/var/www/alegreme/public/uploads
       - ./web/db/backups:/var/www/alegreme/db/backups
@@ -85,7 +85,7 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - ./logs/web:/var/www/alegreme/log
-      - public-files:/var/www/alegreme/public:ro
+      # - public-files:/var/www/alegreme/public:ro
     restart: always
     mem_limit: 2gb
     memswap_limit: 3gb

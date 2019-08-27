@@ -16,6 +16,7 @@ web/*.orig
 web/rerun.txt
 web/pickle-email-*.html
 web/public/packs/
+web/public/assets/
 web/tmp/
 web/db/schema.rb
 web/db/test.sqlite3
