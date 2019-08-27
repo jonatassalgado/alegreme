@@ -112,3 +112,24 @@ const applicationScript = () => {
 
 document.addEventListener("DOMContentLoaded", applicationScript, false);
 document.addEventListener("turbolinks:load", applicationScript, false);
+
+
+
+
+document.addEventListener("turbolinks:load", () => {
+	const page = document.querySelector(".me-page--events-section")
+		if(page){
+			requestAnimationFrame(() => {
+				page.classList.remove("is-animated");
+			})
+		}
+}, false);
+
+document.addEventListener("turbolinks:before-cache", () => {
+	const page = document.querySelector(".me-page--events-section")
+	if(page) {
+		// requestAnimationFrame(() => {
+			page.classList.add("is-animated");
+		// })
+	}
+}, false);

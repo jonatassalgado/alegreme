@@ -1,44 +1,18 @@
 <header class="me-top-app-bar mdc-top-app-bar mdc-top-app-bar--fixed <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>"
         id="top-bar">
   <div class="mdc-top-app-bar__row">
-    <% if params[:controller] == 'feeds' && params[:action] == 'index' %>
-      <section
-      class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+    <% if params[:controller] == 'feeds' %>
+      <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <a href="/">
           <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
         </a>
       </section>
-    <% else %>
-      <span class="me-top-app-bar__back-button"
-        onclick="window.history.back()">
-        <i class="material-icons">keyboard_backspace</i>
-      </span>
-    <% end %>
-    <% if mobile_device? && params[:controller] == 'events' %>
-      <span class="me-top-app-bar__back-button"
-        onclick="window.history.back()">
-        <i class="material-icons">keyboard_backspace</i>
-      </span>
-    <% else %>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
         <div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"
              data-controller="chat"
              data-target="chat.field"
              data-turbolinks-permanent
              id="me-chat">
-          <%# unless current_user.try('personas_assortment_finished?') %>
-          <!-- <input data-target="chat.input" data-action="click->chat#showBot" id="text-field-shape-one" class="mdc-text-field__input" autocomplete="off" type="text" placeholder="Oi, tem alguem ai?">
-            <div data-target="chat.botConversation" class="me-search-field__bot">
-              <iframe id="botkit_client" referrerpolicy="no-referrer" src="<%= request.protocol + request.host + (ENV['IS_DOCKER'] == 'true' ? "/bot/chat.html" : ":3030/chat.html") %>"></iframe>
-            </div>
-            <div data-target="chat.reply" data-action="click->chat#showBot" class="me-search-field__reply">
-              <span>Sim, estou aqui</span>
-            </div>
-            <div data-target="chat.close" data-action="click->chat#hideBot"
-              class="me-search-field__close me-search-field__close--is-hide">
-              <span>Fechar</span>
-            </div> -->
-          <%# else %>
           <form action=""
                 data-action="submit->chat#search"
                 data-target="chat.form"
@@ -58,6 +32,24 @@
           <%# end %>
         </div>
       </section>
+    <% elsif mobile_device? && params[:controller] == 'feeds' %>
+      <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <a href="/">
+          <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
+        </a>
+      </section>
+    <% end %>
+    <% if params[:controller] != 'feeds' && mobile_device? %>
+      <span class="me-top-app-bar__back-button"
+        onclick="window.history.back()">
+        <i class="material-icons">keyboard_backspace</i>
+      </span>
+    <% elsif params[:controller] != 'feeds' %>
+    <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+      <a href="/">
+        <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
+      </a>
+    </section>
     <% end %>
     <section
       class="me-top-app-bar__section me-top-app-bar__section--right mdc-top-app-bar__section mdc-top-app-bar__section--align-end">

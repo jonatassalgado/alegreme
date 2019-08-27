@@ -38,7 +38,7 @@
   </section>
 <% elsif params['controller'] == 'events' && params['action'] == 'show' %>
   <%= render partial: "layouts/app-top-bar", locals: {controller: 'events'} %>
-  <section class="me-page--events-section">
+  <section class="me-page--events-section is-animated">
     <div class="me-overlay"></div>
     <%= yield %>
   </section>
