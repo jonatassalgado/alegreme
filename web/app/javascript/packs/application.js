@@ -114,22 +114,22 @@ document.addEventListener("DOMContentLoaded", applicationScript, false);
 document.addEventListener("turbolinks:load", applicationScript, false);
 
 
+["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
+	document.addEventListener(eventName, () => {
+		const page = document.querySelector(".me-page--events-section")
+		if(page) {
+				requestAnimationFrame(() => {
+					page.classList.remove("is-animated");
+				})
+			}
+		}, false);
+})
 
-
-document.addEventListener("turbolinks:load", () => {
-	const page = document.querySelector(".me-page--events-section")
-		if(page){
-			requestAnimationFrame(() => {
-				page.classList.remove("is-animated");
-			})
-		}
-}, false);
-
-document.addEventListener("turbolinks:before-cache", () => {
-	const page = document.querySelector(".me-page--events-section")
-	if(page) {
-		// requestAnimationFrame(() => {
-			page.classList.add("is-animated");
-		// })
-	}
-}, false);
+["turbolinks:before-cache"].forEach((eventName) => {
+	document.addEventListener(eventName, () => {
+		const page = document.querySelector(".me-page--events-section")
+		if(page) {
+				page.classList.add("is-animated");
+			}
+		}, false);
+})
