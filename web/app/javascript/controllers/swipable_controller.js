@@ -216,7 +216,7 @@ export default class SwipableController extends Controller {
 													document.querySelector('.final-state').classList.remove('hidden');
 													document.querySelector('.final-state').classList.add('active');
 													setTimeout(() => {
-														Turbolinks.visit(location.toString());
+														location.assign(location.toString());
 													}, 1500)
 													// listElNodesObj[maxElements - 1].removeEventListener('transitionend', null, false);
 												// });
