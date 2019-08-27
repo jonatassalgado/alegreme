@@ -70,6 +70,9 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg ma
 RUN apt-get update && apt-get install -y postgresql-client-10
 
 
+# RUN echo fs.inotify.max_user_watches=524288 | tee /etc/sysctl.d/40-max-user-watches.conf && sysctl --system
+
+
 # ENV RAILS_VERSION 5.2.1
 # RUN gem install rails --version "$RAILS_VERSION"
 
@@ -99,7 +102,7 @@ RUN bundle install --jobs 20 --retry 5
 RUN bundle update --bundler
 
 
-COPY . $RAILS_ROOT
+ADD . $RAILS_ROOT
 
 
 RUN rake assets:clobber
