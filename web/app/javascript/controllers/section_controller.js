@@ -1,4 +1,5 @@
-import {Controller} from "stimulus"
+import {Controller} from "stimulus";
+import {LazyloadModule} from "../modules/lazyload-module";
 
 export default class SectionController extends Controller {
 	static targets = ["section", "filter", "loadMoreButton"];
@@ -10,6 +11,7 @@ export default class SectionController extends Controller {
 			channel : `${self.identifier}`,
 			topic   : `${self.identifier}.updated`,
 			callback: function (data, envelope) {
+				LazyloadModule.init();
 				self.hasMoreEventsToLoad();
 			}
 		});

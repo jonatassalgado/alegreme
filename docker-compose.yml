@@ -25,6 +25,7 @@ services:
       # - public-files:/var/www/alegreme/public
       - scrapy_data:/var/www/scrapy/data:ro
       - ./web/public/uploads:/var/www/alegreme/public/uploads
+      # - ./web/public:/var/www/alegreme/public
       - ./web/db/backups:/var/www/alegreme/db/backups
       - ./logs/app:/var/www/alegreme/log
       - ./storage:/var/www/alegreme/storage

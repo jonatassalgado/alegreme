@@ -22,6 +22,7 @@
        data-target="event.event"
        id="<%= dom_id event %>">
     <div class="mdc-card__media mdc-card__media--16-9" style="<%= get_image_style_attr event %>">
+    <!-- <div class="mdc-card__media mdc-card__media--16-9 lazy-bgimage hidden" data-src="<%#= event.image[:feed].url %>" style="<%#= get_image_style_attr event %>"> -->
       <% if current_user %>
         <div class="me-card__like-button" data-action="click->event#like">
           <div data-target="event.like">

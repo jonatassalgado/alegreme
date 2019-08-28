@@ -42,8 +42,12 @@ import {
 import {
 	AnimateModule
 } from "../modules/animate-module";
+// import {
+// 	LazyloadModule
+// } from "../modules/lazyload-module";
 
 CacheModule.activateTurbolinks();
+// LazyloadModule.init();
 AnimateModule.init();
 
 const applicationScript = () => {
@@ -112,4 +116,3 @@ const applicationScript = () => {
 
 document.addEventListener("DOMContentLoaded", applicationScript, false);
 document.addEventListener("turbolinks:load", applicationScript, false);
-
