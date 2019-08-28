@@ -4,9 +4,9 @@
        data-chip-type="filter"
        data-target="chip.chipset filter.<%= type %>"
        class="me-chip-set <%= (['kinds'].include?(type)) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'filter' %>">
-    <i class="material-icons">
-      <%= icon_type %>
-    </i>
+<!--    <i class="material-icons">-->
+      <%#= icon_type %>
+<!--    </i>-->
     <% Array(filters_that_exist_in_events).each do |filter| %>
       <% if type == 'ocurrences' %>
         <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter['string'] %>"

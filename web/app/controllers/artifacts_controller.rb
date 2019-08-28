@@ -55,6 +55,7 @@ class ArtifactsController < ApplicationController
   # DELETE /artifacts/1
   # DELETE /artifacts/1.json
   def destroy
+    @artifact.file.purge_later
     @artifact.destroy
     respond_to do |format|
       format.html { redirect_to artifacts_url, notice: 'Artifact was successfully destroyed.' }

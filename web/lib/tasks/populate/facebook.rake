@@ -185,12 +185,12 @@ def read_file
 	timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
 	artifact = Artifact.create(
 			details: {
-					name: "scraped-#{last_file}",
+					name: last_file},
 					type: 'scraped'
 			}
 	)
 
-	artifact.file.attach(io: File.open("#{last_file}"), filename: "scraped-events-#{timestr}.json", content_type: "application/json")
+	artifact.file.attach(io: File.open("#{last_file}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
 
 	puts "Lendo arquivo JSON #{last_file}".blue
 
