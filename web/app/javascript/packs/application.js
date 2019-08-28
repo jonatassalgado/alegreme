@@ -15,9 +15,9 @@ import "controllers";
 
 import {MDCIconButtonToggle} from "@material/icon-button";
 
-import {
-	MDCTopAppBar
-} from "@material/top-app-bar/index";
+// import {
+// 	MDCTopAppBar
+// } from "@material/top-app-bar/index";
 import {
 	MDCRipple
 } from "@material/ripple";
@@ -52,8 +52,8 @@ AnimateModule.init();
 
 const applicationScript = () => {
 	// TopAppBar
-	const topAppBarElement = document.querySelector(".mdc-top-app-bar");
-	const topAppBar        = new MDCTopAppBar(topAppBarElement);
+	// const topAppBarElement = document.querySelector(".mdc-top-app-bar");
+	// const topAppBar        = new MDCTopAppBar(topAppBarElement);
 
 	// Button
 	const buttons = document.querySelectorAll(".mdc-button");

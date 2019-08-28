@@ -87,6 +87,7 @@ $gutter: 6px;
     margin: 0 0 15px 0;
     font-size: 1.3em;
     font-weight: 800;
+    letter-spacing: -0.01em;
     @include mdc-layout-grid-media-query_("phone") {
       font-size: 22px;
       padding: 0 $section-padding-phone;

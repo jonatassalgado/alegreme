@@ -11,20 +11,19 @@ $border-color: #e0e0e0;
   position: fixed;
   top: 0;
   user-select: none;
+  border-bottom: 1px solid $border-color;
+
   @include mdc-layout-grid-media-query_("phone") {
-    background-color: $background-color;
-    border-bottom: 0;
-
-    &.mdc-top-app-bar--fixed-scrolled {
-      background-color: $background-color;
-      box-shadow: unset;
-    }
+    // &.mdc-top-app-bar--fixed-scrolled {
+    //   background-color: $background-color;
+    //   box-shadow: unset;
+    // }
   }
 
-  &.mdc-top-app-bar--fixed-scrolled {
-    border-bottom: 1px solid $border-color;
-    box-shadow: unset;
-  }
+  // &.mdc-top-app-bar--fixed-scrolled {
+  //   border-bottom: 1px solid $border-color;
+  //   box-shadow: unset;
+  // }
 
 
   &__logo {
@@ -39,14 +38,15 @@ $border-color: #e0e0e0;
       // height: 30px;
       //margin: 0;
       //display: none;
+      @include mdc-layout-grid-media-query_("phone") {
+        // height: 24px;
+        // position: relative;
+        // margin: auto;
+        // justify-self: center;
+        // left: -24px;
+      }
     }
 
-    @include mdc-layout-grid-media-query_("phone") {
-      // position: relative;
-      // margin: auto;
-      // justify-self: center;
-      // left: -24px;
-    }
   }
 
   &__name {

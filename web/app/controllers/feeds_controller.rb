@@ -203,12 +203,15 @@ class FeedsController < ApplicationController
 
 						       collection_personas = collections.call(
 								       'user-personas',
-								       {not_in: collection_follow[:detail][:init_filters_applyed][:events_ids]
+								       {
+												 not_in: collection_follow[:detail][:init_filters_applyed][:events_ids]
 								       })
 
 						       collection_suggestions = collections.call(
 								       'user-suggestions',
-								       {})
+								       {
+												 not_in: collection_personas[:detail][:init_filters_applyed][:events_ids]
+											 })
 
 						       {
 								       today:            collection_today,

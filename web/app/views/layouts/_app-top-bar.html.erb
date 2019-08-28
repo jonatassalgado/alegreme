@@ -1,10 +1,14 @@
-<header class="me-top-app-bar mdc-top-app-bar mdc-top-app-bar--fixed <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>"
+<header class="me-top-app-bar mdc-top-app-bar <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>"
         id="top-bar">
   <div class="mdc-top-app-bar__row">
     <% if params[:controller] == 'feeds' %>
       <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <a href="/">
-          <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
+          <% if mobile_device? %>
+            <%= responsive_image_tag 'logo-mobile', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
+          <% else %>
+            <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
+          <% end %>
         </a>
       </section>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
