@@ -61,14 +61,14 @@
         </div>
       <% else %>
         <div class="me-top-app-bar__signin-link">
-          <span onclick="CacheSystem.clearCache(); location.assign('/users/auth/google_oauth2')">Entrar</span>
+          <span onclick="CacheModule.clearCache(); location.assign('/users/auth/google_oauth2')">Entrar</span>
         </div>
         <div class="g-signin2"
              data-gapiscan="true"
              data-onload="true"
              data-onsuccess="onSuccess">
           <div class="abcRioButton"
-               onclick="CacheSystem.clearCache(); location.assign('/users/auth/google_oauth2')"
+               onclick="CacheModule.clearCache(); location.assign('/users/auth/google_oauth2')"
                style="height:36px;width:185px;">
             <div class="abcRioButtonContentWrapper">
               <div class="abcRioButtonIcon" style="padding:8px">

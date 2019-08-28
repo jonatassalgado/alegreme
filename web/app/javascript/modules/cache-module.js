@@ -1,6 +1,6 @@
 import * as Turbolinks from "turbolinks";
 
-const CacheSystem = (function() {
+const CacheModule = (function() {
   const module = {};
   const status = {
     turbolinksStarted: false
@@ -77,9 +77,9 @@ const CacheSystem = (function() {
     }
   };
 
-  window.CacheSystem = module;
+  window.CacheModule = module;
 
   return module;
 })();
 
-export { CacheSystem };
+export { CacheModule };

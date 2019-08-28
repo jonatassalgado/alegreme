@@ -58,7 +58,7 @@ export default class FollowChipsetController extends Controller {
 					response => {
 						response.text().then(data => {
 							eval(data);
-							CacheSystem.clearCache(['feed-page']);
+							CacheModule.clearCache(['feed-page']);
 						});
 					}
 				)

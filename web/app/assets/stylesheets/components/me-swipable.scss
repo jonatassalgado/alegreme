@@ -5,7 +5,6 @@
   position: relative;
   padding: 0 $section-padding-phone;
   @include mdc-layout-grid-media-query_("phone") {
-    width: 100%;
     margin: 25px 0 35px 0;
     display: inline-block;
   }

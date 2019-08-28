@@ -1,9 +1,9 @@
 import {Controller}      from "stimulus";
 import {MDCMenu}         from "@material/menu";
 import {MDCRipple}       from "@material/ripple";
-import {CacheSystem}     from "modules/cache-system";
+import {CacheModule}     from "modules/cache-module";
+import {MDCIconButtonToggle} from "@material/icon-button";
 import * as MobileDetect from "mobile-detect";
-import * as mdc          from "material-components-web";
 
 export default class EventController extends Controller {
 	static targets = [
@@ -198,7 +198,7 @@ export default class EventController extends Controller {
 				this.overlayRipple = new MDCRipple(this.overlayTarget);
 			}
 			if (this.hasLikeButtonTarget) {
-				this.toggleLikeButton = new mdc.iconButton.MDCIconButtonToggle(
+				this.toggleLikeButton = new MDCIconButtonToggle(
 					this.likeButtonTarget
 				);
 			}

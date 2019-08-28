@@ -1,3 +1,26 @@
+@mixin is-slide-left-animated() {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  &.is-animated {
+    opacity: 0;
+    will-change: opacity, transform;
+    @include mdc-layout-grid-media-query_("phone") {
+
+    }
+  }
+}
+
+@mixin is-slide-right-animated() {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  &.is-animated {
+    opacity: 0;
+    transform: translate(0, 100px);
+    will-change: opacity, transform;
+    @include mdc-layout-grid-media-query_("phone") {
+      transform: translate(50vw, 0);
+    }
+  }
+}
+
 @mixin add-horizontal-scroll() {
   overflow-x: scroll;
   overflow-y: hidden;

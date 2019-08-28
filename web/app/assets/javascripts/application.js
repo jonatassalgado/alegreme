@@ -11,9 +11,6 @@
 // about supported directives.
 //
 //= require rails-ujs
-// require activestorage
 //= require materialize
-
 //= require serviceworker-companion
 
-// require botkit

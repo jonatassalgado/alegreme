@@ -11,11 +11,9 @@ console.log("Hello World from Webpacker");
 
 import "postal";
 import "morphdom";
-
-
 import "controllers";
-// import 'default-passive-events'
-import * as mdc from "material-components-web";
+
+import {MDCIconButtonToggle} from "@material/icon-button";
 
 import {
 	MDCTopAppBar
@@ -38,13 +36,15 @@ import {
 import {
 	MDCSnackbar
 } from "@material/snackbar";
-
 import {
-	CacheSystem
-} from "modules/cache-system";
+	CacheModule
+} from "../modules/cache-module";
+import {
+	AnimateModule
+} from "../modules/animate-module";
 
-
-CacheSystem.activateTurbolinks();
+CacheModule.activateTurbolinks();
+AnimateModule.init();
 
 const applicationScript = () => {
 	// TopAppBar
@@ -69,7 +69,7 @@ const applicationScript = () => {
 	});
 
 	icons.forEach(icon => {
-		new mdc.iconButton.MDCIconButtonToggle(icon);
+		new MDCIconButtonToggle(icon);
 		const ripple     = new MDCRipple(icon);
 		ripple.unbounded = true;
 	});
@@ -108,28 +108,8 @@ const applicationScript = () => {
 		new MDCMenu(menu);
 	});
 
-}
+};
 
 document.addEventListener("DOMContentLoaded", applicationScript, false);
 document.addEventListener("turbolinks:load", applicationScript, false);
 
-
-["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
-	document.addEventListener(eventName, () => {
-		const page = document.querySelector(".me-page--events-section")
-		if(page) {
-				requestAnimationFrame(() => {
-					page.classList.remove("is-animated");
-				})
-			}
-		}, false);
-})
-
-["turbolinks:before-cache"].forEach((eventName) => {
-	document.addEventListener(eventName, () => {
-		const page = document.querySelector(".me-page--events-section")
-		if(page) {
-				page.classList.add("is-animated");
-			}
-		}, false);
-})

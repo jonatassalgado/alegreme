@@ -6,16 +6,17 @@ export default class SwipableController extends Controller {
 	static targets = ["swipable"];
 
 	initialize() {
-		["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
-			document.addEventListener(eventName, () => {
-				setTimeout(() => {
-					window.SwipableApi = this.stackedCards();
-					if (this.hasSwipableTarget) {
-						this.swipableTarget.style.minHeight = `${this.swipableTarget.offsetHeight}px`;
+		const self = this;
+		// ["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
+		// 	document.addEventListener(eventName, () => {
+		// 		setTimeout(() => {
+					if (self.hasSwipableTarget) {
+						self.stackedCards();
+						self.swipableTarget.style.minHeight = `${self.swipableTarget.offsetHeight}px`;
 					}
-				}, 500);
-			});
-		});
+				// }, 500);
+		// 	}, false);
+		// });
 	}
 
 
@@ -210,15 +211,15 @@ export default class SwipableController extends Controller {
 												console.log(data);
 
 												// listElNodesObj[maxElements - 1].addEventListener('transitionend', function () {
-													document.body.classList.add("background-7");
-													document.querySelector('.stackedcards').classList.add('hidden');
-													document.querySelector('.global-actions').classList.add('hidden');
-													document.querySelector('.final-state').classList.remove('hidden');
-													document.querySelector('.final-state').classList.add('active');
-													setTimeout(() => {
-														location.assign(location.toString());
-													}, 1500)
-													// listElNodesObj[maxElements - 1].removeEventListener('transitionend', null, false);
+												document.body.classList.add("background-7");
+												document.querySelector('.stackedcards').classList.add('hidden');
+												document.querySelector('.global-actions').classList.add('hidden');
+												document.querySelector('.final-state').classList.remove('hidden');
+												document.querySelector('.final-state').classList.add('active');
+												setTimeout(() => {
+													location.assign(location.toString());
+												}, 1500)
+												// listElNodesObj[maxElements - 1].removeEventListener('transitionend', null, false);
 												// });
 											});
 										}
