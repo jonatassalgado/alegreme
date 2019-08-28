@@ -31,6 +31,7 @@
     animation-name: show-in;
     animation-duration: 1s;
     @include mdc-layout-grid-media-query_("phone") {
+      font-size: 12px;
       padding: 0 12px;
     }
 
@@ -89,6 +90,10 @@
     animation-name: show-in;
     animation-duration: 1s;
     width: 100%;
+    @include mdc-layout-grid-media-query_("phone") {
+      @include add-horizontal-scroll-wrapper;
+      @include no-scroll-bar;
+    }
 
     & .mdc-chip__text {
       font-size: 11px;
@@ -99,9 +104,15 @@
       padding: 0 15%;
       padding-bottom: 15px;
       @include mdc-layout-grid-media-query_("phone") {
-        padding: 0;
+        padding: 0 8px;
       }
       //border-bottom: 1px solid darken($background-color, 5%);
+    }
+  }
+
+  &__topics {
+    @include mdc-layout-grid-media-query_("phone") {
+      display: none;
     }
   }
 

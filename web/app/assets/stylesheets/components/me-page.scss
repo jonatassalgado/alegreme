@@ -9,7 +9,7 @@
     padding: 35px 0;
     background: $background-z1-color;
     @include mdc-layout-grid-media-query_("phone") {
-      border-bottom: 1px solid $border-color;
+      //border-bottom: 1px solid $border-color;
       padding: 6px 0;
     }
 

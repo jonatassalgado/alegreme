@@ -21,28 +21,21 @@
   }
 }
 
-@mixin add-horizontal-scroll() {
+@mixin add-horizontal-scroll-wrapper() {
   overflow-x: scroll;
   overflow-y: hidden;
-  scroll-snap-type: x proximity;
-  scroll-behavior: smooth;
+  //scroll-snap-type: x proximity;
+  //scroll-behavior: smooth;
+}
+
+@mixin add-horizontal-scroll-items() {
+  width: max-content;
 }
 
 @mixin no-scroll-bar() {
 
   &::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    height: 0;
-    width: 0;
-  }
-
-  &::-webkit-scrollbar-track {
-    height: 0;
-    width: 0;
+    display: none;
   }
 }
 

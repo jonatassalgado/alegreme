@@ -103,7 +103,7 @@ $gutter: 6px;
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
     --mdc-layout-grid-gutter-desktop: 8px;
-    @include add-horizontal-scroll();
+    @include add-horizontal-scroll-wrapper();
     @include no-scroll-bar();
     @include mdc-layout-grid-media-query_("phone") {
       padding: 0;
@@ -119,7 +119,7 @@ $gutter: 6px;
     grid-auto-columns: 54px;
     padding-bottom: calc(0.75 * #{$gutter});
     margin-bottom: calc(-0.25 * #{$gutter});
-    // @include add-horizontal-scroll();
+    // @include add-horizontal-scroll-wrapper();
     @include mdc-layout-grid-media-query_("phone") {
       padding: 0 $section-padding-phone;
     }
