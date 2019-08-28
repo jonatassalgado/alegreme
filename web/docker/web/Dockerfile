@@ -9,7 +9,7 @@ WORKDIR $RAILS_ROOT
 RUN mkdir -p log
 RUN mkdir -p cache/nginx-rails
 
-# COPY public public/
+COPY public public/
 
 COPY docker/web/nginx.conf /tmp/docker.nginx
 
