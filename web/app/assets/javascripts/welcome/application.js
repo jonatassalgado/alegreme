@@ -2,11 +2,11 @@
 //= require rails-ujs
 // require rellax/rellax.js
 //= require mobile-detect/mobile-detect.js
-//= require lazysizes/lazysizes.min.js
+// require lazysizes/lazysizes.min.js
 //= require serviceworker-companion.js
 // require query-string/index.js
 
-lazySizes.cfg.expand = 10;
+// lazySizes.cfg.expand = 10;
 
 window.addEventListener('beforeinstallprompt', (e) => {
 	e.preventDefault();
@@ -29,6 +29,11 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 document.addEventListener('DOMContentLoaded', function () {
 
+	WebFont.load({
+		google: {
+			families: ['Montserrat:800,900', 'Roboto:400,500,700']
+		}
+	});
 
 	const md = new MobileDetect(window.navigator.userAgent);
 
