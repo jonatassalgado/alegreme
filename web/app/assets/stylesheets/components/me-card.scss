@@ -127,9 +127,9 @@ $description-color: $font-secondary-color;
     //color: $brand-color-left;
   }
 
-  &__date {
+  &__date, &__price {
 
-    &.is-today, .is-today a {
+    &.is-highlight, .is-highlight a {
       color: $brand-color;
     }
   }

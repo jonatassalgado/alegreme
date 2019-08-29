@@ -191,7 +191,7 @@ $gutter: 6px;
       margin: 8px 0 6px 0;
       font-weight: 800;
       min-height: 1.1em;
-      &.is-today, .is-today a {
+      &.is-highlight, .is-highlight a {
         color: $brand-color;
       }
     }
