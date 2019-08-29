@@ -7,6 +7,8 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+import {ripple} from "material-components-web/index";
+
 console.log("Hello World from Webpacker");
 
 import "postal";
@@ -76,6 +78,9 @@ const applicationScript = () => {
 		new MDCIconButtonToggle(icon);
 		const ripple     = new MDCRipple(icon);
 		ripple.unbounded = true;
+		document.addEventListener("turbolinks:before-cache", () => {
+			ripple.destroy();
+		}, false);
 	});
 
 	// Textfield
@@ -114,5 +119,7 @@ const applicationScript = () => {
 
 };
 
+
 document.addEventListener("DOMContentLoaded", applicationScript, false);
 document.addEventListener("turbolinks:load", applicationScript, false);
+

@@ -23,8 +23,8 @@ export default class SwipableController extends Controller {
 		const HOST           = gon.env == "development" ? `http://localhost:5000` : `https://${document.location.host}/ml`;
 		const stackedOptions = 'Top'; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
 		const rotate         = true; //Activate the elements' rotation for each move on stacked cards.
-		let items            = 4; //Number of visible elements when the stacked options are bottom or top.
-		const elementsMargin = 6; //Define the distance of each element when the stacked options are bottom or top.
+		let items            = 3; //Number of visible elements when the stacked options are bottom or top.
+		const elementsMargin = 10; //Define the distance of each element when the stacked options are bottom or top.
 		const useOverlays    = true; //Enable or disable the overlays for swipe elements.
 		let maxElements; //Total of stacked cards on DOM.
 		let currentPosition  = 0; //Keep the position of active stacked card.
@@ -601,7 +601,7 @@ export default class SwipableController extends Controller {
 						listElNodesObj[i].style.opacity         = elOpac;
 						listElNodesObj[i].style.zIndex          = elZindex;
 
-						elScale = elScale - 0.04;
+						elScale = elScale - 0.12;
 						elOpac  = elOpac - (1 / items);
 						elZindex--;
 					}

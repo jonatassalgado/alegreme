@@ -13,10 +13,10 @@
   transition: opacity 0.6s ease, transform 0.6s ease;
   &.is-animated {
     opacity: 0;
-    transform: translate(0, 100px);
+    transform: translate(0, 85px);
     will-change: opacity, transform;
     @include mdc-layout-grid-media-query_("phone") {
-      transform: translate(50vw, 0);
+      transform: translate(25vw, 0);
     }
   }
 }

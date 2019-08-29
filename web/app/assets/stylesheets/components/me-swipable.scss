@@ -15,7 +15,7 @@
 
   &__question {
     text-align: center;
-    margin: 12px auto;
+    margin: 0 auto 12px auto;
     line-height: 1.3em;
     & h2 {
       font-weight: 800;
@@ -52,6 +52,7 @@
 
     &-title, &-description {
       z-index: 3;
+      line-height: 1em;
     }
 
     &-title {
@@ -60,17 +61,19 @@
       padding: 0 15px;
       max-width: 80%;
       @include mdc-layout-grid-media-query_("phone") {
-        font-size: 22px;
+        font-size: 20px;
+        padding: 0 12px;
       }
     }
 
     &-description {
       font-size: 14px;
-      line-height: 1.3em;
+      line-height: 1.1em;
       font-weight: 400;
       padding: 0 15px 15px;
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 12px;
+        padding: 3px 12px 12px;
       }
     }
 
@@ -137,7 +140,7 @@
     border-radius: 10px;
     overflow: hidden;
     @include mdc-layout-grid-media-query_("phone") {
-      height: 190px;
+      height: 160px;
     }
   }
 

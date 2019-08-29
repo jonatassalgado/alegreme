@@ -1,4 +1,5 @@
-import {Controller} from "stimulus";
+import {Controller}      from "stimulus";
+import * as MobileDetect from "mobile-detect";
 
 export default class Float_menu_controller extends Controller {
 	static targets = [
@@ -7,7 +8,7 @@ export default class Float_menu_controller extends Controller {
 	];
 
 	initialize() {
-
+		this.md                    = new MobileDetect(window.navigator.userAgent);
 		const observableSectionEls = document.querySelectorAll('[data-observable="float-menu.section"]');
 
 		if (this.hasMenuTarget && observableSectionEls !== undefined) {
@@ -47,8 +48,15 @@ export default class Float_menu_controller extends Controller {
 	scrollTo(event) {
 		const identifier = event.target.closest('.me-float-menu__item').dataset.collectionIdentifier;
 		const sectionEl  = document.getElementById(identifier);
+		document.documentElement.style.scrollBehavior = "smooth";
 
-		window.scrollTo(0, sectionEl.offsetTop - 100);
+		if (this.md.mobile()) {
+			window.scrollTo(0, sectionEl.offsetTop - 30);
+		} else {
+			window.scrollTo(0, sectionEl.offsetTop - 100);
+		}
+
+		document.documentElement.style.scrollBehavior = ""
 	}
 
 }

@@ -15,7 +15,13 @@
   //border-radius: 0 15px 15px 0;
 
   @include mdc-layout-grid-media-query_("phone") {
-    display: none;
+    top: 55px;
+    left: 0px;
+    height: 100vh;
+    width: 60px;
+    background: #f7f7f7;
+    touch-action: none;
+    box-shadow: inset 0 0 6px #ececec;
   }
 
   &__nav {
@@ -26,6 +32,11 @@
     padding: 25px 0 0 0;
     text-align: center;
     font-size: 10px;
+    @include  mdc-layout-grid-media-query_("phone") {
+      width: 100%;
+      padding: 20px 0 0 0;
+      font-size: 10px;
+    }
   }
 
   &__icon {
