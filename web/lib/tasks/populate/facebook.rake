@@ -185,7 +185,7 @@ def read_file
 	timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
 	artifact = Artifact.create(
 			details: {
-					name: last_file},
+					name: last_file,
 					type: 'scraped'
 			}
 	)

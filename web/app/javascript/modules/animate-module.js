@@ -10,8 +10,8 @@ const AnimateModule = (function () {
 	module.animateFeeds = () => {
 		["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
 			document.addEventListener(eventName, () => {
+				const page = document.querySelector(".me-page--feed-section");
 				requestAnimationFrame(() => {
-					const page = document.querySelector(".me-page");
 					if (page) {
 						page.classList.remove("is-animated");
 					}

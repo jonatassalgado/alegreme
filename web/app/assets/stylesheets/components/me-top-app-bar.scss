@@ -28,23 +28,12 @@ $border-color: #e0e0e0;
 
   &__logo {
     display: flex;
-    // height: 22px;
 
     &-icon {
-      // height: 30px;
+
     }
 
     &-text{
-      // height: 30px;
-      //margin: 0;
-      //display: none;
-      @include mdc-layout-grid-media-query_("phone") {
-        // height: 24px;
-        // position: relative;
-        // margin: auto;
-        // justify-self: center;
-        // left: -24px;
-      }
     }
 
   }

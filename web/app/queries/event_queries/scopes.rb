@@ -226,8 +226,9 @@ module EventQueries
 				categories = categories || []
 
 				if opts[:turn_on] && !categories.blank?
+					# .where("(categories.details ->> 'name') IN (:categories) ", categories: categories)
 					Event.includes(:categories)
-							.where("(categories.details ->> 'name') IN (:categories) ", categories: categories)
+							.where("(ml_data -> 'categories' -> 'primary' ->> 'name') IN (:categories) ", categories: categories)
 							.references(:categories)
 							.active(opts[:active])
 							.order_by_persona(true, {personas: opts[:personas]})
@@ -259,9 +260,8 @@ module EventQueries
 
 
 			scope 'active', lambda { |turn_on = true|
-
 				if turn_on
-					where("(ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now - 1)
+					where("(ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now.beginning_of_day)
 				else
 					all
 				end

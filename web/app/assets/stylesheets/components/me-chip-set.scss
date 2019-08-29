@@ -1,7 +1,7 @@
 @import "../_variables";
 
 .me-chip-set {
-  text-align: right;
+  text-align: left;
   @include mdc-layout-grid-media-query_("phone") {
     text-align: left;
     width: max-content;

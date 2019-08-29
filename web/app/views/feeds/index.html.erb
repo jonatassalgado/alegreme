@@ -93,9 +93,9 @@
                          opts: {
                              type:       :large,
                              filters:    {
-                                 categories: true,
-                                 kinds:      true,
-                                 ocurrences: false
+                                 categories: false,
+                                 kinds:      false,
+                                 ocurrences: true
                              },
                              detail: @items[:user_suggestions][:detail]
                          }
@@ -116,8 +116,8 @@
                        opts: {
                            type:       :large,
                            filters:    {
-                               categories: true,
-                               kinds:      true,
+                               categories: false,
+                               kinds:      false,
                                ocurrences: true
                            },
                            detail: @items[:user_personas][:detail]

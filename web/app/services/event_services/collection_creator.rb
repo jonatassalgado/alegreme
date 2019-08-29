@@ -9,7 +9,7 @@ module EventServices
 			cache_variables(current_user)
 
 			@params   = request_params || {}
-			@today    = Date.today
+			@today    = DateTime.now.beginning_of_day
 			@tomorrow = @today + 1
 		end
 
@@ -53,7 +53,7 @@ module EventServices
 		def get_filters_for_collection
 			collections = {
 					'today-and-tomorrow' => {
-							in_days:          [@today.to_s, @tomorrow.to_s],
+							in_days:          @params[:ocurrences] || [@today.to_s, @tomorrow.to_s],
 							in_user_personas: true,
 							order_by_persona: true
 					},
@@ -64,7 +64,7 @@ module EventServices
 					},
 					'follow'             => {
 							in_days:            set_initial_dates_filter,
-							order_by_persona:   true,
+							order_by_personas:      true,
 							in_follow_features: true,
 							group_by:           calculate_items_for_group(5, auto_balance: true)
 					},
@@ -88,13 +88,13 @@ module EventServices
 							all_existing_filters: false
 					},
 					'user-personas'      => {
-							all_existing_filters: false
+							all_existing_filters: true
 					},
 					'follow'             => {
-							all_existing_filters: false
+							all_existing_filters: true
 					},
 					'user-suggestions'   => {
-							all_existing_filters: false
+							all_existing_filters: true
 					}
 			}
 
@@ -109,7 +109,8 @@ module EventServices
 			filters = {
 					'today-and-tomorrow' => {
 							categories: true,
-							kinds:      true
+							kinds:      true,
+							ocurrences: true
 					},
 					'user-personas'      => {
 							categories: true,
@@ -225,7 +226,11 @@ module EventServices
 					if params_filter_category_exist? || params_filter_kind_exist?
 						Event.day_of_week(events, active_range: active_range?).sort_by_order.compact_range.uniq.values
 					else
-						defaults[type]
+						if @identifier == 'today-and-tomorrow'
+							defaults[type]
+						else
+							Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_date.compact_range.uniq.values
+						end
 					end
 				end
 			else
@@ -240,7 +245,7 @@ module EventServices
 					# events.map(&:kinds_name).flatten.uniq
 				when 'ocurrences'
 					if @opts[:all_existing_filters]
-						Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_order.compact_range.uniq.values
+						Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_date.compact_range.uniq.values
 					else
 						Event.day_of_week(events, active_range: active_range?).sort_by_date.compact_range.uniq.values
 					end
@@ -273,8 +278,9 @@ module EventServices
 		end
 
 		def filters_without_sensitive_info
-			filters_cleanned = @dynamic_filters
-			filters_cleanned.store :in_user_personas, @dynamic_filters[:user].slice(:id) if @dynamic_filters[:user]
+			filters_cleanned = @dynamic_filters.select { |k, v| k != :user }
+			filters_cleanned.store :user, {id: @dynamic_filters[:user][:id]} if @dynamic_filters[:user]
+			# filters_cleanned.store :in_user_personas, @dynamic_filters[:user].slice(:id) if @dynamic_filters[:user]
 			filters_cleanned.store :events_ids, @events.map(&:id)
 			filters_cleanned
 		end
@@ -288,9 +294,9 @@ module EventServices
 				CollectionCreator.categories    = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq.freeze
 			else
 				CollectionCreator.user          = current_user
-				CollectionCreator.active_events ||= Event.includes(:place, :categories, :organizers).active
+				CollectionCreator.active_events = Event.includes(:place, :categories, :organizers).active
 				# CollectionCreator.kinds         ||= CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
-				CollectionCreator.categories ||= CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
+				CollectionCreator.categories = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
 			end
 		end
 	end

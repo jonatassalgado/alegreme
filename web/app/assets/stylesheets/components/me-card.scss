@@ -73,6 +73,7 @@ $description-color: $font-secondary-color;
     background: linear-gradient(to top, #ffffff38, transparent);
     overflow: hidden;
     border-radius: $media-border-radius;
+    box-shadow: 0 0 6px #00000038;
     @include mdc-ripple-surface;
     @include mdc-ripple-radius-bounded;
     @include mdc-states;
@@ -97,12 +98,12 @@ $description-color: $font-secondary-color;
 
   &__secondary-section {
     color: $font-secondary-color;
-    font-size: 18px;
+    font-size: 16px;
     margin: 6px 0 0 0px;
     font-weight: 500;
-    @include mdc-layout-grid-media-query_("phone") {
-      font-size: 16px;
-    }
+    //@include mdc-layout-grid-media-query_("phone") {
+    //  font-size: 16px;
+    //}
 
     & a {
       color: $font-secondary-color;
@@ -184,9 +185,8 @@ $description-color: $font-secondary-color;
     font-size: 14px;
     border: 0;
     box-shadow: none;
-    // background: $background-color;
+    margin: 6px 0 0 0;
     position: relative;
-    //margin: 0 0 25px 0;
 
     &:hover {
       & .me-card__similar {
@@ -524,7 +524,7 @@ $description-color: $font-secondary-color;
   }
 
   &--notice {
-    min-height: 50vh;
+    min-height: 40vh;
     align-items: center;
     justify-content: center;
     text-align: center;

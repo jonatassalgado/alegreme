@@ -7,9 +7,9 @@ $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
 
 $mdc-layout-grid-columns: (
-desktop: 12,
-tablet: 18,
-phone: 8
+        desktop: 12,
+        tablet: 18,
+        phone: 8
 );
 
 .me-feed {
@@ -25,7 +25,6 @@ phone: 8
     max-width: 960px;
     @include mdc-layout-grid-media-query_("phone") {
       max-width: unset;
-      padding: 0;
       padding: 35px 0 35px 0;
       //border-bottom: 1px solid $border-color;
     }
@@ -45,10 +44,10 @@ phone: 8
       color: $font-primary-color;
       font-family: $font-primary-family;
       @include mdc-layout-grid-media-query_("phone") {
-        font-size: 22px;
-        line-height: 1.1em;
-        letter-spacing: -0.4px;
-        max-width: 90%;
+        font-size: 24px;
+        line-height: 1.2em;
+        letter-spacing: -0.01em;
+        max-width: 70vw;
         padding: 0 $section-padding-phone;
       }
 
@@ -82,11 +81,10 @@ phone: 8
   &__section-head {
     // @include section-head;
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
     margin-bottom: 6px;
+    flex-direction: column;
     @include mdc-layout-grid-media-query_("phone") {
-      flex-direction: column;
+
     }
 
     & i {
@@ -101,6 +99,7 @@ phone: 8
 
   &__load-more {
     text-align: center;
+    margin: 35px 0;
     @include mdc-layout-grid-media-query_("phone") {
       display: none;
     }
@@ -178,7 +177,7 @@ phone: 8
     --mdc-layout-grid-gutter-phone: 0 16px;
 
     --mdc-layout-grid-margin-desktop: 0;
-    --mdc-layout-grid-gutter-desktop: 0 16px;
+    --mdc-layout-grid-gutter-desktop: 25px 16px;
 
     @include mdc-layout-grid-media-query_("phone") {
       // background-color: $surface-color;
@@ -194,13 +193,12 @@ phone: 8
   }
 
 
-
   & .mdc-layout-grid__inner {
     @include mdc-layout-grid-media-query_("desktop") {
       @include mdc-layout-grid-inner(
-      $size: "desktop",
-      $margin: 0,
-      $gutter: 15px
+              $size: "desktop",
+              $margin: 0,
+              $gutter: 15px
       );
     }
 
@@ -223,16 +221,16 @@ phone: 8
   & .mdc-layout-grid__cell {
     @include mdc-layout-grid-media-query_("desktop") {
       @include mdc-layout-grid-cell(
-      $size: "desktop",
-      $default-span: 3,
-      $gutter: 24px
+              $size: "desktop",
+              $default-span: 3,
+              $gutter: 24px
       );
     }
     @include mdc-layout-grid-media-query_("phone") {
       @include mdc-layout-grid-cell(
-      $size: "phone",
-      $default-span: 1,
-      $gutter: 16px
+              $size: "phone",
+              $default-span: 1,
+              $gutter: 16px
       );
     }
 

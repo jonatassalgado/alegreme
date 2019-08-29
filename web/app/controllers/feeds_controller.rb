@@ -5,11 +5,11 @@ class FeedsController < ApplicationController
 	def index
 		respond_to do |format|
 			format.js do
-				Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
-					collection = EventServices::CollectionCreator.new(current_or_guest_user, params)
-					@title     = JSON.parse(params[:title])
-					@events    = collection.call(params[:identifier])
-				end
+				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+				collection = EventServices::CollectionCreator.new(current_or_guest_user, params)
+				@title     = JSON.parse(params[:title])
+				@events    = collection.call(params[:identifier])
+				# end
 
 				@locals = {
 						items:      @events,
@@ -204,14 +204,14 @@ class FeedsController < ApplicationController
 						       collection_personas = collections.call(
 								       'user-personas',
 								       {
-												 not_in: collection_follow[:detail][:init_filters_applyed][:events_ids]
+										       not_in: collection_follow[:detail][:init_filters_applyed][:events_ids]
 								       })
 
 						       collection_suggestions = collections.call(
 								       'user-suggestions',
 								       {
-												 not_in: collection_personas[:detail][:init_filters_applyed][:events_ids]
-											 })
+										       not_in: collection_personas[:detail][:init_filters_applyed][:events_ids]
+								       })
 
 						       {
 								       today:            collection_today,

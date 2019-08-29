@@ -110,7 +110,7 @@
       <!--              <%#= event.first_day_time %> | <%#= event.first_day_time.to_date.yday %>-->
       <%# end %>
     </div>
-    <% if display_similar %>
+    <% if display_similar && event.similar_data.empty? == false %>
       <div class="me-card__similar"
            data-action="click->event#showSimilar"
            data-target="event.similar"

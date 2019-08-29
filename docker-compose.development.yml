@@ -55,7 +55,7 @@ services:
       - 3000:3000
     stdin_open: true
     tty: true
-    command: bundle exec puma -C config/puma.rb
+    command: bundle exec puma -C config/puma/puma-development.rb
     mem_limit: 6048000000
   db:
     image: postgres

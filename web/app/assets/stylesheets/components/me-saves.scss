@@ -28,6 +28,9 @@ $gutter: 6px;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.1s linear;
+      @include mdc-layout-grid-media-query_("phone") {
+        content: none;
+      }
     }
 
     &::after {
@@ -42,6 +45,9 @@ $gutter: 6px;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.1s linear;
+      @include mdc-layout-grid-media-query_("phone") {
+        content: none;
+      }
     }
 
     &--at-initital {
@@ -89,7 +95,7 @@ $gutter: 6px;
     font-weight: 800;
     letter-spacing: -0.01em;
     @include mdc-layout-grid-media-query_("phone") {
-      font-size: 22px;
+      font-size: 24px;
       padding: 0 $section-padding-phone;
       font-family: $font-primary-family;
     }
@@ -136,6 +142,13 @@ $gutter: 6px;
     @include mdc-layout-grid-media-query_("phone") {
       scroll-snap-align: none;
     }
+
+    &:last-child {
+      @include mdc-layout-grid-media-query_("phone") {
+        padding: 0 $section-padding-phone 0 0;
+        margin: 0 (-$section-padding-phone) 0 0;
+      }
+    }
   }
 
   & .me-card {
@@ -146,6 +159,9 @@ $gutter: 6px;
     box-shadow: none;
     background-color: inherit;
     @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
+    @include mdc-layout-grid-media-query_("phone") {
+      min-height: 100px;
+    }
 
     &__title,
     &__date {
@@ -177,10 +193,9 @@ $gutter: 6px;
     }
 
     &__remove {
-      background: $icon-background-color;
+      background: transparentize($icon-background-color, 0.3);
       position: absolute;
       top: 5px;
-      right: 5px;
       right: 5px;
       width: 16px;
       height: 16px;
@@ -188,6 +203,12 @@ $gutter: 6px;
       display: none;
       z-index: 1;
       border-radius: 100%;
+      @include mdc-layout-grid-media-query_("phone") {
+        width: 18px;
+        height: 18px;
+        display: block;
+        padding: 4px;
+      }
     }
 
     & .mdc-card__media {
