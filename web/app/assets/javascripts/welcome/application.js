@@ -2,11 +2,11 @@
 //= require rails-ujs
 // require rellax/rellax.js
 //= require mobile-detect/mobile-detect.js
-// require lazysizes/lazysizes.min.js
+//= require lazysizes/lazysizes.min.js
 //= require serviceworker-companion.js
 // require query-string/index.js
 
-// lazySizes.cfg.expand = 10;
+lazySizes.cfg.expand = 10;
 
 window.addEventListener('beforeinstallprompt', (e) => {
 	e.preventDefault();
@@ -25,6 +25,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
 			deferredPrompt = null;
 		});
 	});
+});
+
+document.addEventListener('lazybeforeunveil', function(e){
+	var bg = e.target.getAttribute('data-bg');
+	if(bg){
+		e.target.style.backgroundImage = 'url(' + bg + ')';
+	}
 });
 
 document.addEventListener('DOMContentLoaded', function () {

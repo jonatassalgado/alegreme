@@ -80,7 +80,7 @@
     <div class="invite__status">
       <div class="people">
         <% @last_people.each do |person| %>
-          <div class="people__person-face" style="background-image: url('<%= image_path person.demographic['picture']%>')" title="<%= person.demographic['name'] %>"></div>
+          <div class="people__person-face lazyload" data-bg="<%= image_path person.demographic['picture']%>" title="<%= person.demographic['name'] %>"></div>
         <% end  %>
       </div>
       <div class="invite__counter">
@@ -93,14 +93,14 @@
     <div class="invite__cta" title="Seja um Beta tester!">
       Pegar Convite
       <span>
-        <%= image_tag "welcome/right-arrow.png", alt: "seta" %>
+        <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
       </span>
     </div>
     <div class="invite__google-details">
-      <%= responsive_image_tag "welcome/google-details", alt: 'conta do google' %>
+      <%= responsive_image_tag "welcome/google-details", alt: 'conta do google', class: 'lazyload' %>
     </div>
     <div class="sharethis-inline-share-buttons invite__share"></div>
-    <div class="skatista" style="transform: translate(-1900px, -50px);">
+    <div class="skatista lazyload" data-bg="<%= image_path 'welcome/skatista.png' %>" style="transform: translate(-1900px, -50px);">
     </div>
   </section>
 
@@ -179,14 +179,14 @@
 
     <section class="footer">
       <div class="footer__logo-icon js-logo">
-        <%= responsive_image_tag "welcome/footer-logo-icon", alt: 'logo', title: 'Pimba!' %>
+        <%= responsive_image_tag "welcome/footer-logo-icon", alt: 'logo', title: 'Pimba!', class: 'lazyload' %>
         <div class="brand__pimba js-pimba" style="opacity: 0;">Pimba</div>
       </div>
       <div class="footer__links">
         <a href="/privacy">Política de privacidade</a>
         <a href="/terms">Termos de serviço</a>
       </div>
-      <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!' %>
+      <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!',  class: 'lazyload' %>
     </section>
   </section>
 
