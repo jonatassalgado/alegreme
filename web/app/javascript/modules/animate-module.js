@@ -2,15 +2,15 @@ const AnimateModule = (function () {
 	const module = {};
 
 	module.init = () => {
-		module.animateFeeds();
-		module.animateEventsShow();
+		module.animatePage();
+		// module.animateBackbutton();
 		console.log("[ANIMATE]: started");
 	};
 
-	module.animateFeeds = () => {
+	module.animatePage = () => {
 		["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
 			document.addEventListener(eventName, () => {
-				const page = document.querySelector(".me-page--feed-section");
+				const page = document.querySelector(".me-page");
 				requestAnimationFrame(() => {
 					if (page) {
 						page.classList.remove("is-animated");
@@ -28,25 +28,17 @@ const AnimateModule = (function () {
 		});
 	};
 
-	module.animateEventsShow = () => {
-		["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
-			document.addEventListener(eventName, () => {
-				const page = document.querySelector(".me-page--events-section");
-				requestAnimationFrame(() => {
-					if (page) {
-						page.classList.remove("is-animated");
-					}
-				})
-			}, false);
+	module.animateBackbutton = () => {
+		const page = document.querySelector(".me-page");
+		requestAnimationFrame(() => {
+			if (page) {
+				page.classList.add("is-animated");
+			}
 		});
-		["turbolinks:before-cache"].forEach((eventName) => {
-			document.addEventListener(eventName, () => {
-				const page = document.querySelector(".me-page--events-section");
-				if (page) {
-					page.classList.add("is-animated");
-				}
-			}, false);
-		});
+
+		setTimeout(() => {
+			window.history.back();
+		}, 25)
 	};
 
 	window.AnimateModule = module;

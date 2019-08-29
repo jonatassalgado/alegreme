@@ -122,6 +122,10 @@ a {
 .turbolinks-progress-bar {
   height: 5px;
   background-color: $brand-color;
+  @include mdc-layout-grid-media-query_("phone") {
+    height: 3px;
+    top: 54px;
+  }
 }
 
 

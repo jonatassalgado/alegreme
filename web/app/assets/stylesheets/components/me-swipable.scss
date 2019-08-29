@@ -14,7 +14,6 @@
   }
 
   &__question {
-    text-align: center;
     margin: 0 auto 12px auto;
     line-height: 1.3em;
     & h2 {
@@ -22,6 +21,7 @@
       font-family: $font-primary-family;
       font-size: 24px;
       margin: 0 0 5px 0;
+      line-height: 1em;
     }
     & span {
       font-size: 11px;
@@ -29,7 +29,6 @@
       display: block;
       line-height: 130%;
       color: $font-secondary-color;
-      max-width: 85%;
       margin: 0 auto;
     }
   }

@@ -45,7 +45,7 @@
     <% end %>
     <% if params[:controller] != 'feeds' && mobile_device? %>
       <button class="me-top-app-bar__back-button mdc-icon-button"
-        onclick="window.history.back()">
+        onclick="window.AnimateModule.animateBackbutton()">
         <i class="material-icons">keyboard_backspace</i>
       </button>
     <% elsif params[:controller] != 'feeds' %>

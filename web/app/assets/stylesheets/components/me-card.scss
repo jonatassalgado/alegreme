@@ -324,6 +324,7 @@ $description-color: $font-secondary-color;
 
     & .me-card__primary-section {
       color: $font-secondary-color;
+
       & a {
         color: $font-secondary-color;
       }
@@ -369,7 +370,7 @@ $description-color: $font-secondary-color;
       font-size: 18px;
       color: $font-primary-color;
       @include mdc-layout-grid-media-query_("phone") {
-        font-size: 24px;
+        font-size: 21px;
         width: 90%;
         text-align: center;
         margin: 15px 0 0 0;
@@ -520,30 +521,21 @@ $description-color: $font-secondary-color;
   }
 
   &--notice {
-    min-height: 40vh;
+    min-height: 30vh;
     align-items: center;
     justify-content: center;
     text-align: center;
+    margin: auto;
     @include mdc-layout-grid-media-query_("phone") {
       border: unset;
-      min-height: 30vh;
-      justify-content: space-between;
+      min-height: 15vh;
+      justify-content: center;
+      max-width: 85%;
     }
 
     & .me-card__primary-section, .me-card__secondary-section {
       row-gap: 12px;
       display: grid;
-    }
-
-
-    & .me-card__primary-section {
-      color: $font-secondary-color;
-      font-size: 17px;
-    }
-
-    & .me-card__secondary-section {
-      color: $font-tertiary-color;
-      font-size: 14px;
     }
 
     & .me-card__primary-action {
@@ -556,8 +548,19 @@ $description-color: $font-secondary-color;
       cursor: pointer;
       position: absolute;
       bottom: 0;
+      font-size: 16px;
       @include mdc-layout-grid-media-query_("phone") {
+        font-size: 14px;
         border: unset;
+      }
+    }
+
+    & .me-card__secondary-section {
+      color: $font-tertiary-color;
+      font-size: 14px;
+      @include mdc-layout-grid-media-query_("phone") {
+        font-size: 11px;
+        font-weight: 100;
       }
     }
   }

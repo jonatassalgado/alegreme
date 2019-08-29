@@ -12,6 +12,7 @@ export default class Float_menu_controller extends Controller {
 		const observableSectionEls = document.querySelectorAll('[data-observable="float-menu.section"]');
 
 		if (this.hasMenuTarget && observableSectionEls !== undefined) {
+			const threshold = this.md.mobile() ? 0.60 : 0.85;
 
 			this.observer = new IntersectionObserver((entries, observer) => {
 					entries.forEach((entry) => {
@@ -27,7 +28,7 @@ export default class Float_menu_controller extends Controller {
 					})
 				},
 				{
-					threshold: [0.85]
+					threshold: [threshold]
 				}
 			);
 
@@ -46,8 +47,8 @@ export default class Float_menu_controller extends Controller {
 	};
 
 	scrollTo(event) {
-		const identifier = event.target.closest('.me-float-menu__item').dataset.collectionIdentifier;
-		const sectionEl  = document.getElementById(identifier);
+		const identifier                              = event.target.closest('.me-float-menu__item').dataset.collectionIdentifier;
+		const sectionEl                               = document.getElementById(identifier);
 		document.documentElement.style.scrollBehavior = "smooth";
 
 		if (this.md.mobile()) {

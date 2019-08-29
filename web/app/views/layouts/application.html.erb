@@ -30,27 +30,27 @@
 <div style="height: 64px; width: 100%"></div>
 <% if params['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
   <%= render partial: "layouts/app-top-bar" %>
-  <%= render partial: 'layouts/hero' unless current_user %>
+  <%= render partial: "feeds/float_menu" %>
   <section class="me-page me-page--feed-section is-animated">
 <!--    <div class="me-overlay"></div>-->
     <%= yield %>
   </section>
 <% elsif params['controller'] == 'events' && params['action'] == 'show' %>
   <%= render partial: "layouts/app-top-bar", locals: {controller: 'events'} %>
-  <section class="me-page--events-section is-animated">
+  <section class="me-page me-page--events-section is-animated">
 <!--    <div class="me-overlay"></div>-->
     <%= yield %>
   </section>
 <% elsif params['controller'] == 'feeds' && params['action'] == 'train' %>
   <%= render partial: "layouts/app-top-bar" %>
-  <section class="me-page--train-section">
+  <section class="me-page me-page--train-section">
     <%#= render partial: 'layouts/bot' %>
 <!--    <div class="me-overlay"></div>-->
     <%= yield %>
   </section>
 <% else %>
   <%= render partial: "layouts/app-top-bar" %>
-  <section class="me-page--profile__section">
+  <section class="me-page me-page--profile__section">
     <%#= render partial: 'layouts/bot' %>
 <!--    <div class="me-overlay"></div>-->
     <%= yield %>

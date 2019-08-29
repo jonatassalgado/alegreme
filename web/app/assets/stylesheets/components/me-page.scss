@@ -2,14 +2,13 @@
 
 .me-page {
   color: $font-primary-color;
-  @include is-slide-left-animated;
+  @include is-show-in-animated;
 
 
   &__section {
     padding: 35px 0;
     background: $background-z1-color;
     @include mdc-layout-grid-media-query_("phone") {
-      //border-bottom: 1px solid $border-color;
       padding: 6px 0;
     }
 
@@ -54,7 +53,7 @@
   &--events-section {
     max-width: 700px;
     margin: auto;
-    @include is-slide-right-animated;
+    @include is-open-up-animated;
     @include mdc-layout-grid-media-query_("phone") {
       padding: 24px;
     }
