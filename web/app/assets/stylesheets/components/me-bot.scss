@@ -34,7 +34,7 @@ $border-color: #e0e0e0;
 
   &__pre-response {
     color: $surface-color;
-    background: $brand-color-left;
+    background: $brand-color;
     padding: 6px 16px;
     border-radius: 25px;
     margin: 0 16px;
@@ -378,7 +378,7 @@ $border-color: #e0e0e0;
     text-decoration: none;
     display: block;
     color: $surface-color;
-    background: $brand-color-left;
+    background: $brand-color;
     border-radius: 25px;
     padding: 0.5rem 1rem;
     font-size: 13px;

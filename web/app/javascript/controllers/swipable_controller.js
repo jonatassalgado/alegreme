@@ -208,19 +208,13 @@ export default class SwipableController extends Controller {
 									.then(
 										response => {
 											response.text().then(data => {
-												console.log(data);
-
-												// listElNodesObj[maxElements - 1].addEventListener('transitionend', function () {
-												document.body.classList.add("background-7");
 												document.querySelector('.stackedcards').classList.add('hidden');
 												document.querySelector('.global-actions').classList.add('hidden');
 												document.querySelector('.final-state').classList.remove('hidden');
 												document.querySelector('.final-state').classList.add('active');
 												setTimeout(() => {
-													location.assign(location.toString());
+													Turbolinks.visit("/feed");
 												}, 1500)
-												// listElNodesObj[maxElements - 1].removeEventListener('transitionend', null, false);
-												// });
 											});
 										}
 									)

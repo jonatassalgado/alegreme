@@ -1,4 +1,4 @@
-$brand-color-left: #00AD54; // #2ECC71; // #5EEDDE; // #31916C; // #26B679
+$brand-color: #00AD54; // #2ECC71; // #5EEDDE; // #31916C; // #26B679
 $brand-shadow-color-left: #2BBE69;
 $brand-color-right: #2191FB;
 $brand-color-high-contrast: #0C0F0A; //darken($brand-color, 10%);
@@ -6,9 +6,9 @@ $brand-color-high-contrast: #0C0F0A; //darken($brand-color, 10%);
 
 $border-color: #E1E1E1;
 
-$like-color: $brand-color-left;
+$like-color: $brand-color;
 $dislike-color: #8F1717;
-$maybe-color: $brand-color-left;
+$maybe-color: $brand-color;
 
 $font-primary-family: 'Montserrat', sans-serif;
 $font-secondary-family: 'Roboto', sans-serif;
@@ -52,30 +52,30 @@ $media-border-width: 0;
 
 $save-icon-fill: none;
 $save-icon-fill-hover: #ffffff;
-$save-icon-fill-active: $brand-color-left;
+$save-icon-fill-active: $brand-color;
 $save-icon-color: #ffffff;
 $save-icon-color-hover: #ffffff;
-$save-icon-color-active: $brand-color-left;
+$save-icon-color-active: $brand-color;
 
-$chip-follow-color: darken($brand-color-left, 10%);
-$chip-follow-border-color: $brand-color-left;
+$chip-follow-color: darken($brand-color, 10%);
+$chip-follow-border-color: $brand-color;
 $chip-follow-background-color: rgba(0, 173, 84, 0.15);
 
 $chip-filter-color: $font-secondary-color;
 $chip-filter-border-color: $border-color; // $brand-color-left;
 $chip-filter-background: #ffffff;
-$chip-filter-color-active: darken($brand-color-left, 10%);
-$chip-filter-border-color-active: $brand-color-left;
+$chip-filter-color-active: darken($brand-color, 10%);
+$chip-filter-border-color-active: $brand-color;
 $chip-filter-background-active: rgba(0, 173, 84, 0.15);
 $chip-filter-radius: 1px;
 
 $chip-font-color: $brand-color-high-contrast; // darken($brand-color, 25%);
-$chip-background-color: $brand-color-left; // transparentize($brand-color, 0.65);
+$chip-background-color: $brand-color; // transparentize($brand-color, 0.65);
 $chip-border-color: $brand-color-high-contrast; //transparentize($brand-color, 0.45);
 $chip-border-size: 1px;
 $chip-transition: background 0.5s cubic-bezier(.29, .01, .4, .99), border 0.5s cubic-bezier(.29, .01, .4, .99);
 
-$link-color: $brand-color-left;
+$link-color: $brand-color;
 
 $icon-color: transparentize($font-primary-color, 0.30);
 $icon-dark-color: transparentize($font-primary-color, 0.10);
@@ -87,4 +87,4 @@ $elevated-surface-color: #f9f9f9;
 
 $filter-background-color: $background-color;
 
-$mdc-theme-primary: $brand-color-left;
+$mdc-theme-primary: $brand-color;

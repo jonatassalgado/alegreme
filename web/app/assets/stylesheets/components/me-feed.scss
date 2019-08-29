@@ -114,7 +114,7 @@ $mdc-layout-grid-columns: (
     display: none;
     width: 100px;
     height: 2px;
-    background: $brand-color-left;
+    background: $brand-color;
     border-radius: 1px;
     margin: 12px 0 26px 0;
     @include mdc-layout-grid-media-query_("tablet") {

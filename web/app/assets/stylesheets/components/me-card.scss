@@ -21,10 +21,10 @@ $description-color: $font-secondary-color;
     & .me-card__similar {
       // transform: translate(0px, 6px);
       opacity: 1;
-      color: $brand-color-left;
+      color: $brand-color;
 
       & svg {
-        fill: $brand-color-left;
+        fill: $brand-color;
       }
     }
   }
@@ -123,18 +123,14 @@ $description-color: $font-secondary-color;
   }
 
   &__category {
-    color: $font-secondary-color-high-contrast
+    color: $font-secondary-color;
     //color: $brand-color-left;
   }
 
   &__date {
 
-    &.is-today {
-      background: $brand-color-left;
-      padding: 0 3px 0 0;
-      border-radius: 3px;
-      color: white;
-      margin: 0 3px 0 0;
+    &.is-today, .is-today a {
+      color: $brand-color;
     }
   }
 
@@ -165,7 +161,7 @@ $description-color: $font-secondary-color;
     }
 
     &:hover {
-      color: $brand-color-left;
+      color: $brand-color;
     }
 
     & .material-icons {
@@ -500,7 +496,7 @@ $description-color: $font-secondary-color;
 
         &--on {
           //background: $icon-background-color;
-          @include mdc-icon-button-ink-color($color: $brand-color-left);
+          @include mdc-icon-button-ink-color($color: $brand-color);
           // @include mdc-elevation($z-value: 2);
         }
 
@@ -512,7 +508,7 @@ $description-color: $font-secondary-color;
     }
 
     & .mdc-fab {
-      @include mdc-fab-container-color($brand-color-left);
+      @include mdc-fab-container-color($brand-color);
     }
 
     & .mdc-typography--body2 {
@@ -551,7 +547,7 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__primary-action {
-      color: $brand-color-left;
+      color: $brand-color;
       border-top: 1px solid $border-color;
       width: 100%;
       text-align: center;

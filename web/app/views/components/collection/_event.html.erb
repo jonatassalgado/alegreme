@@ -64,8 +64,9 @@
       <% if event.day_of_week['decorator'] == 'hoje' %>
         <span class="me-card__date is-today"
               data-target="event.date">
-          <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %> <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
+          <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
         </span>
+        <span> <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %></span>
         <span aria-hidden="true"> · </span>
         <span class="me-card__category"
               data-target="event.category">
@@ -79,8 +80,9 @@
         <span aria-hidden="true"> · </span>
         <span class="me-card__date"
               data-target="event.date">
-          <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %> <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
+          <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
         </span>
+        <span><%= " · R$#{event.details_prices.min}" if event.details_prices.present? %></span>
       <% end %>
     </div>
     <div class="me-card__secondary-section">
