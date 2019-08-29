@@ -128,7 +128,7 @@ $gutter: 6px;
     margin-bottom: calc(-0.25 * #{$gutter});
     // @include add-horizontal-scroll-wrapper();
     @include mdc-layout-grid-media-query_("phone") {
-      grid-auto-columns: 38px;
+      grid-auto-columns: 45px;
       padding: 0 $section-padding-phone;
     }
   }

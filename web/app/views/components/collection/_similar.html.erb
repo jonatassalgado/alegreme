@@ -19,7 +19,7 @@
        class="me-similar"
        style="order: <%= order %>">
     <h3>
-      Eventos parecidos com <%= link_to(limit_name_size(event.details['name'], 60), event_path(event)) %>
+      Similares a <%= link_to(limit_name_size(event.details['name'], 60), event_path(event)) %>
     </h3>
 
     <div class="me-similar__events">

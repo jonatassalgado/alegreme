@@ -415,14 +415,15 @@ $description-color: $font-secondary-color;
       @include mdc-layout-grid-media-query_("phone") {
         width: auto;
         margin: 0 0 16px 0;
+        display: flex;
       }
 
       & i {
         float: left;
-        margin: 8px 10px 0 3px;
-        @include mdc-layout-grid-media-query_("phone") {
-          margin: 2px 10px 0 3px;
-        }
+        margin: 0 10px 0 0;
+        //@include mdc-layout-grid-media-query_("phone") {
+        //  margin: 2px 10px 0 3px;
+        //}
       }
 
       & h3 {
@@ -442,6 +443,10 @@ $description-color: $font-secondary-color;
 
     & .me-card__date {
       margin: 0;
+
+      & h3 {
+        text-transform: uppercase;
+      }
     }
 
     & .me-card__description {

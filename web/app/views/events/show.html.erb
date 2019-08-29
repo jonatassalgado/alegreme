@@ -51,10 +51,10 @@
           </i>
           <div>
             <h3>
-              <%= link_to @event.place_details_name, place_path(@event.place) %>
+              <%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place) %>
             </h3>
             <span>
-            <%= @event.geographic['address'] %>
+            <%= limit_address_name_size @event.geographic['address'] %>
           </span>
           </div>
         <% end %>
@@ -66,10 +66,10 @@
           </i>
           <div>
             <h3>
-              <%= "#{@event.day_of_week['decorator']}" %>
+              <%= "#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }" %>
             </h3>
             <span>
-              <%= "#{@event.day_of_week['string']}" %>
+              <%= I18n.l(@event.day_of_week['date'], format: :long) %>
           </span>
           </div>
         <% end %>

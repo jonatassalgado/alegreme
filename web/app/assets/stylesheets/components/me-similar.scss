@@ -54,6 +54,7 @@
       grid-template-columns: repeat(20, minmax(18vw, 1fr));
       overflow-x: scroll;
       padding: 0 ($section-padding-phone / 2);
+      margin: 6px 0 12px 0;
     }
 
     &::-webkit-scrollbar {
@@ -93,6 +94,7 @@
     @include mdc-layout-grid-media-query_("phone") {
       @include add-horizontal-scroll-wrapper;
       @include no-scroll-bar;
+      padding: 6px 0;
     }
 
     & .mdc-chip__text {

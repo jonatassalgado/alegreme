@@ -3,6 +3,10 @@
 .me-page {
   color: $font-primary-color;
   @include is-show-in-animated;
+  @include mdc-layout-grid-media-query_("phone") {
+    max-width: 100vw;
+    overflow: hidden;
+  }
 
 
   &__section {
