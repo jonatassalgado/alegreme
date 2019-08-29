@@ -2,13 +2,39 @@
 
 .me-footer {
   text-align: center;
-  padding: 35px 0;
+  height: auto;
+  display: flex;
+  flex-direction: column;
   color: $font-secondary-color;
+  font-size: 14px;
+  justify-content: flex-end;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-image: asset_url("welcome/bg-footer");
+  min-height: 300px;
+  font-weight: 500;
+  padding: 12px 6px 24px 6px;
+  line-height: 1.3em;
   @include mdc-layout-grid-media-query_("phone") {
-    display: none;
+    min-height: 36vh;
+    background-image: asset_url("bg-footer-mobile");
+    font-size: 12px;
+    background-size: contain;
   }
 
-  & span {
-    margin: 0 12px;
+  &__icon {
+    margin: 35px 0;
+    @include mdc-layout-grid-media-query_("phone") {
+      margin: 12px 0;
+    }
+  }
+
+  &--feed {
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 12px 96px 24px 90px;
+      align-items: end;
+      text-align: left;
+    }
   }
 }

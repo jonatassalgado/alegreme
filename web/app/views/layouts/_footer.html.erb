@@ -1,7 +1,5 @@
-<div class="me-footer">
-    <span>
-        <b>Aproveite a cidade de Porto Alegre</b>
-    </span>
-<!--    <span>Feito com amor em Porto Alegre para Porto Alegre por porto alegrenses</span>-->
+<div class="me-footer <%= 'me-footer--feed' if params['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>">
+  <%= responsive_image_tag 'welcome/footer-logo-icon', class: 'me-footer__icon lazyload' %>
+  <span>Feito com ♥ no Centro Histórico de Porto Alegre</span>
 </div>
 
