@@ -1,4 +1,8 @@
 <div data-controller="swipable" data-target="swipable.swipable" class="me-swipable me-page__section">
+  <div class="me-swipable__question">
+    <h2>Você iria neste evento?</h2>
+    <span>Indique abaixo os eventos que você iria ou não para já receber sugestões que tem a ver com seu gosto</span>
+  </div>
   <div id="stacked-cards-block" class="stackedcards stackedcards--animatable init">
     <div class="stackedcards-container">
       <% @swipable_items.each do |item| %>
@@ -24,7 +28,6 @@
   <div class="global-actions">
     <button class="mdc-button mdc-button__icon left-action">
       <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_down</i>
-      <span class="mdc-button__label">Não</span>
     </button>
     <button class="mdc-button mdc-button__icon top-action">
 <!--      <i class="material-icons mdc-button__icon" aria-hidden="true">star_rate</i>-->
@@ -32,7 +35,6 @@
     </button>
     <button class="mdc-button mdc-button__icon right-action">
       <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
-      <span class="mdc-button__label">Sim</span>
     </button>
   </div>
   <div class="final-state hidden">

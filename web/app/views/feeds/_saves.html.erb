@@ -1,11 +1,11 @@
   <div id="saves" class="me-saves me-feed__section me-page__section" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
     <% if current_user and !current_user.taste_events_saved.empty? %>
-      <h3 data-target="saves.header" class="">
+      <h2 data-target="saves.header" class="">
         Eventos salvos
         <i class="material-icons">
           chevron_right
         </i>
-      </h3>
+      </h2>
       <div class="me-icon__group">
         <div data-target="saves.scrollLeft" data-action="click->saves#scrollLeft"
              class="me-icon me-icon--scroll-left me-icon--off">
@@ -56,6 +56,7 @@
                   <div class="me-card__date <%= 'is-today' if ['hoje', 'amanhã'].include?(event.day_of_week['decorator'])  %>" data-target="saves-events.date">
                     <%= event.day_of_week['decorator'] %>
                   </div>
+                  <%#= format_hour event.first_day_time %>
   <!--                <div class="me-card__title mdc-card__title"-->
   <!--                     data-target="saves-events.title">-->
                     <%#= limit_name_size event.details_name, 32 %>

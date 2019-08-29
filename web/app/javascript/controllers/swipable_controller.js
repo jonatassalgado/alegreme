@@ -1,5 +1,4 @@
 import {Controller} from "stimulus";
-import {stringify}  from "query-string";
 
 
 export default class SwipableController extends Controller {
@@ -10,11 +9,11 @@ export default class SwipableController extends Controller {
 		// ["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
 		// 	document.addEventListener(eventName, () => {
 		// 		setTimeout(() => {
-					if (self.hasSwipableTarget) {
-						self.stackedCards();
-						self.swipableTarget.style.minHeight = `${self.swipableTarget.offsetHeight}px`;
-					}
-				// }, 500);
+		if (self.hasSwipableTarget) {
+			self.stackedCards();
+			self.swipableTarget.style.minHeight = `${self.swipableTarget.offsetHeight}px`;
+		}
+		// }, 500);
 		// 	}, false);
 		// });
 	}
@@ -294,7 +293,7 @@ export default class SwipableController extends Controller {
 				transformUi(-1000, 0, 0, topObj); //Move topOverlay
 				resetOverlayLeft();
 			}
-			counter = counter + 1
+			counter = counter + 1;
 			removeElement();
 			updateUi();
 			currentElement();
@@ -312,7 +311,7 @@ export default class SwipableController extends Controller {
 				transformUi(1000, 0, 0, topObj); //Move topOverlay
 				resetOverlayRight();
 			}
-			counter = counter + 1
+			counter = counter + 1;
 			removeElement();
 			updateUi();
 			currentElement();
@@ -331,7 +330,7 @@ export default class SwipableController extends Controller {
 				transformUi(0, -1000, 0, topObj); //Move topOverlay
 				resetOverlays();
 			}
-			counter = counter + 1
+			counter = counter + 1;
 			removeElement();
 			updateUi();
 			currentElement();

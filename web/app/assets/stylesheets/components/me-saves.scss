@@ -18,7 +18,7 @@ $gutter: 6px;
   &__list {
     &::before {
       content: close-quote;
-      background: linear-gradient(to left, transparent, $background-z0-color);
+      background: linear-gradient(to left, transparent, $background-color);
       width: 126px;
       height: 90%;
       position: absolute;
@@ -35,7 +35,7 @@ $gutter: 6px;
 
     &::after {
       content: close-quote;
-      background: linear-gradient(to right, transparent, $background-z0-color);
+      background: linear-gradient(to right, transparent, $background-color);
       width: 126px;
       height: 90%;
       position: absolute;
@@ -89,7 +89,7 @@ $gutter: 6px;
     font-size: 21px;
   }
 
-  & h3 {
+  & h2 {
     margin: 0 0 15px 0;
     font-size: 1.3em;
     font-weight: 800;
@@ -218,7 +218,7 @@ $gutter: 6px;
       border-radius: 3px;
       overflow: hidden;
       //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: $media-box-shadow;
+      box-shadow: $media-box-shadow-small;
 
       &:hover {
         //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
@@ -233,17 +233,28 @@ $gutter: 6px;
   }
 
   & .me-icon--scroll-left, .me-icon--scroll-right {
+    width: 28px;
+    height: 28px;
     position: absolute;
+    top: 30px;
+    z-index: 2;
+    padding: 12px;
+    transition: opacity 0.4s ease;
     @include mdc-layout-grid-media-query_("phone") {
       display: none;
+    }
+
+
+    & .iron-icon {
+      fill: $font-primary-color;
     }
   }
 
   & .me-icon--scroll-left {
-    left: -22px;
+    left: -30px;
   }
 
   & .me-icon--scroll-right {
-    right: -22px;
+    right: -30px;
   }
 }

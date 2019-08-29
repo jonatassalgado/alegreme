@@ -1,12 +1,37 @@
 .me-swipable {
   z-index: 2;
-  max-width: 500px;
+  max-width: 420px;
   margin: 35px auto 10px;
   position: relative;
   padding: 0 $section-padding-phone;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   @include mdc-layout-grid-media-query_("phone") {
-    margin: 25px 0 35px 0;
-    display: inline-block;
+    margin: 0 0 15px 0;
+  }
+
+  &__question {
+    text-align: center;
+    margin: 12px auto;
+    line-height: 1.3em;
+    & h2 {
+      font-weight: 800;
+      font-family: $font-primary-family;
+      font-size: 24px;
+      margin: 0 0 5px 0;
+    }
+    & span {
+      font-size: 11px;
+      font-weight: 200;
+      display: block;
+      line-height: 130%;
+      color: $font-secondary-color;
+      max-width: 85%;
+      margin: 0 auto;
+    }
   }
 
   &__item {
@@ -33,7 +58,7 @@
       font-size: 22px;
       font-weight: 700;
       padding: 0 15px;
-      font-family: $font-primary-family;
+      max-width: 80%;
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 22px;
       }
@@ -130,6 +155,14 @@
     justify-content: center;
   }
 
+  & .stackedcards-container .card-item:not(:first-child) .me-swipable__item-overlay {
+    background: #c7c7c7 !important;
+  }
+
+  & .stackedcards-container .card-item:not(:first-child) .me-swipable__item {
+    background: unset !important;
+  }
+
   & .stackedcards-overlay.left, .stackedcards-overlay.right, .stackedcards-overlay.top {
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -143,7 +176,7 @@
     left: 0;
     opacity: 0;
     top: 0;
-    height: 100%;
+    height: calc(100% - 18px);
     letter-spacing: 3px;
     font-size: 24px; /* this style was added only for better preview */
     text-transform: uppercase; /* this style was added only for better preview */
@@ -201,6 +234,7 @@
     position: relative;
     margin: 15px 0 0 0;
     @include mdc-layout-grid-media-query_("phone") {
+      //display: none;
       margin: 15px 0 25px 0;
     }
 
@@ -208,32 +242,48 @@
       display: none;
     }
 
-    & > button {
-      margin: 0 12px;
+    & button {
+      margin: auto 10px;
       display: flex;
       text-align: center;
-      height: 55px;
+      height: 62px;
+      width: 62px;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
       flex-direction: column;
-      justify-content: flex-end;
+      -webkit-box-pack: end;
+      border: 1px solid #e0e0e0;
+      border-radius: 100%;
+      padding: 0;
+      font-family: $font-secondary-family;
+      justify-content: center;
+      font-weight: 600;
+      align-items: center;
+      background: none;
       @include mdc-button-ink-color($font-tertiary-color);
       //@include mdc-button-outline-color($font-secondary-color)
     }
+
+    & .mdc-button__icon {
+      @include mdc-button-ink-color($font-tertiary-color);
+      @include mdc-states-base-color($border-color);
+    }
   }
 
-  & .right-action {
-    @include mdc-button-ink-color($like-color);
-    @include mdc-states-base-color($like-color);
-  }
-
-  & .top-action {
-    @include mdc-button-ink-color($maybe-color);
-    @include mdc-states-base-color($maybe-color);
-  }
-
-  & .left-action {
-    @include mdc-button-ink-color($dislike-color);
-    @include mdc-states-base-color($dislike-color);
-  }
+  //& .right-action {
+  //  //@include mdc-button-ink-color($like-color);
+  //  //@include mdc-states-base-color($like-color);
+  //}
+  //
+  //& .top-action {
+  //  @include mdc-button-ink-color($border-color);
+  //  @include mdc-states-base-color($border-color);
+  //}
+  //
+  //& .left-action {
+  //  //@include mdc-button-ink-color($dislike-color);
+  //  //@include mdc-states-base-color($dislike-color);
+  //}
 
 
 
@@ -268,16 +318,12 @@
   & .mdc-button__icon {
     margin: 0;
     width: auto;
-  }
-
-  & .mdc-button__icon {
-    font-size: 26px;
+    font-size: 22px;
     height: auto;
-    margin-bottom: 6px;
   }
 
   & .mdc-button__label {
-    font-size: 11px;
+    font-size: 9px;
     height: auto;
   }
 }

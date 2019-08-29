@@ -73,7 +73,7 @@ $description-color: $font-secondary-color;
     background: linear-gradient(to top, #ffffff38, transparent);
     overflow: hidden;
     border-radius: $media-border-radius;
-    box-shadow: 0 0 6px #00000038;
+    box-shadow: $media-box-shadow-large;
     @include mdc-ripple-surface;
     @include mdc-ripple-radius-bounded;
     @include mdc-states;

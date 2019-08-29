@@ -46,7 +46,8 @@ $font-secondary-color: #4B4B4B; // transparentize($font-primary-color, 0.35);
 $font-secondary-color-high-contrast: #8F1717;
 $font-tertiary-color: #7D7D7D; // transparentize($font-secondary-color, 0.20);
 
-$media-box-shadow: unset; // 0 0 0 1px rgba(0, 0, 0, 0.12);
+$media-box-shadow-small: 0 0 3px #00000038;
+$media-box-shadow-large: 0 0 6px #00000038;
 $media-border-radius: 3px;
 $media-border-width: 0;
 

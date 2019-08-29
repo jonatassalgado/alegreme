@@ -155,7 +155,7 @@
     }
 
     &__overlay {
-      box-shadow: 0 0 3px #00000038;
+      box-shadow: $media-box-shadow-small;
     }
 
     & .mdc-card__media {
