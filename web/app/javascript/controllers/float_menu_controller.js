@@ -52,9 +52,9 @@ export default class Float_menu_controller extends Controller {
 		document.documentElement.style.scrollBehavior = "smooth";
 
 		if (this.md.mobile()) {
-			window.scrollTo(0, sectionEl.offsetTop - 30);
+			window.scrollTo(0, sectionEl.offsetTop + 50);
 		} else {
-			window.scrollTo(0, sectionEl.offsetTop - 100);
+			window.scrollTo(0, sectionEl.offsetTop + 20);
 		}
 
 		document.documentElement.style.scrollBehavior = ""
