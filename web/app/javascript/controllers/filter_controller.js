@@ -139,6 +139,10 @@ export default class FilterController extends Controller {
 						       arrayFormat: 'bracket'
 					       });
 
+				       if (opts.similar) {
+
+				       }
+
 				       fetch(`${location.pathname}?${urlWithFilters}`, {
 					       method     : 'get',
 					       headers    : {

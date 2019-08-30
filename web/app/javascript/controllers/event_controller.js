@@ -73,6 +73,8 @@ export default class EventController extends Controller {
 	};
 
 	showSimilar = () => {
+		this.isSimilarLoading = true;
+
 		postal.publish({
 			channel: `${this.sectionIdentifier}`,
 			topic  : `${this.sectionIdentifier}.create`,
@@ -161,6 +163,10 @@ export default class EventController extends Controller {
 
 	set isSimilarOpen(value) {
 		this.data.set("similar-open", value);
+	}
+
+	set isSimilarLoading(value) {
+		this.data.set("similar-loading", value);
 	}
 
 	get identifier() {

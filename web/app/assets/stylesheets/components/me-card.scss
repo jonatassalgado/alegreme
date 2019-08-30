@@ -10,58 +10,27 @@ $description-color: $font-secondary-color;
   will-change: opacity, transform;
 
   &[data-event-similar-open="true"], &[data-event-similar-open="true"]:hover {
-    //transform: scale(0.9);
-    //transform-origin: center;
-    //border-bottom: 3px solid $brand-color-left;
 
     & .me-card__secondary-section a {
-      //color: $brand-color-left;
-    }
 
+    }
     & .me-card__similar {
-      // transform: translate(0px, 6px);
       opacity: 1;
       color: $brand-color;
-
-      & svg {
-        fill: $brand-color;
-      }
     }
   }
 
-  &[data-event-similar-open="true"]::before {
-    //content: close-quote;
-    //border: 2px solid $font-primary-color;
-    //height: 100%;
-    //position: absolute;
-    //width: 100%;
-    //transform: scale(1.1, 1.1);
-    //transform-origin: center;
-    //border-radius: 8px;
-    //left: -2px;
-    //animation-name: show-in-similar-border;
-    //animation-duration: 400ms;
-    //animation-timing-function: ease-out;
-    //
-    //@keyframes show-in-similar-border {
-    //  from {
-    //    opacity: 0;
-    //    //transform: scale(1.1, 1.1) translate(0px, -25px);
-    //  }
-    //
-    //  to {
-    //    opacity: 1;
-    //    //transform: scale(1.1, 1.1) translate(0, 0);
-    //  }
-    //}
-  }
+  &[data-event-similar-loading="true"] {
+    & .me-card__expand-more {
+      opacity: 0;
+      display: none;
+    }
 
-  &::before {
-    //transition: transform 0.4s ease;
-  }
-
-  &:hover {
-
+    & .me-card__loading {
+      opacity: 1;
+      display: block;
+      color: $font-secondary-color;
+    }
   }
 
   &__overlay {
@@ -124,7 +93,6 @@ $description-color: $font-secondary-color;
 
   &__category {
     color: $font-secondary-color;
-    //color: $brand-color-left;
   }
 
   &__date, &__price {
@@ -145,14 +113,38 @@ $description-color: $font-secondary-color;
     align-self: center;
     cursor: pointer;
     color: $font-tertiary-color;
-    //min-height: 35px;
     opacity: 0;
     transition: opacity 0.15s ease;
-    //transform: translate(0px, -10px);
-    margin: 6px 0 0 0;
     user-select: none;
+    z-index: 2;
+    position: relative;
+    top: 6px;
+    margin-bottom: 12px;
     @include mdc-layout-grid-media-query_("phone") {
       opacity: 1;
+    }
+
+    & .me-card__loading {
+      opacity: 0;
+      display: none;
+      animation-name: rotate;
+      animation-iteration-count: infinite;
+      animation-duration: 1s;
+      animation-timing-function: ease;
+      padding: 0;
+      @include mdc-layout-grid-media-query_("phone") {
+        padding: 0 0 1px 0;
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
     }
 
 
