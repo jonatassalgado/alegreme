@@ -18,14 +18,12 @@ const AnimateModule = (function () {
 				})
 			}, false);
 		});
-		["turbolinks:before-cache"].forEach((eventName) => {
-			document.addEventListener(eventName, () => {
-				const page = document.querySelector(".me-page");
-				if (page) {
-					page.classList.add("is-animated");
-				}
-			}, false);
-		});
+		document.addEventListener("turbolinks:before-cache", () => {
+			const page = document.querySelector(".me-page");
+			if (page) {
+				page.classList.add("is-animated");
+			}
+		}, false);
 	};
 
 	module.animateBackbutton = () => {

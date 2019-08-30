@@ -7,52 +7,35 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import {ripple} from "material-components-web/index";
-
-console.log("Hello World from Webpacker");
-
 import "postal";
 import "morphdom";
 import "controllers";
 
 import {MDCIconButtonToggle} from "@material/icon-button";
-
 // import {
 // 	MDCTopAppBar
 // } from "@material/top-app-bar/index";
-import {
-	MDCRipple
-} from "@material/ripple";
-import {
-	MDCTextField
-} from "@material/textfield";
-import {
-	MDCSelect
-} from "@material/select";
-import {
-	MDCCheckbox
-} from "@material/checkbox";
-import {
-	MDCMenu
-} from "@material/menu";
-import {
-	MDCSnackbar
-} from "@material/snackbar";
-import {
-	CacheModule
-} from "../modules/cache-module";
-import {
-	AnimateModule
-} from "../modules/animate-module";
-// import {
-// 	LazyloadModule
-// } from "../modules/lazyload-module";
+import {MDCRipple}           from "@material/ripple";
+import {MDCTextField}        from "@material/textfield";
+import {MDCSelect}           from "@material/select";
+import {MDCCheckbox}         from "@material/checkbox";
+import {MDCMenu}             from "@material/menu";
+import {MDCSnackbar}         from "@material/snackbar";
+import {CacheModule}         from "../modules/cache-module";
+import {AnimateModule}       from "../modules/animate-module";
+import {LazyloadModule}      from "../modules/lazyload-module";
+
+console.log("Hello World from Webpacker");
+
+// import 'lazysizes';
+
 
 CacheModule.activateTurbolinks();
-// LazyloadModule.init();
 AnimateModule.init();
-
 const applicationScript = () => {
+
+	LazyloadModule.init();
+
 	// TopAppBar
 	// const topAppBarElement = document.querySelector(".mdc-top-app-bar");
 	// const topAppBar        = new MDCTopAppBar(topAppBarElement);
