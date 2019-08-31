@@ -6,7 +6,7 @@ volumes:
   api_data:
   scrapydo_data:
   splash_data:
-  redis_data:
+#  redis_data:
   # scrapy_shared:
   # search_data:
 services:
@@ -17,9 +17,9 @@ services:
     depends_on:
       - db
       - api
-      - memcached
       - scrapy
-      - redis
+#      - memcached
+#      - redis
       # - search
       # - bot
     volumes:
@@ -50,32 +50,32 @@ services:
     memswap_limit: 6gb
     mem_reservation: 256m
     cpus: 0.5
-  sidekiq:
-    build:
-      context: ./web
-      dockerfile: ./docker/sidekiq/Dockerfile
-    depends_on:
-      - redis
-      - db
-    volumes:
-      - ./web:/var/www/alegreme
-      - ./logs/sidekiq:/var/www/alegreme/log
-    working_dir: /var/www/alegreme
-    environment:
-      RAILS_ENV: development
-      RACK_ENV: development
-      PGHOST: db
-      PGUSER: postgres
-      API_URL: http://api
-      IS_DOCKER: 'true'
-      HTTP_HOST: 'www.alegreme.com'
-      NODE_ENV: development
-      JOB_WORKER_URL: redis://redis:6379/0
-    command: bundle exec sidekiq -C /var/www/sidekiq/config.yml -r /var/www/alegreme
-    restart: always
-    mem_limit: 3gb
-    memswap_limit: 3gb
-    cpus: 0.5
+#  sidekiq:
+#    build:
+#      context: ./web
+#      dockerfile: ./docker/sidekiq/Dockerfile
+#    depends_on:
+#      - redis
+#      - db
+#    volumes:
+#      - ./web:/var/www/alegreme
+#      - ./logs/sidekiq:/var/www/alegreme/log
+#    working_dir: /var/www/alegreme
+#    environment:
+#      RAILS_ENV: development
+#      RACK_ENV: development
+#      PGHOST: db
+#      PGUSER: postgres
+#      API_URL: http://api
+#      IS_DOCKER: 'true'
+#      HTTP_HOST: 'www.alegreme.com'
+#      NODE_ENV: development
+#      JOB_WORKER_URL: redis://redis:6379/0
+#    command: bundle exec sidekiq -C /var/www/sidekiq/config.yml -r /var/www/alegreme
+#    restart: always
+#    mem_limit: 3gb
+#    memswap_limit: 3gb
+#    cpus: 0.5
   db:
     image: postgres
     volumes:
@@ -142,29 +142,29 @@ services:
     mem_reservation: 256m
     cpus: 0.7
     command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
-  memcached:
-    image: memcached
-    command: memcached -m 64
-    ports:
-      - 11211:11211
-    restart: always
-    mem_limit: 3gb
-    memswap_limit: 3gb
-    mem_reservation: 256m
-    cpus: 0.3
-    restart: always
-  redis:
-    image: redis
-    command: redis-server
-    volumes:
-      - redis_data:/data
-    ports:
-      - 6379:6379
-    mem_limit: 3gb
-    memswap_limit: 3gb
-    mem_reservation: 256m
-    cpus: 0.3
-    restart: always
+#  memcached:
+#    image: memcached
+#    command: memcached -m 64
+#    ports:
+#      - 11211:11211
+#    restart: always
+#    mem_limit: 3gb
+#    memswap_limit: 3gb
+#    mem_reservation: 256m
+#    cpus: 0.3
+#    restart: always
+#  redis:
+#    image: redis
+#    command: redis-server
+#    volumes:
+#      - redis_data:/data
+#    ports:
+#      - 6379:6379
+#    mem_limit: 3gb
+#    memswap_limit: 3gb
+#    mem_reservation: 256m
+#    cpus: 0.3
+#    restart: always
 # web:
 #   build:
 #     context: ./web
