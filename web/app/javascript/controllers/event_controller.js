@@ -1,9 +1,9 @@
-import {Controller}      from "stimulus";
-import {MDCMenu}         from "@material/menu";
-import {MDCRipple}       from "@material/ripple";
-import {CacheModule}     from "modules/cache-module";
+import {Controller}          from "stimulus";
+import {MDCMenu}             from "@material/menu";
+import {MDCRipple}           from "@material/ripple";
+import {CacheModule}         from "modules/cache-module";
 import {MDCIconButtonToggle} from "@material/icon-button";
-import * as MobileDetect from "mobile-detect";
+import * as MobileDetect     from "mobile-detect";
 
 export default class EventController extends Controller {
 	static targets = [
@@ -130,6 +130,11 @@ export default class EventController extends Controller {
 				response => {
 					response.text().then(data => {
 						eval(data);
+						// CacheModule.clearCache(['feed-page', 'events-page'], {
+						// 	event: {
+						// 		identifier: this.identifier
+						// 	}
+						// });
 					});
 				}
 			)

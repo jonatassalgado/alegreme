@@ -49,7 +49,7 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
   /.+(?:js|css)+.*$/,
-  new workbox.strategies.StaleWhileRevalidate({
+  new workbox.strategies.CacheFirst({
     cacheName: CACHE_NAME + "static-resources"
   })
 );

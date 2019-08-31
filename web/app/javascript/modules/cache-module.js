@@ -17,14 +17,14 @@ const CacheModule = (function() {
     const staticResourcesCache = caches.has("v1:sw-cache-static-resources");
     const staticImagesCache = caches.has("v1:sw-cache-static-images");
     const gFontsCache = caches.has("v1:sw-cache-google-fonts-stylesheets");
-    const wFontsCache = caches.has("v1:sw-cache-google-fonts-webfonts");
+    // const wFontsCache = caches.has("v1:sw-cache-google-fonts-webfonts");
 
     Promise.all([
       feedCache,
       staticResourcesCache,
       staticImagesCache,
-      gFontsCache,
-      wFontsCache
+      gFontsCache
+      // wFontsCache
     ])
       .then(hasCaches => {
         const hasCachedPrincipalResources = hasCaches.every(Boolean);
@@ -42,7 +42,7 @@ const CacheModule = (function() {
       caches
         .open("v1:sw-cache-feed-page")
         .then(function(cache) {
-          cache.delete("/").then(function(response) {
+          cache.delete("/feed").then(function(response) {
             if (response) {
               console.log("Cache v1:sw-cache-feed-page deleted: ", response);
             }

@@ -64,7 +64,7 @@ module EventServices
 					},
 					'follow'             => {
 							in_days:            set_initial_dates_filter,
-							order_by_personas:      true,
+							order_by_personas:  true,
 							in_follow_features: true,
 							group_by:           calculate_items_for_group(5, auto_balance: true)
 					},
