@@ -5,11 +5,10 @@ volumes:
   db_data:
   db_backup:
   api_data:
-  # bot_data:
+  redis_data:
   # search_data:
   scrapydo_data:
   splash_data:
-  # mongo_data:
 services:
   app:
     build:
@@ -18,14 +17,13 @@ services:
     depends_on:
       - db
       - api
-      # - search
       - scrapy
+      - memcached
+      # - search
     volumes:
       - bundle_cache:/bundle
-      # - public-files:/var/www/alegreme/public
       - scrapy_data:/var/www/scrapy/data:ro
       - ./web/public/uploads:/var/www/alegreme/public/uploads
-      # - ./web/public:/var/www/alegreme/public
       - ./web/db/backups:/var/www/alegreme/db/backups
       - ./logs/app:/var/www/alegreme/log
       - ./storage:/var/www/alegreme/storage
@@ -41,11 +39,8 @@ services:
       NODE_ENV: production
       WEB_CONCURRENCY: 2
       RAILS_MAX_THREADS: 6
+      JOB_WORKER_URL: redis://redis:6379/0
       # ELASTICSEARCH_URL: http://search:9200
-    links:
-      - api
-      - db
-      # - search
     restart: always
     ports:
       - 3000:3000
@@ -54,6 +49,34 @@ services:
     memswap_limit: 5gb
     mem_reservation: 256m
     cpu_percent: 75
+  sidekiq:
+    build:
+      context: ./web
+      dockerfile: ./docker/sidekiq/Dockerfile
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ./web:/var/www/alegreme
+      - ./logs/sidekiq:/var/www/alegreme/log
+    working_dir: /var/www/alegreme
+    environment:
+      RAILS_ENV: production
+      RACK_ENV: production
+      PGHOST: db
+      PGUSER: jon
+      API_URL: http://api
+      IS_DOCKER: 'true'
+      HTTP_HOST: 'www.alegreme.com'
+      NODE_ENV: production
+      WEB_CONCURRENCY: 2
+      RAILS_MAX_THREADS: 6
+      JOB_WORKER_URL: redis://redis:6379/0
+    command: bundle exec sidekiq -C /var/www/sidekiq/config.yml -r /var/www/alegreme
+    restart: always
+    mem_limit: 3gb
+    memswap_limit: 3gb
+    cpus: 0.5
   db:
     image: postgres:10
     volumes:
@@ -71,7 +94,7 @@ services:
     restart: always
     mem_limit: 2gb
     memswap_limit: 3gb
-    cpu_percent: 50
+    cpus: 0.5
   web:
     build:
       context: ./web
@@ -85,7 +108,6 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - ./logs/web:/var/www/alegreme/log
-      # - public-files:/var/www/alegreme/public:ro
     restart: always
     mem_limit: 2gb
     memswap_limit: 3gb
@@ -109,18 +131,8 @@ services:
       IS_DOCKER: 'true'
     mem_limit: 3gb
     memswap_limit: 4gb
-    cpu_percent: 50
-  # search:
-  #   build:
-  #     context: ./search
-  #     dockerfile: ./Dockerfile
-  #   environment:
-  #     discovery.type: single-node
-  #   ports:
-  #     - "9200:9200"
-  #   volumes:
-  #     - search_data:/var/www/search/data
-  #   restart: always
+    mem_reservation: 256m
+    cpus: 0.7
   scrapy:
     build:
       context: ./scrapy
@@ -141,17 +153,51 @@ services:
     command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
     mem_limit: 3gb
     memswap_limit: 4gb
-    cpu_percent: 50
+    cpus: 0.5
   splash:
     image: scrapinghub/splash
     ports:
-      - "8050:8050"
-      - "5023:5023"
+      - 8050:8050
+      - 5023:5023
     restart: always
     volumes:
       - splash_data:/var/www/splash/data
-    mem_limit: 4gb
+    mem_limit: 5gb
     memswap_limit: 5gb
     mem_reservation: 256m
-    cpu_percent: 50
+    cpus: 0.7
     command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
+  memcached:
+    image: memcached
+    command: memcached -m 64
+    ports:
+      - 11211:11211
+    restart: always
+    mem_limit: 3gb
+    memswap_limit: 3gb
+    mem_reservation: 256m
+    cpus: 0.3
+    restart: always
+  redis:
+    image: redis
+    command: redis-server
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    mem_limit: 3gb
+    memswap_limit: 3gb
+    mem_reservation: 256m
+    cpus: 0.3
+    restart: always
+  # search:
+  #   build:
+  #     context: ./search
+  #     dockerfile: ./Dockerfile
+  #   environment:
+  #     discovery.type: single-node
+  #   ports:
+  #     - "9200:9200"
+  #   volumes:
+  #     - search_data:/var/www/search/data
+  #   restart: always

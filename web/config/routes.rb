@@ -1,10 +1,10 @@
+
+require 'sidekiq/web'
+require 'sidekiq-scheduler/web'
+
 Rails.application.routes.draw do
 
 	devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
-
-	# authenticated :user do
-	# 	root 'feeds#index', as: :authenticated_root
-	# end
 
 	root to: 'welcome#index'
 
@@ -20,7 +20,6 @@ Rails.application.routes.draw do
 
 	resources :users
 	resources :collections, only: [:index]
-	resources :calendars
 	resources :categories
 	resources :organizers
 	resources :places
@@ -28,7 +27,12 @@ Rails.application.routes.draw do
 	resources :events do
 		resource :favorite, only: [:create, :destroy]
 	end
+
 	get ':type/:resource_id/follow', to: 'follow#follow', :defaults => {:format => 'js'}, as: :follow
 	get ':type/:resource_id/unfollow', to: 'follow#unfollow', :defaults => {:format => 'js'}, as: :unfollow
+
+	mount Sidekiq::Web => '/sidekiq'
+	get 'job/submit/:who/:message', to: 'job#submit'
+
 	# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

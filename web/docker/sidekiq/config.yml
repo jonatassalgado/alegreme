@@ -1,0 +1,10 @@
+:logfile: /var/www/sidekiq/log/sidekiq.log
+:concurrency: 1
+staging:
+  :concurrency: 2
+production:
+  :concurrency: 5
+:queues:
+  - default
+  - mailers
+  - notifier

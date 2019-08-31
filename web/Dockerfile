@@ -111,7 +111,6 @@ RUN rake assets:precompile
 RUN rake webpacker:compile
 RUN yarn install
 
-
 EXPOSE 3000
 
 CMD bundle exec puma -C config/puma.rb

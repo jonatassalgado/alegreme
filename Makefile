@@ -26,6 +26,9 @@ down:
 console:
 	$(EXEC) bash
 
+tail:
+	tail -f logs/app/sidekiq.log  logs/app/development.log logs/sidekiq/development.log
+
 debug-app:
 	docker attach alegreme_app_1
 

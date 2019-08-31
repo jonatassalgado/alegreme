@@ -22,9 +22,15 @@ gem "jsonb_accessor", "~> 1.0.0"
 # Materialize
 gem 'materialize-sass', '~> 1.0.0'
 
+# Cache
+gem 'dalli'
+gem 'connection_pool'
 
 # Sidekiq
 gem 'sidekiq'
+gem 'sidekiq-scheduler'
+gem 'sidekiq-unique-jobs'
+gem 'sinatra', require: nil
 
 # Devise
 gem 'devise'

@@ -16,17 +16,21 @@ Rails.application.configure do
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp", "caching-dev.txt").exist?
     config.action_controller.perform_caching = true
+    config.cache_store = :dalli_store, 'memcached', { :pool_size => 2 }
 
-    config.cache_store = :memory_store
+    # config.cache_store = :memory_store
     # config.public_file_server.enabled = true
-    config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}",
-    }
+    # config.public_file_server.headers = {
+    #   "Cache-Control" => "public, max-age=#{2.days.to_i}",
+    # }
   else
     config.action_controller.perform_caching = false
 
     config.cache_store = :null_store
   end
+
+  config.active_job.queue_adapter = :sidekiq
+
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
