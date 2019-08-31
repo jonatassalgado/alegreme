@@ -23,10 +23,15 @@ module EventsHelper
 		DateTime.parse(datetime).strftime("%Y-%m-%dT%H:%M")
 	end
 
-	def get_image_style_attr(event, type = :feed)
-		if event&.image && event&.image[type]
-			# "background-color: #{event.image_data.dig("feed", "metadata", "dominant_color")}; background-image: url('#{event.image[type].url}')"
-			"background-color: #{event.image_data.dig("feed","metadata", "dominant_color")}"
+	def get_image_style_attr(event, opts = {})
+		opts = {type: :feed, preload: false}.merge(opts)
+		
+		if event&.image && event&.image[opts[:type]]
+			if opts[:preload]
+				"background-color: #{event.image_data.dig("feed", "metadata", "dominant_color")}; background-image: url('#{event.image[opts[:type]].url}')"
+			else
+				"background-color: #{event.image_data.dig("feed", "metadata", "dominant_color")}"
+			end
 		else
 			"background-color: #f1f1f1"
 		end

@@ -1,6 +1,6 @@
 .lazy-bgimage {
   will-change: opacity;
-  transition: all 0.3s;
+  transition: opacity 0.3s;
 }
 .lazy-bgimage.hidden {
   opacity: 0;

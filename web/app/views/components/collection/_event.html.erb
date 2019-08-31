@@ -5,6 +5,7 @@
   is_similar_open = params[:similar].to_i == event.id ? true : false
   display_similar = local_assigns.fetch(:display_similar, true)
   display_place = local_assigns.fetch(:display_place, true)
+  json_request = local_assigns.fetch(:json_request, false)
 
 %>
 
@@ -22,8 +23,7 @@
        data-event-dominant-color="<%= get_image_dominant_color event %>"
        data-target="event.event"
        id="<%= dom_id event %>">
-    <div class="mdc-card__media mdc-card__media--16-9 lazy-bgimage" data-src="<%= event.image[:feed].url %>" style="<%= get_image_style_attr event %>">
-      <!-- <div class="mdc-card__media mdc-card__media--16-9 lazy-bgimage hidden" data-src="<%#= event.image[:feed].url %>" style="<%#= get_image_style_attr event %>"> -->
+    <div class="mdc-card__media mdc-card__media--16-9 <%= 'lazy-bgimage' unless json_request  %>" data-src="<%= event.image[:feed].url unless json_request %>" style="<%= get_image_style_attr event, preload: json_request %>">
       <% if current_user %>
         <div class="me-card__like-button" data-action="click->event#like">
           <div data-target="event.like">
@@ -90,27 +90,12 @@
           <%= link_to limit_place_name_size(event.place_details_name), place_path(event.place) %>
         </div>
       <% end %>
-
-
-      <!--              <div class="me-card__organizer" data-target="event.organizer">-->
-      <%# event.organizers.each do |organizer| %>
-      <%#= link_to organizer.details['name'], organizer_path(organizer) %>
-      <%# end %>
-      <!--              </div>-->
-      <%# if current_user&.admin? %>
-      <%#= event.ml_data['personas'] %>
-      <!--              <%#= event.first_day_time %> | <%#= event.first_day_time.to_date.yday %>-->
-      <%# end %>
     </div>
     <% if display_similar && event.similar_data.empty? == false %>
       <div class="me-card__similar"
            data-action="click->event#showSimilar"
            data-target="event.similar"
            title="Mostrar eventos parecidos">
-        <!--        <svg width="28" height="11" viewBox="0 0 28 11" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-        <!--          <path d="M14 11L0 0H28L14 11Z"/>-->
-        <!--        </svg>-->
-
         <i class="me-card__expand-more material-icons">
           expand_more
         </i>

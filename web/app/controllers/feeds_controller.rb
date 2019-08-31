@@ -12,16 +12,17 @@ class FeedsController < ApplicationController
 				# end
 
 				@locals = {
-						items:      @events,
-						title:      {
+						items:        @events,
+						title:        {
 								principal: @title['principal'],
 								secondary: @title['secondary'].try(:html_safe)
 						},
-						identifier: params[:identifier],
-						opts:       {
+						identifier:   params[:identifier],
+						opts:         {
 								filters: @events[:filters],
 								detail:  @events[:detail]
-						}
+						},
+						json_request: true
 				}
 
 

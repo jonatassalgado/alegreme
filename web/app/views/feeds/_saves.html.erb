@@ -1,4 +1,10 @@
-  <div id="saves" class="me-saves me-feed__section me-page__section" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
+<%
+
+  json_request = local_assigns.fetch(:json_request, false)
+
+%>
+
+<div id="saves" class="me-saves me-feed__section me-page__section" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
     <% if current_user and !current_user.taste_events_saved.empty? %>
       <h2 data-target="saves.header" class="">
         Eventos salvos
@@ -48,7 +54,7 @@
                 </div>
                 <a href="<%= event.url %>"
                    title="<%= event.details_name %>">
-                  <div class="mdc-card__media mdc-card__media--16-9 lazy-bgimage" data-src="<%= event.image[:feed].url %>" style="<%= get_image_style_attr event %>">
+                  <div class="mdc-card__media mdc-card__media--16-9 <%= 'lazy-bgimage' unless json_request  %>" data-src="<%= event.image[:feed].url unless json_request %>" style="<%= get_image_style_attr event, preload: json_request %>">
                     <!-- <div class="mdc-card__media mdc-card__media--16-9 lazy-bgimage" data-src="<%#= event.image[:feed].url %>" style="<%#= get_image_style_attr event %>"> -->
                     <div class="me-card__overlay"
                          data-target="saves-events.overlay"></div>
@@ -56,11 +62,6 @@
                   <div class="me-card__date <%= 'is-today' if ['hoje', 'amanhã'].include?(event.day_of_week['decorator'])  %>" data-target="saves-events.date">
                     <%= event.day_of_week['decorator'] %>
                   </div>
-                  <%#= format_hour event.first_day_time %>
-  <!--                <div class="me-card__title mdc-card__title"-->
-  <!--                     data-target="saves-events.title">-->
-                    <%#= limit_name_size event.details_name, 32 %>
-  <!--                </div>-->
                 </a>
               </div>
             </div>

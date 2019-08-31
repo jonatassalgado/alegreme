@@ -20,13 +20,9 @@ const LazyloadModule = (function () {
 					imageEntites.forEach(image => {
 						if (image.isIntersecting) {
 							observer.unobserve(image.target);
-							image.target.style.backgroundImage = `url(${image.target.dataset.src})`;
-							image.target.classList.remove('hidden');
-							// document.addEventListener("turbolinks:before-cache", () => {
-							// 	image.target.style.backgroundImage = `url(${image.target.dataset.src})`;
-							// 	image.target.style.backgroundImage = `url(${image.target.dataset.src})`;
-							// 	image.target.classList.remove('hidden');
-							// }, false);
+							if(image.target.style.backgroundImage === ""){
+								image.target.style.backgroundImage = `url(${image.target.dataset.src})`;
+							}
 						}
 					})
 

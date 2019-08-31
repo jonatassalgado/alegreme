@@ -6,6 +6,7 @@
   filters = opts[:filters] || {categories: true, kinds: true, ocurrences: true}
   events_in_collection = opts.dig(:detail, :events_in_collection) || 0
   filters_applyed = opts.dig(:detail, :init_filters_applyed) || {}
+  json_request = local_assigns.fetch(:json_request, false)
   cache_keys = params[:defaults] ? JSON.parse(params[:defaults]) : {}
 
 %>
@@ -71,7 +72,8 @@
     <div class="mdc-layout-grid__inner">
       <% unless items.empty? %>
         <%= render partial: 'components/collection/event', collection: items[:events], as: :event, locals: {
-            identifier: identifier
+            identifier:   identifier,
+            json_request: json_request
         } %>
 
         <%= render partial: 'components/collection/similar', locals: {
@@ -114,9 +116,9 @@
         <div class="me-card__secondary-section">
           Tente remover alguns filtros ou volte para a listagem completa sem filtros.
         </div>
-<!--        <div class="me-card__primary-action">-->
-<!--          Voltar para listagem completa-->
-<!--        </div>-->
+        <!--        <div class="me-card__primary-action">-->
+        <!--          Voltar para listagem completa-->
+        <!--        </div>-->
       </div>
     <% end %>
   </div>

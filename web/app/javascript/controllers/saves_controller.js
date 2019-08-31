@@ -22,7 +22,6 @@ export default class SavesController extends Controller {
 			channel : `event`,
 			topic   : `event.like`,
 			callback: (data, envelope) => {
-				LazyloadModule.init();
 				this.flipping.read();
 			}
 		});
@@ -31,6 +30,8 @@ export default class SavesController extends Controller {
 			channel : `saves`,
 			topic   : `saves.updated`,
 			callback: (data, envelope) => {
+				LazyloadModule.init();
+
 				const flipPromise = new Promise((resolve, reject) => {
 					this.flipping.flip();
 
