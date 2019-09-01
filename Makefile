@@ -65,8 +65,8 @@ scrapy-schedule-job:
 test:
 	$(RUN) bash -c "rails test"
 
-aws:
-	ssh ubuntu@159.89.84.18
+cloud:
+	ssh root@159.89.84.18
 
 prune:
 	docker image prune
