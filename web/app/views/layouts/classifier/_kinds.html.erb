@@ -13,7 +13,7 @@
 							class="me-chip-set mdc-chip-set mdc-chip-set--filter mdc-chip-set--input">
 							<% Artifact.kinds_whitelist.sort.each do |kind| %>
 								<div data-target="chip.chip" data-action="click->chip#select"
-									class="me-chip mdc-chip <%= event.kinds_name.include?(kind) ? 'mdc-chip--selected' : nil %>"
+									class="me-chip mdc-chip <%= event.kinds.pluck("details ->> 'name'").include?(kind) ? 'mdc-chip--selected' : nil %>"
 									data-turbolinks-scroll="false">
 									<div class="mdc-chip__checkmark">
 										<svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">

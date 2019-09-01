@@ -21,8 +21,8 @@ Aplicativo com objetivo de fazer as pessoas aproveitarem mais a cidade de Porto 
 
 ##### production
     scrapy-do --pidfile -n scrapy-do --config scrapydo.conf
-    scrapy-do-cl --url http://3.223.33.161:7654 push-project
-    scrapy-do-cl schedule-job --url http://3.223.33.161:7654 --project alegreme --spider event --when 'every day at 01:00'
+    scrapy-do-cl --url http://159.89.84.18:7654 push-project
+    scrapy-do-cl schedule-job --url http://159.89.84.18:7654 --project alegreme --spider event --when 'every day at 01:00'
 
 
 ### Flask

@@ -57,16 +57,16 @@ scrapy-up:
 	docker exec alegreme_scrapy_1 bash -c "scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf"
 
 scrapy-push-project:
-	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://3.223.33.161:7654 push-project"
+	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://159.89.84.18:7654 push-project"
 
 scrapy-schedule-job:
-	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://3.223.33.161:7654 schedule-job --project alegreme --spider event --when 'every day at 01:00'"
+	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://159.89.84.18:7654 schedule-job --project alegreme --spider event --when 'every day at 01:00'"
 
 test:
 	$(RUN) bash -c "rails test"
 
 aws:
-	ssh ubuntu@3.223.33.161
+	ssh ubuntu@159.89.84.18
 
 prune:
 	docker image prune
