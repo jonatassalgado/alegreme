@@ -84,10 +84,11 @@ export default class EventController extends Controller {
 			}
 		});
 
-		// setTimeout(() => {
-		// 	window.scrollTo(0, this.eventTarget.offsetTop + 100);
-		// }, 300)
-
+		setTimeout(() => {
+			document.documentElement.style.scrollBehavior = "smooth";
+			window.scrollTo(0, this.eventTarget.offsetTop + 100);
+			document.documentElement.style.scrollBehavior = "";
+		}, 1000)
 	};
 
 	openMenu = () => {

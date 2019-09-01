@@ -1,5 +1,4 @@
 $brand-color: #00AD54; // #2ECC71; // #5EEDDE; // #31916C; // #26B679
-$brand-shadow-color-left: #2BBE69;
 $brand-color-right: #2191FB;
 $brand-color-high-contrast: #0C0F0A; //darken($brand-color, 10%);
 //$brand-color-intersect: #2bb3ae;
@@ -43,7 +42,6 @@ $surface-secondary-color: #f7f7f7;
 $font-primary-color: lighten($brand-color-high-contrast, 10%); // #1D2A4C; // #000100;
 //$brand-color-left: #2191FB;
 $font-secondary-color: #4B4B4B; // transparentize($font-primary-color, 0.35);
-$font-secondary-color-high-contrast: #8F1717;
 $font-tertiary-color: #7D7D7D; // transparentize($font-secondary-color, 0.20);
 
 $media-box-shadow-small: 0 0 3px #00000038;

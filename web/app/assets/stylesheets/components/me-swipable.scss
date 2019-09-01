@@ -136,7 +136,7 @@
     height: 250px; /* set 100% */
     will-change: transform, opacity;
     top: 0;
-    border-radius: 10px;
+    border-radius: 6px;
     overflow: hidden;
     @include mdc-layout-grid-media-query_("phone") {
       height: 160px;
@@ -292,6 +292,7 @@
   /* elements on stacked cards */
   & .card-item {
     background: #d6d6d6;
+    box-shadow: $media-box-shadow-large;
   }
 
   & .final-state {

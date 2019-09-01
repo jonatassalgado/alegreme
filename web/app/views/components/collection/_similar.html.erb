@@ -10,6 +10,7 @@
     similar_events_ids = event.similar_data[0...similar_to_show]
     similar_events     = Event.where(id: similar_events_ids).active.not_in_saved(user)
     identifier         = local_assigns.fetch(:identifier, 'similar')
+    json_request       = local_assigns.fetch(:json_request, false)
   end
 
 %>
@@ -30,7 +31,8 @@
                      display_similar: false,
                      display_place:   false,
                      identifier:      identifier,
-                     type:            'similar'
+                     type:            'similar',
+                     json_request:    json_request
                  } %>
 
       <% if similar_events.size < similar_to_show %>

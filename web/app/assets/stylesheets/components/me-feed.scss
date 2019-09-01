@@ -91,7 +91,7 @@ $mdc-layout-grid-columns: (
 
     & i {
       font-style: normal;
-      color: $font-secondary-color-high-contrast;
+      color: $brand-color;
       font-weight: 500;
       @include mdc-layout-grid-media-query_("phone") {
         display: none;
