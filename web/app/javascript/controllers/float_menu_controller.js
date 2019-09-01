@@ -12,7 +12,7 @@ export default class Float_menu_controller extends Controller {
 		const observableSectionEls = document.querySelectorAll('[data-observable="float-menu.section"]');
 
 		if (this.hasMenuTarget && observableSectionEls !== undefined) {
-			const threshold = this.md.mobile() ? 0.60 : 0.85;
+			const threshold = 0.60;
 
 			this.observer = new IntersectionObserver((entries, observer) => {
 					entries.forEach((entry) => {
