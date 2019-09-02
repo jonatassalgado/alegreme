@@ -52,42 +52,43 @@
     </div>
   </section>
 
-    <section class="demo">
-      <% unless mobile_device? %>
-        <div class="macbook">
-          <div class="macbook__screen">
-            <video autoplay="autoplay" loop="true" muted="true">
-              <source src="<%= asset_url 'welcome/demo-web-min.webm' %>" type="video/webm">
-              <source src="<%= asset_url 'welcome/demo-web-min.mp4' %>" type="video/mp4">
-            </video>
-          </div>
-        </div>
-      <% end %>
-      <div class="android">
-        <div class="android__screen">
+  <section class="demo">
+    <% unless mobile_device? %>
+      <div class="macbook">
+        <div class="macbook__screen">
           <video autoplay="autoplay" loop="true" muted="true">
-            <source src="<%= asset_url 'welcome/demo-android-min.webm' %>" type="video/webm">
-            <source src="<%= asset_url 'welcome/demo-android-min.mp4' %>" type="video/mp4">
+            <source src="<%= asset_url 'welcome/demo-web-min.webm' %>" type="video/webm">
+            <source src="<%= asset_url 'welcome/demo-web-min.mp4' %>" type="video/mp4">
           </video>
         </div>
       </div>
-      <!-- <div class="macbook__beta-explanation">
-        Demonstração da versão beta
-      </div> -->
-    </section>
+    <% end %>
+    <div class="android">
+      <div class="android__screen">
+        <video autoplay="autoplay" loop="true" muted="true">
+          <source src="<%= asset_url 'welcome/demo-android-min.webm' %>" type="video/webm">
+          <source src="<%= asset_url 'welcome/demo-android-min.mp4' %>" type="video/mp4">
+        </video>
+      </div>
+    </div>
+     <div class="demo__plataform-numbers">
+       <b><%= @events_count %></b> eventos e atividades de <b><%= @organizers_count %></b> organizadores estão disponíveis hoje
+    </div>
+  </section>
 
   <section class="invite">
     <div class="invite__status">
       <div class="people">
         <% @last_people.each do |person| %>
-          <div class="people__person-face lazyload" data-bg="<%= image_path person.demographic['picture']%>" title="<%= person.demographic['name'] %>"></div>
-        <% end  %>
+          <div class="people__person-face lazyload" data-bg="<%= image_path person.demographic['picture'] %>" title="<%= person.demographic['name'] %>"></div>
+        <% end %>
       </div>
       <div class="invite__counter">
         <%= @invites_count %> pessoas solicitaram convite para o alegreme
       </div>
       <div class="invite__details has-helper">
-        Na versão <i title="Versão de testes do aplicativo ainda em desenvolvimento e validações">beta</i> vamos liberar até 100 convites por semana
+        Na versão
+        <i title="Versão de testes do aplicativo ainda em desenvolvimento e validações">beta</i> vamos liberar até 100 convites por semana
       </div>
     </div>
     <div class="invite__cta" title="Seja um Beta tester!">
@@ -151,9 +152,9 @@
           o Google; outras são responsáveis por limpar e classificar estes dados em mais de 500 categorias e subcategorias
           com base em mais de 10 variáveis; outro é responsável a entender os grupos de usuários que usam o app
           e do que gostam e não gostam e organizar para cada pessoa coleções com sugestões, como o Youtube e Netflix fazem.
-          <p>
-            Podemos dizer que o Alegreme é poliglota e hypado, vai do Python ao Javascript, do Ruby ao Java, utiliza inteligência artificial e chatbots, tudo isso para entregar um app massa!
-          </p>
+        <p>
+          Podemos dizer que o Alegreme é poliglota e hypado, vai do Python ao Javascript, do Ruby ao Java, utiliza inteligência artificial e chatbots, tudo isso para entregar um app massa!
+        </p>
         </p>
       </div>
       <div class="answer__content" data-answer="q3">
@@ -186,7 +187,7 @@
         <a href="/privacy">Política de privacidade</a>
         <a href="/terms">Termos de serviço</a>
       </div>
-      <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!',  class: 'lazyload' %>
+      <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!', class: 'lazyload' %>
     </section>
   </section>
 

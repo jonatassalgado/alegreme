@@ -4,13 +4,25 @@
 @import "smile";
 
 
-
 .demo {
   position: relative;
 
-  // @include mobile-only {
-  //   display: none;
-  // }
+  &__plataform-numbers {
+    text-align: center;
+    margin: 15px 0 0 0;
+    font-weight: normal;
+    color: #7D7D7D;
+    font-size: 11px;
+    padding: 0 55px 0 0;
+    position: relative;
+    top: -5px;
+    @include mobile-only {
+      margin: auto;
+      padding: 0;
+      max-width: 70%;
+      top: -110px;
+    }
+  }
 }
 
 
@@ -38,14 +50,6 @@
     & img {
       width: inherit;
     }
-  }
-
-  &__beta-explanation {
-    text-align: center;
-    margin: 15px 0 0 0;
-    font-weight: normal;
-    color: #7D7D7D;
-    font-size: 12px;
   }
 }
 
@@ -356,6 +360,7 @@
     &:hover {
       //transform: scale(0.9);
       background: $brand-color;
+
       & h3 {
         color: #ffffff;
       }
@@ -480,6 +485,7 @@
     margin: 60px 0 12px 0;
     font-size: 12px;
     font-family: $font-secondary-family;
+
     & a {
       color: $font-tertiary-color;
     }

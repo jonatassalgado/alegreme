@@ -3,8 +3,10 @@ class WelcomeController < ApplicationController
 	layout 'welcome'
 
 	def index
-		@invites_count = count_invites
-		@last_people   = User.select("features -> 'demographic' as demographic").order('created_at DESC').where("(features -> 'demographic' ->> 'name') IS NOT NULL").limit(10)
+		@invites_count    = count_invites
+		@events_count     = Rails.cache.fetch("welcome-events-count", expires_in: 1.day) { Event.active.size }
+		@organizers_count = Rails.cache.fetch("welcome-organizers-count", expires_in: 1.day) { Organizer.count }
+		@last_people      = User.select("features -> 'demographic' as demographic").order('created_at DESC').where("(features -> 'demographic' ->> 'name') IS NOT NULL").limit(10)
 	end
 
 	def invite
@@ -38,11 +40,11 @@ class WelcomeController < ApplicationController
 		                password: Devise.friendly_token[0, 20])
 
 		user.features.deep_merge!({
-				                         'demographic' => {
-						                         'name'    => params[:name],
-						                         'picture' => params[:picture]
-				                         }
-		                         })
+				                          'demographic' => {
+						                          'name'    => params[:name],
+						                          'picture' => params[:picture]
+				                          }
+		                          })
 		user.save
 	end
 
