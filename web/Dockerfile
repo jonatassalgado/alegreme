@@ -105,11 +105,11 @@ RUN bundle update --bundler
 ADD . $RAILS_ROOT
 
 
+RUN yarn install
 RUN bundle exec rake assets:clobber
 RUN bundle exec rake webpacker:clobber
 RUN rake assets:precompile
 RUN rake webpacker:compile
-RUN yarn install
 
 EXPOSE 3000
 
