@@ -13,22 +13,21 @@ class PlacesController < ApplicationController
   def show
     respond_to do |format|
       format.js do
-        Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+        # Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
           events      = @place.events.active
           @collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]], limit: 20)
-        end
+        # end
 
         @locals = mount_section_attrs
         render 'collections/index'
       end
       format.html do
-        Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+        # Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
           events      = @place.events.active
           @collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]], limit: 20)
-
           @locals = mount_section_attrs
           render 'show'
-        end
+        # end
       end
     end
   end
@@ -104,7 +103,7 @@ class PlacesController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_place
-      @place = Place.find(params[:id])
+      @place = Place.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

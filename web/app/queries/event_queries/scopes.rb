@@ -215,7 +215,11 @@ module EventQueries
 				places = places || []
 
 				if opts[:turn_on] && !places.blank?
-					Event.includes(:place).where(places: {id: places})
+					if places.any?(&:numeric?)
+						Event.includes(:place).where(places: {id: places})
+					else
+						Event.includes(:place).where(places: {slug: places})
+					end
 				else
 					all
 				end
@@ -248,8 +252,10 @@ module EventQueries
 				raise ArgumentError unless organizers.is_a? Array
 
 				if opts[:turn_on] && !organizers.blank?
+					id_to_search = organizers.any?(&:numeric?) ? {id: organizers} : {slug: organizers}
+
 					Event.includes(:organizers)
-							.where(organizers: {id: organizers})
+							.where(organizers: id_to_search)
 							.references(:organizers)
 							.active(opts[:active])
 							.order_by_date

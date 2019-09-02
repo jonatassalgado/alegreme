@@ -14,22 +14,22 @@ class OrganizersController < ApplicationController
 
 		respond_to do |format|
 			format.js do
-				Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 					events      = @organizer.events.active
 					@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]], limit: 20)
-				end
+				# end
 
 				@locals = mount_section_attrs
 				render 'collections/index'
 			end
 			format.html do
-				Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 					events      = @organizer.events.active
 					@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]], limit: 20)
 
 					@locals = mount_section_attrs
 					render 'show'
-				end
+				# end
 			end
 		end
 
@@ -106,7 +106,7 @@ class OrganizersController < ApplicationController
 
 	# Use callbacks to share common setup or constraints between actions.
 	def set_organizer
-		@organizer = Organizer.find(params[:id])
+		@organizer = Organizer.friendly.find(params[:id])
 	end
 
 	# Never trust parameters from the scary internet, only allow the white list through.
