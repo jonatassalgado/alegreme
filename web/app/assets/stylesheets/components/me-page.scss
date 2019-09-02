@@ -75,6 +75,7 @@
       padding: 6px 0 0 0;
     }
 
+
     @include mdc-layout-grid-media-query_("phone") {
       & .mdc-layout-grid {
         padding: 0 24px;

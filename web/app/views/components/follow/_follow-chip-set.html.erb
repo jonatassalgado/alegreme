@@ -32,7 +32,7 @@
       <%= link_to organizer_path(followable) do %>
         <div class="mdc-chip__text"
              title="Veja todos os eventos do tópico '<%= followable.details['name'] %>'">
-          <%= followable.details['name'] %>
+          <%= followable.details['name'].truncate(25, separator: " ") %>
         </div>
       <% end %>
     </div>

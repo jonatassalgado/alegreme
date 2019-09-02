@@ -96,7 +96,7 @@ class PlacesController < ApplicationController
                 kinds:      true,
                 categories: true
             },
-            detail: @collection[:detail]
+            detail: @collection[:detail],
         }
     }
   end

@@ -100,7 +100,7 @@
 
     & .me-follow-chip-set {
       justify-content: center;
-      padding: 0 15%;
+      //padding: 0 15%;
       padding-bottom: 15px;
       @include mdc-layout-grid-media-query_("phone") {
         padding: 0 8px;
