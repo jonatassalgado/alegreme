@@ -15,15 +15,16 @@
 	<td>Tipo</td>
 	<td>Tags</td>
 </tr>
-<%# cache @items[:events] do %>
+<% cache @items[:events] do %>
 	<% @items[:events].each do |event| %>
-		<%# cache(event) do %>
+		<% cache(event) do %>
 			<tr>
-				<td><img src="<%= event.cover_url :feed %>"></td>
+        <td><img src="<%= event.cover_url :feed %>" style="width: 130px"></td>
 				<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
 				<td><%= event.place_details_name %></td>
 				<td>
 					<%= limit_description_size event.details_description, 565 %> <br/>
+          <%#= event.ml_data.inspect %>
 				</td>
 				<td id="<%= dom_id event, 'chip_themes' %>">
 					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'themes'} %>
@@ -63,6 +64,6 @@
 					</div>
 				</td>
 			</tr>
-		<%# end %>
+		<% end %>
 	<% end %>
-<%# end %>
+<% end %>

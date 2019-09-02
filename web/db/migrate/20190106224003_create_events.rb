@@ -66,7 +66,8 @@ class CreateEvents < ActiveRecord::Migration[5.2]
 									score: nil
 							},
 							outlier:   nil
-					}
+					},
+					kinds: []
 
 			}
 			t.jsonb :similar_data, null: false, default: []

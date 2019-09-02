@@ -5,6 +5,7 @@ importScripts(
 var CACHE_VERSION = "v1";
 var CACHE_NAME = CACHE_VERSION + ":sw-cache-";
 
+workbox.setConfig({debug: false})
 
 workbox.routing.registerRoute(
   "/",

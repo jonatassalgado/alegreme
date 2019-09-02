@@ -88,7 +88,7 @@ class EventsController < ApplicationController
     elsif @feature == "kinds"
       kinds = JSON.parse(params[:kinds]) 
       @event.kinds = kinds
-      Artifact.kinds_whitelist_add(kinds.map{|kinds| kinds['name']})
+      Artifact.kinds_whitelist_add(kinds.map{|kind| kind['name']})
     elsif @feature == "tags"
       @event.public_send("tags_#{@type}_add", JSON.parse(params[:tags]))
       Artifact.public_send("tags_whitelist_#{@type}_add", JSON.parse(params[:tags]))

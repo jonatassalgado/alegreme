@@ -25,7 +25,7 @@ export default class TagsController extends Controller {
         const result = self.chipController.MDCChipSet.selectedChipIds.map(function(chipId) {
           const chipElement = self.chipController.chipsetTarget.querySelector( `#${chipId}` );
           return chipElement.innerText.toLowerCase();
-        })
+        });
   
         resolve(result);
       });

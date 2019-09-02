@@ -240,9 +240,12 @@ class FeedsController < ApplicationController
 	private
 
 	def get_events_not_trained_yet
+
 		Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
 				.order("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric  ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC")
 				.includes(:place)
+
+		# Event.all.order("updated_at DESC")
 	end
 
 	def get_events_for_search_query

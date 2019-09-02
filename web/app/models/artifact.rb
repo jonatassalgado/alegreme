@@ -54,9 +54,9 @@ class Artifact < ApplicationRecord
 				).first
 				
 				if tag.is_a? Array
-					artifact.data[list_type][tag_type] |= tag
+					artifact.data[list_type][tag_type] |= tag.compact
 				elsif tag.is_a? String
-					artifact.data[list_type][tag_type] |= [tag]
+					artifact.data[list_type][tag_type] |= [tag].compact
 				else
 					raise Exception.new "#{tag}:#{tag.class} -> precisa ser uma string ou array"
 				end

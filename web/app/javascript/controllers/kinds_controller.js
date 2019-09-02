@@ -26,7 +26,7 @@ export default class KindsController extends Controller {
         const result = self.chipController.MDCChipSet.selectedChipIds.map(function(chipId) {
           const chipElement = self.chipController.chipsetTarget.querySelector( `#${chipId}` );
           return {name: chipElement.innerText.toLowerCase(), score: 1};
-        })
+        });
   
         resolve(result);
       });

@@ -12,6 +12,7 @@ class Event < ApplicationRecord
 	include EventDecorators::Personas
 	include EventDecorators::Categories
 	include EventDecorators::Tags
+	include EventDecorators::Kinds
 
 	include EventQueries::Scopes
 
@@ -26,7 +27,7 @@ class Event < ApplicationRecord
 	belongs_to :place
 	has_and_belongs_to_many :organizers
 	has_and_belongs_to_many :categories
-	has_and_belongs_to_many :kinds
+	# has_and_belongs_to_many :kinds
 
 	accepts_nested_attributes_for :place, :organizers
 

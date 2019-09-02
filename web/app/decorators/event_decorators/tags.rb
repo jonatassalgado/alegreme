@@ -7,54 +7,54 @@ module EventDecorators
 
 		module InstanceMethods
 			def tags_all
-				things     = tags['things']
-				features   = tags['features']
-				activities = tags['activities']
+				things     = ml_data['tags']['things']
+				features   = ml_data['tags']['features']
+				activities = ml_data['tags']['activities']
 
 				things&.union(features, activities)
 			end
 
 			def tags_of_type(type)
-				tags[type] || []
+				ml_data['tags'][type] || []
 			end
 
 			def tags_things
-				tags['things'] || []
+				ml_data['tags']['things'] || []
 			end
 
 			def tags_things_add(value)
 				if value.is_a? Array
-					tags['things'] = value
+					ml_data['tags']['things'] = value
 				elsif value.is_a? String
-					tags['things'] |= [value]
+					ml_data['tags']['things'] |= [value]
 				else
 					raise Exception, "#{value}:#{value.class} -> precisa ser uma string ou array"
 				end
 			end
 
 			def tags_features
-				tags['features'] || []
+				ml_data['tags']['features'] || []
 			end
 
 			def tags_features_add(value)
 				if value.is_a? Array
-					tags['features'] = value
+					ml_data['tags']['features'] = value
 				elsif value.is_a? String
-					tags['features'] |= [value]
+					ml_data['tags']['features'] |= [value]
 				else
 					raise Exception, "#{value}:#{value.class} -> precisa ser uma string ou array"
 				end
 			end
 
 			def tags_activities
-				tags['activities'] || []
+				ml_data['tags']['activities'] || []
 			end
 
 			def tags_activities_add(value)
 				if value.is_a? Array
-					tags['activities'] = value
+					ml_data['tags']['activities'] = value
 				elsif value.is_a? String
-					tags['activities'] |= [value]
+					ml_data['tags']['activities'] |= [value]
 				else
 					raise Exception, "#{value}:#{value.class} -> precisa ser uma string ou array"
 				end
