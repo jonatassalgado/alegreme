@@ -72,7 +72,18 @@ $border-color: #e0e0e0;
     }
 
     &--left {
+      & span {
+        color: #4b4b4b;
+        padding: 0px 12px;
+        position: relative;
+        top: -3px;
+        font-size: 13px;
+        font-weight: 300;
+      }
       @include mdc-layout-grid-media-query_("phone") {
+        & span {
+          display: none;
+        }
       }
     }
 

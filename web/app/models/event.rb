@@ -1,6 +1,14 @@
 class Event < ApplicationRecord
 
+	extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
 
+	def slug_candidates
+		[
+				[:categories_primary_name, :details_name, :place_details_name],
+				[:categories_primary_name, :details_name, :place_details_name, :first_day_time]
+		]
+	end
 
 	include ImageUploader::Attachment.new(:image)
 	include Rails.application.routes.url_helpers

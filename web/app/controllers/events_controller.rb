@@ -86,7 +86,7 @@ class EventsController < ApplicationController
       @event.theme_name = params[:theme] if params[:theme]
       @event.theme_score = 1 if params[:correct] || params[:theme]
     elsif @feature == "kinds"
-      kinds = JSON.parse(params[:kinds]) 
+      kinds = JSON.parse(params[:kinds])
       @event.kinds = kinds
       Artifact.kinds_whitelist_add(kinds.map{|kind| kind['name']})
     elsif @feature == "tags"
@@ -111,7 +111,7 @@ class EventsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_event
-    @event = Event.find(params[:id])
+    @event = Event.friendly.find(params[:id])
   end
 
   def parse_personas
