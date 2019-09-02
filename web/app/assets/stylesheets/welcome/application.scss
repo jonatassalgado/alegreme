@@ -13,11 +13,13 @@
   // }
 }
 
+
 .macbook {
   width: 720px;
   height: 464px;
   background-image: asset_url("welcome/mockup-macbook.png");
   background-position: center top;
+  background-repeat: no-repeat;
   margin: 95px 0 0 0;
   z-index: 1;
   @include mobile-only {
@@ -31,6 +33,7 @@
     position: relative;
     top: 105px;
     left: 23px;
+    overflow: hidden;
 
     & img {
       width: inherit;
@@ -46,11 +49,16 @@
   }
 }
 
+
 .android {
-  width: 176px;
-  height: 324px;
+  $android-resize: 1.9;
+  $android-width: 176;
+  $android-height: 324;
+  width: unquote($android-width + 'px');
+  height: unquote($android-height + 'px');
   background-image: asset_url("welcome/mockup-android.png");
   background-position: center top;
+  background-repeat: no-repeat;
   background-size: 100%;
   margin: 95px 0 0 0;
   z-index: 2;
@@ -58,24 +66,38 @@
   top: 180px;
   right: 10px;
   @include mobile-only {
+    width: unquote($android-width * $android-resize + 'px');
+    height: unquote($android-height * $android-resize + 'px');
     position: relative;
     top: 0;
-    right: 10px;
-    transform: scale(1.7);
+    right: 0;
+    //transform: scale(1.8);
     margin: 200px 0 110px 0;
   }
 
   &__screen {
-    width: 124px;
-    height: 248px;
+    $android-screen-left: 28;
+    $android-screen-height: 248;
+    $android-screen-width: 121;
+    $android-screen-top: 35;
+    width: unquote($android-screen-width + 'px');
+    height: unquote($android-screen-height + 'px');
     background: #ffffff;
     position: relative;
-    top: 35px;
-    left: 27px;
+    top: unquote($android-screen-top + 'px');
+    left: unquote($android-screen-left + 'px');
     border-radius: 5px;
+    overflow: hidden;
 
     & img, picture, video {
       width: inherit;
+    }
+
+    @include mobile-only {
+      top: unquote($android-screen-top * $android-resize + 'px');
+      left: unquote($android-screen-left * $android-resize + 'px');
+      width: unquote($android-screen-width * $android-resize + 'px');
+      height: unquote($android-screen-height * $android-resize + 'px');
     }
   }
 }
@@ -461,6 +483,10 @@
     & a {
       color: $font-tertiary-color;
     }
+  }
+
+  & img {
+    width: 100%;
   }
 }
 

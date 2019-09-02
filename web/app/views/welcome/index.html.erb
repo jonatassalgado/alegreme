@@ -33,19 +33,19 @@
       </div>
       <div class="feature feature--topics rellax" data-rellax-speed="1" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(0px, 150px)' %>; opacity: 0">
         <div class="feature__icon">
-          <%= responsive_image_tag "welcome/hearth-icon", alt: "coração" %>
+          <%= responsive_image_tag "welcome/hearth-icon", alt: "coração", class: 'lazyload' %>
         </div>
         <div class="feature__title">Siga os tópicos que você gosta e fique sempre por dentro</div>
       </div>
       <div class="feature feature--friends rellax" data-rellax-speed="1" style="transform: translate(100px, -150px); opacity: 0">
         <div class="feature__icon">
-          <%= responsive_image_tag "welcome/friends-icon", alt: "amigos" %>
+          <%= responsive_image_tag "welcome/friends-icon", alt: "amigos", class: 'lazyload' %>
         </div>
         <div class="feature__title">Compartilhe com seus melhores amigos seus planos</div>
       </div>
       <div class="feature feature--movie rellax" data-rellax-speed="2" style="transform: translate(150px, 150px); opacity: 0">
         <div class="feature__icon">
-          <%= responsive_image_tag "welcome/movie-icon", alt: "filme" %>
+          <%= responsive_image_tag "welcome/movie-icon", alt: "filme", class: 'lazyload' %>
         </div>
         <div class="feature__title">Filmes do Mario Quintana, Capitólio e Cinemark</div>
       </div>
@@ -57,8 +57,8 @@
         <div class="macbook">
           <div class="macbook__screen">
             <video autoplay="autoplay" loop="true" muted="true">
-              <source src="<%= asset_url 'welcome/desktop-screen.webm' %>" type="video/webm">
-              <source src="<%= asset_url 'welcome/desktop-screen.mp4' %>" type="video/mp4">
+              <source src="<%= asset_url 'welcome/demo-web-min.webm' %>" type="video/webm">
+              <source src="<%= asset_url 'welcome/demo-web-min.mp4' %>" type="video/mp4">
             </video>
           </div>
         </div>
@@ -66,8 +66,8 @@
       <div class="android">
         <div class="android__screen">
           <video autoplay="autoplay" loop="true" muted="true">
-            <source src="<%= asset_url 'welcome/android-screen.webm' %>" type="video/webm">
-            <source src="<%= asset_url 'welcome/android-screen.mp4' %>" type="video/mp4">
+            <source src="<%= asset_url 'welcome/demo-android-min.webm' %>" type="video/webm">
+            <source src="<%= asset_url 'welcome/demo-android-min.mp4' %>" type="video/mp4">
           </video>
         </div>
       </div>

@@ -10,10 +10,13 @@
   background-image: asset_url('welcome/bg-top.jpg');
   background-repeat: no-repeat;
   background-position: top center;
+  background-size: contain;
   @include mobile-only {
     background-image: asset_url('welcome/bg-top-mobile.jpg');
     background-repeat: no-repeat;
     background-position: top center;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 }
 
