@@ -16,7 +16,6 @@ Rails.application.routes.draw do
 	get '/manifest.json', to: redirect('manifest.json')
 	get '/privacy', to: 'welcome#privacy'
 	get '/terms', to: 'welcome#terms'
-	# match "/manifest.json"
 
 	resources :users
 	resources :collections, only: [:index]
@@ -31,7 +30,10 @@ Rails.application.routes.draw do
 	get ':type/:resource_id/follow', to: 'follow#follow', :defaults => {:format => 'js'}, as: :follow
 	get ':type/:resource_id/unfollow', to: 'follow#unfollow', :defaults => {:format => 'js'}, as: :unfollow
 
-	mount Sidekiq::Web => '/sidekiq'
+	authenticate :user, lambda { |u| u.admin? } do
+  	mount Sidekiq::Web => '/sidekiq'
+	end
+
 	get 'job/submit/:who/:message', to: 'job#submit'
 
 	# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
