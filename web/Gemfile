@@ -91,6 +91,8 @@ gem 'active_record_extended'
 
 # gem 'serviceworker-rails'
 
+gem 'rack-attack'
+
 group :production do
   gem 'aws-sdk-s3'
   gem 'sentry-raven'
