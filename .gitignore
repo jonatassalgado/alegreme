@@ -1,5 +1,6 @@
 keystore
 logs/
+sitemap.xml.gz
 scrapy/scraped
 web/Gemfile.lock
 web/*.rbc

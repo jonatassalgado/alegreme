@@ -86,6 +86,8 @@ gem 'facets', require: false
 gem 'clockwork', require: false
 gem 'daemons'
 
+gem 'sitemap_generator'
+
 
 gem 'active_record_extended'
 
