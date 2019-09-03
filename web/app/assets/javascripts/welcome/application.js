@@ -11,27 +11,29 @@ lazySizes.cfg.expand = 10;
 window.addEventListener('beforeinstallprompt', (e) => {
 	e.preventDefault();
 	deferredPrompt = e;
-	const btnAdd = document.querySelector(".footer__logo-icon");
+	const btnAdd   = document.querySelector(".footer__logo-icon");
 	btnAdd.addEventListener('click', (e) => {
 		deferredPrompt.prompt();
 
 		deferredPrompt.userChoice
-		.then((choiceResult) => {
-			if (choiceResult.outcome === 'accepted') {
-				console.log('User accepted the A2HS prompt');
-			} else {
-				console.log('User dismissed the A2HS prompt');
-			}
-			deferredPrompt = null;
-		});
+		              .then((choiceResult) => {
+			              if (choiceResult.outcome === 'accepted') {
+				              console.log('User accepted the A2HS prompt');
+			              } else {
+				              console.log('User dismissed the A2HS prompt');
+			              }
+			              deferredPrompt = null;
+		              });
 	});
 });
 
-document.addEventListener('lazybeforeunveil', function(e){
-	var bg = e.target.getAttribute('data-bg');
-	if(bg){
-		e.target.style.backgroundImage = 'url(' + bg + ')';
-	}
+document.addEventListener('lazybeforeunveil', function (e) {
+	requestAnimationFrame(() => {
+		var bg = e.target.getAttribute('data-bg');
+		if (bg) {
+			e.target.style.backgroundImage = 'url(' + bg + ')';
+		}
+	});
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -44,19 +46,55 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	const md = new MobileDetect(window.navigator.userAgent);
 
-	const brandLogoEls          = document.querySelectorAll('.js-logo');
-	const pimbaEls              = document.querySelectorAll('.js-pimba');
-	const peopleEls             = document.querySelectorAll('.people__person-face');
-	const answerEl              = document.querySelector('.answer');
-	// const featuresEl            = document.querySelectorAll('.feature');
-	const inviteEl              = document.querySelector('.invite');
-	const inviteCtaEl           = document.querySelector('.invite__cta');
-	// const inviteGoogleDetailsEl = document.querySelector('.invite__google-details');
-	const inviteDetailsEl       = document.querySelector('.invite__details');
-	const inviteCounterEl       = document.querySelector('.invite__counter');
-	const inviteStatusEl        = document.querySelector('.invite__status');
-	const firstPersonFaceEl     = document.querySelector('.people__person-face');
+	const brandLogoEls         = document.querySelectorAll('.js-logo');
+	const pimbaEls             = document.querySelectorAll('.js-pimba');
+	const peopleEls            = document.querySelectorAll('.people__person-face');
+	const answerEl             = document.querySelector('.answer');
+	const shareBtns            = document.querySelectorAll('.shareBtn');
+	const inviteEl             = document.querySelector('.invite');
+	const inviteCtaEl          = document.querySelector('.invite__cta');
+	const inviteDetailsEl      = document.querySelector('.invite__details');
+	const inviteCounterEl      = document.querySelector('.invite__counter');
+	const inviteStatusEl       = document.querySelector('.invite__status');
+	const firstPersonFaceEl    = document.querySelector('.people__person-face');
 
+	const videos   = document.querySelectorAll('video');
+	const observer = new IntersectionObserver((entries, observer) => {
+			for (const entry of entries) {
+				if (entry.isIntersecting) {
+					entry.target.play();
+				} else {
+					entry.target.pause();
+				}
+			}
+		},
+		{
+			threshold: [0.50]
+		}
+	);
+
+	videos.forEach((video) => {
+		observer.observe(video);
+	});
+
+	if (navigator.share) {
+		shareBtns.forEach((shareBtn) => {
+			shareBtn.onclick = () => {
+				navigator.share({
+					title: 'Alegreme - Aproveite a cidade de Porto Alegre',
+					text : 'Atividades culturais, meetups, shows, rolês, feiras de rua, aquele filme no Mario Quintana...\n',
+					url  : 'https://alegreme.com',
+				})
+				         .then(() => console.log('Valeu"'))
+				         .catch((error) => console.log('Deu erro ai :(', error));
+			};
+		});
+	} else {
+		shareBtns.forEach((shareBtn) => {
+
+			shareBtn.style.display = "none";
+		});
+	}
 
 	brandLogoEls.forEach((brandLogoEl) => {
 		['click', 'touchstart'].forEach((e) => {
@@ -67,9 +105,9 @@ document.addEventListener('DOMContentLoaded', function () {
 						pimbaEl.style.transition = '';
 						pimbaEl.style.color      = '#2192f6';
 
-						const x = Math.random() * -20;
-						const y = Math.random() * 50;
-						pimbaEl.style.transform  = `translate(${x}px, ${y}px)`;
+						const x                 = Math.random() * -20;
+						const y                 = Math.random() * 50;
+						pimbaEl.style.transform = `translate(${x}px, ${y}px)`;
 
 						if (x !== undefined && y !== undefined) {
 							resolve();
@@ -182,16 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	// 	delay = delay + 100;
 	// });
 
-	setTimeout(() => {
-		if (md.mobile()) {
-			// new Rellax('.rellax', {
-			// 	horizontal: true,
-			// 	vertical: false
-			// });
-		} else {
-			// new Rellax('.rellax');
-		}
-	}, 1500);
 
 	var startGoogleAuth = function () {
 		gapi.load('auth2', function () {
@@ -240,8 +268,8 @@ document.addEventListener('DOMContentLoaded', function () {
 								inviteEl.classList.add('is-invited');
 
 
-								inviteCounterEl.innerText          = `${backendData.invitesCount} pessoas e ${userName} solicitaram convite para o Alegreme!`
-								inviteDetailsEl.innerText          = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
+								inviteCounterEl.innerText               = `${backendData.invitesCount} pessoas e ${userName} solicitaram convite para o Alegreme!`
+								inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
 								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
 							}
 
@@ -250,8 +278,8 @@ document.addEventListener('DOMContentLoaded', function () {
 								inviteEl.classList.add('is-invited');
 
 
-								inviteCounterEl.innerText          = `${userName}? Você e outras ${backendData.invitesCount} pessoas já estão na fila`;
-								inviteDetailsEl.innerText          = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez`;
+								inviteCounterEl.innerText               = `${userName}? Você e outras ${backendData.invitesCount} pessoas já estão na fila`;
+								inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez`;
 								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
 							}
 						});

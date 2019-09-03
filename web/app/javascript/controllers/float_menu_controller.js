@@ -28,7 +28,8 @@ export default class Float_menu_controller extends Controller {
 					})
 				},
 				{
-					threshold: [threshold]
+					threshold: 1,
+					rootMargin: '0px'
 				}
 			);
 

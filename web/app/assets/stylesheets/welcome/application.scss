@@ -1,7 +1,8 @@
 @import "normalize";
 @import "media-queries";
 @import "variables";
-@import "smile";
+//@import "smile";
+@import "@material/fab/mdc-fab";
 
 
 .demo {
@@ -136,6 +137,11 @@
 
     .invite__share {
       opacity: 1 !important;
+    }
+
+    .shareBtn--invite {
+      opacity: 1;
+      display: flex;
     }
   }
 
@@ -493,6 +499,24 @@
 
   & img {
     width: 100%;
+  }
+}
+
+.shareBtn {
+  position: relative;
+  margin: 24px auto;
+  background: white;
+  z-index: 5;
+  color: #0c0f09;
+  transition: opacity 0.4s ease;
+  @include desktop-only {
+    display: none;
+  }
+
+  &--invite {
+    opacity: 0;
+    display: none;
+    transform: translate(0px, -75px);
   }
 }
 
