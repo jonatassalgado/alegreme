@@ -502,6 +502,18 @@
   }
 }
 
+.social__links {
+  margin: 15px 0;
+  color: $brand-color;
+
+  & a {
+    color: $brand-color;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0 3px;
+  }
+}
+
 .shareBtn {
   position: relative;
   margin: 24px auto;
