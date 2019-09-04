@@ -4,7 +4,7 @@ module EventQueries
 
 		THEMES     = ['lazer', 'saúde', 'atividade física', 'educação', 'cultura', 'alimentação', 'compras', 'cidadania', 'outlier', 'spam'].sort.freeze
 		PERSONAS   = ['aventureiro', 'cult', 'geek', 'hipster', 'praieiro', 'underground', 'zeen', 'geral', 'outlier'].sort.freeze
-		CATEGORIES = ['anúncio', 'festa', 'curso', 'teatro', 'show', 'cinema', 'exposição', 'feira', 'esporte', 'meetup', 'hackaton', 'palestra', 'sarau', 'festival', 'brecho', 'fórum', 'slam', 'protesto', 'outlier'].sort.freeze
+		CATEGORIES = ['anúncio', 'festa', 'curso', 'teatro', 'show', 'cinema', 'exposição', 'feira', 'esporte', 'meetup', 'hackaton', 'palestra', 'sarau', 'festival', 'brecho', 'fórum', 'slam', 'protesto', 'experiência', 'outlier'].sort.freeze
 
 
 		included do
@@ -112,9 +112,9 @@ module EventQueries
 					queries = []
 					kinds.each_with_index do |kind, index|
 						if index == 0
-							queries << "kinds @> '#{kind}'"
+							queries << "ml_data -> 'kinds' @> '#{kind}'"
 						else
-							queries << "OR kinds @> '#{kind}'"
+							queries << "OR ml_data -> 'kinds' @> '#{kind}'"
 						end
 					end
 					where(ActiveRecord::Base::sanitize_sql queries.join(" "))

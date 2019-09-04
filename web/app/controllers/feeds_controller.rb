@@ -232,7 +232,7 @@ class FeedsController < ApplicationController
 		events_not_trained_yet = get_events_not_trained_yet
 
 		@items = {
-				events:      events_not_trained_yet.limit(20),
+				events:      events_not_trained_yet.limit(6),
 				total_count: events_not_trained_yet.count
 		}
 	end
@@ -240,9 +240,10 @@ class FeedsController < ApplicationController
 	private
 
 	def get_events_not_trained_yet
+		order = params[:desc] ? "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC" : "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC"
 
 		Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
-				.order("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric  ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC")
+				.order(order)
 				.includes(:place)
 
 		# Event.all.order("updated_at DESC")

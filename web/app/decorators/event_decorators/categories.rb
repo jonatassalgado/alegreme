@@ -15,11 +15,11 @@ module EventDecorators
 			end
 
 			def categories_secondary_name
-				categories['secondary']['name']
+				ml_data['categories']['secondary']['name']
 			end
 
 			def categories_secondary_name=(value)
-				categories['secondary']['name'] = value
+				ml_data['categories']['secondary']['name'] = value
 			end
 
 			def categories_primary_score
@@ -31,11 +31,11 @@ module EventDecorators
 			end
 
 			def categories_secondary_score
-				categories['secondary']['score']
+				ml_data['categories']['secondary']['score']
 			end
 
 			def categories_secondary_score=(value)
-				categories['secondary']['score'] = value
+				ml_data['categories']['secondary']['score'] = value
 			end
 
 			def categories_as_model
@@ -44,11 +44,11 @@ module EventDecorators
 			end
 
 			def categories_outlier
-				categories['outlier']
+				ml_data['categories']['outlier']
 			end
 
 			def categories_outlier=(value)
-				categories['outlier'] = value
+				ml_data['categories']['outlier'] = value
 			end
 		end
 

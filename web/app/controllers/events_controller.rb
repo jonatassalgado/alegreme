@@ -115,7 +115,7 @@ class EventsController < ApplicationController
   end
 
   def parse_personas
-    @event.personas["outlier"] = params[:event][:personas_outlier] || "false"
+    @event.ml_data["personas"]["outlier"] = params[:event][:personas_outlier] || "false"
   end
 
   def parse_ocurrences

@@ -218,7 +218,7 @@ module EventServices
 					defaults[type]
 				when 'kinds'
 					if params_filter_category_exist?
-						events.map { |e| e.kinds.map { |c| c.details['name'] } }.flatten.uniq
+						events.map { |event| event.kinds_name }.flatten.compact.uniq
 					else
 						defaults[type]
 					end

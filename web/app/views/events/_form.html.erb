@@ -15,7 +15,7 @@
 
   <div class="mdc-card mdc-card--outlined">
     <div class="my-card__media mdc-card__media mdc-card__media--16-9"
-      style="<%= get_image_style_attr @event %>">
+      style="<%= get_image_style_attr @event, {preload: true} %>">
     </div>
   </div>
 
@@ -85,7 +85,7 @@
       <div class="me-text-field__container me-text-field--fullwidth">
         <div class="mdc-select mdc-select--outlined" style="width: 100%">
           <i class="mdc-select__dropdown-icon"></i>
-          <%= form.select(:personas_primary_name, ["", "aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+          <%= form.select(:personas_primary_name, Event::PERSONAS, {}, { class: "mdc-select__native-control"} ) %>
           <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
             <div class="mdc-notched-outline__leading"></div>
             <div class="mdc-notched-outline__notch" style="width: 32.75px;">
@@ -119,7 +119,7 @@
       <div class="me-text-field__container me-text-field--fullwidth">
         <div class="mdc-select mdc-select--outlined" style="width: 100%">
           <i class="mdc-select__dropdown-icon"></i>
-          <%= form.select(:personas_secondary_name, ["aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+          <%= form.select(:personas_secondary_name, Event::PERSONAS, {}, { class: "mdc-select__native-control"} ) %>
           <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
             <div class="mdc-notched-outline__leading"></div>
             <div class="mdc-notched-outline__notch" style="width: 32.75px;">
@@ -154,7 +154,7 @@
       <div class="me-text-field__container me-text-field--fullwidth">
         <div class="mdc-select mdc-select--outlined" style="width: 100%">
           <i class="mdc-select__dropdown-icon"></i>
-          <%= form.select(:categories_primary_name, ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton"], {}, { class: "mdc-select__native-control"} ) %>
+          <%= form.select(:categories_primary_name, Event::CATEGORIES, {}, { class: "mdc-select__native-control"} ) %>
           <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
             <div class="mdc-notched-outline__leading"></div>
             <div class="mdc-notched-outline__notch" style="width: 32.75px;">
@@ -187,7 +187,7 @@
       <div class="me-text-field__container me-text-field--fullwidth">
         <div class="mdc-select mdc-select--outlined" style="width: 100%">
           <i class="mdc-select__dropdown-icon"></i>
-          <%= form.select(:categories_secondary_name, ["festa", "curso", "teatro", "show", "cinema", "exposição", "feira", "aventura", "meetup", "hackaton"], {}, { class: "mdc-select__native-control"} ) %>
+          <%= form.select(:categories_secondary_name, Event::CATEGORIES, {}, { class: "mdc-select__native-control"} ) %>
           <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
             <div class="mdc-notched-outline__leading"></div>
             <div class="mdc-notched-outline__notch" style="width: 32.75px;">

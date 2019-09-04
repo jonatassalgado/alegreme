@@ -45,7 +45,7 @@
               type:                         'categories'
           } %>
         <% end %>
-        <% if filters[:kinds] && params[:categories] && params[:kinds] && items[:kinds] %>
+        <% if (filters[:kinds] && params[:categories] && items[:kinds]) || (filters[:kinds] && params[:kinds]) %>
           <%= title[:kinds] %>
           <%= render partial: 'feeds/filter', locals: {
               initial_filters:              items[:kinds],

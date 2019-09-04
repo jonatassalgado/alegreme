@@ -63,7 +63,6 @@ export default class ChipController extends Controller {
 	}
 
 	create() {
-		debugger
 		if (this.hasChipsetTarget) {
 			const chipEl = document.createElement("div");
 			chipEl.classList.add("me-chip", "mdc-chip", "mdc-chip--selected");
