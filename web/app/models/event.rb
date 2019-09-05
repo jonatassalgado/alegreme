@@ -5,8 +5,9 @@ class Event < ApplicationRecord
 
 	def slug_candidates
 		[
-				[:categories_primary_name, :details_name, :place_details_name],
-				[:categories_primary_name, :details_name, :place_details_name, :first_day_time]
+				[:details_name, :categories_primary_name],
+				[:details_name, :place_details_name, :categories_primary_name],
+				[:details_name, :place_details_name, :categories_primary_name, :first_day_time]
 		]
 	end
 

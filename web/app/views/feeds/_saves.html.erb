@@ -37,7 +37,7 @@
            data-target="saves.list">
         <div class="mdc-layout-grid__inner">
           <% saved_events.each do |event| %>
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+            <div class="mdc-layout-grid__cell">
               <div class="me-card mdc-card me-card--saves event-<%= event.id %>"
                    data-action="mouseover->saves-events#showEventDetails"
                    data-controller="saves-events"

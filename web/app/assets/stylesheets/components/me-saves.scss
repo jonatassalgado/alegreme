@@ -133,13 +133,14 @@ $gutter: 6px;
     }
   }
 
-  & .mdc-layout-grid__cell--span-2 {
+  & .mdc-layout-grid__cell {
     scroll-snap-align: center;
     padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: normal;
     width: auto;
+    grid-column-end: span 2;
     @include mdc-layout-grid-media-query_("phone") {
       scroll-snap-align: none;
     }

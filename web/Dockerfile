@@ -97,8 +97,6 @@ RUN rake assets:precompile
 RUN rake webpacker:compile
 RUN yarn install
 
-RUN rake sitemaps:refresh
-
 EXPOSE 3000
 
 CMD bundle exec puma -C config/puma.rb

@@ -1,4 +1,3 @@
-
 require 'sidekiq/web'
 require 'sidekiq-scheduler/web'
 
@@ -20,21 +19,23 @@ Rails.application.routes.draw do
 	resources :users
 	resources :collections, only: [:index]
 	resources :categories
-	resources :organizers
-	resources :places
+	resources :organizers, path: 'organizadores'
+	resources :places, path: 'porto-alegre/locais'
 	resources :artifacts
-	resources :events do
+
+	resources :events, path: 'porto-alegre/eventos' do
 		resource :favorite, only: [:create, :destroy]
 	end
+
 
 	get ':type/:resource_id/follow', to: 'follow#follow', :defaults => {:format => 'js'}, as: :follow
 	get ':type/:resource_id/unfollow', to: 'follow#unfollow', :defaults => {:format => 'js'}, as: :unfollow
 
 	authenticate :user, lambda { |u| u.admin? } do
-  	mount Sidekiq::Web => '/sidekiq'
+		mount Sidekiq::Web => '/sidekiq'
 	end
 
 	get 'job/submit/:who/:message', to: 'job#submit'
 
-	# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

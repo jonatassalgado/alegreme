@@ -118,7 +118,7 @@ export default class EventController extends Controller {
 			data   : {}
 		});
 
-		fetch(`/events/${this.identifier}/favorite`, {
+		fetch(`/porto-alegre/eventos/${this.identifier}/favorite`, {
 			method     : this.isFavorited,
 			headers    : {
 				'X-Requested-With': 'XMLHttpRequest',

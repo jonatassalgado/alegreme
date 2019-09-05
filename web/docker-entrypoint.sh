@@ -10,8 +10,9 @@ bundle check || bundle install --binstubs="$BUNDLE_BIN"
 
 rake db:exists && rake db:migrate || rake db:setup db:migrate
 
-bundle exec clockworkd -c clock.rb -d /var/www/alegreme --log-dir /var/www/alegreme/log --log restart
+bundle exec rake sitemap:refresh
 
+bundle exec clockworkd -c clock.rb -d /var/www/alegreme --log-dir /var/www/alegreme/log --log restart
 
 exec "$@"
 # Finally call command issued to the docker service
