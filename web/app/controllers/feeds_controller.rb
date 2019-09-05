@@ -1,3 +1,5 @@
+include Pagy::Backend
+
 class FeedsController < ApplicationController
 	before_action :authorize_user
 	before_action :authorize_admin, only: [:train]
@@ -231,10 +233,13 @@ class FeedsController < ApplicationController
 	def train
 		events_not_trained_yet = get_events_not_trained_yet
 
-		@items = {
-				events:      events_not_trained_yet.limit(6),
-				total_count: events_not_trained_yet.count
-		}
+		# @items = {
+		# 		events:      events_not_trained_yet.limit(20),
+		# 		total_count: events_not_trained_yet.count
+		# }
+
+		@pagy, @events = pagy(events_not_trained_yet, items: 6)
+
 	end
 
 	private

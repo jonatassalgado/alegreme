@@ -89,6 +89,8 @@ gem 'daemons'
 gem 'sitemap_generator'
 
 
+gem 'pagy', '~> 3.5'
+
 gem 'active_record_extended'
 
 # gem 'serviceworker-rails'

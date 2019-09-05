@@ -124,8 +124,8 @@ class EventCategoryPrediction(object):
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
             last_file = max(
                 filter(regex.search,
-                       os.listdir('../../../alegreme/scrapy/classified')))
-            self.base = pd.read_csv('../../../alegreme/scrapy/classified/' +
+                       os.listdir('../../../alegreme/scrapy/data/classified')))
+            self.base = pd.read_csv('../../../alegreme/scrapy/data/classified/' +
                                     last_file)
             self.base = self.base.drop_duplicates(['source_url'])
 
@@ -469,9 +469,9 @@ class EventCategoryPrediction(object):
         return gs_classificator.best_params_
 
 
-# predictModel = EventCategoryPrediction()
-# predictModel.clean()
-# predictModel.train()
+#predictModel = EventCategoryPrediction()
+#predictModel.clean()
+#predictModel.train()
 #predictModel.debug
 #bagOfWords = predictModel.bag_of_words()
 

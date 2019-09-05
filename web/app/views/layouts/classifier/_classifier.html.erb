@@ -1,6 +1,6 @@
 
 <p>
-	<%= "#{@items[:total_count]} eventos para treinamento" %>
+	<%= "#{@events.size} eventos para treinamento" %>
 </p>
 <p>
 <a href="/train?desc=true">Classificação alta</a>
@@ -18,8 +18,8 @@
 	<td>Tipo</td>
 	<td>Tags</td>
 </tr>
-<% cache @items[:events] do %>
-	<% @items[:events].each do |event| %>
+<% cache @events do %>
+	<% @events.each do |event| %>
 		<% cache(event) do %>
 			<tr>
         <td><img src="<%= event.cover_url :feed %>" style="width: 130px"></td>
@@ -70,3 +70,6 @@
 		<% end %>
 	<% end %>
 <% end %>
+
+<%== pagy_nav(@pagy) %>
+
