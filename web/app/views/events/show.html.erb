@@ -1,5 +1,9 @@
 <%= notice %>
 
+<% content_for :meta_title, "#{@event.details_name} | Alegreme.com" %>
+<% content_for :meta_description, strip_tags(limit_description_size(@event.details_description, 160)) %>
+<% content_for :meta_image, @event.image[:original].url %>
+
 <% if current_user&.admin? %>
   <a href="<%= @event.url %>/edit">Editar</a>
   <a href="/train">Treinar</a>
@@ -25,7 +29,7 @@
     }
   },
   "image": [
-    "<%= @event.image[:feed].url %>"
+    "<%= @event.image[:original].url %>"
    ],
   "description": "<%= strip_tags @event.details_description %>"
 }
