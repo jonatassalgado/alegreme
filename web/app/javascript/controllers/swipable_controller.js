@@ -209,6 +209,7 @@ export default class SwipableController extends Controller {
 											response.text().then(data => {
 												document.querySelector('.stackedcards').classList.add('hidden');
 												document.querySelector('.global-actions').classList.add('hidden');
+												document.querySelector('.me-swipable__question').classList.add('hidden');
 												document.querySelector('.final-state').classList.remove('hidden');
 												document.querySelector('.final-state').classList.add('active');
 												setTimeout(() => {
