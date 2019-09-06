@@ -19,31 +19,31 @@
 
   <section class="features">
     <div class="features__scroll-view">
-      <div class="feature feature--activities rellax" data-rellax-speed="2" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(-150px, 150px)' %> ; opacity: 0">
+      <div class="feature feature--activities rellax" data-rellax-speed="2" style="">
         <div class="feature__icon">
           <%= responsive_image_tag "welcome/bike-icon", alt: 'bicicleta' %>
         </div>
         <div class="feature__title">Atividades recorrentes para praticar na cidade</div>
       </div>
-      <div class="feature feature--events rellax" data-rellax-speed="1" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(-100px, -150px)' %>; opacity: 0">
+      <div class="feature feature--events rellax" data-rellax-speed="1" style="">
         <div class="feature__icon">
           <%= responsive_image_tag "welcome/calendar-icon", alt: "calendário" %>
         </div>
         <div class="feature__title">Eventos sugeridos com base no seu gosto individual</div>
       </div>
-      <div class="feature feature--topics rellax" data-rellax-speed="1" style="transform: <%= mobile_device? ? 'translate(150px, 0px)' : 'translate(0px, 150px)' %>; opacity: 0">
+      <div class="feature feature--topics rellax" data-rellax-speed="1" style="">
         <div class="feature__icon">
           <%= responsive_image_tag "welcome/hearth-icon", alt: "coração", class: 'lazyload' %>
         </div>
         <div class="feature__title">Siga os tópicos que você gosta e fique sempre por dentro</div>
       </div>
-      <div class="feature feature--friends rellax" data-rellax-speed="1" style="transform: translate(100px, -150px); opacity: 0">
+      <div class="feature feature--friends rellax" data-rellax-speed="1" style="">
         <div class="feature__icon">
           <%= responsive_image_tag "welcome/friends-icon", alt: "amigos", class: 'lazyload' %>
         </div>
         <div class="feature__title">Compartilhe com seus melhores amigos seus planos</div>
       </div>
-      <div class="feature feature--movie rellax" data-rellax-speed="2" style="transform: translate(150px, 150px); opacity: 0">
+      <div class="feature feature--movie rellax" data-rellax-speed="2" style="">
         <div class="feature__icon">
           <%= responsive_image_tag "welcome/movie-icon", alt: "filme", class: 'lazyload' %>
         </div>
@@ -77,6 +77,17 @@
     </div>
   </section>
 
+  <!-- <section>
+    <div class="befefits">
+      <div class="benefit">Filtre por dia, categoria e tipo facilmente.</div>
+      <div class="benefit">Filtre por dia, categoria e tipo facilmente.</div>
+      <div class="benefit">Filtre por dia, categoria e tipo facilmente.</div>
+      <div class="benefit">Filtre por dia, categoria e tipo facilmente.</div>
+      <div class="benefit">Filtre por dia, categoria e tipo facilmente.</div>
+      <div class="benefit">Filtre por dia, categoria e tipo facilmente.</div>
+    </div>
+  </section> -->
+
   <section class="invite">
     <div class="invite__status">
       <div class="people">
@@ -97,7 +108,7 @@
       <span class="mdc-fab__label">Compartilhar</span>
     </button>
     <div class="invite__cta" title="Seja um Beta tester!">
-      Pegar Convite
+      Solicitar Convite
       <span>
         <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
       </span>
@@ -118,6 +129,16 @@
       <a href="https://twitter.com/portoalegreme">
         <%= responsive_image_tag "welcome/follow-twitter", alt: 'siga o twitter', class: 'lazyload' %>
       </a>
+    </div>
+  </section>
+
+  <section class="manifesto">
+    <h2>Aumentando a interação entre as pessoas para criarmos cidades incríveis!</h2>
+    <div class="manifesto__content">
+      <p>Você é o que você come. Quantas vezes você já ouviu esta frase? Com certeza algumas vezes. Mas somos mais ainda o resultado daquilo que vivemos, com as pessoas que interagimos!</p>
+      <p>O mundo já foi um lugar pacato, poucas coisas aconteciam a nossa volta, e não muito raramente as cidades possuíam pouca diversidade de eventos e atividades. Houve um tempo que os grandes acontecimentos da nossa sociedade eram a missa, o casamento e a festa anual da cidade.</p>
+      <p>Por isso talvez as pessoas eram tão iguais, previsíveis e havia pouca inovação.</p>
+      <a href="https://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" target="_blank"  class="manifesto__read-more">LER MAIS</a>
     </div>
   </section>
 

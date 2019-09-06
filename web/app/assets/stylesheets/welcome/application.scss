@@ -178,7 +178,7 @@
   }
 
   &__cta {
-    width: 366px;
+    width: 390px;
     height: 87px;
     font-family: $font-primary-family;
     font-style: normal;
@@ -283,6 +283,55 @@
 }
 
 
+.manifesto {
+  max-width: 640px;
+  text-align: justify;
+  line-height: 1.6em;
+  position: relative;
+  margin: 0 0 85px 0;
+  @include mobile-only{
+    display: none;
+  }
+
+  &__content {
+    // max-width: 640px;
+    margin: auto;
+  }
+
+  &::before {
+    content: close-quote;
+    background: linear-gradient(0deg, #ffffffbf, transparent 50%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  & h2 {
+    font-family: $font-primary-family;
+    font-weight: bold;
+    font-size: 38px;
+    line-height: 1.2em;
+    margin: 140px auto 35px auto;
+    padding: 0;
+    text-align: left;
+    @include mobile-only {
+      font-size: 31px;
+      line-height: 0;
+      margin: 65px auto 0 auto;
+    }
+  }
+
+  &__read-more {
+    margin: auto;
+    position: relative;
+    color: $brand-color;
+    text-decoration: none;
+    font-weight: 500;
+  }
+}
+
 .questions {
   width: 100%;
   height: 920px;
@@ -305,8 +354,8 @@
   & h2 {
     font-family: $font-primary-family;
     font-weight: bold;
-    font-size: 48px;
-    line-height: 58px;
+    font-size: 38px;
+    line-height: 1.2empx;
     margin: 140px auto 0 auto;
     padding: 0;
     text-align: center;
@@ -518,7 +567,7 @@
 
   & a {
     max-width: 85%;
-    margin: auto;
+    // margin: auto;
     transition: transform 0.35s ease;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
@@ -537,8 +586,8 @@
   & h2 {
     font-family: $font-primary-family;
     font-weight: bold;
-    font-size: 48px;
-    line-height: 58px;
+    font-size: 38px;
+    line-height: 1.2empx;
     margin: 0 auto 50px auto;
     padding: 0;
     text-align: center;

@@ -8,6 +8,8 @@ set -e
 
 bundle check || bundle install --binstubs="$BUNDLE_BIN"
 
+yarn install
+
 rake db:exists && rake db:migrate || rake db:setup db:migrate
 
 bundle exec rake sitemap:refresh
