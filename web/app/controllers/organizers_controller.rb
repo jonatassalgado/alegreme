@@ -15,8 +15,8 @@ class OrganizersController < ApplicationController
 		respond_to do |format|
 			format.js do
 				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
-					events      = @organizer.events.active
-					@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]], limit: 20)
+				events      = @organizer.events.active
+				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]], limit: 20)
 				# end
 
 				@locals = mount_section_attrs
@@ -24,11 +24,37 @@ class OrganizersController < ApplicationController
 			end
 			format.html do
 				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
-					events      = @organizer.events.active
-					@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]], limit: 20)
+				events      = @organizer.events.active
+				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]], limit: 20)
 
-					@locals = mount_section_attrs
-					render 'show'
+				@jsonld = @collection.map do |event|
+					{
+							"@context":    "https://schema.org",
+							"@type":       "Event",
+							"name":        event.details_name,
+							"startDate":   event.first_day_time.to_datetime.iso8601,
+							"endDate":     "",
+							"location":    {
+									"@type":   "Place",
+									"name":    event.place_details_name,
+									"address": {
+											"@type":           "PostalAddress",
+											"streetAddress":   event.geographic['address'],
+											"addressLocality": event.geographic['city'],
+											"postalCode":      event.geographic['cep'],
+											"addressRegion":   "RS",
+											"addressCountry":  "BR"
+									}
+							},
+							"image":       [
+									               event.image[:original].url
+							               ],
+							"description": strip_tags @event.details_description
+					}
+				end
+
+				@locals = mount_section_attrs
+				render 'show'
 				# end
 			end
 		end
@@ -89,17 +115,17 @@ class OrganizersController < ApplicationController
 	def mount_section_attrs
 		{
 				items:      @collection,
-				title:     {
+				title:      {
 						principal: @organizer.details['name']
 				},
 				identifier: @organizer.details['name'].parameterize,
-				opts: {
-						filters:    {
+				opts:       {
+						filters: {
 								ocurrences: true,
 								kinds:      true,
 								categories: true
 						},
-						detail: @collection[:detail]
+						detail:  @collection[:detail]
 				}
 		}
 	end

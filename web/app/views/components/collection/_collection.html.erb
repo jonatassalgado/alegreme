@@ -25,8 +25,8 @@
     <h2>
       <%= title[:principal] %>
       <span>
-            <%= title[:secondary] %>
-          </span>
+        <%= title[:secondary] %>
+      </span>
     </h2>
     <% if filters %>
       <div class="me-filter"
@@ -77,8 +77,8 @@
         } %>
 
         <%= render partial: 'components/collection/similar', locals: {
-            events:     items[:events],
-            identifier: identifier,
+            events:       items[:events],
+            identifier:   identifier,
             json_request: json_request
         } unless mobile_device? %>
 

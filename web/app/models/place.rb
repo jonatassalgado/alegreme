@@ -12,4 +12,8 @@ class Place < ApplicationRecord
   def details_name=(value)
     self.details['name'] = value
   end
+
+  def geographic_address
+    self.geographic['address']
+  end
 end

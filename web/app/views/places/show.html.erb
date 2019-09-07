@@ -1,3 +1,35 @@
 <%= notice %>
 
+<script type="application/ld+json">
+[
+<%
+  size = @collection[:events].size - 1
+  @collection[:events].each_with_index do |event, index|
+%>
+    {
+        "@context":    "https://schema.org",
+        "@type":       "Event",
+        "name":        "<%= event.details_name %>",
+        "startDate":   "<%= event.first_day_time.to_datetime.iso8601 %>",
+        "endDate":     "",
+        "location":    {
+            "@type":   "Place",
+            "name":    "<%= event.place_details_name %>",
+            "address": {
+                "@type":           "PostalAddress",
+                "streetAddress":   "<%= event.geographic['address'] %>",
+                "addressLocality": "<%= event.geographic['city'] %>",
+                "postalCode":      "<%= event.geographic['cep'] %>",
+                "addressRegion":   "RS",
+                "addressCountry":  "BR"
+            }
+        },
+        "image":       [
+                           "<%= event.image[:original].url %>"
+                       ],
+        "description": "<%= strip_tags(event.details_description) %>"
+    } <%= "," unless size == index %>
+  <% end %>
+]
+</script>
 <%= render partial: "components/collection/collection", locals: @locals %>
