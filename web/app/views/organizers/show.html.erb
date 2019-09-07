@@ -1,5 +1,10 @@
 <%= notice %>
 
-<!-- <section class="me-page--events__section"> -->
-  <%= render partial: "components/collection/collection", locals: @locals %>
-<!-- </section> -->
+<script type="application/ld+json">
+  [
+    <%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>
+  ]
+</script>
+
+<%= render partial: "components/collection/collection", locals: @locals %>
+

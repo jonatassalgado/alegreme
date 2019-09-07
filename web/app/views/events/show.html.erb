@@ -16,6 +16,7 @@
   "name": "<%= @event.details_name %>",
   "startDate": "<%= @event.first_day_time.to_datetime.iso8601 %>",
   "endDate": "",
+  "url": "<%= event_path @event %>",
   "location": {
     "@type": "Place",
     "name": "<%= @event.place_details_name %>",
@@ -26,10 +27,11 @@
       "postalCode": "<%= @event.geographic['cep'] %>",
       "addressRegion": "RS",
       "addressCountry": "BR"
-    }
+    },
+    "url": "<%= place_path @event.place %>"
   },
   "image": [
-    "<%= @event.image[:original].url %>"
+    "<%= full_image_url @event.image[:original].url %>"
    ],
   "description": "<%= strip_tags @event.details_description %>"
 }

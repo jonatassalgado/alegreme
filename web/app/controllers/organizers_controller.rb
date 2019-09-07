@@ -27,32 +27,6 @@ class OrganizersController < ApplicationController
 				events      = @organizer.events.active
 				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]], limit: 20)
 
-				@jsonld = @collection.map do |event|
-					{
-							"@context":    "https://schema.org",
-							"@type":       "Event",
-							"name":        event.details_name,
-							"startDate":   event.first_day_time.to_datetime.iso8601,
-							"endDate":     "",
-							"location":    {
-									"@type":   "Place",
-									"name":    event.place_details_name,
-									"address": {
-											"@type":           "PostalAddress",
-											"streetAddress":   event.geographic['address'],
-											"addressLocality": event.geographic['city'],
-											"postalCode":      event.geographic['cep'],
-											"addressRegion":   "RS",
-											"addressCountry":  "BR"
-									}
-							},
-							"image":       [
-									               event.image[:original].url
-							               ],
-							"description": strip_tags @event.details_description
-					}
-				end
-
 				@locals = mount_section_attrs
 				render 'show'
 				# end

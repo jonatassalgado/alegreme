@@ -1,0 +1,32 @@
+
+
+    {
+        "@context":    "https://schema.org",
+        "@type":       "Event",
+        "name":        "<%= event.details_name %>",
+        "image":       [
+                           "<%= full_image_url event.image[:original].url %>"
+                       ],
+        "description": "<%= strip_tags(event.details_description) %>",
+        "url": "<%= event_path event %>",
+        "startDate":   "<%= event.first_day_time.to_datetime.iso8601 %>",
+        "endDate":     "",
+        "location":    {
+            "@type":   "Place",
+            "name":    "<%= event.place_details_name %>",
+            "address": {
+                "@type":           "PostalAddress",
+                "streetAddress":   "<%= event.geographic['address'] %>",
+                "addressLocality": "<%= event.geographic['city'] %>",
+                "postalCode":      "<%= event.geographic['cep'] %>",
+                "addressRegion":   "RS",
+                "addressCountry":  "BR"
+            },
+            "url": "<%= place_path event.place %>"
+        },
+        "offers": {
+          "@type": "AggregateOffer",
+          "lowPrice": "<%= event.details_prices.min %>",
+          "priceCurrency": "BRL"
+        }
+    } <%= "," unless @collection[:events].size == event_counter + 1 %>
