@@ -261,14 +261,14 @@ document.addEventListener('DOMContentLoaded', function () {
 						response.text().then(data => {
 							const backendData = JSON.parse(data);
 
-							const userName = `${googleUserData.name.split(" ")[0]} ${googleUserData.name.split(" ")[1]}`;
+							const userName = `${googleUserData.name.split(" ")[0]}`;
 
 							if (backendData.invitationCreated) {
 								inviteStatusEl.style.transform = 'translate(0px, 150px)';
 								inviteEl.classList.add('is-invited');
 
 
-								inviteCounterEl.innerText               = `${backendData.invitesCount} pessoas e ${userName} solicitaram convite para o Alegreme!`
+								inviteCounterEl.innerText               = `Pronto ${userName}, convite solicitado com sucesso!`
 								inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
 								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
 							}
@@ -278,8 +278,8 @@ document.addEventListener('DOMContentLoaded', function () {
 								inviteEl.classList.add('is-invited');
 
 
-								inviteCounterEl.innerText               = `${userName}? Você e outras ${backendData.invitesCount} pessoas já estão na fila`;
-								inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez`;
+								inviteCounterEl.innerText               = `${userName}, você e outras ${backendData.invitesCount} pessoas já estão na fila`;
+								inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
 								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
 							}
 						});

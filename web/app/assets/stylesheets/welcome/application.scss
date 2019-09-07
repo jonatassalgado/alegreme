@@ -2,7 +2,7 @@
 @import "media-queries";
 @import "variables";
 //@import "smile";
-@import "@material/fab/mdc-fab";
+//@import "@material/fab/mdc-fab";
 
 
 .demo {
@@ -21,7 +21,7 @@
       margin: auto;
       padding: 0;
       max-width: 70%;
-      top: -110px;
+      top: -70px;
     }
   }
 }
@@ -33,7 +33,7 @@
   background-image: asset_url("welcome/mockup-macbook.png");
   background-position: center top;
   background-repeat: no-repeat;
-  margin: 95px 0 0 0;
+  margin: 65px 0 0 0;
   z-index: 1;
   @include mobile-only {
     display: none;
@@ -77,7 +77,7 @@
     top: 0;
     right: 0;
     //transform: scale(1.8);
-    margin: 200px 0 110px 0;
+    margin: 100px 0 40px 0;
   }
 
   &__screen {
@@ -103,6 +103,51 @@
       left: unquote($android-screen-left * $android-resize + 'px');
       width: unquote($android-screen-width * $android-resize + 'px');
       height: unquote($android-screen-height * $android-resize + 'px');
+    }
+  }
+}
+
+.benefits {
+  margin: 65px 0 65px 0;
+  max-width: 670px;
+  @include mobile-only{
+    max-width: calc(100vw - 48px);
+    margin: 0 0 50px 0;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 25px 35px;
+  }
+
+  &__item {
+    grid-column-end: 1 span;
+    position: relative;
+    @include mobile-only {
+      grid-column-end: 2 span;
+      margin: 0 0 0 24px;
+    }
+
+    & h3 {
+      font-size: 14px;
+      margin: 0 0 4px 0;
+      color: $font-secondary-color;
+    }
+
+    & span {
+      color: $font-tertiary-color;
+      font-size: 12px;
+    }
+
+    & input {
+      position: absolute;
+      left: -24px;
+      top: 2px;
+      pointer-events: none;
     }
   }
 }
@@ -162,15 +207,15 @@
   &__details {
     font-style: normal;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 21px;
     color: rgba(12, 15, 9, 0.7);
     margin: 12px 0 0 0;
     text-align: center;
     transition: opacity 0.4s ease;
     @include mobile-only {
-      display: none;
-      font-size: 14px;
+      //display: none;
+      font-size: 12px;
       line-height: 16px;
       margin: 6px 0 0 0;
       padding: 0 50px;
@@ -198,6 +243,7 @@
     transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
+    -webkit-user-select: none;
     @include mobile-only {
       width: 245px;
       height: 65px;
@@ -288,14 +334,9 @@
   text-align: justify;
   line-height: 1.6em;
   position: relative;
-  margin: 0 0 85px 0;
+  margin: 100px 0 85px 0;
   @include mobile-only{
     display: none;
-  }
-
-  &__content {
-    // max-width: 640px;
-    margin: auto;
   }
 
   &::before {
@@ -308,12 +349,16 @@
     left: 0;
   }
 
+  & i {
+    color: $font-tertiary-color;
+  }
+
   & h2 {
     font-family: $font-primary-family;
     font-weight: bold;
     font-size: 38px;
     line-height: 1.2em;
-    margin: 140px auto 35px auto;
+    margin: 0 auto 35px auto;
     padding: 0;
     text-align: left;
     @include mobile-only {
@@ -321,6 +366,10 @@
       line-height: 0;
       margin: 65px auto 0 auto;
     }
+  }
+
+  &__content {
+    margin: auto;
   }
 
   &__read-more {
@@ -557,6 +606,9 @@
   margin: 125px 0 75px 0;
   width: 100vw;
   max-width: 1090px;
+  @include mobile-only {
+    margin: 75px 0 75px 0;
+  }
 
   &__buttons {
     display: flex;
@@ -618,17 +670,30 @@
   position: relative;
   margin: 24px auto;
   background: white;
-  z-index: 5;
-  color: #0c0f09;
   transition: opacity 0.4s ease;
+  border: 0;
+  display: flex;
+  align-items: center;
+  font-family: $font-primary-family;
+  padding: 14px 18px;
+  box-shadow: 0 0 30px #0000004d;
+  border-radius: 35px;
+  z-index: 5;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
   @include desktop-only {
     display: none;
+  }
+
+  & i {
+    margin: 0px 6px 0 0;
   }
 
   &--invite {
     opacity: 0;
     display: none;
-    transform: translate(0px, -75px);
+    transform: translate(0px, -115px);
   }
 }
 
