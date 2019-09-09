@@ -106,3 +106,7 @@ const applicationScript = () => {
 document.addEventListener("DOMContentLoaded", applicationScript, false);
 document.addEventListener("turbolinks:load", applicationScript, false);
 
+
+
+
+

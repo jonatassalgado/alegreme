@@ -5,13 +5,14 @@
 $gutter: 6px;
 
 .me-saves {
-  margin: auto;
-  padding: 0 0 25px 0;
+  margin: 115px auto 0 auto;
+  //padding: 0 0 25px 0;
   max-width: 960px;
   position: relative;
   @include mdc-layout-grid-media-query_("phone") {
+    margin: 35px auto 0 auto;
     max-width: unset;
-    padding: 35px 0 35px 0;
+    //padding: 35px 0 35px 0;
   }
 
   &__list {
@@ -229,7 +230,7 @@ $gutter: 6px;
 
   & .me-icon__group {
     position: absolute;
-    top: 57px;
+    top: 15px;
     width: 100%;
   }
 

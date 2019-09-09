@@ -1,11 +1,12 @@
-import {Controller} from "stimulus";
+import {Controller}     from "stimulus";
 import {LazyloadModule} from "../modules/lazyload-module";
 
 export default class SectionController extends Controller {
-	static targets = ["section", "filter", "loadMoreButton"];
+	static targets = ["section", "filter", "scrollContainer", "loadMoreButton"];
 
 	initialize() {
-		const self = this;
+		const self      = this;
+		this.scrollLeft = this.data.get('turbolinksPersistScroll');
 
 		self.subscription = postal.subscribe({
 			channel : `${self.identifier}`,
@@ -17,6 +18,10 @@ export default class SectionController extends Controller {
 		});
 
 		self.sectionTarget.parentElement.style.minHeight = `${self.sectionTarget.getBoundingClientRect().height}px`;
+
+		document.addEventListener('turbolinks:before-cache', () => {
+			this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+		}, false);
 	}
 
 	loadMore() {
@@ -25,14 +30,10 @@ export default class SectionController extends Controller {
 		})
 	}
 
-	closeLoadMore() {
-
-	}
-
 	hasMoreEventsToLoad() {
 		const self = this;
 
-		if(self.hasLoadMoreButtonTarget){
+		if (self.hasLoadMoreButtonTarget) {
 			if (parseInt(self.actualEventsInCollection) >= parseInt(self.totalEventsInCollection)) {
 				self.loadMoreButtonTarget.style.display = 'none';
 			}
@@ -53,6 +54,16 @@ export default class SectionController extends Controller {
 
 	get identifier() {
 		return this.sectionTarget.id;
+	}
+
+	set turbolinksPersistScroll(value) {
+		this.data.set('turbolinksPersistScroll', value);
+	}
+
+	set scrollLeft(value) {
+		if (value > 0) {
+			this.scrollContainerTarget.scrollLeft = value;
+		}
 	}
 
 }

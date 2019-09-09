@@ -20,20 +20,19 @@ $mdc-layout-grid-columns: (
   // }
 
   &__section {
-    margin: auto;
-    padding: 0 0 25px 0;
+    margin: 0 auto 150px auto;
     max-width: 960px;
     @include mdc-layout-grid-media-query_("phone") {
       max-width: unset;
       padding: 35px 0 35px 0;
-      //border-bottom: 1px solid $border-color;
+      margin: 0 auto 26px auto;
     }
 
 
     & h2 {
       margin: 8px 0;
       font-weight: 800;
-      max-width: 55%;
+      max-width: 90%;
       line-height: 1.3em;
       font-size: 24px;
       color: $font-primary-color;

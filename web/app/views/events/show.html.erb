@@ -4,11 +4,6 @@
 <% content_for :meta_description, strip_tags(limit_description_size(@event.details_description, 160)) %>
 <% content_for :meta_image, @event.image[:original].url %>
 
-<% if current_user&.admin? %>
-  <a href="<%= @event.url %>/edit">Editar</a>
-  <a href="/train">Treinar</a>
-<% end %>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -115,6 +110,11 @@
     </div>
   </div>
 </div>
+
+<% if current_user&.admin? %>
+  <a href="<%= @event.url %>/edit">Editar</a>
+  <a href="/train">Treinar</a>
+<% end %>
 
 <!--<ul>-->
 <%# @event.similar_data.each do |similar| %>

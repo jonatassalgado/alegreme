@@ -59,7 +59,7 @@
                     <div class="me-card__overlay"
                          data-target="saves-events.overlay"></div>
                   </div>
-                  <div class="me-card__date <%= 'is-today' if ['hoje', 'amanhã'].include?(event.day_of_week['decorator'])  %>" data-target="saves-events.date">
+                  <div class="me-card__date <%= 'is-highlight' if ['hoje', 'amanhã'].include?(event.day_of_week['decorator'])  %>" data-target="saves-events.date">
                     <%= event.day_of_week['decorator'] %>
                   </div>
                 </a>

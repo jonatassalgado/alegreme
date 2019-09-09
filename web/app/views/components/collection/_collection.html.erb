@@ -16,7 +16,7 @@
 <%# unless items[:events].empty? %>
 <%# cache [current_user, identifier, cache_keys[:categories], cache_keys[:kinds], cache_keys[:ocurrences]] do %>
 
-<div class="me-feed__section"
+<section class="me-feed__section"
      data-controller="section"
      data-target="section.section"
      data-section-total-events-in-collection="<%= total_events_in_collection %>"
@@ -71,7 +71,7 @@
     <% end %>
   </div>
   <div class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
+    <div class="mdc-layout-grid__inner" data-target="section.scrollContainer" data-section-turbolinks-persist-scroll="0">
       <% unless items.empty? %>
         <%= render partial: 'components/collection/event', collection: items[:events], as: :event, locals: {
             identifier:   identifier,
@@ -133,6 +133,6 @@
       </div>
     <% end %>
   </div>
-</div>
+</section>
 <%# end %>
 <%# end %>
