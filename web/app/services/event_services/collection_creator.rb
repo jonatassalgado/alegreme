@@ -107,7 +107,7 @@ module EventServices
 			else
 				{
 						all_existing_filters: false,
-						limit:                2
+						limit:                8
 				}.merge(opts)
 			end
 		end

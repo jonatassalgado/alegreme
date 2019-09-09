@@ -3,7 +3,7 @@
   similar_to = params.fetch(:similar, false)
   order = params.fetch(:insert_after, 4)
   user = local_assigns.fetch(:user, current_user)
-  similar_to_show = 6
+  similar_to_show = mobile_device? ? 8 : 6
 
   if similar_to
     event              = events.detect { |event| event.id == similar_to.to_i } || Event.find(similar_to)

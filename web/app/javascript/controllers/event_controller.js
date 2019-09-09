@@ -80,7 +80,8 @@ export default class EventController extends Controller {
 			topic  : `${this.sectionIdentifier}.create`,
 			data   : {
 				similar     : this.identifier,
-				insert_after: this.insertAfter
+				insert_after: this.insertAfter,
+				limit       : this.sectionController.actualEventsInCollection
 			}
 		});
 
@@ -185,6 +186,11 @@ export default class EventController extends Controller {
 
 	get favoriteController() {
 		return this.application.controllers.find(controller => controller.context.identifier === 'saves');
+	}
+
+	get sectionController() {
+		const collectionEl = this.eventTarget.closest('[data-controller="section"]');
+		return this.application.getControllerForElementAndIdentifier(collectionEl, 'section');
 	}
 
 	get sectionIdentifier() {
