@@ -119,8 +119,8 @@ $description-color: $font-secondary-color;
     z-index: 2;
     position: relative;
     top: 6px;
-    margin-bottom: 12px;
     @include mdc-layout-grid-media-query_("phone") {
+      margin-bottom: 12px;
       opacity: 1;
     }
 

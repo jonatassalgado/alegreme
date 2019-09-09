@@ -54,7 +54,7 @@ $mdc-layout-grid-columns: (
         font-family: $font-secondary-family;
         color: $font-secondary-color;
         line-height: 1.6em;
-        margin-top: 8px;
+        //margin-top: 8px;
         @include mdc-layout-grid-media-query_("phone") {
           display: none;
         }

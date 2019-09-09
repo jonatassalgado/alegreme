@@ -24,7 +24,7 @@
 
   & .mdc-chip-set {
     display: block;
-    padding: 3px 0;
+    padding: 0;
     @include mdc-layout-grid-media-query_("phone") {
       padding: 2px $section-padding-phone;
     }
