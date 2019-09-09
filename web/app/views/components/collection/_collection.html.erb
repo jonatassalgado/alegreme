@@ -116,7 +116,7 @@
         </button>
       </div>
     <% end %>
-    <% if items[:events].empty? %>
+    <% unless items[:events] %>
       <div class="me-card me-card--notice mdc-card mdc-card--outlined">
         <div class="me-card__primary-section">
           <i class="material-icons">

@@ -26,7 +26,7 @@ module EventServices
 
 			@opts            = default_options(opts)
 			@dynamic_filters = default_filters.merge(get_filters_for_collection)
-			@events          = EventFetcher.new(@collection, @dynamic_filters).call
+			@all_events      = EventFetcher.new(@collection, @dynamic_filters).call
 
 			mount_response
 		end
@@ -158,17 +158,17 @@ module EventServices
 		end
 
 		def mount_response
-			events = @events.limit(@params[:limit] || @opts[:limit])
+			@current_events = @all_events.limit(@params[:limit] || @opts[:limit])
 
 			{
-					events:     events,
-					categories: get_filters_from_exist_events(@events, 'categories'),
-					kinds:      get_filters_from_exist_events(@events, 'kinds'),
-					ocurrences: get_filters_from_exist_events(@events, 'ocurrences'),
+					events: @current_events,
+					categories: get_filters_from_exist_events(@all_events, 'categories'),
+					kinds:      get_filters_from_exist_events(@all_events, 'kinds'),
+					ocurrences: get_filters_from_exist_events(@all_events, 'ocurrences'),
 					filters:    get_filters_toggle_for_collection,
 					detail:     {
-							total_events_in_collection:  @events.size,
-							actual_events_in_collection: events.size,
+							total_events_in_collection:  @all_events.size,
+							actual_events_in_collection: @current_events.size,
 							init_filters_applyed:        filters_without_sensitive_info
 					}
 			}
@@ -295,7 +295,7 @@ module EventServices
 			filters_cleanned = @dynamic_filters.select { |k, v| k != :user }
 			filters_cleanned.store :user, {id: @dynamic_filters[:user][:id]} if @dynamic_filters[:user]
 			# filters_cleanned.store :in_user_personas, @dynamic_filters[:user].slice(:id) if @dynamic_filters[:user]
-			filters_cleanned.store :events_ids, @events.map(&:id)
+			filters_cleanned.store :events_ids, @current_events.map(&:id)
 			filters_cleanned
 		end
 
