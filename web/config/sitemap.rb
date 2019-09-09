@@ -22,6 +22,14 @@ SitemapGenerator::Sitemap.create do
 	# Add all articles:
 	#
 	Event.find_each do |event|
-		add event_path(event), :lastmod => event.updated_at
+		add event_path(event), :lastmod => event.updated_at, :changefreq => 'daily', :priority => 0.9
+	end
+
+	Place.find_each do |place|
+		add place_path(place), :lastmod => place.updated_at, :changefreq => 'weekly', :priority => 0.8
+	end
+
+	Organizer.find_each do |organizer|
+		add organizer_path(organizer), :lastmod => organizer.updated_at, :changefreq => 'weekly', :priority => 0.8
 	end
 end
