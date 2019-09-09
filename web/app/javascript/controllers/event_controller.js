@@ -1,7 +1,7 @@
 import {Controller}          from "stimulus";
 import {MDCMenu}             from "@material/menu";
 import {MDCRipple}           from "@material/ripple";
-import {CacheModule}         from "modules/cache-module";
+// import {CacheModule}         from "modules/cache-module";
 import {MDCIconButtonToggle} from "@material/icon-button";
 import * as MobileDetect     from "mobile-detect";
 
@@ -152,7 +152,11 @@ export default class EventController extends Controller {
 	get insertAfter() {
 		const order = parseInt(this.eventTarget.parentElement.style.order);
 
-		return (Math.ceil(order / this.itemsPerRow)) * this.itemsPerRow
+		if (this.md.mobile()) {
+			return order;
+		} else {
+			return (Math.ceil(order / this.itemsPerRow)) * this.itemsPerRow
+		}
 	}
 
 	get isFavorited() {

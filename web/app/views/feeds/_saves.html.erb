@@ -4,7 +4,7 @@
 
 %>
 
-<div id="saves" class="me-saves me-feed__section me-page__section" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
+<div id="saves" class="me-saves" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
     <% if current_user and !current_user.taste_events_saved.empty? %>
       <h2 data-target="saves.header" class="">
         Eventos salvos

@@ -4,7 +4,8 @@
 
   type = opts[:type] || :large
   filters = opts[:filters] || {categories: true, kinds: true, ocurrences: true}
-  events_in_collection = opts.dig(:detail, :events_in_collection) || 0
+  total_events_in_collection = opts.dig(:detail, :total_events_in_collection) || 0
+  actual_events_in_collection = opts.dig(:detail, :actual_events_in_collection) || 0
   filters_applyed = opts.dig(:detail, :init_filters_applyed) || {}
   json_request = local_assigns.fetch(:json_request, false)
   cache_keys = params[:defaults] ? JSON.parse(params[:defaults]) : {}
@@ -18,7 +19,8 @@
 <div class="me-feed__section"
      data-controller="section"
      data-target="section.section"
-     data-section-items-count="<%= events_in_collection %>"
+     data-section-total-events-in-collection="<%= total_events_in_collection %>"
+     data-section-actual-events-in-collection="<%= actual_events_in_collection %>"
      data-observable="float-menu.section"
      id="<%= identifier %>">
   <div class="me-feed__section-head">
@@ -45,7 +47,7 @@
               type:                         'categories'
           } %>
         <% end %>
-        <% if (filters[:kinds] && params[:categories] && items[:kinds]) || (filters[:kinds] && params[:kinds]) %>
+        <% if (filters[:kinds] && params[:categories] && !items[:kinds].blank?) || (filters[:kinds] && !params[:kinds].blank?) %>
           <%= title[:kinds] %>
           <%= render partial: 'feeds/filter', locals: {
               initial_filters:              items[:kinds],
@@ -82,7 +84,15 @@
             json_request: json_request
         } unless mobile_device? %>
 
-        <%# if events_in_collection < 4 %>
+        <% if actual_events_in_collection < total_events_in_collection && mobile_device? %>
+          <div class="me-feed__load-more me-feed__load-more--mobile"
+               data-action="click->section#loadMore"
+               data-target="section.loadMoreButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
+          </div>
+        <% end %>
+
+        <%# if total_events_in_collection < 4 %>
         <!-- <div class="me-feed__empty">
           <i class="material-icons-sharp sentiment-satisfied">
             sentiment_satisfied
@@ -97,7 +107,7 @@
         events:     items[:events],
         identifier: identifier
     } if mobile_device? %>
-    <% if events_in_collection >= 4 %>
+    <% if actual_events_in_collection < total_events_in_collection %>
       <div class="me-feed__load-more"
            data-action="click->section#loadMore"
            data-target="section.loadMoreButton">

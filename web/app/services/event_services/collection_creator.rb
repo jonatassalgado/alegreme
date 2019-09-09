@@ -85,23 +85,30 @@ module EventServices
 		def default_options(opts)
 			default_opts = {
 					'today-and-tomorrow' => {
-							all_existing_filters: false
+							all_existing_filters: false,
+							limit:                8
 					},
 					'user-personas'      => {
-							all_existing_filters: true
+							all_existing_filters: false,
+							limit:                8
 					},
 					'follow'             => {
-							all_existing_filters: true
+							all_existing_filters: true,
+							limit:                8
 					},
 					'user-suggestions'   => {
-							all_existing_filters: true
+							all_existing_filters: true,
+							limit:                8
 					}
 			}
 
 			if default_opts.key?(@identifier)
 				default_opts[@identifier].merge(opts)
 			else
-				{all_existing_filters: false}.merge(opts)
+				{
+						all_existing_filters: false,
+						limit:                2
+				}.merge(opts)
 			end
 		end
 
@@ -141,9 +148,9 @@ module EventServices
 		end
 
 		def set_limit
-			return 8 if params_filter_category_exist? || params_filters_ocurrences_exist?
-
-			@params[:limit] || @opts[:limit] || 8
+			# return 8 if params_filter_category_exist? || params_filters_ocurrences_exist?
+			#
+			# @params[:limit] || @opts[:limit] || 8
 		end
 
 		def group_by_or_kinds_not_exist?(opts)
@@ -151,15 +158,18 @@ module EventServices
 		end
 
 		def mount_response
+			events = @events.limit(@params[:limit] || @opts[:limit])
+
 			{
-					events:     @events,
+					events:     events,
 					categories: get_filters_from_exist_events(@events, 'categories'),
 					kinds:      get_filters_from_exist_events(@events, 'kinds'),
 					ocurrences: get_filters_from_exist_events(@events, 'ocurrences'),
 					filters:    get_filters_toggle_for_collection,
 					detail:     {
-							events_in_collection: @events.size,
-							init_filters_applyed: filters_without_sensitive_info
+							total_events_in_collection:  @events.size,
+							actual_events_in_collection: events.size,
+							init_filters_applyed:        filters_without_sensitive_info
 					}
 			}
 		end
@@ -223,24 +233,28 @@ module EventServices
 						defaults[type]
 					end
 				when 'ocurrences'
-					if params_filter_category_exist? || params_filter_kind_exist?
-						Event.day_of_week(events, active_range: active_range?).sort_by_order.compact_range.uniq.values
-					else
-						if @identifier == 'today-and-tomorrow'
-							defaults[type]
-						else
-							Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_date.compact_range.uniq.values
-						end
-					end
+					# if params_filter_category_exist? || params_filter_kind_exist?
+					# 	Event.day_of_week(events, active_range: active_range?).sort_by_order.compact_range.uniq.values
+					# else
+					# if @identifier == 'today-and-tomorrow'
+					defaults[type]
+					# else
+					# 	if @opts[:all_existing_filters]
+					# 		Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_date.compact_range.uniq.values
+					# 	else
+					# 		Event.day_of_week(events, active_range: active_range?).sort_by_date.compact_range.uniq.values
+					# 	end
+					# end
+					# end
 				end
 			else
 				case type
 				when 'categories'
-					if @opts[:all_existing_filters]
-						CollectionCreator.categories
-					else
-						events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
-					end
+					# if @opts[:all_existing_filters]
+					# 	CollectionCreator.categories
+					# else
+					events.map { |e| e.categories_primary_name }.flatten.uniq
+					# end
 				when 'kinds'
 					# events.map(&:kinds_name).flatten.uniq
 				when 'ocurrences'

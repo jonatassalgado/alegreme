@@ -91,6 +91,8 @@ RUN bundle update --bundler
 
 ADD . $RAILS_ROOT
 
+RUN bash -c "cat /proc/sys/fs/inotify/max_user_watches"
+
 RUN rake assets:clobber
 RUN rake webpacker:clobber
 RUN rake assets:precompile

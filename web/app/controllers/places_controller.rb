@@ -15,7 +15,7 @@ class PlacesController < ApplicationController
 			format.js do
 				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 				events      = @place.events.active
-				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]], limit: 20)
+				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]])
 				# end
 
 				@locals = mount_section_attrs
@@ -24,7 +24,7 @@ class PlacesController < ApplicationController
 			format.html do
 				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 				events      = @place.events.active
-				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]], limit: 20)
+				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]])
 
 				@locals = mount_section_attrs
 				render 'show'

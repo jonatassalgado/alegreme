@@ -21,7 +21,7 @@ export default class SectionController extends Controller {
 
 	loadMore() {
 		this.filterController.filter({
-			limit: parseInt(this.itemsCount) + 8
+			limit: parseInt(this.actualEventsInCollection) + 8
 		})
 	}
 
@@ -33,10 +33,8 @@ export default class SectionController extends Controller {
 		const self = this;
 
 		if(self.hasLoadMoreButtonTarget){
-			if (parseInt(self.itemsCount) === 16 || parseInt(self.itemsCount) >= 9) {
+			if (parseInt(self.actualEventsInCollection) >= parseInt(self.totalEventsInCollection)) {
 				self.loadMoreButtonTarget.style.display = 'none';
-			} else {
-				self.loadMoreButtonTarget.style.display = '';
 			}
 		}
 	}
@@ -45,12 +43,12 @@ export default class SectionController extends Controller {
 		return this.application.getControllerForElementAndIdentifier(this.filterTarget, 'filter');
 	}
 
-	get itemsCount() {
-		return this.data.get('itemsCount');
+	get actualEventsInCollection() {
+		return this.data.get('actualEventsInCollection');
 	}
 
-	set itemsCount(count) {
-		return this.data.set('itemsCount', count);
+	get totalEventsInCollection() {
+		return this.data.get('totalEventsInCollection');
 	}
 
 	get identifier() {

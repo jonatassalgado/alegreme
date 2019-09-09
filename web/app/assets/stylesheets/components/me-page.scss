@@ -81,6 +81,10 @@
         padding: 0 24px;
       }
 
+      & .mdc-layout-grid__cell {
+        grid-column-end: span 4;
+      }
+
       & .me-feed__section {
         padding: 0;
       }
@@ -88,6 +92,7 @@
       & .me-card--feed {
         margin: 0 0 34px 0;
       }
+
     }
   }
 }
