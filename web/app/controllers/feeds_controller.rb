@@ -5,33 +5,31 @@ class FeedsController < ApplicationController
 	before_action :authorize_admin, only: [:train]
 
 	def index
-		respond_to do |format|
-			format.js do
-				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
-				collection = EventServices::CollectionCreator.new(current_or_guest_user, params)
-				@title     = JSON.parse(params[:title])
-				@events    = collection.call(params[:identifier])
-				# end
+		# respond_to do |format|
+			# format.js do
+				# collection = EventServices::CollectionCreator.new(current_or_guest_user, params)
+				# @title     = JSON.parse(params[:title])
+				# @events    = collection.call(params[:identifier])
+				#
+				# @locals = {
+				# 		items:        @events,
+				# 		title:        {
+				# 				principal: @title['principal'],
+				# 				secondary: @title['secondary'].try(:html_safe)
+				# 		},
+				# 		identifier:   params[:identifier],
+				# 		opts:         {
+				# 				filters: @events[:filters],
+				# 				detail:  @events[:detail]
+				# 		},
+				# 		json_request: true
+				# }
+				#
+				#
+				# render 'collections/index'
+			# end
 
-				@locals = {
-						items:        @events,
-						title:        {
-								principal: @title['principal'],
-								secondary: @title['secondary'].try(:html_safe)
-						},
-						identifier:   params[:identifier],
-						opts:         {
-								filters: @events[:filters],
-								detail:  @events[:detail]
-						},
-						json_request: true
-				}
-
-
-				render 'collections/index'
-			end
-
-			format.html do
+			# format.html do
 				gon.push(:user => current_or_guest_user)
 				gon.push(:env => Rails.env)
 				collections ||= EventServices::CollectionCreator.new(current_or_guest_user, params)
@@ -225,8 +223,8 @@ class FeedsController < ApplicationController
 				         end
 
 				@favorited_events = current_or_guest_user.saved_events
-			end
-		end
+			# end
+		# end
 
 	end
 

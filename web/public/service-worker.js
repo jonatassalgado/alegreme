@@ -71,7 +71,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  /.+(events\/)+.*/,
+  /.+(porto-alegre\/eventos\/)+.*/,
   new workbox.strategies.NetworkFirst({
     cacheName: CACHE_NAME + "events-page"
   })

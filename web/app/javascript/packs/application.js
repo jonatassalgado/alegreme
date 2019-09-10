@@ -10,20 +10,22 @@
 import "postal";
 import "morphdom";
 import "controllers";
+import {MDCRipple}      from "@material/ripple";
+import {MDCTextField}   from "@material/textfield";
+import {MDCSelect}      from "@material/select";
+import {MDCCheckbox}    from "@material/checkbox";
+import {MDCMenu}        from "@material/menu";
+import {MDCSnackbar}    from "@material/snackbar";
+import {CacheModule}    from "../modules/cache-module";
+import {AnimateModule}  from "../modules/animate-module";
+import {LazyloadModule} from "../modules/lazyload-module";
 
-import {MDCIconButtonToggle} from "@material/icon-button";
+// TODO: JS Event Listners leaks
+// import {MDCIconButtonToggle} from "@material/icon-button";
 // import {
+
 // 	MDCTopAppBar
 // } from "@material/top-app-bar/index";
-import {MDCRipple}           from "@material/ripple";
-import {MDCTextField}        from "@material/textfield";
-import {MDCSelect}           from "@material/select";
-import {MDCCheckbox}         from "@material/checkbox";
-import {MDCMenu}             from "@material/menu";
-import {MDCSnackbar}         from "@material/snackbar";
-import {CacheModule}         from "../modules/cache-module";
-import {AnimateModule}       from "../modules/animate-module";
-import {LazyloadModule}      from "../modules/lazyload-module";
 
 console.log("Hello World from Webpacker");
 
@@ -31,80 +33,84 @@ console.log("Hello World from Webpacker");
 
 
 CacheModule.activateTurbolinks();
+
 AnimateModule.init();
-const applicationScript = () => {
+const initCommonComponents = () => {
+
+	const commonComponents = {
+		domEls: {},
+		components: {}
+	};
 
 	LazyloadModule.init();
 
-	// TopAppBar
-	// const topAppBarElement = document.querySelector(".mdc-top-app-bar");
-	// const topAppBar        = new MDCTopAppBar(topAppBarElement);
+	commonComponents.domEls.buttons = document.querySelectorAll(".mdc-button");
+	commonComponents.domEls.fabs    = document.querySelectorAll(".mdc-fab");
+	// const icons   = document.querySelectorAll(".mdc-icon-button");
 
-	// Button
-	const buttons = document.querySelectorAll(".mdc-button");
-	const fabs    = document.querySelectorAll(".mdc-fab");
-	const icons   = document.querySelectorAll(".mdc-icon-button");
-
-	buttons.forEach(button => {
+	commonComponents.components.buttons = [];
+	commonComponents.domEls.buttons.forEach(button => {
 		if (button) {
-			new MDCRipple(button);
+			commonComponents.components.buttons.push(new MDCRipple(button));
 		}
 	});
 
-	fabs.forEach(fab => {
+	commonComponents.components.fabs = [];
+	commonComponents.domEls.fabs.forEach(fab => {
 		if (fab) {
-			new MDCRipple(fab);
+			commonComponents.components.fabs.push(new MDCRipple(fab));
 		}
 	});
 
-	icons.forEach(icon => {
-		new MDCIconButtonToggle(icon);
-		const ripple     = new MDCRipple(icon);
-		ripple.unbounded = true;
-		document.addEventListener("turbolinks:before-cache", () => {
-			ripple.destroy();
-		}, false);
+	// icons.forEach(icon => {
+	// 	new MDCIconButtonToggle(icon);
+	// 	const ripple     = new MDCRipple(icon);
+	// 	ripple.unbounded = true;
+	// 	document.addEventListener("turbolinks:before-cache", () => {
+	// 		ripple.destroy();
+	// 	}, false);
+	// });
+
+	commonComponents.domEls.fields = document.querySelectorAll(".mdc-text-field");
+	commonComponents.components.fields = [];
+	commonComponents.domEls.fields.forEach(field => {
+		commonComponents.components.fields.push(new MDCTextField(field))
 	});
 
-	// Textfield
-	const fields = document.querySelectorAll(".mdc-text-field");
-	fields.forEach(field => {
-		// const chatInput = field.querySelector('[data-target="chat.input"]');
-		// if (chatInput) {
-		new MDCTextField(field);
-		// }
-	});
-
-	// Snackbar
-	const snackbarElem = document.querySelector(".mdc-snackbar");
-	if (snackbarElem) {
-		const snackbar = new MDCSnackbar(snackbarElem);
-		snackbar.open();
+	commonComponents.domEls.snackbar = document.querySelector(".mdc-snackbar");
+	if (commonComponents.domEls.snackbar) {
+		commonComponents.components.snackbar = new MDCSnackbar(snackbarElem);
+		commonComponents.components.snackbar.open();
 	}
 
-	// Select
-	const selects = document.querySelectorAll(".mdc-select");
-	selects.forEach(select => {
-		new MDCSelect(select);
+	commonComponents.domEls.selects = document.querySelectorAll(".mdc-select");
+	commonComponents.components.selects = [];
+	commonComponents.domEls.selects.forEach(select => {
+		commonComponents.components.selects.push(new MDCSelect(select));
 	});
 
-	// Checkbox
-	const checkboxes = document.querySelectorAll(".mdc-checkbox");
-	checkboxes.forEach(checkbox => {
-		new MDCCheckbox(checkbox);
+	commonComponents.domEls.checkboxes = document.querySelectorAll(".mdc-checkbox");
+	commonComponents.components.checkboxes = [];
+	commonComponents.domEls.checkboxes.forEach(checkbox => {
+		commonComponents.components.checkboxes.push(new MDCCheckbox(checkbox));
 	});
 
-	// Menu
-	const menus = document.querySelectorAll(".mdc-menu");
-	menus.forEach(menu => {
-		new MDCMenu(menu);
+	commonComponents.domEls.menus = document.querySelectorAll(".mdc-menu");
+	commonComponents.components.menus = [];
+	commonComponents.domEls.menus.forEach(menu => {
+		commonComponents.components.menus.push(new MDCMenu(menu));
 	});
 
+	document.addEventListener("turbolinks:before-cache", () => {
+		delete commonComponents.domEls;
+		delete commonComponents.components;
+	});
 };
 
 
-document.addEventListener("DOMContentLoaded", applicationScript, false);
-document.addEventListener("turbolinks:load", applicationScript, false);
+// document.addEventListener("DOMContentLoaded", initCommonComponents, {once: true});
+document.addEventListener("turbolinks:load", initCommonComponents, {once: true});
+document.addEventListener("turbolinks:render", initCommonComponents, false);
 
 
 

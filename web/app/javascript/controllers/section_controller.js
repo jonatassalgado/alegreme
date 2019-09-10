@@ -19,9 +19,15 @@ export default class SectionController extends Controller {
 
 		self.sectionTarget.parentElement.style.minHeight = `${self.sectionTarget.getBoundingClientRect().height}px`;
 
-		document.addEventListener('turbolinks:before-cache', () => {
+		this.destroy = () => {
 			this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
-		}, false);
+		};
+
+		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	disconnect() {
+		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
 	loadMore() {

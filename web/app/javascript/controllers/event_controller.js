@@ -19,13 +19,13 @@ export default class EventController extends Controller {
 		"menu"
 	];
 
-	initialize = () => {
+	initialize() {
+		this.subscriptions = {};
+		this.itemsPerRow   = 4;
+
 		this.md                 = new MobileDetect(window.navigator.userAgent);
 		this.adjustForDevice    = this.md.mobile();
-		this.subscriptions      = {};
 		this.activeInteractions = true;
-		this.itemsPerRow        = 4;
-
 
 		this.subscriptions.savesUpdated = postal.subscribe({
 			channel : `saves`,
@@ -49,13 +49,18 @@ export default class EventController extends Controller {
 				}
 			});
 
-		document.addEventListener("turbolinks:before-cache", () => {
+		this.destroy = () => {
 			this.activeInteractions = false;
-
 			this.subscriptions.filterUpdated.unsubscribe();
 			this.subscriptions.savesUpdated.unsubscribe();
-		});
-	};
+		};
+
+		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	disconnect() {
+		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
+	}
 
 	showEventDetails = () => {
 		if (this.md.mobile()) {
@@ -124,7 +129,7 @@ export default class EventController extends Controller {
 			headers    : {
 				'X-Requested-With': 'XMLHttpRequest',
 				'Content-type'    : 'text/javascript; charset=UTF-8',
-				'X-CSRF-Token'    : Rails.csrfToken()
+				'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 			},
 			credentials: 'same-origin'
 		})
@@ -132,11 +137,11 @@ export default class EventController extends Controller {
 				response => {
 					response.text().then(data => {
 						eval(data);
-						// CacheModule.clearCache(['feed-page', 'events-page'], {
-						// 	event: {
-						// 		identifier: this.identifier
-						// 	}
-						// });
+						CacheModule.clearCache(['feed-page', 'events-page'], {
+							event: {
+								identifier: this.identifier
+							}
+						});
 					});
 				}
 			)
@@ -228,8 +233,8 @@ export default class EventController extends Controller {
 			if (this.overlayRipple) {
 				this.overlayRipple.destroy();
 			}
-			if (this.likeButtonRipple) {
-				this.likeButtonRipple.destroy();
+			if (this.toggleLikeButton) {
+				this.toggleLikeButton.destroy();
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 import {Controller} from "stimulus";
 import {MDCChipSet} from '@material/chips';
-import * as mdc     from "material-components-web";
 
 
 export default class FollowChipsetController extends Controller {
@@ -19,6 +18,16 @@ export default class FollowChipsetController extends Controller {
 					}, 550)
 				}
 			});
+
+		this.destroy = () => {
+			this.subscriptions.filterUpdated.unsubscribe();
+		};
+
+		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	disconnect() {
+		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
 
@@ -50,7 +59,7 @@ export default class FollowChipsetController extends Controller {
 				headers    : {
 					'X-Requested-With': 'XMLHttpRequest',
 					'Content-type'    : 'text/javascript; charset=UTF-8',
-					'X-CSRF-Token'    : Rails.csrfToken()
+					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 				},
 				credentials: 'same-origin'
 			})

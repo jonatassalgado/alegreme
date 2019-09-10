@@ -11,17 +11,17 @@ class PlacesController < ApplicationController
 	# GET /places/1
 	# GET /places/1.json
 	def show
-		respond_to do |format|
-			format.js do
-				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
-				events      = @place.events.active
-				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]])
-				# end
-
-				@locals = mount_section_attrs
-				render 'collections/index'
-			end
-			format.html do
+		# respond_to do |format|
+			# format.js do
+			# 	# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
+			# 	events      = @place.events.active
+			# 	@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]])
+			# 	# end
+			#
+			# 	@locals = mount_section_attrs
+			# 	render 'collections/index'
+			# end
+			# format.html do
 				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 				events      = @place.events.active
 				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, places: [params[:id]])
@@ -29,8 +29,8 @@ class PlacesController < ApplicationController
 				@locals = mount_section_attrs
 				render 'show'
 				# end
-			end
-		end
+		# 	end
+		# end
 	end
 
 	# GET /places/new

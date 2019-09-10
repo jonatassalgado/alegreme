@@ -6,8 +6,6 @@ export default class ChipController extends Controller {
 	static targets = ["chipset", "container", "chip", "input", "inputContainer"];
 
 	initialize() {
-		// const sectionIdentifier = this.chipsetTarget.parentElement.dataset.filterSectionIdentifier;
-
 		this.subscriptions = {};
 		this.MDCChipSet    = new MDCChipSet(this.chipsetTarget);
 
@@ -15,11 +13,9 @@ export default class ChipController extends Controller {
 			channel : `${this.sectionIdentifier}`,
 			topic   : `${this.sectionIdentifier}.updated`,
 			callback: (data, envelope) => {
-
-				setTimeout(() => {
+				requestIdleCallback(() => {
 					this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
-				}, 550)
-
+				})
 			}
 		});
 
@@ -31,16 +27,19 @@ export default class ChipController extends Controller {
 			});
 		}
 
-		document.addEventListener("turbolinks:load", () => {
-			// setTimeout(() => {
-			// 	this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
-			// }, 350)
-		});
-
-		document.addEventListener("turbolinks:before-cache", () => {
+		this.destroy = () => {
+			this.MDCChipSet.destroy();
 			this.subscriptions.sectionUpdated.unsubscribe();
-			// this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
-		});
+			if (this.hasInputTarget) {
+				this.inputTarget.removeEventListener('keydown');
+			}
+		};
+
+		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	disconnect() {
+		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
 	select() {

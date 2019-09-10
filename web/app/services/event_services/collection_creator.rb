@@ -93,11 +93,11 @@ module EventServices
 							limit:                8
 					},
 					'follow'             => {
-							all_existing_filters: true,
+							all_existing_filters: false,
 							limit:                8
 					},
 					'user-suggestions'   => {
-							all_existing_filters: true,
+							all_existing_filters: false,
 							limit:                8
 					}
 			}
@@ -137,9 +137,9 @@ module EventServices
 			}
 
 			filters[@identifier] || {
-					categories: false,
-					kinds:      false,
-					ocurrences: false
+					categories: true,
+					kinds:      true,
+					ocurrences: true
 			}
 		end
 

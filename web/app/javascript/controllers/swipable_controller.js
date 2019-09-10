@@ -6,16 +6,14 @@ export default class SwipableController extends Controller {
 
 	initialize() {
 		const self = this;
-		// ["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
-		// 	document.addEventListener(eventName, () => {
-		// 		setTimeout(() => {
 		if (self.hasSwipableTarget) {
 			self.stackedCards();
 			self.swipableTarget.style.minHeight = `${self.swipableTarget.offsetHeight}px`;
 		}
-		// }, 500);
-		// 	}, false);
-		// });
+	}
+
+	disconnect() {
+
 	}
 
 
@@ -199,7 +197,7 @@ export default class SwipableController extends Controller {
 										'Content-type'    : 'application/json; charset=UTF-8',
 										'Accept'          : 'application/json',
 										'X-Requested-With': 'XMLHttpRequest',
-										'X-CSRF-Token'    : Rails.csrfToken()
+										'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 									},
 									credentials: 'same-origin',
 									body       : JSON.stringify(params)

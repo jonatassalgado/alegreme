@@ -36,7 +36,7 @@
                } %>
 
   <% else %>
-
+    <% if @items.dig(:today, :detail, :total_events_in_collection) > 0 %>
       <%= render partial: "components/collection/collection",
                  locals:  {
                      items:      @items[:today],
@@ -55,73 +55,73 @@
                          detail:  @items[:today][:detail]
                      }
                  } %>
+    <% end %>
 
-
-      <% if current_user && @items.dig(:follow, :detail, :total_events_in_collection) > 0 %>
-          <%= render partial: "components/collection/collection",
-                     locals:  {
-                         items:      @items[:follow],
-                         title:      {
-                             principal: "Tópicos que você segue",
-                             secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
+    <% if current_user && @items.dig(:follow, :detail, :total_events_in_collection) > 0 %>
+      <%= render partial: "components/collection/collection",
+                 locals:  {
+                     items:      @items[:follow],
+                     title:      {
+                         principal: "Tópicos que você segue",
+                         secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
+                     },
+                     identifier: 'follow',
+                     opts:       {
+                         type:    :large,
+                         filters: {
+                             categories: true,
+                             kinds:      true,
+                             ocurrences: true
                          },
-                         identifier: 'follow',
-                         opts:       {
-                             type:    :large,
-                             filters: {
-                                 categories: true,
-                                 kinds:      true,
-                                 ocurrences: true
-                             },
-                             detail:  @items[:follow][:detail]
-                         }
-                     } %>
-      <% end %>
+                         detail:  @items[:follow][:detail]
+                     }
+                 } %>
+    <% end %>
 
 
-      <% if current_user && @items.dig(:user_suggestions, :detail, :total_events_in_collection) > 0 %>
-          <%= render partial: "components/collection/collection",
-                     locals:  {
-                         items:      @items[:user_suggestions],
-                         title:      {
-                             principal: "Indicados para #{current_user.name}",
-                             secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
+    <% if current_user && @items.dig(:user_suggestions, :detail, :total_events_in_collection) > 0 %>
+      <%= render partial: "components/collection/collection",
+                 locals:  {
+                     items:      @items[:user_suggestions],
+                     title:      {
+                         principal: "Indicados para #{current_user.name}",
+                         secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
+                     },
+                     identifier: 'user-suggestions',
+                     opts:       {
+                         type:    :large,
+                         filters: {
+                             categories: false,
+                             kinds:      false,
+                             ocurrences: true
                          },
-                         identifier: 'user-suggestions',
-                         opts:       {
-                             type:    :large,
-                             filters: {
-                                 categories: false,
-                                 kinds:      false,
-                                 ocurrences: true
-                             },
-                             detail:  @items[:user_suggestions][:detail]
-                         }
-                     } %>
+                         detail:  @items[:user_suggestions][:detail]
+                     }
+                 } %>
 
-      <% end %>
+    <% end %>
 
 
     <% if @items.dig(:user_personas, :detail, :total_events_in_collection) > 0 %>
 
-        <%= render partial: "components/collection/collection",
-                   locals:  {
-                       items:      @items[:user_personas],
-                       title:      {
-                           principal: "Gostos parecidos",
-                           secondary: "Explore os eventos que pessoas com gostos parecidos estão salvando"
-                       },
-                       identifier: 'user-personas',
-                       opts:       {
-                           type:    :large,
-                           filters: {
-                               categories: false,
-                               kinds:      false,
-                               ocurrences: true
-                           },
-                           detail:  @items[:user_personas][:detail]
-                       }
-                   } %>
+      <%= render partial: "components/collection/collection",
+                 locals:  {
+                     items:      @items[:user_personas],
+                     title:      {
+                         principal: "Gostos parecidos",
+                         secondary: "Explore os eventos que pessoas com gostos parecidos estão salvando"
+                     },
+                     identifier: 'user-personas',
+                     opts:       {
+                         type:    :large,
+                         filters: {
+                             categories: false,
+                             kinds:      false,
+                             ocurrences: true
+                         },
+                         detail:  @items[:user_personas][:detail]
+                     }
+                 } %>
 
 
     <% end %>

@@ -81,10 +81,19 @@ export default class SavesController extends Controller {
 			this.listTarget.addEventListener('scrolledRight', SavesController.scrolledToRight);
 		}
 
-		document.addEventListener("turbolinks:before-cache", () => {
+		this.destroy = () => {
 			this.subscription.unsubscribe();
-		});
+			if (this.hasListTarget) {
+				delete this.scrollLeftEvent;
+				delete this.scrollRightEvent;
+			}
+		};
 
+		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	disconnect() {
+		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
 	scrollLeft(event) {

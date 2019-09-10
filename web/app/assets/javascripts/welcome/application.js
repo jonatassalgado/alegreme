@@ -1,5 +1,5 @@
 // require flipping/dist/flipping.js
-//= require rails-ujs
+// require rails-ujs
 // require rellax/rellax.js
 //= require mobile-detect/mobile-detect.js
 //= require lazysizes/lazysizes.min.js
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					headers    : {
 						'X-Requested-With': 'XMLHttpRequest',
 						'Content-type'    : 'text/javascript; charset=UTF-8',
-						'X-CSRF-Token'    : Rails.csrfToken()
+						'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 					},
 					credentials: 'same-origin'
 				}).then(

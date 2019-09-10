@@ -18,7 +18,8 @@
     "rellax": "^1.10.0",
     "scrollbooster": "^1.1.0",
     "stimulus": "^1.1.1",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "unpoly": "^0.60.3"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.1.14"

@@ -40,7 +40,7 @@ export default class KindsController extends Controller {
               headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'Content-type': 'text/javascript; charset=UTF-8',
-                'X-CSRF-Token': Rails.csrfToken()
+                'X-CSRF-Token': document.querySelector('meta[name=csrf-token]').content
               },
               credentials: 'same-origin'
             })

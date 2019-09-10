@@ -6,6 +6,7 @@ import Flipping     from 'flipping';
 export default class FilterController extends Controller {
 	static targets = ["filterContainer", "personas", "categories", "ocurrences", "kinds"];
 
+
 	initialize() {
 		this.flipping      = new Flipping({
 			attribute: `data-collection-${this.sectionIdentifier}-flip-key`
@@ -71,11 +72,16 @@ export default class FilterController extends Controller {
 				}
 			});
 
-		document.addEventListener("turbolinks:before-cache", () => {
+		this.destroy = () => {
 			this.subscriptions.sectionUpdated.unsubscribe();
 			this.subscriptions.filterCreate.unsubscribe();
-		});
+		};
 
+		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	disconnect() {
+		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
 
@@ -143,12 +149,12 @@ export default class FilterController extends Controller {
 
 				       }
 
-				       fetch(`${location.pathname}?${urlWithFilters}`, {
+				       fetch(`/collections?${urlWithFilters}`, {
 					       method     : 'get',
 					       headers    : {
 						       'X-Requested-With': 'XMLHttpRequest',
 						       'Content-type'    : 'text/javascript; charset=UTF-8',
-						       'X-CSRF-Token'    : Rails.csrfToken()
+						       'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 					       },
 					       credentials: 'same-origin'
 				       })
