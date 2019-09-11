@@ -114,7 +114,6 @@
     max-width: calc(100vw - 48px);
     margin: 0 0 50px 0;
     -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
     -webkit-user-select: none;
   }
 
@@ -242,7 +241,6 @@
     cursor: pointer;
     transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
     -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
     -webkit-user-select: none;
     @include mobile-only {
       width: 245px;
@@ -622,7 +620,6 @@
     // margin: auto;
     transition: transform 0.35s ease;
     -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
     &:hover {
       transform: scale(0.95);
     }
@@ -680,7 +677,6 @@
   border-radius: 35px;
   z-index: 5;
   -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
   -webkit-user-select: none;
   @include desktop-only {
     display: none;

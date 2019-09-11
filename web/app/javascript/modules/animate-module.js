@@ -3,15 +3,14 @@ const AnimateModule = (function () {
 
 	module.init = () => {
 		module.animatePage();
-		// module.animateBackbutton();
 		console.log("[ANIMATE]: started");
 	};
 
 	module.animatePage = () => {
 		["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
 			document.addEventListener(eventName, () => {
-				const page = document.querySelector(".me-page");
 				requestAnimationFrame(() => {
+					const page = document.querySelector(".me-page");
 					if (page) {
 						page.classList.remove("is-animated");
 					}
@@ -27,8 +26,8 @@ const AnimateModule = (function () {
 	};
 
 	module.animateBackbutton = () => {
-		const page = document.querySelector(".me-page");
 		requestAnimationFrame(() => {
+			const page = document.querySelector(".me-page");
 			if (page) {
 				page.classList.add("is-animated");
 			}

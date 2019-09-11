@@ -7,8 +7,10 @@ export default class SwipableController extends Controller {
 	initialize() {
 		const self = this;
 		if (self.hasSwipableTarget) {
-			self.stackedCards();
-			self.swipableTarget.style.minHeight = `${self.swipableTarget.offsetHeight}px`;
+			requestIdleCallback(() => {
+				self.stackedCards();
+				self.swipableTarget.style.minHeight = `${self.swipableTarget.offsetHeight}px`;
+			});
 		}
 	}
 

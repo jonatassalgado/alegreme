@@ -1,27 +1,21 @@
 (function () {
 
-//	const eventLiked = new CustomEvent('eventLiked', {
-//		'detail': {
-//			'currentEventFavorited': <%#= @locals[:current_event_favorited] %>,
-//			'eventId'              : <%#= @locals[:event_id] %>
-//		}
-//	});
-
 	const promise = new Promise(function (resolve, reject) {
 		const savesWrapperEl = document.getElementById('saves');
 
-    if (savesWrapperEl) {
-	    const morph = morphdom.default(savesWrapperEl, '<%= j render partial: "feeds/saves", locals: @locals %>'.trim(), {
-		    onBeforeElUpdated: function (fromEl, toEl) {
-			    return !fromEl.isEqualNode(toEl);
-		    }
-	    });
+		requestIdleCallback(function () {
+			if (savesWrapperEl) {
+				const morph = morphdom.default(savesWrapperEl, '<%= j render partial: "feeds/saves", locals: @locals %>'.trim(), {
+					onBeforeElUpdated: function (fromEl, toEl) {
+						return !fromEl.isEqualNode(toEl);
+					}
+				});
 
-			resolve(morph)
-		} else {
-			resolve()
-		}
-
+				resolve(morph)
+			} else {
+				resolve()
+			}
+		})
 	})
 
 	promise.then(function (value) {
