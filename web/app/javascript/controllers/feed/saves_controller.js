@@ -1,6 +1,6 @@
 import {Controller}     from "stimulus"
 import Flipping         from "flipping"
-import {LazyloadModule} from "../modules/lazyload-module";
+import {LazyloadModule} from "modules/lazyload-module";
 
 export default class SavesController extends Controller {
 	static targets = ["saves", "list", "title", "date", "remove", "scrollLeft", "scrollRight", "header"];

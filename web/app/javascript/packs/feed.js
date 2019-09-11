@@ -10,15 +10,13 @@
 // import "postal";
 import "morphdom";
 import {MDCRipple}      from "@material/ripple";
-import {MDCTextField}   from "@material/textfield";
-import {MDCSelect}      from "@material/select";
 import {MDCCheckbox}    from "@material/checkbox";
 import {MDCMenu}        from "@material/menu";
 import {MDCSnackbar}    from "@material/snackbar";
-import {CacheModule}    from "../modules/cache-module";
-import {AnimateModule}  from "../modules/animate-module";
-import {LazyloadModule} from "../modules/lazyload-module";
-import {PubSubModule}   from "../modules/pubsub-module";
+import {CacheModule}    from "modules/cache-module";
+import {AnimateModule}  from "modules/animate-module";
+import {LazyloadModule} from "modules/lazyload-module";
+import {PubSubModule}   from "modules/pubsub-module";
 // TODO: JS Event Listners leaks
 // import {MDCIconButtonToggle} from "@material/icon-button";
 // import {
@@ -59,32 +57,12 @@ const initCommonComponents = () => {
 		}
 	});
 
-	// icons.forEach(icon => {
-	// 	new MDCIconButtonToggle(icon);
-	// 	const ripple     = new MDCRipple(icon);
-	// 	ripple.unbounded = true;
-	// 	document.addEventListener("turbolinks:before-cache", () => {
-	// 		ripple.destroy();
-	// 	}, false);
-	// });
-
-	commonComponents.domEls.fields     = document.querySelectorAll(".mdc-text-field");
-	commonComponents.components.fields = [];
-	commonComponents.domEls.fields.forEach(field => {
-		commonComponents.components.fields.push(new MDCTextField(field))
-	});
 
 	commonComponents.domEls.snackbar = document.querySelector(".mdc-snackbar");
 	if (commonComponents.domEls.snackbar) {
 		commonComponents.components.snackbar = new MDCSnackbar(snackbarElem);
 		commonComponents.components.snackbar.open();
 	}
-
-	commonComponents.domEls.selects     = document.querySelectorAll(".mdc-select");
-	commonComponents.components.selects = [];
-	commonComponents.domEls.selects.forEach(select => {
-		commonComponents.components.selects.push(new MDCSelect(select));
-	});
 
 	commonComponents.domEls.checkboxes     = document.querySelectorAll(".mdc-checkbox");
 	commonComponents.components.checkboxes = [];
@@ -110,6 +88,6 @@ document.addEventListener("turbolinks:load", initCommonComponents, {once: true})
 document.addEventListener("turbolinks:render", initCommonComponents, false);
 
 
-import "controllers";
+import "controllers/feed";
 
 

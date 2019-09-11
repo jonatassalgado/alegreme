@@ -10,7 +10,7 @@ export default class LabelController extends Controller {
   initialize() {
     const self = this;
   }
-  
+
   openMenu() {
     const self = this;
     const mdcMenu = new MDCMenu(self.menuTarget);

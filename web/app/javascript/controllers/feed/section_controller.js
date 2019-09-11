@@ -1,5 +1,5 @@
 import {Controller}     from "stimulus";
-import {LazyloadModule} from "../modules/lazyload-module";
+import {LazyloadModule} from "modules/lazyload-module";
 
 export default class SectionController extends Controller {
 	static targets = ["section", "filter", "scrollContainer", "loadMoreButton"];
