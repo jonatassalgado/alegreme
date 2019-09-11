@@ -9,6 +9,7 @@ export default class SavesController extends Controller {
 		this.flipping = new Flipping({
 			attribute: 'data-saves-flip-key'
 		});
+		this.pubsub = {};
 
 		if (this.hasListTarget) {
 			this.scrollLeftEvent  = new CustomEvent('scrolledLeft', {'detail': {'controller': this}});
@@ -18,61 +19,52 @@ export default class SavesController extends Controller {
 			this.removeRepeatedDates();
 		}
 
-		this.subscription = postal.subscribe({
-			channel : `event`,
-			topic   : `event.like`,
-			callback: (data, envelope) => {
+		this.pubsub.eventLike = PubSubModule.on(`event.like`, (data) => {
 				this.flipping.read();
 			}
-		});
+		);
 
-		this.subscription = postal.subscribe({
-			channel : `saves`,
-			topic   : `saves.updated`,
-			callback: (data, envelope) => {
-				LazyloadModule.init();
+		this.pubsub.savesUpdated = PubSubModule.on(`saves.updated`, (data) => {
+			LazyloadModule.init();
 
-				const flipPromise = new Promise((resolve, reject) => {
-					this.flipping.flip();
+			const flipPromise = new Promise((resolve, reject) => {
+				this.flipping.flip();
 
-					const flipped = Object.keys(this.flipping.states).forEach((key) => {
-						const state = this.flipping.states[key];
+				const flipped = Object.keys(this.flipping.states).forEach((key) => {
+					const state = this.flipping.states[key];
+
+					if (state.type === 'MOVE' && state.delta) {
+						state.element.style.transition = '';
+						state.element.style.transform  = `translateY(${state.delta.top}px) translateX(${state.delta.left}px)`;
+					}
+					if (state.type === 'ENTER') {
+						state.element.style.opacity   = 0;
+						state.element.style.transform = `scale(0.85)`;
+					}
+
+					requestAnimationFrame(() => {
 
 						if (state.type === 'MOVE' && state.delta) {
-							state.element.style.transition = '';
-							state.element.style.transform  = `translateY(${state.delta.top}px) translateX(${state.delta.left}px)`;
+							state.element.style.transition = 'transform 0.6s cubic-bezier(.54,.01,.45,.99)';
+							state.element.style.transform  = '';
+							state.element.style.opacity    = 1;
 						}
 						if (state.type === 'ENTER') {
-							state.element.style.opacity   = 0;
-							state.element.style.transform = `scale(0.85)`;
+							state.element.style.transition = 'transform 0.4s cubic-bezier(.54,.01,.45,.99) 0.350s, opacity 0.4s cubic-bezier(0,.16,.45,.99) 0.350s';
+							state.element.style.transform  = '';
+							state.element.style.opacity    = 1;
 						}
 
-						requestAnimationFrame(() => {
-
-							if (state.type === 'MOVE' && state.delta) {
-								state.element.style.transition = 'transform 0.6s cubic-bezier(.54,.01,.45,.99)';
-								state.element.style.transform  = '';
-								state.element.style.opacity    = 1;
-							}
-							if (state.type === 'ENTER') {
-								state.element.style.transition = 'transform 0.4s cubic-bezier(.54,.01,.45,.99) 0.350s, opacity 0.4s cubic-bezier(0,.16,.45,.99) 0.350s';
-								state.element.style.transform  = '';
-								state.element.style.opacity    = 1;
-							}
-
-						});
 					});
-
-					resolve(flipped)
 				});
 
-				flipPromise.then(() => {
-					this.updateScrollButtonsStatus();
-					this.removeRepeatedDates();
-				})
+				resolve(flipped)
+			});
 
-
-			}
+			flipPromise.then(() => {
+				this.updateScrollButtonsStatus();
+				this.removeRepeatedDates();
+			})
 		});
 
 		if (this.hasListTarget) {
@@ -82,7 +74,8 @@ export default class SavesController extends Controller {
 		}
 
 		this.destroy = () => {
-			this.subscription.unsubscribe();
+			this.pubsub.eventLike();
+			this.pubsub.savesUpdated();
 			if (this.hasListTarget) {
 				delete this.scrollLeftEvent;
 				delete this.scrollRightEvent;

@@ -20,39 +20,29 @@ export default class EventController extends Controller {
 	];
 
 	initialize() {
-		this.subscriptions = {};
-		this.itemsPerRow   = 4;
-
+		this.itemsPerRow        = 4;
 		this.md                 = new MobileDetect(window.navigator.userAgent);
 		this.adjustForDevice    = this.md.mobile();
 		this.activeInteractions = true;
+		this.pubsub             = {};
 
-		this.subscriptions.savesUpdated = postal.subscribe({
-			channel : `saves`,
-			topic   : `saves.updated`,
-			callback: (data, envelope) => {
-				if (data.detail.eventId == this.identifier) {
-					this.likeStatus = data.detail.currentEventFavorited;
-					this.updateLikeButtonStyle(data.detail.eventId);
-				}
+		this.pubsub.savesUpdated = PubSubModule.on(`saves.updated`, (data) => {
+			if (data.detail.eventId == this.identifier) {
+				this.likeStatus = data.detail.currentEventFavorited;
+				this.updateLikeButtonStyle(data.detail.eventId);
 			}
 		});
 
-		this.subscriptions.filterUpdated = postal.subscribe(
-			{
-				channel : `${this.sectionIdentifier}`,
-				topic   : `${this.sectionIdentifier}.updated`,
-				callback: (data, envelope) => {
-					if (data.params.similar == this.identifier) {
-						this.isSimilarOpen = true;
-					}
-				}
-			});
+		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
+			if (data.params.similar == this.identifier) {
+				this.isSimilarOpen = true;
+			}
+		});
 
 		this.destroy = () => {
 			this.activeInteractions = false;
-			this.subscriptions.filterUpdated.unsubscribe();
-			this.subscriptions.savesUpdated.unsubscribe();
+			this.pubsub.savesUpdated();
+			this.pubsub.sectionUpdated();
 		};
 
 		document.addEventListener('turbolinks:before-cache', this.destroy, false);
@@ -80,15 +70,13 @@ export default class EventController extends Controller {
 	showSimilar = () => {
 		this.isSimilarLoading = true;
 
-		postal.publish({
-			channel: `${this.sectionIdentifier}`,
-			topic  : `${this.sectionIdentifier}.create`,
-			data   : {
+		PubSubModule.emit(`${this.sectionIdentifier}.create`,
+			{
 				similar     : this.identifier,
 				insert_after: this.insertAfter,
 				limit       : this.sectionController.actualEventsInCollection
 			}
-		});
+		);
 
 		setTimeout(() => {
 			document.documentElement.style.scrollBehavior = "smooth";
@@ -118,11 +106,7 @@ export default class EventController extends Controller {
 	};
 
 	like() {
-		postal.publish({
-			channel: "event",
-			topic  : "event.like",
-			data   : {}
-		});
+		PubSubModule.emit('event.like');
 
 		fetch(`/porto-alegre/eventos/${this.identifier}/favorite`, {
 			method     : this.isFavorited,

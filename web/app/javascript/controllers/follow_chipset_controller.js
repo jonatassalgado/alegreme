@@ -6,21 +6,16 @@ export default class FollowChipsetController extends Controller {
 	static targets = ['chipset', "chip"];
 
 	initialize() {
-		this.subscriptions = {};
+		this.pubsub = {};
 
-		this.subscriptions.filterUpdated = postal.subscribe(
-			{
-				channel : `${this.sectionIdentifier}`,
-				topic   : `${this.sectionIdentifier}.updated`,
-				callback: (data, envelope) => {
-					setTimeout(() => {
-						this.chipSet = new MDCChipSet(this.chipsetTarget);
-					}, 550)
-				}
-			});
+		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
+			setTimeout(() => {
+				this.chipSet = new MDCChipSet(this.chipsetTarget);
+			}, 550)
+		});
 
 		this.destroy = () => {
-			this.subscriptions.filterUpdated.unsubscribe();
+			this.pubsub.sectionUpdated();
 		};
 
 		document.addEventListener('turbolinks:before-cache', this.destroy, false);

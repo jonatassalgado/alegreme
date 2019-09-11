@@ -1,29 +1,29 @@
 Arguments: 
-  /home/jon/.nvm/versions/node/v10.15.1/bin/node /usr/share/yarn/bin/yarn.js add gif-player
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add webpack-bundler-analyzer --dev
 
 PATH: 
-  /home/jon/.rbenv/plugins/ruby-build/bin:/home/jon/.rbenv/shims:/home/jon/.rbenv/bin:/home/jon/anaconda3/envs/alegreme/bin:/home/jon/anaconda3/condabin:/home/jon/.nvm/versions/node/v10.15.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /bundle/bin:/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 Yarn version: 
-  1.13.0
+  1.17.3
 
 Node version: 
-  10.15.1
+  10.16.3
 
 Platform: 
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/gif-player: Not found
-      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66255:18)
-      at Request.self.callback (/usr/share/yarn/lib/cli.js:129397:22)
-      at Request.emit (events.js:189:13)
-      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:130369:10)
-      at Request.emit (events.js:189:13)
-      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:130291:12)
-      at Object.onceWrapper (events.js:277:13)
-      at IncomingMessage.emit (events.js:194:15)
-      at endReadableNT (_stream_readable.js:1103:12)
+  Error: https://registry.yarnpkg.com/webpack-bundler-analyzer: Not found
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66830:18)
+      at Request.self.callback (/usr/share/yarn/lib/cli.js:140464:22)
+      at Request.emit (events.js:198:13)
+      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:141436:10)
+      at Request.emit (events.js:198:13)
+      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:141358:12)
+      at Object.onceWrapper (events.js:286:20)
+      at IncomingMessage.emit (events.js:203:15)
+      at endReadableNT (_stream_readable.js:1145:12)
       at process._tickCallback (internal/process/next_tick.js:63:19)
 
 npm manifest: 
@@ -35,7 +35,9 @@ npm manifest:
       "@rails/webpacker": "https://github.com/rails/webpacker",
       "botkit": "^0.7.0",
       "default-passive-events": "^1.0.10",
+      "expose-loader": "^0.7.5",
       "flipping": "^1.1.0",
+      "lazysizes": "^5.1.0",
       "lit-html": "^0.14.0",
       "material-components-web": "^0.43.0",
       "mobile-detect": "^1.4.3",
@@ -45,10 +47,10 @@ npm manifest:
       "rellax": "^1.10.0",
       "scrollbooster": "^1.1.0",
       "stimulus": "^1.1.1",
-      "turbolinks": "^5.2.0"
+      "turbolinks": "^5.2.0",
+      "unpoly": "^0.60.3"
     },
     "devDependencies": {
-      "expose-loader": "^0.7.5",
       "webpack-dev-server": "^3.1.14"
     }
   }
@@ -5215,6 +5217,11 @@ Lockfile:
       lodash "^4.17.5"
       webpack-sources "^1.1.0"
   
+  lazysizes@^5.1.0:
+    version "5.1.0"
+    resolved "https://registry.yarnpkg.com/lazysizes/-/lazysizes-5.1.0.tgz#a87d413aa3765dee03fcb2159f423ab84ed2f2e6"
+    integrity sha512-5NsKePWiWTTCXf3xKFaLOXE6eEX0Y1iWpxYAHnPRiv4JrDpUmgRnuDxeDeskw4hue9SgViXbAtEEvP9Jd8yZfQ==
+  
   lcid@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/lcid/-/lcid-1.0.0.tgz#308accafa0bc483a3867b4b6f2b9506251d1b835"
@@ -8651,6 +8658,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
     integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
+  
+  unpoly@^0.60.3:
+    version "0.60.3"
+    resolved "https://registry.yarnpkg.com/unpoly/-/unpoly-0.60.3.tgz#8cf063118300250933ea57e358aa6d058741be20"
+    integrity sha512-1zZRilmcTk9k9qz3wrDn8OQ7m2avp+SydYAdJlD7RYWpCjWWxVj9pFvY5pqL1COI8C9RtBHGfhCTHV7jTFbWIg==
   
   unquote@~1.1.1:
     version "1.1.1"

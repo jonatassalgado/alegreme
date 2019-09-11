@@ -16,18 +16,12 @@
 	})
 
 	promise.then(function (value) {
-
-		postal.publish({
-			channel: "<%= @locals[:identifier] %>",
-			topic  : "<%= @locals[:identifier] %>.updated",
-			data   : {
-				itemsCount: <%= @locals[:items].count %>,
-				params    : {
-					similar: <%= params[:similar] || {} %>
-				}
+		PubSubModule.emit('<%= @locals[:identifier] %>.updated', {
+			itemsCount: <%= @locals[:items].count %>,
+			params    : {
+				similar: <%= params[:similar] || {} %>
 			}
-		});
-
+		})
 	})
 
 })()

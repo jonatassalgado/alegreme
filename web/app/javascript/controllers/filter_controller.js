@@ -8,73 +8,63 @@ export default class FilterController extends Controller {
 
 
 	initialize() {
-		this.flipping      = new Flipping({
+		this.flipping = new Flipping({
 			attribute: `data-collection-${this.sectionIdentifier}-flip-key`
 		});
-		this.subscriptions = {};
+		this.pubsub   = {};
 
-		this.subscriptions.sectionUpdated = postal.subscribe({
-			channel : `${this.sectionIdentifier}`,
-			topic   : `${this.sectionIdentifier}.updated`,
-			callback: (data, envelope) => {
+		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
+			const flipPromise = new Promise((resolve, reject) => {
+				this.flipping.flip();
 
-				const flipPromise = new Promise((resolve, reject) => {
-					this.flipping.flip();
+				let delay     = 0.035;
+				const flipped = Object.keys(this.flipping.states).forEach((key) => {
+					const state = this.flipping.states[key];
+					if (state.element === undefined) {
+						return;
+					}
 
-					let delay     = 0.035;
-					const flipped = Object.keys(this.flipping.states).forEach((key) => {
-						const state = this.flipping.states[key];
-						if (state.element === undefined) {
-							return;
-						}
+					if (state.type === 'MOVE' && state.delta) {
+						state.element.style.transition = '';
+						state.element.style.transform  = `translateY(${state.delta.top}px) translateX(${state.delta.left}px)`;
+					}
+					if (state.type === 'ENTER') {
+						state.element.style.opacity   = 0;
+						state.element.style.transform = `scale(0.8)`;
+					}
+
+					requestAnimationFrame(() => {
 
 						if (state.type === 'MOVE' && state.delta) {
-							state.element.style.transition = '';
-							state.element.style.transform  = `translateY(${state.delta.top}px) translateX(${state.delta.left}px)`;
+							state.element.style.transition = `transform 0.6s cubic-bezier(.54,.01,.45,.99)`;
+							state.element.style.transform  = '';
+							state.element.style.opacity    = 1;
 						}
 						if (state.type === 'ENTER') {
-							state.element.style.opacity   = 0;
-							state.element.style.transform = `scale(0.8)`;
+							state.element.style.transition = `transform 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s, opacity 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s`;
+							state.element.style.transform  = '';
+							state.element.style.opacity    = 1;
 						}
 
-						requestAnimationFrame(() => {
-
-							if (state.type === 'MOVE' && state.delta) {
-								state.element.style.transition = `transform 0.6s cubic-bezier(.54,.01,.45,.99)`;
-								state.element.style.transform  = '';
-								state.element.style.opacity    = 1;
-							}
-							if (state.type === 'ENTER') {
-								state.element.style.transition = `transform 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s, opacity 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s`;
-								state.element.style.transform  = '';
-								state.element.style.opacity    = 1;
-							}
-
-							delay = delay + 0.035;
-						});
+						delay = delay + 0.035;
 					});
-
-					resolve(flipped)
 				});
 
-				flipPromise.then(() => {
-
-				});
-			}
-		});
-
-		this.subscriptions.filterCreate = postal.subscribe(
-			{
-				channel : `${this.sectionIdentifier}`,
-				topic   : `${this.sectionIdentifier}.create`,
-				callback: (data, envelope) => {
-					this.filter(data);
-				}
+				resolve(flipped)
 			});
 
+			flipPromise.then(() => {
+
+			});
+		});
+
+		this.pubsub.sectionCreate = PubSubModule.on(`${this.sectionIdentifier}.create`, (data) => {
+			this.filter(data);
+		});
+
 		this.destroy = () => {
-			this.subscriptions.sectionUpdated.unsubscribe();
-			this.subscriptions.filterCreate.unsubscribe();
+			this.pubsub.sectionUpdated();
+			this.pubsub.sectionCreate();
 		};
 
 		document.addEventListener('turbolinks:before-cache', this.destroy, false);

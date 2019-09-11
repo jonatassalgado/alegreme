@@ -7,9 +7,8 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import "postal";
+// import "postal";
 import "morphdom";
-import "controllers";
 import {MDCRipple}      from "@material/ripple";
 import {MDCTextField}   from "@material/textfield";
 import {MDCSelect}      from "@material/select";
@@ -19,7 +18,7 @@ import {MDCSnackbar}    from "@material/snackbar";
 import {CacheModule}    from "../modules/cache-module";
 import {AnimateModule}  from "../modules/animate-module";
 import {LazyloadModule} from "../modules/lazyload-module";
-
+import {PubSubModule}   from "../modules/pubsub-module";
 // TODO: JS Event Listners leaks
 // import {MDCIconButtonToggle} from "@material/icon-button";
 // import {
@@ -27,18 +26,16 @@ import {LazyloadModule} from "../modules/lazyload-module";
 // 	MDCTopAppBar
 // } from "@material/top-app-bar/index";
 
-console.log("Hello World from Webpacker");
 
-// import 'lazysizes';
-
-
+PubSubModule.init();
 CacheModule.activateTurbolinks();
-
 AnimateModule.init();
+
+
 const initCommonComponents = () => {
 
 	const commonComponents = {
-		domEls: {},
+		domEls    : {},
 		components: {}
 	};
 
@@ -71,7 +68,7 @@ const initCommonComponents = () => {
 	// 	}, false);
 	// });
 
-	commonComponents.domEls.fields = document.querySelectorAll(".mdc-text-field");
+	commonComponents.domEls.fields     = document.querySelectorAll(".mdc-text-field");
 	commonComponents.components.fields = [];
 	commonComponents.domEls.fields.forEach(field => {
 		commonComponents.components.fields.push(new MDCTextField(field))
@@ -83,19 +80,19 @@ const initCommonComponents = () => {
 		commonComponents.components.snackbar.open();
 	}
 
-	commonComponents.domEls.selects = document.querySelectorAll(".mdc-select");
+	commonComponents.domEls.selects     = document.querySelectorAll(".mdc-select");
 	commonComponents.components.selects = [];
 	commonComponents.domEls.selects.forEach(select => {
 		commonComponents.components.selects.push(new MDCSelect(select));
 	});
 
-	commonComponents.domEls.checkboxes = document.querySelectorAll(".mdc-checkbox");
+	commonComponents.domEls.checkboxes     = document.querySelectorAll(".mdc-checkbox");
 	commonComponents.components.checkboxes = [];
 	commonComponents.domEls.checkboxes.forEach(checkbox => {
 		commonComponents.components.checkboxes.push(new MDCCheckbox(checkbox));
 	});
 
-	commonComponents.domEls.menus = document.querySelectorAll(".mdc-menu");
+	commonComponents.domEls.menus     = document.querySelectorAll(".mdc-menu");
 	commonComponents.components.menus = [];
 	commonComponents.domEls.menus.forEach(menu => {
 		commonComponents.components.menus.push(new MDCMenu(menu));
@@ -113,6 +110,6 @@ document.addEventListener("turbolinks:load", initCommonComponents, {once: true})
 document.addEventListener("turbolinks:render", initCommonComponents, false);
 
 
-
+import "controllers";
 
 

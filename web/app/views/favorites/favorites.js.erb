@@ -19,26 +19,12 @@
 	})
 
 	promise.then(function (value) {
-		postal.publish({
-			channel: "saves",
-			topic  : "saves.updated",
-			data   : {
-				detail: {
-					currentEventFavorited: <%= @locals[:current_event_favorited] %>,
-					eventId              : <%= @locals[:event_id] %>
-				}
-			}
-		});
+	  PubSubModule.emit('saves.updated', {
+	    detail: {
+		    currentEventFavorited: <%= @locals[:current_event_favorited] %>,
+		    eventId              : <%= @locals[:event_id] %>
+	    }
+    })
 	})
-
-
-//	let savesElem    = savesWrapper.querySelector('[data-controller="favorite"]')
-
-//	savesElem.dispatchEvent(eventLiked);
-
-//	let eventElem = document.getElementById('<%= @locals[:event_identifier] %>');
-
-//	eventElem.dispatchEvent(eventLiked);
-
 
 })()

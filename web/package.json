@@ -13,6 +13,7 @@
     "material-components-web": "^0.43.0",
     "mobile-detect": "^1.4.3",
     "morphdom": "^2.5.4",
+    "nanoevents": "^2.0.0",
     "postal": "^2.0.5",
     "query-string": "^6.4.2",
     "rellax": "^1.10.0",
@@ -22,6 +23,7 @@
     "unpoly": "^0.60.3"
   },
   "devDependencies": {
+    "webpack-bundle-analyzer": "^3.4.1",
     "webpack-dev-server": "^3.1.14"
   }
 }

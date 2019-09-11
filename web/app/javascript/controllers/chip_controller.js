@@ -6,18 +6,15 @@ export default class ChipController extends Controller {
 	static targets = ["chipset", "container", "chip", "input", "inputContainer"];
 
 	initialize() {
-		this.subscriptions = {};
-		this.MDCChipSet    = new MDCChipSet(this.chipsetTarget);
+		this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
+		this.pubsub     = {};
 
-		this.subscriptions.sectionUpdated = postal.subscribe({
-			channel : `${this.sectionIdentifier}`,
-			topic   : `${this.sectionIdentifier}.updated`,
-			callback: (data, envelope) => {
-				requestIdleCallback(() => {
-					this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
-				})
-			}
+		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
+			requestIdleCallback(() => {
+				this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
+			})
 		});
+
 
 		if (this.hasInputTarget) {
 			this.inputTarget.addEventListener('keydown', event => {
@@ -29,7 +26,7 @@ export default class ChipController extends Controller {
 
 		this.destroy = () => {
 			this.MDCChipSet.destroy();
-			this.subscriptions.sectionUpdated.unsubscribe();
+			this.pubsub.sectionUpdated();
 			if (this.hasInputTarget) {
 				this.inputTarget.removeEventListener('keydown');
 			}

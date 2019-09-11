@@ -5,26 +5,25 @@ export default class SectionController extends Controller {
 	static targets = ["section", "filter", "scrollContainer", "loadMoreButton"];
 
 	initialize() {
-		const self      = this;
 		this.scrollLeft = this.data.get('turbolinksPersistScroll');
+		this.pubsub     = {};
 
-		self.subscription = postal.subscribe({
-			channel : `${self.identifier}`,
-			topic   : `${self.identifier}.updated`,
-			callback: function (data, envelope) {
-				LazyloadModule.init();
-				self.hasMoreEventsToLoad();
-			}
+		this.pubsub.sectionUpdated = PubSubModule.on(`${this.identifier}.updated`, (data) => {
+			LazyloadModule.init();
+			this.hasMoreEventsToLoad();
 		});
 
-		self.sectionTarget.parentElement.style.minHeight = `${self.sectionTarget.getBoundingClientRect().height}px`;
+
+		this.sectionTarget.parentElement.style.minHeight = `${this.sectionTarget.getBoundingClientRect().height}px`;
 
 		this.destroy = () => {
+			this.pubsub.sectionUpdated();
 			this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
 		};
 
 		document.addEventListener('turbolinks:before-cache', this.destroy, false);
 	}
+
 
 	disconnect() {
 		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
