@@ -81,42 +81,34 @@
   <section class="benefits">
     <div class="benefits__items">
       <div class="benefits__item">
-        <input type="checkbox" id="scales" name="scales" checked="true">
         <h3>Filtre eventos por dia, categoria e tipo</h3>
         <span>Ex: sexta-feira > festas > evento de rua</span>
       </div>
       <div class="benefits__item">
-        <input type="checkbox" id="scales" name="scales" checked="true">
         <h3>Mostrar eventos similares em um clique</h3>
         <span>Ex: ver similares à "Festa Goodbye Lenin"</span>
       </div>
       <div class="benefits__item">
-        <input type="checkbox" id="scales" name="scales" checked="true">
         <h3>Seguir os tópicos que você gosta</h3>
         <span>Ex: seguir os tópicos "Feiras de rua" e "Brechó"</span>
       </div>
       <div class="benefits__item">
-        <input type="checkbox" id="scales" name="scales" checked="true">
         <h3>Seguir organizadores</h3>
         <span>Ex: seguir os organizadores "Coletivo Plano" e "No Palco"</span>
       </div>
       <div class="benefits__item">
-        <input type="checkbox" id="scales" name="scales" checked="true">
         <h3>Recomendações específicas para você</h3>
         <span>Aprendemos continuamente o seu gosto individual</span>
       </div>
       <div class="benefits__item">
-        <input type="checkbox" id="scales" name="scales" checked="true">
         <h3>Seguir locais</h3>
         <span>Ex: seguir os locais "Opnião" e "Mario Quintana"</span>
       </div>
       <div class="benefits__item">
-        <input type="checkbox" id="scales" name="scales">
         <h3>Filmes em cartaz nos cinemas</h3>
         <span>Ex: ver lista de filmes no "Capitólio" e "Cinemark"</span>
       </div>
       <div class="benefits__item">
-        <input type="checkbox" id="scales" name="scales">
         <h3>Compartilhar minha agenda</h3>
         <span>Ex: compartilha seu perfil com "amigos", "trabalho" e "família"</span>
       </div>
@@ -160,31 +152,31 @@
     </div>
   </section>
 
-  <% unless mobile_device? %>
-    <section class="manifesto">
-      <i>Manifesto</i>
-      <h2>Aumentar a interação das pessoas com a cidade</h2>
-      <div class="manifesto__content">
-        <p>Você é o que você come. Quantas vezes você já ouviu esta frase? Com certeza algumas vezes. Mas somos mais ainda o resultado daquilo que vivemos, com as pessoas que interagimos!</p>
-        <p>O mundo já foi um lugar pacato, poucas coisas aconteciam a nossa volta, e não muito raramente as cidades possuíam pouca diversidade de eventos e atividades. Houve um tempo que os grandes acontecimentos da nossa sociedade eram a missa, o casamento e a festa anual da cidade.</p>
-        <p>Por isso talvez as pessoas eram tão iguais, previsíveis e havia pouca inovação...</p>
-        <a href="https://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" target="_blank" class="manifesto__read-more">LER MAIS</a>
-      </div>
-    </section>
-  <% end %>
+  <%# unless mobile_device? %>
+  <!--    <section class="manifesto">-->
+  <!--      <i>Manifesto</i>-->
+  <!--      <h2>Aumentar a interação das pessoas com a cidade</h2>-->
+  <!--      <div class="manifesto__content">-->
+  <!--        <p>Você é o que você come. Quantas vezes você já ouviu esta frase? Com certeza algumas vezes. Mas somos mais ainda o resultado daquilo que vivemos, com as pessoas que interagimos!</p>-->
+  <!--        <p>O mundo já foi um lugar pacato, poucas coisas aconteciam a nossa volta, e não muito raramente as cidades possuíam pouca diversidade de eventos e atividades. Houve um tempo que os grandes acontecimentos da nossa sociedade eram a missa, o casamento e a festa anual da cidade.</p>-->
+  <!--        <p>Por isso talvez as pessoas eram tão iguais, previsíveis e havia pouca inovação...</p>-->
+  <!--        <a href="https://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" target="_blank" class="manifesto__read-more">LER MAIS</a>-->
+  <!--      </div>-->
+  <!--    </section>-->
+  <%# end %>
 
 
-  <section class="social">
-    <h2>Siga o alegreme</h2>
-    <div class="social__buttons">
-      <a href="https://www.instagram.com/portoalegreme">
-        <%= responsive_image_tag "welcome/follow-instagram", alt: 'siga o instagram', class: 'lazyload' %>
-      </a>
-      <a href="https://twitter.com/portoalegreme">
-        <%= responsive_image_tag "welcome/follow-twitter", alt: 'siga o twitter', class: 'lazyload' %>
-      </a>
-    </div>
-  </section>
+  <!--  <section class="social">-->
+  <!--    <h2>Siga o alegreme</h2>-->
+  <!--    <div class="social__buttons">-->
+  <!--      <a href="https://www.instagram.com/portoalegreme">-->
+  <%#= responsive_image_tag "welcome/follow-instagram", alt: 'siga o instagram', class: 'lazyload' %>
+  <!--      </a>-->
+  <!--      <a href="https://twitter.com/portoalegreme">-->
+  <%#= responsive_image_tag "welcome/follow-twitter", alt: 'siga o twitter', class: 'lazyload' %>
+  <!--      </a>-->
+  <!--    </div>-->
+  <!--  </section>-->
 
 
   <section class="questions">
@@ -208,6 +200,7 @@
     </div>
     <div class="answer is-hidden">
       <div class="answer__content" data-answer="q1">
+        <div class="answer__close">FECHAR</div>
         <h3>O que é o Alegreme?</h3>
         <p>
           Um aplicativo web que facilita aos moradores de Porto Alegre
@@ -218,6 +211,7 @@
         <!--        </p>-->
       </div>
       <div class="answer__content" data-answer="q2">
+        <div class="answer__close">FECHAR</div>
         <h3>Como funciona?</h3>
         <p>
           <b>Resposta rápida:</b>
@@ -240,12 +234,14 @@
         </p>
       </div>
       <div class="answer__content" data-answer="q3">
+        <div class="answer__close">FECHAR</div>
         <h3>É grátis?</h3>
         <p>
           Sim. 0800. Free.
         </p>
       </div>
       <div class="answer__content" data-answer="q4">
+        <div class="answer__close">FECHAR</div>
         <h3>Funciona somente em Porto Alegre?</h3>
         <p>
           Sim. Mas há uma funcionalidade que exibe coleções de eventos e atividade de cidades do
@@ -253,6 +249,7 @@
         </p>
       </div>
       <div class="answer__content" data-answer="q5">
+        <div class="answer__close">FECHAR</div>
         <h3>Como entrar em contato?</h3>
         <p>
           Para dúvidas, dicas e outras resenhas é só mandar um email para oi@alegreme.com
@@ -275,13 +272,14 @@
         <span class="">Compartilhar</span>
       </button>
       <div class="social__links">
-        <!--        <a href="https://www.instagram.com/portoalegreme" >instagram</a> ·-->
-        <!--        <a href="https://twitter.com/portoalegreme" >twitter</a> ·-->
+        <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
+        <a href="https://twitter.com/portoalegreme">twitter</a> ·
         <a href="#">oi@alegreme.com</a>
       </div>
       <div class="footer__links">
-        <a href="/privacy">Política de privacidade</a>
-        <a href="/terms">Termos de serviço</a>
+        <a href="/privacy">Política de privacidade</a> ·
+        <a href="/terms">Termos de serviço</a> ·
+        <a href="https://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" target="_blank">Sobre</a>
       </div>
       <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!', class: 'lazyload' %>
     </section>

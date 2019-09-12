@@ -56,7 +56,7 @@
 
 
 .android {
-  $android-resize: 1.9;
+  $android-resize: 1.6;
   $android-width: 176;
   $android-height: 324;
   width: unquote($android-width + 'px');
@@ -77,7 +77,7 @@
     top: 0;
     right: 0;
     //transform: scale(1.8);
-    margin: 100px 0 40px 0;
+    margin: 86px auto 40px auto;
   }
 
   &__screen {
@@ -128,7 +128,7 @@
     position: relative;
     @include mobile-only {
       grid-column-end: 2 span;
-      margin: 0 0 0 24px;
+      //margin: 0 0 0 24px;
     }
 
     & h3 {
@@ -142,12 +142,12 @@
       font-size: 12px;
     }
 
-    & input {
-      position: absolute;
-      left: -24px;
-      top: 2px;
-      pointer-events: none;
-    }
+    //& input {
+    //  position: absolute;
+    //  left: -24px;
+    //  top: 2px;
+    //  pointer-events: none;
+    //}
   }
 }
 
@@ -549,6 +549,24 @@
     }
   }
 
+  &__close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: $font-primary-color;
+    font-size: 12px;
+    background: white;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 4px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
   &.is-showin {
     animation-name: show-in;
     animation-duration: 600ms;
@@ -652,6 +670,11 @@
   &__links {
     margin: 15px 0;
     color: $brand-color;
+    @include mobile-only {
+      max-width: 90vw;
+      text-align: center;
+      line-height: 1.6em;
+    }
 
     & a {
       color: $brand-color;

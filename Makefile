@@ -32,6 +32,9 @@ tail:
 debug-app:
 	docker attach alegreme_app_1
 
+webpack-watcher:
+	./bin/webpack --watch --colors --progress
+
 logs:
 	$(EXEC) bash -c "tail -f log/development.log"
 

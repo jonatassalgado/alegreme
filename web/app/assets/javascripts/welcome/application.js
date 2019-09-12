@@ -46,25 +46,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	const md = new MobileDetect(window.navigator.userAgent);
 
-	const brandLogoEls         = document.querySelectorAll('.js-logo');
-	const pimbaEls             = document.querySelectorAll('.js-pimba');
-	const peopleEls            = document.querySelectorAll('.people__person-face');
-	const answerEl             = document.querySelector('.answer');
-	const shareBtns            = document.querySelectorAll('.shareBtn');
-	const inviteEl             = document.querySelector('.invite');
-	const inviteCtaEl          = document.querySelector('.invite__cta');
-	const inviteDetailsEl      = document.querySelector('.invite__details');
-	const inviteCounterEl      = document.querySelector('.invite__counter');
-	const inviteStatusEl       = document.querySelector('.invite__status');
-	const firstPersonFaceEl    = document.querySelector('.people__person-face');
+	const brandLogoEls      = document.querySelectorAll('.js-logo');
+	const pimbaEls          = document.querySelectorAll('.js-pimba');
+	const peopleEls         = document.querySelectorAll('.people__person-face');
+	const answerEl          = document.querySelector('.answer');
+	const shareBtns         = document.querySelectorAll('.shareBtn');
+	const inviteEl          = document.querySelector('.invite');
+	const inviteCtaEl       = document.querySelector('.invite__cta');
+	const inviteDetailsEl   = document.querySelector('.invite__details');
+	const inviteCounterEl   = document.querySelector('.invite__counter');
+	const inviteStatusEl    = document.querySelector('.invite__status');
+	const firstPersonFaceEl = document.querySelector('.people__person-face');
 
 	const videos   = document.querySelectorAll('video');
 	const observer = new IntersectionObserver((entries, observer) => {
 			for (const entry of entries) {
 				if (entry.isIntersecting) {
-					entry.target.play();
+					requestIdleCallback(() => {
+						entry.target.play();
+					});
 				} else {
-					entry.target.pause();
+					requestIdleCallback(() => {
+						entry.target.pause();
+					});
 				}
 			}
 		},
