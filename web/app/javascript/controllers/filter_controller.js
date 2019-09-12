@@ -78,92 +78,95 @@ export default class FilterController extends Controller {
 
 	filter(opts = {}) {
 		ProgressBarModule.show();
-		let promises = [];
 
-		this.flipping.read();
+		requestIdleCallback(() => {
+			let promises = [];
 
-		if (this.hasPersonasTarget) {
-			promises[0] = this.personasController.MDCChipSet.selectedChipIds.map((chipId) => {
-				const chipElement = this.personasController.chipsetTarget.querySelector(`#${chipId}`);
-				if (chipElement) {
+			this.flipping.read();
+
+			if (this.hasPersonasTarget) {
+				promises[0] = this.personasController.MDCChipSet.selectedChipIds.map((chipId) => {
+					const chipElement = this.personasController.chipsetTarget.querySelector(`#${chipId}`);
+					if (chipElement) {
+						return chipElement.innerText.toLowerCase();
+					}
+				});
+			}
+
+			if (this.hasCategoriesTarget) {
+				promises[1] = this.categoriesController.MDCChipSet.selectedChipIds.map((chipId) => {
+					const chipElement = this.categoriesController.chipsetTarget.querySelector(`#${chipId}`);
+					if (chipElement) {
+						return chipElement.innerText.toLowerCase();
+					}
+				});
+			}
+
+			if (this.hasOcurrencesTarget) {
+				promises[2] = this.ocurrencesController.MDCChipSet.selectedChipIds.map((chipId) => {
+					const chipElement = this.ocurrencesController.chipsetTarget.querySelector(`#${chipId}`);
+					if (chipElement) {
+						return chipElement.dataset.chipValue.toLowerCase();
+					}
+				});
+			}
+
+			if (this.hasKindsTarget) {
+				promises[3] = this.kindsController.MDCChipSet.selectedChipIds.map((chipId) => {
+					const chipElement = this.kindsController.chipsetTarget.querySelector(`#${chipId}`);
 					return chipElement.innerText.toLowerCase();
-				}
-			});
-		}
+				});
+			}
 
-		if (this.hasCategoriesTarget) {
-			promises[1] = this.categoriesController.MDCChipSet.selectedChipIds.map((chipId) => {
-				const chipElement = this.categoriesController.chipsetTarget.querySelector(`#${chipId}`);
-				if (chipElement) {
-					return chipElement.innerText.toLowerCase();
-				}
-			});
-		}
+			if (promises.length) {
+				Promise.all(promises)
+				       .then((resultsArray) => {
+					       const urlWithFilters = stringify(
+						       {
+							       personas            : resultsArray[0],
+							       categories          : resultsArray[1],
+							       ocurrences          : resultsArray[2],
+							       kinds               : resultsArray[3],
+							       identifier          : this.sectionIdentifier,
+							       title               : this.title,
+							       defaults            : this.defaultValue,
+							       init_filters_applyed: this.initFiltersApplyed,
+							       similar             : opts.similar,
+							       insert_after        : opts.insert_after,
+							       limit               : opts.limit
+						       },
+						       {
+							       arrayFormat: 'bracket'
+						       });
 
-		if (this.hasOcurrencesTarget) {
-			promises[2] = this.ocurrencesController.MDCChipSet.selectedChipIds.map((chipId) => {
-				const chipElement = this.ocurrencesController.chipsetTarget.querySelector(`#${chipId}`);
-				if (chipElement) {
-					return chipElement.dataset.chipValue.toLowerCase();
-				}
-			});
-		}
+					       fetch(`/collections?${urlWithFilters}`, {
+						       method     : 'get',
+						       headers    : {
+							       'X-Requested-With': 'XMLHttpRequest',
+							       'Content-type'    : 'text/javascript; charset=UTF-8',
+							       'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+						       },
+						       credentials: 'same-origin'
+					       })
+						       .then(
+							       (response) => {
+								       response.text().then((data) => {
+									       eval(data);
+									       ProgressBarModule.hide();
+								       });
+							       }
+						       )
+						       .catch(err => {
+							       console.log('Fetch Error :-S', err);
+						       });
 
-		if (this.hasKindsTarget) {
-			promises[3] = this.kindsController.MDCChipSet.selectedChipIds.map((chipId) => {
-				const chipElement = this.kindsController.chipsetTarget.querySelector(`#${chipId}`);
-				return chipElement.innerText.toLowerCase();
-			});
-		}
-
-		if (promises.length) {
-			Promise.all(promises)
-			       .then((resultsArray) => {
-				       const urlWithFilters = stringify(
-					       {
-						       personas            : resultsArray[0],
-						       categories          : resultsArray[1],
-						       ocurrences          : resultsArray[2],
-						       kinds               : resultsArray[3],
-						       identifier          : this.sectionIdentifier,
-						       title               : this.title,
-						       defaults            : this.defaultValue,
-						       init_filters_applyed: this.initFiltersApplyed,
-						       similar             : opts.similar,
-						       insert_after        : opts.insert_after,
-						       limit               : opts.limit
-					       },
-					       {
-						       arrayFormat: 'bracket'
-					       });
-
-				       fetch(`/collections?${urlWithFilters}`, {
-					       method     : 'get',
-					       headers    : {
-						       'X-Requested-With': 'XMLHttpRequest',
-						       'Content-type'    : 'text/javascript; charset=UTF-8',
-						       'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
-					       },
-					       credentials: 'same-origin'
+					       // }
 				       })
-					       .then(
-						       (response) => {
-							       response.text().then((data) => {
-								       eval(data);
-								       ProgressBarModule.hide();
-							       });
-						       }
-					       )
-					       .catch(err => {
-						       console.log('Fetch Error :-S', err);
-					       });
-
-				       // }
-			       })
-			       .catch(err => {
-				       console.log(err);
-			       });
-		}
+				       .catch(err => {
+					       console.log(err);
+				       });
+			}
+		}, {timeout: 500});
 
 	}
 

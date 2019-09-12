@@ -14,7 +14,7 @@ export default class ChipController extends Controller {
 				if(this.hasChipsetTarget) {
 					this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
 				}
-			})
+			}, {timeout: 250})
 		});
 
 		if (this.hasInputTarget) {

@@ -183,7 +183,7 @@ export default class SavesController extends Controller {
 						dates[i + 1].innerHTML = '';
 					}
 				}
-			});
+			}, {timeout: 250});
 		}
 	}
 

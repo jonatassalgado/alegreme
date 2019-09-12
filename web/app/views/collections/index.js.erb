@@ -5,14 +5,15 @@
 		const sectionElem = document.getElementById('<%= @locals[:identifier] %>');
 
 		requestIdleCallback(function () {
-			const morph = morphdom.default(sectionElem, '<%= j render partial: "components/collection/collection", locals: @locals %>'.trim(), {
-				onBeforeElUpdated: function (fromEl, toEl) {
-					return !fromEl.isEqualNode(toEl);
-				}
+			requestAnimationFrame(function () {
+				const morph = morphdom.default(sectionElem, '<%= j render partial: "components/collection/collection", locals: @locals %>'.trim(), {
+					onBeforeElUpdated: function (fromEl, toEl) {
+						return !fromEl.isEqualNode(toEl);
+					}
+				});
+				resolve(morph)
 			});
-
-			resolve(morph)
-		});
+		}, {timeout: 250});
 	})
 
 	promise.then(function (value) {

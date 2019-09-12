@@ -51,7 +51,7 @@ export default class EventController extends Controller {
 							window.scrollTo(0, eventEl.offsetTop - 225);
 						}
 						document.documentElement.style.scrollBehavior = "";
-					})
+					}, {timeout: 250})
 				}, 500);
 			}
 		});

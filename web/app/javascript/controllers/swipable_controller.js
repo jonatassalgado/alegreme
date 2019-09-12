@@ -10,7 +10,7 @@ export default class SwipableController extends Controller {
 			requestIdleCallback(() => {
 				self.stackedCards();
 				self.swipableTarget.style.minHeight = `${self.swipableTarget.offsetHeight}px`;
-			});
+			}, {timeout: 250});
 		}
 	}
 

@@ -63,7 +63,7 @@ export default class FloatMenuController extends Controller {
 
 			}
 			document.documentElement.style.scrollBehavior = ""
-		});
+		}, {timeout: 250});
 	}
 
 }

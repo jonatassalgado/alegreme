@@ -25,7 +25,7 @@ const LazyloadModule = (function () {
 						if (image.target.style.backgroundImage === "") {
 							image.target.style.backgroundImage = `url(${image.target.dataset.src})`;
 						}
-					});
+					}, {timeout: 250});
 				}
 			});
 		}

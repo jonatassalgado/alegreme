@@ -64,11 +64,11 @@ document.addEventListener('DOMContentLoaded', function () {
 				if (entry.isIntersecting) {
 					requestIdleCallback(() => {
 						entry.target.play();
-					});
+					}, {timeout: 250});
 				} else {
 					requestIdleCallback(() => {
 						entry.target.pause();
-					});
+					}, {timeout: 250});
 				}
 			}
 		},
