@@ -7,16 +7,12 @@ const AnimateModule = (function () {
 	};
 
 	module.animatePage = () => {
-		["DOMContentLoaded", "turbolinks:load"].forEach((eventName) => {
-			document.addEventListener(eventName, () => {
 				requestAnimationFrame(() => {
 					const page = document.querySelector(".me-page");
 					if (page) {
 						page.classList.remove("is-animated");
 					}
 				})
-			}, false);
-		});
 		document.addEventListener("turbolinks:before-cache", () => {
 			const page = document.querySelector(".me-page");
 			if (page) {
@@ -37,6 +33,9 @@ const AnimateModule = (function () {
 			window.history.back();
 		}, 25)
 	};
+
+	document.addEventListener("turbolinks:load", module.animatePage, {once: true})
+	document.addEventListener("turbolinks:render", module.animatePage)
 
 	window.AnimateModule = module;
 

@@ -52,7 +52,7 @@ export default class EventController extends Controller {
 		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
-	showEventDetails = () => {
+	showEventDetails() {
 		if (this.md.mobile()) {
 		} else {
 			if (this.data.get("favorited") === "false") {
@@ -67,7 +67,7 @@ export default class EventController extends Controller {
 		}
 	};
 
-	showSimilar = () => {
+	showSimilar() {
 		this.isSimilarLoading = true;
 
 		PubSubModule.emit(`${this.sectionIdentifier}.create`,
@@ -85,13 +85,13 @@ export default class EventController extends Controller {
 		}, 1000)
 	};
 
-	openMenu = () => {
+	openMenu() {
 		const mdcMenu = new MDCMenu(this.menuTarget);
 		mdcMenu.open  = !mdcMenu.open;
 	};
 
 
-	updateLikeButtonStyle = (eventId) => {
+	updateLikeButtonStyle(eventId) {
 		const active = this.data.get('favorited');
 
 		if (active === 'true') {

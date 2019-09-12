@@ -9,13 +9,13 @@ Rails.application.routes.draw do
 
 	get '/invite', to: 'welcome#invite'
 	get '/feed', to: 'feeds#index'
-	get '/train', to: 'feeds#train'
 	get '/retrain', to: 'events#retrain'
 	get '/service-worker.js', to: redirect('service-worker.js')
 	get '/manifest.json', to: redirect('manifest.json')
 	get '/privacy', to: 'welcome#privacy'
 	get '/terms', to: 'welcome#terms'
 
+	resources :train, only: [:index]
 	resources :users
 	resources :collections, only: [:index]
 	resources :categories

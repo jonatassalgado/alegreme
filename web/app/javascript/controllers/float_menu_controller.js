@@ -1,7 +1,7 @@
 import {Controller}      from "stimulus";
 import * as MobileDetect from "mobile-detect";
 
-export default class Float_menu_controller extends Controller {
+export default class FloatMenuController extends Controller {
 	static targets = [
 		"menu",
 		"item"

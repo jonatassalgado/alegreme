@@ -1,5 +1,4 @@
-<%= javascript_pack_tag ['mdc-select', 'mdc-textfield'], 'data-turbolinks-track': 'reload', defer: true %>
-
+<%= javascript_pack_tag 'events', 'data-turbolinks-track': 'reload', defer: true %>
 
 <%= form_with(model: user, local: true) do |form| %>
   <% if user.errors.any? %>

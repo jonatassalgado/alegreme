@@ -33,6 +33,9 @@ const LazyloadModule = (function () {
 		images.forEach(image => observer.observe(image));
 	};
 
+	document.addEventListener("turbolinks:load", module.lazyloadFeed, {once: true})
+	document.addEventListener("turbolinks:render", module.lazyloadFeed)
+
 	window.LazyloadModule = module;
 
 	return module;
