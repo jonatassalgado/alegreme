@@ -37,8 +37,7 @@
            data-filter-title="<%= title.to_json %>"
            data-filter-init-filters-applyed="<%= filters_applyed.to_json %>"
            data-target="filter.filterContainer section.filter">
-        <% if filters[:categories] && items[:filters] %>
-          <%= title[:categories] %>
+        <% if filters[:categories] && !items[:categories].blank? %>
           <%= render partial: 'feeds/filter', locals: {
               initial_filters:              items[:categories],
               params_filters:               params[:categories],
@@ -48,7 +47,6 @@
           } %>
         <% end %>
         <% if (filters[:kinds] && params[:categories] && !items[:kinds].blank?) || (filters[:kinds] && !params[:kinds].blank?) %>
-          <%= title[:kinds] %>
           <%= render partial: 'feeds/filter', locals: {
               initial_filters:              items[:kinds],
               params_filters:               params[:kinds],
@@ -57,7 +55,7 @@
               type:                         'kinds'
           } %>
         <% end %>
-        <% if filters[:ocurrences] && items[:ocurrences] %>
+        <% if filters[:ocurrences] && !items[:ocurrences].blank? %>
           <%= title[:ocurrences] %>
           <%= render partial: 'feeds/filter', locals: {
               initial_filters:              items[:ocurrences],

@@ -137,10 +137,6 @@ export default class FilterController extends Controller {
 						       arrayFormat: 'bracket'
 					       });
 
-				       if (opts.similar) {
-
-				       }
-
 				       fetch(`/collections?${urlWithFilters}`, {
 					       method     : 'get',
 					       headers    : {

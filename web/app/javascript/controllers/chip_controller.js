@@ -11,10 +11,11 @@ export default class ChipController extends Controller {
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
 			requestIdleCallback(() => {
-				this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
+				if(this.hasChipsetTarget) {
+					this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
+				}
 			})
 		});
-
 
 		if (this.hasInputTarget) {
 			this.inputTarget.addEventListener('keydown', event => {
