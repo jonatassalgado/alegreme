@@ -1,6 +1,4 @@
-<div class="template__container">
-
-
+<div class="template__container <%= 'is-pwa' if params[:pwa] %>">
   <section class="brand">
     <div class="brand__letter">
       <%= responsive_image_tag 'welcome/logo-letter', alt: 'logo', title: 'Oie!' %>
@@ -11,11 +9,13 @@
     <span onclick="location.assign('/users/auth/google_oauth2')">Entrar</span>
   </section>
 
-  <section class="headline">
-    <h1>Aproveite a cidade de Porto Alegre</h1>
-    <h2>Atividades culturais, meetups, shows, rolês, feiras de rua, aquele filme no Mario Quintana...</br>
-      Um feed para quem quer explorar a cidade e não perder o que já conhece</h2>
-  </section>
+  <% unless params[:pwa] %>
+    <section class="headline">
+      <h1>Aproveite a cidade de Porto Alegre</h1>
+      <h2>Atividades culturais, meetups, shows, rolês, feiras de rua, aquele filme no Mario Quintana...</br>
+        Um feed para quem quer explorar a cidade e não perder o que já conhece</h2>
+    </section>
+  <% end %>
 
   <section class="features">
     <div class="features__scroll-view">
@@ -52,105 +52,118 @@
     </div>
   </section>
 
-  <section class="demo">
-    <% unless mobile_device? %>
-      <div class="macbook">
-        <div class="macbook__screen">
-          <video autoplay="autoplay" loop="true" muted="true">
-            <source src="<%= asset_url 'welcome/demo-web-min.webm' %>" type="video/webm">
-            <source src="<%= asset_url 'welcome/demo-web-min.mp4' %>" type="video/mp4">
+  <% if params[:pwa] %>
+    <div class="login-button" title="Entrar" onclick="location.assign('/users/auth/google_oauth2')">
+      Entrar
+      <span>
+          <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
+        </span>
+    </div>
+  <% end %>
+
+  <% unless params[:pwa] %>
+    <section class="demo">
+      <% unless mobile_device? %>
+        <div class="macbook">
+          <div class="macbook__screen">
+            <video autoplay="autoplay" loop="true" muted="true">
+              <source src="<%= asset_url 'welcome/demo-web-min.webm' %>" type="video/webm">
+              <source src="<%= asset_url 'welcome/demo-web-min.mp4' %>" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      <% end %>
+      <div class="android">
+        <div class="android__screen">
+          <video loop="true" muted="true">
+            <source src="<%= asset_url 'welcome/demo-android-min.webm' %>" type="video/webm">
+            <source src="<%= asset_url 'welcome/demo-android-min.mp4' %>" type="video/mp4">
           </video>
         </div>
       </div>
-    <% end %>
-    <div class="android">
-      <div class="android__screen">
-        <video loop="true" muted="true">
-          <source src="<%= asset_url 'welcome/demo-android-min.webm' %>" type="video/webm">
-          <source src="<%= asset_url 'welcome/demo-android-min.mp4' %>" type="video/mp4">
-        </video>
+      <div class="demo__plataform-numbers">
+        <b><%= @events_count %></b> eventos e atividades de
+        <b><%= @organizers_count %></b> organizadores estão disponíveis hoje
+        <br>
       </div>
-    </div>
-    <div class="demo__plataform-numbers">
-      <b><%= @events_count %></b> eventos e atividades de
-      <b><%= @organizers_count %></b> organizadores estão disponíveis hoje
-      <br>
-    </div>
-  </section>
+    </section>
 
-  <section class="benefits">
-    <div class="benefits__items">
-      <div class="benefits__item">
-        <h3>Filtre eventos por dia, categoria e tipo</h3>
-        <span>Ex: sexta-feira > festas > evento de rua</span>
+    <section class="benefits">
+      <div class="benefits__items">
+        <div class="benefits__item">
+          <h3>Filtre eventos por dia, categoria e tipo</h3>
+          <span>Ex: sexta-feira > festas > evento de rua</span>
+        </div>
+        <div class="benefits__item">
+          <h3>Mostrar eventos similares em um clique</h3>
+          <span>Ex: ver similares à "Festa Goodbye Lenin"</span>
+        </div>
+        <div class="benefits__item">
+          <h3>Seguir os tópicos que você gosta</h3>
+          <span>Ex: seguir os tópicos "Feiras de rua" e "Brechó"</span>
+        </div>
+        <div class="benefits__item">
+          <h3>Seguir organizadores</h3>
+          <span>Ex: seguir os organizadores "Coletivo Plano" e "No Palco"</span>
+        </div>
+        <div class="benefits__item">
+          <h3>Recomendações específicas para você</h3>
+          <span>Aprendemos continuamente o seu gosto individual</span>
+        </div>
+        <div class="benefits__item">
+          <h3>Seguir locais</h3>
+          <span>Ex: seguir os locais "Opnião" e "Mario Quintana"</span>
+        </div>
+        <div class="benefits__item">
+          <h3>Filmes em cartaz nos cinemas</h3>
+          <span>Ex: ver lista de filmes no "Capitólio" e "Cinemark"</span>
+        </div>
+        <div class="benefits__item">
+          <h3>Compartilhar minha agenda</h3>
+          <span>Ex: compartilha seu perfil com "amigos", "trabalho" e "família"</span>
+        </div>
       </div>
-      <div class="benefits__item">
-        <h3>Mostrar eventos similares em um clique</h3>
-        <span>Ex: ver similares à "Festa Goodbye Lenin"</span>
-      </div>
-      <div class="benefits__item">
-        <h3>Seguir os tópicos que você gosta</h3>
-        <span>Ex: seguir os tópicos "Feiras de rua" e "Brechó"</span>
-      </div>
-      <div class="benefits__item">
-        <h3>Seguir organizadores</h3>
-        <span>Ex: seguir os organizadores "Coletivo Plano" e "No Palco"</span>
-      </div>
-      <div class="benefits__item">
-        <h3>Recomendações específicas para você</h3>
-        <span>Aprendemos continuamente o seu gosto individual</span>
-      </div>
-      <div class="benefits__item">
-        <h3>Seguir locais</h3>
-        <span>Ex: seguir os locais "Opnião" e "Mario Quintana"</span>
-      </div>
-      <div class="benefits__item">
-        <h3>Filmes em cartaz nos cinemas</h3>
-        <span>Ex: ver lista de filmes no "Capitólio" e "Cinemark"</span>
-      </div>
-      <div class="benefits__item">
-        <h3>Compartilhar minha agenda</h3>
-        <span>Ex: compartilha seu perfil com "amigos", "trabalho" e "família"</span>
-      </div>
-    </div>
-  </section>
+    </section>
+  <% end %>
 
-  <section class="invite">
-    <div class="invite__status">
-      <div class="people">
-        <% @last_people.each do |person| %>
-          <div class="people__person-face lazyload" data-bg="<%= image_path person.demographic['picture'] %>" title="<%= person.demographic['name'] %>"></div>
-        <% end %>
+  <% unless params[:pwa] %>
+    <section class="invite">
+      <div class="invite__status">
+        <div class="people">
+          <% @last_people.each do |person| %>
+            <div class="people__person-face lazyload" data-bg="<%= image_path person.demographic['picture'] %>" title="<%= person.demographic['name'] %>"></div>
+          <% end %>
+        </div>
+        <div class="invite__counter">
+          <%= @invites_count %> pessoas solicitaram convite para o alegreme
+        </div>
+        <div class="invite__details has-helper">
+          Na versão
+          <i title="Versão de testes do aplicativo ainda em desenvolvimento e validações">beta</i> vamos liberar até 100 convites por semana
+        </div>
       </div>
-      <div class="invite__counter">
-        <%= @invites_count %> pessoas solicitaram convite para o alegreme
+      <button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="">
+        <i class="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+          </svg>
+        </i>
+        <span class="">Compartilhar</span>
+      </button>
+      <div class="invite__cta" title="Seja um Beta tester!">
+        Solicitar Convite
+        <span>
+          <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
+        </span>
       </div>
-      <div class="invite__details has-helper">
-        Na versão
-        <i title="Versão de testes do aplicativo ainda em desenvolvimento e validações">beta</i> vamos liberar até 100 convites por semana
+      <div class="invite__google-details">
+        <%= responsive_image_tag "welcome/google-details", alt: 'conta do google', class: 'lazyload' %>
       </div>
-    </div>
-    <button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="">
-      <i class="">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path fill="none" d="M0 0h24v24H0V0z"/>
-          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-        </svg>
-      </i>
-      <span class="">Compartilhar</span>
-    </button>
-    <div class="invite__cta" title="Seja um Beta tester!">
-      Solicitar Convite
-      <span>
-        <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
-      </span>
-    </div>
-    <div class="invite__google-details">
-      <%= responsive_image_tag "welcome/google-details", alt: 'conta do google', class: 'lazyload' %>
-    </div>
-    <div class="skatista lazyload" data-bg="<%= image_path 'welcome/skatista.png' %>" style="transform: translate(-1900px, -50px);">
-    </div>
-  </section>
+      <div class="skatista lazyload" data-bg="<%= image_path 'welcome/skatista.png' %>" style="transform: translate(-1900px, -50px);">
+      </div>
+    </section>
+  <% end %>
 
   <%# unless mobile_device? %>
   <!--    <section class="manifesto">-->
@@ -178,110 +191,111 @@
   <!--    </div>-->
   <!--  </section>-->
 
+  <% unless params[:pwa] %>
+    <section class="questions">
+      <h2>Perguntas?</h2>
+      <div class="questions__grid">
+        <div class="questions__grid-item questions__grid-item--q1" data-question="q1" data-color="#E4F2FB">
+          <h3>O que é o Alegreme?</h3>
+        </div>
+        <div class="questions__grid-item questions__grid-item--q2" data-question="q2" data-color="#E4F2FB">
+          <h3>Como funciona?</h3>
+        </div>
+        <div class="questions__grid-item questions__grid-item--q3" data-question="q3" data-color="#E4F2FB">
+          <h3>É grátis?</h3>
+        </div>
+        <div class="questions__grid-item questions__grid-item--q4" data-question="q4" data-color="#E4F2FB">
+          <h3>Funciona somente em Porto Alegre?</h3>
+        </div>
+        <div class="questions__grid-item questions__grid-item--q5" data-question="q5" data-color="#E4F2FB">
+          <h3>Como entrar em contato?</h3>
+        </div>
+      </div>
+      <div class="answer is-hidden">
+        <div class="answer__content" data-answer="q1">
+          <div class="answer__close">FECHAR</div>
+          <h3>O que é o Alegreme?</h3>
+          <p>
+            Um aplicativo web que facilita aos moradores de Porto Alegre
+            a explorarem eventos e atividades da cidade.
+          </p>
+          <!--        <p>-->
+          <!--          <i>PS: Android e iOs sairam na versão 1.0 em breve.</i>-->
+          <!--        </p>-->
+        </div>
+        <div class="answer__content" data-answer="q2">
+          <div class="answer__close">FECHAR</div>
+          <h3>Como funciona?</h3>
+          <p>
+            <b>Resposta rápida:</b>
+          <ul>
+            <li>1. Você cria um perfil e responde sobre eventos e atividades que iria ou não.</li>
+            <li>2. Com um perfil inicial traçado, iremos mostrar coleções de eventos e atividades.</li>
+            <li>3. Você pode salvar o que gostar, seguir tópicos, locais e organizadores e explorar itens semelhantes.</li>
+            <li>4. Enquanto você usa o app aprendemos o que gosta e vamos mostrando coleções com base no seu gosto individual.</li>
+          </ul>
+          </p>
+          <p>
+            <b>Resposta técnica:</b> <br>
+            São 6 aplicações que funcionam em conjunto, algumas são responsáveis por buscar o conteúdo na web, semelhante
+            o Google; outras são responsáveis por limpar e classificar estes dados em mais de 500 categorias e subcategorias
+            com base em mais de 10 variáveis; outro é responsável a entender os grupos de usuários que usam o app
+            e do que gostam e não gostam e organizar para cada pessoa coleções com sugestões, como o Youtube e Netflix fazem.
+          <p>
+            Podemos dizer que o Alegreme é poliglota e hypado, vai do Python ao Javascript, do Ruby ao Java, utiliza inteligência artificial e bots, tudo isso para entregar um app massa!
+          </p>
+          </p>
+        </div>
+        <div class="answer__content" data-answer="q3">
+          <div class="answer__close">FECHAR</div>
+          <h3>É grátis?</h3>
+          <p>
+            Sim. 0800. Free.
+          </p>
+        </div>
+        <div class="answer__content" data-answer="q4">
+          <div class="answer__close">FECHAR</div>
+          <h3>Funciona somente em Porto Alegre?</h3>
+          <p>
+            Sim. Mas há uma funcionalidade que exibe coleções de eventos e atividade de cidades do
+            Rio Grande do Sul para pessoas que querem turistar de carro no fim de semana.
+          </p>
+        </div>
+        <div class="answer__content" data-answer="q5">
+          <div class="answer__close">FECHAR</div>
+          <h3>Como entrar em contato?</h3>
+          <p>
+            Para dúvidas, dicas e outras resenhas é só mandar um email para oi@alegreme.com
+          </p>
+        </div>
+      </div>
+  <% end %>
 
-  <section class="questions">
-    <h2>Perguntas?</h2>
-    <div class="questions__grid">
-      <div class="questions__grid-item questions__grid-item--q1" data-question="q1" data-color="#E4F2FB">
-        <h3>O que é o Alegreme?</h3>
-      </div>
-      <div class="questions__grid-item questions__grid-item--q2" data-question="q2" data-color="#E4F2FB">
-        <h3>Como funciona?</h3>
-      </div>
-      <div class="questions__grid-item questions__grid-item--q3" data-question="q3" data-color="#E4F2FB">
-        <h3>É grátis?</h3>
-      </div>
-      <div class="questions__grid-item questions__grid-item--q4" data-question="q4" data-color="#E4F2FB">
-        <h3>Funciona somente em Porto Alegre?</h3>
-      </div>
-      <div class="questions__grid-item questions__grid-item--q5" data-question="q5" data-color="#E4F2FB">
-        <h3>Como entrar em contato?</h3>
-      </div>
+  <section class="footer">
+    <div class="footer__logo-icon js-logo">
+      <%= responsive_image_tag "welcome/footer-logo-icon", alt: 'logo', title: 'Pimba!', class: 'lazyload' %>
+      <div class="brand__pimba js-pimba" style="opacity: 0;">Pimba</div>
     </div>
-    <div class="answer is-hidden">
-      <div class="answer__content" data-answer="q1">
-        <div class="answer__close">FECHAR</div>
-        <h3>O que é o Alegreme?</h3>
-        <p>
-          Um aplicativo web que facilita aos moradores de Porto Alegre
-          a explorarem eventos e atividades da cidade.
-        </p>
-        <!--        <p>-->
-        <!--          <i>PS: Android e iOs sairam na versão 1.0 em breve.</i>-->
-        <!--        </p>-->
-      </div>
-      <div class="answer__content" data-answer="q2">
-        <div class="answer__close">FECHAR</div>
-        <h3>Como funciona?</h3>
-        <p>
-          <b>Resposta rápida:</b>
-        <ul>
-          <li>1. Você cria um perfil e responde sobre eventos e atividades que iria ou não.</li>
-          <li>2. Com um perfil inicial traçado, iremos mostrar coleções de eventos e atividades.</li>
-          <li>3. Você pode salvar o que gostar, seguir tópicos, locais e organizadores e explorar itens semelhantes.</li>
-          <li>4. Enquanto você usa o app aprendemos o que gosta e vamos mostrando coleções com base no seu gosto individual.</li>
-        </ul>
-        </p>
-        <p>
-          <b>Resposta técnica:</b> <br>
-          São 6 aplicações que funcionam em conjunto, algumas são responsáveis por buscar o conteúdo na web, semelhante
-          o Google; outras são responsáveis por limpar e classificar estes dados em mais de 500 categorias e subcategorias
-          com base em mais de 10 variáveis; outro é responsável a entender os grupos de usuários que usam o app
-          e do que gostam e não gostam e organizar para cada pessoa coleções com sugestões, como o Youtube e Netflix fazem.
-        <p>
-          Podemos dizer que o Alegreme é poliglota e hypado, vai do Python ao Javascript, do Ruby ao Java, utiliza inteligência artificial e bots, tudo isso para entregar um app massa!
-        </p>
-        </p>
-      </div>
-      <div class="answer__content" data-answer="q3">
-        <div class="answer__close">FECHAR</div>
-        <h3>É grátis?</h3>
-        <p>
-          Sim. 0800. Free.
-        </p>
-      </div>
-      <div class="answer__content" data-answer="q4">
-        <div class="answer__close">FECHAR</div>
-        <h3>Funciona somente em Porto Alegre?</h3>
-        <p>
-          Sim. Mas há uma funcionalidade que exibe coleções de eventos e atividade de cidades do
-          Rio Grande do Sul para pessoas que querem turistar de carro no fim de semana.
-        </p>
-      </div>
-      <div class="answer__content" data-answer="q5">
-        <div class="answer__close">FECHAR</div>
-        <h3>Como entrar em contato?</h3>
-        <p>
-          Para dúvidas, dicas e outras resenhas é só mandar um email para oi@alegreme.com
-        </p>
-      </div>
+    <button class="shareBtn" aria-label="Compartilhar" style="">
+      <i class="">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="none" d="M0 0h24v24H0V0z"/>
+          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+        </svg>
+      </i>
+      <span class="">Compartilhar</span>
+    </button>
+    <div class="social__links">
+      <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
+      <a href="https://twitter.com/portoalegreme">twitter</a> ·
+      <a href="#">oi@alegreme.com</a>
     </div>
-
-    <section class="footer">
-      <div class="footer__logo-icon js-logo">
-        <%= responsive_image_tag "welcome/footer-logo-icon", alt: 'logo', title: 'Pimba!', class: 'lazyload' %>
-        <div class="brand__pimba js-pimba" style="opacity: 0;">Pimba</div>
-      </div>
-      <button class="shareBtn" aria-label="Compartilhar" style="">
-        <i class="">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="none" d="M0 0h24v24H0V0z"/>
-            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-          </svg>
-        </i>
-        <span class="">Compartilhar</span>
-      </button>
-      <div class="social__links">
-        <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
-        <a href="https://twitter.com/portoalegreme">twitter</a> ·
-        <a href="#">oi@alegreme.com</a>
-      </div>
-      <div class="footer__links">
-        <a href="/privacy">Política de privacidade</a> ·
-        <a href="/terms">Termos de serviço</a> ·
-        <a href="https://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" target="_blank">Sobre</a>
-      </div>
-      <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!', class: 'lazyload' %>
-    </section>
+    <div class="footer__links">
+      <a href="/privacy">Política de privacidade</a> ·
+      <a href="/terms">Termos de serviço</a> ·
+      <a href="https://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" target="_blank">Sobre</a>
+    </div>
+    <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!', class: 'lazyload' %>
+  </section>
   </section>
 </div>

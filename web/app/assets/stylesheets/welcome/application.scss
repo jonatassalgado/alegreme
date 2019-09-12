@@ -110,7 +110,7 @@
 .benefits {
   margin: 65px 0 65px 0;
   max-width: 670px;
-  @include mobile-only{
+  @include mobile-only {
     max-width: calc(100vw - 48px);
     margin: 0 0 50px 0;
     -webkit-tap-highlight-color: transparent;
@@ -333,7 +333,7 @@
   line-height: 1.6em;
   position: relative;
   margin: 100px 0 85px 0;
-  @include mobile-only{
+  @include mobile-only {
     display: none;
   }
 
@@ -402,7 +402,7 @@
     font-family: $font-primary-family;
     font-weight: bold;
     font-size: 38px;
-    line-height: 1.2empx;
+    line-height: 1.2 empx;
     margin: 140px auto 0 auto;
     padding: 0;
     text-align: center;
@@ -638,6 +638,7 @@
     // margin: auto;
     transition: transform 0.35s ease;
     -webkit-tap-highlight-color: transparent;
+
     &:hover {
       transform: scale(0.95);
     }
@@ -645,7 +646,7 @@
 
   & img, picture {
     max-width: 100%;
-    @include mobile-only{
+    @include mobile-only {
       margin: 6px auto;
     }
   }
@@ -654,7 +655,7 @@
     font-family: $font-primary-family;
     font-weight: bold;
     font-size: 38px;
-    line-height: 1.2empx;
+    line-height: 1.2 empx;
     margin: 0 auto 50px auto;
     padding: 0;
     text-align: center;
@@ -714,6 +715,56 @@
     display: none;
     transform: translate(0px, -115px);
   }
+}
+
+.login-button {
+  background: white;
+  width: 420px;
+  height: 87px;
+  font-family: $font-primary-family;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 34px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  color: $brand-color;
+  justify-content: center;
+  box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
+  border-radius: 60px;
+  margin: 0 auto 0 auto;
+  cursor: pointer;
+  transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  @include mobile-only {
+    width: calc(100vw - 48px);
+    height: 65px;
+    font-size: 18px;
+    margin: 25px auto 0 auto;
+  }
+
+  &:hover {
+    box-shadow: 0 0 45px rgba(0, 0, 0, 0.35);
+    transform: scale(1.05);
+
+    &.invite__cta span {
+      transform: translateX(6px);
+    }
+  }
+
+  & span {
+    position: relative;
+    top: 0px;
+    right: -20px;
+    transition: transform 0.4s ease;
+    @include mobile-only {
+      display: none;
+    }
+  }
+
 }
 
 .skatista {
