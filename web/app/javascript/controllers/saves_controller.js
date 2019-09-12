@@ -25,7 +25,7 @@ export default class SavesController extends Controller {
 		);
 
 		this.pubsub.savesUpdated = PubSubModule.on(`saves.updated`, (data) => {
-			LazyloadModule.init();
+			LazyloadModule.lazyloadFeed();
 
 			const flipPromise = new Promise((resolve, reject) => {
 				this.flipping.flip();

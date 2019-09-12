@@ -94,8 +94,8 @@ body {
   @include mdc-layout-grid-media-query_("phone") {
     background: $background-color;
     user-select: none;
-    //-webkit-tap-highlight-color: transparent;
-    //-webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
     //-webkit-overflow-scrolling: touch;
   }
 }

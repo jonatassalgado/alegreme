@@ -2,12 +2,14 @@ const LazyloadModule = (function () {
 	const module = {};
 
 	module.init = () => {
-		module.lazyloadFeed();
 		console.log("[LAZYLOAD]: started");
+		// module.lazyloadFeed();
+		document.addEventListener("turbolinks:load", module.lazyloadFeed);
 	};
 
 
 	module.lazyloadFeed = () => {
+		console.log("[LAZYLOAD]: applyed");
 
 		let images = [...document.querySelectorAll('.lazy-bgimage')];
 
@@ -33,8 +35,6 @@ const LazyloadModule = (function () {
 		images.forEach(image => observer.observe(image));
 	};
 
-	document.addEventListener("turbolinks:load", module.lazyloadFeed, {once: true})
-	document.addEventListener("turbolinks:render", module.lazyloadFeed)
 
 	window.LazyloadModule = module;
 

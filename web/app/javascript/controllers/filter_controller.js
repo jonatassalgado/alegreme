@@ -1,6 +1,7 @@
-import {Controller} from "stimulus";
-import {stringify}  from "query-string";
-import Flipping     from 'flipping';
+import {Controller}        from "stimulus";
+import {stringify}         from "query-string";
+import Flipping            from 'flipping';
+import {ProgressBarModule} from "../modules/progressbar-module";
 
 
 export default class FilterController extends Controller {
@@ -76,6 +77,7 @@ export default class FilterController extends Controller {
 
 
 	filter(opts = {}) {
+		ProgressBarModule.show();
 		let promises = [];
 
 		this.flipping.read();
@@ -152,6 +154,7 @@ export default class FilterController extends Controller {
 						       (response) => {
 							       response.text().then((data) => {
 								       eval(data);
+								       ProgressBarModule.hide();
 							       });
 						       }
 					       )

@@ -9,7 +9,7 @@ export default class SectionController extends Controller {
 		this.pubsub     = {};
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.identifier}.updated`, (data) => {
-			LazyloadModule.init();
+			LazyloadModule.lazyloadFeed();
 			this.hasMoreEventsToLoad();
 		});
 

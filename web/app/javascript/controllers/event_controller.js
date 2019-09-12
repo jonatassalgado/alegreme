@@ -1,9 +1,9 @@
 import {Controller}          from "stimulus";
 import {MDCMenu}             from "@material/menu";
 import {MDCRipple}           from "@material/ripple";
-// import {CacheModule}         from "modules/cache-module";
 import {MDCIconButtonToggle} from "@material/icon-button";
 import * as MobileDetect     from "mobile-detect";
+import {ProgressBarModule}   from "../modules/progressbar-module";
 
 export default class EventController extends Controller {
 	static targets = [
@@ -36,6 +36,23 @@ export default class EventController extends Controller {
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
 			if (data.params.similar == this.identifier) {
 				this.isSimilarOpen = true;
+
+				ProgressBarModule.hide();
+				setTimeout(() => {
+					requestIdleCallback(() => {
+						const eventEl = document.getElementById(`similar-to-${data.params.similar}`);
+
+						if (eventEl === undefined) return;
+
+						document.documentElement.style.scrollBehavior = "smooth";
+						if(this.md.mobile()) {
+							window.scrollTo(0, eventEl.offsetTop - 150);
+						} else {
+							window.scrollTo(0, eventEl.offsetTop - 225);
+						}
+						document.documentElement.style.scrollBehavior = "";
+					})
+				}, 500);
 			}
 		});
 
@@ -70,19 +87,16 @@ export default class EventController extends Controller {
 	showSimilar() {
 		this.isSimilarLoading = true;
 
+		ProgressBarModule.show();
+
 		PubSubModule.emit(`${this.sectionIdentifier}.create`,
 			{
 				similar     : this.identifier,
 				insert_after: this.insertAfter,
-				limit       : this.sectionController.actualEventsInCollection
+				limit       : this.sectionController.actualEventsInCollection,
+				id          : this.eventTarget.id
 			}
 		);
-
-		setTimeout(() => {
-			document.documentElement.style.scrollBehavior = "smooth";
-			window.scrollTo(0, this.eventTarget.offsetTop + 100);
-			document.documentElement.style.scrollBehavior = "";
-		}, 1000)
 	};
 
 	openMenu() {

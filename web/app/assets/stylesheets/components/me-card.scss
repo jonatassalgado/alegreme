@@ -133,7 +133,7 @@ $description-color: $font-secondary-color;
       animation-timing-function: ease;
       padding: 0;
       @include mdc-layout-grid-media-query_("phone") {
-        padding: 0 0 1px 0;
+        padding: 1px 0 1px 0;
       }
     }
 
