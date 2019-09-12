@@ -28,6 +28,23 @@ $mdc-layout-grid-columns: (
       margin: 0 auto 26px auto;
     }
 
+    &[data-section-load-more-loading="true"] {
+      & .me-feed__load-more--mobile {
+        opacity: 0;
+        display: none;
+        &.is-loading {
+          display: block;
+          opacity: 1;
+          & svg {
+            animation-name: rotate;
+            animation-iteration-count: infinite;
+            animation-duration: 1s;
+            animation-timing-function: ease;
+          }
+        }
+      }
+    }
+
 
     & h2 {
       margin: 8px 0;
@@ -113,9 +130,16 @@ $mdc-layout-grid-columns: (
     }
 
     &--mobile {
+      transition: opacity 0.250ms ease;
+      will-change: opacity;
       @include mdc-layout-grid-media-query_("phone") {
         order: 1000;
         display: block;
+        &.is-loading {
+          display: none;
+          opacity: 0;
+        }
+
         & svg {
           padding: 12px;
           border: 1px solid $border-color;

@@ -87,3 +87,15 @@ $elevated-surface-color: #f9f9f9;
 $filter-background-color: $background-color;
 
 $mdc-theme-primary: $brand-color;
+
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

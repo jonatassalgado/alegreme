@@ -2,27 +2,23 @@
 
   raise ArgumentError unless identifier && items && title
 
-  type = opts[:type] || :large
   filters = opts[:filters] || {categories: true, kinds: true, ocurrences: true}
   total_events_in_collection = opts.dig(:detail, :total_events_in_collection) || 0
   actual_events_in_collection = opts.dig(:detail, :actual_events_in_collection) || 0
   filters_applyed = opts.dig(:detail, :init_filters_applyed) || {}
   json_request = local_assigns.fetch(:json_request, false)
-  cache_keys = params[:defaults] ? JSON.parse(params[:defaults]) : {}
 
 %>
 
 
-<%# unless items[:events].empty? %>
-<%# cache [current_user, identifier, cache_keys[:categories], cache_keys[:kinds], cache_keys[:ocurrences]] do %>
-
 <section class="me-feed__section"
-     data-controller="section"
-     data-target="section.section"
-     data-section-total-events-in-collection="<%= total_events_in_collection %>"
-     data-section-actual-events-in-collection="<%= actual_events_in_collection %>"
-     data-observable="float-menu.section"
-     id="<%= identifier %>">
+         data-controller="section"
+         data-target="section.section"
+         data-section-total-events-in-collection="<%= total_events_in_collection %>"
+         data-section-actual-events-in-collection="<%= actual_events_in_collection %>"
+         data-section-load-more-loading="false"
+         data-observable="float-menu.section"
+         id="<%= identifier %>">
   <div class="me-feed__section-head">
     <h2>
       <%= title[:principal] %>
@@ -69,7 +65,9 @@
     <% end %>
   </div>
   <div class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner" data-target="section.scrollContainer" data-section-turbolinks-persist-scroll="0">
+    <div class="mdc-layout-grid__inner"
+         data-section-turbolinks-persist-scroll="0"
+         data-target="section.scrollContainer">
       <% unless items.empty? %>
         <%= render partial: 'components/collection/event', collection: items[:events], as: :event, locals: {
             identifier:   identifier,
@@ -80,14 +78,25 @@
             events:       items[:events],
             identifier:   identifier,
             json_request: json_request
-        } if !mobile_device? || ['places', 'organizers'].include?(params[:controller])%>
+        } if !mobile_device? || ['places', 'organizers'].include?(params[:controller]) %>
 
         <% if actual_events_in_collection < total_events_in_collection && mobile_device? %>
-          <div class="me-feed__load-more me-feed__load-more--mobile"
-               data-action="click->section#loadMore"
-               data-target="section.loadMoreButton">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
+
+          <div data-action="click->section#loadMore"
+               data-target="section.loadMoreButton"
+               class="me-feed__load-more me-feed__load-more--mobile">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z"/>
+              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+            </svg>
           </div>
+          <div class="me-feed__load-more me-feed__load-more--mobile is-loading">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z"/>
+              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+          </div>
+
         <% end %>
 
         <%# if total_events_in_collection < 4 %>
@@ -104,7 +113,7 @@
     <%= render partial: 'components/collection/similar', locals: {
         events:     items[:events],
         identifier: identifier
-    } if mobile_device? && !['places', 'organizers'].include?(params[:controller])  %>
+    } if mobile_device? && !['places', 'organizers'].include?(params[:controller]) %>
     <% if actual_events_in_collection < total_events_in_collection %>
       <div class="me-feed__load-more"
            data-action="click->section#loadMore"

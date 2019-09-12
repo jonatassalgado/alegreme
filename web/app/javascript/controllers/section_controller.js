@@ -11,6 +11,7 @@ export default class SectionController extends Controller {
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.identifier}.updated`, (data) => {
 			LazyloadModule.lazyloadFeed();
 			this.hasMoreEventsToLoad();
+			this.data.set("load-more-loading", false);
 		});
 
 
@@ -30,6 +31,8 @@ export default class SectionController extends Controller {
 	}
 
 	loadMore() {
+		this.data.set("load-more-loading", true);
+
 		this.filterController.filter({
 			limit: parseInt(this.actualEventsInCollection) + 8
 		})

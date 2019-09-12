@@ -13,7 +13,9 @@ const ProgressBarModule = (() => {
 
 	module.hide = () => {
 		progressBar.setValue(1);
-		progressBar.hide();
+		setTimeout(() => {
+			progressBar.hide();
+		}, 100);
 	};
 
 	return module;
