@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include AuthorizationHelper
 
-  etag {current_or_guest_user.try :id}
+  etag {current_user.try :id}
 
   # Sentry
   if Rails.env.production?

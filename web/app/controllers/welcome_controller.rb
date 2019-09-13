@@ -3,6 +3,8 @@ class WelcomeController < ApplicationController
 	layout 'welcome'
 
 	def index
+		redirect_to feed_path if current_user.try(:admin?)
+
 		@invites_count    = count_invites
 		@events_count     = Rails.cache.fetch("welcome-events-count", expires_in: 1.day) { Event.active.size }
 		@organizers_count = Rails.cache.fetch("welcome-organizers-count", expires_in: 1.day) { Organizer.count }
@@ -32,7 +34,7 @@ class WelcomeController < ApplicationController
 	private
 
 	def count_invites
-		624 + User.all.count
+		2046 + User.all.count
 	end
 
 	def create_invite
@@ -42,7 +44,11 @@ class WelcomeController < ApplicationController
 		user.features.deep_merge!({
 				                          'demographic' => {
 						                          'name'    => params[:name],
-						                          'picture' => params[:picture]
+						                          'picture' => params[:picture],
+						                          'beta'    => {
+								                          'requested' => true,
+								                          'activated' => false
+						                          }
 				                          }
 		                          })
 		user.save

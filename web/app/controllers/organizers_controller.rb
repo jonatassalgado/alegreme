@@ -25,7 +25,7 @@ class OrganizersController < ApplicationController
 		# 	format.html do
 				# Rails.cache.fetch("#{current_or_guest_user}_user_personas", expires_in: 1.hour) do
 				events      = @organizer.events.active
-				@collection = EventServices::CollectionCreator.new(current_or_guest_user, params).call(events, organizers: [params[:id]], limit: 20)
+				@collection = EventServices::CollectionCreator.new(current_user, params).call(events, organizers: [params[:id]], limit: 20)
 
 				@locals = mount_section_attrs
 				render 'show'

@@ -1,7 +1,7 @@
 class CollectionsController < ApplicationController
 
 	def index
-		collection_creator = EventServices::CollectionCreator.new(current_or_guest_user, params)
+		collection_creator = EventServices::CollectionCreator.new(current_user, params)
 
 		if !initial_filters_applyed['in_places'].blank?
 			place  = Place.friendly.find(initial_filters_applyed['in_places'][0])

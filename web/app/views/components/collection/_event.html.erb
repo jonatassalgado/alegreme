@@ -50,7 +50,7 @@
           <div data-target="event.like">
             <button data-target="event.likeButton"
                     id="add-to-favorites"
-                    class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(event.id) %>"
+                    class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_events_saved?(event.id) %>"
                     aria-label="Add to favorites"
                     aria-hidden="true"
                     aria-pressed="false">

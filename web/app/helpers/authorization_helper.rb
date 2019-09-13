@@ -2,6 +2,8 @@ module AuthorizationHelper
 
 	# if user is logged in, return current_user, else return guest_user
 	def current_or_guest_user
+		return if request.env["HTTP_USER_AGENT"].match(/\(.*https?:\/\/.*\)/)
+
 		if current_user
 			if session[:guest_user_id] && session[:guest_user_id] != current_user.id
 				logging_in

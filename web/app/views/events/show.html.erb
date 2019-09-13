@@ -46,7 +46,7 @@
         <div class="me-card__like-button" data-action="click->event#like">
           <div data-target="event.like">
             <button data-target="event.likeButton" id="add-to-favorites"
-                    class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_or_guest_user.taste_events_saved?(@event.id) %>"
+                    class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_events_saved?(@event.id) %>"
                     aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
               <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
               <i class="material-icons-sharp mdc-icon-button__icon">star_border</i>
