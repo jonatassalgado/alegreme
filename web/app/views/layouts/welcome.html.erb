@@ -10,8 +10,8 @@
 	  });
 	  var f                          = d.getElementsByTagName(s)[0],
 	      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-	  j.async = true;
-	  j.src =
+	  j.async                        = true;
+	  j.src                          =
 		  'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
 	  f.parentNode.insertBefore(j, f);
   })(window, document, 'script', 'dataLayer', 'GTM-WH7RVCR');</script>
@@ -50,22 +50,22 @@
 <%= yield %>
 
 <% if notice %>
-  <div data-controller="snackbar" class="me-snackbar mdc-snackbar">
+  <div class="mdc-snackbar">
     <div class="mdc-snackbar__surface">
-      <div class="mdc-snackbar__label" role="status" aria-live="polite">
+      <div class="mdc-snackbar__label"
+           role="status"
+           aria-live="polite">
         <%= notice %>
-      </div>
-      <div class="mdc-snackbar__actions">
-        <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
       </div>
     </div>
   </div>
 <% end %>
 
+
 <script rel="preconnect" src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" defer></script>
 <script rel="preconnect" src="https://apis.google.com/js/platform.js" defer></script>
 <%= javascript_include_tag 'welcome/application.js', defer: true %>
-
+<%= javascript_pack_tag 'welcome.js', defer: true %>
 
 </body>
 </html>
