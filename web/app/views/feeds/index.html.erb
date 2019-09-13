@@ -31,7 +31,8 @@
                            kinds:      true,
                            ocurrences: true
                        },
-                       detail:  @items[:user][:detail]
+                       detail:  @items[:user][:detail],
+                       origin: :feed
                    }
                } %>
 
@@ -52,7 +53,8 @@
                              kinds:      true,
                              ocurrences: true
                          },
-                         detail:  @items[:today][:detail]
+                         detail:  @items[:today][:detail],
+                         origin: :feed
                      }
                  } %>
     <% end %>
@@ -73,7 +75,8 @@
                              kinds:      true,
                              ocurrences: true
                          },
-                         detail:  @items[:follow][:detail]
+                         detail:  @items[:follow][:detail],
+                         origin: :feed
                      }
                  } %>
     <% end %>
@@ -95,7 +98,8 @@
                              kinds:      false,
                              ocurrences: true
                          },
-                         detail:  @items[:user_suggestions][:detail]
+                         detail:  @items[:user_suggestions][:detail],
+                         origin: :feed
                      }
                  } %>
 
@@ -119,7 +123,8 @@
                              kinds:      false,
                              ocurrences: true
                          },
-                         detail:  @items[:user_personas][:detail]
+                         detail:  @items[:user_personas][:detail],
+                         origin: :feed
                      }
                  } %>
 

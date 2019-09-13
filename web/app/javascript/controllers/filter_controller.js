@@ -131,6 +131,7 @@ export default class FilterController extends Controller {
 							       title               : this.title,
 							       defaults            : this.defaultValue,
 							       init_filters_applyed: this.initFiltersApplyed,
+							       origin              : this.origin,
 							       similar             : opts.similar,
 							       insert_after        : opts.insert_after,
 							       limit               : opts.limit
@@ -202,6 +203,10 @@ export default class FilterController extends Controller {
 
 	get initFiltersApplyed() {
 		return this.data.get('initFiltersApplyed');
+	}
+
+	get origin() {
+		return this.data.get('origin');
 	}
 
 	get sectionIdentifier() {

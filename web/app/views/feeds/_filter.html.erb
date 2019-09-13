@@ -22,7 +22,7 @@
              data-turbolinks-scroll="false">
 
           <div class="mdc-chip__text">
-            <%= filter.capitalize %>
+            <%= filter.try(:capitalize) %>
           </div>
         </div>
       <% end %>

@@ -32,6 +32,7 @@
            data-filter-section-identifier="<%= identifier %>"
            data-filter-title="<%= title.to_json %>"
            data-filter-init-filters-applyed="<%= filters_applyed.to_json %>"
+           data-filter-origin="<%= opts[:origin] %>"
            data-target="filter.filterContainer section.filter">
         <% if filters[:categories] && !items[:categories].blank? %>
           <%= render partial: 'feeds/filter', locals: {
@@ -78,10 +79,9 @@
             events:       items[:events],
             identifier:   identifier,
             json_request: json_request
-        } if !mobile_device? || ['places', 'organizers'].include?(params[:controller]) %>
+        } if !mobile_device? || !['feed'].include?(opts[:origin]) %>
 
         <% if actual_events_in_collection < total_events_in_collection && mobile_device? %>
-
           <div data-action="click->section#loadMore"
                data-target="section.loadMoreButton"
                class="me-feed__load-more me-feed__load-more--mobile">
@@ -113,7 +113,7 @@
     <%= render partial: 'components/collection/similar', locals: {
         events:     items[:events],
         identifier: identifier
-    } if mobile_device? && !['places', 'organizers'].include?(params[:controller]) %>
+    } if mobile_device? && ['feed'].include?(opts[:origin]) %>
     <% if actual_events_in_collection < total_events_in_collection %>
       <div class="me-feed__load-more"
            data-action="click->section#loadMore"

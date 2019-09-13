@@ -18,7 +18,8 @@ class CollectionsController < ApplicationController
 					identifier:   params[:identifier],
 					opts:         {
 							filters: collection[:filters],
-							detail:  collection[:detail]
+							detail:  collection[:detail],
+							origin: params[:origin]
 					},
 					json_request: true
 			}
@@ -36,7 +37,8 @@ class CollectionsController < ApplicationController
 					identifier:   params[:identifier],
 					opts:         {
 							filters: collection[:filters],
-							detail:  collection[:detail]
+							detail:  collection[:detail],
+							origin: params[:origin]
 					},
 					json_request: true
 			}
@@ -53,7 +55,8 @@ class CollectionsController < ApplicationController
 					identifier:   params[:identifier],
 					opts:         {
 							filters: collection[:filters],
-							detail:  collection[:detail]
+							detail:  collection[:detail],
+							origin: params[:origin]
 					},
 					json_request: true
 			}
