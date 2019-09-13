@@ -1,7 +1,7 @@
 import Turbolinks from "turbolinks"
 
 const ProgressBarModule = (() => {
-	const module    = {};
+	const module      = {};
 	const progressBar = new Turbolinks.ProgressBar();
 
 	console.log("[PROGRESSBAR]: initied");
@@ -12,10 +12,14 @@ const ProgressBarModule = (() => {
 	};
 
 	module.hide = () => {
-		progressBar.setValue(1);
 		setTimeout(() => {
-			progressBar.hide();
-		}, 100);
+			requestIdleCallback(() => {
+				progressBar.setValue(1);
+				setTimeout(() => {
+					progressBar.hide();
+				}, 100);
+			}, {timeout: 250});
+		}, 250);
 	};
 
 	return module;

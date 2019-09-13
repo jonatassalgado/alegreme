@@ -55,7 +55,7 @@ export default class FilterController extends Controller {
 			});
 
 			flipPromise.then(() => {
-
+				ProgressBarModule.hide();
 			});
 		});
 
@@ -153,7 +153,6 @@ export default class FilterController extends Controller {
 							       (response) => {
 								       response.text().then((data) => {
 									       eval(data);
-									       ProgressBarModule.hide();
 								       });
 							       }
 						       )
