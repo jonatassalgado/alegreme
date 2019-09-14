@@ -26,7 +26,7 @@ namespace :populate do
 			puts "Erro ao ler arquivo JSON: #{e}".red
 			return
 		else
-			puts "Arquivo JSON parseado".green
+			puts "Arquivo JSON parseado".blue
 		end
 
 		data.each do |item|
@@ -51,7 +51,7 @@ def create_place(item)
 	place = Place.where.contains(details: {name: item['place']}).first
 
 	if !place.blank?
-		puts "#{place.details['name']} - Lugar já existe".yellow
+		puts "#{place.details['name']} - Lugar já existe".white
 
 		place
 	else
@@ -66,7 +66,7 @@ def create_place(item)
 
 		SetGeolocationJob.perform_later(place.id)
 
-		puts "#{place.details_name} - Lugar criado".green
+		puts "#{place.details_name} - Lugar criado".blue
 
 		place
 	end
@@ -85,7 +85,7 @@ def create_organizer(item, event)
 					name: organizer_item
 			)
 
-			puts "#{organizer_item} - Organizador criado".green
+			puts "#{organizer_item} - Organizador criado".blue
 
 			event.organizers << organizer unless event.organizers.include?(organizer)
 		end
@@ -93,6 +93,7 @@ def create_organizer(item, event)
 end
 
 def save_event(event)
+	event.slug = nil
 	event.save!
 
 	@events_create_counter += 1
@@ -152,26 +153,28 @@ end
 
 def set_cover(item, event)
 	return unless item['cover_url']
-	event_name = "event-#{item['name'].parameterize}"
+	return if event.image
+
 	begin
 		event_cover_file = Down.download(item['cover_url'])
 	rescue Down::Error => e
 		puts "#{item['name']} - Erro no download da imagem (#{item['cover_url']}) - #{e}".red
 		return false
 	else
-		puts "#{item['name']} - Download da imagem (#{item['cover_url']}) - Sucesso".green
+		puts "#{item['name']} - Download da imagem (#{item['cover_url']}) - Sucesso".blue
 	end
 
 	return unless event_cover_file
 
 	begin
-		event.image = @uploader.upload(event_cover_file, metadata: {'filename' => event_name})
+		event.image = event_cover_file
+		puts "#{item['name']} - Upload de imagem".blue
 	rescue
 		puts "#{item['name']} - Erro no upload da image #{e}".red
 		return false
 	end
 
-	return true
+	true
 end
 
 def associate_event_place(event, place)
@@ -209,7 +212,7 @@ def create_event(item)
 
 	if !event.blank?
 		@events_create_counter += 1
-		puts "#{@events_create_counter}: #{item['name']} - Evento já existe".yellow
+		puts "#{@events_create_counter}: #{item['name']} - Evento já existe".white
 	elsif @features_response_failed
 		@events_create_counter += 1
 		puts "#{@events_create_counter}: #{item['name']} - Evento falhou durante a criação".red

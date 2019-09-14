@@ -78,6 +78,7 @@ gem 'image_processing', '~> 1.0'
 gem 'rack-cors'
 
 gem 'shrine'
+gem 'aws-sdk-s3'
 gem 'mimemagic'
 gem 'shrine-color'
 
@@ -98,7 +99,7 @@ gem 'active_record_extended'
 gem 'rack-attack'
 
 group :production do
-  gem 'aws-sdk-s3'
+  # gem 'aws-sdk-s3'
   gem 'sentry-raven'
 
   # Cache
@@ -113,6 +114,7 @@ group :production do
 end
 
 group :development, :production do
+  gem 'aws-sdk-s3'
 end
 
 group :development, :test do

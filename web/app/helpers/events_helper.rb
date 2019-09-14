@@ -28,7 +28,7 @@ module EventsHelper
 		
 		if event&.image && event&.image[opts[:type]]
 			if opts[:preload]
-				"background-color: #{event.image_data.dig("feed", "metadata", "dominant_color")}; background-image: url('#{event.image[opts[:type]].url}')"
+				"background-color: #{event.image_data.dig("feed", "metadata", "dominant_color")}; background-image: url('#{event.image[opts[:type]].url(public: true)}')"
 			else
 				"background-color: #{event.image_data.dig("feed", "metadata", "dominant_color")}"
 			end
