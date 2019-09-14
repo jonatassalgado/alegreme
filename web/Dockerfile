@@ -34,17 +34,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       libpq-dev \
   && rm -rf /var/lib/apt/lists/*
 
-# RUN echo 'gem: --no-document' >> /.gemrc
 
-# RUN mkdir -p /tmp/ruby \
-#   && curl -L "http://cache.ruby-lang.org/pub/ruby/$RUBY_MAJOR/ruby-$RUBY_VERSION.tar.bz2" \
-#       | tar -xjC /tmp/ruby --strip-components=1 \
-#   && cd /tmp/ruby \
-#   && ./configure --disable-install-doc \
-#   && make \
-#   && make install \
-#   && gem update --system \
-#   && rm -r /tmp/ruby
+ENV RAILS_ENV production
+ENV RACK_ENV production
+#ENV RAILS_LOG_TO_STDOUT true
 
 RUN rm -fr /usr/local/bin/bundle
 RUN gem install --no-document bundler
@@ -86,7 +79,7 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 COPY Gemfile Gemfile
 
-RUN bundle install --jobs 20 --retry 5
+RUN bundle install --jobs 20 --retry 5 --without development test
 RUN bundle update --bundler
 
 ADD . $RAILS_ROOT
