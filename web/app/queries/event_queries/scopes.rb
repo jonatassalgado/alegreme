@@ -101,7 +101,6 @@ module EventQueries
 				else
 					all
 				end
-
 			}
 
 			scope 'in_kinds', lambda { |kinds, opts = {}|
@@ -226,13 +225,13 @@ module EventQueries
 			}
 
 			scope 'in_categories', lambda { |categories, opts = {}|
-				opts       = {'turn_on': true, 'group_by': 5, 'active': true, 'personas': PERSONAS}.merge(opts)
-				categories = categories || []
+				opts       = {'turn_on': true, 'group_by': 5, 'active': true, 'personas': PERSONAS, 'not_in': []}.merge(opts)
+				categories = categories.present? ? (categories - opts[:not_in]) : (CATEGORIES - opts[:not_in])
 
-				if opts[:turn_on] && !categories.blank?
+				if categories.present? || opts[:not_in].present?
 					# .where("(categories.details ->> 'name') IN (:categories) ", categories: categories)
 					Event.includes(:categories)
-							.where("(ml_data -> 'categories' -> 'primary' ->> 'name') IN (:categories) ", categories: categories)
+							.where("(ml_data -> 'categories' -> 'primary' ->> 'name') IN (:categories)", categories: categories)
 							.references(:categories)
 							.active(opts[:active])
 							.order_by_persona(true, {personas: opts[:personas]})

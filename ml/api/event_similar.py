@@ -29,8 +29,8 @@ class EventSimilar(object):
             cosine_sim[current_text_index]).sort_values(ascending=False)
 
         top_10_items = [
-            list(score_series.iloc[1:11].index),
-            list(score_series.iloc[1:11].values)
+            list(score_series.iloc[1:17].index),
+            list(score_series.iloc[1:17].values)
         ]
 
         for index, similar_index in enumerate(top_10_items[0]):
@@ -49,18 +49,9 @@ class EventSimilar(object):
         base = base64.b64decode(base).decode('utf-8')
         similarity = self.__get_similarity(text, base)
 
-        print(similarity)
+#        print(similarity)
         return similarity
 
 
-# predictModel = EventCategoryPrediction()
-# predictModel.clean()
-# predictModel.train()
-#predictModel.debug
-#bagOfWords = predictModel.bag_of_words()
-
-#stemmed, cleanned = predictModel.X
-#mostFreq = predictModel.most_popular_words
-
-#
-#predictModel.predict('<span>Nossa Feira aterriza novamente na Casa de Cultura Mario Quintana como um grande mercado do alternativo, vintage e cultural.<br>Como sempre teremos expositores dos mais variados, um som gostoso e nostálgico e algumas atrações!<br><br>A arara convidada desta vez fica por conta da querida Carol Morandi que traz sua linha de peças em crochê, a Carol Morandi Handmade Crochet, marca local que também irá fazer um desfile pocket em nosso evento!<br><br>Na finaleira não podia faltar o agito dos Teachers Trio na pista, tocando o melhor da Jovem Guarda! Pedida mais que confirmada!<br><br>Não perde!<br><br>***Vai ser em <br>14/04 na Casa de Cultura Mario Quintana, Travessa dos Catavento<br>das 13h às 19h<br><br>ENTRADA FRANCA<br><br>***16h Desfile pocket da marca Carol Morandi Handmade Crochet<br><br>***17h show com a banda Teachers Trio<br><br>/////Em caso de chuva o evento será transferido\\\\\<br><br>Tem uma marca, trabalho artístico, brechó e que expor?<br>Entra em contato conosco pelo<br>mercadodepulgaspoa@gmail.com e manda teu portfólio!<br><br>*Breve mais informações S2<br></span>')
+#predictModel = EventSimilar()
+#predictModel.get_similarity(1)

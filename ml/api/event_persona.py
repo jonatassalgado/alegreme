@@ -428,16 +428,16 @@ class EventPersonaPrediction(object):
 
         X_train, X_test, y_train, y_test = train_test_split(self.X,
                                                             self.y,
-                                                            test_size=0.15,
+                                                            test_size=0.01,
                                                             random_state=True)
 
         gs_classificator = gs_clf_svm.fit(X_train, y_train)
         return gs_classificator.best_params_
 
 
-#predictModel = EventPersonaPrediction()
-#predictModel.clean()
-#predictModel.train()
+predictModel = EventPersonaPrediction()
+predictModel.clean()
+predictModel.train()
 #predictModel.predict('<span>Nossa Feira aterriza novamente na Casa de Cultura Mario Quintana como um grande mercado do alternativo, vintage e cultural.<br>Como sempre teremos expositores dos mais variados, um som gostoso e nostálgico e algumas atrações!<br><br>A arara convidada desta vez fica por conta da querida Carol Morandi que traz sua linha de peças em crochê, a Carol Morandi Handmade Crochet, marca local que também irá fazer um desfile pocket em nosso evento!<br><br>Na finaleira não podia faltar o agito dos Teachers Trio na pista, tocando o melhor da Jovem Guarda! Pedida mais que confirmada!<br><br>Não perde!<br><br>***Vai ser em <br>14/04 na Casa de Cultura Mario Quintana, Travessa dos Catavento<br>das 13h às 19h<br><br>ENTRADA FRANCA<br><br>***16h Desfile pocket da marca Carol Morandi Handmade Crochet<br><br>***17h show com a banda Teachers Trio<br><br>/////Em caso de chuva o evento será transferido\\\\\<br><br>Tem uma marca, trabalho artístico, brechó e que expor?<br>Entra em contato conosco pelo<br>mercadodepulgaspoa@gmail.com e manda teu portfólio!<br><br>*Breve mais informações S2<br></span>')
 #predictModel.debug
 #bagOfWords = predictModel.bag_of_words()

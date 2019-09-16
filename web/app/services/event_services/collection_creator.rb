@@ -38,6 +38,7 @@ module EventServices
 			{
 					user:             get_current_user,
 					in_categories:    set_initial_categories_filter,
+					not_in_categories: [],
 					in_days:          set_initial_dates_filter,
 					in_kinds:         set_initial_kinds_filter,
 					in_organizers:    set_initial_organizers_filter,
@@ -72,7 +73,7 @@ module EventServices
 							in_user_suggestions: true,
 							in_days:             set_initial_dates_filter,
 							order_by_persona:    true
-					},
+					}
 			}
 
 			if collections.key?(@identifier)

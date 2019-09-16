@@ -27,6 +27,7 @@ module EventServices
 			organizers          = @params[:in_organizers]
 			places              = @params[:in_places]
 			categories          = @params[:in_categories]
+			not_categories      = @params[:not_in_categories]
 			not_in              = @params[:not_in]
 			limit               = @params[:limit]
 			kinds               = @params[:in_kinds]
@@ -70,7 +71,8 @@ module EventServices
 							categories,
 							'personas': personas,
 							'group_by': group_by,
-							'turn_on':  categories_on
+							'turn_on':  categories_on,
+							'not_in':   not_categories
 					)
 					.in_kinds(
 							kinds,
