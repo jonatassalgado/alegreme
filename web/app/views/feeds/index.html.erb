@@ -43,7 +43,7 @@
                      items:      @items[:today],
                      title:      {
                          principal: "Eventos acontecendo hoje e amanhã",
-                         secondary: "Acontecendo hoje (quinta) ou amanhã (sexta). Use os filtros ao lado para buscar tópicos que deseja."
+                         secondary: "#{I18n.l(Date.today, format: :week)} (#{I18n.l(Date.today, format: :short)}) e #{I18n.l(Date.today + 1, format: :week)} (#{I18n.l(Date.today + 1, format: :short)})"
                      },
                      identifier: 'today-and-tomorrow',
                      opts:       {
