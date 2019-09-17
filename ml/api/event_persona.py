@@ -110,7 +110,7 @@ class EventPersonaPrediction(object):
     def __init__(self):
 
         self.debug = {}
-        
+
         if 'IS_DOCKER' in os.environ and os.environ['IS_DOCKER'] == 'true':
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
             last_file = max(filter(regex.search, os.listdir('/var/www/scrapy/data/classified/')))
@@ -119,7 +119,7 @@ class EventPersonaPrediction(object):
             regex = re.compile(r'svm-classification-events-\d{8}-\d{6}\.csv$')
             last_file = max(filter(regex.search, os.listdir('../../../alegreme/scrapy/data/classified')))
             self.base = pd.read_csv('../../../alegreme/scrapy/data/classified/' + last_file)
-            
+
         self.base = self.base.drop_duplicates(['source_url'])
 
 
@@ -346,7 +346,7 @@ class EventPersonaPrediction(object):
         classificator = classificator.fit(X_train, y_train)
         timestr = time.strftime("%Y%m%d-%H%M%S")
         dump(classificator, 'predict-event__persona-model-' + timestr + '.joblib')
-        
+
 #        predictions = classificator.predict(X_test)
 #        print(classificator.score(X_test, y_test))
         predictions = classificator.predict_proba(X_test)
@@ -357,7 +357,7 @@ class EventPersonaPrediction(object):
             best_two_labels_index = hq.nlargest(2, range(len(prediction)), prediction.take)
             predictions_labels.append(classificator.classes_[best_two_labels_index])
             predictions_scores.append(hq.nlargest(2, prediction))
-        
+
         self.debug['predictionsLabels'] = predictions_labels
 
         accuracy = accuracy_score([i[0] for i in predictions_labels], y_test)
@@ -435,9 +435,9 @@ class EventPersonaPrediction(object):
         return gs_classificator.best_params_
 
 
-predictModel = EventPersonaPrediction()
-predictModel.clean()
-predictModel.train()
+# predictModel = EventPersonaPrediction()
+# predictModel.clean()
+# predictModel.train()
 #predictModel.predict('<span>Nossa Feira aterriza novamente na Casa de Cultura Mario Quintana como um grande mercado do alternativo, vintage e cultural.<br>Como sempre teremos expositores dos mais variados, um som gostoso e nostálgico e algumas atrações!<br><br>A arara convidada desta vez fica por conta da querida Carol Morandi que traz sua linha de peças em crochê, a Carol Morandi Handmade Crochet, marca local que também irá fazer um desfile pocket em nosso evento!<br><br>Na finaleira não podia faltar o agito dos Teachers Trio na pista, tocando o melhor da Jovem Guarda! Pedida mais que confirmada!<br><br>Não perde!<br><br>***Vai ser em <br>14/04 na Casa de Cultura Mario Quintana, Travessa dos Catavento<br>das 13h às 19h<br><br>ENTRADA FRANCA<br><br>***16h Desfile pocket da marca Carol Morandi Handmade Crochet<br><br>***17h show com a banda Teachers Trio<br><br>/////Em caso de chuva o evento será transferido\\\\\<br><br>Tem uma marca, trabalho artístico, brechó e que expor?<br>Entra em contato conosco pelo<br>mercadodepulgaspoa@gmail.com e manda teu portfólio!<br><br>*Breve mais informações S2<br></span>')
 #predictModel.debug
 #bagOfWords = predictModel.bag_of_words()
