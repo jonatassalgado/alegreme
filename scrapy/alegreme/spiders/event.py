@@ -83,6 +83,9 @@ parse_page_script = """
 """
 
 class EventSpider(scrapy.Spider):
+    http_user = 'jon'
+    http_pass = 'password'
+
     name = 'event'
     allowed_domains = ['facebook.com']
     start_urls = ['https://www.facebook.com/pg/SerenataIluminada/events',
@@ -137,7 +140,7 @@ class EventSpider(scrapy.Spider):
                   'https://www.facebook.com/pg/SindilojasPOA/events',
                   'https://www.facebook.com/pg/ligadesaudedesportiva/events',
                   'https://www.facebook.com/pg/centrodeeventospucrs/events/']
-    
+
     random.shuffle(start_urls)
 
     def start_requests(self):
@@ -153,10 +156,10 @@ class EventSpider(scrapy.Spider):
             )
 
 
-    
+
 
     def parse_page(self, response):
-       
+
         events_in_page = response.xpath('//*[contains(@id, "recurring_events_card")]//*[contains(@class, "_2l3f")]/a/@href | //*[@id="upcoming_events_card"]//*[contains(@class, "_4dmk")]/a/@href')
 
         for event_link in events_in_page.extract():

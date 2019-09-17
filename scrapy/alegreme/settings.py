@@ -28,6 +28,8 @@ home = os.environ.get('HOME')
 
 # if home == '/home/jon':
 SPLASH_URL = 'http://splash:8050'
+SPLASH_USERNAME = 'jon'
+SPLASH_PASS = 'password'
 IS_DOCKER = 'true'
 # PWD = '/home/jon/Projects/alegreme/scrapy/'
 # else:
