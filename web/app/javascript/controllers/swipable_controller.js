@@ -1,5 +1,7 @@
-import {Controller}      from "stimulus";
-import * as MobileDetect from "mobile-detect";
+import {Controller}        from "stimulus";
+import {UILandingBot}      from "../modules/bot-module";
+import * as MobileDetect   from "mobile-detect";
+import {ProgressBarModule} from "../modules/progressbar-module";
 
 
 export default class SwipableController extends Controller {
@@ -116,8 +118,8 @@ export default class SwipableController extends Controller {
 		let maxElements; //Total of stacked cards on DOM.
 		let currentPosition           = 0; //Keep the position of active stacked card.
 		let counter                   = 0;
-		const velocity                = 0.5; //Minimum velocity allowed to trigger a swipe.
-		const pixelsToMoveCardOnSwipe = this.md.mobile() ? 400 : 1000;
+		const velocity                = 0.35; //Minimum velocity allowed to trigger a swipe.
+		const pixelsToMoveCardOnSwipe = this.md.mobile() ? 250 : 400;
 		let answers                   = [];
 		let isFirstTime               = true;
 		let topObj; //Keep the swipe top properties.
@@ -300,9 +302,11 @@ export default class SwipableController extends Controller {
 												document.querySelector('.me-swipable__question').classList.add('hidden');
 												document.querySelector('.final-state').classList.remove('hidden');
 												document.querySelector('.final-state').classList.add('active');
+												ProgressBarModule.show();
 												setTimeout(() => {
+													ProgressBarModule.hide();
 													Turbolinks.visit("/feed");
-												}, 1500)
+												}, 3500)
 											});
 										}
 									)

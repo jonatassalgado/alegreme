@@ -20,8 +20,8 @@
     height: 100%;
     //overflow-y: scroll;
     //overflow-x: hidden;
-    width: 40vw;
-    padding: 25px 30vw;
+    width: calc(40vw - 20px);
+    padding: 106px 30vw;
     @include mdc-layout-grid-media-query_("phone") {
       width: calc(100vw - 64px);
       padding: 150px 24px 66px 24px;
@@ -37,6 +37,7 @@
   &__items {
     transition: opacity 0.4s linear;
     max-width: 420px;
+    padding: 150px 24px 66px 24px;
     @include mdc-layout-grid-media-query_("phone") {
       padding: 94px 24px 0 24px;
     }
@@ -160,9 +161,10 @@
   }
 
   & .stackedcards--animatable {
-    -webkit-transition: all 650ms ease;
-    -o-transition: all 650ms ease;
-    transition: all 650ms ease;
+    -webkit-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
+    will-change: opacity, transform;
   }
 
   & .stackedcards-overlay {
@@ -219,7 +221,7 @@
     left: 0;
     opacity: 0;
     top: 0;
-    height: calc(100% - 18px);
+    height: calc(100% - 24px);
     letter-spacing: 3px;
     font-size: 24px; /* this style was added only for better preview */
     text-transform: uppercase; /* this style was added only for better preview */
@@ -336,21 +338,13 @@
   }
 
   & .final-state {
-    transition: opacity 0.3s linear;
+    transition: opacity 0.4s linear;
+    text-align: center;
+    max-width: 300px;
   }
 
   & .final-state.active {
-    position: absolute;
     opacity: 1;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    transition: opacity 400ms ease;
-    text-align: center;
   }
 
   & .final-state.hidden {

@@ -1,19 +1,11 @@
-<!-- <section class="me-page__section"> -->
 <%= render partial: 'components/swipable/swipable' unless current_user&.personas_assortment_finished? %>
-<!-- </section> -->
 
-<!-- <div class=""> -->
-<!-- <section class=""> -->
 <%= render partial: 'saves',
            locals:  {
                identifier:   'salvos',
                saved_events: @favorited_events
            } if current_user && current_user&.personas_assortment_finished? %>
-<!-- </div> -->
-<!-- </section> -->
 
-
-<!-- <section class="me-page__section"> -->
 
 <div class="me-feed me-page__section">
   <% if params[:q] %>
@@ -32,107 +24,106 @@
                            ocurrences: true
                        },
                        detail:  @items[:user][:detail],
-                       origin: :feed
+                       origin:  :feed
                    }
                } %>
 
   <% else %>
-  <% if current_user&.personas_assortment_finished? %>
-    <% if @items.dig(:today, :detail, :total_events_in_collection) > 0 %>
-      <%= render partial: "components/collection/collection",
-                 locals:  {
-                     items:      @items[:today],
-                     title:      {
-                         principal: "Eventos acontecendo hoje e amanhã",
-                         secondary: "#{I18n.l(Date.today, format: :week)} (#{I18n.l(Date.today, format: :short)}) e #{I18n.l(Date.today + 1, format: :week)} (#{I18n.l(Date.today + 1, format: :short)})"
-                     },
-                     identifier: 'today-and-tomorrow',
-                     opts:       {
-                         type:    :large,
-                         filters: {
-                             categories: true,
-                             kinds:      true,
-                             ocurrences: true
-                         },
-                         detail:  @items[:today][:detail],
-                         origin: :feed
-                     }
-                 } %>
-    <% end %>
+    <% if current_user&.personas_assortment_finished? %>
+      <% if @items.dig(:today, :detail, :total_events_in_collection) > 0 %>
+        <%= render partial: "components/collection/collection",
+                   locals:  {
+                       items:      @items[:today],
+                       title:      {
+                           principal: "Eventos acontecendo hoje e amanhã",
+                           secondary: "#{I18n.l(Date.today, format: :week)} (#{I18n.l(Date.today, format: :short)}) e #{I18n.l(Date.today + 1, format: :week)} (#{I18n.l(Date.today + 1, format: :short)})"
+                       },
+                       identifier: 'today-and-tomorrow',
+                       opts:       {
+                           type:    :large,
+                           filters: {
+                               categories: true,
+                               kinds:      true,
+                               ocurrences: true
+                           },
+                           detail:  @items[:today][:detail],
+                           origin:  :feed
+                       }
+                   } %>
+      <% end %>
 
-    <% if current_user && @items.dig(:follow, :detail, :total_events_in_collection) > 0 %>
-      <%= render partial: "components/collection/collection",
-                 locals:  {
-                     items:      @items[:follow],
-                     title:      {
-                         principal: "Tópicos que você segue",
-                         secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
-                     },
-                     identifier: 'follow',
-                     opts:       {
-                         type:    :large,
-                         filters: {
-                             categories: true,
-                             kinds:      true,
-                             ocurrences: true
-                         },
-                         detail:  @items[:follow][:detail],
-                         origin: :feed
-                     }
-                 } %>
-    <% end %>
-
-
-    <% if current_user && @items.dig(:user_suggestions, :detail, :total_events_in_collection) > 0 %>
-      <%= render partial: "components/collection/collection",
-                 locals:  {
-                     items:      @items[:user_suggestions],
-                     title:      {
-                         principal: "Indicados para #{current_user.name}",
-                         secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
-                     },
-                     identifier: 'user-suggestions',
-                     opts:       {
-                         type:    :large,
-                         filters: {
-                             categories: true,
-                             kinds:      false,
-                             ocurrences: true
-                         },
-                         detail:  @items[:user_suggestions][:detail],
-                         origin: :feed
-                     }
-                 } %>
-
-    <% end %>
+      <% if current_user && @items.dig(:follow, :detail, :total_events_in_collection) > 0 %>
+        <%= render partial: "components/collection/collection",
+                   locals:  {
+                       items:      @items[:follow],
+                       title:      {
+                           principal: "Tópicos que você segue",
+                           secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
+                       },
+                       identifier: 'follow',
+                       opts:       {
+                           type:    :large,
+                           filters: {
+                               categories: true,
+                               kinds:      true,
+                               ocurrences: true
+                           },
+                           detail:  @items[:follow][:detail],
+                           origin:  :feed
+                       }
+                   } %>
+      <% end %>
 
 
-    <% if @items.dig(:user_personas, :detail, :total_events_in_collection) > 0 %>
+      <% if current_user && @items.dig(:user_suggestions, :detail, :total_events_in_collection) > 0 %>
+        <%= render partial: "components/collection/collection",
+                   locals:  {
+                       items:      @items[:user_suggestions],
+                       title:      {
+                           principal: "Indicados para #{current_user.name}",
+                           secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
+                       },
+                       identifier: 'user-suggestions',
+                       opts:       {
+                           type:    :large,
+                           filters: {
+                               categories: true,
+                               kinds:      false,
+                               ocurrences: true
+                           },
+                           detail:  @items[:user_suggestions][:detail],
+                           origin:  :feed
+                       }
+                   } %>
 
-      <%= render partial: "components/collection/collection",
-                 locals:  {
-                     items:      @items[:user_personas],
-                     title:      {
-                         principal: "Gostos parecidos",
-                         secondary: "Explore os eventos que pessoas com gostos parecidos estão salvando"
-                     },
-                     identifier: 'user-personas',
-                     opts:       {
-                         type:    :large,
-                         filters: {
-                             categories: true,
-                             kinds:      false,
-                             ocurrences: true
-                         },
-                         detail:  @items[:user_personas][:detail],
-                         origin: :feed
-                     }
-                 } %>
+      <% end %>
 
 
+      <% if @items.dig(:user_personas, :detail, :total_events_in_collection) > 0 %>
+
+        <%= render partial: "components/collection/collection",
+                   locals:  {
+                       items:      @items[:user_personas],
+                       title:      {
+                           principal: "Gostos parecidos",
+                           secondary: "Explore os eventos que pessoas com gostos parecidos estão salvando"
+                       },
+                       identifier: 'user-personas',
+                       opts:       {
+                           type:    :large,
+                           filters: {
+                               categories: true,
+                               kinds:      false,
+                               ocurrences: true
+                           },
+                           detail:  @items[:user_personas][:detail],
+                           origin:  :feed
+                       }
+                   } %>
+
+
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
 
 </div>
-<!-- </section> -->

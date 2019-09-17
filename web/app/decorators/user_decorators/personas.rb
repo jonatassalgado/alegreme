@@ -76,7 +76,7 @@ module UserDecorators
 			end
 
 			def personas_assortment_finished?
-				personas_jsonb['assortment']['finished'] if features['psychographic']
+				personas_jsonb['assortment']['finished'].to_boolean if features['psychographic']
 			end
 
 			def personas_assortment_finished=(value)
