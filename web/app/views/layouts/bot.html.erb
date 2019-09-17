@@ -4,7 +4,6 @@
 
   <title><%= meta_title %></title>
 
-<!--  <meta name="turbolinks-cache-control" content="no-preview">-->
   <meta name="theme-color" content="#ffffff"/>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -33,37 +32,12 @@
 
 </head>
 <body>
-<!--<div class="mdc-drawer-app-content">-->
-<div style="height: 64px; width: 100%"></div>
-<% if params['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
-  <%= render partial: "layouts/app-top-bar" %>
-  <%= render partial: "feeds/float_menu" %>
-  <section class="me-page me-page--feed-section is-animated">
-<!--    <div class="me-overlay"></div>-->
-    <%= yield %>
-  </section>
-<% elsif params['controller'] == 'events' && params['action'] == 'show' %>
-  <%= render partial: "layouts/app-top-bar", locals: {controller: 'events'} %>
-  <section class="me-page me-page--events-section is-animated">
-<!--    <div class="me-overlay"></div>-->
-    <%= yield %>
-  </section>
-<% elsif params['controller'] == 'feeds' && params['action'] == 'train' %>
-  <%= render partial: "layouts/app-top-bar" %>
-  <section class="me-page me-page--train-section">
-    <%#= render partial: 'layouts/bot' %>
-<!--    <div class="me-overlay"></div>-->
-    <%= yield %>
-  </section>
-<% else %>
-  <%= render partial: "layouts/app-top-bar" %>
-  <section class="me-page me-page--profile__section is-animated">
-    <%#= render partial: 'layouts/bot' %>
-<!--    <div class="me-overlay"></div>-->
-    <%= yield %>
-  </section>
-<% end %>
-<!--</div>-->
+
+<%= render partial: "layouts/app-top-bar" %>
+<!--<section class="">-->
+  <%= yield %>
+<!--</section>-->
+
 <% if notice %>
   <div data-controller="snackbar" class="me-snackbar mdc-snackbar">
     <div class="mdc-snackbar__surface">
@@ -76,6 +50,6 @@
     </div>
   </div>
 <% end %>
-<%= render partial: 'layouts/footer' %>
+<%#= render partial: 'layouts/footer' %>
 </body>
 </html>

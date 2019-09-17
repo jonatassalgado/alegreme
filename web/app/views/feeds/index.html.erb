@@ -8,7 +8,7 @@
            locals:  {
                identifier:   'salvos',
                saved_events: @favorited_events
-           } if current_user %>
+           } if current_user && current_user&.personas_assortment_finished? %>
 <!-- </div> -->
 <!-- </section> -->
 
@@ -37,6 +37,7 @@
                } %>
 
   <% else %>
+  <% if current_user&.personas_assortment_finished? %>
     <% if @items.dig(:today, :detail, :total_events_in_collection) > 0 %>
       <%= render partial: "components/collection/collection",
                  locals:  {
@@ -131,6 +132,7 @@
 
     <% end %>
   <% end %>
+<% end %>
 
 </div>
 <!-- </section> -->

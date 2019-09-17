@@ -1,43 +1,54 @@
-<div data-controller="swipable" data-target="swipable.swipable" class="me-swipable me-page__section">
-  <div class="me-swipable__question">
-    <h2>Você iria neste evento?</h2>
-    <span>Indique abaixo os eventos que você iria ou não para já receber sugestões que tem a ver com seu gosto</span>
-  </div>
-  <div id="stacked-cards-block" class="stackedcards stackedcards--animatable init">
-    <div class="stackedcards-container">
-      <% @swipable_items.each do |item| %>
-        <div id="<%= item[:id] %>" class="card-item">
-          <div class="me-swipable__item" style="background-image: url('<%= image_url item[:image_url] %>')">
-            <div class="me-swipable__item-overlay" style="background: linear-gradient(to top, <%= item[:dominant_color] %>cb 30%, <%= item[:dominant_color] %>89);"></div>
-            <div class="me-swipable__item-title"><%= item[:name] %></div>
-            <div class="me-swipable__item-description"><%= item[:description] %></div>
+<div class="me-swipable"
+     data-controller="swipable"
+     data-target="swipable.swipable"
+     style="">
+
+  <div class="me-swipable__onboarding"
+       data-target="swipable.onboarding"></div>
+
+  <div class="me-swipable__items"
+       data-target="swipable.items"
+       style="display: none; opacity: 0">
+    <div class="me-swipable__question">
+      <h2>Você iria neste evento?</h2>
+      <span>Indique abaixo os eventos que você iria ou não para já receber sugestões que tem a ver com seu gosto</span>
+    </div>
+    <div id="stacked-cards-block" class="stackedcards stackedcards--animatable init">
+      <div class="stackedcards-container">
+        <% @swipable_items.each do |item| %>
+          <div id="<%= item[:id] %>" class="card-item">
+            <div class="me-swipable__item" style="background-image: url('<%= image_url item[:image_url] %>')">
+              <div class="me-swipable__item-overlay" style="background: linear-gradient(to top, <%= item[:dominant_color] %>cb 30%, <%= item[:dominant_color] %>89);"></div>
+              <div class="me-swipable__item-title"><%= item[:name] %></div>
+              <div class="me-swipable__item-description"><%= item[:description] %></div>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+      <div class="stackedcards--animatable stackedcards-overlay left">
+        <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_down</i>
+      </div>
+      <div class="stackedcards--animatable stackedcards-overlay right">
+        <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
+      </div>
+      <div class="stackedcards--animatable stackedcards-overlay top">
+        TALVEZ
+      </div>
     </div>
-    <div class="stackedcards--animatable stackedcards-overlay left">
-      <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_down</i>
+    <div class="global-actions">
+      <button class="mdc-button mdc-button__icon left-action">
+        <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_down</i>
+      </button>
+      <button class="mdc-button mdc-button__icon top-action">
+  <!--      <i class="material-icons mdc-button__icon" aria-hidden="true">star_rate</i>-->
+        <span class="mdc-button__label" style="opacity: 0.6">Talvez</span>
+      </button>
+      <button class="mdc-button mdc-button__icon right-action">
+        <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
+      </button>
     </div>
-    <div class="stackedcards--animatable stackedcards-overlay right">
-      <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
+    <div class="final-state hidden">
+      <h2>Carregando novas sugestões...</h2>
     </div>
-    <div class="stackedcards--animatable stackedcards-overlay top">
-      TALVEZ
-    </div>
-  </div>
-  <div class="global-actions">
-    <button class="mdc-button mdc-button__icon left-action">
-      <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_down</i>
-    </button>
-    <button class="mdc-button mdc-button__icon top-action">
-<!--      <i class="material-icons mdc-button__icon" aria-hidden="true">star_rate</i>-->
-      <span class="mdc-button__label" style="opacity: 0.6">Talvez</span>
-    </button>
-    <button class="mdc-button mdc-button__icon right-action">
-      <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
-    </button>
-  </div>
-  <div class="final-state hidden">
-    <h2>Carregando novas sugestões...</h2>
   </div>
 </div>

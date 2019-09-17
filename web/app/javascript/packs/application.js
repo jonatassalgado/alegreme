@@ -18,6 +18,3 @@ const application = Application.start();
 const context     = require.context("controllers", true, /controller\.js$/);
 
 application.load(definitionsFromContext(context));
-
-
-

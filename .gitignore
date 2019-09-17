@@ -1,3 +1,5 @@
+web/package.json
+web/yarn-error.log
 web/core
 web/stats.json
 data/

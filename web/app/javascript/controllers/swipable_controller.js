@@ -1,11 +1,98 @@
-import {Controller} from "stimulus";
+import {Controller}      from "stimulus";
+import * as MobileDetect from "mobile-detect";
 
 
 export default class SwipableController extends Controller {
-	static targets = ["swipable"];
+	static targets = ["swipable", "onboarding", "items"];
 
 	initialize() {
 		const self = this;
+		this.md    = new MobileDetect(window.navigator.userAgent);
+		this.uilb  = new UILandingBot(this.onboardingTarget);
+
+		this.uilb
+		    .message({
+			    content: `Olá ${gon.user.features.demographic.name.split(" ")[0]} 👋`,
+			    delay  : 150
+		    })
+		    .then(ok =>
+			    this.uilb.message({
+				    cssClass: "no-icon",
+				    content :
+					    "Vamos aproveitar a cidade de Porto Alegre juntos!",
+				    delay   : 2000
+			    })
+		    )
+		    .then(ok =>
+			    this.uilb.message({
+				    cssClass: "no-icon",
+				    content :
+					    "Inicialmente vamos te sugerir eventos, mas logo também iremos sugerir filmes no cinema, serviços e experiências",
+				    delay   : 1500
+			    }))
+		    .then(ok =>
+			    this.uilb.message({
+				    cssClass: "no-icon",
+				    content :
+					    "Chega de papo, vamos começar!",
+				    delay   : 4000
+			    })
+		    )
+		    .then(ok =>
+			    this.uilb.message({
+				    cssClass: "no-icon",
+				    content :
+					    "Para sugerir eventos que tem a ver com você, primeiro me diga o que você gosta e não gosta",
+				    delay   : 1000
+			    })
+		    )
+		    .then(ok =>
+			    this.uilb.message({
+				    cssClass: "no-icon",
+				    content : "Vamos lá?",
+				    delay   : 4000
+			    })
+		    )
+		    .then(ok =>
+			    this.uilb.action({
+				    type : "button",
+				    delay: 500,
+				    items: [
+					    {
+						    text : "Vamos!",
+						    value: "Vamos!"
+					    }
+				    ]
+			    })
+		    )
+		    .then(ok =>
+			    this.uilb.message({
+				    delay  : 250,
+				    human  : true,
+				    content: ok
+			    })
+		    )
+		    .then(ok => {
+			    this.uilb.message({
+				    content: "Carregando opções...",
+				    delay  : 1500
+			    })
+		    })
+		    .then(ok => {
+			    setTimeout(() => {
+				    this.onboardingTarget.style.display = 'none';
+				    this.itemsTarget.style.display      = '';
+
+				    requestAnimationFrame(() => {
+					    setTimeout(() => {
+						    this.itemsTarget.style.opacity = '';
+						    window.scrollTo(0, 0);
+					    }, 300);
+				    });
+			    }, 5000);
+		    })
+		    .catch(error => console.log('error', error));
+
 		if (self.hasSwipableTarget) {
 			requestIdleCallback(() => {
 				self.stackedCards();
@@ -20,18 +107,19 @@ export default class SwipableController extends Controller {
 
 
 	stackedCards() {
-		const HOST           = gon.env == "development" ? `http://localhost:5000` : `https://${document.location.host}/ml`;
-		const stackedOptions = 'Top'; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
-		const rotate         = true; //Activate the elements' rotation for each move on stacked cards.
-		let items            = 3; //Number of visible elements when the stacked options are bottom or top.
-		const elementsMargin = 10; //Define the distance of each element when the stacked options are bottom or top.
-		const useOverlays    = true; //Enable or disable the overlays for swipe elements.
+		const HOST                    = gon.env == "development" ? `http://localhost:5000` : `https://${document.location.host}/ml`;
+		const stackedOptions          = 'Top'; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
+		const rotate                  = true; //Activate the elements' rotation for each move on stacked cards.
+		let items                     = 3; //Number of visible elements when the stacked options are bottom or top.
+		const elementsMargin          = 12; //Define the distance of each element when the stacked options are bottom or top.
+		const useOverlays             = true; //Enable or disable the overlays for swipe elements.
 		let maxElements; //Total of stacked cards on DOM.
-		let currentPosition  = 0; //Keep the position of active stacked card.
-		let counter          = 0;
-		const velocity       = 0.1; //Minimum velocity allowed to trigger a swipe.
-		let answers          = [];
-		let isFirstTime      = true;
+		let currentPosition           = 0; //Keep the position of active stacked card.
+		let counter                   = 0;
+		const velocity                = 0.5; //Minimum velocity allowed to trigger a swipe.
+		const pixelsToMoveCardOnSwipe = this.md.mobile() ? 400 : 1000;
+		let answers                   = [];
+		let isFirstTime               = true;
 		let topObj; //Keep the swipe top properties.
 		let rightObj; //Keep the swipe right properties.
 		let leftObj; //Keep the swipe left properties.
@@ -288,10 +376,10 @@ export default class SwipableController extends Controller {
 			answers.push('-1');
 
 			removeNoTransition();
-			transformUi(-1000, 0, 0, currentElementObj);
+			transformUi(-pixelsToMoveCardOnSwipe, 0, 0, currentElementObj);
 			if (useOverlays) {
-				transformUi(-1000, 0, 0, leftObj); //Move leftOverlay
-				transformUi(-1000, 0, 0, topObj); //Move topOverlay
+				transformUi(-pixelsToMoveCardOnSwipe, 0, 0, leftObj); //Move leftOverlay
+				transformUi(-pixelsToMoveCardOnSwipe, 0, 0, topObj); //Move topOverlay
 				resetOverlayLeft();
 			}
 			counter = counter + 1;
@@ -306,10 +394,10 @@ export default class SwipableController extends Controller {
 			answers.push('1');
 
 			removeNoTransition();
-			transformUi(1000, 0, 0, currentElementObj);
+			transformUi(pixelsToMoveCardOnSwipe, 0, 0, currentElementObj);
 			if (useOverlays) {
-				transformUi(1000, 0, 0, rightObj); //Move rightOverlay
-				transformUi(1000, 0, 0, topObj); //Move topOverlay
+				transformUi(pixelsToMoveCardOnSwipe, 0, 0, rightObj); //Move rightOverlay
+				transformUi(pixelsToMoveCardOnSwipe, 0, 0, topObj); //Move topOverlay
 				resetOverlayRight();
 			}
 			counter = counter + 1;
@@ -324,11 +412,11 @@ export default class SwipableController extends Controller {
 			answers.push('0');
 
 			removeNoTransition();
-			transformUi(0, -1000, 0, currentElementObj);
+			transformUi(0, -pixelsToMoveCardOnSwipe, 0, currentElementObj);
 			if (useOverlays) {
-				transformUi(0, -1000, 0, leftObj); //Move leftOverlay
-				transformUi(0, -1000, 0, rightObj); //Move rightOverlay
-				transformUi(0, -1000, 0, topObj); //Move topOverlay
+				transformUi(0, -pixelsToMoveCardOnSwipe, 0, leftObj); //Move leftOverlay
+				transformUi(0, -pixelsToMoveCardOnSwipe, 0, rightObj); //Move rightOverlay
+				transformUi(0, -pixelsToMoveCardOnSwipe, 0, topObj); //Move topOverlay
 				resetOverlays();
 			}
 			counter = counter + 1;

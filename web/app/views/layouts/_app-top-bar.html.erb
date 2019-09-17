@@ -12,29 +12,30 @@
         </a>
       </section>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
-        <div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"
-             data-controller="chat"
-             data-target="chat.field"
-             data-turbolinks-permanent
-             id="me-chat">
-          <form action=""
-                data-action="submit->chat#search"
-                data-target="chat.form"
-                method="get"
-                name="search"
-                style="width: 100%">
-            <i class="material-icons mdc-text-field__icon">search</i>
-            <input autocomplete="false"
-                   class="mdc-text-field__input"
-                   data-target="chat.input"
-                   id="text-field-shape-one"
-                   placeholder="O que você está buscando hoje?"
-                   type="text">
-            <input style="display: none;"
-                   type="submit"/>
-          </form>
-          <%# end %>
-        </div>
+        <% if current_user&.personas_assortment_finished? %>
+          <div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"
+               data-controller="chat"
+               data-target="chat.field"
+               data-turbolinks-permanent
+               id="me-chat">
+            <form action=""
+                  data-action="submit->chat#search"
+                  data-target="chat.form"
+                  method="get"
+                  name="search"
+                  style="width: 100%">
+              <i class="material-icons mdc-text-field__icon">search</i>
+              <input autocomplete="false"
+                     class="mdc-text-field__input"
+                     data-target="chat.input"
+                     id="text-field-shape-one"
+                     placeholder="O que você está buscando hoje?"
+                     type="text">
+              <input style="display: none;"
+                     type="submit"/>
+            </form>
+          </div>
+        <% end %>
       </section>
     <% elsif mobile_device? && params[:controller] == 'feeds' %>
       <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">

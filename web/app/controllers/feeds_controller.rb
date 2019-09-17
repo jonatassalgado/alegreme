@@ -32,6 +32,11 @@ class FeedsController < ApplicationController
 			# format.html do
 				gon.push(:user => current_or_guest_user)
 				gon.push(:env => Rails.env)
+
+				# unless current_user&.personas_assortment_finished?
+
+				# end
+
 				collections ||= EventServices::CollectionCreator.new(current_or_guest_user, params)
 
 				@swipable_items = [
@@ -183,6 +188,10 @@ class FeedsController < ApplicationController
 								dominant_color: "#225070"
 						}
 				]
+
+				unless current_user&.personas_assortment_finished?
+					render layout: 'bot' and return
+				end
 
 				@items = if params[:q]
 					         get_events_for_search_query
