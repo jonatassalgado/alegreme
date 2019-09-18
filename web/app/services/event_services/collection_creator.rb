@@ -14,11 +14,11 @@ module EventServices
 		end
 
 		def call(collection, opts = {})
-			return {} if collection.blank?
+			return {} if collection.nil? && collection[:collection].blank?
 
 			if collection.is_a?(Hash) && collection.key?(:identifier)
-				@collection = collection[:collection]
 				@identifier = collection[:identifier]
+				@collection = collection[:collection]
 			else
 				@identifier = collection
 				@collection = Event.all
@@ -36,18 +36,18 @@ module EventServices
 
 		def default_filters
 			{
-					user:             get_current_user,
-					in_categories:    set_initial_categories_filter,
+					user:              get_current_user,
+					in_categories:     set_initial_categories_filter,
 					not_in_categories: [],
-					in_days:          set_initial_dates_filter,
-					in_kinds:         set_initial_kinds_filter,
-					in_organizers:    set_initial_organizers_filter,
-					in_places:        set_initial_places_filter,
-					order_by_date:    false,
-					order_by_persona: false,
-					group_by:         calculate_items_for_group(2, auto_balance: true),
-					not_in:           set_not_in,
-					limit:            set_limit
+					in_days:           set_initial_dates_filter,
+					in_kinds:          set_initial_kinds_filter,
+					in_organizers:     set_initial_organizers_filter,
+					in_places:         set_initial_places_filter,
+					order_by_date:     false,
+					order_by_persona:  false,
+					group_by:          calculate_items_for_group(2, auto_balance: true),
+					not_in:            set_not_in,
+					limit:             set_limit
 			}
 		end
 
@@ -56,23 +56,26 @@ module EventServices
 					'today-and-tomorrow' => {
 							in_days:          @params[:ocurrences] || [@today.to_s, @tomorrow.to_s],
 							in_user_personas: true,
-							order_by_persona: true
-					},
-					'user-personas'      => {
-							in_user_personas: CollectionCreator.user,
-							in_days:          set_initial_dates_filter,
-							order_by_persona: true
+							order_by_persona: true,
+							group_by:         calculate_items_for_group(3, auto_balance: true)
 					},
 					'follow'             => {
 							in_days:            set_initial_dates_filter,
-							order_by_personas:  true,
+							order_by_persona:   false,
 							in_follow_features: true,
-							group_by:           calculate_items_for_group(5, auto_balance: true)
+							group_by:           nil
 					},
 					'user-suggestions'   => {
 							in_user_suggestions: true,
 							in_days:             set_initial_dates_filter,
-							order_by_persona:    true
+							order_by_persona:    true,
+							group_by:            calculate_items_for_group(nil, auto_balance: false)
+					},
+					'user-personas'      => {
+							in_user_personas: CollectionCreator.user,
+							in_days:          set_initial_dates_filter,
+							order_by_persona: true,
+							group_by:         calculate_items_for_group(4, auto_balance: true)
 					}
 			}
 
@@ -162,7 +165,7 @@ module EventServices
 			@current_events = @all_events.limit(@params[:limit] || @opts[:limit])
 
 			{
-					events: @current_events,
+					events:     @current_events,
 					categories: get_filters_from_exist_events(@all_events, 'categories'),
 					kinds:      get_filters_from_exist_events(@all_events, 'kinds'),
 					ocurrences: get_filters_from_exist_events(@all_events, 'ocurrences'),
@@ -205,17 +208,24 @@ module EventServices
 		end
 
 		def calculate_items_for_group(number = 2, opts = {})
-			if opts[:auto_balance] && @opts[:limit]
-				(@opts[:limit] / 8) * 2
-			elsif opts[:auto_balance] && params_filter_category_exist?
-				categories = @params.fetch(:categories) || CollectionCreator.categories
-				categories.count < 5 ? (8 / categories.count) : 2
-			elsif params_filter_kind_exist?
-				8
-			elsif number
-				number
+			if organizers_filter_exist || places_filter_exist
+				return nil
 			else
-				2
+				if @params[:limit] && JSON.parse(@params[:limit]) > 8
+					return nil
+				else
+					if opts[:auto_balance] && params_filter_category_exist?
+						nil
+					elsif opts[:auto_balance] && @opts[:limit]
+						(@opts[:limit] / 8) * 2
+						# categories = @params.fetch(:categories) || @opts.fetch(:categories)
+						# categories.size < 5 ? (8 / categories.size) : 2
+					elsif params_filter_kind_exist?
+						nil
+					else
+						number
+					end
+				end
 			end
 		end
 
@@ -292,11 +302,19 @@ module EventServices
 			!@params[:init_filters_applyed].blank?
 		end
 
+		def organizers_filter_exist
+			@opts[:organizers].present? || @params[:organizers].present?
+		end
+
+		def places_filter_exist
+			@opts[:places].present? || @params[:places].present?
+		end
+
 		def filters_without_sensitive_info
 			filters_cleanned = @dynamic_filters.select { |k, v| k != :user }
 			filters_cleanned.store :user, {id: @dynamic_filters[:user][:id]} if @dynamic_filters[:user]
 			# filters_cleanned.store :in_user_personas, @dynamic_filters[:user].slice(:id) if @dynamic_filters[:user]
-			filters_cleanned.store :events_ids, @current_events.map(&:id)
+			filters_cleanned.store :events_ids, @current_events.includes(:place).map(&:id)
 			filters_cleanned
 		end
 
@@ -308,10 +326,10 @@ module EventServices
 				CollectionCreator.kinds         = CollectionCreator.active_events.map { |e| e.kinds.map { |c| c.details['name'] } }.flatten.uniq.freeze
 				CollectionCreator.categories    = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq.freeze
 			else
-				CollectionCreator.user          = current_user
-				CollectionCreator.active_events = Event.includes(:place, :categories, :organizers).active
+				CollectionCreator.user          ||= current_user
+				CollectionCreator.active_events ||= Event.includes(:place, :categories, :organizers).active
+				CollectionCreator.categories    ||= CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
 				# CollectionCreator.kinds         ||= CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
-				CollectionCreator.categories = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
 			end
 		end
 	end

@@ -3,7 +3,7 @@
 
 	setTimeout(function () {
 		requestIdleCallback(function (){
-      morphdom.default(chipEventElem, '<%= j render(partial: 'components/follow/follow-chip-set', locals: @locals) %>'.trim(), {
+      morphdom.default(chipEventElem, '<%= j render(partial: 'components/follow/follow', locals: @locals) %>'.trim(), {
         onBeforeElUpdated: function (fromEl, toEl) {
           return !fromEl.isEqualNode(toEl);
         }

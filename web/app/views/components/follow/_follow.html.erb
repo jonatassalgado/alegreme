@@ -1,0 +1,25 @@
+<%
+
+  return unless user
+
+  type = local_assigns.fetch(:type)
+  event_id = local_assigns.fetch(:event_id)
+  expand_to_similar = local_assigns.fetch(:expand_to_similar, false)
+
+%>
+
+<div class="me-follow-chip-set mdc-chip-set mdc-chip-set--filter"
+     data-controller="follow-chipset"
+     data-target="follow-chipset.chipset"
+     data-follow-chipset-similar-to="<%= event_id %>"
+     data-follow-chipset-expand-to-similar="<%= expand_to_similar %>"
+     id="<%= "follow-chip-set__#{type}-#{event_id}" %>">
+
+  <%= render partial:    'components/follow/follow-chip-set',
+             collection: chips,
+             as:         :followable,
+             locals:     {
+                 user:              current_user,
+                 type:              'organizers'
+             } %>
+</div>

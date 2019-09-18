@@ -93,15 +93,15 @@ module EventQueries
 
 			}
 
-			scope 'with_categories', lambda { |categories, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
-
-				if opts[:turn_on]
-					includes(:categories).where("(categories.details ->> 'name') IN (?)", categories).references(:categories)
-				else
-					all
-				end
-			}
+			# scope 'with_categories', lambda { |categories, opts = {}|
+			# opts = {'turn_on': true}.merge(opts)
+			#
+			# if opts[:turn_on]
+			# 	includes(:categories).where("(categories.details ->> 'name') IN (?)", categories).references(:categories)
+			# else
+			# all
+			# end
+			# }
 
 			scope 'in_kinds', lambda { |kinds, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
@@ -215,9 +215,15 @@ module EventQueries
 
 				if opts[:turn_on] && !places.blank?
 					if places.any?(&:numeric?)
-						Event.includes(:place).where(places: {id: places})
+						joins(:place)
+								.where("places.id IN (?)", places)
+						# where("places.id IN (?)", places)
+						# select("e.*").from("events AS e").joins("INNER JOIN places p ON e.place_id = p.id").where("p.id IN (?)", places)
 					else
-						Event.includes(:place).where(places: {slug: places})
+						joins(:place)
+								.where("places.slug IN (?)", places)
+						# where("places.slug IN (?)", places)
+						# select("e.*").from("events AS e").joins("INNER JOIN places p ON e.place_id = p.id").where("p.slug IN (?)", places)
 					end
 				else
 					all
@@ -225,19 +231,29 @@ module EventQueries
 			}
 
 			scope 'in_categories', lambda { |categories, opts = {}|
-				opts       = {'turn_on': true, 'group_by': 5, 'active': true, 'personas': PERSONAS, 'not_in': []}.merge(opts)
+				opts       = {'turn_on': true, 'group_by': nil, 'active': true, 'personas': PERSONAS, 'not_in': []}.merge(opts)
 				categories = categories.present? ? (categories - opts[:not_in]) : (CATEGORIES - opts[:not_in])
 
-				if categories.present? || opts[:not_in].present?
-					# .where("(categories.details ->> 'name') IN (:categories) ", categories: categories)
-					Event.includes(:categories)
-							.where("(ml_data -> 'categories' -> 'primary' ->> 'name') IN (:categories)", categories: categories)
-							.references(:categories)
-							.active(opts[:active])
-							.order_by_persona(true, {personas: opts[:personas]})
-							.order_by_date
-							.limit(opts[:group_by])
+				if opts[:group_by] && categories.present? || opts[:not_in].present?
+					order_by = ["CASE"]
+					opts[:personas].each_with_index.map do |persona, index|
+						order_by << "WHEN (ml_data -> 'personas' -> 'primary' ->> 'name') = '#{persona}' THEN #{index}"
+					end
+					order_by << "END"
+					order_query = Arel.sql ActiveRecord::Base::sanitize_sql(order_by.join(" "))
 
+					select("*")
+							.from(Event
+									      .select("events.*, ROW_NUMBER() OVER (
+																										PARTITION BY (ml_data -> 'categories' -> 'primary' ->> 'name')
+																										ORDER BY #{order_query}
+																								  ) AS row")
+									      .as("events")
+							)
+							.where("(ml_data -> 'categories' -> 'primary' ->> 'name') IN (:categories)", categories: categories)
+							.where("row <= :group_by", group_by: opts[:group_by])
+				elsif opts[:group_by].blank?
+					where("(ml_data -> 'categories' -> 'primary' ->> 'name') IN (:categories)", categories: categories)
 				else
 					all
 				end
@@ -251,13 +267,13 @@ module EventQueries
 				raise ArgumentError unless organizers.is_a? Array
 
 				if opts[:turn_on] && !organizers.blank?
-					id_to_search = organizers.any?(&:numeric?) ? {id: organizers} : {slug: organizers}
-
-					Event.includes(:organizers)
-							.where(organizers: id_to_search)
-							.references(:organizers)
-							.active(opts[:active])
-							.order_by_date
+					if organizers.any?(&:numeric?)
+						joins(:organizers)
+								.where("organizers.id IN (?)", organizers)
+					else
+						joins(:organizers)
+								.where("organizers.slug IN (?)", organizers)
+					end
 				else
 					all
 				end

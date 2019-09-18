@@ -26,7 +26,7 @@
         },
         "offers": {
           "@type": "AggregateOffer",
-          "lowPrice": "<%= event.details_prices.min %>",
+          "lowPrice": "<%= event.details_prices.try(:min) %>",
           "priceCurrency": "BRL"
         }
     } <%= "," unless @collection[:events].size == event_counter + 1 %>

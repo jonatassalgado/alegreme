@@ -35,9 +35,8 @@ module UserDecorators
 				private
 
 				def default_response
-					Event.where(categories: {id: @features.categories})
-							.or(Event.where(organizers: {id: @features.organizers}))
-							.includes(:categories, :organizers)
+					Event.joins(:categories, :organizers)
+							.where("categories.id IN (?) OR organizers.id IN (?)", @features.categories, @features.organizers).distinct
 				end
 
 				def pluck_name

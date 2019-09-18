@@ -26,9 +26,9 @@ class PlacesController < ApplicationController
 				events      = @place.events.active
 				@collection = EventServices::CollectionCreator.new(current_user, params).call(events, places: [params[:id]])
 
-				@locals = mount_section_attrs
-				render 'show'
-				# end
+		@locals = mount_section_attrs
+		render 'show'
+		# end
 		# 	end
 		# end
 	end
@@ -89,7 +89,7 @@ class PlacesController < ApplicationController
 				items:      @collection,
 				title:      {
 						principal: @place.details_name,
-            secondary: @place.geographic_address
+						secondary: @place.geographic_address
 				},
 				identifier: @place.details_name.parameterize,
 				opts:       {

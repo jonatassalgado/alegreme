@@ -30,7 +30,7 @@
 
   <% else %>
     <% if current_user&.personas_assortment_finished? %>
-      <% if @items.dig(:today, :detail, :total_events_in_collection) > 0 %>
+      <% if @items.dig(:today, :detail, :total_events_in_collection) %>
         <%= render partial: "components/collection/collection",
                    locals:  {
                        items:      @items[:today],
@@ -52,7 +52,7 @@
                    } %>
       <% end %>
 
-      <% if current_user && @items.dig(:follow, :detail, :total_events_in_collection) > 0 %>
+      <% if current_user && @items.dig(:follow, :detail, :total_events_in_collection) %>
         <%= render partial: "components/collection/collection",
                    locals:  {
                        items:      @items[:follow],
@@ -75,7 +75,7 @@
       <% end %>
 
 
-      <% if current_user && @items.dig(:user_suggestions, :detail, :total_events_in_collection) > 0 %>
+      <% if current_user && @items.dig(:user_suggestions, :detail, :total_events_in_collection) %>
         <%= render partial: "components/collection/collection",
                    locals:  {
                        items:      @items[:user_suggestions],
@@ -99,7 +99,7 @@
       <% end %>
 
 
-      <% if @items.dig(:user_personas, :detail, :total_events_in_collection) > 0 %>
+      <% if @items.dig(:user_personas, :detail, :total_events_in_collection)  %>
 
         <%= render partial: "components/collection/collection",
                    locals:  {

@@ -96,7 +96,7 @@
 
     <div class="me-card__topics">
       <%#= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.categories.sort, event_id: @event.id, type: 'categories' } %>
-      <%= render partial: 'components/follow/follow-chip-set', locals: {user: current_user, chips: @event.organizers.sort, event_id: @event.id, type: 'organizers'} %>
+      <%= render partial: 'components/follow/follow', locals: {user: current_user, chips: @event.organizers.sort, event_id: @event.id, type: 'organizers'} %>
     </div>
 
 

@@ -1,40 +1,18 @@
-<%
-
-  return unless user
-
-  raise ArgumentError if chips.blank? || type.blank?
-
-  type = local_assigns.fetch(:type)
-  event_id = local_assigns.fetch(:event_id)
-  expand_to_similar = local_assigns.fetch(:expand_to_similar, false)
-
-
-%>
-
-<div class="me-follow-chip-set mdc-chip-set mdc-chip-set--filter"
-     data-controller="follow-chipset"
-     data-target="follow-chipset.chipset"
-     data-follow-chipset-similar-to="<%= event_id %>"
-     data-follow-chipset-expand-to-similar="<%= expand_to_similar %>"
-     id="<%= "follow-chip-set__#{type}-#{event_id}" %>">
-  <% chips.each do |followable| %>
-    <div class="mdc-chip <%= 'mdc-chip--selected' if user.following?(followable) %>"
-         data-followed="<%= user.following?(followable) %>"
-         data-followable="<%= followable.id %>"
-         data-type="<%= type %>"
-         data-target="follow-chipset.chip">
-      <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"
-         data-action="click->follow-chipset#follow"
-         data-target="follow-chipset.trailing"
-         role="button"
-         tabindex="0"
-         title="Siga o tópico '<%= followable.details['name'] %>'"><%= user.following?(followable) ? 'check' : 'add' %></i>
-      <%= link_to organizer_path(followable) do %>
-        <div class="mdc-chip__text"
-             title="Veja todos os eventos do tópico '<%= followable.details['name'] %>'">
-          <%= followable.details['name'].truncate(25, separator: " ") %>
-        </div>
-      <% end %>
+<div class="mdc-chip <%= 'mdc-chip--selected' if user.following?(followable) %>"
+     data-followed="<%= user.following?(followable) %>"
+     data-followable="<%= followable.id %>"
+     data-type="<%= type %>"
+     data-target="follow-chipset.chip">
+  <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"
+     data-action="click->follow-chipset#follow"
+     data-target="follow-chipset.trailing"
+     role="button"
+     tabindex="0"
+     title="Siga o tópico '<%= followable.details['name'] %>'"><%= user.following?(followable) ? 'check' : 'add' %></i>
+  <%= link_to organizer_path(followable) do %>
+    <div class="mdc-chip__text"
+         title="Veja todos os eventos do tópico '<%= followable.details['name'] %>'">
+      <%= followable.details['name'].truncate(25, separator: " ") %>
     </div>
   <% end %>
 </div>

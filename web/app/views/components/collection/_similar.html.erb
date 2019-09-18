@@ -50,13 +50,14 @@
     </h3>
 
     <div class="me-similar__organizers">
-      <%= render partial: 'components/follow/follow-chip-set', locals: {
-          user:              current_user,
-          event_id:          event.id,
-          chips:             similar_events.map { |similar| similar.organizers[0..3] }.flatten.uniq[0..6].sort,
-          type:              'organizers',
-          expand_to_similar: true
-      } %>
+      <%= render partial: 'components/follow/follow',
+                 locals:  {
+                     chips:             similar_events.map { |similar| similar.organizers[0..3] }.flatten.uniq[0..6].sort,
+                     user:              current_user,
+                     event_id:          event.id,
+                     type:              'organizers',
+                     expand_to_similar: true
+                 } %>
     </div>
 
   </div>
