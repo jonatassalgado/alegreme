@@ -1,11 +1,30 @@
 FROM ruby:2.6.3
 
+
+RUN apt-get update && apt-get install -y locales locales-all
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+ENV TZ "America/Sao_Paulo"
+RUN echo $TZ > /etc/timezone && \
+  apt-get update && apt-get install -y tzdata && \
+  rm /etc/localtime && \
+  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+  dpkg-reconfigure -f noninteractive tzdata && \
+  apt-get clean
+
+
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install yarn
+
 ENV SIDEKIQ_ROOT /var/www/sidekiq
+ENV RAILS_ROOT /var/www/alegreme
 RUN mkdir -p $SIDEKIQ_ROOT
-
-
 WORKDIR $SIDEKIQ_ROOT
 
 
@@ -27,6 +46,15 @@ RUN bundle update --bundler
 COPY ./docker/sidekiq/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+
+ADD . $SIDEKIQ_ROOT
+
+RUN rake assets:clobber
+RUN rake webpacker:clobber
+RUN rake assets:precompile
+RUN rake webpacker:compile
+RUN yarn install
 
 
 CMD bundle exec sidekiq -C config.yml
