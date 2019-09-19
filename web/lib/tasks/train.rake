@@ -17,7 +17,7 @@ namespace :ml do
 
 		puts "Abrindo o arquivo #{last_file}".blue
 
-		events = Event.where("( ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= 0.90 OR (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric >= 0.90").order("updated_at ASC").uniq
+		events = Event.where("( ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= 0.90 AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric >= 0.90").order("updated_at ASC").uniq
 
 
 		events.each do |event|

@@ -18,58 +18,53 @@
 	<td>Tipo</td>
 	<td>Tags</td>
 </tr>
-<% cache @events do %>
-	<% @events.each do |event| %>
-		<% cache(event) do %>
-			<tr>
-        <td><img src="<%= event.cover_url :feed %>" style="width: 130px"></td>
-				<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
-				<td><%= event.place_details_name %></td>
-				<td>
-					<%= limit_description_size event.details_description, 565 %> <br/>
-          <%#= event.ml_data.inspect %>
-				</td>
-				<td id="<%= dom_id event, 'chip_themes' %>">
-					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'themes'} %>
-				</td>
-				<td id="<%= dom_id event, 'chip_categories' %>">
-					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'categories'} %>
-				</td>
-				<td id="<%= dom_id event, 'chip_personas' %>">
-					<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'personas'} %>
-				</td>
-				<td id="<%= dom_id event, 'kinds' %>">
-					<%= render partial: 'layouts/classifier/kinds', locals: {event: event} %>
-				</td>
-				<td>
-					<div id="<%= dom_id event, 'things' %>">
-						<%= render partial: 'layouts/classifier/tags', locals: {
-							event: event,
-							type: 'things',
-							tags_to_select: whitelist_tags_by_type(event, 'things')
-						} %>
-					</div>
-					<div id="<%= dom_id event, 'activities' %>">
-						<%=
-						render partial: 'layouts/classifier/tags', locals: {
-							event: event,
-							type: 'activities',
-							tags_to_select: whitelist_tags_by_type(event, 'activities')
-						}
-						%>
-					</div>
-					<div id="<%= dom_id event, 'features' %>">
-						<%= render partial: 'layouts/classifier/tags', locals: {
-							event: event,
-							type: 'features',
-							tags_to_select: whitelist_tags_by_type(event, 'features')
-							} %>
-					</div>
-				</td>
-			</tr>
-		<% end %>
-	<% end %>
+<% @events.each do |event| %>
+	<tr>
+    <td><img src="<%= event.cover_url :feed %>" style="width: 130px"></td>
+		<td> <a href="<%= event.url %>"> <%= limit_name_size event.details_name %> </a> </td>
+		<td><%= event.place_details_name %></td>
+		<td>
+			<%= limit_description_size event.details_description, 565 %> <br/>
+      <%#= event.ml_data.inspect %>
+		</td>
+		<td id="<%= dom_id event, 'chip_themes' %>">
+			<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'themes'} %>
+		</td>
+		<td id="<%= dom_id event, 'chip_categories' %>">
+			<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'categories'} %>
+		</td>
+		<td id="<%= dom_id event, 'chip_personas' %>">
+			<%= render partial: 'layouts/classifier/chips', locals: {event: event, feature: 'personas'} %>
+		</td>
+		<td id="<%= dom_id event, 'kinds' %>">
+			<%= render partial: 'layouts/classifier/kinds', locals: {event: event} %>
+		</td>
+		<td>
+			<div id="<%= dom_id event, 'things' %>">
+				<%= render partial: 'layouts/classifier/tags', locals: {
+					event: event,
+					type: 'things',
+					tags_to_select: whitelist_tags_by_type(event, 'things')
+				} %>
+			</div>
+			<div id="<%= dom_id event, 'activities' %>">
+				<%=
+				render partial: 'layouts/classifier/tags', locals: {
+					event: event,
+					type: 'activities',
+					tags_to_select: whitelist_tags_by_type(event, 'activities')
+				}
+				%>
+			</div>
+			<div id="<%= dom_id event, 'features' %>">
+				<%= render partial: 'layouts/classifier/tags', locals: {
+					event: event,
+					type: 'features',
+					tags_to_select: whitelist_tags_by_type(event, 'features')
+					} %>
+			</div>
+		</td>
+	</tr>
 <% end %>
 
 <%== pagy_nav(@pagy) %>
-

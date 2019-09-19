@@ -35,6 +35,7 @@ module EventServices
 
 			@relation
 					.active
+					.with_high_score
 					.not_in_saved(
 							user,
 							'turn_on': not_in_saved_on

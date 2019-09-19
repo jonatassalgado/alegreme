@@ -246,7 +246,7 @@ module EventQueries
 							.from(Event
 									      .select("events.*, ROW_NUMBER() OVER (
 																										PARTITION BY (ml_data -> 'categories' -> 'primary' ->> 'name')
-																										ORDER BY #{order_query}
+																										ORDER BY #{order_query}, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC
 																								  ) AS row")
 									      .as("events")
 							)
@@ -288,13 +288,14 @@ module EventQueries
 				end
 			}
 
-			scope 'with_low_score', lambda { |feature|
-				case feature
-				when :personas
-					where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.51")
-				when :categories
-					where("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.51")
-				end
+			scope 'with_low_score', lambda {
+					where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.7 AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.7")
+			}
+
+			scope 'with_high_score', lambda {
+				persona_score = 0.35
+				category_score = 0.7
+				where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= :persona_score AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric >= :category_score", persona_score: persona_score, category_score: category_score)
 			}
 
 			scope 'not_retrained', lambda {
