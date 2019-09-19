@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	before_action :set_user, only: %i[show edit update destroy]
-	before_action :authorize_admin, only: [:destroy]
-	before_action :authorize_admin_and_user, only: %i[update edit]
+	before_action :authorize_admin, only: [:index, :destroy]
+	before_action :authorize_admin_and_user, only: %i[update edit show]
 	before_action :mount_json, only: %i[edit update]
 
 	# GET /users
@@ -81,9 +81,8 @@ class UsersController < ApplicationController
 	end
 
 	def authorize_admin_and_user
-		unless @user.id == current_user.id || current_user.admin? == true
-			flash.now[:notice] = 'Você não tem permissão para realizar esta operação'
-			redirect_to root_path
+		unless @user&.id == current_user&.id || current_user&.admin?
+			redirect_to root_path, notice: 'Você não tem permissão para realizar esta operação'
 		end
 	end
 

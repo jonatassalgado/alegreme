@@ -34,7 +34,7 @@ class WelcomeController < ApplicationController
 	private
 
 	def count_invites
-		2046 + User.all.count
+		1226 + User.all.count
 	end
 
 	def create_invite
@@ -52,6 +52,10 @@ class WelcomeController < ApplicationController
 				                          }
 		                          })
 		user.save
+
+		InviteMailer.with(user: user).send_request_invite_confirmation.deliver_later
+
+		return user
 	end
 
 

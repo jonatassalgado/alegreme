@@ -115,7 +115,7 @@ group :production do
 end
 
 group :development, :production do
-  # gem 'aws-sdk-s3'
+  gem 'sendgrid-ruby'
 end
 
 group :development, :test do

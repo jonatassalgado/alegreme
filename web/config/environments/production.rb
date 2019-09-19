@@ -66,6 +66,9 @@ Rails.application.configure do
   config.active_job.queue_adapter     = :sidekiq
   # config.active_job.queue_name_prefix = "app_#{Rails.env}"
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: "https://alegreme.com" }
+
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -96,10 +99,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_controller.default_url_options = {
-    host: ENV['HTTP_HOST'] || 'localhost'
-  }
-
-  config.action_mailer.default_url_options = {
     host: ENV['HTTP_HOST'] || 'localhost'
   }
 

@@ -48,7 +48,7 @@ db-create:
 	$(RUN) bash -c "rake db:migrate && rake db:seed"
 
 credentials:
-	$(EXEC) bash -c "EDITOR=vim rails credentials:edit"
+	$(EXEC) bash -c "EDITOR=nano rails credentials:edit"
 
 scrapy-run:
 	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event"
