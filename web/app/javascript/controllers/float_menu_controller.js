@@ -12,6 +12,8 @@ export default class FloatMenuController extends Controller {
 		const observableSectionEls = document.querySelectorAll('[data-observable="float-menu.section"]');
 
 		if (this.hasMenuTarget && observableSectionEls !== undefined) {
+			const threshold = this.md.mobile() ? 0.6 : 0.1;
+
 			this.observer = new IntersectionObserver((entries, observer) => {
 					entries.forEach((entry) => {
 						const collectionEl = document.querySelector(`[data-collection-identifier="${entry.target.id}"]`);
@@ -30,7 +32,7 @@ export default class FloatMenuController extends Controller {
 					})
 				},
 				{
-					threshold : 0.6,
+					threshold : threshold,
 					rootMargin: '0px'
 				}
 			);

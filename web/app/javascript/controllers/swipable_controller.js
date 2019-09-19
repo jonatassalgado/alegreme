@@ -8,7 +8,6 @@ export default class SwipableController extends Controller {
 	static targets = ["swipable", "onboarding", "items"];
 
 	initialize() {
-		const self = this;
 		this.md    = new MobileDetect(window.navigator.userAgent);
 		this.uilb  = new UILandingBot(this.onboardingTarget);
 
@@ -89,18 +88,17 @@ export default class SwipableController extends Controller {
 					    setTimeout(() => {
 						    this.itemsTarget.style.opacity = '';
 						    window.scrollTo(0, 0);
+								if (this.hasSwipableTarget) {
+									requestIdleCallback(() => {
+										this.stackedCards();
+										this.swipableTarget.style.minHeight = `${this.swipableTarget.offsetHeight}px`;
+									}, {timeout: 250});
+								}
 					    }, 300);
 				    });
-			    }, 5000);
+			    }, 4000);
 		    })
 		    .catch(error => console.log('error', error));
-
-		if (self.hasSwipableTarget) {
-			requestIdleCallback(() => {
-				self.stackedCards();
-				self.swipableTarget.style.minHeight = `${self.swipableTarget.offsetHeight}px`;
-			}, {timeout: 250});
-		}
 	}
 
 	disconnect() {
@@ -118,8 +116,8 @@ export default class SwipableController extends Controller {
 		let maxElements; //Total of stacked cards on DOM.
 		let currentPosition           = 0; //Keep the position of active stacked card.
 		let counter                   = 0;
-		const velocity                = 0.35; //Minimum velocity allowed to trigger a swipe.
-		const pixelsToMoveCardOnSwipe = this.md.mobile() ? 250 : 400;
+		const velocity                = 0.25; //Minimum velocity allowed to trigger a swipe.
+		const pixelsToMoveCardOnSwipe = this.md.mobile() ? 600 : 800;
 		let answers                   = [];
 		let isFirstTime               = true;
 		let topObj; //Keep the swipe top properties.
