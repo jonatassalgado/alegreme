@@ -275,6 +275,8 @@ document.addEventListener('DOMContentLoaded', function () {
 								inviteCounterEl.innerText               = `Pronto ${userName}, convite solicitado com sucesso!`
 								inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
 								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
+
+  							fbq('track', 'CompleteRegistration');
 							}
 
 							if (backendData.invitationAlreadyRequested) {
