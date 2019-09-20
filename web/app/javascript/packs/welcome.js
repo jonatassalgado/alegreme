@@ -1,3 +1,10 @@
 import {MDCSnackbar} from '@material/snackbar';
-const snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
-snackbar.open();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const snackbarEl = document.querySelector('.mdc-snackbar');
+  
+  if (snackbarEl) {
+    const snackbar = new MDCSnackbar();
+    snackbar.open();
+  }
+});

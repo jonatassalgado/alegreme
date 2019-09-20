@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	const brandLogoEls      = document.querySelectorAll('.js-logo');
 	const pimbaEls          = document.querySelectorAll('.js-pimba');
+	const peopleEl          = document.querySelector('.people');
 	const peopleEls         = document.querySelectorAll('.people__person-face');
 	const answerEl          = document.querySelector('.answer');
 	const shareBtns         = document.querySelectorAll('.shareBtn');
@@ -57,6 +58,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	const inviteCounterEl   = document.querySelector('.invite__counter');
 	const inviteStatusEl    = document.querySelector('.invite__status');
 	const firstPersonFaceEl = document.querySelector('.people__person-face');
+
+	setTimeout(() => {
+		requestAnimationFrame(() => {
+			peopleEl.style.opacity = 1;
+		}, 2500);
+	})
 
 	const videos   = document.querySelectorAll('video');
 	const observer = new IntersectionObserver((entries, observer) => {
@@ -138,13 +145,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		peopleEls.forEach(function (person) {
 			if (md.mobile()) {
-				const distance = 20;
+				const distance = 21;
 				if (index > 0) {
 					person.style.transform = `translateX(${distance * index}px)`;
 					person.style.zIndex    = `${index * -1}`;
 				}
 			} else {
-				const distance = 34;
+				const distance = 30;
 				if (index > 0) {
 					person.style.transform = `translateX(${distance * index}px)`;
 					person.style.zIndex    = `${index * -1}`;

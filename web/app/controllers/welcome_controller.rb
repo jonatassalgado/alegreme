@@ -15,7 +15,7 @@ class WelcomeController < ApplicationController
 		@user = User.find_by_email(params[:email])
 
 		if @user
-			render json: {invitesCount: count_invites, name: @user.features['demographic']['name'], invitationAlreadyRequested: true}
+			render json: {invitesCount: count_invites, name: @user.features.dig('demographic', 'name'), invitationAlreadyRequested: true}
 		else
 			if create_invite
 				render json: {invitesCount: count_invites, invitationCreated: true, invitationAlreadyRequested: false}

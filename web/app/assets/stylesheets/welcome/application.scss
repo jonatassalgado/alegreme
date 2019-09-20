@@ -121,7 +121,7 @@
   &__items {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-gap: 25px 35px;
+    grid-gap: 24px 35px;
   }
 
   &__item {
@@ -129,7 +129,8 @@
     position: relative;
     @include mobile-only {
       grid-column-end: 2 span;
-      //margin: 0 0 0 24px;
+      border-bottom: 1px solid #eaeaea;
+      padding: 0 0 24px 0;
     }
 
     & h3 {
@@ -152,180 +153,7 @@
   }
 }
 
-.invite {
-  margin: 250px auto 0 auto;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  padding-bottom: 220px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  @include mobile-only {
-    margin: 100px auto 0 auto;
-    padding-bottom: 60px;
-  }
 
-  &__status {
-    transition: transform 0.8s ease;
-  }
-
-  &.is-invited {
-    .invite__cta {
-      opacity: 0;
-    }
-
-    .invite__google-details {
-      opacity: 0;
-    }
-
-    .invite__share {
-      opacity: 1 !important;
-    }
-
-    .shareBtn--invite {
-      opacity: 1;
-      display: flex;
-    }
-  }
-
-  &__counter {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 23px;
-    line-height: 27px;
-    margin: 20px 0 0 0;
-    text-align: center;
-    @include mobile-only {
-      font-size: 18px;
-      line-height: 21px;
-      padding: 0 45px;
-    }
-  }
-
-  &__details {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 21px;
-    color: rgba(12, 15, 9, 0.7);
-    margin: 12px 0 0 0;
-    text-align: center;
-    transition: opacity 0.4s ease;
-    @include mobile-only {
-      //display: none;
-      font-size: 12px;
-      line-height: 16px;
-      margin: 6px 0 0 0;
-      padding: 0 50px;
-    }
-  }
-
-  &__cta {
-    width: 420px;
-    height: 87px;
-    font-family: $font-primary-family;
-    font-style: normal;
-    font-weight: 900;
-    font-size: 28px;
-    line-height: 34px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    text-transform: uppercase;
-    color: $brand-color;
-    justify-content: center;
-    box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
-    border-radius: 60px;
-    margin: 85px auto 0 auto;
-    cursor: pointer;
-    transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none;
-    @include mobile-only {
-      width: 245px;
-      height: 65px;
-      font-size: 18px;
-      margin: 35px auto 0 auto;
-    }
-
-    &:hover {
-      box-shadow: 0 0 45px rgba(0, 0, 0, 0.35);
-      transform: scale(1.05);
-
-      &.invite__cta span {
-        transform: translateX(6px);
-      }
-    }
-
-    & span {
-      position: relative;
-      top: 0px;
-      right: -20px;
-      transition: transform 0.4s ease;
-      @include mobile-only {
-        display: none;
-      }
-    }
-  }
-
-  &__google-details {
-    text-align: center;
-    margin: 20px auto 0 auto;
-    // width: 406px;
-    // height: 35px;
-    // background-image: asset_url("welcome/google-details.png");
-    // background-repeat: no-repeat;
-    // background-position: center;
-    transition: opacity 0.4s ease;
-    @include mobile-only {
-      // width: 220px;
-      // height: 51px;
-      // background-image: asset_url("welcome/google-details-mobile.png");
-      // background-repeat: no-repeat;
-      // background-position: center;
-    }
-  }
-
-  &__share {
-    opacity: 0 !important;
-    width: 100%;
-    margin: 25px 0 0 0;
-    text-align: center;
-    transition: opacity 0.4s ease;
-  }
-
-  & .people {
-    margin: auto;
-    position: relative;
-    width: 328px;
-    height: 55px;
-    z-index: 2;
-    @include mobile-only {
-      width: 220px;
-      height: 40px;
-    }
-
-    &__person-face {
-      width: 50px;
-      height: 50px;
-      border: 3px solid #FFFFFF;
-      border-radius: 100%;
-      position: absolute;
-      left: 0;
-      background-color: #f3f3f3;
-      background-size: 106% 106%;
-      background-position: center;
-      //transition: transform 2s ease;
-      @include mobile-only {
-        width: 35px;
-        height: 35px;
-        border: 2px solid #FFFFFF;
-      }
-    }
-  }
-}
 
 
 .manifesto {
@@ -688,35 +516,7 @@
 }
 
 
-.shareBtn {
-  position: relative;
-  margin: 24px auto;
-  background: white;
-  transition: opacity 0.4s ease;
-  border: 0;
-  display: flex;
-  align-items: center;
-  font-family: $font-primary-family;
-  padding: 14px 18px;
-  box-shadow: 0 0 30px #0000004d;
-  border-radius: 35px;
-  z-index: 5;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-user-select: none;
-  @include desktop-only {
-    display: none;
-  }
 
-  & i {
-    margin: 0px 6px 0 0;
-  }
-
-  &--invite {
-    opacity: 0;
-    display: none;
-    transform: translate(0px, -115px);
-  }
-}
 
 .login-button {
   background: white;

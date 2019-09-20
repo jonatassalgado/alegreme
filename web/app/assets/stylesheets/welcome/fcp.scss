@@ -3,7 +3,7 @@
 
 .template__container {
   font-family: $font-secondary-family;
-  color: #0C0F09;
+  color: $font-secondary-color;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,20 +40,19 @@ section {
 
 .brand {
   display: flex;
-  margin: 40px 0 50px 0;
+  margin: 24px 0 12px 0;
   min-height: auto;
   align-items: center;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  & img {
+    max-width: 200px;
+  }
 
   @include mobile-only {
-    margin: 24px 0 35px 0;
-
-    & img {
-      max-width: 200px;
-    }
+    margin: 24px 0 24px 0;
   }
 
   .is-pwa & {
@@ -96,7 +95,7 @@ section {
     font-family: $font-primary-family;
     letter-spacing: -0.02em;
     font-weight: 800;
-    font-size: 48px;
+    font-size: 28px;
     line-height: 58px;
     margin: 0;
     padding: 0;
@@ -105,16 +104,17 @@ section {
       font-size: 26px;
       line-height: 30px;
       text-align: left;
-      max-width: 80%;
+      max-width: 90%;
+      margin: 0 0 12px 0;
     }
   }
 
   & h2 {
     font-family: $font-secondary-family;
     font-weight: normal;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 26px;
-    margin: 10px 0 0 0;
+    margin: 0 0 0 0;
     max-width: 1080px;
     @include mobile-only {
       font-size: 14px;
@@ -124,10 +124,219 @@ section {
   }
 }
 
+.invite {
+  margin: 80px auto 0 auto;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: 160px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  @include mobile-only {
+    margin: 42px auto 0 auto;
+    padding-bottom: 60px;
+  }
+
+  &__status {
+    transition: transform 0.8s ease;
+  }
+
+  &.is-invited {
+    .invite__cta {
+      opacity: 0;
+    }
+
+    .invite__google-details {
+      opacity: 0;
+    }
+
+    .invite__share {
+      opacity: 1 !important;
+    }
+
+    .shareBtn--invite {
+      opacity: 1;
+      display: flex;
+    }
+  }
+
+  &__counter {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    margin: 20px 0 0 0;
+    text-align: center;
+    @include mobile-only {
+      font-size: 18px;
+      line-height: 21px;
+      padding: 0 45px;
+    }
+  }
+
+  &__details {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 21px;
+    color: rgba(12, 15, 9, 0.7);
+    margin: 0 0 0 0;
+    text-align: center;
+    transition: opacity 0.4s ease;
+    @include mobile-only {
+      display: none;
+      font-size: 12px;
+      line-height: 16px;
+      margin: 6px auto 0 auto;
+      max-width: 50%;
+    }
+  }
+
+  &__cta {
+    width: 420px;
+    height: 87px;
+    font-family: $font-primary-family;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 34px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    background: $brand-color;
+    color: $surface-color;
+    justify-content: center;
+    box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
+    border-radius: 60px;
+    margin: 24px auto 0 auto;
+    cursor: pointer;
+    transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    @include mobile-only {
+      width: 245px;
+      height: 65px;
+      font-size: 18px;
+      margin: 35px auto 0 auto;
+    }
+
+    &:hover {
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.35);
+      transform: scale(1.05);
+
+      &.invite__cta span {
+        transform: translateX(6px);
+      }
+    }
+
+    & span {
+      // position: relative;
+      // top: 0px;
+      // right: -20px;
+      // transition: transform 0.4s ease;
+      // @include mobile-only {
+      //   display: none;
+      // }
+    }
+  }
+
+  &__google-details {
+    text-align: center;
+    margin: 20px auto 0 auto;
+    // width: 406px;
+    // height: 35px;
+    // background-image: asset_url("welcome/google-details.png");
+    // background-repeat: no-repeat;
+    // background-position: center;
+    transition: opacity 0.4s ease;
+    @include mobile-only {
+      // width: 220px;
+      // height: 51px;
+      // background-image: asset_url("welcome/google-details-mobile.png");
+      // background-repeat: no-repeat;
+      // background-position: center;
+    }
+  }
+
+  &__share {
+    opacity: 0 !important;
+    width: 100%;
+    margin: 25px 0 0 0;
+    text-align: center;
+    transition: opacity 0.4s ease;
+  }
+
+  & .people {
+    margin: auto;
+    position: relative;
+    width: 328px;
+    height: 55px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 300ms ease;
+    @include mobile-only {
+      width: 220px;
+      height: 40px;
+    }
+
+    &__person-face {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #FFFFFF;
+      border-radius: 100%;
+      position: absolute;
+      left: 0;
+      background-color: #f3f3f3;
+      background-size: 106% 106%;
+      background-position: center;
+      //transition: transform 2s ease;
+      @include mobile-only {
+        width: 35px;
+        height: 35px;
+        border: 2px solid #FFFFFF;
+      }
+    }
+  }
+}
+
+.shareBtn {
+  position: relative;
+  margin: 24px auto;
+  background: white;
+  transition: opacity 0.4s ease;
+  border: 0;
+  display: flex;
+  align-items: center;
+  font-family: $font-primary-family;
+  padding: 14px 18px;
+  box-shadow: 0 0 30px #0000004d;
+  border-radius: 35px;
+  z-index: 5;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  @include desktop-only {
+    display: none;
+  }
+
+  & i {
+    margin: 0px 6px 0 0;
+  }
+
+  &--invite {
+    opacity: 0;
+    display: none;
+    transform: translate(0px, -115px);
+  }
+}
+
 .features {
-  margin: 65px 0 0 100px;
+  margin: 45px 0 0 100px;
   position: relative;
   @include mobile-only {
+    display: none;
     margin: 25px 0 0 0;
     overflow-x: scroll;
     width: 100vw;
@@ -149,7 +358,7 @@ section {
   &__scroll-view {
     position: relative;
     width: 1120px;
-    height: 330px;
+    height: 250px;
     @include mobile-only {
       width: 970px;
       height: 275px;
@@ -160,10 +369,10 @@ section {
 
 .feature {
   background: #FFFFFF;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.09);
   border-radius: 6px;
-  width: 226px;
-  height: 110px;
+  width: 200px;
+  height: 100px;
   padding: 12px 25px;
   font-style: normal;
   text-align: center;
@@ -242,8 +451,8 @@ section {
   }
 
   &__title {
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: 400;
+    font-size: 14px;
     line-height: 19px;
     @include mobile-only {
       font-size: 14px;

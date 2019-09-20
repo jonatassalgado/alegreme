@@ -17,6 +17,7 @@
     </section>
   <% end %>
 
+  <% unless mobile_device? %>
   <section class="features">
     <div class="features__scroll-view">
       <div class="feature feature--activities rellax" data-rellax-speed="2" style="">
@@ -51,6 +52,46 @@
       </div>
     </div>
   </section>
+  <% end %>
+
+  <% unless params[:pwa] %>
+    <section class="invite">
+      <div class="invite__status">
+        <div class="people">
+          <% @last_people.each do |person| %>
+            <div class="people__person-face" style="background-image: url('<%= image_path person.demographic['picture'] %>')" title="<%= person.demographic['name'] %>"></div>
+          <% end %>
+        </div>
+        <div class="invite__counter">
+          <%= @invites_count %> pessoas solicitaram convite para o alegreme
+        </div>
+        <div class="invite__details has-helper">
+          Na versão
+          <i title="Versão de testes do aplicativo ainda em desenvolvimento e validações">beta</i> vamos liberar até 100 convites por semana
+        </div>
+      </div>
+      <button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="">
+        <i class="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+          </svg>
+        </i>
+        <span class="">Compartilhar</span>
+      </button>
+      <div class="invite__cta" title="Seja um Beta tester!">
+        Solicitar Convite
+        <!-- <span> -->
+          <%#= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
+        <!-- </span> -->
+      </div>
+      <div class="invite__google-details">
+        <%= responsive_image_tag "welcome/google-details", alt: 'conta do google', class: 'lazyload' %>
+      </div>
+      <div class="skatista lazyload" data-bg="<%= image_path 'welcome/skatista.png' %>" style="transform: translate(-1900px, -50px);">
+      </div>
+    </section>
+  <% end %>
 
   <% if params[:pwa] %>
     <div class="login-button" title="Entrar" onclick="location.assign('/users/auth/google_oauth2')">
@@ -126,44 +167,7 @@
     </section>
   <% end %>
 
-  <% unless params[:pwa] %>
-    <section class="invite">
-      <div class="invite__status">
-        <div class="people">
-          <% @last_people.each do |person| %>
-            <div class="people__person-face lazyload" data-bg="<%= image_path person.demographic['picture'] %>" title="<%= person.demographic['name'] %>"></div>
-          <% end %>
-        </div>
-        <div class="invite__counter">
-          <%= @invites_count %> pessoas solicitaram convite para o alegreme
-        </div>
-        <div class="invite__details has-helper">
-          Na versão
-          <i title="Versão de testes do aplicativo ainda em desenvolvimento e validações">beta</i> vamos liberar até 100 convites por semana
-        </div>
-      </div>
-      <button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="">
-        <i class="">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="none" d="M0 0h24v24H0V0z"/>
-            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-          </svg>
-        </i>
-        <span class="">Compartilhar</span>
-      </button>
-      <div class="invite__cta" title="Seja um Beta tester!">
-        Solicitar Convite
-        <span>
-          <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
-        </span>
-      </div>
-      <div class="invite__google-details">
-        <%= responsive_image_tag "welcome/google-details", alt: 'conta do google', class: 'lazyload' %>
-      </div>
-      <div class="skatista lazyload" data-bg="<%= image_path 'welcome/skatista.png' %>" style="transform: translate(-1900px, -50px);">
-      </div>
-    </section>
-  <% end %>
+
 
   <%# unless mobile_device? %>
   <!--    <section class="manifesto">-->
@@ -293,7 +297,7 @@
     <div class="footer__links">
       <a href="/privacy">Política de privacidade</a> ·
       <a href="/terms">Termos de serviço</a> ·
-      <a href="https://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" target="_blank">Sobre</a>
+      <a href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">Sobre</a>
     </div>
     <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!', class: 'lazyload' %>
   </section>
