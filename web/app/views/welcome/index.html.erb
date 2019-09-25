@@ -107,18 +107,26 @@
       <% unless mobile_device? %>
         <div class="macbook">
           <div class="macbook__screen">
-            <video autoplay="autoplay" loop="true" muted="true">
-              <source src="<%= asset_url 'welcome/demo-web-min.webm' %>" type="video/webm">
-              <source src="<%= asset_url 'welcome/demo-web-min.mp4' %>" type="video/mp4">
+            <video width="100%" height="auto" autoplay muted loop playsinline>
+            	<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.mp4"  type="video/mp4" />
+            	<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.webm"  type="video/webm" />
+            	<object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.swf">
+            		<param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.swf" />
+            		<param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.mp4" />
+            	</object>
             </video>
           </div>
         </div>
       <% end %>
       <div class="android">
         <div class="android__screen">
-          <video loop="true" muted="true">
-            <source src="<%= asset_url 'welcome/demo-android-min.webm' %>" type="video/webm">
-            <source src="<%= asset_url 'welcome/demo-android-min.mp4' %>" type="video/mp4">
+          <video width="100%" height="auto" autoplay muted loop playsinline>
+          	<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4"  type="video/mp4" />
+          	<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.webm"  type="video/webm" />
+          	<object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.swf">
+          		<param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.swf" />
+          		<param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4" />
+          	</object>
           </video>
         </div>
       </div>
@@ -129,42 +137,44 @@
       </div>
     </section>
 
-    <section class="benefits">
-      <div class="benefits__items">
-        <div class="benefits__item">
-          <h3>Filtre eventos por dia, categoria e tipo</h3>
-          <span>Ex: sexta-feira > festas > evento de rua</span>
+    <% unless mobile_device? %>
+      <section class="benefits">
+        <div class="benefits__items">
+          <div class="benefits__item">
+            <h3>Filtre eventos por dia, categoria e tipo</h3>
+            <span>Ex: sexta-feira > festas > evento de rua</span>
+          </div>
+          <div class="benefits__item">
+            <h3>Mostrar eventos similares em um clique</h3>
+            <span>Ex: ver similares à "Festa Goodbye Lenin"</span>
+          </div>
+          <div class="benefits__item">
+            <h3>Seguir os tópicos que você gosta</h3>
+            <span>Ex: seguir os tópicos "Feiras de rua" e "Brechó"</span>
+          </div>
+          <div class="benefits__item">
+            <h3>Seguir organizadores</h3>
+            <span>Ex: seguir os organizadores "Coletivo Plano" e "No Palco"</span>
+          </div>
+          <div class="benefits__item">
+            <h3>Recomendações específicas para você</h3>
+            <span>Aprendemos continuamente o seu gosto individual</span>
+          </div>
+          <div class="benefits__item">
+            <h3>Seguir locais</h3>
+            <span>Ex: seguir os locais "Opnião" e "Mario Quintana"</span>
+          </div>
+          <div class="benefits__item">
+            <h3>Filmes em cartaz nos cinemas</h3>
+            <span>Ex: ver lista de filmes no "Capitólio" e "Cinemark"</span>
+          </div>
+          <div class="benefits__item">
+            <h3>Compartilhar minha agenda</h3>
+            <span>Ex: compartilha seu perfil com "amigos", "trabalho" e "família"</span>
+          </div>
         </div>
-        <div class="benefits__item">
-          <h3>Mostrar eventos similares em um clique</h3>
-          <span>Ex: ver similares à "Festa Goodbye Lenin"</span>
-        </div>
-        <div class="benefits__item">
-          <h3>Seguir os tópicos que você gosta</h3>
-          <span>Ex: seguir os tópicos "Feiras de rua" e "Brechó"</span>
-        </div>
-        <div class="benefits__item">
-          <h3>Seguir organizadores</h3>
-          <span>Ex: seguir os organizadores "Coletivo Plano" e "No Palco"</span>
-        </div>
-        <div class="benefits__item">
-          <h3>Recomendações específicas para você</h3>
-          <span>Aprendemos continuamente o seu gosto individual</span>
-        </div>
-        <div class="benefits__item">
-          <h3>Seguir locais</h3>
-          <span>Ex: seguir os locais "Opnião" e "Mario Quintana"</span>
-        </div>
-        <div class="benefits__item">
-          <h3>Filmes em cartaz nos cinemas</h3>
-          <span>Ex: ver lista de filmes no "Capitólio" e "Cinemark"</span>
-        </div>
-        <div class="benefits__item">
-          <h3>Compartilhar minha agenda</h3>
-          <span>Ex: compartilha seu perfil com "amigos", "trabalho" e "família"</span>
-        </div>
-      </div>
-    </section>
+      </section>
+    <% end %>
   <% end %>
 
 

@@ -66,27 +66,35 @@ document.addEventListener('DOMContentLoaded', function () {
 	})
 
 	const videos   = document.querySelectorAll('video');
-	const observer = new IntersectionObserver((entries, observer) => {
-			for (const entry of entries) {
-				if (entry.isIntersecting) {
-					requestIdleCallback(() => {
-						entry.target.play();
-					}, {timeout: 250});
-				} else {
-					requestIdleCallback(() => {
-						entry.target.pause();
-					}, {timeout: 250});
-				}
-			}
-		},
-		{
-			threshold: [0.50]
-		}
-	);
 
-	videos.forEach((video) => {
-		observer.observe(video);
-	});
+	if ('IntersectionObserver' in window) {
+		const observer = new IntersectionObserver((entries, observer) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						requestIdleCallback(() => {
+							entry.target.play();
+						}, {timeout: 250});
+					} else {
+						requestIdleCallback(() => {
+							entry.target.pause();
+						}, {timeout: 250});
+					}
+				}
+			},
+			{
+				threshold: [0.50]
+			}
+		);
+
+		videos.forEach((video) => {
+			observer.observe(video);
+		});
+	} else {
+		videos.forEach((video) => {
+			video.play();
+		});
+	}
+
 
 	if (navigator.share) {
 		shareBtns.forEach((shareBtn) => {
