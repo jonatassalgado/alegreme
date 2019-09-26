@@ -79,15 +79,17 @@
         </i>
         <span class="">Compartilhar</span>
       </button>
-      <div class="invite__cta" title="Seja um Beta tester!">
+      <div class="invite__loginButtons">
+        <div class="invite__loginButtons-facebook" onclick="loginWithFacebook()">Entrar com facebook</div>
+        <div class="invite__loginButtons-gmail" onclick="loginWithGmail()">Entrar com gmail</div>
+      </div>
+      <div class="invite__cta" onclick="showLoginButtons()" title="Seja um Beta tester!">
         Solicitar Convite
         <!-- <span> -->
           <%#= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
         <!-- </span> -->
       </div>
-      <div class="invite__google-details">
-        <%= responsive_image_tag "welcome/google-details", alt: 'conta do google', class: 'lazyload' %>
-      </div>
+
       <div class="skatista lazyload" data-bg="<%= image_path 'welcome/skatista.png' %>" style="transform: translate(-1900px, -50px);">
       </div>
     </section>

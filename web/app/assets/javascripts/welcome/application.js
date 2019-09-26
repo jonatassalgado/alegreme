@@ -1,10 +1,6 @@
-// require flipping/dist/flipping.js
-// require rails-ujs
-// require rellax/rellax.js
 //= require mobile-detect/mobile-detect.js
 //= require lazysizes/lazysizes.min.js
 //= require serviceworker-companion.js
-// require query-string/index.js
 
 lazySizes.cfg.expand = 10;
 
@@ -46,18 +42,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	const md = new MobileDetect(window.navigator.userAgent);
 
-	const brandLogoEls      = document.querySelectorAll('.js-logo');
-	const pimbaEls          = document.querySelectorAll('.js-pimba');
-	const peopleEl          = document.querySelector('.people');
-	const peopleEls         = document.querySelectorAll('.people__person-face');
-	const answerEl          = document.querySelector('.answer');
-	const shareBtns         = document.querySelectorAll('.shareBtn');
-	const inviteEl          = document.querySelector('.invite');
-	const inviteCtaEl       = document.querySelector('.invite__cta');
-	const inviteDetailsEl   = document.querySelector('.invite__details');
-	const inviteCounterEl   = document.querySelector('.invite__counter');
-	const inviteStatusEl    = document.querySelector('.invite__status');
-	const firstPersonFaceEl = document.querySelector('.people__person-face');
+	const brandLogoEls       = document.querySelectorAll('.js-logo');
+	const pimbaEls           = document.querySelectorAll('.js-pimba');
+	const peopleEl           = document.querySelector('.people');
+	const peopleEls          = document.querySelectorAll('.people__person-face');
+	const answerEl           = document.querySelector('.answer');
+	const shareBtns          = document.querySelectorAll('.shareBtn');
+	const inviteEl           = document.querySelector('.invite');
+	const inviteCtaEl        = document.querySelector('.invite__cta');
+	const inviteLoginBtnsEl  = document.querySelector('.invite__loginButtons');
+	const inviteLoginFbEl    = document.querySelector('.invite__loginButtons-facebook');
+	const inviteLoginGmailEl = document.querySelector('.invite__loginButtons-gmail');
+	const inviteDetailsEl    = document.querySelector('.invite__details');
+	const inviteCounterEl    = document.querySelector('.invite__counter');
+	const inviteStatusEl     = document.querySelector('.invite__status');
+	const firstPersonFaceEl  = document.querySelector('.people__person-face');
 
 	setTimeout(() => {
 		requestAnimationFrame(() => {
@@ -240,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// });
 
 
-	var startGoogleAuth = function () {
+	const startGoogleAuth = function () {
 		gapi.load('auth2', function () {
 			auth2 = gapi.auth2.init({
 				client_id   : '859257966270-bklt50keg5qsjjda0qv34dnki47olthj.apps.googleusercontent.com',
@@ -248,79 +247,107 @@ document.addEventListener('DOMContentLoaded', function () {
 				cookiepolicy: 'single_host_origin'
 			});
 
-			attachSignin(inviteCtaEl);
+			// attachSignin(inviteLoginGmailEl);
 		});
 	};
 
-	function attachSignin(element) {
-		console.log('inside attachSignin');
-		auth2.attachClickHandler(element, {},
-			function (googleUser) {
-				var profile          = googleUser.getBasicProfile();
-				const googleUserData = {
-					name   : profile.getName(),
-					email  : profile.getEmail(),
-					picture: profile.getImageUrl()
-				};
+	function createInvite(userData) {
+		const frontData = userData;
+		fetch(`/invite?name=${frontData.name}&email=${frontData.email}&picture=${frontData.picture}`, {
+			method     : 'GET',
+			headers    : {
+				'X-Requested-With': 'XMLHttpRequest',
+				'Content-type'    : 'text/javascript; charset=UTF-8',
+				'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+			},
+			credentials: 'same-origin'
+		}).then(
+			response => {
+				response.text().then(data => {
+					const backendData = JSON.parse(data);
+					const userName = `${frontData.name.split(" ")[0]}`;
 
-				// const params = stringify(googleUserData, {
-				// 	arrayFormat: 'bracket'
-				// });
+					setTimeout(() => {
+						// inviteCtaEl.style.display = "flex";
+						inviteLoginBtnsEl.style.display = "flex";
+					}, 400)
 
-				fetch(`/invite?name=${googleUserData.name}&email=${googleUserData.email}&picture=${googleUserData.picture}`, {
-					method     : 'GET',
-					headers    : {
-						'X-Requested-With': 'XMLHttpRequest',
-						'Content-type'    : 'text/javascript; charset=UTF-8',
-						'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
-					},
-					credentials: 'same-origin'
-				}).then(
-					response => {
-						response.text().then(data => {
-							const backendData = JSON.parse(data);
-
-							const userName = `${googleUserData.name.split(" ")[0]}`;
-
-							if (backendData.invitationCreated) {
-								inviteStatusEl.style.transform = 'translate(0px, 150px)';
-								inviteEl.classList.add('is-invited');
+					if (backendData.invitationCreated) {
+						inviteStatusEl.style.transform = 'translate(0px, 50px)';
+						inviteEl.classList.add('is-invited');
 
 
-								inviteCounterEl.innerText               = `Pronto ${userName}, convite solicitado com sucesso!`
-								inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
-								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
+						inviteCounterEl.innerText               = `Pronto ${userName}, convite solicitado com sucesso!`
+						inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
+						firstPersonFaceEl.style.backgroundImage = `url("${frontData.picture}")`;
 
-  							fbq('track', 'CompleteRegistration');
-							}
-
-							if (backendData.invitationAlreadyRequested) {
-								inviteStatusEl.style.transform = 'translate(0px, 150px)';
-								inviteEl.classList.add('is-invited');
-
-
-								inviteCounterEl.innerText               = `${userName}, você e outras ${backendData.invitesCount} pessoas já estão na fila`;
-								inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
-								firstPersonFaceEl.style.backgroundImage = `url("${googleUserData.picture}")`;
-							}
-						});
+						fbq('track', 'CompleteRegistration');
 					}
-				).catch(err => {
-					console.log('Fetch Error :-S', err);
+
+					if (backendData.invitationAlreadyRequested) {
+						inviteStatusEl.style.transform = 'translate(0px, 50px)';
+						inviteEl.classList.add('is-invited');
+
+
+						inviteCounterEl.innerText               = `${userName}, você e outras ${backendData.invitesCount} pessoas já estão na fila`;
+						inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
+						firstPersonFaceEl.style.backgroundImage = `url("${frontData.picture}")`;
+					}
+
+					setTimeout(() => {
+						inviteCtaEl.style.display = "none";
+						inviteLoginBtnsEl.style.display = "none";
+					}, 400)
 				});
-			});
+			}
+		).catch(err => {
+			console.log('Fetch Error :-S', err);
+		});
 	}
 
 
 	startGoogleAuth();
 
 
-	function socialInit(access_token, flag) {
-		// var socialLoginData = JSON.stringify({ token: access_token, social_type: flag });
-		// var socialLoginUrl = $scope.baseUrl + '/users/login/social'
-		// $http.post(socialLoginUrl, socialLoginData).success(function(response) {
-		// })
+	window.loginWithGmail = function loginWithGmail() {
+		auth2.signIn().then(function (googleUser) {
+			var profile          = googleUser.getBasicProfile();
+			const googleUserData = {
+				name   : profile.getName(),
+				email  : profile.getEmail(),
+				picture: profile.getImageUrl()
+			};
+
+			createInvite(googleUserData);
+		})
 	}
 
+	window.loginWithFacebook = function loginWithFacebook() {
+		FB.login(function(response) {
+		  if (response.status === 'connected') {
+				FB.api('/me', {fields: 'name, email, picture'}, function(response) {
+					const fbUserData = {
+						name   : response.name,
+						email  : response.email,
+						picture: response.picture.data.url
+					};
+
+					createInvite(fbUserData);
+		    });
+		  } else {
+
+		  }
+		}, {scope: 'public_profile,email'});
+	}
+
+	window.showLoginButtons = function showLoginButtons() {
+		inviteLoginBtnsEl.style.display = "flex";
+		inviteCtaEl.style.display = "none";
+		inviteCtaEl.style.opacity = 0;
+
+		setTimeout(() => {
+			inviteLoginBtnsEl.style.opacity = 1;
+		}, 150)
+	}
 
 });
