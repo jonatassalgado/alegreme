@@ -253,14 +253,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	function createInvite(userData) {
 		const frontData = userData;
-		fetch(`/invite?name=${frontData.name}&email=${frontData.email}&picture=${frontData.picture}`, {
-			method     : 'GET',
+
+		fetch(`/invite`, {
+			method     : 'PATCH',
 			headers    : {
+				'Content-type'    : 'application/json; charset=UTF-8',
+				'Accept'          : 'application/json',
 				'X-Requested-With': 'XMLHttpRequest',
-				'Content-type'    : 'text/javascript; charset=UTF-8',
 				'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 			},
-			credentials: 'same-origin'
+			credentials: 'same-origin',
+			body       : JSON.stringify(frontData)
 		}).then(
 			response => {
 				response.text().then(data => {
@@ -313,9 +316,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		auth2.signIn().then(function (googleUser) {
 			var profile          = googleUser.getBasicProfile();
 			const googleUserData = {
-				name   : profile.getName(),
-				email  : profile.getEmail(),
-				picture: profile.getImageUrl()
+				googleId : profile.getId(),
+				name     : profile.getName(),
+				email    : profile.getEmail(),
+				picture  : profile.getImageUrl()
 			};
 
 			createInvite(googleUserData);
@@ -327,6 +331,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		  if (response.status === 'connected') {
 				FB.api('/me', {fields: 'name, email, picture'}, function(response) {
 					const fbUserData = {
+						fbId   : response.id,
 						name   : response.name,
 						email  : response.email,
 						picture: response.picture.data.url

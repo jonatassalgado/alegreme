@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
 	root to: 'welcome#index'
 
-	get '/invite', to: 'welcome#invite'
+	patch '/invite', to: 'welcome#invite'
 	get '/feed', to: 'feeds#index'
 	get '/retrain', to: 'events#retrain'
 	get '/service-worker.js', to: redirect('service-worker.js')

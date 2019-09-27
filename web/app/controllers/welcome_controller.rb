@@ -48,7 +48,11 @@ class WelcomeController < ApplicationController
 						                          'beta'    => {
 								                          'requested' => true,
 								                          'activated' => false
-						                          }
+						                          },
+																			'social'   => {
+																				'fbId'     => params[:fbId],
+																				'googleId' => params[:googleId]
+																			},
 				                          }
 		                          })
 		user.save
