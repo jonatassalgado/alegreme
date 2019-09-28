@@ -34,6 +34,8 @@ document.addEventListener('lazybeforeunveil', function (e) {
 
 document.addEventListener('DOMContentLoaded', function () {
 
+	window.dataLayer = window.dataLayer || [];
+
 	WebFont.load({
 		google: {
 			families: ['Montserrat:800,900', 'Roboto:400,500,700']
@@ -285,6 +287,10 @@ document.addEventListener('DOMContentLoaded', function () {
 						firstPersonFaceEl.style.backgroundImage = `url("${frontData.picture}")`;
 
 						fbq('track', 'CompleteRegistration');
+
+						window.dataLayer.push({
+							'event': 'completeRegistration'
+						});
 					}
 
 					if (backendData.invitationAlreadyRequested) {
