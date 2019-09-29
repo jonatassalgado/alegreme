@@ -17,8 +17,9 @@
     font-size: 11px;
     padding: 0 55px 0 0;
     position: relative;
-    top: -5px;
+    top: -80px;
     @include mobile-only {
+      display: none;
       margin: auto;
       padding: 0;
       max-width: 70%;
@@ -29,8 +30,8 @@
 
 
 .macbook {
-  width: 720px;
-  height: 464px;
+  width: 838px;
+  height: 490px;
   background-image: asset_url("welcome/mockup-macbook.png");
   background-position: center top;
   background-repeat: no-repeat;
@@ -41,12 +42,12 @@
   }
 
   &__screen {
-    width: 593px;
-    height: 332px;
+    width: 587px;
+    height: 335px;
     background: #ffffff;
     position: relative;
-    top: 105px;
-    left: 23px;
+    top: 31px;
+    left: 126px;
     overflow: hidden;
 
     & img {
@@ -59,7 +60,7 @@
 .android {
   $android-resize: 1.6;
   $android-width: 176;
-  $android-height: 324;
+  $android-height: 356;
   width: unquote($android-width + 'px');
   height: unquote($android-height + 'px');
   background-image: asset_url("welcome/mockup-android.png");
@@ -69,7 +70,7 @@
   margin: 95px 0 0 0;
   z-index: 2;
   position: absolute;
-  top: 180px;
+  top: 70px;
   right: 10px;
   @include mobile-only {
     width: unquote($android-width * $android-resize + 'px');
@@ -82,17 +83,16 @@
   }
 
   &__screen {
-    $android-screen-left: 28;
-    $android-screen-height: 248;
-    $android-screen-width: 121;
-    $android-screen-top: 35;
+    $android-screen-left: 11;
+    $android-screen-height: 272;
+    $android-screen-width: 152;
+    $android-screen-top: 37;
     width: unquote($android-screen-width + 'px');
     height: unquote($android-screen-height + 'px');
     background: #ffffff;
     position: relative;
     top: unquote($android-screen-top + 'px');
     left: unquote($android-screen-left + 'px');
-    border-radius: 5px;
     overflow: hidden;
 
     & img, picture, video {
@@ -108,19 +108,21 @@
   }
 
   &__playStoreBanner {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: -60px;
+    left: 0;
+
+    @include mobile-only {
+      width: 100%;
+      position: absolute;
+      bottom: -100px;
+      left: 0;
+    }
 
     & img {
-      width: 112px;
-      position: absolute;
-      bottom: -16px;
-      left: 12px;
-
-      @include mobile-only {
-        width: 50vw;
-        position: absolute;
-        bottom: -75px;
-        left: 50px;
-      }
+      width: 100%;
     }
   }
 }
@@ -129,6 +131,7 @@
   margin: 65px 0 65px 0;
   max-width: 670px;
   @include mobile-only {
+    display: none;
     max-width: calc(100vw - 48px);
     margin: 0 0 50px 0;
     -webkit-tap-highlight-color: transparent;
@@ -236,6 +239,7 @@
     background-repeat: no-repeat;
     background-position: bottom center;
     height: auto;
+    margin: 85px 0 0 0;
   }
 
   & h2 {
