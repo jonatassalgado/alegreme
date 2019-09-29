@@ -286,9 +286,10 @@ section {
 
     &-instagram {
       color: $font-primary-color;
-      width: 100%;
+      width: 90vw;
       text-align: center;
-      margin: 6px 0;
+      margin: 6px auto;
+      line-height: 1.35em;
       & b {
         color: #C13584;
         border-bottom: 1px solid;

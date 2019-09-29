@@ -106,6 +106,23 @@
       height: unquote($android-screen-height * $android-resize + 'px');
     }
   }
+
+  &__playStoreBanner {
+
+    & img {
+      width: 112px;
+      position: absolute;
+      bottom: -16px;
+      left: 12px;
+
+      @include mobile-only {
+        width: 50vw;
+        position: absolute;
+        bottom: -75px;
+        left: 50px;
+      }
+    }
+  }
 }
 
 .benefits {
