@@ -39,6 +39,7 @@ services:
       HTTP_HOST: 'www.alegreme.com'
       NODE_ENV: development
       JOB_WORKER_URL: redis://redis:6379/0
+      RAILS_MAX_THREADS: 5
       # ELASTICSEARCH_URL: http://search:9200
     restart: always
     ports:

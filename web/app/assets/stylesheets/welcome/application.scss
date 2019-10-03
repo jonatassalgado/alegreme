@@ -2,12 +2,45 @@
 @import "media-queries";
 @import "variables";
 @import "@material/snackbar/mdc-snackbar";
+@import "pwa-install-prompt/style";
 //@import "smile";
 //@import "@material/fab/mdc-fab";
 
 
 .demo {
   position: relative;
+  @include mobile-only {
+    margin: 0 0 250px 0;
+  }
+
+  &__banners {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include mobile-only {
+      width: 100%;
+      position: absolute;
+      bottom: -250px;
+      left: 0;
+      flex-direction: column;
+    }
+
+    & img {
+      width: 160px;
+      margin: 0 6px;
+      cursor: pointer;
+      @include mobile-only {
+        width: 200px;
+        width: 250px;
+      }
+    }
+  }
 
   &__plataform-numbers {
     text-align: center;
@@ -79,7 +112,7 @@
     top: 0;
     right: 0;
     //transform: scale(1.8);
-    margin: 86px auto 40px auto;
+    margin: 86px auto 0 auto;
   }
 
   &__screen {
@@ -104,25 +137,6 @@
       left: unquote($android-screen-left * $android-resize + 'px');
       width: unquote($android-screen-width * $android-resize + 'px');
       height: unquote($android-screen-height * $android-resize + 'px');
-    }
-  }
-
-  &__playStoreBanner {
-    text-align: center;
-    width: 100%;
-    position: absolute;
-    bottom: -60px;
-    left: 0;
-
-    @include mobile-only {
-      width: 100%;
-      position: absolute;
-      bottom: -100px;
-      left: 0;
-    }
-
-    & img {
-      width: 100%;
     }
   }
 }

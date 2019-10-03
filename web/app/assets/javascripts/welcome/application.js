@@ -7,7 +7,8 @@ lazySizes.cfg.expand = 10;
 window.addEventListener('beforeinstallprompt', (e) => {
 	e.preventDefault();
 	deferredPrompt = e;
-	const btnAdd   = document.querySelector(".footer__logo-icon");
+	const btnAdd   = document.querySelector(".demo__pwaBanner");
+
 	btnAdd.addEventListener('click', (e) => {
 		deferredPrompt.prompt();
 

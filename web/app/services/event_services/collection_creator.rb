@@ -54,6 +54,7 @@ module EventServices
 		def get_filters_for_collection
 			collections = {
 					'today-and-tomorrow' => {
+							# in_days:          @params[:ocurrences] || (@today..(@today + 7)).map(&:to_s),
 							in_days:          @params[:ocurrences] || [@today.to_s, @tomorrow.to_s],
 							in_user_personas: true,
 							order_by_persona: true,

@@ -107,6 +107,20 @@
 
   <% unless params[:pwa] %>
     <section class="demo">
+      <div class="demo__banners">
+        <div class="demo__pwaBanner">
+          <%= image_tag 'welcome/pwa-banner.png', alt: 'Iniciar como Web App', title: 'Instalar app web no celular' %>
+        </div>
+        <div class="demo__iosBanner" onclick="prompt.open()">
+          <%= image_tag 'welcome/ios-banner.png', alt: 'Adicionar na tela inicial', title: 'Adicionar na tela inicial' %>
+        </div>
+        <div class="demo__playStoreBanner">
+          <a href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+            <%= image_tag 'welcome/google-play-banner.png',  alt: 'Disponível no Google Play', title: 'Disponível no Google Play' %>
+          </a>
+        </div>
+      </div>
+
       <% unless mobile_device? %>
         <div class="macbook">
           <div class="macbook__screen">
@@ -131,11 +145,6 @@
           		<param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4" />
           	</object>
           </video>
-        </div>
-        <div class="android__playStoreBanner">
-          <a href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
-            <img alt='Disponível no Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/pt-br_badge_web_generic.png'/>
-          </a>
         </div>
       </div>
       <div class="demo__plataform-numbers">

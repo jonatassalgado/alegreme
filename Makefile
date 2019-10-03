@@ -75,3 +75,6 @@ prune:
 	docker image prune
 	docker volume prune
 	docker container prune
+
+hint:
+	hint http://localhost:3000
