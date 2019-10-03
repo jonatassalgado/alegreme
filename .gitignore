@@ -1,3 +1,4 @@
+hint-report/
 .DS_Store
 web/package.json
 web/yarn-error.log
