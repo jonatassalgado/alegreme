@@ -10,7 +10,7 @@
 .demo {
   position: relative;
   @include mobile-only {
-    margin: 0 0 250px 0;
+    margin: 0 0 180px 0;
   }
 
   &__banners {
@@ -26,7 +26,7 @@
     @include mobile-only {
       width: 100%;
       position: absolute;
-      bottom: -250px;
+      bottom: -180px;
       left: 0;
       flex-direction: column;
     }
@@ -40,6 +40,10 @@
         width: 250px;
       }
     }
+  }
+
+  &__iosBanner {
+    display: none;
   }
 
   &__plataform-numbers {

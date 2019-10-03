@@ -60,6 +60,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	const inviteCounterEl    = document.querySelector('.invite__counter');
 	const inviteStatusEl     = document.querySelector('.invite__status');
 	const firstPersonFaceEl  = document.querySelector('.people__person-face');
+	const iosBannerEl        = document.querySelector('.demo__iosBanner');
+	const pwaBannerEl        = document.querySelector('.demo__pwaBanner');
+
+	if (md.is('iOS')) {
+		iosBannerEl.style.display = 'block';
+		pwaBannerEl.style.display = 'none';
+	}
 
 	setTimeout(() => {
 		requestAnimationFrame(() => {

@@ -5,21 +5,21 @@ document.addEventListener('DOMContentLoaded', () => {
   window.prompt = new pwaInstallPrompt(".pwa-install-prompt__container", {
       active_class: "is-active",
       closer: ".pwa-install-prompt__overlay",
-      condition: null,
+      condition: false,
       expires: 180,
       show_after: 90,
       on: {
           beforeOpen: function () {
-              console.log("before open!");
+              // console.log("before open!");
           },
           afterOpen: function () {
-              console.log("after open!");
+              // console.log("after open!");
           },
           beforeClose: function () {
-              console.log("before close!");
+              // console.log("before close!");
           },
           afterClose: function () {
-              console.log("after close!");
+              // console.log("after close!");
           },
       }
   });
