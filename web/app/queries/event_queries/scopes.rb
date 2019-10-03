@@ -247,7 +247,6 @@ module EventQueries
 							.from(Event
 									      .select("events.*, ROW_NUMBER() OVER (
 																										PARTITION BY (ml_data -> 'categories' -> 'primary' ->> 'name')
-																										ORDER BY #{order_query}, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC
 																								  ) AS row")
 									      .as("events")
 							)
