@@ -22,7 +22,7 @@ class FeedsController < ApplicationController
 			         get_events_for_search_query
 			       else
 				       collection_today = collections.call(
-						       'today-and-tomorrow',
+						       'this-week',
 						       {
 								       group_by: 2
 						       })
@@ -40,10 +40,11 @@ class FeedsController < ApplicationController
 						       })
 
 				       collection_suggestions = collections.call(
-						       'user-suggestions',
-						       {
-								       not_in: collection_personas.dig(:detail, :init_filters_applyed, :events_ids) | collection_follow.dig(:detail, :init_filters_applyed, :events_ids) | collection_today.dig(:detail, :init_filters_applyed, :events_ids)
-						       })
+						       'user-suggestions'
+						       # {
+								   #     not_in: collection_personas.dig(:detail, :init_filters_applyed, :events_ids) | collection_follow.dig(:detail, :init_filters_applyed, :events_ids) | collection_today.dig(:detail, :init_filters_applyed, :events_ids)
+						       # }
+								 )
 
 				       {
 						       today:            collection_today,

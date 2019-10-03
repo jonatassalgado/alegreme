@@ -15,35 +15,35 @@ pt-BR:
           has_many: Não é possível excluir o registro pois existem %{record} dependentes
   date:
     abbr_day_names:
-    - Dom
-    - Seg
-    - Ter
-    - Qua
-    - Qui
-    - Sex
-    - Sáb
+    - dom
+    - seg
+    - ter
+    - qua
+    - qui
+    - sex
+    - sáb
     abbr_month_names:
     -
-    - Jan
-    - Fev
-    - Mar
-    - Abr
-    - Mai
-    - Jun
-    - Jul
-    - Ago
-    - Set
-    - Out
-    - Nov
-    - Dez
+    - jan
+    - fev
+    - mar
+    - abr
+    - mai
+    - jun
+    - jul
+    - ago
+    - set
+    - out
+    - nov
+    - dez
     day_names:
-    - Domingo
-    - Segunda
-    - Terça
-    - Quarta
-    - Quinta
-    - Sexta
-    - Sábado
+    - domingo
+    - segunda
+    - terça
+    - quarta
+    - quinta
+    - sexta
+    - sábado
     formats:
       default: "%d/%m/%Y"
       long: "%d de %B de %Y"
@@ -51,18 +51,18 @@ pt-BR:
       week: "%A"
     month_names:
     -
-    - Janeiro
-    - Fevereiro
-    - Março
-    - Abril
-    - Maio
-    - Junho
-    - Julho
-    - Agosto
-    - Setembro
-    - Outubro
-    - Novembro
-    - Dezembro
+    - janeiro
+    - fevereiro
+    - março
+    - abril
+    - maio
+    - junho
+    - julho
+    - agosto
+    - setembro
+    - outubro
+    - novembro
+    - dezembro
     order:
     - :day
     - :month
@@ -107,12 +107,12 @@ pt-BR:
         one: 1 ano
         other: "%{count} anos"
     prompts:
-      second: Segundo
-      minute: Minuto
-      hour: Hora
-      day: Dia
-      month: Mês
-      year: Ano
+      second: segundo
+      minute: minuto
+      hour: hora
+      day: dia
+      month: mês
+      year: ano
   errors:
     format: "%{attribute} %{message}"
     messages:

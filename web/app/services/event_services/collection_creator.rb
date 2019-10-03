@@ -53,12 +53,12 @@ module EventServices
 
 		def get_filters_for_collection
 			collections = {
-					'today-and-tomorrow' => {
-							# in_days:          @params[:ocurrences] || (@today..(@today + 7)).map(&:to_s),
-							in_days:          @params[:ocurrences] || [@today.to_s, @tomorrow.to_s],
-							in_user_personas: true,
+					'this-week' => {
+							in_days:          @params[:ocurrences] || (@today..(@today + 6)).map(&:to_s),
+							# in_days:          @params[:ocurrences] || [@today.to_s, @tomorrow.to_s],
+							in_user_personas: false,
 							order_by_persona: true,
-							group_by:         calculate_items_for_group(3, auto_balance: true)
+							group_by:         calculate_items_for_group(nil, auto_balance: false)
 					},
 					'follow'             => {
 							in_days:            set_initial_dates_filter,
@@ -89,7 +89,7 @@ module EventServices
 
 		def default_options(opts)
 			default_opts = {
-					'today-and-tomorrow' => {
+					'this-week' => {
 							all_existing_filters: false,
 							limit:                8
 					},
@@ -119,7 +119,7 @@ module EventServices
 
 		def get_filters_toggle_for_collection
 			filters = {
-					'today-and-tomorrow' => {
+					'this-week' => {
 							categories: true,
 							kinds:      true,
 							ocurrences: true
@@ -209,6 +209,8 @@ module EventServices
 		end
 
 		def calculate_items_for_group(number = 2, opts = {})
+			# return 15
+
 			if organizers_filter_exist || places_filter_exist
 				return nil
 			else
@@ -248,7 +250,7 @@ module EventServices
 					# if params_filter_category_exist? || params_filter_kind_exist?
 					# 	Event.day_of_week(events, active_range: active_range?).sort_by_order.compact_range.uniq.values
 					# else
-					# if @identifier == 'today-and-tomorrow'
+					# if @identifier == 'this-week'
 					defaults[type]
 					# else
 					# 	if @opts[:all_existing_filters]

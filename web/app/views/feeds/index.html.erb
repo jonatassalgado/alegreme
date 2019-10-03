@@ -35,10 +35,10 @@
                    locals:  {
                        items:      @items[:today],
                        title:      {
-                           principal: "Eventos acontecendo hoje e amanhã",
-                           secondary: "#{I18n.l(Date.today, format: :week)} (#{I18n.l(Date.today, format: :short)}) e #{I18n.l(Date.today + 1, format: :week)} (#{I18n.l(Date.today + 1, format: :short)})"
+                           principal: "Eventos acontecendo esta semana",
+                           secondary: "Hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 6, format: :week)} (#{I18n.l(Date.today + 6, format: :short)})"
                        },
-                       identifier: 'today-and-tomorrow',
+                       identifier: 'this-week',
                        opts:       {
                            type:    :large,
                            filters: {

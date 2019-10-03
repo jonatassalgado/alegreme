@@ -235,18 +235,19 @@ module EventQueries
 				categories = categories.present? ? (categories - opts[:not_in]) : (CATEGORIES - opts[:not_in])
 
 				if opts[:group_by] && categories.present? || opts[:not_in].present?
-					# order_by = ["CASE"]
-					# opts[:personas].each_with_index.map do |persona, index|
-					# 	order_by << "WHEN (ml_data -> 'personas' -> 'primary' ->> 'name') = '#{persona}' THEN #{index}"
-					# end
-					# order_by << "END"
-					# order_query = Arel.sql ActiveRecord::Base::sanitize_sql(order_by.join(" "))
+					order_by = ["CASE"]
+					opts[:personas].each_with_index.map do |persona, index|
+						order_by << "WHEN (ml_data -> 'personas' -> 'primary' ->> 'name') = '#{persona}' THEN #{index}"
+					end
+					order_by << "END"
+					order_query = Arel.sql ActiveRecord::Base::sanitize_sql(order_by.join(" "))
 
 					# ORDER BY #{order_query}, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC
 					select("*")
 							.from(Event
 									      .select("events.*, ROW_NUMBER() OVER (
 																										PARTITION BY (ml_data -> 'categories' -> 'primary' ->> 'name')
+																										ORDER BY #{order_query}, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC
 																								  ) AS row")
 									      .as("events")
 							)

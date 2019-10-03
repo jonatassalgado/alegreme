@@ -21,7 +21,7 @@ class CollectionCreatorTest < ActiveSupport::TestCase
 		})
 
 		collection = EventServices::CollectionCreator.new(@user)
-		assert_equal 2, collection.call('today-and-tomorrow')[:events].count, 'should return 2 events'
+		assert_equal 2, collection.call('this-week')[:events].count, 'should return 2 events'
 	end
 
 
