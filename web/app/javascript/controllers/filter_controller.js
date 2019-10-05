@@ -2,6 +2,7 @@ import {Controller}        from "stimulus";
 import {stringify}         from "query-string";
 import Flipping            from 'flipping';
 import {ProgressBarModule} from "../modules/progressbar-module";
+import * as MobileDetect     from "mobile-detect";
 
 
 export default class FilterController extends Controller {
@@ -13,50 +14,55 @@ export default class FilterController extends Controller {
 			attribute: `data-collection-${this.sectionIdentifier}-flip-key`
 		});
 		this.pubsub   = {};
+		this.md       = new MobileDetect(window.navigator.userAgent);
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
-			const flipPromise = new Promise((resolve, reject) => {
-				this.flipping.flip();
+			if (!this.md.mobile()) {
+				const flipPromise = new Promise((resolve, reject) => {
+					this.flipping.flip();
 
-				let delay     = 0.035;
-				const flipped = Object.keys(this.flipping.states).forEach((key) => {
-					const state = this.flipping.states[key];
-					if (state.element === undefined) {
-						return;
-					}
-
-					if (state.type === 'MOVE' && state.delta) {
-						state.element.style.transition = '';
-						state.element.style.transform  = `translateY(${state.delta.top}px) translateX(${state.delta.left}px)`;
-					}
-					if (state.type === 'ENTER') {
-						state.element.style.opacity   = 0;
-						state.element.style.transform = `scale(0.8)`;
-					}
-
-					requestAnimationFrame(() => {
+					let delay     = 0.035;
+					const flipped = Object.keys(this.flipping.states).forEach((key) => {
+						const state = this.flipping.states[key];
+						if (state.element === undefined) {
+							return;
+						}
 
 						if (state.type === 'MOVE' && state.delta) {
-							state.element.style.transition = `transform 0.6s cubic-bezier(.54,.01,.45,.99)`;
-							state.element.style.transform  = '';
-							state.element.style.opacity    = 1;
+							state.element.style.transition = '';
+							state.element.style.transform  = `translateY(${state.delta.top}px) translateX(${state.delta.left}px)`;
 						}
 						if (state.type === 'ENTER') {
-							state.element.style.transition = `transform 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s, opacity 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s`;
-							state.element.style.transform  = '';
-							state.element.style.opacity    = 1;
+							state.element.style.opacity   = 0;
+							state.element.style.transform = `scale(0.8)`;
 						}
 
-						delay = delay + 0.035;
+						requestAnimationFrame(() => {
+
+							if (state.type === 'MOVE' && state.delta) {
+								state.element.style.transition = `transform 0.6s cubic-bezier(.54,.01,.45,.99)`;
+								state.element.style.transform  = '';
+								state.element.style.opacity    = 1;
+							}
+							if (state.type === 'ENTER') {
+								state.element.style.transition = `transform 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s, opacity 0.4s cubic-bezier(0,.16,.45,.99) ${delay}s`;
+								state.element.style.transform  = '';
+								state.element.style.opacity    = 1;
+							}
+
+							delay = delay + 0.035;
+						});
 					});
+
+					resolve(flipped)
 				});
 
-				resolve(flipped)
-			});
-
-			flipPromise.then(() => {
+				flipPromise.then(() => {
+					ProgressBarModule.hide();
+				});
+			} else {
 				ProgressBarModule.hide();
-			});
+			}
 		});
 
 		this.pubsub.sectionCreate = PubSubModule.on(`${this.sectionIdentifier}.create`, (data) => {
