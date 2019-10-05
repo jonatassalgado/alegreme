@@ -3,7 +3,7 @@
        data-chip-default-value="<%= initial_filters.to_json %>"
        data-chip-type="filter"
        data-target="chip.chipset filter.<%= type %>"
-       class="me-chip-set <%= (['kinds'].include?(type)) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'filter' %>">
+       class="me-chip-set <%= (['kinds'].include?(type)) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'choice' %>">
 <!--    <i class="material-icons">-->
       <%#= icon_type %>
 <!--    </i>-->

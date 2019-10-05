@@ -329,10 +329,12 @@ module EventServices
 				CollectionCreator.kinds         = CollectionCreator.active_events.map { |e| e.kinds.map { |c| c.details['name'] } }.flatten.uniq.freeze
 				CollectionCreator.categories    = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq.freeze
 			else
-				CollectionCreator.user          ||= current_user
-				CollectionCreator.active_events ||= Event.includes(:place, :categories, :organizers).active
-				CollectionCreator.categories    ||= CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
-				# CollectionCreator.kinds         ||= CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
+				Rails.cache.fetch("collection_creator_#{current_user}") do
+					CollectionCreator.user          = current_user
+					CollectionCreator.active_events = Event.includes(:place, :categories, :organizers).active
+					CollectionCreator.categories    = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
+					# CollectionCreator.kinds       = CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
+				end
 			end
 		end
 	end
