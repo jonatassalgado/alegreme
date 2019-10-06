@@ -36,8 +36,9 @@
   <meta name="apple-mobile-web-app-title" content="Alegreme">
   <link rel="apple-touch-icon" href="<%= image_url 'icons/launcher-icon-180x180.png' %>">
 
-  <%= favicon_link_tag asset_path 'favicon-32x32.png', sizes: "32x32" %>
-  <%= favicon_link_tag asset_path 'favicon-16x16.png', sizes: "16x16" %>
+  <%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-48x48.png', {sizes: "48x48", type: "image/png"} %>
+  <%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-96x96.png', {sizes: "96x96", type: "image/png"} %>
+  <%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-144x144.png', {sizes: "144x144", type: "image/png"} %>
 
   <link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
