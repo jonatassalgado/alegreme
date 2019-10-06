@@ -1,14 +1,17 @@
-<div class="mdc-chip <%= 'mdc-chip--selected' if user.following?(followable) %>"
-     data-followed="<%= user.following?(followable) %>"
+<div class="mdc-chip <%= 'mdc-chip--selected' if user.try {|user| user.following?(followable)} %>"
+     data-followed="<%= user.try {|user| user.following?(followable)} %>"
      data-followable="<%= followable.id %>"
      data-type="<%= type %>"
      data-target="follow-chipset.chip">
-  <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"
-     data-action="click->follow-chipset#follow"
-     data-target="follow-chipset.trailing"
-     role="button"
-     tabindex="0"
-     title="Siga o tópico '<%= followable.details['name'] %>'"><%= user.following?(followable) ? 'check' : 'add' %></i>
+  <% if user %>
+    <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"
+       data-action="click->follow-chipset#follow"
+       data-target="follow-chipset.trailing"
+       role="button"
+       tabindex="0"
+       title="Siga o tópico '<%= followable.details['name'] %>'"><%= user.following?(followable) ? 'check' : 'add' %>
+    </i>
+  <% end %>
   <%= link_to organizer_path(followable) do %>
     <div class="mdc-chip__text"
          title="Veja todos os eventos do tópico '<%= followable.details['name'] %>'">

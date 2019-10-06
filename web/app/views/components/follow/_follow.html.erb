@@ -1,7 +1,5 @@
 <%
 
-  return unless user
-
   type = local_assigns.fetch(:type)
   event_id = local_assigns.fetch(:event_id)
   expand_to_similar = local_assigns.fetch(:expand_to_similar, false)
@@ -19,7 +17,7 @@
              collection: chips,
              as:         :followable,
              locals:     {
-                 user:              current_user,
-                 type:              'organizers'
+                 user: user,
+                 type: 'organizers'
              } %>
 </div>
