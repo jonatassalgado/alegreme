@@ -49,6 +49,15 @@ module EventQueries
 				end
 			}
 
+			scope 'only_in', lambda { |ids, opts = {}|
+				opts = {'turn_on': true}.merge(opts)
+				if opts[:turn_on] && !ids.blank?
+					where(id: ids)
+				else
+					all
+				end
+			}
+
 			scope 'follow_features_by_user', lambda { |user, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
 

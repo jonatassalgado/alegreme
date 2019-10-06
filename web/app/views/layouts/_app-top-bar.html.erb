@@ -1,46 +1,42 @@
 <header class="me-top-app-bar mdc-top-app-bar <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>"
         id="top-bar">
   <div class="mdc-top-app-bar__row">
-    <% if params[:controller] == 'feeds' %>
+    <% if ['feeds', 'search'].include? params[:controller] %>
       <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <a href="/">
           <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo', alt: 'logo' %>
         </a>
       </section>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
-        <% if current_user&.personas_assortment_finished? %>
-          <div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"
-               data-controller="chat"
-               data-target="chat.field"
-               data-turbolinks-permanent
-               id="me-chat">
-            <form action=""
-                  data-action="submit->chat#search"
-                  data-target="chat.form"
-                  method="get"
-                  name="search"
-                  style="width: 100%">
-              <i class="material-icons mdc-text-field__icon">search</i>
-              <input autocomplete="false"
-                     class="mdc-text-field__input"
-                     data-target="chat.input"
-                     id="text-field-shape-one"
-                     placeholder="O que você está buscando hoje?"
-                     type="text">
-              <input style="display: none;"
-                     type="submit"/>
-            </form>
-          </div>
-        <% end %>
+        <div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"
+             data-controller="chat"
+             data-target="chat.field"
+             data-turbolinks-permanent
+             id="me-chat">
+          <form action="/search"
+                method="get"
+                name="search"
+                style="width: 100%">
+            <i class="material-icons mdc-text-field__icon">search</i>
+            <input autocomplete="false"
+                   name="q"
+                   class="mdc-text-field__input"
+                   id="text-field-shape-one"
+                   placeholder="O que você está buscando hoje?"
+                   type="text">
+            <input style="display: none;"
+                   type="submit"/>
+          </form>
+        </div>
       </section>
-    <% elsif mobile_device? && params[:controller] == 'feeds' %>
+    <% elsif mobile_device? && ['feeds', 'search'].include?(params[:controller]) %>
       <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <a href="/">
           <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>
         </a>
       </section>
     <% end %>
-    <% if params[:controller] != 'feeds' && mobile_device? %>
+    <% if !['feeds', 'search'].include?(params[:controller]) && mobile_device? %>
       <% if current_user %>
         <button class="me-top-app-bar__back-button mdc-icon-button"
                 onclick="window.AnimateModule.animateBackbutton()">
@@ -53,7 +49,7 @@
           </a>
         </section>
       <% end %>
-    <% elsif params[:controller] != 'feeds' %>
+    <% elsif !['feeds', 'search'].include?(params[:controller]) %>
       <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <a href="/">
           <%= responsive_image_tag 'logo', class: 'me-top-app-bar__logo-text', alt: 'logo' %>

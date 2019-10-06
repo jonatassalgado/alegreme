@@ -19,7 +19,7 @@ services:
       - api
       - scrapy
       - memcached
-      # - search
+      - search
     volumes:
       - bundle_cache:/bundle
       - scrapy_data:/var/www/scrapy/data:ro
@@ -40,7 +40,7 @@ services:
       WEB_CONCURRENCY: 4
       RAILS_MAX_THREADS: 6
       JOB_WORKER_URL: redis://redis:6379/0
-      # ELASTICSEARCH_URL: http://search:9200
+      ELASTICSEARCH_URL: http://search:9200
     restart: always
     ports:
       - 3000:3000
@@ -192,14 +192,16 @@ services:
     mem_reservation: 256m
     cpus: 2
     restart: always
-  # search:
-  #   build:
-  #     context: ./search
-  #     dockerfile: ./Dockerfile
-  #   environment:
-  #     discovery.type: single-node
-  #   ports:
-  #     - "9200:9200"
-  #   volumes:
-  #     - search_data:/var/www/search/data
-  #   restart: always
+  search:
+    build:
+      context: ./search
+      dockerfile: ./Dockerfile
+    environment:
+      discovery.type: single-node
+    ports:
+      - "9200:9200"
+    mem_limit: 2gb
+    memswap_limit: 2gb
+    mem_reservation: 256m
+    cpus: 1.5
+    restart: always

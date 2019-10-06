@@ -18,41 +18,47 @@ class FeedsController < ApplicationController
 			render layout: 'bot' and return
 		end
 
-		@items = if params[:q]
-			         get_events_for_search_query
-			       else
-				       collection_today = collections.call(
-						       'this-week',
-						       {
-								       group_by: 2
-						       })
+		collection_week = collections.call(
+				{
+						identifier: 'this-week',
+						events:     Event.all
+				},
+				{
+						group_by: 2
+				})
 
-				       collection_follow = collections.call(
-						       'follow',
-						       {
-								       not_in: collection_today.dig(:detail, :init_filters_applyed, :events_ids)
-						       })
+		collection_follow = collections.call(
+				{
+						identifier: 'follow',
+						events:     Event.all
+				},
+				{
+						not_in: collection_week.dig(:detail, :init_filters_applyed, :events_ids)
+				})
 
-				       collection_personas = collections.call(
-						       'user-personas',
-						       {
-								       not_in: collection_follow.dig(:detail, :init_filters_applyed, :events_ids) | collection_today.dig(:detail, :init_filters_applyed, :events_ids)
-						       })
+		collection_personas = collections.call(
+				{
+						identifier: 'user-personas',
+						events:     Event.all
+				},
+				{
+						not_in: collection_follow.dig(:detail, :init_filters_applyed, :events_ids) | collection_week.dig(:detail, :init_filters_applyed, :events_ids)
+				})
 
-				       collection_suggestions = collections.call(
-						       'user-suggestions'
-						       # {
-								   #     not_in: collection_personas.dig(:detail, :init_filters_applyed, :events_ids) | collection_follow.dig(:detail, :init_filters_applyed, :events_ids) | collection_today.dig(:detail, :init_filters_applyed, :events_ids)
-						       # }
-								 )
+		collection_suggestions = collections.call(
+				{
+						identifier: 'user-suggestions',
+						events:     Event.all
+				}
+		)
 
-				       {
-						       today:            collection_today,
-						       follow:           collection_follow,
-						       user_personas:    collection_personas,
-						       user_suggestions: collection_suggestions
-				       }
-		         end
+		@items = {
+				week:             collection_week,
+				follow:           collection_follow,
+				user_personas:    collection_personas,
+				user_suggestions: collection_suggestions
+		}
+
 
 		@favorited_events = current_or_guest_user.saved_events
 
@@ -60,7 +66,7 @@ class FeedsController < ApplicationController
 
 	def train
 		events_not_trained_yet = get_events_not_trained_yet
-		@pagy, @events = pagy(events_not_trained_yet, items: 6)
+		@pagy, @events         = pagy(events_not_trained_yet, items: 6)
 	end
 
 	private
@@ -223,15 +229,8 @@ class FeedsController < ApplicationController
 		Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
 				.order(order)
 				.includes(:place)
-
-		# Event.all.order("updated_at DESC")
 	end
 
-	def get_events_for_search_query
-		{
-				user: Event.search(params[:q].downcase, highlight: true, limit: 23, includes: [:place])
-		}
-	end
 
 	protected
 

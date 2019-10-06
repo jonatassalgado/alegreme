@@ -8,25 +8,26 @@ module EventServices
 		def initialize(current_user, request_params = {})
 			cache_variables(current_user)
 
-			@params   = request_params || {}
-			@today    = DateTime.now.beginning_of_day
-			@tomorrow = @today + 1
+			@params               = request_params || {}
+			@today                = DateTime.now.beginning_of_day
+			@tomorrow             = @today + 1
+			@init_filters_applyed = @params[:init_filters_applyed] ? JSON.parse(@params[:init_filters_applyed]) : {}
 		end
 
 		def call(collection, opts = {})
-			return {} if collection.nil? && collection[:collection].blank?
+			raise ArgumentError, "Coleção precisa ser um Hash com eventos e identificador" unless collection.is_a? Hash
 
-			if collection.is_a?(Hash) && collection.key?(:identifier)
+			if collection.key?(:events)
 				@identifier = collection[:identifier]
-				@collection = collection[:collection]
-			else
+				@events     = collection[:events]
+			elsif collection.key?(:ids)
 				@identifier = collection
-				@collection = Event.all
+				@events     = Event.where(id: [collection[:ids]])
 			end
 
 			@opts            = default_options(opts)
 			@dynamic_filters = default_filters.merge(get_filters_for_collection)
-			@all_events      = EventFetcher.new(@collection, @dynamic_filters).call
+			@all_events      = EventFetcher.new(@events, @dynamic_filters).call
 
 			mount_response
 		end
@@ -45,34 +46,34 @@ module EventServices
 					in_places:         set_initial_places_filter,
 					order_by_date:     false,
 					order_by_persona:  false,
-					group_by:          calculate_items_for_group(2, auto_balance: true),
+					group_by:          false,
 					not_in:            set_not_in,
+					only_in:           set_only_in,
 					limit:             set_limit
 			}
 		end
 
 		def get_filters_for_collection
 			collections = {
-					'this-week' => {
-							in_days:          @params[:ocurrences] || (@today..(@today + 6)).map(&:to_s),
-							# in_days:          @params[:ocurrences] || [@today.to_s, @tomorrow.to_s],
+					'this-week'        => {
+							in_days: @params[:ocurrences] || (@today..(@today + 6)).map(&:to_s),
 							in_user_personas: false,
 							order_by_persona: true,
 							group_by:         calculate_items_for_group(nil, auto_balance: false)
 					},
-					'follow'             => {
+					'follow'           => {
 							in_days:            set_initial_dates_filter,
 							order_by_persona:   false,
 							in_follow_features: true,
 							group_by:           nil
 					},
-					'user-suggestions'   => {
+					'user-suggestions' => {
 							in_user_suggestions: true,
 							in_days:             set_initial_dates_filter,
 							order_by_persona:    true,
 							group_by:            calculate_items_for_group(nil, auto_balance: false)
 					},
-					'user-personas'      => {
+					'user-personas'    => {
 							in_user_personas: CollectionCreator.user,
 							in_days:          set_initial_dates_filter,
 							order_by_persona: true,
@@ -89,19 +90,19 @@ module EventServices
 
 		def default_options(opts)
 			default_opts = {
-					'this-week' => {
+					'this-week'        => {
 							all_existing_filters: false,
 							limit:                8
 					},
-					'user-personas'      => {
+					'user-personas'    => {
 							all_existing_filters: false,
 							limit:                8
 					},
-					'follow'             => {
+					'follow'           => {
 							all_existing_filters: false,
 							limit:                8
 					},
-					'user-suggestions'   => {
+					'user-suggestions' => {
 							all_existing_filters: false,
 							limit:                8
 					}
@@ -119,22 +120,22 @@ module EventServices
 
 		def get_filters_toggle_for_collection
 			filters = {
-					'this-week' => {
+					'this-week'        => {
 							categories: true,
 							kinds:      true,
 							ocurrences: true
 					},
-					'user-personas'      => {
+					'user-personas'    => {
 							categories: true,
 							kinds:      true,
 							ocurrences: true
 					},
-					'follow'             => {
+					'follow'           => {
 							categories: true,
 							kinds:      true,
 							ocurrences: true
 					},
-					'user-suggestions'   => {
+					'user-suggestions' => {
 							categories: true,
 							kinds:      true,
 							ocurrences: true
@@ -201,10 +202,17 @@ module EventServices
 
 		def set_not_in
 			if @params.include?(:init_filters_applyed)
-				init_filters_applyed = JSON.parse(@params[:init_filters_applyed])
-				init_filters_applyed['not_in']
+				@init_filters_applyed['not_in']
 			else
 				@opts[:not_in] || []
+			end
+		end
+
+		def set_only_in
+			if @params.include?(:init_filters_applyed)
+				@init_filters_applyed['only_in']
+			else
+				@opts[:only_in] || []
 			end
 		end
 
@@ -286,7 +294,7 @@ module EventServices
 		end
 
 		def is_a_activerecord_relation?
-			@collection.is_a? ActiveRecord::Relation
+			@events.is_a? ActiveRecord::Relation
 		end
 
 		def params_filter_category_exist?

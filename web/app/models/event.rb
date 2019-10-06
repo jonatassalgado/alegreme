@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
 
 	extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
+	friendly_id :slug_candidates, use: :slugged
 
 	def slug_candidates
 		[
@@ -22,6 +22,7 @@ class Event < ApplicationRecord
 	include EventDecorators::Categories
 	include EventDecorators::Tags
 	include EventDecorators::Kinds
+	include EventDecorators::MLData
 
 	include EventQueries::Scopes
 
@@ -42,9 +43,17 @@ class Event < ApplicationRecord
 
 	delegate :details_name, to: :place, prefix: true, allow_nil: true
 
-	searchkick callbacks: false, language: 'portuguese', highlight: %i[name description]
+	searchkick callbacks: false, language: 'portuguese', highlight: %i[details_name]
 
-
+	def search_data
+		{
+				name:        details_name,
+				description: ml_data_cleanned,
+				category:    categories_primary_name,
+				place:       place_details_name,
+				organizers:  organizers.map(&:details_name)
+		}
+	end
 
 	def ml_data_all
 		nouns = ml_data['nouns']
@@ -79,7 +88,6 @@ class Event < ApplicationRecord
 	end
 
 
-
 	private
 
 	def destroy_entries
@@ -90,16 +98,5 @@ class Event < ApplicationRecord
 			user.taste['events']['total_saves'] -= 1
 		end
 	end
-	#
-	# def validate_attrs_that_should_be_a_hash
-	# 	['theme', 'personas', 'categories', 'geographic', 'ocurrences', 'details', 'entries', 'ml_data', 'image_data', 'tags'].each do |attr|
-	# 		errors.add(attr, 'precisam ser um Hash') unless public_send(attr).is_a? Hash
-	# 	end
-	# end
-	#
-	# def validate_attrs_that_should_be_a_array
-	# 	['kinds'].each do |attr|
-	# 		errors.add(attr, 'precisam ser um Array') unless public_send(attr).is_a? Array
-	# 	end
-	# end
+
 end

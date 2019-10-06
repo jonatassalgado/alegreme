@@ -18,9 +18,9 @@ services:
       - db
       - api
       - scrapy
-#      - memcached
-#      - redis
-      # - search
+      - search
+      # - memcached
+      # - redis
       # - bot
     volumes:
       - bundle_cache:/bundle
@@ -40,7 +40,7 @@ services:
       NODE_ENV: development
       JOB_WORKER_URL: redis://redis:6379/0
       RAILS_MAX_THREADS: 5
-      # ELASTICSEARCH_URL: http://search:9200
+      ELASTICSEARCH_URL: http://search:9200
     restart: always
     ports:
       - 3000:3000
@@ -184,14 +184,12 @@ services:
 #   volumes:
 #     - ./data/certbot/conf:/etc/letsencrypt
 #     - ./data/certbot/www:/var/www/certbot
-# search:
-#   build:
-#     context: ./search
-#     dockerfile: ./Dockerfile
-#   environment:
-#     discovery.type: single-node
-#   ports:
-#     - "9200:9200"
-#   volumes:
-#     - search_data:/var/www/search/data
-#   restart: always
+  search:
+    build:
+      context: ./search
+      dockerfile: ./Dockerfile
+    environment:
+      discovery.type: single-node
+    ports:
+      - "9200:9200"
+    restart: always

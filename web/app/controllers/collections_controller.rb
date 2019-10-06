@@ -7,7 +7,13 @@ class CollectionsController < ApplicationController
 			place  = Place.friendly.find(initial_filters_applyed['in_places'][0])
 			events = place.events.active
 
-			collection = collection_creator.call(events, places: initial_filters_applyed['in_places'])
+			collection = collection_creator.call({
+					                                     identifier: 'places',
+					                                     events:     events
+			                                     },
+			                                     {
+					                                     places: initial_filters_applyed['in_places']
+			                                     })
 
 			@locals = {
 					items:        collection,
@@ -19,7 +25,7 @@ class CollectionsController < ApplicationController
 					opts:         {
 							filters: collection[:filters],
 							detail:  collection[:detail],
-							origin: params[:origin]
+							origin:  params[:origin]
 					},
 					json_request: true
 			}
@@ -27,7 +33,12 @@ class CollectionsController < ApplicationController
 			organizer = Organizer.friendly.find(initial_filters_applyed['in_organizers'][0])
 			events    = organizer.events.active
 
-			collection = collection_creator.call(events, organizers: initial_filters_applyed['in_organizers'])
+			collection = collection_creator.call({
+					                                     identifier: 'organizers',
+					                                     events:     events},
+			                                     {
+					                                     organizers: initial_filters_applyed['in_organizers']
+			                                     })
 
 			@locals = {
 					items:        collection,
@@ -38,13 +49,17 @@ class CollectionsController < ApplicationController
 					opts:         {
 							filters: collection[:filters],
 							detail:  collection[:detail],
-							origin: params[:origin]
+							origin:  params[:origin]
 					},
 					json_request: true
 			}
 		else
-			collection = collection_creator.call(params[:identifier])
-			@title     = JSON.parse(params[:title])
+			collection = collection_creator.call({
+					                                     identifier: params[:identifier],
+					                                     events:     Event.all
+			                                     })
+
+			@title = JSON.parse(params[:title])
 
 			@locals = {
 					items:        collection,
@@ -56,7 +71,7 @@ class CollectionsController < ApplicationController
 					opts:         {
 							filters: collection[:filters],
 							detail:  collection[:detail],
-							origin: params[:origin]
+							origin:  params[:origin]
 					},
 					json_request: true
 			}

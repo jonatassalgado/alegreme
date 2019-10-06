@@ -1,0 +1,8 @@
+<div class="me-feed me-page__section">
+  <% if params[:q] %>
+    <%= render partial: "components/collection/collection", locals: @locals %>
+
+  <% else %>
+    Nenhum evento encontrado
+  <% end %>
+</div>

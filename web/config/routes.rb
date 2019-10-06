@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 	get '/privacy', to: 'welcome#privacy'
 	get '/terms', to: 'welcome#terms'
 
+	resources :search, only: [:index]
 	resources :train, only: [:index]
 	resources :users
 	resources :collections, only: [:index]

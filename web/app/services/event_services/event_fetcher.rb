@@ -22,6 +22,7 @@ module EventServices
 			order_personas_on   = sockets[:order_by_persona]
 			not_in_saved_on     = sockets[:not_in_saved_on]
 			not_in_on           = sockets[:not_in]
+			only_in_on          = sockets[:only_in]
 			order_by_date       = sockets[:order_by_date]
 			days                = @params[:in_days]
 			organizers          = @params[:in_organizers]
@@ -29,6 +30,7 @@ module EventServices
 			categories          = @params[:in_categories]
 			not_categories      = @params[:not_in_categories]
 			not_in              = @params[:not_in]
+			only_in             = @params[:only_in]
 			limit               = @params[:limit]
 			kinds               = @params[:in_kinds]
 			group_by            = @params[:group_by]
@@ -43,6 +45,10 @@ module EventServices
 					.not_in(
 							not_in,
 							'turn_on': not_in_on
+					)
+					.only_in(
+							only_in,
+							'turn_on': only_in_on
 					)
 					.in_days(
 							days,
@@ -132,7 +138,8 @@ module EventServices
 					order_by_persona:    false,
 					group_by:            false,
 					not_in_saved_on:     true,
-					not_in_on:           false
+					not_in_on:           false,
+					only_in_on:          false
 			}
 
 			default_sockets.merge(toggles)
