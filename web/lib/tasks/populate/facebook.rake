@@ -62,6 +62,7 @@ def create_place(item)
 		place.geographic.deep_merge!(
 				address: item['address']
 		)
+		place.slug = nil
 		place.save!
 
 		SetGeolocationJob.perform_later(place.id)
@@ -84,6 +85,9 @@ def create_organizer(item, event)
 			organizer.details.deep_merge!(
 					name: organizer_item
 			)
+
+			organizer.slug = nil
+			organizer.save!
 
 			puts "#{organizer_item} - Organizador criado".blue
 
