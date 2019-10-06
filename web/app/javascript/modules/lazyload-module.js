@@ -14,7 +14,7 @@ const LazyloadModule = (function () {
 		let images = [...document.querySelectorAll('.lazy-bgimage')];
 
 		const interactSettings = {
-			rootMargin: '0px 0px 200px 0px'
+			rootMargin: '0px 100px 200px 0px'
 		};
 
 		function onIntersection(imageEntites) {

@@ -9,19 +9,21 @@ window.addEventListener('beforeinstallprompt', (e) => {
 	deferredPrompt = e;
 	const btnAdd   = document.querySelector(".demo__pwaBanner");
 
-	btnAdd.addEventListener('click', (e) => {
-		deferredPrompt.prompt();
+	if(btnAdd) {
+		btnAdd.addEventListener('click', (e) => {
+			deferredPrompt.prompt();
 
-		deferredPrompt.userChoice
-		              .then((choiceResult) => {
-			              if (choiceResult.outcome === 'accepted') {
-				              console.log('User accepted the A2HS prompt');
-			              } else {
-				              console.log('User dismissed the A2HS prompt');
-			              }
-			              deferredPrompt = null;
-		              });
-	});
+			deferredPrompt.userChoice
+			              .then((choiceResult) => {
+				              if (choiceResult.outcome === 'accepted') {
+					              console.log('User accepted the A2HS prompt');
+				              } else {
+					              console.log('User dismissed the A2HS prompt');
+				              }
+				              deferredPrompt = null;
+			              });
+		});
+	}
 });
 
 document.addEventListener('lazybeforeunveil', function (e) {
@@ -70,9 +72,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	setTimeout(() => {
 		requestAnimationFrame(() => {
-			peopleEl.style.opacity = 1;
+			if(peopleEl) {
+				peopleEl.style.opacity = 1;
+			}
 		}, 2500);
-	})
+	});
 
 	const videos   = document.querySelectorAll('video');
 
@@ -179,26 +183,27 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	});
 
-	answerEl.addEventListener('click', () => {
-		answerEl.classList.add('is-showout');
+	if(answerEl) {
+		answerEl.addEventListener('click', () => {
+			answerEl.classList.add('is-showout');
 
+			setTimeout(() => {
+				answerEl.style.display = 'none';
+				answerEl.classList.remove('is-showout');
+				answerEl.querySelectorAll('[data-answer]').forEach((answer) => {
+					answer.style.display = 'none';
 
-		setTimeout(() => {
-			answerEl.style.display = 'none';
-			answerEl.classList.remove('is-showout');
-			answerEl.querySelectorAll('[data-answer]').forEach((answer) => {
-				answer.style.display = 'none';
+				});
+				document.body.style.overflow = 'auto';
 
-			});
-			document.body.style.overflow = 'auto';
+				if (md.mobile()) {
+				} else {
+					document.body.style.paddingRight = '0';
+				}
 
-			if (md.mobile()) {
-			} else {
-				document.body.style.paddingRight = '0';
-			}
-
-		}, 590);
-	});
+			}, 590);
+		});
+	}
 
 
 	document.querySelectorAll('.questions__grid-item').forEach((item) => {

@@ -17,45 +17,54 @@
   </section>
 
 
-  <% unless mobile_device? %>
-  <section class="features">
-    <div class="features__scroll-view">
-      <div class="feature feature--activities rellax" data-rellax-speed="2" style="">
-        <div class="feature__icon">
-          <%= responsive_image_tag "welcome/bike-icon", alt: 'bicicleta' %>
+  <% unless mobile_device? || params[:pwa] %>
+    <section class="features">
+      <div class="features__scroll-view">
+        <div class="feature feature--activities rellax" data-rellax-speed="2" style="">
+          <div class="feature__icon">
+            <%= responsive_image_tag "welcome/bike-icon", alt: 'bicicleta' %>
+          </div>
+          <div class="feature__title">Atividades recorrentes para praticar na cidade</div>
         </div>
-        <div class="feature__title">Atividades recorrentes para praticar na cidade</div>
-      </div>
-      <div class="feature feature--events rellax" data-rellax-speed="1" style="">
-        <div class="feature__icon">
-          <%= responsive_image_tag "welcome/calendar-icon", alt: "calendário" %>
+        <div class="feature feature--events rellax" data-rellax-speed="1" style="">
+          <div class="feature__icon">
+            <%= responsive_image_tag "welcome/calendar-icon", alt: "calendário" %>
+          </div>
+          <div class="feature__title">Eventos sugeridos com base no seu gosto individual</div>
         </div>
-        <div class="feature__title">Eventos sugeridos com base no seu gosto individual</div>
-      </div>
-      <div class="feature feature--topics rellax" data-rellax-speed="1" style="">
-        <div class="feature__icon">
-          <%= responsive_image_tag "welcome/hearth-icon", alt: "coração", class: 'lazyload' %>
+        <div class="feature feature--topics rellax" data-rellax-speed="1" style="">
+          <div class="feature__icon">
+            <%= responsive_image_tag "welcome/hearth-icon", alt: "coração", class: 'lazyload' %>
+          </div>
+          <div class="feature__title">Siga os tópicos que você gosta e fique sempre por dentro</div>
         </div>
-        <div class="feature__title">Siga os tópicos que você gosta e fique sempre por dentro</div>
-      </div>
-      <div class="feature feature--friends rellax" data-rellax-speed="1" style="">
-        <div class="feature__icon">
-          <%= responsive_image_tag "welcome/friends-icon", alt: "amigos", class: 'lazyload' %>
+        <div class="feature feature--friends rellax" data-rellax-speed="1" style="">
+          <div class="feature__icon">
+            <%= responsive_image_tag "welcome/friends-icon", alt: "amigos", class: 'lazyload' %>
+          </div>
+          <div class="feature__title">Compartilhe com seus melhores amigos seus planos</div>
         </div>
-        <div class="feature__title">Compartilhe com seus melhores amigos seus planos</div>
-      </div>
-      <div class="feature feature--movie rellax" data-rellax-speed="2" style="">
-        <div class="feature__icon">
-          <%= responsive_image_tag "welcome/movie-icon", alt: "filme", class: 'lazyload' %>
+        <div class="feature feature--movie rellax" data-rellax-speed="2" style="">
+          <div class="feature__icon">
+            <%= responsive_image_tag "welcome/movie-icon", alt: "filme", class: 'lazyload' %>
+          </div>
+          <div class="feature__title">Filmes do Mario Quintana, Capitólio e Cinemark</div>
         </div>
-        <div class="feature__title">Filmes do Mario Quintana, Capitólio e Cinemark</div>
       </div>
-    </div>
-  </section>
+    </section>
   <% end %>
 
-  <% unless params[:pwa] %>
-    <section class="invite">
+  <% if params[:pwa] %>
+    <div class="login-button" title="Entrar" onclick="location.assign('/users/auth/google_oauth2')">
+      Entrar
+      <span>
+          <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
+        </span>
+    </div>
+  <% end %>
+
+  <section class="invite <%= 'is-pwa' if params[:pwa] %>">
+    <% unless params[:pwa] %>
       <div class="invite__status">
         <div class="people">
           <% @last_people.each do |person| %>
@@ -79,31 +88,26 @@
         </i>
         <span class="">Compartilhar</span>
       </button>
+
       <div class="invite__loginButtons">
         <div class="invite__button invite__button-facebook" onclick="loginWithFacebook()">Continuar com facebook</div>
         <div class="invite__button invite__button-gmail" onclick="loginWithGmail()">Continuar com gmail</div>
-        <div class="invite__button invite__button-instagram" onclick="window.location = 'https://www.instagram.com/portoalegreme'">Ou siga nosso <b>instagram</b> e seja avisado por lá.</div>
+        <div class="invite__button invite__button-instagram" onclick="window.location = 'https://www.instagram.com/portoalegreme'">Ou siga nosso
+          <b>instagram</b> e seja avisado por lá.
+        </div>
       </div>
       <div class="invite__cta" onclick="showLoginButtons()" title="Seja um Beta tester!">
         Solicitar Convite
         <!-- <span> -->
-          <%#= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
+        <%#= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
         <!-- </span> -->
       </div>
 
       <div class="skatista lazyload" data-bg="<%= image_path 'welcome/skatista.png' %>" style="transform: translate(-1900px, -50px);">
       </div>
-    </section>
-  <% end %>
+    <% end %>
+  </section>
 
-  <% if params[:pwa] %>
-    <div class="login-button" title="Entrar" onclick="location.assign('/users/auth/google_oauth2')">
-      Entrar
-      <span>
-          <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
-        </span>
-    </div>
-  <% end %>
 
   <% unless params[:pwa] %>
     <section class="demo">
@@ -116,7 +120,7 @@
         </div>
         <div class="demo__playStoreBanner">
           <a href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
-            <%= image_tag 'welcome/google-play-banner.png',  alt: 'Disponível no Google Play', title: 'Disponível no Google Play' %>
+            <%= image_tag 'welcome/google-play-banner.png', alt: 'Disponível no Google Play', title: 'Disponível no Google Play' %>
           </a>
         </div>
       </div>
@@ -125,12 +129,12 @@
         <div class="macbook">
           <div class="macbook__screen">
             <video width="100%" height="auto" autoplay muted loop playsinline>
-            	<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.mp4"  type="video/mp4" />
-            	<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.webm"  type="video/webm" />
-            	<object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.swf">
-            		<param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.swf" />
-            		<param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.mp4" />
-            	</object>
+              <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.mp4" type="video/mp4"/>
+              <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.webm" type="video/webm"/>
+              <object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.swf">
+                <param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.swf"/>
+                <param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.mp4"/>
+              </object>
             </video>
           </div>
         </div>
@@ -138,12 +142,12 @@
       <div class="android">
         <div class="android__screen">
           <video width="100%" height="auto" autoplay muted loop playsinline>
-          	<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4"  type="video/mp4" />
-          	<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.webm"  type="video/webm" />
-          	<object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.swf">
-          		<param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.swf" />
-          		<param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4" />
-          	</object>
+            <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4" type="video/mp4"/>
+            <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.webm" type="video/webm"/>
+            <object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.swf">
+              <param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.swf"/>
+              <param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4"/>
+            </object>
           </video>
         </div>
       </div>
@@ -303,30 +307,32 @@
   <% end %>
 
   <section class="footer">
-    <div class="footer__logo-icon js-logo">
-      <%= responsive_image_tag "welcome/footer-logo-icon", alt: 'logo', title: 'Pimba!', class: 'lazyload' %>
-      <div class="brand__pimba js-pimba" style="opacity: 0;">Pimba</div>
-    </div>
-    <button class="shareBtn" aria-label="Compartilhar" style="" type="button">
-      <i class="">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path fill="none" d="M0 0h24v24H0V0z"/>
-          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-        </svg>
-      </i>
-      <span class="">Compartilhar</span>
-    </button>
-    <div class="social__links">
-      <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
-      <a href="https://twitter.com/portoalegreme">twitter</a> ·
-      <a href="#">oi@alegreme.com</a>
-    </div>
-    <div class="footer__links">
-      <a href="/privacy">Política de privacidade</a> ·
-      <a href="/terms">Termos de serviço</a> ·
-      <a href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">Sobre</a>
-    </div>
-    <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!', class: 'lazyload' %>
+    <% unless params[:pwa] %>
+      <div class="footer__logo-icon js-logo">
+        <%= responsive_image_tag "welcome/footer-logo-icon", alt: 'logo', title: 'Pimba!', class: 'lazyload' %>
+        <div class="brand__pimba js-pimba" style="opacity: 0;">Pimba</div>
+      </div>
+      <button class="shareBtn" aria-label="Compartilhar" style="" type="button">
+        <i class="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+          </svg>
+        </i>
+        <span class="">Compartilhar</span>
+      </button>
+      <div class="social__links">
+        <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
+        <a href="https://twitter.com/portoalegreme">twitter</a> ·
+        <a href="#">oi@alegreme.com</a>
+      </div>
+      <div class="footer__links">
+        <a href="/privacy">Política de privacidade</a> ·
+        <a href="/terms">Termos de serviço</a> ·
+        <a href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">Sobre</a>
+      </div>
+      <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!', class: 'lazyload' %>
+    <% end %>
   </section>
   </section>
 </div>

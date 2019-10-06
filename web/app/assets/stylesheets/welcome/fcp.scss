@@ -16,7 +16,10 @@
     background-repeat: no-repeat;
     background-position: top center;
     max-width: 100vw;
-    //overflow-x: hidden;
+    &.is-pwa  {
+      min-height: 100vh;
+      background-size: auto;
+    }
   }
 
 }
@@ -88,7 +91,7 @@ section {
   font-style: normal;
   text-align: center;
   @include mobile-only {
-    padding: 0 25px;
+    padding: 6vh 24px 6vh 24px;
   }
 
   & h1 {
@@ -137,6 +140,9 @@ section {
   @include mobile-only {
     margin: 42px auto 0 auto;
     padding-bottom: 60px;
+    .is-pwa & {
+      margin: 16px auto 0 auto;
+    }
   }
 
   &__status {
@@ -227,6 +233,10 @@ section {
       font-size: 16px;
       font-weight: 800;
       margin: 35px auto 0 auto;
+      .is-pwa & {
+        width: calc(100% - 48px);
+        margin: 0 auto 0 auto;
+      }
     }
 
     &:hover {

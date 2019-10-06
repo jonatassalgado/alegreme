@@ -465,6 +465,11 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  @include mobile-only {
+    //margin: 24px auto 12px auto;
+    //position: fixed;
+    //bottom: 0;
+  }
 
   &__logo-icon {
     position: relative;
@@ -582,7 +587,9 @@
     width: calc(100vw - 48px);
     height: 65px;
     font-size: 18px;
-    margin: 25px auto 0 auto;
+    position: absolute;
+    margin: 25px auto 36px auto;
+    bottom: 0;
   }
 
   &:hover {
