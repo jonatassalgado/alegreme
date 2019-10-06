@@ -55,9 +55,9 @@
         </div>
       <% end %>
     </div>
-    <h2 class="me-card__name">
+    <h1 class="me-card__name">
       <%= @event.details_name %>
-    </h2>
+    </h1>
   </div>
 
   <div class="me-card__content">
@@ -68,9 +68,9 @@
             place
           </i>
           <div>
-            <h3>
+            <div class="me-card__date-title">
               <%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place) %>
-            </h3>
+            </div>
             <span>
             <%= limit_address_name_size @event.geographic['address'] %>
           </span>
@@ -83,9 +83,9 @@
             today
           </i>
           <div>
-            <h3>
+            <div class="me-card__place-title">
               <%= "#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }" %>
-            </h3>
+            </div>
             <span>
               <%= I18n.l(@event.day_of_week['date'], format: :long) %>
           </span>
@@ -116,8 +116,21 @@
   <a href="/train">Treinar</a>
 <% end %>
 
-<!--<ul>-->
-<%# @event.similar_data.each do |similar| %>
-<!--    <li><%#= "#{Event.find(similar).id} #{Event.find(similar).details_name}" %></li>-->
-<%# end %>
-<!--</ul>-->
+
+
+<section class="me-event-single__similar">
+  <h2 class="me-h2 me-h2--centralize">Eventos similares</h2>
+  <div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <%= render partial:    'components/collection/event',
+                 collection: @similar_events,
+                 as:         :event,
+                 locals:     {
+                     identifier:   @event.slug,
+                     json_request: false,
+                     display_similar: false
+                 },
+                 cached:     true %>
+    </div>
+  </div>
+</section>

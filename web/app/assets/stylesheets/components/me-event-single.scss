@@ -1,0 +1,12 @@
+@import "variables";
+
+.me-event-single {
+
+  &__similar {
+    margin-top: 85px;
+
+    @include mdc-layout-grid-media-query_("phone") {
+      margin-top: 125px;
+    }
+  }
+}

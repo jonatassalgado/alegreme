@@ -13,6 +13,8 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @similar_events = Event.where(id: @event.similar_data).limit(15)
+
     respond_to do |format|
       format.html { render :show }
     end

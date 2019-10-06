@@ -109,19 +109,21 @@ $description-color: $font-secondary-color;
   }
 
   &__similar {
-    text-align: center;
-    align-self: center;
-    cursor: pointer;
-    color: $font-tertiary-color;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-    user-select: none;
-    z-index: 2;
-    position: relative;
-    top: 6px;
-    @include mdc-layout-grid-media-query_("phone") {
-      margin-bottom: 12px;
-      opacity: 1;
+    .me-feed__section & {
+      text-align: center;
+      align-self: center;
+      cursor: pointer;
+      color: $font-tertiary-color;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      user-select: none;
+      z-index: 2;
+      position: relative;
+      top: 6px;
+      @include mdc-layout-grid-media-query_("phone") {
+        margin-bottom: 12px;
+        opacity: 1;
+      }
     }
 
     & .me-card__loading {
@@ -170,6 +172,10 @@ $description-color: $font-secondary-color;
         opacity: 1;
         transform: translate(0px, 0px);
       }
+    }
+
+    .me-event-single__similar & {
+      margin: 6px 0 30px 0;
     }
 
     @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
@@ -348,7 +354,7 @@ $description-color: $font-secondary-color;
       line-height: 1.3em;
       font-family: $font-primary-family;
       font-weight: 800;
-      font-size: 18px;
+      font-size: 28px;
       color: $font-primary-color;
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 21px;
@@ -399,20 +405,20 @@ $description-color: $font-secondary-color;
         display: flex;
       }
 
+      &-title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        margin: 0;
+        line-height: 1em;
+      }
+
       & i {
         float: left;
         margin: 0 10px 0 0;
         //@include mdc-layout-grid-media-query_("phone") {
         //  margin: 2px 10px 0 3px;
         //}
-      }
-
-      & h3 {
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        margin: 0;
-        line-height: 1em;
       }
 
       & span {
@@ -425,9 +431,9 @@ $description-color: $font-secondary-color;
     & .me-card__date {
       margin: 0;
 
-      & h3 {
-        text-transform: uppercase;
-      }
+      //& h3 {
+      //  text-transform: uppercase;
+      //}
     }
 
     & .me-card__description {

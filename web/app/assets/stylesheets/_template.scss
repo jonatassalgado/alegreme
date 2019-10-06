@@ -1,3 +1,38 @@
+@import "_variables";
+
+.me-h2 {
+  line-height: 1.3em;
+  font-size: 24px;
+  color: $font-primary-color;
+  font-family: $font-primary-family;
+  position: relative;
+  z-index: 3;
+  letter-spacing: -0.01em;
+  @include mdc-layout-grid-media-query_("phone") {
+    font-size: 24px;
+    line-height: 1em;
+    max-width: 70vw;
+    padding: 0 $section-padding-phone;
+  }
+
+  &--centralize {
+    text-align: center;
+  }
+
+  & span {
+    font-size: 16px;
+    display: block;
+    font-weight: 300;
+    font-family: $font-secondary-family;
+    color: $font-secondary-color;
+    line-height: 1.6em;
+    //margin-top: 8px;
+    @include mdc-layout-grid-media-query_("phone") {
+      display: none;
+    }
+  }
+}
+
 .lazy-bgimage {
   will-change: opacity;
   transition: opacity 0.3s;
