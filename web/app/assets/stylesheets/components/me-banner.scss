@@ -1,0 +1,15 @@
+@import "variables";
+
+.me-banner {
+  width: calc(100% - 12px);
+  max-width: 350px;
+  height: auto;
+  margin: 75px auto 25px auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: 6px solid #e0e0e0;
+  border-radius: 12px;
+  &:hover {
+    border-color: $brand-color;
+  }
+}

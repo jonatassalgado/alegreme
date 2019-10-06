@@ -69,7 +69,7 @@
           </i>
           <div>
             <div class="me-card__date-title">
-              <%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place) %>
+              <%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'me-is-clickable' %>
             </div>
             <span>
             <%= limit_address_name_size @event.geographic['address'] %>
@@ -134,3 +134,9 @@
     </div>
   </div>
 </section>
+
+<% unless current_user%>
+  <%= link_to root_path, style: "display: flex" do %>
+    <img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">
+  <% end %>
+<% end %>

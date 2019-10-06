@@ -394,7 +394,7 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__place, .me-card__date {
-      background: $background-z0-color;
+      //background: $background-z0-color;
       padding: 10px;
       margin: 0 15px 0 0;
       border-radius: 5px;
@@ -411,6 +411,9 @@ $description-color: $font-secondary-color;
         font-size: 14px;
         margin: 0;
         line-height: 1em;
+        & a:hover {
+          color: $brand-color;
+        }
       }
 
       & i {
