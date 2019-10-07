@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	WebFont.load({
 		google: {
-			families: ['Montserrat:800,900', 'Roboto:400,500,700']
+			families: ['Varela+Round', 'Roboto:400,500,700']
 		}
 	});
 

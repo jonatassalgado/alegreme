@@ -392,6 +392,7 @@ $description-color: $font-secondary-color;
       margin: 50px 0;
       @include mdc-layout-grid-media-query_("phone") {
         flex-direction: column;
+        margin: 24px 0;
       }
     }
 
@@ -411,8 +412,9 @@ $description-color: $font-secondary-color;
         font-style: normal;
         font-weight: bold;
         font-size: 14px;
-        margin: 0;
+        margin: 0 0 3px 0;
         line-height: 1em;
+        text-transform: capitalize;
         & a:hover {
           color: $brand-color;
         }

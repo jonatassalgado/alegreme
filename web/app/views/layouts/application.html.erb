@@ -43,7 +43,7 @@
   <link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Montserrat:800|Roboto:300,400,500,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Varela+Round|Roboto:300,400,500,700&display=swap">
 
   <%= Gon::Base.render_data %>
 
@@ -79,7 +79,8 @@
 <!-- End Google Tag Manager (noscript) -->
 
 <!--<div class="mdc-drawer-app-content">-->
-<div style="height: 64px; width: 100%"></div>
+<div class="me-top-app-bar__fake-size"></div>
+
 <% if params['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
   <%= render partial: "layouts/app-top-bar" %>
   <%= render partial: "feeds/float_menu" %>

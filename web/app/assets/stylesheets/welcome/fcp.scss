@@ -52,6 +52,8 @@ section {
   user-select: none;
   & img {
     max-width: 200px;
+    position: relative;
+    left: -12px;
   }
 
   @include mobile-only {

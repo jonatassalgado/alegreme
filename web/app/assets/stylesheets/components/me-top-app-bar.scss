@@ -25,6 +25,14 @@ $border-color: #e0e0e0;
   //   box-shadow: unset;
   // }
 
+  &__fake-size {
+    height: 64px;
+    width: 100%;
+    @include mdc-layout-grid-media-query_("phone") {
+      height: 56px;
+    }
+  }
+
 
   &__logo {
     display: flex;

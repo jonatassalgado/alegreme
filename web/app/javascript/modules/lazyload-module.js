@@ -20,12 +20,12 @@ const LazyloadModule = (function () {
 		function onIntersection(imageEntites) {
 			imageEntites.forEach(image => {
 				if (image.isIntersecting) {
-					requestIdleCallback(() => {
+					// requestIdleCallback(() => {
 						observer.unobserve(image.target);
 						if (image.target.style.backgroundImage === "") {
 							image.target.style.backgroundImage = `url(${image.target.dataset.src})`;
 						}
-					}, {timeout: 250});
+					// }, {timeout: 250});
 				}
 			});
 		}
