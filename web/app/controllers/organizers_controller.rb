@@ -17,7 +17,7 @@ class OrganizersController < ApplicationController
 				                                                                              events:     events
 		                                                                              }, {
 				                                                                              organizers: [params[:id]],
-				                                                                              limit:      20
+				                                                                              limit:      24
 		                                                                              })
 
 		@locals = mount_section_attrs

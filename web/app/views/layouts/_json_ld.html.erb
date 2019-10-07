@@ -5,7 +5,7 @@
         "@type":       "Event",
         "name":        "<%= event.details_name %>",
         "image":       [
-                           "<%= full_image_url event.image[:original].url %>"
+                           "<%= event.image[:original].url %>"
                        ],
         "description": "<%= strip_tags(event.details_description) %>",
         "url": "<%= event_path event %>",
@@ -27,6 +27,8 @@
         "offers": {
           "@type": "AggregateOffer",
           "lowPrice": "<%= event.details_prices.try(:min) %>",
-          "priceCurrency": "BRL"
+          "price": "<%= event.details_prices.try(:min) %>",
+          "priceCurrency": "BRL",
+          "url": "<%= event_path event %>"
         }
     } <%= "," unless @collection[:events].size == event_counter + 1 %>

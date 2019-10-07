@@ -17,7 +17,8 @@ class PlacesController < ApplicationController
 				                                                                              identifier: 'places',
 				                                                                              events:     events
 		                                                                              }, {
-				                                                                              places: [params[:id]]
+				                                                                              places: [params[:id]],
+				                                                                              limit:  24
 		                                                                              })
 
 		@locals = mount_section_attrs

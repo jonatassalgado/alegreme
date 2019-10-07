@@ -11,6 +11,10 @@
   "name": "<%= @event.details_name %>",
   "startDate": "<%= @event.first_day_time.to_datetime.iso8601 %>",
   "endDate": "",
+  "image": [
+    "<%= @event.image[:original].url %>"
+   ],
+  "description": "<%= strip_tags @event.details_description %>",
   "url": "<%= event_path @event %>",
   "location": {
     "@type": "Place",
@@ -25,11 +29,15 @@
     },
     "url": "<%= place_path @event.place %>"
   },
-  "image": [
-    "<%= full_image_url @event.image[:original].url %>"
-   ],
-  "description": "<%= strip_tags @event.details_description %>"
+  "offers": {
+    "@type": "AggregateOffer",
+    "price": "<%= @event.details_prices.try(:min) %>",
+    "lowPrice": "<%= @event.details_prices.try(:min) %>",
+    "priceCurrency": "BRL",
+    "url": "<%= event_path @event %>"
+  }
 }
+
 </script>
 
 <div id="event" class="me-card me-card--single event-<%= @event.id %>"
@@ -49,10 +57,18 @@
                     class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_events_saved?(@event.id) %>"
                     aria-label="Add to favorites" aria-hidden="true" aria-pressed="false">
               <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.03 0 3.8-1.11 4.75-2.75.19-.33-.05-.75-.44-.75H7.69c-.38 0-.63.42-.44.75.95 1.64 2.72 2.75 4.75 2.75z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="none" d="M0 0h24v24H0V0z"/>
+                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.03 0 3.8-1.11 4.75-2.75.19-.33-.05-.75-.44-.75H7.69c-.38 0-.63.42-.44.75.95 1.64 2.72 2.75 4.75 2.75z"/>
+                </svg>
               </i>
               <i class="material-icons-sharp mdc-icon-button__icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"></path><circle cx="15.5" cy="9.5" r="1.5"></circle><circle cx="8.5" cy="9.5" r="1.5"></circle><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm4.41-6.11c-.35-.22-.82-.11-1.03.24-.74 1.17-2 1.87-3.38 1.87s-2.64-.7-3.38-1.88c-.22-.35-.68-.46-1.03-.24-.35.22-.46.68-.24 1.03C8.37 16.54 10.1 17.5 12 17.5s3.63-.97 4.65-2.58c.22-.35.11-.81-.24-1.03z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="none" d="M0 0h24v24H0V0z"></path>
+                  <circle cx="15.5" cy="9.5" r="1.5"></circle>
+                  <circle cx="8.5" cy="9.5" r="1.5"></circle>
+                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm4.41-6.11c-.35-.22-.82-.11-1.03.24-.74 1.17-2 1.87-3.38 1.87s-2.64-.7-3.38-1.88c-.22-.35-.68-.46-1.03-.24-.35.22-.46.68-.24 1.03C8.37 16.54 10.1 17.5 12 17.5s3.63-.97 4.65-2.58c.22-.35.11-.81-.24-1.03z"></path>
+                </svg>
               </i>
             </button>
           </div>
@@ -69,7 +85,10 @@
       <div class="me-card__place">
         <% if @event.place %>
           <i class="material-icons">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.13.48 1.53 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z"/>
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.13.48 1.53 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
           </i>
           <div>
             <div class="me-card__date-title">
@@ -84,7 +103,10 @@
       <div class="me-card__date">
         <% if @event.place %>
           <i class="material-icons">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
           </i>
           <div>
             <div class="me-card__place-title">
@@ -130,8 +152,8 @@
                  collection: @similar_events,
                  as:         :event,
                  locals:     {
-                     identifier:   @event.slug,
-                     json_request: false,
+                     identifier:      @event.slug,
+                     json_request:    false,
                      display_similar: false
                  },
                  cached:     true %>
@@ -139,7 +161,7 @@
   </div>
 </section>
 
-<% unless current_user%>
+<% unless current_user %>
   <%= link_to root_path, style: "display: flex" do %>
     <img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">
   <% end %>
