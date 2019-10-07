@@ -49,12 +49,14 @@ $media-box-shadow-large: 0 0 6px #00000038;
 $media-border-radius: 3px;
 $media-border-width: 0;
 
-$save-icon-fill: none;
-$save-icon-fill-hover: #ffffff;
+$save-icon-fill: $font-secondary-color;
+$save-icon-fill-hover: lighten($brand-color, 5%);
 $save-icon-fill-active: $brand-color;
-$save-icon-color: #ffffff;
-$save-icon-color-hover: #ffffff;
+$save-icon-color: $font-secondary-color;
+$save-icon-color-hover: lighten($brand-color, 5%);
 $save-icon-color-active: $brand-color;
+$save-icon-background: $surface-color;
+$save-icon-background-active: $surface-color;
 
 $chip-follow-color: darken($brand-color, 10%);
 $chip-follow-border-color: $brand-color;

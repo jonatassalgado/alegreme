@@ -65,6 +65,7 @@ $gutter: 6px;
 
   &__empty {
     color: $font-secondary-color;
+    fill: $font-secondary-color;
     order: 10;
     border-radius: 3px;
     grid-column-end: span 3;

@@ -38,11 +38,13 @@
 
       & .mdc-chip__text {
         color: $chip-follow-color;
+        fill: $chip-follow-color;
       }
 
 
       & .mdc-chip__icon--leading {
         color: $chip-follow-color;
+        fill: $chip-follow-color;
         //width: 18px;
         opacity: 1;
         //margin: 0 -4px 0 4px;

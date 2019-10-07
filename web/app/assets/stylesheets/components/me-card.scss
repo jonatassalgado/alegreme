@@ -26,7 +26,7 @@ $description-color: $font-secondary-color;
       display: none;
     }
 
-    & .me-card__loading {
+    & .me-card__loading svg {
       opacity: 1;
       display: block;
       color: $font-secondary-color;
@@ -126,7 +126,7 @@ $description-color: $font-secondary-color;
       }
     }
 
-    & .me-card__loading {
+    & .me-card__loading svg {
       opacity: 0;
       display: none;
       animation-name: rotate;
@@ -135,7 +135,7 @@ $description-color: $font-secondary-color;
       animation-timing-function: ease;
       padding: 0;
       @include mdc-layout-grid-media-query_("phone") {
-        padding: 1px 0 1px 0;
+        //padding: 1px 0 1px 0;
       }
     }
 
@@ -187,6 +187,7 @@ $description-color: $font-secondary-color;
     & .me-icon-button.mdc-icon-button {
       display: none;
       color: $save-icon-color;
+      background: $surface-color;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
       @include mdc-layout-grid-media-query_("phone") {
@@ -199,7 +200,7 @@ $description-color: $font-secondary-color;
       @include mdc-layout-grid-media-query_("phone") {
         //@include mdc-icon-button-ink-color($color: $icon-light-color);
         @include mdc-icon-button-size($width: 26px, $height: 26px, $padding: 4px);
-        background: none;
+        //background: none;
       }
 
 
@@ -479,10 +480,10 @@ $description-color: $font-secondary-color;
     & .me-icon-button {
 
       &.mdc-icon-button {
-        //background: $icon-background-color;
+        background: $save-icon-background;
         transition: 0.2s all ease 0s;
         border-radius: 100%;
-        @include mdc-icon-button-ink-color($color: $icon-light-color);
+        @include mdc-icon-button-ink-color($color: $save-icon-fill);
         @include mdc-icon-button-size($width: 32px, $height: 32px, $padding: 6px);
         // @include mdc-elevation($z-value: 4);
 
@@ -492,13 +493,12 @@ $description-color: $font-secondary-color;
 
         &--on {
           //background: $icon-background-color;
-          @include mdc-icon-button-ink-color($color: $brand-color);
+          @include mdc-icon-button-ink-color($color: $save-icon-fill-active);
           // @include mdc-elevation($z-value: 2);
         }
 
         & .material-icons-sharp {
           font-size: 32px;
-          color: #ffffff;
         }
       }
     }

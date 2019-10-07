@@ -28,14 +28,16 @@ export default class FollowChipsetController extends Controller {
 
 	follow(event) {
 		const followPromise = new Promise((resolve, reject) => {
+			const chipEl = event.target.closest('[data-target="follow-chipset.chip"]');
+
 			const data = {
 				chipIconElem   : event.target,
-				chipElem       : event.target.parentElement,
+				chipElem       : chipEl,
 				eventElem      : document.getElementById('event'),
-				followable     : event.target.parentElement.dataset.followable,
-				type           : event.target.parentElement.dataset.type,
+				followable     : chipEl.dataset.followable,
+				type           : chipEl.dataset.type,
 				expandToSimilar: this.expandToSimilar,
-				action         : event.target.parentElement.dataset.followed === 'true' ? 'unfollow' : 'follow',
+				action         : chipEl.dataset.followed === 'true' ? 'unfollow' : 'follow',
 				eventId        : this.eventId
 			};
 
