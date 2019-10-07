@@ -47,10 +47,10 @@ $mdc-layout-grid-columns: (
 
 
     & h2 {
-      margin: 8px 0;
+      margin: 8px 0 4px 0;
       font-weight: 800;
       max-width: 90%;
-      line-height: 1.3em;
+      line-height: 1.4em;
       font-size: 24px;
       color: $font-primary-color;
       font-family: $font-primary-family;
@@ -60,21 +60,19 @@ $mdc-layout-grid-columns: (
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 22px;
         line-height: 1em;
-        max-width: 70vw;
         padding: 0 $section-padding-phone;
       }
+    }
 
-      & span {
-        font-size: 16px;
-        display: block;
-        font-weight: 300;
-        font-family: $font-secondary-family;
-        color: $font-secondary-color;
-        line-height: 1.6em;
-        //margin-top: 8px;
-        @include mdc-layout-grid-media-query_("phone") {
-          display: none;
-        }
+    &-title-secondary {
+      font-size: 16px;
+      display: block;
+      font-weight: 300;
+      font-family: $font-secondary-family;
+      color: $font-secondary-color;
+      line-height: 1.2em;
+      @include mdc-layout-grid-media-query_("phone") {
+        padding: 0 $section-padding-phone;
       }
     }
 

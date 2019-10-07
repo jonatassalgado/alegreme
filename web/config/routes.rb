@@ -7,8 +7,10 @@ Rails.application.routes.draw do
 
 	root to: 'welcome#index'
 
-	patch '/invite', to: 'welcome#invite'
 	get '/feed', to: 'feeds#index'
+	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
+
+	patch '/invite', to: 'welcome#invite'
 	get '/retrain', to: 'events#retrain'
 	get '/service-worker.js', to: redirect('service-worker.js')
 	get '/manifest.json', to: redirect('manifest.json')

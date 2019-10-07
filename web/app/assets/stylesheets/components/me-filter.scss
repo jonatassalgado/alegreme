@@ -4,10 +4,11 @@
 .me-filter {
   display: inline;
   user-select: none;
+  margin: 12px 0 0 0;
   @include mdc-layout-grid-media-query_("phone") {
     // width: calc(100vw - 24px);
     //width: 100vw;
-    margin: 0 0 3px 0;
+    margin: 12px 0 3px 0;
   }
 
   &:hover {

@@ -32,4 +32,6 @@ SitemapGenerator::Sitemap.create do
 	Organizer.find_each do |organizer|
 		add organizer_path(organizer), :lastmod => organizer.updated_at, :changefreq => 'weekly', :priority => 0.8
 	end
+
+	add today_events_path, :changefreq => 'daily', :priority => 0.9
 end

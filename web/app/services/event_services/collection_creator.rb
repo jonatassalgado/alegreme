@@ -55,25 +55,28 @@ module EventServices
 
 		def get_filters_for_collection
 			collections = {
-					'this-week'        => {
-							in_days: @params[:ocurrences] || (@today..(@today + 6)).map(&:to_s),
+					'today-and-tomorrow' => {
+							in_days: @params[:ocurrences] || [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s]
+					},
+					'this-week'          => {
+							in_days:          @params[:ocurrences] || (@today..(@today + 6)).map(&:to_s),
 							in_user_personas: false,
 							order_by_persona: true,
 							group_by:         calculate_items_for_group(nil, auto_balance: false)
 					},
-					'follow'           => {
+					'follow'             => {
 							in_days:            set_initial_dates_filter,
 							order_by_persona:   false,
 							in_follow_features: true,
 							group_by:           nil
 					},
-					'user-suggestions' => {
+					'user-suggestions'   => {
 							in_user_suggestions: true,
 							in_days:             set_initial_dates_filter,
 							order_by_persona:    true,
 							group_by:            calculate_items_for_group(nil, auto_balance: false)
 					},
-					'user-personas'    => {
+					'user-personas'      => {
 							in_user_personas: CollectionCreator.user,
 							in_days:          set_initial_dates_filter,
 							order_by_persona: true,
@@ -90,19 +93,22 @@ module EventServices
 
 		def default_options(opts)
 			default_opts = {
-					'this-week'        => {
+					'today-and-tomorrow' => {
+							limit: 36
+					},
+					'this-week'          => {
 							all_existing_filters: false,
 							limit:                8
 					},
-					'user-personas'    => {
+					'user-personas'      => {
 							all_existing_filters: false,
 							limit:                8
 					},
-					'follow'           => {
+					'follow'             => {
 							all_existing_filters: false,
 							limit:                8
 					},
-					'user-suggestions' => {
+					'user-suggestions'   => {
 							all_existing_filters: false,
 							limit:                8
 					}
@@ -189,7 +195,13 @@ module EventServices
 		end
 
 		def set_initial_dates_filter
-			@params[:ocurrences] || @opts[:ocurrences] || []
+			# if params_filters_ocurrences_exist?
+			# 	@params[:ocurrences]
+			# # elsif @init_filters_applyed['in_days']
+			# # 	@init_filters_applyed['in_days']
+			# else
+				@params[:ocurrences] || @opts[:in_days] || []
+			# end
 		end
 
 		def set_initial_organizers_filter

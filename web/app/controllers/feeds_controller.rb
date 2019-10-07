@@ -1,7 +1,7 @@
 include Pagy::Backend
 
 class FeedsController < ApplicationController
-	before_action :authorize_user
+	before_action :authorize_user, except: [:today]
 	before_action :authorize_admin, only: [:train]
 
 	def index
@@ -64,10 +64,33 @@ class FeedsController < ApplicationController
 
 	end
 
-	def train
-		events_not_trained_yet = get_events_not_trained_yet
-		@pagy, @events         = pagy(events_not_trained_yet, items: 6)
+	def today
+		@collection = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                              identifier: 'today-and-tomorrow',
+				                                                                              events:     Event.all
+		                                                                              }, {
+				                                                                              in_days: [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
+				                                                                              limit:   36
+		                                                                              })
+
+		@locals = {
+				items:      @collection,
+				title:      {
+						principal: "Eventos em Porto Alegre Hoje e Amanhã",
+						secondary: "Explore os #{@collection[:events].size} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
+				},
+				identifier: 'today-and-tomorrow',
+				opts:       {
+						filters: {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						},
+						detail:  @collection[:detail],
+				}
+		}
 	end
+
 
 	private
 
