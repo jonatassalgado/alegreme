@@ -155,8 +155,8 @@ $description-color: $font-secondary-color;
   &__like-button {
     position: absolute;
     z-index: 2;
-    top: 10px;
-    right: 10px;
+    top: 2px;
+    right: 2px;
   }
 
   &--feed {
@@ -190,6 +190,7 @@ $description-color: $font-secondary-color;
       background: $surface-color;
       transition: 0.2s all ease 0s;
       border-radius: 100%;
+      margin: 6px;
       @include mdc-layout-grid-media-query_("phone") {
         display: block;
       }
@@ -478,6 +479,7 @@ $description-color: $font-secondary-color;
     }
 
     & .me-icon-button {
+      margin: 6px;
 
       &.mdc-icon-button {
         background: $save-icon-background;

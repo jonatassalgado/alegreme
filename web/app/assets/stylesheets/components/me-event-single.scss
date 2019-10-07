@@ -8,5 +8,11 @@
     @include mdc-layout-grid-media-query_("phone") {
       margin-top: 125px;
     }
+
+    & .mdc-layout-grid__inner {
+      @include mdc-layout-grid-media-query_("phone") {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+      }
+    }
   }
 }
