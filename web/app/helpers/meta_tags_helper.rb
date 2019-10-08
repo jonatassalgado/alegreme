@@ -13,4 +13,10 @@ module MetaTagsHelper
 		# avec une image dans vos assets ou une url absolue
 		meta_image.starts_with?("http") ? meta_image : image_url(meta_image)
 	end
+
+	def canonical_url
+		if content_for?(:canonical_url)
+			tag(:link, rel: :canonical, href: content_for(:canonical_url))
+		end
+	end
 end
