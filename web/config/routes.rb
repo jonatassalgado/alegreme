@@ -14,8 +14,10 @@ Rails.application.routes.draw do
 	get '/retrain', to: 'events#retrain'
 	get '/service-worker.js', to: redirect('service-worker.js')
 	get '/manifest.json', to: redirect('manifest.json')
-	get '/privacy', to: 'welcome#privacy'
-	get '/terms', to: 'welcome#terms'
+
+	get '/privacy', to: 'pages#privacy'
+	get '/terms', to: 'pages#terms'
+	get '/robots.:format', to: 'pages#robots'
 
 	resources :search, only: [:index]
 	resources :train, only: [:index]
