@@ -35,36 +35,39 @@
            data-target="filter.filterContainer section.filter">
         <% if filters[:categories] && !items[:categories].blank? %>
           <%# cache [items[:categories], params[:categories]], {expires_in: 1.day} do %>
-          <%= render(partial: 'feeds/filter', locals: {
-              initial_filters:              items[:categories],
-              params_filters:               params[:categories],
-              filters_that_exist_in_events: items[:categories],
-              icon_type:                    'filter_list',
-              type:                         'categories'
-          },
+          <%= render(partial: 'feeds/filter',
+                     locals:  {
+                         initial_filters:              items[:categories],
+                         params_filters:               params[:categories],
+                         filters_that_exist_in_events: items[:categories],
+                         icon_type:                    'filter_list',
+                         type:                         'categories'
+                     },
                      cached:  true) %>
           <%# end %>
         <% end %>
         <% if (filters[:kinds] && params[:categories] && !items[:kinds].blank?) || (filters[:kinds] && !params[:kinds].blank?) %>
-          <%= render(partial: 'feeds/filter', locals: {
-              initial_filters:              items[:kinds],
-              params_filters:               params[:kinds],
-              filters_that_exist_in_events: items[:kinds],
-              icon_type:                    'filter_list',
-              type:                         'kinds'
-          },
+          <%= render(partial: 'feeds/filter',
+                     locals:  {
+                         initial_filters:              items[:kinds],
+                         params_filters:               params[:kinds],
+                         filters_that_exist_in_events: items[:kinds],
+                         icon_type:                    'filter_list',
+                         type:                         'kinds'
+                     },
                      cached:  true) %>
         <% end %>
         <!-- TODO: remover duplicado-->
         <% if filters[:ocurrences] && !items[:ocurrences].blank? %>
           <%= title[:ocurrences] %>
-          <%= render(partial: 'feeds/filter', locals: {
-              initial_filters:              items[:ocurrences],
-              params_filters:               params[:ocurrences],
-              filters_that_exist_in_events: items[:ocurrences],
-              icon_type:                    '',
-              type:                         'ocurrences'
-          },
+          <%= render(partial: 'feeds/filter',
+                     locals:  {
+                         initial_filters:              items[:ocurrences],
+                         params_filters:               params[:ocurrences],
+                         filters_that_exist_in_events: items[:ocurrences],
+                         icon_type:                    '',
+                         type:                         'ocurrences'
+                     },
                      cached:  true) %>
         <% end %>
       </div>
@@ -75,20 +78,24 @@
          data-section-turbolinks-persist-scroll="0"
          data-target="section.scrollContainer">
       <% unless items.empty? %>
-        <%# cache [identifier, items[:events]], {expires_in: 1.day} do %>
-        <%= render(partial: 'components/collection/event', collection: items[:events], as: :event, locals: {
-            identifier:   identifier,
-            json_request: json_request
-        },
-                   cached:  false) %>
+        <%# cache [identifier, items[:events]], {expires_in: 1.minute} do %>
+        <%= render(partial:    'components/collection/event',
+                   collection: items[:events],
+                   as:         :event,
+                   locals:     {
+                       identifier:   identifier,
+                       json_request: json_request
+                   },
+                   cached:     false) %>
         <%# end %>
 
         <%# cache [params[:similar], items[:events]], {expires_in: 1.day} do %>
-        <%= render(partial: 'components/collection/similar', locals: {
-            events:       items[:events],
-            identifier:   identifier,
-            json_request: json_request
-        },
+        <%= render(partial: 'components/collection/similar',
+                   locals:  {
+                       events:       items[:events],
+                       identifier:   identifier,
+                       json_request: json_request
+                   },
                    cached:  true) if !mobile_device? || !['feed'].include?(opts[:origin]) %>
         <%# end %>
 
@@ -121,10 +128,11 @@
 
       <% end %>
     </div>
-    <%= render(partial: 'components/collection/similar', locals: {
-        events:     items[:events],
-        identifier: identifier
-    },
+    <%= render(partial: 'components/collection/similar',
+               locals:  {
+                   events:     items[:events],
+                   identifier: identifier
+               },
                cached:  true) if mobile_device? && ['feed'].include?(opts[:origin]) %>
     <% if actual_events_in_collection < total_events_in_collection %>
       <div class="me-feed__load-more"

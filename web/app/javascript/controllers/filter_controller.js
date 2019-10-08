@@ -2,7 +2,7 @@ import {Controller}        from "stimulus";
 import {stringify}         from "query-string";
 import Flipping            from 'flipping';
 import {ProgressBarModule} from "../modules/progressbar-module";
-import * as MobileDetect     from "mobile-detect";
+import * as MobileDetect   from "mobile-detect";
 
 
 export default class FilterController extends Controller {
@@ -21,10 +21,19 @@ export default class FilterController extends Controller {
 				const flipPromise = new Promise((resolve, reject) => {
 					this.flipping.flip();
 
-					let delay     = 0.035;
-					const flipped = Object.keys(this.flipping.states).forEach((key) => {
+					let delay   = 0.035;
+					let counter = 0;
+					let states  = Object.keys(this.flipping.states);
+
+					const flipped = states.forEach((key) => {
+						counter++;
+
 						const state = this.flipping.states[key];
 						if (state.element === undefined) {
+							return;
+						}
+
+						if (counter < (states.length - 8)) {
 							return;
 						}
 

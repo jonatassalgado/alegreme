@@ -79,7 +79,7 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
   /.+feed/,
-  new workbox.strategies.NetworkFirst({
+  new workbox.strategies.CacheFirst({
     cacheName: CACHE_NAME + "feed-page"
   })
 );

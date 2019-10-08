@@ -35,9 +35,9 @@ module EventServices
 				mixed_suggestions = []
 
 				counter = 0
-				limit   = @responses[:resources].keys.size
+				limit   = @responses[:resources].keys.length
 
-				until mixed_suggestions.size >= 15 || counter >= 10 do
+				until mixed_suggestions.length >= 15 || counter >= 10 do
 					@responses[:resources].keys.each do |key|
 						mixed_suggestions |= [@responses[:resources][key][:similar][counter]]
 					end
@@ -82,7 +82,7 @@ module EventServices
 			end
 
 			quantity = @opts[:mixed_suggestions_qty] || 16
-			quantity / @responses[:resources].keys.size
+			quantity / @responses[:resources].keys.length
 		end
 
 	end

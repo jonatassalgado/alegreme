@@ -292,7 +292,7 @@ module EventQueries
 
 			scope 'active', lambda { |turn_on = true|
 				if turn_on
-					where("(ocurrences -> 'dates' ->> 0)::timestamptz > ?", DateTime.now.beginning_of_day)
+					where("(ocurrences -> 'dates' ->> 0)::timestamptz > ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", DateTime.now.beginning_of_day)
 				else
 					all
 				end

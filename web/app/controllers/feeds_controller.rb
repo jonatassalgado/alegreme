@@ -27,13 +27,20 @@ class FeedsController < ApplicationController
 						group_by: 2
 				})
 
+		collection_suggestions = collections.call(
+				{
+						identifier: 'user-suggestions',
+						events:     Event.all
+				}
+		)
+
 		collection_follow = collections.call(
 				{
 						identifier: 'follow',
 						events:     Event.all
 				},
 				{
-						not_in: collection_week.dig(:detail, :init_filters_applyed, :events_ids)
+						not_in: collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids)
 				})
 
 		collection_personas = collections.call(
@@ -42,13 +49,18 @@ class FeedsController < ApplicationController
 						events:     Event.all
 				},
 				{
-						not_in: collection_follow.dig(:detail, :init_filters_applyed, :events_ids) | collection_week.dig(:detail, :init_filters_applyed, :events_ids)
+						not_in: collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids)
 				})
 
-		collection_suggestions = collections.call(
+		collection_explorer = collections.call(
 				{
-						identifier: 'user-suggestions',
+						identifier: 'explorer',
 						events:     Event.all
+				}, {
+						user:          current_user,
+						order_by_persona: true,
+						limit:         12,
+						not_in: collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_personas.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids)
 				}
 		)
 
@@ -56,7 +68,8 @@ class FeedsController < ApplicationController
 				week:             collection_week,
 				follow:           collection_follow,
 				user_personas:    collection_personas,
-				user_suggestions: collection_suggestions
+				user_suggestions: collection_suggestions,
+				explorer:         collection_explorer
 		}
 
 
@@ -77,7 +90,7 @@ class FeedsController < ApplicationController
 				items:      @collection,
 				title:      {
 						principal: "Eventos em Porto Alegre Hoje e Amanhã",
-						secondary: "Explore os #{@collection[:events].size} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
+						secondary: "Explore os #{@collection[:events].length} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
 				},
 				identifier: 'today-and-tomorrow',
 				opts:       {

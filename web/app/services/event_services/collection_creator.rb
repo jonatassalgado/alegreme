@@ -39,14 +39,14 @@ module EventServices
 			{
 					user:              get_current_user,
 					in_categories:     set_initial_categories_filter,
-					not_in_categories: [],
+					not_in_categories: set_not_in_categories,
 					in_days:           set_initial_dates_filter,
 					in_kinds:          set_initial_kinds_filter,
 					in_organizers:     set_initial_organizers_filter,
 					in_places:         set_initial_places_filter,
-					order_by_date:     false,
-					order_by_persona:  false,
-					group_by:          false,
+					order_by_date:     set_order_by_date,
+					order_by_persona:  set_order_by_persona,
+					group_by:          set_group_by,
 					not_in:            set_not_in,
 					only_in:           set_only_in,
 					limit:             set_limit
@@ -80,7 +80,8 @@ module EventServices
 							in_user_personas: CollectionCreator.user,
 							in_days:          set_initial_dates_filter,
 							order_by_persona: true,
-							group_by:         calculate_items_for_group(4, auto_balance: true)
+							group_by:         calculate_items_for_group(2, auto_balance: true),
+							limit:            40
 					}
 			}
 
@@ -155,20 +156,6 @@ module EventServices
 			}
 		end
 
-		def get_current_user
-			CollectionCreator.user
-		end
-
-		def set_limit
-			# return 8 if params_filter_category_exist? || params_filters_ocurrences_exist?
-			#
-			# @params[:limit] || @opts[:limit] || 8
-		end
-
-		def group_by_or_kinds_not_exist?(opts)
-			@params[:categories] || (!opts[:group_by].blank? || @params[:kinds].blank?)
-		end
-
 		def mount_response
 			@current_events = @all_events.limit(@params[:limit] || @opts[:limit])
 
@@ -179,11 +166,23 @@ module EventServices
 					ocurrences: get_filters_from_exist_events(@all_events, 'ocurrences'),
 					filters:    get_filters_toggle_for_collection,
 					detail:     {
-							total_events_in_collection:  @all_events.size,
-							actual_events_in_collection: @current_events.size,
+							total_events_in_collection:  @all_events.length,
+							actual_events_in_collection: @current_events.length,
 							init_filters_applyed:        filters_without_sensitive_info
 					}
 			}
+		end
+
+		def get_current_user
+			CollectionCreator.user
+		end
+
+		def set_limit
+			false
+		end
+
+		def group_by_or_kinds_not_exist?(opts)
+			@params[:categories] || (!opts[:group_by].blank? || @params[:kinds].blank?)
 		end
 
 		def set_initial_categories_filter
@@ -200,7 +199,7 @@ module EventServices
 			# # elsif @init_filters_applyed['in_days']
 			# # 	@init_filters_applyed['in_days']
 			# else
-				@params[:ocurrences] || @opts[:in_days] || []
+			@params[:ocurrences] || @opts[:in_days] || []
 			# end
 		end
 
@@ -212,11 +211,43 @@ module EventServices
 			@params[:places] || @opts[:places] || []
 		end
 
+		def set_order_by_persona
+			if @params.include?(:init_filters_applyed)
+				@init_filters_applyed['order_by_persona']
+			else
+				@params[:order_by_persona] || @opts[:order_by_persona] || false
+			end
+		end
+
+		def set_not_in_categories
+			if @params.include?(:init_filters_applyed)
+				@init_filters_applyed['not_in_categories']
+			else
+				@params[:not_in_categories] || @opts[:not_in_categories] || []
+			end
+		end
+
+		def set_group_by
+			if @params.include?(:init_filters_applyed)
+				@init_filters_applyed['group_by']
+			else
+				@params[:group_by] || @opts[:group_by] || false
+			end
+		end
+
+		def set_order_by_date
+			if @params.include?(:init_filters_applyed)
+				@init_filters_applyed['order_by_date']
+			else
+				@params[:order_by_date] || @opts[:order_by_date] || false
+			end
+		end
+
 		def set_not_in
 			if @params.include?(:init_filters_applyed)
 				@init_filters_applyed['not_in']
 			else
-				@opts[:not_in] || []
+				@params[:not_in] || @opts[:not_in] || []
 			end
 		end
 
@@ -224,7 +255,7 @@ module EventServices
 			if @params.include?(:init_filters_applyed)
 				@init_filters_applyed['only_in']
 			else
-				@opts[:only_in] || []
+				@params[:only_in] || @opts[:only_in] || []
 			end
 		end
 
@@ -242,7 +273,7 @@ module EventServices
 					elsif opts[:auto_balance] && @opts[:limit]
 						(@opts[:limit] / 8) * 2
 						# categories = @params.fetch(:categories) || @opts.fetch(:categories)
-						# categories.size < 5 ? (8 / categories.size) : 2
+						# categories.length < 5 ? (8 / categories.length) : 2
 					elsif params_filter_kind_exist?
 						nil
 					else
@@ -337,10 +368,11 @@ module EventServices
 			filters_cleanned = @dynamic_filters.select { |k, v| k != :user }
 			filters_cleanned.store :user, {id: @dynamic_filters[:user][:id]} if @dynamic_filters[:user]
 			# filters_cleanned.store :in_user_personas, @dynamic_filters[:user].slice(:id) if @dynamic_filters[:user]
-			filters_cleanned.store :events_ids, @current_events.includes(:place).map(&:id)
+			filters_cleanned.store :all_events_ids, @all_events.map(&:id)
+			filters_cleanned.store :current_events_ids, @current_events.map(&:id)
 			filters_cleanned
 		end
-
+		# TODO: Cache precisa atulizar quando update em eventos
 		def cache_variables(current_user)
 			case Rails.env
 			when 'test'

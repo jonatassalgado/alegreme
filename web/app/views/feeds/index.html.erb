@@ -79,7 +79,6 @@
 
 
     <% if @items.dig(:user_personas, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
-
       <%= render partial: "components/collection/collection",
                  locals:  {
                      items:      @items[:user_personas],
@@ -99,8 +98,28 @@
                          origin:  :feed
                      }
                  } %>
+    <% end %>
 
-
+    <% if @items.dig(:explorer, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+      <%= render partial: "components/collection/collection",
+                 locals:  {
+                     items:      @items[:explorer],
+                     title:      {
+                         principal: "Explorar todos os eventos",
+                         secondary: "Use os filtros abaixo e seja feliz :)"
+                     },
+                     identifier: 'explorer',
+                     opts:       {
+                         type:    :large,
+                         filters: {
+                             categories: true,
+                             kinds:      false,
+                             ocurrences: true
+                         },
+                         detail:  @items[:explorer][:detail],
+                         origin:  :feed
+                     }
+                 } %>
     <% end %>
   <% end %>
 </div>

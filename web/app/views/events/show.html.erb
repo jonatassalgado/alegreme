@@ -38,6 +38,7 @@
   }
 }
 
+
 </script>
 
 <div id="event" class="me-card me-card--single event-<%= @event.id %>"
@@ -148,15 +149,15 @@
   <h2 class="me-h2 me-h2--centralize">Eventos similares</h2>
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-      <%= render partial:    'components/collection/event',
-                 collection: @similar_events,
-                 as:         :event,
-                 locals:     {
-                     identifier:      @event.slug,
-                     json_request:    false,
-                     display_similar: false
-                 },
-                 cached:     true %>
+        <%= render partial:    'components/collection/event',
+                   collection: @similar_events,
+                   as:         :event,
+                   locals:     {
+                       identifier:      @event.slug,
+                       json_request:    false,
+                       display_similar: false
+                   },
+                   cached:     true %>
     </div>
   </div>
 </section>
