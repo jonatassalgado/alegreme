@@ -1,0 +1,218 @@
+@import "variables";
+
+/* latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxK.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Varela Round';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Varela Round Regular'), local('VarelaRound-Regular'), url(https://fonts.gstatic.com/s/varelaround/v12/w8gdH283Tvk__Lua32TysjIfp8uP.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+.scrollToTop {
+  color: $surface-color;
+  fill: $surface-color;
+  font-size: 1.4em;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px -1px rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background: $brand-color;
+  z-index: 9999;
+  bottom: 24px;
+  right: 24px;
+  position: fixed;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* we move the anchor down to componsate the fixed header */
+.target {
+  position: relative;
+}
+.target-anchor {
+  position: absolute;
+  top: -72px;
+  left: 0;
+}
+
+.amp-social-share-system {
+  background-color: $brand-color;
+  border-radius: 3px;
+  max-height: 30px;
+  min-width: 94px;
+  background-size: auto;
+  background-position: 3px;
+  padding: 1px 6px 1px 31px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+body {
+  font-family: $font-secondary-family;
+  color: $font-primary-color;
+}
+
+
+a {
+  color: $brand-color-aa;
+  text-decoration: none;
+}
+
+.me-top-app-bar {
+  position: fixed;
+  min-height: 32px;
+  width: 100%;
+  background: $surface-color;
+  border-bottom: 1px solid $border-color;
+  z-index: 3;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px 12px 24px;
+
+    & a {
+      display: flex;
+    }
+  }
+
+  & span {
+    font-size: 14px;
+    color: $font-tertiary-color;
+  }
+}
+
+.me-content {
+  padding: 76px 18px 18px 24px;
+  background: $background-color;
+
+  & h1.title {
+    font-family: "Varela Round", sans-serif;
+    text-align: left;
+    margin: 0 0 6px 0;
+    font-size: 26px;
+  }
+
+  & .description {
+    font-size: 14px;
+    line-height: 1.4em;
+    font-weight: 400;
+    margin: 0 0 24px 0;
+  }
+}
+
+.me-logo {
+
+}
+
+.me-list {
+
+  &--events {
+    & a {
+      color: $font-primary-color;
+    }
+
+    & .item {
+      margin: 6px 6px 65px 6px;
+    }
+
+    & h2.title {
+      margin: 6px 0 6px 0;
+      font-size: 18px;
+    }
+
+    & .labels {
+      margin: 12px 0 0 0;
+    }
+
+    & .date, .place {
+      font-size: 16px;
+    }
+
+    & .date, .category {
+      font-weight: 800;
+      color: $font-tertiary-color;
+      text-transform: uppercase;
+    }
+
+    & .category {
+      color: $font-secondary-color;
+    }
+  }
+}
+
+.me-event {
+
+  & h1.title {
+    font-family: $font-primary-family;
+    text-align: center;
+    margin: 24px 0 36px 0;
+    font-size: 28px;
+  }
+
+  &__cover {
+    background-color: $border-color;
+    border-radius: $media-border-radius;
+    box-shadow: $media-box-shadow-large;
+  }
+
+  &__date, &__place {
+    display: flex;
+    margin: 24px 0;
+
+    & .icon {
+      margin: 0 6px 0 0;
+    }
+
+    & .title {
+      font-weight: bold;
+    }
+  }
+
+  &__description {
+    margin: 50px 0 24px 0;
+    font-size: 16px;
+    line-height: 1.5em;
+    word-break: break-word;
+  }
+
+  &__similar {
+    margin: 50px 0 0 0;
+
+    & .item {
+      padding: 16px 0;
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        border: 0;
+      }
+    }
+  }
+}
+
+.me-banner {
+  margin: 50px 0 24px 0;
+}
+
+.me-footer {
+  font-size: 14px;
+  text-align: center;
+  padding: 12px 0 24px 0;
+}

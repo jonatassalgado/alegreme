@@ -19,4 +19,10 @@ module MetaTagsHelper
 			tag(:link, rel: :canonical, href: content_for(:canonical_url))
 		end
 	end
+
+	def amp_url
+		if content_for?(:amp_url)
+			tag(:link, rel: :amphtml, href: content_for(:amp_url))
+		end
+	end
 end

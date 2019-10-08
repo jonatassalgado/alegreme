@@ -7,6 +7,11 @@ Rails.application.routes.draw do
 
 	root to: 'welcome#index'
 
+	namespace 'api' do
+		get 'porto-alegre/eventos/:id/similar', to: 'events#similar', as: :events_similar
+		get 'porto-alegre/eventos/today', to: 'events#today', as: :today_and_tomorrow_events
+	end
+
 	get '/feed', to: 'feeds#index'
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
 

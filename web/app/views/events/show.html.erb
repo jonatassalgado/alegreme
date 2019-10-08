@@ -3,7 +3,8 @@
 <% content_for :meta_title, "Evento #{@event.details_name} em Porto Alegre | Alegreme.com" %>
 <% content_for :meta_description, strip_tags(limit_description_size(@event.details_description, 160)) %>
 <% content_for :meta_image, @event.image[:original].url %>
-<% content_for :canonical_url, event_url(@event) %>
+<% content_for :canonical_url, event_url(@event, format: :html) %>
+<% content_for :amp_url, event_url(@event, format: :amp) %>
 
 <script type="application/ld+json">
 {

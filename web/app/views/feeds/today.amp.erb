@@ -1,0 +1,60 @@
+<% content_for :meta_title, "Eventos em Porto Alegre Hoje (#{I18n.l(Date.today, format: :short)}) e Amanhã (#{I18n.l(Date.tomorrow, format: :short)})" %>
+<% content_for :meta_description, "Descubra as festas, shows, feiras, teatros, palestras, festivais, exposições e filmes que acontecem hoje dia #{I18n.l(Date.today, format: :long)} e amanhã." %>
+
+<script type="application/ld+json">
+  [
+    <%= render partial: 'layouts/json_ld.html.erb', collection: @collection[:events], as: :event, cached: true %>
+  ]
+
+</script>
+
+
+<div class="me-list me-list--events">
+  <h1 class="title">Eventos em Porto Alegre Hoje e Amanhã</h1>
+  <div class="description">
+    <%= "Explore os #{@collection[:events].length} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS" %>
+  </div>
+  <amp-list binding="no"
+            height="300"
+            load-more="auto"
+            src="<%= api_today_and_tomorrow_events_path format: :json %>">
+    <div overflow
+         role="button"
+         aria-label="Show more"
+         class="list-overflow">
+      Show more
+    </div>
+    <template type="amp-mustache">
+      <div class="item">
+        <a href="{{url}}.amp">
+          <amp-img height="1"
+                   layout="responsive"
+                   class="me-event__cover"
+                   alt="{{name}}"
+                   src="{{cover}}"
+                   width="1.66"></amp-img>
+          <div class="labels">
+            <span class="category">
+              {{category}}
+            </span>
+            ·
+            <span class="date">
+              {{date}}
+            </span>
+          </div>
+          <h2 class="title">
+            {{name}}
+          </h2>
+        </a>
+        <div class="place">
+          <a href="{{place.url}}">
+            {{place.name}}
+          </a>
+        </div>
+      </div>
+    </template>
+  </amp-list>
+</div>
+
+
+

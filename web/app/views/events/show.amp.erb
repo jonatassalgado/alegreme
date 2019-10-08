@@ -1,0 +1,121 @@
+<% content_for :meta_title, "Evento #{@event.details_name} em Porto Alegre" %>
+<% content_for :meta_description, strip_tags(limit_description_size(@event.details_description, 160)) %>
+<% content_for :meta_image, @event.image[:original].url %>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "<%= @event.details_name %>",
+  "startDate": "<%= @event.first_day_time.to_datetime.iso8601 %>",
+  "endDate": "",
+  "image": [
+    "<%= @event.image[:original].url %>"
+   ],
+  "description": "<%= strip_tags @event.details_description %>",
+  "url": "<%= event_path @event %>",
+  "location": {
+    "@type": "Place",
+    "name": "<%= @event.place_details_name %>",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "<%= @event.geographic['address'] %>",
+      "addressLocality": "<%= @event.geographic['city'] %>",
+      "postalCode": "<%= @event.geographic['cep'] %>",
+      "addressRegion": "RS",
+      "addressCountry": "BR"
+    },
+    "url": "<%= place_path @event.place %>"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "price": "<%= @event.details_prices.try(:min) %>",
+    "lowPrice": "<%= @event.details_prices.try(:min) %>",
+    "priceCurrency": "BRL",
+    "url": "<%= event_path @event %>"
+  }
+}
+
+
+</script>
+
+<div class="me-event">
+
+  <amp-img height="1"
+           layout="responsive"
+           class="me-event__cover"
+           alt="<%= @event.details_name %>"
+           src="<%= @event.image[:feed].url(public: true) %>"
+           width="1.66"></amp-img>
+
+  <%= tag.h1 @event.details_name, class: 'title' %>
+
+  <div class="me-event__primary-section">
+    <div class="me-event__place">
+      <% if @event.place %>
+        <i class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.13.48 1.53 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+        </i>
+        <div>
+          <div class="title">
+            <%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'me-is-clickable' %>
+          </div>
+          <span>
+            <%= limit_address_name_size @event.geographic['address'] %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+    <div class="me-event__date">
+      <% if @event.place %>
+        <i class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+          </svg>
+        </i>
+        <div>
+          <div class="title">
+            <%= "#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }" %>
+          </div>
+          <span>
+              <%= I18n.l(@event.day_of_week['date'], format: :long) %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="me-event__description">
+    <%= sanitize @event.details_description, scrubber: AmpScrubber.new %>
+  </div>
+
+  <div class="me-banner">
+    <%= link_to root_path do %>
+      <amp-img height="1"
+               layout="responsive"
+               src="<%= image_url 'banners/get-invite-banner' %>"
+               width="1"></amp-img>
+    <% end %>
+  </div>
+
+  <div class="me-event__similar">
+    <h2>Eventos similares</h2>
+    <amp-list reset-on-refresh="always"
+              binding="no"
+              height="20"
+              load-more="auto"
+              src="<%= api_events_similar_path @event.slug, format: :json %>">
+      <template type="amp-mustache">
+        <div class="item">
+          <a href="{{url}}.amp">{{name}}</a>
+        </div>
+      </template>
+    </amp-list>
+  </div>
+</div>
+
