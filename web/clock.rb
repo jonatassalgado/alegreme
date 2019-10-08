@@ -31,6 +31,7 @@ module Clockwork
     Rake::Task["populate:facebook"].invoke
     Rake::Task["similar:events"].invoke
     Rake::Task["sitemap:refresh"].invoke
+    Rake::Task["search:refresh"].invoke
   }
 
 end

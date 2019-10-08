@@ -14,6 +14,8 @@ rake db:exists && rake db:migrate || rake db:setup db:migrate
 
 bundle exec rake sitemap:refresh
 
+bundle exec rake search:refresh
+
 bundle exec clockworkd -c clock.rb -d /var/www/alegreme --log-dir /var/www/alegreme/log --log restart
 
 exec "$@"
