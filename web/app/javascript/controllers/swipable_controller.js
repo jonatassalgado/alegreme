@@ -13,7 +13,7 @@ export default class SwipableController extends Controller {
 
 		this.uilb
 		    .message({
-			    content: `Olá ${gon.user.features.demographic.name.split(" ")[0]} 👋`,
+			    content: `Olá User 👋`,
 			    delay  : 150
 		    })
 		    .then(ok =>

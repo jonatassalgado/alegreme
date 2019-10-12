@@ -58,6 +58,9 @@
       font-size: 24px;
       margin: 0 0 5px 0;
       line-height: 1em;
+      @include mdc-layout-grid-media-query_("phone") {
+        font-size: 20px;
+      }
     }
 
     & span {
@@ -101,6 +104,7 @@
       font-weight: 700;
       padding: 0 15px;
       max-width: 80%;
+      font-family: "Montserrat";
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 20px;
         padding: 0 12px;
@@ -112,6 +116,7 @@
       line-height: 1.1em;
       font-weight: 400;
       padding: 0 15px 15px;
+      font-family: "Varela Round";
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 12px;
         padding: 3px 12px 12px;
@@ -205,7 +210,7 @@
   }
 
   & .stackedcards-container .card-item:not(:first-child) .me-swipable__item {
-    background: unset !important;
+    //background: unset !important;
   }
 
   & .stackedcards-overlay.left, .stackedcards-overlay.right, .stackedcards-overlay.top {
@@ -221,7 +226,7 @@
     left: 0;
     opacity: 0;
     top: 0;
-    height: calc(100% - 24px);
+    //height: calc(100% - 24px);
     letter-spacing: 3px;
     font-size: 24px; /* this style was added only for better preview */
     text-transform: uppercase; /* this style was added only for better preview */

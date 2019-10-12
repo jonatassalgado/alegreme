@@ -8,7 +8,7 @@ class WelcomeController < ApplicationController
 		@invites_count    = count_invites
 		@events_count     = Rails.cache.fetch("welcome-events-count", expires_in: 1.day) { Event.active.length }
 		@organizers_count = Rails.cache.fetch("welcome-organizers-count", expires_in: 1.day) { Organizer.count }
-		@last_people      = User.select("features -> 'demographic' as demographic").order('created_at DESC').where("(features -> 'demographic' ->> 'name') IS NOT NULL").limit(10)
+		@last_people      = User.select("features -> 'demographic' as demographic").order('created_at DESC').where("(features -> 'demographic' ->> 'name') IS NOT NULL").limit(20)
 	end
 
 	def invite

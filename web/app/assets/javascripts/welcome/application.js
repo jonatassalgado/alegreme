@@ -9,7 +9,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 	deferredPrompt = e;
 	const btnAdd   = document.querySelector(".demo__pwaBanner");
 
-	if(btnAdd) {
+	if (btnAdd) {
 		btnAdd.addEventListener('click', (e) => {
 			deferredPrompt.prompt();
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	WebFont.load({
 		google: {
-			families: ['Varela+Round', 'Roboto:400,500,700']
+			families: ['Montserrat:400,500,600,700', 'Roboto:400,500,700']
 		}
 	});
 
@@ -64,21 +64,86 @@ document.addEventListener('DOMContentLoaded', function () {
 	const firstPersonFaceEl  = document.querySelector('.people__person-face');
 	const iosBannerEl        = document.querySelector('.demo__iosBanner');
 	const pwaBannerEl        = document.querySelector('.demo__pwaBanner');
+	const inviteFloatEl      = document.querySelector('.invite-float');
+	const androidEl          = document.querySelector('.android');
+	const heroBannerEl       = document.querySelector('.hero__banner');
 
 	if (md.is('iOS')) {
-		iosBannerEl.style.display = 'block';
-		pwaBannerEl.style.display = 'none';
+		// iosBannerEl.style.display = 'block';
+		// pwaBannerEl.style.display = 'none';
 	}
 
 	setTimeout(() => {
 		requestAnimationFrame(() => {
-			if(peopleEl) {
+			androidEl.style.transform  = "translateY(0)";
+			heroBannerEl.style.opacity = 1;
+		});
+	}, 1000);
+
+	window.addEventListener('scroll', () => {
+		if (window.scrollY > 500) {
+			requestAnimationFrame(() => {
+				inviteFloatEl.style.opacity    = 1;
+				inviteFloatEl.style.transform  = 'translateY(0)';
+				inviteFloatEl.style.visibility = 'visible';
+			});
+		} else {
+			requestAnimationFrame(() => {
+				inviteFloatEl.style.opacity    = 1;
+				inviteFloatEl.style.transform  = 'translateY(150px)';
+				inviteFloatEl.style.visibility = 'hidden';
+			});
+		}
+	}, {capture: false, passive: true});
+
+	if (!md.mobile()) {
+		setTimeout(() => {
+			const scrollOptions = {capture: false, passive: true};
+
+			const onScroll = target => {
+				requestAnimationFrame(() => {
+					document.querySelector('.how-works').style.setProperty('--y', `${window.scrollY}px`)
+
+				});
+			};
+
+			if ('IntersectionObserver' in window) {
+				const observerEls = document.querySelectorAll('.how-works__step');
+
+				observerEls.forEach((observerEl) => {
+						observerEl.style.setProperty('--offsettop', `${observerEl.offsetTop}px`);
+
+						const observer = new IntersectionObserver(entries => {
+								let [{isIntersecting}] = entries;
+
+								if (isIntersecting) {
+									window.addEventListener('scroll', onScroll, scrollOptions)
+								} else {
+									window.removeEventListener('scroll', onScroll, scrollOptions)
+								}
+
+							},
+							{rootMargin: '50px 50px 50px 50px'});
+
+						observer.observe(observerEl)
+					}
+				);
+
+			} else {
+				window.addEventListener('scroll', onScroll, scrollOptions)
+			}
+		}, 2000);
+	}
+
+	setTimeout(() => {
+		requestAnimationFrame(() => {
+			if (peopleEl) {
 				peopleEl.style.opacity = 1;
 			}
 		}, 2500);
 	});
 
-	const videos   = document.querySelectorAll('video');
+	const videos = document.querySelectorAll('video');
 
 	if ('IntersectionObserver' in window) {
 		const observer = new IntersectionObserver((entries, observer) => {
@@ -139,7 +204,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 						const x                 = Math.random() * -20;
 						const y                 = Math.random() * 50;
-						pimbaEl.style.transform = `translate(${x}px, ${y}px)`;
+						pimbaEl.style.transform =
+							`translate(${x}px, ${y}px)`
+						;
 
 						if (x !== undefined && y !== undefined) {
 							resolve();
@@ -166,16 +233,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		peopleEls.forEach(function (person) {
 			if (md.mobile()) {
-				const distance = 21;
+				const distance = 18;
 				if (index > 0) {
-					person.style.transform = `translateX(${distance * index}px)`;
-					person.style.zIndex    = `${index * -1}`;
+					person.style.transform =
+						`translateX(${distance * index}px)`
+					;
+					person.style.zIndex    =
+						`${index * -1}`
+					;
 				}
 			} else {
-				const distance = 30;
+				const distance = 18;
 				if (index > 0) {
-					person.style.transform = `translateX(${distance * index}px)`;
-					person.style.zIndex    = `${index * -1}`;
+					person.style.transform =
+						`translateX(${distance * index}px)`
+					;
+					person.style.zIndex    =
+						`${index * -1}`
+					;
 				}
 			}
 
@@ -183,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	});
 
-	if(answerEl) {
+	if (answerEl) {
 		answerEl.addEventListener('click', () => {
 			answerEl.classList.add('is-showout');
 
@@ -214,7 +289,9 @@ document.addEventListener('DOMContentLoaded', function () {
 				// answerEl.style.background = item.dataset.color;
 				answerEl.style.background = '#ffffff';
 
-				answerEl.querySelector(`[data-answer=${item.dataset.question}]`).style.display = 'block';
+				answerEl.querySelector(
+					`[data-answer=${item.dataset.question}]`
+				).style.display = 'block';
 
 				document.body.style.overflow = 'hidden';
 
@@ -269,35 +346,48 @@ document.addEventListener('DOMContentLoaded', function () {
 	function createInvite(userData) {
 		const frontData = userData;
 
-		fetch(`/invite`, {
-			method     : 'PATCH',
-			headers    : {
-				'Content-type'    : 'application/json; charset=UTF-8',
-				'Accept'          : 'application/json',
-				'X-Requested-With': 'XMLHttpRequest',
-				'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
-			},
-			credentials: 'same-origin',
-			body       : JSON.stringify(frontData)
-		}).then(
+		fetch(
+			`/invite`
+			, {
+				method     : 'PATCH',
+				headers    : {
+					'Content-type'    : 'application/json; charset=UTF-8',
+					'Accept'          : 'application/json',
+					'X-Requested-With': 'XMLHttpRequest',
+					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+				},
+				credentials: 'same-origin',
+				body       : JSON.stringify(frontData)
+			}).then(
 			response => {
 				response.text().then(data => {
 					const backendData = JSON.parse(data);
-					const userName = `${frontData.name.split(" ")[0]}`;
+					const userName    =
+						      `${frontData.name.split(" ")[0]}`
+					;
 
-					setTimeout(() => {
-						// inviteCtaEl.style.display = "flex";
-						inviteLoginBtnsEl.style.display = "flex";
-					}, 400)
+					// setTimeout(() => {
+					// 	// inviteCtaEl.style.display = "flex";
+					// 	inviteLoginBtnsEl.style.display = "flex";
+					// }, 400);
+
+					inviteCtaEl.style.display       = "none";
+					inviteLoginBtnsEl.style.display = "none";
 
 					if (backendData.invitationCreated) {
-						inviteStatusEl.style.transform = 'translate(0px, 50px)';
+						// inviteStatusEl.style.transform = 'translate(0px, 50px)';
 						inviteEl.classList.add('is-invited');
 
 
-						inviteCounterEl.innerText               = `Pronto ${userName}, convite solicitado com sucesso!`
-						inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
-						firstPersonFaceEl.style.backgroundImage = `url("${frontData.picture}")`;
+						inviteCounterEl.innerText =
+							`Pronto ${userName}, convite solicitado com sucesso!`
+
+						inviteDetailsEl.innerHTML               =
+							`Agora é só aguardar que te enviaremos um email quando chegar a sua vez. <br> Aproveita e avisa a galera`
+						;
+						firstPersonFaceEl.style.backgroundImage =
+							`url("${frontData.picture}")`
+						;
 
 						fbq('track', 'CompleteRegistration');
 
@@ -307,19 +397,25 @@ document.addEventListener('DOMContentLoaded', function () {
 					}
 
 					if (backendData.invitationAlreadyRequested) {
-						inviteStatusEl.style.transform = 'translate(0px, 50px)';
+						// inviteStatusEl.style.transform = 'translate(0px, 50px)';
 						inviteEl.classList.add('is-invited');
 
 
-						inviteCounterEl.innerText               = `${userName}, você e outras ${backendData.invitesCount} pessoas já estão na fila`;
-						inviteDetailsEl.innerText               = `Agora é só aguardar que te enviaremos um email quando chegar a sua vez. Aproveita e avisa a galera`;
-						firstPersonFaceEl.style.backgroundImage = `url("${frontData.picture}")`;
+						inviteCounterEl.innerText               =
+							`${userName}, você e outras ${backendData.invitesCount} pessoas já estão na fila`
+						;
+						inviteDetailsEl.innerHTML               =
+							`Agora é só aguardar que te enviaremos um email quando chegar a sua vez. <br> Aproveita e avisa a galera`
+						;
+						firstPersonFaceEl.style.backgroundImage =
+							`url("${frontData.picture}")`
+						;
 					}
 
-					setTimeout(() => {
-						inviteCtaEl.style.display = "none";
-						inviteLoginBtnsEl.style.display = "none";
-					}, 400)
+					// setTimeout(() => {
+					// 	inviteCtaEl.style.display = "none";
+					// 	inviteLoginBtnsEl.style.display = "none";
+					// }, 1000)
 				});
 			}
 		).catch(err => {
@@ -335,10 +431,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		auth2.signIn().then(function (googleUser) {
 			var profile          = googleUser.getBasicProfile();
 			const googleUserData = {
-				googleId : profile.getId(),
-				name     : profile.getName(),
-				email    : profile.getEmail(),
-				picture  : profile.getImageUrl()
+				googleId: profile.getId(),
+				name    : profile.getName(),
+				email   : profile.getEmail(),
+				picture : profile.getImageUrl()
 			};
 
 			createInvite(googleUserData);
@@ -346,9 +442,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	window.loginWithFacebook = function loginWithFacebook() {
-		FB.login(function(response) {
-		  if (response.status === 'connected') {
-				FB.api('/me', {fields: 'name, email, picture'}, function(response) {
+		FB.login(function (response) {
+			if (response.status === 'connected') {
+				FB.api('/me', {fields: 'name, email, picture'}, function (response) {
 					const fbUserData = {
 						fbId   : response.id,
 						name   : response.name,
@@ -357,17 +453,19 @@ document.addEventListener('DOMContentLoaded', function () {
 					};
 
 					createInvite(fbUserData);
-		    });
-		  } else {
+				});
+			} else {
 
-		  }
+			}
 		}, {scope: 'public_profile,email'});
-	}
+	};
 
 	window.showLoginButtons = function showLoginButtons() {
+		window.scrollTo(0, 0);
+		inviteFloatEl.remove();
 		inviteLoginBtnsEl.style.display = "flex";
-		inviteCtaEl.style.display = "none";
-		inviteCtaEl.style.opacity = 0;
+		inviteCtaEl.style.display       = "none";
+		inviteCtaEl.style.opacity       = 0;
 
 		setTimeout(() => {
 			inviteLoginBtnsEl.style.opacity = 1;

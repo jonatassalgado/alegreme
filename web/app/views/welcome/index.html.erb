@@ -1,340 +1,249 @@
 <% content_for :canonical_url, root_url, format: :html %>
 
 <div class="template__container <%= 'is-pwa' if params[:pwa] %>">
-  <section class="brand">
-    <div class="brand__letter">
-      <%= responsive_image_tag 'welcome/logo-letter', alt: 'logo', title: 'Oie!' %>
-    </div>
-  </section>
 
-  <section class=menu>
-    <span onclick="location.assign('/users/auth/google_oauth2')">Entrar</span>
-  </section>
+  <div class="hero__wrapper">
+    <section class="hero">
+      <div class="hero-left">
+        <section class=menu>
+          <section class="brand">
+            <div class="brand__letter">
+              <%= responsive_image_tag 'welcome/logo-icon', alt: 'logo', title: 'Oie!' %>
+            </div>
+          </section>
+          <nav>
+            <a href="#como-funciona">Como funciona</a>
+            <a href="#sobre">Sobre</a>
+            <!--            <span onclick="location.assign('/users/auth/google_oauth2')">Entrar</span>-->
+          </nav>
+        </section>
 
+        <section class="headline">
+          <h1>Te entregamos uma experiência única de Porto Alegre</h1>
+          <h2>Aprendemos o que você gosta e não gosta para te sugerir eventos, atividades, promoções e serviços que vão de lazer a educação. Assim, você descobre coisas novas e não perde o que já conhece.</h2>
+        </section>
 
-  <section class="headline">
-    <h1>Aproveite a cidade de Porto Alegre</h1>
-    <h2>Atividades culturais, meetups, shows, rolês, feiras de rua, aquele filme no Mario Quintana...</br>
-      Um feed para quem quer explorar a cidade e não perder o que já conhece</h2>
-  </section>
-
-
-  <% unless mobile_device? || params[:pwa] %>
-    <section class="features">
-      <div class="features__scroll-view">
-        <div class="feature feature--activities rellax" data-rellax-speed="2" style="">
-          <div class="feature__icon">
-            <%= responsive_image_tag "welcome/bike-icon", alt: 'bicicleta' %>
-          </div>
-          <div class="feature__title">Atividades recorrentes para praticar na cidade</div>
-        </div>
-        <div class="feature feature--events rellax" data-rellax-speed="1" style="">
-          <div class="feature__icon">
-            <%= responsive_image_tag "welcome/calendar-icon", alt: "calendário" %>
-          </div>
-          <div class="feature__title">Eventos sugeridos com base no seu gosto individual</div>
-        </div>
-        <div class="feature feature--topics rellax" data-rellax-speed="1" style="">
-          <div class="feature__icon">
-            <%= responsive_image_tag "welcome/hearth-icon", alt: "coração", class: 'lazyload' %>
-          </div>
-          <div class="feature__title">Siga os tópicos que você gosta e fique sempre por dentro</div>
-        </div>
-        <div class="feature feature--friends rellax" data-rellax-speed="1" style="">
-          <div class="feature__icon">
-            <%= responsive_image_tag "welcome/friends-icon", alt: "amigos", class: 'lazyload' %>
-          </div>
-          <div class="feature__title">Compartilhe com seus melhores amigos seus planos</div>
-        </div>
-        <div class="feature feature--movie rellax" data-rellax-speed="2" style="">
-          <div class="feature__icon">
-            <%= responsive_image_tag "welcome/movie-icon", alt: "filme", class: 'lazyload' %>
-          </div>
-          <div class="feature__title">Filmes do Mario Quintana, Capitólio e Cinemark</div>
-        </div>
-      </div>
-    </section>
-  <% end %>
-
-  <% if params[:pwa] %>
-    <div class="login-button" title="Entrar" onclick="location.assign('/users/auth/google_oauth2')">
-      Entrar
-      <span>
+        <% if params[:pwa] %>
+          <div class="login-button" title="Entrar" onclick="location.assign('/users/auth/google_oauth2')">
+            Entrar
+            <span>
           <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
         </span>
-    </div>
-  <% end %>
+          </div>
+        <% end %>
 
-  <section class="invite <%= 'is-pwa' if params[:pwa] %>">
-    <% unless params[:pwa] %>
-      <div class="invite__status">
-        <div class="people">
-          <% @last_people.each do |person| %>
-            <div class="people__person-face" style="background-image: url('<%= image_path person.demographic['picture'] %>')" title="<%= person.demographic['name'] %>"></div>
-          <% end %>
-        </div>
-        <div class="invite__counter">
-          <%= @invites_count %> pessoas solicitaram convite para o alegreme
-        </div>
-        <div class="invite__details has-helper">
-          Na versão
-          <i title="Versão de testes do aplicativo ainda em desenvolvimento e validações">beta</i> vamos liberar até 100 convites por semana
-        </div>
-      </div>
-      <button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="" type="button">
-        <i class="">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="none" d="M0 0h24v24H0V0z"/>
-            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-          </svg>
-        </i>
-        <span class="">Compartilhar</span>
-      </button>
-
-      <div class="invite__loginButtons">
-        <div class="invite__button invite__button-facebook" onclick="loginWithFacebook()">Continuar com facebook</div>
-        <div class="invite__button invite__button-gmail" onclick="loginWithGmail()">Continuar com gmail</div>
-        <div class="invite__button invite__button-instagram" onclick="window.location = 'https://www.instagram.com/portoalegreme'">Ou siga nosso
-          <b>instagram</b> e seja avisado por lá.
-        </div>
-      </div>
-      <div class="invite__cta" onclick="showLoginButtons()" title="Seja um Beta tester!">
-        Solicitar Convite
-        <!-- <span> -->
-        <%#= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
-        <!-- </span> -->
-      </div>
-
-      <div class="skatista lazyload" data-bg="<%= image_path 'welcome/skatista.png' %>" style="transform: translate(-1900px, -50px);">
-      </div>
-    <% end %>
-  </section>
-
-
-  <% unless params[:pwa] %>
-    <section class="demo">
-      <div class="demo__banners">
-        <div class="demo__pwaBanner">
-          <%= image_tag 'welcome/pwa-banner.png', alt: 'Iniciar como Web App', title: 'Instalar app web no celular' %>
-        </div>
-        <div class="demo__iosBanner" onclick="prompt.open()">
-          <%= image_tag 'welcome/ios-banner.png', alt: 'Adicionar na tela inicial', title: 'Adicionar na tela inicial' %>
-        </div>
-        <div class="demo__playStoreBanner">
-          <a href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
-            <%= image_tag 'welcome/google-play-banner.png', alt: 'Disponível no Google Play', title: 'Disponível no Google Play' %>
-          </a>
-        </div>
+        <%= render partial: "welcome/invite" %>
       </div>
 
       <% unless mobile_device? %>
-        <div class="macbook">
-          <div class="macbook__screen">
-            <video width="100%" height="auto" autoplay muted loop playsinline>
-              <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.mp4" type="video/mp4"/>
-              <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.webm" type="video/webm"/>
-              <object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.swf">
-                <param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.swf"/>
-                <param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-web-min.mp4"/>
-              </object>
-            </video>
+        <div class="hero-right">
+          <div class="hero__banner" style="opacity: 0">
+            <a href="https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+              <%= image_tag "welcome/google-play-banner.png" %>
+            </a>
+          </div>
+          <div class="hero__device">
+            <div class="android" style="transform: translateY(800px)">
+              <div class="android__screen">
+                <video width="100%" height="auto" autoplay muted loop playsinline>
+                  <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/hero-device-screen.mp4" type="video/mp4"/>
+                  <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/hero-device-screen.webm" type="video/webm"/>
+                  <object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/hero-device-screen.swf">
+                    <param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/hero-device-screen.swf"/>
+                    <param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/hero-device-screen.mp4"/>
+                  </object>
+                </video>
+              </div>
+            </div>
           </div>
         </div>
       <% end %>
-      <div class="android">
-        <div class="android__screen">
-          <video width="100%" height="auto" autoplay muted loop playsinline>
-            <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4" type="video/mp4"/>
-            <source src="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.webm" type="video/webm"/>
-            <object width="100%" height="auto" type="application/x-shockwave-flash" data="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.swf">
-              <param name="movie" value="https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.swf"/>
-              <param name="flashvars" value="autostart=true&amp;controlbar=over&amp;file=https://alegreme.sfo2.digitaloceanspaces.com/video/demo-android-min.mp4"/>
-            </object>
-          </video>
-        </div>
+
+    </section>
+  </div>
+
+
+  <section id="como-funciona" class="how-works">
+    <h2 class="h2">Como funciona</h2>
+    <section class="how-works__step how-works__step--left">
+      <div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-1' %>">
       </div>
-      <div class="demo__plataform-numbers">
-        <b><%= @events_count %></b> eventos e atividades de
-        <b><%= @organizers_count %></b> organizadores estão disponíveis hoje
-        <br>
+      <div class="how-works__description">
+        <div class="how-works__bullet">
+          <span>1</span>
+        </div>
+        <div class="how-works__title">
+          Primeiro vamos nos conhecer melhor
+        </div>
       </div>
     </section>
 
-    <% unless mobile_device? %>
-      <section class="benefits">
-        <div class="benefits__items">
-          <div class="benefits__item">
-            <h3>Filtre eventos por dia, categoria e tipo</h3>
-            <span>Ex: sexta-feira > festas > evento de rua</span>
-          </div>
-          <div class="benefits__item">
-            <h3>Mostrar eventos similares em um clique</h3>
-            <span>Ex: ver similares à "Festa Goodbye Lenin"</span>
-          </div>
-          <div class="benefits__item">
-            <h3>Seguir os tópicos que você gosta</h3>
-            <span>Ex: seguir os tópicos "Feiras de rua" e "Brechó"</span>
-          </div>
-          <div class="benefits__item">
-            <h3>Seguir organizadores</h3>
-            <span>Ex: seguir os organizadores "Coletivo Plano" e "No Palco"</span>
-          </div>
-          <div class="benefits__item">
-            <h3>Recomendações específicas para você</h3>
-            <span>Aprendemos continuamente o seu gosto individual</span>
-          </div>
-          <div class="benefits__item">
-            <h3>Seguir locais</h3>
-            <span>Ex: seguir os locais "Opnião" e "Mario Quintana"</span>
-          </div>
-          <div class="benefits__item">
-            <h3>Filmes em cartaz nos cinemas</h3>
-            <span>Ex: ver lista de filmes no "Capitólio" e "Cinemark"</span>
-          </div>
-          <div class="benefits__item">
-            <h3>Compartilhar minha agenda</h3>
-            <span>Ex: compartilha seu perfil com "amigos", "trabalho" e "família"</span>
-          </div>
+    <section class="how-works__step how-works__step--right">
+      <div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-2' %>">
+      </div>
+      <div class="how-works__description">
+        <div class="how-works__bullet">
+          <span>2</span>
         </div>
-      </section>
-    <% end %>
-  <% end %>
-
-
-
-  <%# unless mobile_device? %>
-  <!--    <section class="manifesto">-->
-  <!--      <i>Manifesto</i>-->
-  <!--      <h2>Aumentar a interação das pessoas com a cidade</h2>-->
-  <!--      <div class="manifesto__content">-->
-  <!--        <p>Você é o que você come. Quantas vezes você já ouviu esta frase? Com certeza algumas vezes. Mas somos mais ainda o resultado daquilo que vivemos, com as pessoas que interagimos!</p>-->
-  <!--        <p>O mundo já foi um lugar pacato, poucas coisas aconteciam a nossa volta, e não muito raramente as cidades possuíam pouca diversidade de eventos e atividades. Houve um tempo que os grandes acontecimentos da nossa sociedade eram a missa, o casamento e a festa anual da cidade.</p>-->
-  <!--        <p>Por isso talvez as pessoas eram tão iguais, previsíveis e havia pouca inovação...</p>-->
-  <!--        <a href="https://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" target="_blank" class="manifesto__read-more">LER MAIS</a>-->
-  <!--      </div>-->
-  <!--    </section>-->
-  <%# end %>
-
-
-  <!--  <section class="social">-->
-  <!--    <h2>Siga o alegreme</h2>-->
-  <!--    <div class="social__buttons">-->
-  <!--      <a href="https://www.instagram.com/portoalegreme">-->
-  <%#= responsive_image_tag "welcome/follow-instagram", alt: 'siga o instagram', class: 'lazyload' %>
-  <!--      </a>-->
-  <!--      <a href="https://twitter.com/portoalegreme">-->
-  <%#= responsive_image_tag "welcome/follow-twitter", alt: 'siga o twitter', class: 'lazyload' %>
-  <!--      </a>-->
-  <!--    </div>-->
-  <!--  </section>-->
-
-  <% unless params[:pwa] %>
-    <section class="questions">
-      <h2>Perguntas?</h2>
-      <div class="questions__grid">
-        <div class="questions__grid-item questions__grid-item--q1" data-question="q1" data-color="#E4F2FB">
-          <h3>O que é o Alegreme?</h3>
-        </div>
-        <div class="questions__grid-item questions__grid-item--q2" data-question="q2" data-color="#E4F2FB">
-          <h3>Como funciona?</h3>
-        </div>
-        <div class="questions__grid-item questions__grid-item--q3" data-question="q3" data-color="#E4F2FB">
-          <h3>É grátis?</h3>
-        </div>
-        <div class="questions__grid-item questions__grid-item--q4" data-question="q4" data-color="#E4F2FB">
-          <h3>Funciona somente em Porto Alegre?</h3>
-        </div>
-        <div class="questions__grid-item questions__grid-item--q5" data-question="q5" data-color="#E4F2FB">
-          <h3>Como entrar em contato?</h3>
+        <div class="how-works__title">
+          Nos diga o que você curte
         </div>
       </div>
-      <div class="answer is-hidden">
-        <div class="answer__content" data-answer="q1">
-          <div class="answer__close">FECHAR</div>
-          <h3>O que é o Alegreme?</h3>
-          <p>
-            Um aplicativo web que facilita aos moradores de Porto Alegre
-            a explorarem eventos e atividades da cidade.
-          </p>
-          <!--        <p>-->
-          <!--          <i>PS: Android e iOs sairam na versão 1.0 em breve.</i>-->
-          <!--        </p>-->
+    </section>
+
+    <section class="how-works__step how-works__step--left">
+      <div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-3' %>">
+      </div>
+      <div class="how-works__description">
+        <div class="how-works__bullet">
+          <span>3</span>
         </div>
-        <div class="answer__content" data-answer="q2">
-          <div class="answer__close">FECHAR</div>
-          <h3>Como funciona?</h3>
-          <p>
-            <b>Resposta rápida:</b>
-          <ul>
-            <li>1. Você cria um perfil e responde sobre eventos e atividades que iria ou não.</li>
-            <li>2. Com um perfil inicial traçado, iremos mostrar coleções de eventos e atividades.</li>
-            <li>3. Você pode salvar o que gostar, seguir tópicos, locais e organizadores e explorar itens semelhantes.</li>
-            <li>4. Enquanto você usa o app aprendemos o que gosta e vamos mostrando coleções com base no seu gosto individual.</li>
-          </ul>
-          </p>
-          <p>
-            <b>Resposta técnica:</b> <br>
-            São 6 aplicações que funcionam em conjunto, algumas são responsáveis por buscar o conteúdo na web, semelhante
-            o Google; outras são responsáveis por limpar e classificar estes dados em mais de 500 categorias e subcategorias
-            com base em mais de 10 variáveis; outro é responsável a entender os grupos de usuários que usam o app
-            e do que gostam e não gostam e organizar para cada pessoa coleções com sugestões, como o Youtube e Netflix fazem.
-          <p>
-            Podemos dizer que o Alegreme é poliglota e hypado, vai do Python ao Javascript, do Ruby ao Java, utiliza inteligência artificial e bots, tudo isso para entregar um app massa!
-          </p>
-          </p>
-        </div>
-        <div class="answer__content" data-answer="q3">
-          <div class="answer__close">FECHAR</div>
-          <h3>É grátis?</h3>
-          <p>
-            Sim. 0800. Free.
-          </p>
-        </div>
-        <div class="answer__content" data-answer="q4">
-          <div class="answer__close">FECHAR</div>
-          <h3>Funciona somente em Porto Alegre?</h3>
-          <p>
-            Sim. Mas há uma funcionalidade que exibe coleções de eventos e atividade de cidades do
-            Rio Grande do Sul para pessoas que querem turistar de carro no fim de semana.
-          </p>
-        </div>
-        <div class="answer__content" data-answer="q5">
-          <div class="answer__close">FECHAR</div>
-          <h3>Como entrar em contato?</h3>
-          <p>
-            Para dúvidas, dicas e outras resenhas é só mandar um email para oi@alegreme.com
-          </p>
+        <div class="how-works__title">
+          Experiências escolhidas a dedo para você
         </div>
       </div>
-  <% end %>
+    </section>
+
+    <section class="how-works__step how-works__step--right">
+      <div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-4' %>">
+      </div>
+      <div class="how-works__description">
+        <div class="how-works__bullet">
+          <span>4</span>
+        </div>
+        <div class="how-works__title">
+          Siga os tópicos que você gosta
+        </div>
+      </div>
+    </section>
+
+    <section class="how-works__step how-works__step--left">
+      <div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-5' %>">
+      </div>
+      <div class="how-works__description">
+        <div class="how-works__bullet">
+          <span>5</span>
+        </div>
+        <div class="how-works__title how-works__title--large">
+          Explore <br> coleções
+        </div>
+      </div>
+    </section>
+
+    <section class="how-works__step how-works__step--right">
+      <div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-6' %>">
+      </div>
+      <div class="how-works__description">
+        <div class="how-works__bullet">
+          <span>6</span>
+        </div>
+        <div class="how-works__title how-works__title--large">
+          Explore <br> a cidade
+        </div>
+      </div>
+    </section>
+
+    <section class="how-works__step how-works__step--left">
+      <div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-7' %>">
+      </div>
+      <div class="how-works__description">
+        <div class="how-works__bullet">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" width="30" height="30">
+            <path fill="#fff" fill-rule="evenodd" d="M29.5157 15.3149c0 7.9609-6.4114 14.4145-14.3202 14.4145-7.9089 0-14.3203-6.4536-14.3203-14.4145C.8752 7.3539 7.2866.9004 15.1955.9004c7.9088 0 14.3202 6.4536 14.3202 14.4145zm-6.6093-3.5121c0 1.3268-1.0694 2.4024-2.3886 2.4024s-2.3887-1.0756-2.3887-2.4024c0-1.3268 1.0695-2.4024 2.3887-2.4024 1.3192 0 2.3886 1.0756 2.3886 2.4024zm-10.6445 0c0 1.3268-1.0694 2.4024-2.3886 2.4024-1.3193 0-2.3887-1.0756-2.3887-2.4024 0-1.3268 1.0694-2.4024 2.3887-2.4024 1.3192 0 2.3886 1.0756 2.3886 2.4024zm-3.0146 6.6689c-1.3961.694-1.3958.6947-1.3955.6953l.0007.0014.0016.0031.0036.0071.0094.0183a5.6001 5.6001 0 00.1193.2139c.0772.1315.1877.3092.3333.5176a9.288 9.288 0 001.3252 1.5124c1.2057 1.1065 3.0999 2.2404 5.7342 2.2404 2.6343 0 4.5286-1.1339 5.7343-2.2404a9.288 9.288 0 001.3251-1.5124 7.839 7.839 0 00.3333-.5176 5.3362 5.3362 0 00.1193-.2139l.0094-.0183.0037-.0071.0015-.0031.0007-.0014c.0004-.0006.0007-.0013-1.3954-.6953-1.3961-.694-1.3958-.6946-1.3955-.6952l.0006-.0011.001-.0021.0016-.0031.0004-.0007a2.5409 2.5409 0 01-.0438.0775 4.7268 4.7268 0 01-.2009.3111 6.1726 6.1726 0 01-.8785 1.0022c-.7871.7224-1.9588 1.4173-3.6168 1.4173s-2.8297-.6949-3.6168-1.4173a6.1825 6.1825 0 01-.8785-1.0022 4.7268 4.7268 0 01-.2009-.3111 2.5409 2.5409 0 01-.0447-.0794l.0013.0026.0016.0031.0011.0021.0005.0011c.0003.0006.0007.0012-1.3954.6952z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <div class="how-works__title">
+          Seja notificado na hora certa da coisa certa
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <div id="sobre" class="about__wrapper">
+    <section class="about">
+      <h2 class="h2">
+        Sobre
+      </h2>
+
+      <div class="about__grid">
+        <div class="about__item" style="grid-area: r1">
+          <h3 class="h3">O que é o Alegreme?</h3>
+          <div class="about__content">
+            Alegreme é um aplicativo para celular e desktop que busca eventos, atividades, promoções e serviços de categorias como lazer e educação na cidade de Porto Alegre. O aplicativo aprende o que você gosta e não gosta para lhe sugerir experiências únicas com base no seu gosto.
+          </div>
+        </div>
+        <div class="about__item" style="grid-area: r2">
+          <h3 class="h3">
+            Funciona só em Porto Alegre?
+          </h3>
+          <div class="about__content">
+            Sim, o Alegreme é um projeto local com grandes ambições mas está começando somente por Porto Alegre. Queremos experimentar e testar muitas coisas para criar um negócio inovador com foco nos usuários, ou seja, queremos fazer algo diferente e bem feito aqui na nossa cidade. Se funcionar e fizer sentido podemos espalhar pelo Brasil.
+          </div>
+        </div>
+        <div class="about__item" style="grid-area: r3">
+          <h3 class="h3">
+            Quem faz?
+          </h3>
+          <div class="about__content">
+            A pessoa que está desenvolvendo tudo, por enquanto, sou eu,
+            <a href="https://www.instagram.com/jonataseduardo/">@jonastaseduardo</a>, mais conhecido como Jon. Tenho esse desejo de fazer algo parecido desde 2013, quando comecei a estudar de tudo um pouco. 6 anos atrás ainda estava começando minha jornada no desenvolvimento de produtos. Hoje com tecnologias como inteligência artificial mais acessíveis e com seis anos a mais de aprendizado, chegou a hora de conectar os pontos e ver se o projeto acontece.
+          </div>
+        </div>
+        <div class="about__item" style="grid-area: r4">
+          <h3 class="h3">
+            Como enviar algo?
+          </h3>
+          <div class="about__content">
+            Se o seu evento ou experiência está na internet em sites que tratam sobre Porto Alegre provavelmtente ele está no Alegreme, pois o aplicativo funciona semelhante ao Google, buscando tudo que há de eventos e experiências em sites de Porto Alegre. O algorítimo cria, edita, categoriza, escolhe para quem exibir... Praticamente faz tudo sozinho.
+          </div>
+        </div>
+        <div class="about__item" style="grid-area: r5">
+          <h3 class="h3">
+            Que tecnologia vocês usam?
+          </h3>
+          <div class="about__content">
+            As liguagens são muitas, vão de Ruby a Python; de Javascript a Java. São 6 serviços que rodam de forma isolada. Alguns responsáveis por catar dados da internet como o Google, outros em classificar estes dados, como o Pinterest e outro em aprender sobre os dados e usuários, como o Netflix. Para ser ágil no desenvolvimento, na versão mobile estamos usando PWA. E tudo tendo como core inteligência artificial, como você deve ter imaginado :)
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <section class="footer">
     <% unless params[:pwa] %>
-      <div class="footer__logo-icon js-logo">
-        <%= responsive_image_tag "welcome/footer-logo-icon", alt: 'logo', title: 'Pimba!', class: 'lazyload' %>
-        <div class="brand__pimba js-pimba" style="opacity: 0;">Pimba</div>
-      </div>
-      <button class="shareBtn" aria-label="Compartilhar" style="" type="button">
-        <i class="">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="none" d="M0 0h24v24H0V0z"/>
-            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-          </svg>
-        </i>
-        <span class="">Compartilhar</span>
-      </button>
+      <picture>
+        <source media="(max-width: 480px)" srcset="<%= image_url 'welcome/porto-alegre@512w' %>">
+        <img src="<%= image_url 'welcome/porto-alegre' %>" alt="Porto Alegre" class="footer__image">
+      </picture>
+
       <div class="social__links">
         <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
         <a href="https://twitter.com/portoalegreme">twitter</a> ·
         <a href="#">oi@alegreme.com</a>
       </div>
-      <div class="footer__links">
-        <a href="/privacy">Política de privacidade</a> ·
-        <a href="/terms">Termos de serviço</a> ·
-        <a href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">Sobre</a>
+      <div class="credits">
+        Feito por
+        <a href="https://www.instagram.com/jonataseduardo/">@jonataseduardo</a> com
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.7054 0.257324C10.0657 0.257324 8.63837 1.23748 7.99993 2.65639C7.36149 1.23889 5.93415 0.257324 4.29446 0.257324C2.05571 0.257324 0.234619 2.07982 0.234619 4.31857C0.234619 9.36701 7.51759 13.5239 7.82837 13.6983C7.88181 13.7278 7.93946 13.7433 7.99853 13.7433C8.05759 13.7433 8.11665 13.7278 8.16868 13.6983C8.47806 13.5239 15.7638 9.36701 15.7638 4.31857C15.7652 2.07982 13.9442 0.257324 11.7054 0.257324Z" fill="#DB4437"/>
+        </svg>
+        ️no Centro Histórico de Porto Alegre
       </div>
-      <%= responsive_image_tag 'welcome/footer-message', alt: 'footer message', title: 'Tchau!', class: 'lazyload' %>
+      <div class="vamodale">
+        Ei! Tem ideias de funcionalidades, projetos pra tocar junto, quer conectar uma API, trocar uma ideia... Usa os links acima. Vlw flw
+      </div>
+      <div class="footer__links">
+        <a href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">
+          Manifesto
+        </a> ·
+        <a href="/privacy">Política de privacidade</a> ·
+        <a href="/terms">Termos de serviço</a>
+      </div>
     <% end %>
   </section>
+
+  <section class="invite-float">
+    <%= render partial: "welcome/invite" %>
   </section>
+
 </div>

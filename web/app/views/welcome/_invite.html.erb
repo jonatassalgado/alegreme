@@ -1,0 +1,36 @@
+<section class="invite <%= 'is-pwa' if params[:pwa] %>">
+  <% unless params[:pwa] %>
+    <button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="" type="button">
+      <i class="">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="none" d="M0 0h24v24H0V0z"/>
+          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+        </svg>
+      </i>
+      <span class="">Compartilhar</span>
+    </button>
+
+    <div class="invite__status">
+      <div class="people">
+        <% @last_people.each do |person| %>
+          <div class="people__person-face" style="background-image: url('<%= image_path person.demographic['picture'] %>')" title="<%= person.demographic['name'] %>"></div>
+        <% end %>
+      </div>
+      <div class="invite__counter">
+      </div>
+      <div class="invite__details has-helper">
+      </div>
+    </div>
+
+    <div class="invite__loginButtons">
+      <div class="invite__button invite__button-facebook" onclick="loginWithFacebook()">Continuar com facebook</div>
+      <div class="invite__button invite__button-gmail" onclick="loginWithGmail()">Continuar com gmail</div>
+      <div class="invite__button invite__button-instagram" onclick="window.location = 'https://www.instagram.com/portoalegreme'">Ou siga nosso
+        <b>instagram</b> e seja avisado por lá.
+      </div>
+    </div>
+    <div class="invite__cta" onclick="showLoginButtons()">
+      Pegar convite
+    </div>
+  <% end %>
+</section>

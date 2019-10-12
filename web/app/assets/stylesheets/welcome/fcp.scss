@@ -1,18 +1,34 @@
 @import "media-queries";
 @import "variables";
 
+$font-primary-family: "Montserrat", sans-serif;
+$font-secondary-color: #4f4f4f;
+$font-tertiary-color: #828282;
+$wrapper-width: 1280px;
+$background-color: #f3f5f7;
+
+body {
+  letter-spacing: -0.5px;
+  font-family: $font-primary-family;
+}
+
+a {
+  text-decoration: none;
+}
+
 .template__container {
-  font-family: $font-secondary-family;
+  font-family: $font-primary-family;
   color: $font-secondary-color;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: asset_url('welcome/bg-top.jpg');
+  //background-image: asset_url('welcome/bg-top.jpg');
   background-repeat: no-repeat;
   background-position: top center;
   background-size: contain;
+  padding: 0 0 100px 0;
   @include mobile-only {
-    background-image: asset_url('welcome/bg-top-mobile.jpg');
+    //background-image: asset_url('welcome/bg-top-mobile.jpg');
     background-repeat: no-repeat;
     background-position: top center;
     max-width: 100vw;
@@ -29,11 +45,15 @@ section {
 }
 
 .menu {
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  font-size: 11px;
-  color: #d1d1d1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 0 0;
+
+  & a {
+    color: $brand-color;
+    padding: 0 10px;
+  }
   .is-pwa & {
     @include mobile-only {
       display: none;
@@ -43,7 +63,7 @@ section {
 
 .brand {
   display: flex;
-  margin: 24px 0 12px 0;
+  margin: 0 0 0 24px;
   min-height: auto;
   align-items: center;
   -webkit-user-select: none;
@@ -51,13 +71,12 @@ section {
   -ms-user-select: none;
   user-select: none;
   & img {
-    max-width: 200px;
+    //max-width: 200px;
     position: relative;
-    left: -12px;
   }
 
   @include mobile-only {
-    margin: 24px 0 24px 0;
+    margin: 0 0 0 24px;
   }
 
   .is-pwa & {
@@ -90,20 +109,20 @@ section {
 }
 
 .headline {
-  font-style: normal;
-  text-align: center;
+  margin: 35px 24px 0 24px;
+
   @include mobile-only {
-    padding: 6vh 24px 6vh 24px;
+    margin: 24px 24px 0 24px;
+    //padding: 6vh 24px 6vh 24px;
   }
 
   & h1 {
     font-family: $font-primary-family;
-    letter-spacing: -0.02em;
-    font-weight: 800;
-    font-size: 28px;
-    line-height: 58px;
-    margin: 0;
-    padding: 0;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 34px;
+    line-height: 120%;
+    max-width: 80%;
 
     @include mobile-only {
       font-size: 26px;
@@ -115,7 +134,7 @@ section {
   }
 
   & h2 {
-    font-family: $font-secondary-family;
+    font-family: $font-primary-family;
     font-weight: normal;
     font-size: 18px;
     line-height: 26px;
@@ -130,17 +149,17 @@ section {
 }
 
 .invite {
-  margin: 80px auto 0 auto;
+  margin: 30px 0 0 0;
   position: relative;
-  overflow: hidden;
+  //overflow: hidden;
   width: 100%;
-  padding-bottom: 160px;
+  //padding-bottom: 160px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   @include mobile-only {
-    margin: 42px auto 0 auto;
+    margin: 24px auto 0 auto;
     padding-bottom: 60px;
     .is-pwa & {
       margin: 16px auto 0 auto;
@@ -148,10 +167,18 @@ section {
   }
 
   &__status {
-    transition: transform 0.8s ease;
+    display: none;
+    opacity: 0;
+    transition: transform 0.8s ease, opacity 0.8s ease;
   }
 
   &.is-invited {
+    .invite__status {
+      display: block;
+      opacity: 1;
+      padding: 0 30px;
+    }
+
     .invite__cta {
       opacity: 0;
     }
@@ -180,7 +207,7 @@ section {
     font-weight: 500;
     font-size: 18px;
     line-height: 27px;
-    margin: 20px 0 0 0;
+    margin: 6px 0 0 0;
     text-align: center;
     @include mobile-only {
       font-size: 18px;
@@ -208,33 +235,32 @@ section {
   }
 
   &__cta {
-    width: 420px;
-    height: 87px;
+    width: 185px;
+    height: 50px;
     font-family: $font-primary-family;
-    font-style: normal;
-    font-weight: 900;
-    font-size: 28px;
-    line-height: 34px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
     display: flex;
     align-items: center;
     text-align: center;
-    text-transform: uppercase;
     background: $brand-color;
     color: $surface-color;
     justify-content: center;
-    box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
+    //box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
     border-radius: 60px;
-    margin: 24px auto 0 auto;
+    margin: 0 0 0 30px;
     cursor: pointer;
     transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+    will-change: transform;
     -webkit-tap-highlight-color: transparent;
     -webkit-user-select: none;
     @include mobile-only {
-      width: 245px;
+      //width: calc(100% - 48px);
       height: 65px;
-      font-size: 16px;
-      font-weight: 800;
-      margin: 35px auto 0 auto;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 0 24px;
       .is-pwa & {
         width: calc(100% - 48px);
         margin: 0 auto 0 auto;
@@ -242,8 +268,9 @@ section {
     }
 
     &:hover {
-      box-shadow: 0 0 45px rgba(0, 0, 0, 0.35);
-      transform: scale(1.05);
+      //box-shadow: 0 0 45px rgba(0, 0, 0, 0.35);
+      transform: scale(1.03);
+      background: lighten($brand-color, 3%);
 
       &.invite__cta span {
         transform: translateX(6px);
@@ -269,6 +296,7 @@ section {
     display: none;
     flex-wrap: wrap;
     @include mobile-only {
+      margin: 6px auto;
       flex-direction: column;
     }
   }
@@ -279,13 +307,14 @@ section {
     border-radius: 36px;
     color: $surface-color;
     font-family: $font-primary-family;
-    letter-spacing: 0.4px;
     font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
     cursor: pointer;
     @include mobile-only {
-      margin: 6px 24px;
+      margin: 5px 24px;
       text-align: center;
-      padding: 18px 0px;
+      padding: 18px 0;
     }
 
     &-gmail {
@@ -298,10 +327,15 @@ section {
 
     &-instagram {
       color: $font-primary-color;
-      width: 90vw;
+      //width: 90vw;
       text-align: center;
       margin: 6px auto;
       line-height: 1.35em;
+      font-size: 16px;
+      @include mobile-only {
+        display: none;
+      }
+
       & b {
         color: #C13584;
         border-bottom: 1px solid;
@@ -338,19 +372,19 @@ section {
   & .people {
     margin: auto;
     position: relative;
-    width: 328px;
-    height: 55px;
+    width: 300px;
+    height: 30px;
     z-index: 2;
     opacity: 0;
     transition: opacity 300ms ease;
     @include mobile-only {
-      width: 220px;
+      width: 286px;
       height: 40px;
     }
 
     &__person-face {
-      width: 50px;
-      height: 50px;
+      width: 25px;
+      height: 25px;
       border: 3px solid #FFFFFF;
       border-radius: 100%;
       position: absolute;
@@ -365,6 +399,29 @@ section {
         border: 2px solid #FFFFFF;
       }
     }
+  }
+}
+
+.invite-float {
+  position: fixed;
+  bottom: 0;
+  background: linear-gradient(0deg, $surface-color 60%, transparent);
+  width: 100vw;
+  z-index: 3;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(150px);
+  transition: opacity 250ms ease, transform 250ms ease;
+
+  & .invite {
+    display: flex;
+    justify-content: center;
+    padding: 55px 0 12px 0;
+    margin: 0;
+  }
+
+  & .invite__cta {
+    margin: 0;
   }
 }
 
@@ -398,131 +455,117 @@ section {
   }
 }
 
-.features {
-  margin: 45px 0 0 100px;
-  position: relative;
+.hero {
+  --y: 0;
+  display: flex;
+  width: 100%;
+  margin: auto;
+  max-width: $wrapper-width;
+  min-height: 860px;
+  overflow: hidden;
   @include mobile-only {
-    display: none;
-    margin: 25px 0 0 0;
-    overflow-x: scroll;
-    width: 100vw;
+    height: 100vh;
+    min-height: 730px;
   }
 
-  .is-pwa & {
+  &__wrapper {
+    background: lighten($background-color, 1%);
+    width: 100%;
+  }
+
+  &-left, &-right {
+    width: 50%;
+  }
+
+  &-left {
+    background: $surface-color;
+    margin: 40px 0 50px 26px;
+    background-image: asset_url("welcome/experiences.jpg");
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-size: contain;
     @include mobile-only {
+      background-size: 160%;
       margin: 0;
-      padding: 4vh 0 8vh 0;
+      width: 100%;
+      background-position: center bottom;
     }
   }
 
-  &::-webkit-scrollbar{
+  &-right {
     @include mobile-only {
       display: none;
     }
   }
 
-  &__scroll-view {
+  &__device {
+    display: flex;
+    justify-content: center;
     position: relative;
-    width: 1120px;
-    height: 250px;
-    @include mobile-only {
-      width: 970px;
-      height: 275px;
-      margin: 0 25px;
-    }
+    top: 0;
+  }
+
+  &__banner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: 40px;
+    width: fit-content;
+    margin: auto;
+    z-index: 3;
+    transition: opacity 850ms ease 150ms;
   }
 }
 
-.feature {
-  background: #FFFFFF;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.09);
-  border-radius: 6px;
-  width: 200px;
-  height: 100px;
-  padding: 12px 25px;
-  font-style: normal;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.8);
-  position: absolute;
+.android {
+  $android-resize: 1;
+  $android-width: 536;
+  $android-height: 790;
+  width: unquote($android-width + 'px');
+  height: unquote($android-height + 'px');
+  background-image: asset_url("welcome/hero-device.png");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: auto;
+  margin:0;
   z-index: 2;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-  will-change: transform, opacity;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
+  position: relative;
+  transition: transform 850ms ease;
+  will-change: transform;
   @include mobile-only {
-    width: 200px;
-    height: 100px;
+    width: unquote($android-width * $android-resize + 'px');
+    height: unquote($android-height * $android-resize + 'px');
+    position: relative;
+    top: 0;
+    right: 0;
+    //transform: scale(1.8);
+    margin: 86px auto 0 auto;
   }
 
-  &--activities {
-    position: absolute;
-    left: 0%;
-    top: 54.07%;
-    z-index: 3;
-    @include mobile-only {
-      top: 47.07%;
+  &__screen {
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    $android-screen-left: 121;
+    $android-screen-height: 521;
+    $android-screen-width: 295;
+    $android-screen-top: 143;
+    width: unquote($android-screen-width + 'px');
+    height: unquote($android-screen-height + 'px');
+    top: unquote($android-screen-top + 'px');
+    left: unquote($android-screen-left + 'px');
+
+
+    & img, picture, video {
+      width: inherit;
     }
-  }
 
-  &--events {
-    position: absolute;
-    left: 17.35%;
-    top: 0%;
     @include mobile-only {
-      left: 8.35%;
-      top: 7%;
-    }
-  }
-
-  &--topics {
-    position: absolute;
-    left: 31.6%;
-    top: 45.27%;
-    z-index: 3;
-    @include mobile-only {
-      left: 31.6%;
-      top: 38.27%;
-    }
-  }
-
-  &--friends {
-    position: absolute;
-    left: 53.25%;
-    top: 14.62%;
-    @include mobile-only {
-      left: 60.25%;
-      top: 8.62%;
-    }
-  }
-
-  &--movie {
-    position: absolute;
-    left: 68.86%;
-    top: 61.21%;
-    z-index: 3;
-    @include mobile-only {
-      left: 71.86%;
-      top: 49.21%;
-    }
-  }
-
-
-  &__icon {
-    width: 48px;
-    height: 48px;
-    margin: 0 auto 6px auto;
-  }
-
-  &__title {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-    @include mobile-only {
-      font-size: 14px;
-      line-height: 18px;
+      top: unquote($android-screen-top * $android-resize + 'px');
+      left: unquote($android-screen-left * $android-resize + 'px');
+      width: unquote($android-screen-width * $android-resize + 'px');
+      height: unquote($android-screen-height * $android-resize + 'px');
     }
   }
 }
