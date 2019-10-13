@@ -107,31 +107,11 @@ document.addEventListener('DOMContentLoaded', function () {
 				});
 			};
 
-			if ('IntersectionObserver' in window) {
-				const observerEls = document.querySelectorAll('.how-works__step');
+			document.querySelectorAll('.how-works__step').forEach((step) => {
+				step.style.setProperty('--offsettop', `${step.offsetTop}px`);
+			})
 
-				observerEls.forEach((observerEl) => {
-						observerEl.style.setProperty('--offsettop', `${observerEl.offsetTop}px`);
-
-						const observer = new IntersectionObserver(entries => {
-								let [{isIntersecting}] = entries;
-
-								if (isIntersecting) {
-									window.addEventListener('scroll', onScroll, scrollOptions)
-								} else {
-									window.removeEventListener('scroll', onScroll, scrollOptions)
-								}
-
-							},
-							{rootMargin: '50px 50px 50px 50px'});
-
-						observer.observe(observerEl)
-					}
-				);
-
-			} else {
-				window.addEventListener('scroll', onScroll, scrollOptions)
-			}
+			window.addEventListener('scroll', onScroll, scrollOptions)
 		}, 2000);
 	}
 
