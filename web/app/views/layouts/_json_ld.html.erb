@@ -1,5 +1,3 @@
-
-
     {
         "@context":    "https://schema.org",
         "@type":       "Event",
@@ -7,7 +5,7 @@
         "image":       [
                            "<%= event.image[:original].url %>"
                        ],
-        "description": "<%= strip_tags(event.details_description) %>",
+        "description": "<%= strip_tags(event.details_description).gsub(/[^[0-9][$][-]\p{L}\p{M}*+ ]/i, '') %>",
         "url": "<%= event_path event %>",
         "startDate":   "<%= event.first_day_time.to_datetime.iso8601 %>",
         "endDate":     "",
@@ -31,4 +29,4 @@
           "priceCurrency": "BRL",
           "url": "<%= event_path event %>"
         }
-    } <%= "," unless @collection[:events].size == event_counter + 1 %>
+    }<%= "," unless @collection[:events].size == event_counter + 1 %>

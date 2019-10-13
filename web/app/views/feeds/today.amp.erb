@@ -3,7 +3,7 @@
 
 <script type="application/ld+json">
   [
-    <%= render partial: 'layouts/json_ld.html.erb', collection: @collection[:events], as: :event, cached: true %>
+    <%= render partial: 'layouts/json_ld.html.erb', collection: @collection[:events], as: :event %>
   ]
 
 </script>
@@ -55,6 +55,3 @@
     </template>
   </amp-list>
 </div>
-
-
-

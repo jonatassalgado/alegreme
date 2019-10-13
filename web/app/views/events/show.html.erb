@@ -16,7 +16,7 @@
   "image": [
     "<%= @event.image[:original].url %>"
    ],
-  "description": "<%= strip_tags @event.details_description %>",
+  "description": "<%= strip_tags(@event.details_description).gsub(/[^[0-9][$][-]\p{L}\p{M}*+ ]/i, '') %>",
   "url": "<%= event_path @event %>",
   "location": {
     "@type": "Place",
