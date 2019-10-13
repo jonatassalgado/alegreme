@@ -45,7 +45,7 @@ services:
     ports:
       - 3000:3000
     command: bundle exec puma -C config/puma.rb
-    mem_limit: 6gb
+    mem_limit: 5gb
     memswap_limit: 6gb
     mem_reservation: 256m
     cpus: 3.5
@@ -162,11 +162,11 @@ services:
     restart: always
     volumes:
       - splash_data:/var/www/splash/data
-    mem_limit: 5gb
+    mem_limit: 4gb
     memswap_limit: 5gb
     mem_reservation: 256m
     cpus: 2
-    command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
+    command: --maxrss 3500
   memcached:
     image: memcached
     command: memcached -m 64

@@ -73,12 +73,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		// pwaBannerEl.style.display = 'none';
 	}
 
-	setTimeout(() => {
-		requestAnimationFrame(() => {
-			androidEl.style.transform  = "translateY(0)";
-			heroBannerEl.style.opacity = 1;
-		});
-	}, 1000);
+	if (androidEl) {
+		setTimeout(() => {
+			requestAnimationFrame(() => {
+				androidEl.style.transform  = "translateY(0)";
+				heroBannerEl.style.opacity = 1;
+			});
+		}, 1000);
+	}
 
 	window.addEventListener('scroll', () => {
 		if (window.scrollY > 500) {
