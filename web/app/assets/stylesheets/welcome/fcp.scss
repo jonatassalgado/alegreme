@@ -35,6 +35,7 @@ a {
     &.is-pwa  {
       min-height: 100vh;
       background-size: auto;
+      padding: 0;
     }
   }
 
@@ -56,7 +57,8 @@ section {
   }
   .is-pwa & {
     @include mobile-only {
-      display: none;
+      align-self: stretch;
+      padding: 0 24px 0 0;
     }
   }
 }
@@ -81,7 +83,7 @@ section {
 
   .is-pwa & {
     @include mobile-only {
-      margin: 30px 24px 15px 24px;
+      //margin: 30px 24px 15px 24px;
     }
   }
 
@@ -116,6 +118,10 @@ section {
     //padding: 6vh 24px 6vh 24px;
   }
 
+  .is-pwa & {
+    margin: 50px 24px 0 24px;
+  }
+
   & h1 {
     font-family: $font-primary-family;
     font-style: normal;
@@ -130,6 +136,10 @@ section {
       text-align: left;
       max-width: 90%;
       margin: 0 0 12px 0;
+    }
+
+    .is-pwa {
+      margin: 0 0 24px 0;
     }
   }
 
@@ -486,6 +496,14 @@ section {
       margin: 0;
       width: 100%;
       background-position: center bottom;
+    }
+
+    .is-pwa & {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      padding: 24px 0;
     }
   }
 

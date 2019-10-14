@@ -82,21 +82,23 @@ document.addEventListener('DOMContentLoaded', function () {
 		}, 1000);
 	}
 
-	window.addEventListener('scroll', () => {
-		if (window.scrollY > 500) {
-			requestAnimationFrame(() => {
-				inviteFloatEl.style.opacity    = 1;
-				inviteFloatEl.style.transform  = 'translateY(0)';
-				inviteFloatEl.style.visibility = 'visible';
-			});
-		} else {
-			requestAnimationFrame(() => {
-				inviteFloatEl.style.opacity    = 1;
-				inviteFloatEl.style.transform  = 'translateY(150px)';
-				inviteFloatEl.style.visibility = 'hidden';
-			});
-		}
-	}, {capture: false, passive: true});
+	if (inviteFloatEl) {
+		window.addEventListener('scroll', () => {
+			if (window.scrollY > 500) {
+				requestAnimationFrame(() => {
+					inviteFloatEl.style.opacity    = 1;
+					inviteFloatEl.style.transform  = 'translateY(0)';
+					inviteFloatEl.style.visibility = 'visible';
+				});
+			} else {
+				requestAnimationFrame(() => {
+					inviteFloatEl.style.opacity    = 1;
+					inviteFloatEl.style.transform  = 'translateY(150px)';
+					inviteFloatEl.style.visibility = 'hidden';
+				});
+			}
+		}, {capture: false, passive: true});
+	}
 
 	if (!md.mobile()) {
 		setTimeout(() => {

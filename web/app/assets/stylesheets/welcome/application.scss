@@ -390,7 +390,6 @@ $background-color: #f3f5f7;
   display: flex;
   align-items: center;
   text-align: center;
-  text-transform: uppercase;
   color: $brand-color;
   justify-content: center;
   box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
@@ -403,7 +402,7 @@ $background-color: #f3f5f7;
   @include mobile-only {
     width: calc(100vw - 48px);
     height: 65px;
-    font-size: 18px;
+    font-size: 20px;
     position: absolute;
     margin: 25px auto 36px auto;
     bottom: 0;

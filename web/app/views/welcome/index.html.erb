@@ -210,40 +210,40 @@
   </div>
 
   <section class="footer">
-    <% unless params[:pwa] %>
-      <picture>
-        <source media="(max-width: 480px)" srcset="<%= image_url 'welcome/porto-alegre@512w' %>">
-        <img src="<%= image_url 'welcome/porto-alegre' %>" alt="Porto Alegre" class="footer__image">
-      </picture>
+    <picture>
+      <source media="(max-width: 480px)" srcset="<%= image_url 'welcome/porto-alegre@512w' %>">
+      <img src="<%= image_url 'welcome/porto-alegre' %>" alt="Porto Alegre" class="footer__image">
+    </picture>
 
-      <div class="social__links">
-        <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
-        <a href="https://twitter.com/portoalegreme">twitter</a> ·
-        <a href="#">oi@alegreme.com</a>
-      </div>
-      <div class="credits">
-        Feito por
-        <a href="https://www.instagram.com/jonataseduardo/">@jonataseduardo</a> com
-        <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.7054 0.257324C10.0657 0.257324 8.63837 1.23748 7.99993 2.65639C7.36149 1.23889 5.93415 0.257324 4.29446 0.257324C2.05571 0.257324 0.234619 2.07982 0.234619 4.31857C0.234619 9.36701 7.51759 13.5239 7.82837 13.6983C7.88181 13.7278 7.93946 13.7433 7.99853 13.7433C8.05759 13.7433 8.11665 13.7278 8.16868 13.6983C8.47806 13.5239 15.7638 9.36701 15.7638 4.31857C15.7652 2.07982 13.9442 0.257324 11.7054 0.257324Z" fill="#DB4437"/>
-        </svg>
-        ️no Centro Histórico de Porto Alegre
-      </div>
-      <div class="vamodale">
-        Ei! Tem ideias de funcionalidades, projetos pra tocar junto, quer conectar uma API, trocar uma ideia... Usa os links acima. Vlw flw
-      </div>
-      <div class="footer__links">
-        <a href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">
-          Manifesto
-        </a> ·
-        <a href="/privacy">Política de privacidade</a> ·
-        <a href="/terms">Termos de serviço</a>
-      </div>
-    <% end %>
+    <div class="social__links">
+      <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
+      <a href="https://twitter.com/portoalegreme">twitter</a> ·
+      <a href="#">oi@alegreme.com</a>
+    </div>
+    <div class="credits">
+      Feito por
+      <a href="https://www.instagram.com/jonataseduardo/">@jonataseduardo</a> com
+      <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.7054 0.257324C10.0657 0.257324 8.63837 1.23748 7.99993 2.65639C7.36149 1.23889 5.93415 0.257324 4.29446 0.257324C2.05571 0.257324 0.234619 2.07982 0.234619 4.31857C0.234619 9.36701 7.51759 13.5239 7.82837 13.6983C7.88181 13.7278 7.93946 13.7433 7.99853 13.7433C8.05759 13.7433 8.11665 13.7278 8.16868 13.6983C8.47806 13.5239 15.7638 9.36701 15.7638 4.31857C15.7652 2.07982 13.9442 0.257324 11.7054 0.257324Z" fill="#DB4437"/>
+      </svg>
+      ️no Centro Histórico de Porto Alegre
+    </div>
+    <div class="vamodale">
+      Ei! Tem ideias de funcionalidades, projetos pra tocar junto, quer conectar uma API, trocar uma ideia... Usa os links acima. Vlw flw
+    </div>
+    <div class="footer__links">
+      <a href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">
+        Manifesto
+      </a> ·
+      <a href="/privacy">Política de privacidade</a> ·
+      <a href="/terms">Termos de serviço</a>
+    </div>
   </section>
 
-  <section class="invite-float">
-    <%= render partial: "welcome/invite" %>
-  </section>
+  <% unless params[:pwa] %>
+    <section class="invite-float">
+      <%= render partial: "welcome/invite" %>
+    </section>
+  <% end %>
 
 </div>
