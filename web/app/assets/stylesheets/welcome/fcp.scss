@@ -547,6 +547,8 @@ section {
   position: relative;
   transition: transform 850ms ease;
   will-change: transform;
+  display: flex;
+  justify-content: center;
   @include mobile-only {
     width: unquote($android-width * $android-resize + 'px');
     height: unquote($android-height * $android-resize + 'px');
@@ -569,7 +571,7 @@ section {
     width: unquote($android-screen-width + 'px');
     height: unquote($android-screen-height + 'px');
     top: unquote($android-screen-top + 'px');
-    left: unquote($android-screen-left + 'px');
+    //left: unquote($android-screen-left + 'px');
 
 
     & img, picture, video {
