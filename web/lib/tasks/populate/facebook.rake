@@ -216,6 +216,28 @@ def create_event(item)
 
 	if !event.blank?
 		@events_create_counter += 1
+
+		event.details.deep_merge!(
+				name:        item['name'],
+				description: item['description'],
+				prices:      item['prices'] || []
+		)
+
+		event.ocurrences.deep_merge!(
+				dates: item['datetimes']
+		)
+
+		event.geographic.deep_merge!(
+				address:      item['address'],
+				# latlon:       @geocode.try(:coordinates),
+				# neighborhood: @geocode.try(:suburb),
+				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
+				cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
+		)
+
+		event.slug = nil
+		event.save
+
 		puts "#{@events_create_counter}: #{item['name']} - Evento já existe".white
 	elsif @features_response_failed
 		@events_create_counter += 1
@@ -246,8 +268,8 @@ def create_event(item)
 
 		event.geographic.deep_merge!(
 				address:      item['address'],
-				latlon:       @geocode.try(:coordinates),
-				neighborhood: @geocode.try(:suburb),
+				# latlon:       @geocode.try(:coordinates),
+				# neighborhood: @geocode.try(:suburb),
 				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
 				cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
 		)
