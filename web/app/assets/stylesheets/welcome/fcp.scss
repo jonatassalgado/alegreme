@@ -141,7 +141,7 @@ section {
     margin: 0 0 0 0;
     max-width: 1080px;
     @include mobile-only {
-      font-size: 14px;
+      font-size: 15px;
       text-align: left;
       line-height: 1.6em;
     }
@@ -177,7 +177,7 @@ section {
     .invite__status {
       display: block;
       opacity: 1;
-      padding: 0 30px;
+      padding: 0 24px;
     }
 
     .invite__cta {
@@ -205,15 +205,14 @@ section {
 
   &__counter {
     font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
+    font-weight: 400;
+    font-size: 16px;
     line-height: 27px;
     margin: 6px 0 0 0;
-    text-align: center;
     @include mobile-only {
-      font-size: 18px;
+      font-size: 16px;
       line-height: 21px;
-      padding: 0 45px;
+      padding: 0;
     }
   }
 
@@ -224,7 +223,6 @@ section {
     line-height: 21px;
     color: rgba(12, 15, 9, 0.7);
     margin: 0 0 0 0;
-    text-align: center;
     transition: opacity 0.4s ease;
     @include mobile-only {
       display: none;
