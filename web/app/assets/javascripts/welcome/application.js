@@ -290,17 +290,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	});
 
-	if (md.mobile()) {
-
-	} else {
-		inviteCtaEl.addEventListener('mouseover', () => {
-			requestAnimationFrame(() => {
-				document.querySelector('.skatista').style.transform = '';
-			});
-		});
-	}
-
-
 	// var delay = 0;
 	// featuresEl.forEach((feature) => {
 	// 	setTimeout(() => {

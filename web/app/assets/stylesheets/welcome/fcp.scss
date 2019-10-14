@@ -169,6 +169,7 @@ section {
   &__status {
     display: none;
     opacity: 0;
+    padding: 0 24px;
     transition: transform 0.8s ease, opacity 0.8s ease;
   }
 
@@ -372,13 +373,13 @@ section {
   & .people {
     margin: auto;
     position: relative;
-    width: 300px;
+    width: 100%;
     height: 30px;
     z-index: 2;
     opacity: 0;
     transition: opacity 300ms ease;
     @include mobile-only {
-      width: 286px;
+      width: 100vw;
       height: 40px;
     }
 
@@ -394,8 +395,6 @@ section {
       background-position: center;
       //transition: transform 2s ease;
       @include mobile-only {
-        width: 35px;
-        height: 35px;
         border: 2px solid #FFFFFF;
       }
     }
