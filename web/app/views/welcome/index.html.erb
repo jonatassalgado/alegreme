@@ -210,10 +210,11 @@
   </div>
 
   <section class="footer">
-    <picture>
-      <source media="(max-width: 480px)" srcset="<%= image_url 'welcome/porto-alegre@512w' %>">
-      <img src="<%= image_url 'welcome/porto-alegre' %>" alt="Porto Alegre" class="footer__image">
-    </picture>
+    <img
+      data-sizes="auto"
+      data-src="<%= image_url 'welcome/porto-alegre' %>"
+      data-srcset="<%= image_url 'welcome/porto-alegre@512w' %> 512w, <%= image_url 'welcome/porto-alegre' %> 1248w"
+      class="footer__image lazyload"/>
 
     <div class="social__links">
       <a href="https://www.instagram.com/portoalegreme">instagram</a> ·
