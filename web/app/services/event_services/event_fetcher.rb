@@ -11,6 +11,7 @@ module EventServices
 			sockets             = get_sockets_status @params
 			user                = @params[:user]
 			personas            = user.try(:personas_name)
+			with_high_score     = sockets[:high_score_on]
 			categories_on       = sockets[:in_categories]
 			organizers_on       = sockets[:in_organizers]
 			places_on           = sockets[:in_places]
@@ -37,7 +38,9 @@ module EventServices
 
 			@relation
 					.active
-					.with_high_score
+					.with_high_score(
+							'turn_on': with_high_score
+					)
 					.not_in_saved(
 							user,
 							'turn_on': not_in_saved_on
@@ -139,7 +142,8 @@ module EventServices
 					group_by:            false,
 					not_in_saved_on:     true,
 					not_in_on:           false,
-					only_in_on:          false
+					only_in_on:          false,
+					with_high_score:     true
 			}
 
 			default_sockets.merge(toggles)

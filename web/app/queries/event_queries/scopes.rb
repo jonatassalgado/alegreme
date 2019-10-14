@@ -299,13 +299,19 @@ module EventQueries
 			}
 
 			scope 'with_low_score', lambda {
-					where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.7 AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.7")
+				where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.7 AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.7")
 			}
 
-			scope 'with_high_score', lambda {
-				persona_score = 0.35
-				category_score = 0.7
-				where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= :persona_score AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric >= :category_score", persona_score: persona_score, category_score: category_score)
+			scope 'with_high_score', lambda { |opts = {}|
+				opts = {'turn_on': true, 'active': true}.merge(opts)
+
+				if opts[:turn_on]
+					persona_score  = 0.35
+					category_score = 0.7
+					where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= :persona_score AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric >= :category_score", persona_score: persona_score, category_score: category_score)
+				else
+					all
+				end
 			}
 
 			scope 'not_retrained', lambda {

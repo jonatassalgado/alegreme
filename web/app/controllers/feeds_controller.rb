@@ -83,7 +83,8 @@ class FeedsController < ApplicationController
 				                                                                              events:     Event.all
 		                                                                              }, {
 				                                                                              in_days: [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
-				                                                                              limit:   36
+				                                                                              with_high_score: false,
+				                                                                              limit:   100
 		                                                                              })
 
 		@locals = {

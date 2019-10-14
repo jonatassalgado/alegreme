@@ -18,6 +18,7 @@ class PlacesController < ApplicationController
 				                                                                              events:     events
 		                                                                              }, {
 				                                                                              places: [params[:id]],
+				                                                                              with_high_score: false,
 				                                                                              limit:  24
 		                                                                              })
 

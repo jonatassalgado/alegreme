@@ -85,8 +85,8 @@
            title="<%= event.details_name %>">
         <%= link_to limit_name_size(event.details_name), event_path(event) %>
       </div>
-      <%= event.ml_data['personas']['primary'].to_json if current_user&.admin && params[:debug]  %>
-      <%= event.ml_data['categories']['primary'].to_json if current_user&.admin && params[:debug] %>
+      <%= event.ml_data['personas']['primary'].to_json if Rails.env == 'development' && params[:debug]  %>
+      <%= event.ml_data['categories']['primary'].to_json if Rails.env == 'development' && params[:debug] %>
     </div>
     <div class="me-card__tertiary-section">
       <% if display_place %>

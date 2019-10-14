@@ -49,6 +49,7 @@ module EventServices
 					group_by:          set_group_by,
 					not_in:            set_not_in,
 					only_in:           set_only_in,
+					with_high_score:   set_high_score,
 					limit:             set_limit
 			}
 		end
@@ -257,6 +258,10 @@ module EventServices
 			else
 				@params[:only_in] || @opts[:only_in] || []
 			end
+		end
+
+		def set_high_score
+			@params[:with_high_score] || @opts[:with_high_score] || true
 		end
 
 		def calculate_items_for_group(number = 2, opts = {})
