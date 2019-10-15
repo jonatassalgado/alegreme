@@ -1,6 +1,30 @@
 <p id="notice">
   <%= notice %>
 </p>
+
+<p>
+  <%#= "#{@events.length} eventos para treinamento" %>
+</p>
+<p>
+  <a href="/train?desc=true">Classificação alta</a>
+</p>
+
+
+
 <table class="me-table">
-  <%= render partial: 'layouts/classifier/classifier', object: @events %>
+  <tr style="font-weight: bold">
+    <td>Cover</td>
+    <td>Nome</td>
+    <td>Local</td>
+    <td>Descrição</td>
+    <td>Tema</td>
+    <td>Categoria</td>
+    <td>Persona</td>
+    <td>Tipo</td>
+    <td>Tags</td>
+  </tr>
+
+  <%= render partial: 'layouts/classifier/classifier', collection: @events, as: :event, cached: true %>
 </table>
+
+<%== pagy_nav(@pagy) %>

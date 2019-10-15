@@ -4,9 +4,13 @@ class TrainController < ApplicationController
 	before_action :authorize_admin
 
 	def index
-		events_not_trained_yet = get_events_not_trained_yet
-
-		@pagy, @events = pagy(events_not_trained_yet, items: 6)
+		if params[:q]
+			# events         = Event.search(params[:q].downcase, fields: ["name^5", "organizers^3", "place^2", "description", "category"], limit: 40, includes: [:place])
+			# @pagy, @events = pagy(events, items: 30)
+		else
+			events_not_trained_yet = get_events_not_trained_yet
+			@pagy, @events         = pagy(events_not_trained_yet, items: 6)
+		end
 	end
 
 	private
