@@ -8,5 +8,13 @@ module Api
 		def today
 
 		end
+
+		def category
+
+		end
+
+		def week
+
+		end
 	end
 end

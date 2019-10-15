@@ -1,8 +1,7 @@
 include Pagy::Backend
 
 class FeedsController < ApplicationController
-	before_action :authorize_user, except: [:today, :category]
-	before_action :authorize_admin, only: [:train]
+	before_action :authorize_user, except: [:today, :category, :week]
 
 	def index
 
@@ -94,6 +93,32 @@ class FeedsController < ApplicationController
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
 				},
 				identifier: 'today-and-tomorrow',
+				opts:       {
+						filters: {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						},
+						detail:  @collection[:detail],
+				}
+		}
+	end
+
+	def week
+		@collection = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                              identifier: 'this-week',
+				                                                                              events:     Event.all
+		                                                                              }, {
+				                                                                              limit: 40
+		                                                                              })
+
+		@locals = {
+				items:      @collection,
+				title:      {
+						principal: "Eventos acontecendo esta semana em Porto Alegre",
+						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 6, format: :week)} (#{I18n.l(Date.today + 6, format: :short)}) em Porto Alegre - RS"
+				},
+				identifier: 'this-week',
 				opts:       {
 						filters: {
 								ocurrences: true,

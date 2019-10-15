@@ -10,11 +10,13 @@ Rails.application.routes.draw do
 	namespace 'api' do
 		get 'porto-alegre/eventos/:id/similar', to: 'events#similar', as: :events_similar
 		get 'porto-alegre/eventos/today', to: 'events#today', as: :today_and_tomorrow_events
+		get 'porto-alegre/eventos/week', to: 'events#week', as: :week_events
 		get 'porto-alegre/eventos/category/:category', to: 'events#category', as: :category_events
 	end
 
 	get '/feed', to: 'feeds#index'
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
+	get '/porto-alegre/eventos/semana', to: 'feeds#week', as: :week_events
 	get '/porto-alegre/eventos/categoria/:category', to: 'feeds#category', as: :category_events
 
 	patch '/invite', to: 'welcome#invite'

@@ -23,4 +23,5 @@ module ApplicationHelper
 	def full_image_url url
 		"https://alegreme.com" + url
 	end
+
 end

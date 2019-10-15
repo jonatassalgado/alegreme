@@ -385,13 +385,39 @@ module EventServices
 				CollectionCreator.kinds         = CollectionCreator.active_events.map { |e| e.kinds.map { |c| c.details['name'] } }.flatten.uniq.freeze
 				CollectionCreator.categories    = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq.freeze
 			else
-				Rails.cache.fetch("collection_creator_#{current_user}") do
-					CollectionCreator.user          = current_user
+				Rails.cache.fetch("collection_creator_#{current_user}", expires_in: 1.day) do
+					CollectionCreator.user          = current_user || fake_user
 					CollectionCreator.active_events = Event.includes(:place, :categories, :organizers).active
-					# CollectionCreator.categories  = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq
-					# CollectionCreator.kinds       = CollectionCreator.active_events.map(&:kinds_name).flatten.sort.uniq.freeze
 				end
 			end
+		end
+
+		def fake_user
+			User.new(features: {
+					psychographic: {
+							personas: {
+									primary:    {
+											name:  'hipster',
+											score: '1'
+									},
+									secondary:  {
+											name:  'cult',
+											score: '1'
+									},
+									tertiary:   {
+											name:  'praieiro',
+											score: '1'
+									},
+									quartenary: {
+											name:  'underground',
+											score: '1'
+									},
+									assortment: {
+											finished: false
+									}
+							}
+					}
+			})
 		end
 	end
 end

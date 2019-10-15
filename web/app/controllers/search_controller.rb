@@ -1,8 +1,8 @@
 class SearchController < ApplicationController
-	before_action :authorize_user
+	# before_action :authorize_user
 
 	def index
-		gon.push(:user => current_or_guest_user)
+		gon.push(:user => current_user)
 		gon.push(:env => Rails.env)
 
 
