@@ -12,6 +12,7 @@ module EventServices
 			@today                = DateTime.now.beginning_of_day
 			@tomorrow             = @today + 1
 			@init_filters_applyed = @params[:init_filters_applyed] ? JSON.parse(@params[:init_filters_applyed]) : {}
+			@default_filters      = @params[:defaults] ? JSON.parse(@params[:defaults]) : {}
 		end
 
 		def call(collection, opts = {})
@@ -50,7 +51,7 @@ module EventServices
 					not_in:            set_not_in,
 					only_in:           set_only_in,
 					with_high_score:   set_high_score,
-					limit:             set_limit
+					limit:             false
 			}
 		end
 
@@ -158,7 +159,7 @@ module EventServices
 		end
 
 		def mount_response
-			@current_events = @all_events.limit(@params[:limit] || @opts[:limit])
+			@current_events = @all_events.limit(set_limit)
 
 			{
 					events:     @current_events,
@@ -179,7 +180,7 @@ module EventServices
 		end
 
 		def set_limit
-			false
+			@params[:limit] || @opts[:limit]
 		end
 
 		def group_by_or_kinds_not_exist?(opts)
@@ -187,11 +188,11 @@ module EventServices
 		end
 
 		def set_initial_categories_filter
-			@params[:categories] || @opts[:categories] || []
+			@params[:categories] || @opts[:in_categories] || @default_filters['categories'] || @init_filters_applyed['in_categories'] || []
 		end
 
 		def set_initial_kinds_filter
-			@params[:kinds] || @opts[:kinds] || []
+			@params[:kinds] || @opts[:in_kinds] || []
 		end
 
 		def set_initial_dates_filter
@@ -205,7 +206,7 @@ module EventServices
 		end
 
 		def set_initial_organizers_filter
-			@params[:organizers] || @opts[:organizers] || []
+			@params[:organizers] || @opts[:in_organizers] || []
 		end
 
 		def set_initial_places_filter
@@ -290,24 +291,21 @@ module EventServices
 
 		def get_filters_from_exist_events(events, type)
 			if init_filters_applyed_exist?
-
-				defaults = JSON.parse @params[:defaults]
-
 				case type
 				when 'categories'
-					defaults[type]
+					@default_filters[type]
 				when 'kinds'
 					if params_filter_category_exist?
 						events.map { |event| event.kinds_name }.flatten.compact.uniq
 					else
-						defaults[type]
+						@default_filters[type]
 					end
 				when 'ocurrences'
 					# if params_filter_category_exist? || params_filter_kind_exist?
 					# 	Event.day_of_week(events, active_range: active_range?).sort_by_order.compact_range.uniq.values
 					# else
 					# if @identifier == 'this-week'
-					defaults[type]
+					@default_filters[type]
 					# else
 					# 	if @opts[:all_existing_filters]
 					# 		Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_date.compact_range.uniq.values
@@ -377,6 +375,7 @@ module EventServices
 			filters_cleanned.store :current_events_ids, @current_events.map(&:id)
 			filters_cleanned
 		end
+
 		# TODO: Cache precisa atulizar quando update em eventos
 		def cache_variables(current_user)
 			case Rails.env

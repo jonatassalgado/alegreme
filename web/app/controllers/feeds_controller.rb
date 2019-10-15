@@ -1,7 +1,7 @@
 include Pagy::Backend
 
 class FeedsController < ApplicationController
-	before_action :authorize_user, except: [:today]
+	before_action :authorize_user, except: [:today, :category]
 	before_action :authorize_admin, only: [:train]
 
 	def index
@@ -57,10 +57,10 @@ class FeedsController < ApplicationController
 						identifier: 'explorer',
 						events:     Event.all
 				}, {
-						user:          current_user,
+						user:             current_user,
 						order_by_persona: true,
-						limit:         12,
-						not_in: collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_personas.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids)
+						limit:            12,
+						not_in:           collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_personas.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids)
 				}
 		)
 
@@ -82,16 +82,16 @@ class FeedsController < ApplicationController
 				                                                                              identifier: 'today-and-tomorrow',
 				                                                                              events:     Event.all
 		                                                                              }, {
-				                                                                              in_days: [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
+				                                                                              in_days:         [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
 				                                                                              with_high_score: false,
-				                                                                              limit:   100
+				                                                                              limit:           100
 		                                                                              })
 
 		@locals = {
 				items:      @collection,
 				title:      {
 						principal: "Eventos em Porto Alegre Hoje e Amanhã",
-						secondary: "Explore os #{@collection[:events].length} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
+						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
 				},
 				identifier: 'today-and-tomorrow',
 				opts:       {
@@ -105,6 +105,34 @@ class FeedsController < ApplicationController
 		}
 	end
 
+	def category
+		@categories = Event::CATEGORIES.dup
+		@collection = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                              identifier: 'category',
+				                                                                              events:     Event.all
+		                                                                              }, {
+				                                                                              in_categories:   [params[:category]],
+				                                                                              with_high_score: true,
+				                                                                              limit:           60
+		                                                                              })
+
+		@locals = {
+				items:      @collection,
+				title:      {
+						principal: "Eventos na categoria #{params[:category].capitalize} em Porto Alegre",
+						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos de #{params[:category]} em Porto Alegre - RS"
+				},
+				identifier: 'category',
+				opts:       {
+						filters: {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						},
+						detail:  @collection[:detail],
+				}
+		}
+	end
 
 	private
 

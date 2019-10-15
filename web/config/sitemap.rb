@@ -23,16 +23,21 @@ SitemapGenerator::Sitemap.create do
 	# Add all articles:
 	#
 	Event.find_each do |event|
-		add event_path(event), :lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.9
+		add event_path(event), {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.9}
 	end
 
 	Place.find_each do |place|
-		add place_path(place), :lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.8
+		add place_path(place), {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.8}
 	end
 
 	Organizer.find_each do |organizer|
-		add organizer_path(organizer), :lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.8
+		add organizer_path(organizer), {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.8}
 	end
 
-	add today_events_path, :lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.9
+	add today_events_path, {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.9}
+
+	categories = Event::CATEGORIES.dup
+	categories.delete_if{|category| ['anúncio', 'outlier'].include? category}.each do |category|
+		add category_events_path(category), {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.9}
+	end
 end

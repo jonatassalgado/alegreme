@@ -115,7 +115,7 @@ $mdc-layout-grid-columns: (
       color: $brand-color;
       font-weight: 500;
       @include mdc-layout-grid-media-query_("phone") {
-        display: none;
+        //display: none;
       }
     }
   }

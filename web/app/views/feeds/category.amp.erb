@@ -1,0 +1,57 @@
+<% content_for :meta_title, "Eventos de #{params[:category].capitalize} em Porto Alegre - RS" %>
+<% content_for :meta_description, "Descubra eventos de #{params[:category]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
+
+<script type="application/ld+json">
+  [
+    <%= render partial: 'layouts/json_ld.html.erb', collection: @collection[:events], as: :event %>
+  ]
+
+</script>
+
+
+<div class="me-list me-list--events">
+  <h1 class="title"><%= "Eventos na categoria #{params[:category].capitalize} em Porto Alegre" %></h1>
+  <div class="description">
+    <%= "Explore os #{@collection[:detail][:total_events_in_collection]} eventos de #{params[:category]} em Porto Alegre - RS" %>
+  </div>
+  <amp-list binding="no"
+            height="300"
+            load-more="auto"
+            src="<%= api_category_events_path params[:category], format: :json %>">
+    <div overflow
+         role="button"
+         aria-label="Show more"
+         class="list-overflow">
+      Show more
+    </div>
+    <template type="amp-mustache">
+      <div class="item">
+        <a href="{{url}}.amp">
+          <amp-img height="1"
+                   layout="responsive"
+                   class="me-event__cover"
+                   alt="{{name}}"
+                   src="{{cover}}"
+                   width="1.66"></amp-img>
+          <div class="labels">
+            <span class="category">
+              {{category}}
+            </span>
+            ·
+            <span class="date">
+              {{date}}
+            </span>
+          </div>
+          <h2 class="title">
+            {{name}}
+          </h2>
+        </a>
+        <div class="place">
+          <a href="{{place.url}}">
+            {{place.name}}
+          </a>
+        </div>
+      </div>
+    </template>
+  </amp-list>
+</div>
