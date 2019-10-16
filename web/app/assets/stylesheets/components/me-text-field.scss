@@ -1,5 +1,13 @@
-.me-text-field {
+@import "_variables";
 
+.me-text-field {
+  @include mdc-text-field-ink-color($font-primary-color);
+  @include mdc-text-field-label-color($font-secondary-color);
+  @include mdc-text-field-focused-outline-color($brand-color);
+
+  &.mdc-text-field--outlined.mdc-text-field--dense .mdc-floating-label--float-above{
+    color: $brand-color;
+  }
 
   &__container {
     margin: 25px 0;

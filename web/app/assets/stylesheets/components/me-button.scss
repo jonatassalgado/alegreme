@@ -3,5 +3,6 @@
 $fill-color: #ffffff;
 
 .me-button {
+  @include mdc-button-filled-accessible($brand-color);
   border-radius: 36px;
 }
