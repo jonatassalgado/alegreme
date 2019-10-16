@@ -62,7 +62,11 @@ gem 'redis-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Search
 gem 'searchkick'
+gem 'oj'
+gem 'typhoeus'
+
 
 gem 'httparty'
 

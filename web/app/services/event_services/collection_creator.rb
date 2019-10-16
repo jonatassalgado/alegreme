@@ -47,6 +47,7 @@ module EventServices
 					in_places:         set_initial_places_filter,
 					order_by_date:     set_order_by_date,
 					order_by_persona:  set_order_by_persona,
+					order_by_ids:      set_order_by_ids,
 					group_by:          set_group_by,
 					not_in:            set_not_in,
 					only_in:           set_only_in,
@@ -221,6 +222,10 @@ module EventServices
 			end
 		end
 
+		def set_order_by_ids
+			@params[:order_by_ids] || @opts[:order_by_ids] || @default_filters['order_by_ids'] || @init_filters_applyed['order_by_ids'] || false
+		end
+
 		def set_not_in_categories
 			if @params.include?(:init_filters_applyed)
 				@init_filters_applyed['not_in_categories']
@@ -262,7 +267,11 @@ module EventServices
 		end
 
 		def set_high_score
-			@params[:with_high_score] || @opts[:with_high_score] || true
+			return @params[:with_high_score] unless @params[:with_high_score].nil?
+			return @opts[:with_high_score] unless @opts[:with_high_score].nil?
+			return @default_filters['with_high_score'] unless @default_filters['with_high_score'].nil?
+			return @init_filters_applyed['with_high_score'] unless @init_filters_applyed['with_high_score'].nil?
+			true
 		end
 
 		def calculate_items_for_group(number = 2, opts = {})

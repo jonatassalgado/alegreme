@@ -11,7 +11,7 @@ module EventServices
 			sockets             = get_sockets_status @params
 			user                = @params[:user]
 			personas            = user.try(:personas_name)
-			with_high_score     = sockets[:high_score_on]
+			high_score_on       = sockets[:with_high_score]
 			categories_on       = sockets[:in_categories]
 			organizers_on       = sockets[:in_organizers]
 			places_on           = sockets[:in_places]
@@ -24,6 +24,7 @@ module EventServices
 			not_in_saved_on     = sockets[:not_in_saved_on]
 			not_in_on           = sockets[:not_in]
 			only_in_on          = sockets[:only_in]
+			order_by_ids        = sockets[:order_by_ids]
 			order_by_date       = sockets[:order_by_date]
 			days                = @params[:in_days]
 			organizers          = @params[:in_organizers]
@@ -39,7 +40,7 @@ module EventServices
 			@relation
 					.active
 					.with_high_score(
-							'turn_on': with_high_score
+							'turn_on': high_score_on
 					)
 					.not_in_saved(
 							user,
@@ -95,6 +96,9 @@ module EventServices
 					.order_by_date(
 							order_by_date
 					)
+					.order_by_ids(
+							order_by_ids
+					)
 					.limit(
 							limit
 					)
@@ -118,7 +122,7 @@ module EventServices
 
 		def get_sockets_status(sockets = {})
 			toggles    = {}
-			order_keys = [:order_by_date, :order_by_persona]
+			order_keys = [:order_by_date, :order_by_persona, :with_high_score]
 
 			sockets.keys.map do |key|
 				if order_keys.include? key
@@ -137,13 +141,14 @@ module EventServices
 					in_organizers:       false,
 					in_places:           false,
 					in_follow_features:  false,
-					order_by_date:       false,
-					order_by_persona:    false,
 					group_by:            false,
 					not_in_saved_on:     true,
 					not_in_on:           false,
 					only_in_on:          false,
-					with_high_score:     true
+					order_by_date:       false,
+					order_by_persona:    false,
+					order_by_ids:        false,
+					with_high_score:     false
 			}
 
 			default_sockets.merge(toggles)

@@ -2,11 +2,6 @@ module EventQueries
 	module Scopes
 		extend ActiveSupport::Concern
 
-		THEMES     = ['lazer', 'saúde', 'atividade física', 'educação', 'cultura', 'alimentação', 'compras', 'cidadania', 'outlier', 'spam'].sort.freeze
-		PERSONAS   = ['aventureiro', 'cult', 'geek', 'hipster', 'praieiro', 'underground', 'zeen', 'geral', 'outlier'].sort.freeze
-		CATEGORIES = ['anúncio', 'festa', 'curso', 'teatro', 'show', 'cinema', 'exposição', 'feira', 'esporte', 'meetup', 'hackaton', 'palestra', 'sarau', 'festival', 'brecho', 'fórum', 'slam', 'protesto', 'experiência', 'outlier'].sort.freeze
-
-
 		included do
 			scope 'in_user_suggestions', lambda { |user, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
@@ -196,8 +191,18 @@ module EventQueries
 
 			}
 
+
+			scope 'order_by_ids', lambda { |ids = false|
+				if ids.is_a?(Array)
+					order("position(id::text in '#{ids.join(',')}')")
+				else
+					all
+				end
+			}
+
+
 			scope 'order_by_persona', lambda { |active = true, opts = {}|
-				opts = {personas: PERSONAS}.merge(opts)
+				opts = {personas: Event::PERSONAS}.merge(opts)
 				if active && !opts[:personas].blank?
 					order_by = ["case"]
 					opts[:personas].each_with_index.map do |persona, index|
@@ -240,8 +245,8 @@ module EventQueries
 			}
 
 			scope 'in_categories', lambda { |categories, opts = {}|
-				opts       = {'turn_on': true, 'group_by': nil, 'active': true, 'personas': PERSONAS, 'not_in': []}.merge(opts)
-				categories = categories.present? ? (categories - opts[:not_in]) : (CATEGORIES - opts[:not_in])
+				opts       = {'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': []}.merge(opts)
+				categories = categories.present? ? (categories - opts[:not_in]) : (Event::CATEGORIES - opts[:not_in])
 
 				if opts[:group_by] && categories.present? || opts[:not_in].present?
 					order_by = ["CASE"]

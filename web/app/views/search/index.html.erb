@@ -1,8 +1,27 @@
 <div class="me-feed me-page__section">
-  <% if params[:q] %>
-    <%= render partial: "components/collection/collection", locals: @locals %>
 
+  <% unless @events_found.suggestions.empty? %>
+    <section class="me-feed__section" style="margin: 0 auto 25px auto;">
+      <div class="me-feed__section-head">
+        <h2>Você quis dizer?</h2>
+      </div>
+      <div class="me-chip-set__wrapper">
+        <div class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
+          <% @events_found.suggestions.each do |suggestion| %>
+            <a href="<%= search_index_path({q: suggestion}) %>" class="me-chip mdc-chip">
+              <span class="mdc-chip__text"><%= suggestion %></span>
+            </a>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+
+  <% if @locals.dig(:opts, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+    <%= render partial: "components/collection/collection", locals: @locals %>
   <% else %>
-    Nenhum evento encontrado
+    <section class="me-feed__section" style="margin: 0 auto 25px auto;">
+      <h3>Nenhum evento encontrado</h3>
+    </section>
   <% end %>
 </div>
