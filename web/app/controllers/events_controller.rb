@@ -113,7 +113,12 @@ class EventsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_event
-    @event = Event.friendly.find(params[:id])
+    if params[:id].numeric?
+      @event = Event.friendly.find(params[:id])
+      redirect_to event_path @event
+    else
+      @event = Event.friendly.find(params[:id])
+    end
   end
 
   def parse_personas

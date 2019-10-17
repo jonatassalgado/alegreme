@@ -39,3 +39,9 @@ class Integer
 		to_s.to_boolean
 	end
 end
+
+class Numeric
+	def numeric?
+		Float(self) != nil rescue false
+	end
+end

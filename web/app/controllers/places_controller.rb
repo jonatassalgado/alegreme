@@ -99,7 +99,12 @@ class PlacesController < ApplicationController
 
 	# Use callbacks to share common setup or constraints between actions.
 	def set_place
-		@place = Place.friendly.find(params[:id])
+		if params[:id].numeric?
+			@place = Place.friendly.find(params[:id])
+			redirect_to place_path @place
+		else
+			@place = Place.friendly.find(params[:id])
+		end
 	end
 
 	# Never trust parameters from the scary internet, only allow the white list through.
