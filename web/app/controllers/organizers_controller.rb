@@ -16,7 +16,7 @@ class OrganizersController < ApplicationController
 				                                                                              identifier: 'organizers',
 				                                                                              events:     events
 		                                                                              }, {
-				                                                                              organizers: [params[:id]],
+				                                                                              in_organizers: [params[:id]],
 				                                                                              with_high_score: false,
 				                                                                              limit:      24
 		                                                                              })

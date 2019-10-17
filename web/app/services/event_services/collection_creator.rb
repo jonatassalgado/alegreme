@@ -211,7 +211,7 @@ module EventServices
 		end
 
 		def set_initial_places_filter
-			@params[:places] || @opts[:places] || []
+			@params[:places] || @opts[:in_places] || []
 		end
 
 		def set_order_by_persona

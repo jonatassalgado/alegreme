@@ -12,7 +12,7 @@ class CollectionsController < ApplicationController
 					                                     events:     events
 			                                     },
 			                                     {
-					                                     places: initial_filters_applyed['in_places']
+					                                     in_places: initial_filters_applyed['in_places']
 			                                     })
 
 			@locals = {
@@ -37,7 +37,7 @@ class CollectionsController < ApplicationController
 					                                     identifier: 'organizers',
 					                                     events:     events},
 			                                     {
-					                                     organizers: initial_filters_applyed['in_organizers']
+					                                     in_organizers: initial_filters_applyed['in_organizers']
 			                                     })
 
 			@locals = {
