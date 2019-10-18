@@ -68,6 +68,11 @@ gem 'oj'
 gem 'typhoeus'
 
 
+# Graph
+gem 'chartkick'
+gem 'groupdate'
+
+
 gem 'httparty'
 
 # Reduces boot times through caching; required in config/boot.rb

@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 	get '/service-worker.js', to: redirect('service-worker.js')
 	get '/manifest.json', to: redirect('manifest.json')
 
+	get 'dashboard', to: 'dashboard#index'
+
 	get '/privacy', to: 'pages#privacy'
 	get '/terms', to: 'pages#terms'
 	get '/robots.:format', to: 'pages#robots'

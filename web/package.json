@@ -6,6 +6,8 @@
     "@rails/webpacker": "https://github.com/rails/webpacker",
     "botkit": "^0.7.0",
     "botui": "^0.3.9",
+    "chart.js": "^2.8.0",
+    "chartkick": "^3.1.1",
     "conversational-form": "^1.0.1",
     "default-passive-events": "^1.0.10",
     "expose-loader": "^0.7.5",

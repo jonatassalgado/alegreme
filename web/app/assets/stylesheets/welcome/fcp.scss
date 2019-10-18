@@ -124,7 +124,15 @@ section {
 
   @include mobile-only {
     margin: 24px 24px 0 24px;
-    //padding: 6vh 24px 6vh 24px;
+  }
+
+  &.is-initial-state {
+    margin: 50px 24px 0 24px;
+    max-width: 85%;
+    @include mobile-only {
+      margin: 24px 24px 0 24px;
+      max-width: 100%;
+    }
   }
 
   .is-pwa & {

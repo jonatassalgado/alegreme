@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const heroEl             = document.querySelector('.hero');
 	const heroBannerEl       = document.querySelector('.hero__banner');
 	const inviteEmailEl      = document.querySelector('.invite__email');
+	const headlineEl         = document.querySelector('.headline');
 	const headlineH1El       = document.querySelector('.headline h1');
 	const headlineH2El       = document.querySelector('.headline h2');
 
@@ -441,6 +442,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	window.showLoginButtons = function showLoginButtons() {
 		window.scrollTo(0, 0);
 		inviteFloatEl.remove();
+
+		headlineEl.classList.remove('is-initial-state');
+
 		headlineH1El.innerText = 'Pegue seu convite';
 		headlineH2El.innerText = 'Use seu email pessoal, conta do gmail ou facebook';
 
