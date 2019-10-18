@@ -24,4 +24,8 @@ module ApplicationHelper
 		"https://alegreme.com" + url
 	end
 
+
+	def google_maps_url address
+		"https://www.google.com/maps/search/?api=1&query=#{address}"
+	end
 end

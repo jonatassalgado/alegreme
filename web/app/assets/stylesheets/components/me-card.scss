@@ -435,6 +435,13 @@ $description-color: $font-secondary-color;
       }
     }
 
+    & .me-card__address {
+      font-weight: normal;
+      &:hover {
+        color: $brand-color;
+      }
+    }
+
     & .me-card__date {
       margin: 0;
 

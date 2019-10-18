@@ -11,7 +11,7 @@ module EventsHelper
 		place_name.truncate(limit, separator: " ")
 	end
 
-	def limit_address_name_size(address_name, limit = 65)
+	def limit_address_name_size(address_name, limit = 70)
 		address_name.truncate(limit, separator: " ")
 	end
 
@@ -25,7 +25,7 @@ module EventsHelper
 
 	def get_image_style_attr(event, opts = {})
 		opts = {type: :feed, preload: false}.merge(opts)
-		
+
 		if event&.image && event&.image[opts[:type]]
 			if opts[:preload]
 				"background-color: #{event.image_data.dig("feed", "metadata", "dominant_color")}; background-image: url('#{event.image[opts[:type]].url(public: true)}')"

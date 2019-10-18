@@ -97,9 +97,9 @@
             <div class="me-card__date-title">
               <%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'me-is-clickable' %>
             </div>
-            <span>
-            <%= limit_address_name_size @event.geographic['address'] %>
-          </span>
+            <%= link_to google_maps_url(@event.geographic['address']), class: 'me-card__address', target: '_blank' do %>
+              <%= limit_address_name_size @event.geographic['address'] %>
+            <% end %>
           </div>
         <% end %>
       </div>
