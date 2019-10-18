@@ -1,14 +1,14 @@
     {
         "@context":    "https://schema.org",
         "@type":       "Event",
-        "name":        "<%= event.details_name %>",
+        "name":        "<%= event.details_name.gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
         "image":       [
                            "<%= event.image[:original].url %>"
                        ],
         "description": "<%= strip_tags(event.details_description).gsub(/[^[0-9][$][-]\p{L}\p{M}*+ ]/i, '') %>",
         "url": "<%= event_path event %>",
-        "startDate":   "<%= event.first_day_time.to_datetime.iso8601 %>",
-        "endDate":     "",
+        "startDate":   "<%= event.ld_json.start_date %>",
+        "endDate":     "<%= event.ld_json.end_date %>",
         "location":    {
             "@type":   "Place",
             "name":    "<%= event.place_details_name %>",
@@ -18,15 +18,21 @@
                 "addressLocality": "<%= event.geographic['city'] %>",
                 "postalCode":      "<%= event.geographic['cep'] %>",
                 "addressRegion":   "RS",
-                "addressCountry":  "BR"
+                "addressCountry": {
+                  "@type": "Country",
+                  "name": "BR"
+                }
             },
             "url": "<%= place_path event.place %>"
         },
         "offers": {
           "@type": "AggregateOffer",
-          "lowPrice": "<%= event.details_prices.try(:min) %>",
-          "price": "<%= event.details_prices.try(:min) %>",
+          "price": "<%= event.ld_json.price %>",
+          "lowPrice": "<%= event.ld_json.low_price %>",
+          "highPrice": "<%= event.ld_json.high_price %>",
           "priceCurrency": "BRL",
-          "url": "<%= event_path event %>"
+          "url": "<%= event_path event %>",
+          "availability": "<%= event.ld_json.availability %>",
+          "validFrom": "<%= event.ld_json.valid_from %>"
         }
     }<%= "," unless @collection[:events].size == event_counter + 1 %>

@@ -218,7 +218,7 @@ def create_event(item)
 		@events_create_counter += 1
 
 		event.details.deep_merge!(
-				name:        item['name'],
+				name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
 				description: item['description'],
 				prices:      item['prices'] || []
 		)

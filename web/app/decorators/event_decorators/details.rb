@@ -23,7 +23,7 @@ module EventDecorators
 			end
 
 			def details_prices
-				details['prices']
+				details['prices'].map(&:to_i)
 			end
 
 			def details_prices=(value)

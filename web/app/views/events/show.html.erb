@@ -1,6 +1,6 @@
 <%= notice %>
 
-<% content_for :meta_title, "Evento #{@event.details_name} em Porto Alegre | Alegreme.com" %>
+<% content_for :meta_title, "Evento #{@event.details_name.gsub(/[^[0-9][$][-]\p{L}\p{M}*+ ]|[+]/i, '')} em Porto Alegre | Alegreme.com" %>
 <% content_for :meta_description, strip_tags(limit_description_size(@event.details_description, 160)) %>
 <% content_for :meta_image, @event.image[:original].url %>
 <% content_for :canonical_url, event_url(@event, format: :html) %>
@@ -10,9 +10,9 @@
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "<%= @event.details_name %>",
-  "startDate": "<%= @event.first_day_time.to_datetime.iso8601 %>",
-  "endDate": "",
+  "name": "<%= @event.details_name.gsub(/[^[0-9][$][-]\p{L}\p{M}*+ ]/i, '') %>",
+  "startDate": "<%= @event.ld_json.start_date %>",
+  "endDate": "<%= @event.ld_json.end_date %>",
   "image": [
     "<%= @event.image[:original].url %>"
    ],
@@ -27,19 +27,24 @@
       "addressLocality": "<%= @event.geographic['city'] %>",
       "postalCode": "<%= @event.geographic['cep'] %>",
       "addressRegion": "RS",
-      "addressCountry": "BR"
+      "addressCountry": {
+        "@type": "Country",
+        "name": "BR"
+       }
     },
     "url": "<%= place_path @event.place %>"
   },
   "offers": {
     "@type": "AggregateOffer",
-    "price": "<%= @event.details_prices.try(:min) %>",
-    "lowPrice": "<%= @event.details_prices.try(:min) %>",
+    "price": "<%= @event.ld_json.price %>",
+    "lowPrice": "<%= @event.ld_json.low_price %>",
+    "highPrice": "<%= @event.ld_json.high_price %>",
     "priceCurrency": "BRL",
-    "url": "<%= event_path @event %>"
+    "url": "<%= event_path @event %>",
+    "availability": "<%= @event.ld_json.availability %>",
+    "validFrom": "<%= @event.ld_json.valid_from %>"
   }
 }
-
 
 </script>
 
@@ -151,15 +156,15 @@
   <h2 class="me-h2 me-h2--centralize">Eventos similares</h2>
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-        <%= render partial:    'components/collection/event',
-                   collection: @similar_events,
-                   as:         :event,
-                   locals:     {
-                       identifier:      @event.slug,
-                       json_request:    false,
-                       display_similar: false
-                   },
-                   cached:     true %>
+      <%= render partial:    'components/collection/event',
+                 collection: @similar_events,
+                 as:         :event,
+                 locals:     {
+                     identifier:      @event.slug,
+                     json_request:    false,
+                     display_similar: false
+                 },
+                 cached:     true %>
     </div>
   </div>
 </section>
