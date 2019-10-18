@@ -117,7 +117,11 @@ class EventsController < ApplicationController
       @event = Event.friendly.find(params[:id])
       redirect_to event_path @event
     else
-      @event = Event.friendly.find(params[:id])
+      if Event.friendly.exists_by_friendly_id? params[:id]
+        @event = Event.friendly.find(params[:id])
+      else
+        redirect_to search_index_path(q: params[:id].gsub("-", " "))
+      end
     end
   end
 

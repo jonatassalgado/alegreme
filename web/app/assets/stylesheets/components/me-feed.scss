@@ -118,6 +118,11 @@ $mdc-layout-grid-columns: (
         //display: none;
       }
     }
+
+    & a {
+      color: $brand-color;
+      text-decoration: underline;
+    }
   }
 
   &__load-more {

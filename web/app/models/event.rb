@@ -63,7 +63,7 @@ class Event < ApplicationRecord
 
 	def search_data
 		{
-				name:        "#{categories_primary_name} #{details_name}",
+				name:        details_name,
 				description: ml_data_cleanned,
 				category:    categories_primary_name,
 				place:       place_details_name,
