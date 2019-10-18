@@ -6,8 +6,7 @@ module EventServices
 		end
 
 		def initialize(current_user, request_params = {})
-			cache_variables(current_user)
-
+			@current_user         = current_user
 			@params               = request_params || {}
 			@today                = DateTime.now.beginning_of_day
 			@tomorrow             = @today + 1
@@ -18,19 +17,21 @@ module EventServices
 		def call(collection, opts = {})
 			raise ArgumentError, "Coleção precisa ser um Hash com eventos e identificador" unless collection.is_a? Hash
 
-			if collection.key?(:events)
-				@identifier = collection[:identifier]
-				@events     = collection[:events]
-			elsif collection.key?(:ids)
-				@identifier = collection
-				@events     = Event.where(id: [collection[:ids]])
+			Rails.cache.fetch("#{collection[:identifier]}/#{@params}", expires_in: 5.minutes) do
+				if collection.key?(:events)
+					@identifier = collection[:identifier]
+					@events     = collection[:events]
+				elsif collection.key?(:ids)
+					@identifier = collection
+					@events     = Event.where(id: [collection[:ids]])
+				end
+
+				@opts            = default_options(opts)
+				@dynamic_filters = default_filters.merge(get_filters_for_collection)
+				@all_events      = EventFetcher.new(@events, @dynamic_filters).call
+
+				mount_response
 			end
-
-			@opts            = default_options(opts)
-			@dynamic_filters = default_filters.merge(get_filters_for_collection)
-			@all_events      = EventFetcher.new(@events, @dynamic_filters).call
-
-			mount_response
 		end
 
 
@@ -80,7 +81,7 @@ module EventServices
 							group_by:            calculate_items_for_group(nil, auto_balance: false)
 					},
 					'user-personas'      => {
-							in_user_personas: CollectionCreator.user,
+							in_user_personas: get_current_user,
 							in_days:          set_initial_dates_filter,
 							order_by_persona: true,
 							group_by:         calculate_items_for_group(2, auto_balance: true),
@@ -177,7 +178,7 @@ module EventServices
 		end
 
 		def get_current_user
-			CollectionCreator.user
+			current_user
 		end
 
 		def set_limit
@@ -335,11 +336,11 @@ module EventServices
 				when 'kinds'
 					# events.map(&:kinds_name).flatten.uniq
 				when 'ocurrences'
-					if @opts[:all_existing_filters]
-						Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_date.compact_range.uniq.values
-					else
-						Event.day_of_week(events, active_range: active_range?).sort_by_date.compact_range.uniq.values
-					end
+					# if @opts[:all_existing_filters]
+					# 	Event.day_of_week(CollectionCreator.active_events, active_range: active_range?).sort_by_date.compact_range.uniq.values
+					# else
+					Event.day_of_week(events, active_range: active_range?).sort_by_date.compact_range.uniq.values
+					# end
 				end
 			end
 		end
@@ -385,48 +386,36 @@ module EventServices
 			filters_cleanned
 		end
 
-		# TODO: Cache precisa atulizar quando update em eventos
-		def cache_variables(current_user)
-			case Rails.env
-			when 'test'
-				CollectionCreator.user          = current_user
-				CollectionCreator.active_events = Event.active
-				CollectionCreator.kinds         = CollectionCreator.active_events.map { |e| e.kinds.map { |c| c.details['name'] } }.flatten.uniq.freeze
-				CollectionCreator.categories    = CollectionCreator.active_events.map { |e| e.categories.map { |c| c.details['name'] } }.flatten.uniq.freeze
+		def get_current_user
+			if @current_user
+				@current_user
 			else
-				Rails.cache.fetch("collection_creator_#{current_user}", expires_in: 1.day) do
-					CollectionCreator.user          = current_user || fake_user
-					CollectionCreator.active_events = Event.includes(:place, :categories, :organizers).active
-				end
+				User.new(features: {
+						psychographic: {
+								personas: {
+										primary:    {
+												name:  'hipster',
+												score: '1'
+										},
+										secondary:  {
+												name:  'cult',
+												score: '1'
+										},
+										tertiary:   {
+												name:  'praieiro',
+												score: '1'
+										},
+										quartenary: {
+												name:  'underground',
+												score: '1'
+										},
+										assortment: {
+												finished: false
+										}
+								}
+						}
+				})
 			end
-		end
-
-		def fake_user
-			User.new(features: {
-					psychographic: {
-							personas: {
-									primary:    {
-											name:  'hipster',
-											score: '1'
-									},
-									secondary:  {
-											name:  'cult',
-											score: '1'
-									},
-									tertiary:   {
-											name:  'praieiro',
-											score: '1'
-									},
-									quartenary: {
-											name:  'underground',
-											score: '1'
-									},
-									assortment: {
-											finished: false
-									}
-							}
-					}
-			})
 		end
 	end
 end
