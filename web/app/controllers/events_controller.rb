@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @similar_events = Event.includes(:place).active.with_high_score.where(id: @event.similar_data).limit(15)
+    @similar_events = Event.includes(:place).active.where(id: @event.similar_data).limit(15)
 
     respond_to do |format|
       format.html { render :show }
