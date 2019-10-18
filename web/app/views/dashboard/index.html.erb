@@ -2,5 +2,16 @@
   <%= notice %>
 </p>
 
+<section class="with-section-constraints">
+  <h1>Dashboard</h1>
 
-<h1>Dashboard</h1>
+  <section>
+    <h2>Convites solicitados</h2>
+    <%= line_chart(User.where("created_at > ?", Date.today - 14).group_by_day(:created_at).count, defer: true) %>
+  </section>
+
+  <section>
+    <h2>Eventos criados</h2>
+    <%= line_chart(Event.where("created_at > ?", Date.today - 14).group_by_day(:created_at).count, defer: true) %>
+  </section>
+</section>
