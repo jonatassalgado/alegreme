@@ -6,10 +6,13 @@ class FeedsController < ApplicationController
 
 
 	def index
-		gon.push(:user => current_or_guest_user)
-		gon.push(:env => Rails.env)
+		gon.push({
+				         :env             => Rails.env,
+				         :user_id         => current_user.id,
+				         :user_first_name => current_user.first_name
+		         })
 
-		collections ||= EventServices::CollectionCreator.new(current_or_guest_user, params)
+		collections ||= EventServices::CollectionCreator.new(current_user, params)
 
 		collection_week = collections.call(
 				{

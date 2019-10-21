@@ -2,9 +2,6 @@ class SearchController < ApplicationController
 	# before_action :authorize_user
 
 	def index
-		gon.push(:user => current_user)
-		gon.push(:env => Rails.env)
-
 		query = params[:q].downcase.split.delete_if { |word| Event::STOPWORDS.include?(word) }.join(' ')
 
 		@events_found = Event.search(query, {

@@ -3,8 +3,11 @@ class BotController < ApplicationController
 
 
 	def onboarding
-		gon.push(:user => current_or_guest_user)
-		gon.push(:env => Rails.env)
+		gon.push({
+				         :env             => Rails.env,
+				         :user_id         => current_user.id,
+				         :user_first_name => current_user.first_name
+		         })
 
 		@swipable_items = get_swipable_items
 	end

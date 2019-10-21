@@ -13,7 +13,7 @@ export default class SwipableController extends Controller {
 
 		this.uilb
 		    .message({
-			    content: `Olá User 👋`,
+			    content: `Olá ${gon.user_first_name} 👋`,
 			    delay  : 150
 		    })
 		    .then(ok =>
@@ -280,7 +280,7 @@ export default class SwipableController extends Controller {
 									}
 								};
 
-								fetch(`${location.origin}/users/${gon.user.id}`, {
+								fetch(`${location.origin}/users/${gon.user_id}`, {
 									method     : 'PATCH',
 									headers    : {
 										'Content-type'    : 'application/json; charset=UTF-8',
