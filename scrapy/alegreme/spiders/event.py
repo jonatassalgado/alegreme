@@ -139,7 +139,12 @@ class EventSpider(scrapy.Spider):
                   'https://www.facebook.com/pg/forumdaliberdade/events',
                   'https://www.facebook.com/pg/SindilojasPOA/events',
                   'https://www.facebook.com/pg/ligadesaudedesportiva/events',
-                  'https://www.facebook.com/pg/centrodeeventospucrs/events/']
+                  'https://www.facebook.com/pg/centrodeeventospucrs/events',
+                  'https://www.facebook.com/pg/revistajadore/events',
+                  'https://www.facebook.com/pg/FestivaldaCervejaPOA/events',
+                  'https://www.facebook.com/pg/mercadodepulgaspoa/events',
+                  'https://www.facebook.com/pg/lojaprofana/events',
+                  'https://www.facebook.com/pg/casadestemperados/events']
 
     random.shuffle(start_urls)
 
