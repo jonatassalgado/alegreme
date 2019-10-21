@@ -6,10 +6,6 @@ $brand-color-high-contrast: #0C0F0A;
 
 $border-color: #E1E1E1;
 
-$like-color: $brand-color;
-$dislike-color: #8F1717;
-$maybe-color: $border-color;
-
 $font-primary-family: 'Varela Round', sans-serif;
 $font-secondary-family: 'Roboto', sans-serif;
 
@@ -91,6 +87,10 @@ $filter-background-color: $background-color;
 
 $mdc-theme-primary: $brand-color;
 
+
+$like-color: $brand-color;
+$dislike-color: #8F1717;
+$maybe-color: $font-tertiary-color;
 
 
 @keyframes rotate {

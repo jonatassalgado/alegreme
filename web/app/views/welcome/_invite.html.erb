@@ -55,8 +55,15 @@
       <div class="invite__button invite__button-instagram">Ou siga nosso <a href="https://www.instagram.com/portoalegreme">instagram</a> e seja avisado por lá.
       </div>
     </div>
-    <div class="invite__cta" onclick="showLoginButtons()">
-      Pegar convite
+    <div class="invite__cta-group">
+      <div class="invite__cta" onclick="showLoginButtons()">
+        Pegar convite
+      </div>
+      <%= link_to new_user_session_path do %>
+        <div class="invite__cta invite__cta--signin" title="Você precisa ter um convite válido!">
+          Entrar
+        </div>
+      <% end %>
     </div>
   <% end %>
 </section>

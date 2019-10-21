@@ -1,30 +1,47 @@
-<p id="notice"><%= notice %></p>
+<section class="with-section-constraints">
 
-<h1>Users</h1>
+  <p id="notice"><%= notice %></p>
 
-<table style="margin: auto">
-  <thead>
+  <h1>Users</h1>
+
+  <table class="me-table">
+    <thead>
     <tr>
+      <th>Foto</th>
       <th>Id</th>
-      <th colspan="3"></th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Criado em</th>
+      <th>Status</th>
+      <th>Beta</th>
+      <th></th>
+      <th></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @users.each do |user| %>
       <tr>
+        <td><%= image_tag(user.picture, class: 'picture') if user.picture %></td>
         <td><%= user.id %></td>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
+        <td><%= distance_of_time_in_words_to_now user.created_at %></td>
+        <td>
+          Requisitado: <%= user.beta_requested? ? 'Sim' : 'Não' %> <br>
+          Ativado: <%= user.beta_activated? ? 'Sim' : 'Não' %>
+        </td>
+<!--        <td><%#= link_to 'Show', user %></td>-->
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to 'Enviar email', send_request_invite_confirmation_path(user), remote: true %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Tem certeza?' } %></td>
+        <td><%= link_to 'Ativar convite', send_invite_activation_link_path(user), remote: true, data: { confirm: "Ativar convite para #{user.first_name} (#{user.email})" } %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<br>
+  <br>
 
-<%= link_to 'New User', new_user_path %>
+  <%= link_to 'New User', new_user_path %>
+</section>
+

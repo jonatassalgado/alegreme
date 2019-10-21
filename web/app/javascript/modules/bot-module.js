@@ -77,7 +77,7 @@ const UILandingBot = class UILandingBot {
 
 			items.forEach(item => {
 				var button       = document.createElement("button");
-				button.className = `me-bot__button ${item.cssClass} me-button mdc-button mdc-button--raised`;
+				button.className = `me-bot__button ${item.cssClass} me-button mdc-button`;
 				button.type      = 'button';
 				button.innerHTML = item.text;
 				button.addEventListener("click", () => {

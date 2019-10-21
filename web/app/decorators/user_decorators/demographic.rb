@@ -8,15 +8,19 @@ module UserDecorators
 
 		module InstanceMethods
 			def name
-				features['demographic']['name'] if features['demographic']
+				features.dig('demographic', 'name')
 			end
 
 			def name=(value)
 				features['demographic']['name'] = name
 			end
 
+			def first_name
+				name.try(:split).try(:first)
+			end
+
 			def picture
-				features['demographic']['picture'] if features['demographic']
+				features.dig('demographic', 'picture')
 			end
 
 			def picture=(value)
@@ -26,6 +30,30 @@ module UserDecorators
 			def demographic=(values)
 				raise ArgumentError unless values.is_a? Hash
 				features['demographic'].update values
+			end
+
+			def beta_activated?
+				features.dig('demographic', 'beta', 'activated').to_boolean
+			end
+
+			def beta_activated=(value)
+				raise ArgumentError unless value.boolean?
+				features['demographic']['beta']['activated'] = value
+			end
+
+			def beta_requested?
+				features.dig('demographic', 'beta', 'requested').to_boolean
+			end
+
+			def beta_requested=(value)
+				raise ArgumentError unless value.boolean?
+				features['demographic']['beta']['requested'] = value
+			end
+
+			def social_plataform_id
+				return 'gmail' unless features.dig('demographic', 'social', 'googleId').blank?
+				return 'facebook' unless features.dig('demographic', 'social', 'fbId').blank?
+				'email'
 			end
 
 		end

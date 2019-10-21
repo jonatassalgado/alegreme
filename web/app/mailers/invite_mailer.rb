@@ -5,6 +5,15 @@ class InviteMailer < ApplicationMailer
 	def send_request_invite_confirmation
 		@user = params[:user]
 		mail(:to      => @user.email,
-		     :subject => 'Recebemos sua solicitação de convite para o alegreme')
+		     :subject => 'Recebemos sua solicitação de convite para o Alegreme')
+	end
+
+	def send_invite_activation_link
+		@user      = params[:user]
+		@token     = params[:token]
+		@plataform = @user.social_plataform_id
+
+		mail(:to      => @user.email,
+		     :subject => 'Seu convite para o Alegreme chegou!')
 	end
 end

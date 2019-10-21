@@ -13,8 +13,21 @@ module UserDecorators
 
 		module ClassMethods
 			def from_omniauth(auth, guest_user, params)
-				data  = auth.extra.id_info
-				user  = User.where(email: data.email).first
+				case auth.provider
+				when 'google_oauth2'
+					email   = auth.extra.id_info.email
+					name    = auth.extra.id_info.name
+					picture = auth.extra.id_info.picture
+				when 'facebook'
+					email   = auth.info.email
+					name    = auth.info.name
+					picture = auth.info.picture
+				else
+					return false
+				end
+
+
+				user = User.where(email: email).first
 				# state = Base64.urlsafe_decode64(params['state'])
 
 				# Rails.logger.debug "PERSONAS STATE: #{state.inspect} "
@@ -27,46 +40,46 @@ module UserDecorators
 				# end
 
 				# Rails.logger.debug "PERSONAS YAML: #{@personas.inspect} "
-				# Rails.logger.debug "GOOGLE DATA: #{data.inspect} "
+				# Rails.logger.debug "GOOGLE DATA: #{extra_info.inspect} "
 
 				# if @personas.empty?
 				# 	unless user
-				# 		user = User.create(email:    data.email,
+				# 		user = User.create(email:    email,
 				# 		                   password: Devise.friendly_token[0, 20])
 				# 	end
 				#
 				# 	user.features.deep_merge!({
 				# 			                          'psychographic' => guest_user.features['psychographic'],
 				# 			                          'demographic'   => {
-				# 					                          'name'    => data.name,
-				# 					                          'picture' => data.picture
+				# 					                          'name'    => extra_info.name,
+				# 					                          'picture' => extra_info.picture
 				# 			                          }
 				# 	                          })
 				# if @personas && @personas['assortment']['finished']
 
 
 				if user
-					return user
+					user
 				else
 					features = {
-						'demographic'   => {
-							'name'    => data.name,
-							'picture' => data.picture
-						}
+							'demographic' => {
+									'name'    => name,
+									'picture' => picture
+							}
 					}
 
-					user = User.new(email:    data.email,
-						password: Devise.friendly_token[0, 20])
+					user = User.new(email:    email,
+					                password: Devise.friendly_token[0, 20])
 
-						user.features.deep_merge!(features)
+					user.features.deep_merge!(features)
 
-						user
-					end
+					user
 				end
-
-				# user.save
-				# user
 			end
-			# end
+
+			# user.save
+			# user
 		end
+		# end
 	end
+end

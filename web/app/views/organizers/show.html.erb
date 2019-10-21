@@ -1,13 +1,16 @@
-<% content_for :canonical_url, organizer_url(@organizer, format: :html) %>
+<section class="me-page me-page--profile__section is-animated">
+  <% content_for :canonical_url, organizer_url(@organizer, format: :html) %>
 
-<%= notice %>
+  <%= notice %>
 
-<% content_for :meta_title, "Eventos por #{@organizer.details_name} em Porto Alegre | Alegreme.com" %>
+  <% content_for :meta_title, "Eventos por #{@organizer.details_name} em Porto Alegre | Alegreme.com" %>
 
-<script type="application/ld+json">
+  <script type="application/ld+json">
   [
     <%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>
   ]
-</script>
 
-<%= render partial: "components/collection/collection", locals: @locals %>
+  </script>
+
+  <%= render partial: "components/collection/collection", locals: @locals %>
+</section>

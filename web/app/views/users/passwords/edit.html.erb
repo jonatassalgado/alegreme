@@ -1,25 +1,56 @@
-<h2>Change your password</h2>
+<%= javascript_pack_tag 'text-field', 'select', 'data-turbolinks-track': 'reload', defer: true %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+<section class="me-page me-page--justify-center is-animated">
+  <div>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <% if params[:active_invite] %>
+      <h2>Oi <%= @user.first_name %>, para começar vamos criar sua senha</h2>
+    <% else %>
+      <h2>Criar uma senha</h2>
     <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+    <%= form_for(@user, as: :user, url: password_path(@user), html: {method: :put, class: 'me-form'}) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.hidden_field :reset_password_token %>
 
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
+      <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+            <div class="me-text-field mdc-text-field mdc-text-field--outlined me-text-field--fullwidth">
+              <%= f.password_field :password, autofocus: true, autocomplete: 'new-password', class: 'mdc-text-field__input' %>
+              <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                  <%= f.label :password, "Senha (min. 6 caracteres)", {class: 'mdc-floating-label'} %>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+          </div>
 
-<%= render "users/shared/links" %>
+
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+            <div class="me-text-field mdc-text-field mdc-text-field--outlined me-text-field--fullwidth">
+              <%= f.password_field :password_confirmation, class: 'mdc-text-field__input' %>
+              <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                  <%= f.label :password_confirmation, "Repita a senha", {class: 'mdc-floating-label'} %>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+              <div class="mdc-line-ripple"></div>
+            </div>
+          </div>
+
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid--align-right">
+            <%= f.submit "OK", {class: 'me-button mdc-button'} %>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+    <%#= render "users/shared/links" %>
+  </div>
+</section>
+

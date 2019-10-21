@@ -8,8 +8,8 @@ export default class SwipableController extends Controller {
 	static targets = ["swipable", "onboarding", "items"];
 
 	initialize() {
-		this.md    = new MobileDetect(window.navigator.userAgent);
-		this.uilb  = new UILandingBot(this.onboardingTarget);
+		this.md   = new MobileDetect(window.navigator.userAgent);
+		this.uilb = new UILandingBot(this.onboardingTarget);
 
 		this.uilb
 		    .message({
@@ -28,7 +28,7 @@ export default class SwipableController extends Controller {
 			    this.uilb.message({
 				    cssClass: "no-icon",
 				    content :
-					    "Inicialmente vamos te sugerir eventos, mas logo também iremos sugerir filmes no cinema, serviços e experiências",
+					    "Inicialmente vamos te sugerir eventos, mas logo também iremos sugerir filmes no cinema, serviços, promoções e experiências",
 				    delay   : 1500
 			    }))
 		    .then(ok =>
@@ -60,7 +60,7 @@ export default class SwipableController extends Controller {
 				    delay: 500,
 				    items: [
 					    {
-						    text : "Vamos!",
+						    text : "Vamos",
 						    value: "Vamos!"
 					    }
 				    ]
@@ -85,16 +85,15 @@ export default class SwipableController extends Controller {
 				    this.itemsTarget.style.display      = '';
 
 				    requestAnimationFrame(() => {
-					    setTimeout(() => {
-						    this.itemsTarget.style.opacity = '';
-						    window.scrollTo(0, 0);
-								if (this.hasSwipableTarget) {
-									requestIdleCallback(() => {
-										this.stackedCards();
-										this.swipableTarget.style.minHeight = `${this.swipableTarget.offsetHeight}px`;
-									}, {timeout: 250});
-								}
-					    }, 300);
+					    this.itemsTarget.style.opacity = '';
+					    window.scrollTo(0, 0);
+					    if (this.hasSwipableTarget) {
+						    requestIdleCallback(() => {
+							    this.stackedCards();
+							    this.swipableTarget.style.minHeight     = `${this.swipableTarget.offsetHeight}px`;
+							    document.documentElement.style.overflow = 'hidden';
+						    }, {timeout: 250});
+					    }
 				    });
 			    }, 4000);
 		    })
@@ -295,16 +294,17 @@ export default class SwipableController extends Controller {
 									.then(
 										response => {
 											response.text().then(data => {
+												document.documentElement.style.overflow = '';
 												document.querySelector('.stackedcards').classList.add('hidden');
 												document.querySelector('.global-actions').classList.add('hidden');
 												document.querySelector('.me-swipable__question').classList.add('hidden');
 												document.querySelector('.final-state').classList.remove('hidden');
-												document.querySelector('.final-state').classList.add('active');
-												ProgressBarModule.show();
 												setTimeout(() => {
-													ProgressBarModule.hide();
-													Turbolinks.visit("/feed");
-												}, 3500)
+													document.querySelector('.final-state').classList.add('active');
+													setTimeout(() => {
+														Turbolinks.visit("/feed");
+													}, 3500)
+												}, 150);
 											});
 										}
 									)

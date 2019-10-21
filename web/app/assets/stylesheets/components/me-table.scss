@@ -1,29 +1,36 @@
 @import "../_variables";
 
 .me-table {
-	border: 1px solid $border-color;
-	border-spacing: 0;
-	font-size: 11px;
-	width: 100%;
-	
-	& td {
-		border-top: 1px solid $border-color;
-		padding: 6px 10px;
-	}
+  border: 1px solid $border-color;
+  border-spacing: 0;
+  font-size: 11px;
+  width: 100%;
 
-	& tr {
-		padding: 6px 0;
-	}
+  & td {
+    border-top: 1px solid $border-color;
+    padding: 6px 10px;
+  }
 
-	& .mdc-chip {
-		font-size: 11px;
-	}
+  & tr {
+    padding: 6px 0;
+    text-align: left;
+  }
 
-	& .mdc-list-item {
-		font-size: 12px;
-	}
+  & .mdc-chip {
+    font-size: 11px;
+  }
 
-	& .mdc-list-item {
-		height: 30px;
-	}
+  & .mdc-list-item {
+    font-size: 12px;
+  }
+
+  & .mdc-list-item {
+    height: 30px;
+  }
+
+  & .picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+  }
 }

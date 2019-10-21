@@ -37,7 +37,7 @@
   &__items {
     transition: opacity 0.4s linear;
     max-width: 420px;
-    padding: 150px 24px 66px 24px;
+    padding: 100px 24px 66px 24px;
     @include mdc-layout-grid-media-query_("phone") {
       padding: 94px 24px 0 24px;
     }

@@ -51,7 +51,6 @@
 
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
-  <%#= javascript_pack_tag 'train', 'data-turbolinks-track': 'reload', defer: true if params[:action] == 'train' %>
 
   <!-- Facebook Pixel Code -->
   <script>
@@ -90,38 +89,13 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<!--<div class="mdc-drawer-app-content">-->
 <div class="me-top-app-bar__fake-size"></div>
 
-<% if params['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
-  <%= render partial: "layouts/app-top-bar" %>
-  <%= render partial: "feeds/float_menu" %>
-  <section class="me-page me-page--feed-section is-animated">
-<!--    <div class="me-overlay"></div>-->
-    <%= yield %>
-  </section>
-<% elsif params['controller'] == 'events' && params['action'] == 'show' %>
-  <%= render partial: "layouts/app-top-bar", locals: {controller: 'events'} %>
-  <section class="me-page me-page--events-section is-animated">
-<!--    <div class="me-overlay"></div>-->
-    <%= yield %>
-  </section>
-<% elsif params['controller'] == 'feeds' && params['action'] == 'train' %>
-  <%= render partial: "layouts/app-top-bar" %>
-  <section class="me-page me-page--train-section">
-    <%#= render partial: 'layouts/bot' %>
-<!--    <div class="me-overlay"></div>-->
-    <%= yield %>
-  </section>
-<% else %>
-  <%= render partial: "layouts/app-top-bar" %>
-  <section class="me-page me-page--profile__section is-animated">
-    <%#= render partial: 'layouts/bot' %>
-<!--    <div class="me-overlay"></div>-->
-    <%= yield %>
-  </section>
-<% end %>
-<!--</div>-->
+<%= render partial: "layouts/app-top-bar" %>
+<%= render partial: "feeds/float_menu" %>
+
+<%= yield %>
+
 <% if notice %>
   <div data-controller="snackbar" class="me-snackbar mdc-snackbar">
     <div class="mdc-snackbar__surface">
@@ -134,6 +108,8 @@
     </div>
   </div>
 <% end %>
+
 <%= render partial: 'layouts/footer' %>
+
 </body>
 </html>

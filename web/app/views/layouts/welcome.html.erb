@@ -93,6 +93,11 @@
   </div>
 </div>
 
+<script rel="preconnect" src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" defer></script>
+<script rel="preconnect" src="https://apis.google.com/js/platform.js" defer></script>
+<%= javascript_include_tag 'welcome/application.js', defer: true %>
+<%= javascript_pack_tag 'welcome.js', defer: true %>
+
 <% if notice %>
   <div class="mdc-snackbar">
     <div class="mdc-snackbar__surface">
@@ -104,12 +109,6 @@
     </div>
   </div>
 <% end %>
-
-
-<script rel="preconnect" src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" defer></script>
-<script rel="preconnect" src="https://apis.google.com/js/platform.js" defer></script>
-<%= javascript_include_tag 'welcome/application.js', defer: true %>
-<%= javascript_pack_tag 'welcome.js', defer: true %>
 
 </body>
 </html>

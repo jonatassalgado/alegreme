@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const snackbarEl = document.querySelector('.mdc-snackbar');
 
 	if (snackbarEl) {
-		const snackbar = new MDCSnackbar();
+		const snackbar = new MDCSnackbar(snackbarEl);
 		snackbar.open();
 	}
 });

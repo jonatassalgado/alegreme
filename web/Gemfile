@@ -28,6 +28,8 @@ gem 'friendly_id', '~> 5.2.4'
 # Devise
 gem 'devise'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+
 
 gem 'lupa', git: 'https://github.com/edelpero/lupa.git'
 

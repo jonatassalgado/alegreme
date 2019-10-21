@@ -1,0 +1,12 @@
+@import "@material/layout-grid/mdc-layout-grid";
+
+.me-form {
+  --mdc-layout-grid-gutter-phone: 12px 16px;
+  --mdc-layout-grid-gutter-desktop: 12px 30px;
+
+  @include mdc-layout-grid-media-query_("phone") {
+    .me-page--justify-center & {
+      width: calc(100vw - 48px);
+    }
+  }
+}

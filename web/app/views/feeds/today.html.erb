@@ -1,19 +1,22 @@
-<% content_for :canonical_url, today_events_url %>
-<% content_for :amp_url, today_events_url(format: :amp) %>
+<section class="me-page me-page--profile__section is-animated">
+  <% content_for :canonical_url, today_events_url %>
+  <% content_for :amp_url, today_events_url(format: :amp) %>
 
-<%= notice %>
+  <%= notice %>
 
-<% content_for :meta_title, "Eventos em Porto Alegre Hoje (#{I18n.l(Date.today, format: :short)}) e Amanhã (#{I18n.l(Date.tomorrow, format: :short)})" %>
-<% content_for :meta_description, "Descubra as festas, shows, feiras, teatros, palestras, festivais, exposições e filmes que acontecem hoje dia #{I18n.l(Date.today, format: :long)} e amanhã." %>
+  <% content_for :meta_title, "Eventos em Porto Alegre Hoje (#{I18n.l(Date.today, format: :short)}) e Amanhã (#{I18n.l(Date.tomorrow, format: :short)})" %>
+  <% content_for :meta_description, "Descubra as festas, shows, feiras, teatros, palestras, festivais, exposições e filmes que acontecem hoje dia #{I18n.l(Date.today, format: :long)} e amanhã." %>
 
-<script type="application/ld+json">
+  <script type="application/ld+json">
   [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
-</script>
 
-<%= render partial: "components/collection/collection", locals: @locals %>
+  </script>
 
-<% unless current_user %>
-  <%= link_to root_path, style: "display: flex" do %>
-    <img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">
+  <%= render partial: "components/collection/collection", locals: @locals %>
+
+  <% unless current_user %>
+    <%= link_to root_path, style: "display: flex" do %>
+      <img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">
+    <% end %>
   <% end %>
-<% end %>
+</section>

@@ -1,3 +1,4 @@
+@import "@material/layout-grid/mdc-layout-grid";
 @import "@material/textfield/mdc-text-field";
 @import "@material/button/mdc-button";
 @import "components/me-button";
@@ -263,6 +264,14 @@ section {
     }
   }
 
+  &__cta-group {
+    display: flex;
+    padding: 0 24px;
+    @include mobile-only {
+      flex-wrap: wrap;
+    }
+  }
+
   &__cta {
     width: 185px;
     height: 50px;
@@ -278,18 +287,18 @@ section {
     justify-content: center;
     //box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
     border-radius: 60px;
-    margin: 0 0 0 30px;
+    margin: 0 12px 0 0;
     cursor: pointer;
     transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
     will-change: transform;
     -webkit-tap-highlight-color: transparent;
     -webkit-user-select: none;
     @include mobile-only {
-      //width: calc(100% - 48px);
+      width: 174px;
       height: 65px;
       font-size: 18px;
       font-weight: 600;
-      margin: 0 0 0 24px;
+      margin: 0 12px 6px 0;
       .is-pwa & {
         width: calc(100% - 48px);
         margin: 0 auto 0 auto;
@@ -314,6 +323,27 @@ section {
       // @include mobile-only {
       //   display: none;
       // }
+    }
+
+    &--signin {
+      background: $surface-color;
+      color: $font-secondary-color;
+      width: 130px;
+      margin: 0 0 0 0;
+      box-shadow: $surface-z10-box-shadow;
+      &:hover {
+        color: $font-secondary-color;
+        background: $surface-color;
+      }
+
+      .invite-float & {
+        display: none;
+      }
+
+      @include mobile-only {
+        margin: 0 0 6px 0;
+        width: 116px;
+      }
     }
   }
 

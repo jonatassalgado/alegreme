@@ -2,7 +2,7 @@ class User < ApplicationRecord
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
-	devise :omniauthable, omniauth_providers: [:google_oauth2]
+	devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
 	acts_as_follower
 
@@ -11,10 +11,11 @@ class User < ApplicationRecord
 	include UserDecorators::Personas
 	include UserDecorators::Demographic
 	include UserDecorators::Omniauth
+	include UserDecorators::Permissions
+	include UserDecorators::Requirements
 
 
-
-	private
+					private
 
 	def validate_taste_existence(dictionary = 'events')
 		taste[dictionary] ||= {}

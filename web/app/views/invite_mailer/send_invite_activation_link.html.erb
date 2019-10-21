@@ -1,7 +1,5 @@
 <!--suppress ALL -->
 
-
-
 <table class="body"
        style="border-spacing:0;border-collapse:collapse;vertical-align:top;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;height:100%;width:100%;color:#0a0a0a;font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;font-size:16px;line-height:19px;margin-bottom:0 !important;background: white;">
   <tbody>
@@ -46,6 +44,7 @@
                 </table>
               </div>
               <br>
+
               <div>
                 <table class="row"
                        style="border-spacing:0;border-collapse:collapse;vertical-align:top;text-align:left;padding:0;width:100%;position:relative;display:table">
@@ -55,7 +54,8 @@
                     <th class="columns first large-12 last small-12"
                         style="color:#0a0a0a;font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;text-align:left;font-size:16px;line-height:19px;margin:0 auto;width:564px;padding: 0 16px 16px;">
                       <p class="headline headline-lg  heavy max-width-485"
-                         style="padding:0;margin:0;text-align:left;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;max-width:485px;font-weight:700;color:#484848;word-break:normal;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:32px;line-height:1.3;margin-bottom:0 !important;">Oi <%= @user.first_name %>!
+                         style="padding:0;margin:0;text-align:left;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;max-width:485px;font-weight:700;color:#484848;word-break:normal;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:32px;line-height:1.3;margin-bottom:0 !important;">
+                        <%= @user.first_name ? "Oi #{@user.first_name}!" : 'Oi!' %>
                       </p>
                     </th>
                   </tr>
@@ -72,7 +72,7 @@
                         style="color:#0a0a0a;font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;text-align:left;font-size:16px;line-height:19px;margin:0 auto;width:564px;padding: 0 16px 16px;">
                       <p class="body  body-lg  body-link-rausch light text-left   "
                          style="padding:0;margin:0;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;font-weight:300;color:#484848;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:18px;line-height:1.4;text-align:left;margin-bottom:0 !important;">
-                        Sua solicitação de convite foi recebida.
+                        Lembra daquele convite para o Alegreme? Então, ele chegou 😃
                       </p>
                     </th>
                   </tr>
@@ -89,7 +89,7 @@
                         style="color:#0a0a0a;font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;text-align:left;font-size:16px;line-height:19px;margin:0 auto;width:564px;padding: 0 16px 16px;">
                       <p class="body  body-lg  body-link-rausch light text-left   "
                          style="padding:0;margin:0;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;font-weight:300;color:#484848;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:18px;line-height:1.4;text-align:left;margin-bottom:0 !important;">
-                        Em breve você irá receber seu convite para ser beta de um dos produtos mais legais que está surgindo na cidade.
+                        Você está recebendo acesso antecipado ao site e aplicativo que está em fase beta, ou seja, ainda em testes.
                       </p>
                     </th>
                   </tr>
@@ -108,9 +108,8 @@
                         style="color:#0a0a0a;font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;text-align:left;font-size:16px;line-height:19px;margin:0 auto;width:564px;padding: 0 16px 16px;">
                       <p class="body  body-lg  body-link-rausch light text-left   "
                          style="padding:0;margin:0;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;font-weight:300;color:#484848;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:18px;line-height:1.4;text-align:left;margin-bottom:0 !important;">
-                        O projeto <a href="https://www.alegreme.com"
-                                     style="font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;text-decoration:none;color:#03994C;font-weight:300;"
-                                     target="_blank">Alegreme </a> está iniciando com eventos que ocorrem em Porto Alegre, mas isto é só o início.
+                        Para começar ao usar o Alegreme você tem duas opções:
+                        <b>website</b> e <b>aplicativo android</b> (logo teremos para iOS).
                       </p>
                     </th>
                   </tr>
@@ -126,14 +125,51 @@
                       style="padding:0;vertical-align:top;text-align:left">
                     <th class="columns first large-12 last small-12"
                         style="color:#0a0a0a;font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;text-align:left;font-size:16px;line-height:19px;margin:0 auto;width:564px;padding: 0 16px 16px;">
-                      <p class="body  body-lg  body-link-rausch light text-left   "
+
+                      <% if @plataform == 'gmail' || @plataform == 'facebook' %>
+                        <p class="body  body-lg  body-link-rausch light text-left"
+                           style="padding:0;margin:0;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;font-weight:300;color:#484848;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:18px;line-height:1.4;text-align:left;margin-bottom:0 !important;">
+                          Para começar usar agora você tem duas opções:
+                        </p>
+                        <blockquote>
+                          A - Acessar <a href="https://www.alegreme.com"
+                                         target="_blank"
+                                         style="font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;text-decoration:none;color:#03994C;font-weight:300;"><b>www.alegreme.com</b></a> e entrar com seu
+                          <b><%= @plataform %></b> <br><br>
+                          B - <a href="https://play.google.com/apps/testing/com.alegreme.app"
+                                 target="_blank"
+                                 style="font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;text-decoration:none;color:#03994C;font-weight:300;"><b>Instalar o aplicativo</b></a> na Play Store.
+                        </blockquote>
+                      <% end %>
+
+                      <% if @plataform == 'email' %>
+                        <p class="body  body-lg  body-link-rausch light text-left"
+                           style="padding:0;margin:0;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;font-weight:300;color:#484848;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:18px;line-height:1.4;text-align:left;margin-bottom:0 !important;">
+                          Para começar usar você precisa seguir os passo abaixo (isto é necessário pois você não solicitou convite com gmail ou facebook):
+                        </p>
+                        <blockquote>
+                          1 - <a href="<%= edit_user_password_url(reset_password_token: @token, active_invite: true) %>"
+                                 target="_blank"
+                                 style="font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;text-decoration:none;color:#03994C;font-weight:300;"><b>Criar uma senha</b></a>,
+                          <br><br>
+                          2 - Acessar o <a href="https://www.alegreme.com"
+                                           target="_blank"
+                                           style="font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;text-decoration:none;color:#03994C;font-weight:300;"><b>website</b></a> ou baixar o
+                          <a href="https://play.google.com/apps/testing/com.alegreme.app"
+                             target="_blank"
+                             style="font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;padding:0;margin:0;text-align:left;line-height:1.3;text-decoration:none;color:#03994C;font-weight:300;"><b>baixar o aplicativo android na Play Store</b></a>.
+                        </blockquote>
+                      <% end %>
+
+                      <p class="body  body-lg  body-link-rausch light text-left"
                          style="padding:0;margin:0;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;font-weight:300;color:#484848;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:18px;line-height:1.4;text-align:left;margin-bottom:0 !important;">
-                        Logo também indicaremos filmes no cinema, atividades e experiências.</p>
+                        Qualquer problema ou sugestão, nos enviei um email, nós chame no instagram ou twitter.</p>
                     </th>
                   </tr>
                   </tbody>
                 </table>
               </div>
+
 
               <div>
                 <table class="row"
@@ -145,24 +181,7 @@
                         style="color:#0a0a0a;font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;text-align:left;font-size:16px;line-height:19px;margin:0 auto;width:564px;padding: 0 16px 16px;">
                       <p class="body  body-lg  body-link-rausch light text-left   "
                          style="padding:0;margin:0;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;font-weight:300;color:#484848;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:18px;line-height:1.4;text-align:left;margin-bottom:0 !important;">
-                        Você como beta irá ajudar na construção deste projeto, inclusive votando e propondo funcionalidades.</p>
-                    </th>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div>
-                <table class="row"
-                       style="border-spacing:0;border-collapse:collapse;vertical-align:top;text-align:left;padding:0;width:100%;position:relative;display:table">
-                  <tbody>
-                  <tr class=""
-                      style="padding:0;vertical-align:top;text-align:left">
-                    <th class="columns first large-12 last small-12"
-                        style="color:#0a0a0a;font-family:'Cereal', Helvetica, Arial, sans-serif;font-weight:normal;text-align:left;font-size:16px;line-height:19px;margin:0 auto;width:564px;padding: 0 16px 16px;">
-                      <p class="body  body-lg  body-link-rausch light text-left   "
-                         style="padding:0;margin:0;font-family:Cereal, Helvetica, Helvetica, Arial, sans-serif;font-weight:300;color:#484848;hyphens:none;-moz-hyphens:none;-webkit-hyphens:none;-ms-hyphens:none;font-size:18px;line-height:1.4;text-align:left;margin-bottom:0 !important;">
-                        É isto. Nos vemos em breve. Até!</p>
+                        É isto. Até mais!</p>
                     </th>
                   </tr>
                   </tbody>
@@ -173,7 +192,7 @@
 
                 <br>
                 <br>
-                <br>
+
 
                 <table class="row"
                        style="border-spacing:0;border-collapse:collapse;vertical-align:top;text-align:left;padding:0;width:100%;position:relative;display:table">

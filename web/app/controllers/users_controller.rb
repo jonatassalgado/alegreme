@@ -4,10 +4,20 @@ class UsersController < ApplicationController
 	before_action :authorize_admin_and_user, only: %i[update edit show]
 	before_action :mount_json, only: %i[edit update]
 
+	def active_invite
+		@user = User.find_by_reset_password_token params[:reset_password_token]
+
+		if @user.has_permission_to_login?
+			redirect_to edit_user_password_path(reset_password_token: params[:reset_password_token])
+		else
+			redirect_to root_path, notice: 'Seu convite parece não ser válido'
+		end
+	end
+
 	# GET /users
 	# GET /users.json
 	def index
-		@users = User.all
+		@users = User.order("created_at ASC")
 	end
 
 	# GET /users/1

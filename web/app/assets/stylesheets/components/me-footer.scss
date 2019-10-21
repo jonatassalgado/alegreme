@@ -1,40 +1,137 @@
 @import "../_variables";
 
 .me-footer {
-  text-align: center;
-  height: auto;
+  margin: 50px 0 0 0;
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  color: $font-secondary-color;
-  font-size: 14px;
-  justify-content: flex-end;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-image: asset_url("welcome/bg-footer");
-  min-height: 300px;
-  font-weight: 500;
-  padding: 12px 6px 24px 6px;
-  line-height: 1.3em;
+  align-items: center;
   @include mdc-layout-grid-media-query_("phone") {
-    min-height: 36vh;
-    background-image: asset_url("bg-footer-mobile");
-    font-size: 12px;
-    background-size: contain;
+    text-align: left;
+    padding: 0 24px;
   }
 
-  &__icon {
-    margin: 35px 0;
-    @include mdc-layout-grid-media-query_("phone") {
-      margin: 12px 0;
+  &__logo-icon {
+    position: relative;
+  }
+
+  &__links {
+    margin: 12px 0 12px 0;
+    font-size: 12px;
+    font-family: $font-primary-family;
+
+    & a {
+      color: $font-tertiary-color;
     }
   }
 
-  &--feed {
+  &__image {
+    margin: 50px 0;
+    width: 100%;
     @include mdc-layout-grid-media-query_("phone") {
-      padding: 12px 96px 24px 90px;
-      align-items: end;
+      margin: 0 0 24px 0;
+    }
+  }
+
+  &__credits {
+    font-family: $font-primary-family;
+    color: $font-secondary-color;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    text-align: center;
+    margin: 24px 0 0 0;
+    @include mdc-layout-grid-media-query_("phone") {
       text-align: left;
     }
+
+    & a {
+      color: #833AB4;
+      text-decoration: none;
+    }
+  }
+
+  &__social {
+    margin: 125px 0 75px 0;
+    width: 100vw;
+    max-width: 1090px;
+    @include mdc-layout-grid-media-query_("phone") {
+      margin: 75px 0 75px 0;
+    }
+
+    &-buttons {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    &-links {
+      margin: 0;
+      color: $brand-color;
+      font-family: $font-primary-family;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 160%;
+      @include mdc-layout-grid-media-query_("phone") {
+        max-width: 95vw;
+        //text-align: center;
+        line-height: 1.6em;
+      }
+
+      & a {
+        color: $brand-color;
+        font-weight: 600;
+        text-decoration: none;
+        padding: 0 3px;
+      }
+    }
+
+    & a {
+      max-width: 85%;
+      // margin: auto;
+      transition: transform 0.35s ease;
+      -webkit-tap-highlight-color: transparent;
+
+      &:hover {
+        transform: scale(0.95);
+      }
+    }
+
+    & img, picture {
+      max-width: 100%;
+      @include mdc-layout-grid-media-query_("phone") {
+        margin: 6px auto;
+      }
+    }
+
+    & h2 {
+      font-family: $font-primary-family;
+      font-weight: bold;
+      font-size: 38px;
+      line-height: 1.2em;
+      margin: 0 auto 50px auto;
+      padding: 0;
+      text-align: center;
+      @include mdc-layout-grid-media-query_("phone") {
+        font-size: 31px;
+        line-height: 0;
+        margin: 65px auto 0 auto;
+        height: 50px;
+      }
+    }
+  }
+
+  &__vamodale {
+    color: $font-tertiary-color;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 160%;
+    margin:6px 0 24px 0;
   }
 }
+
+
+

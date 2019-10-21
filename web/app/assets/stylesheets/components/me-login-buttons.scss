@@ -1,0 +1,35 @@
+.me-login-buttons {
+  color: red;
+
+  &--divider {
+    border-top: 1px solid $border-color;
+    margin: 12px 0 0 0;
+    padding: 24px 0 0 0;
+
+    &::before {
+      content: "OU";
+      position: relative;
+      top: -32px;
+      font-weight: 600;
+      color: $border-color;
+      left: calc(50% - 16px);
+      background: $surface-color;
+      padding: 0 6px;
+    }
+  }
+
+  & .me-button:not(:disabled) {
+    background: $surface-color;
+    margin: 0 0 6px 0;
+  }
+
+  & .me-button--gmail {
+    color: #d44a3d;
+    box-shadow: $surface-z10-box-shadow;
+  }
+
+  & .me-button--facebook {
+    color: #4267b2;
+    box-shadow: $surface-z10-box-shadow;
+  }
+}

@@ -3,7 +3,11 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
-	devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
+	devise_for :users, controllers: {
+			omniauth_callbacks: 'users/omniauth_callbacks',
+			passwords: 'users/passwords',
+			sessions: 'users/sessions'
+	}
 
 	root to: 'welcome#index'
 
@@ -15,6 +19,8 @@ Rails.application.routes.draw do
 	end
 
 	get '/feed', to: 'feeds#index'
+	get '/onboarding', to: 'bot#onboarding'
+
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
 	get '/porto-alegre/eventos/semana', to: 'feeds#week', as: :week_events
 	get '/porto-alegre/eventos/categoria/:category', to: 'feeds#category', as: :category_events
@@ -32,7 +38,10 @@ Rails.application.routes.draw do
 
 	resources :search, only: [:index]
 	resources :train, only: [:index]
+
 	resources :users
+	get '/active-invite', to: 'users#active_invite'
+
 	resources :collections, only: [:index]
 	resources :categories
 	resources :organizers, path: 'organizadores'
@@ -45,6 +54,8 @@ Rails.application.routes.draw do
 
 
 	get '/send_request_invite_confirmation/:user_id', to: 'emails#send_request_invite_confirmation', as: :send_request_invite_confirmation
+	get '/send_invite_activation_link/:user_id', to: 'emails#send_invite_activation_link', as: :send_invite_activation_link
+
 
 	get ':type/:resource_id/follow', to: 'follow#follow', :defaults => {:format => 'js'}, as: :follow
 	get ':type/:resource_id/unfollow', to: 'follow#unfollow', :defaults => {:format => 'js'}, as: :unfollow
