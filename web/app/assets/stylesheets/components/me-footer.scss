@@ -9,7 +9,9 @@
   @include mdc-layout-grid-media-query_("phone") {
     text-align: left;
     padding: 0 24px;
+    align-items: flex-start;
   }
+
 
   &__logo-icon {
     position: relative;
@@ -22,6 +24,12 @@
 
     & a {
       color: $font-tertiary-color;
+    }
+
+    & .manifesto {
+      @include mdc-layout-grid-media-query_("phone") {
+        display: none;
+      }
     }
   }
 
@@ -131,7 +139,18 @@
     line-height: 160%;
     margin:6px 0 24px 0;
   }
+
+  &__credits, &__vamodale {
+    @include mdc-layout-grid-media-query_("phone") {
+      display: none;
+    }
+  }
+
+  &--feeds {
+
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 0 24px 0 74px;
+
+    }
+  }
 }
-
-
-

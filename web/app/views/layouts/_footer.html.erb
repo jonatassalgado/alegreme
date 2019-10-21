@@ -1,4 +1,4 @@
-<section class="me-footer">
+<section class="me-footer <%= "me-footer--#{params[:controller]}" if params[:controller] %>">
   <img
     data-sizes="auto"
     data-src="<%= image_url 'welcome/porto-alegre' %>"
@@ -22,9 +22,9 @@
     Ei! Tem ideias de funcionalidades, projetos pra tocar junto, quer conectar uma API, trocar uma ideia... Usa os links acima.
   </div>
   <div class="me-footer__links">
-    <a href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">
-      Manifesto
-    </a> ·
+    <a class="manifesto" href="http://medium.com/@jonataseduardo/potencializando-a-intera%C3%A7%C3%A3o-entre-as-pessoas-para-criarmos-cidades-melhores-5d048bc9c" rel="noreferrer" target="_blank">
+      Manifesto ·
+    </a>
     <a href="/privacy">Política de privacidade</a> ·
     <a href="/terms">Termos de serviço</a>
   </div>
