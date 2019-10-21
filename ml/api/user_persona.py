@@ -17,7 +17,7 @@ from joblib import load
 class UserPersonaPrediction(object):
 
     def __init__(self):
-        self.base = pd.read_csv('../svm-classification-personas-v3-events.csv')
+        self.base = pd.read_csv('../svm-classification-personas.csv')
 
 
     def visualize(self):
@@ -68,7 +68,7 @@ class UserPersonaPrediction(object):
                         [best_labels_name[2], best_labels_score[2]],
                         [best_labels_name[3], best_labels_score[3]]
                      ]
-            print(output)
+#            print(output)
             return output
 
 #

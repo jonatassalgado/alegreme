@@ -20,7 +20,7 @@ class BotController < ApplicationController
 				{
 						id:             0,
 						name:           "Arduino Day",
-						image_url:      "bot/arduino-day-2019.png",
+						image_url:      "bot/arduino-day-2019.jpeg",
 						description:    "Evento para pessoas desenvolvedoras de software que desejam aprendar mais sobre a linguagem Arduino.",
 						dominant_color: "#53456a"
 				},
@@ -33,10 +33,10 @@ class BotController < ApplicationController
 				},
 				{
 						id:             2,
-						name:           "Carnawow",
-						image_url:      "bot/carnawow.jpeg",
-						description:    "O Carnawow é uma síntese de celebração e meditação. São 5 dias pra abrir tua energia, tua capacidade de sentir e criar através de sessões e meditações ativas.",
-						dominant_color: "#1f4728"
+						name:           "Bloco da Laje",
+						image_url:      "bot/bloco-da-laje.png",
+						description:    "O Bloco da Laje com seus eventos busca reunir artistas e simpatizantes do carnaval para sair pelas ruas da cidade em cortejos pré-carnavalescos.",
+						dominant_color: "#f5ca71"
 				},
 				{
 						id:             3,
