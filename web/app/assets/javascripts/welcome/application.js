@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const answerEl           = document.querySelector('.answer');
 	const shareBtn           = document.querySelector('.shareBtn');
 	const inviteEl           = document.querySelector('.invite');
-	const inviteCtaEl        = document.querySelector('.invite__cta');
+	const inviteCtaGroupEl   = document.querySelector('.invite__cta-group');
 	const inviteLoginBtnsEl  = document.querySelector('.invite__loginButtons');
 	const inviteLoginFbEl    = document.querySelector('.invite__loginButtons-facebook');
 	const inviteLoginGmailEl = document.querySelector('.invite__loginButtons-gmail');
@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					const backendData = JSON.parse(data);
 					const userName    = `${frontData.name.split(" ")[0]}`;
 
-					inviteCtaEl.style.display       = "none";
+					inviteCtaGroupEl.style.display  = "none";
 					inviteLoginBtnsEl.style.display = "none";
 
 					inviteEl.classList.add('is-invited');
@@ -380,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					}
 
 					// setTimeout(() => {
-					// 	inviteCtaEl.style.display = "none";
+					// 	inviteCtaGroupEl.style.display = "none";
 					// 	inviteLoginBtnsEl.style.display = "none";
 					// }, 1000)
 				});
@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		headlineH2El.innerText = 'Use seu email pessoal, conta do gmail ou facebook';
 
 		inviteLoginBtnsEl.style.display = 'flex';
-		inviteCtaEl.style.display       = 'none';
+		inviteCtaGroupEl.style.display  = 'none';
 		inviteEmailEl.style.display     = 'flex';
 		heroEl.style.minHeight          = '830px';
 
@@ -458,7 +458,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			requestAnimationFrame(() => {
 				inviteEl.style.transform        = 'translateY(0)';
-				inviteCtaEl.style.opacity       = 0;
+				inviteCtaGroupEl.style.opacity  = 0;
 				inviteEmailEl.style.opacity     = 1;
 				inviteLoginBtnsEl.style.opacity = 1;
 			});
