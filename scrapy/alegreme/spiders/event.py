@@ -41,7 +41,7 @@ parse_event_script = """
         ]], 30)
 
         assert(splash:wait(0.5))
-
+        splash:runjs("window.close()")
         return splash:html()
     end
 """
@@ -77,7 +77,7 @@ parse_page_script = """
         ]], 30)
 
         assert(splash:wait(0.5))
-
+        splash:runjs("window.close()")
         return splash:html()
     end
 """

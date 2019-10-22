@@ -106,7 +106,7 @@ DOWNLOADER_MIDDLEWARES = {
 # ]
 
 DEPTH_LIMIT = 5
-CLOSESPIDER_ITEMCOUNT=500
+CLOSESPIDER_ITEMCOUNT=1250
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -137,7 +137,7 @@ AUTOTHROTTLE_ENABLED = True
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = False
+HTTPCACHE_ENABLED = True
 #HTTPCACHE_EXPIRATION_SECS = 0
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
