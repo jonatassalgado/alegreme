@@ -23,21 +23,30 @@ class FeedsController < ApplicationController
 						group_by: 2
 				})
 
-		collection_suggestions = collections.call(
-				{
-						identifier: 'user-suggestions',
-						events:     Event.all
-				}
-		)
+		collection_suggestions = if current_user&.has_events_suggestions?
+			                         collections.call(
+					                         {
+							                         identifier: 'user-suggestions',
+							                         events:     Event.all
+					                         }
+			                         )
+			                       else
+				                       {}
+		                         end
 
-		collection_follow = collections.call(
-				{
-						identifier: 'follow',
-						events:     Event.all
-				},
-				{
-						not_in: collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids)
-				})
+		collection_follow = if current_user&.has_following_resources?
+			                    collections.call(
+					                    {
+							                    identifier: 'follow',
+							                    events:     Event.all
+					                    },
+					                    {
+							                    not_in: collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) |
+									                            (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
+					                    })
+			                  else
+				                  {}
+		                    end
 
 		collection_personas = collections.call(
 				{
@@ -45,7 +54,9 @@ class FeedsController < ApplicationController
 						events:     Event.all
 				},
 				{
-						not_in: collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids)
+						not_in: collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) |
+								        (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
+								        (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
 				})
 
 		collection_explorer = collections.call(
@@ -56,7 +67,9 @@ class FeedsController < ApplicationController
 						user:             current_user,
 						order_by_persona: true,
 						limit:            12,
-						not_in:           collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_personas.dig(:detail, :init_filters_applyed, :current_events_ids) | collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids)
+						not_in:           collection_personas.dig(:detail, :init_filters_applyed, :current_events_ids) |
+								                  (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
+								                  (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
 				}
 		)
 

@@ -13,6 +13,7 @@ class User < ApplicationRecord
 	include UserDecorators::Omniauth
 	include UserDecorators::Permissions
 	include UserDecorators::Requirements
+	include UserDecorators::Suggestions
 
 
 					private
