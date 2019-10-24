@@ -37,6 +37,7 @@ namespace :populate do
 			event, ml_data = create_event(item)
 
 			next unless event
+			next unless ml_data
 			next unless set_cover(item, event)
 
 			associate_event_place(event, place)
@@ -205,18 +206,19 @@ def read_file
 end
 
 def create_event(item)
+	event = Event.where.contains(details: {source_url: item['source_url']}).first
+
+	return [false, false] if (event && event.details_description == item['description'])
+
 	query                     = Base64.encode64(item['description'])
 	features_params           = {query: query}
 	features_uri              = URI("#{ENV['API_URL']}:5000/event/features")
 	features_uri.query        = URI.encode_www_form(features_params)
 	features_response         = Net::HTTP.get_response(features_uri)
 	@features_response_failed = !features_response.is_a?(Net::HTTPSuccess)
-
-	event = Event.where.contains(details: {source_url: item['source_url']}).first
+	@events_create_counter   += 1
 
 	if !event.blank?
-		@events_create_counter += 1
-
 		if event.details_description != item['description']
 			event.details.deep_merge!(
 				name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
@@ -242,8 +244,9 @@ def create_event(item)
 
 		puts "#{@events_create_counter}: #{item['name']} - Evento já existe".white
 	elsif @features_response_failed
-		@events_create_counter += 1
 		puts "#{@events_create_counter}: #{item['name']} - Evento falhou durante a criação".red
+
+		return [false, false]
 	else
 		ml_data = JSON.parse(features_response.try(:body))
 		event   = Event.new
