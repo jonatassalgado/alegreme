@@ -31,14 +31,22 @@ namespace :populate do
 
 		data.each do |item|
 			place = create_place(item)
-
-			next unless item['description']
-
 			event, ml_data = create_event(item)
 
-			next unless event
-			next unless ml_data
-			next unless set_cover(item, event)
+			unless event
+				puts "#{item['name']} - Próximo (lugar não criado existe)".yellow
+				next
+			end
+
+			unless ml_data
+				puts "#{item['name']} - Próximo (ML data não retornada)".yellow
+				next
+			end
+
+			unless set_cover(item, event)
+				puts "#{item['name']} - Próximo (cover não atribuido)".yellow
+				next
+			end
 
 			associate_event_place(event, place)
 			create_organizer(item, event)
@@ -158,7 +166,6 @@ end
 
 def set_cover(item, event)
 	return unless item['cover_url']
-	return if event.image
 
 	begin
 		event_cover_file = Down.download(item['cover_url'])
@@ -208,7 +215,10 @@ end
 def create_event(item)
 	event = Event.where.contains(details: {source_url: item['source_url']}).first
 
-	return [false, false] if (event && event.details_description == item['description'])
+	if (event && event.details_description == item['description'])
+		puts "#{@events_create_counter}: #{item['name']} - Evento já existe (sem atualizações)".white
+		return [false, false]
+	end
 
 	query                     = Base64.encode64(item['description'])
 	features_params           = {query: query}
@@ -216,43 +226,55 @@ def create_event(item)
 	features_uri.query        = URI.encode_www_form(features_params)
 	features_response         = Net::HTTP.get_response(features_uri)
 	@features_response_failed = !features_response.is_a?(Net::HTTPSuccess)
-	@events_create_counter   += 1
 
-	if !event.blank?
-		if event.details_description != item['description']
-			event.details.deep_merge!(
-				name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
-				description: item['description'],
-				prices:      item['prices'] || []
-			)
+	if event
+		ml_data = JSON.parse(features_response.try(:body))
 
-			event.ocurrences.deep_merge!(
-				dates: item['datetimes']
-			)
+		event.details.deep_merge!(
+			name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
+			description: item['description'],
+			prices:      item['prices'] || []
+		)
 
-			event.geographic.deep_merge!(
-				address:      item['address'],
-				# latlon:       @geocode.try(:coordinates),
-				# neighborhood: @geocode.try(:suburb),
-				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
-				cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
-			)
+		event.ocurrences.deep_merge!(
+			dates: item['datetimes']
+		)
 
-			event.slug = nil
-			event.save
-		end
+		event.geographic.deep_merge!(
+			address:      item['address'],
+			# latlon:       @geocode.try(:coordinates),
+			# neighborhood: @geocode.try(:suburb),
+			city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
+			cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
+		)
 
-		puts "#{@events_create_counter}: #{item['name']} - Evento já existe".white
+		event.ml_data.deep_merge!(
+				cleanned: ml_data['cleanned'],
+				stemmed:  ml_data['stemmed'],
+				freq:     ml_data['freq'],
+				nouns:    ml_data['nouns'],
+				verbs:    ml_data['verbs'],
+				adjs:     ml_data['adjs']
+		)
+
+		event.slug = nil
+		event.save
+
+		puts "#{@events_create_counter}: #{item['name']} - Evento já existe (atualizado)".white
+
+		return [event, ml_data]
+
 	elsif @features_response_failed
 		puts "#{@events_create_counter}: #{item['name']} - Evento falhou durante a criação".red
 
 		return [false, false]
+
 	else
 		ml_data = JSON.parse(features_response.try(:body))
 		event   = Event.new
 
 		event.details.deep_merge!(
-				name:        item['name'],
+				name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
 				description: item['description'],
 				source_url:  item['source_url'],
 				prices:      item['prices'] || []
