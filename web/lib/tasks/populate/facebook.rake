@@ -217,26 +217,28 @@ def create_event(item)
 	if !event.blank?
 		@events_create_counter += 1
 
-		event.details.deep_merge!(
+		if event.details_description != item['description']
+			event.details.deep_merge!(
 				name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
 				description: item['description'],
 				prices:      item['prices'] || []
-		)
+			)
 
-		event.ocurrences.deep_merge!(
+			event.ocurrences.deep_merge!(
 				dates: item['datetimes']
-		)
+			)
 
-		event.geographic.deep_merge!(
+			event.geographic.deep_merge!(
 				address:      item['address'],
 				# latlon:       @geocode.try(:coordinates),
 				# neighborhood: @geocode.try(:suburb),
 				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
 				cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
-		)
+			)
 
-		event.slug = nil
-		event.save
+			event.slug = nil
+			event.save
+		end
 
 		puts "#{@events_create_counter}: #{item['name']} - Evento já existe".white
 	elsif @features_response_failed

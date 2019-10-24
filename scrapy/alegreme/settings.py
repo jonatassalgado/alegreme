@@ -18,7 +18,6 @@ NEWSPIDER_MODULE = 'alegreme.spiders'
 
 
 
-
 # Splash
 is_docker = os.environ.get('IS_DOCKER')
 splash_url = os.environ.get('SPLASH_URL')
@@ -48,7 +47,7 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 8
+CONCURRENT_REQUESTS = 6
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -105,8 +104,8 @@ DOWNLOADER_MIDDLEWARES = {
 #      'Firefox/55.0')  # firefox
 # ]
 
-DEPTH_LIMIT = 6
-CLOSESPIDER_ITEMCOUNT=1250
+DEPTH_LIMIT = 5
+CLOSESPIDER_ITEMCOUNT=1000
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -121,6 +120,8 @@ ITEM_PIPELINES = {
 }
 
 LOG_ENABLED = True
+LOG_FILE = '/var/www/scrapy/log/output.log'
+LOG_LEVEL = 'INFO'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

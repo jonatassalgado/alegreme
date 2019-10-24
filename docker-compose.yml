@@ -147,6 +147,7 @@ services:
     volumes:
       - scrapy_data:/var/www/scrapy/data
       - scrapydo_data:/var/www/scrapy/projects
+      - ./logs/scrapy:/var/www/scrapy/log
     ports:
       - "7654:7654"
     restart: always
@@ -165,7 +166,7 @@ services:
     mem_limit: 4gb
     memswap_limit: 5gb
     mem_reservation: 256m
-    cpus: 2
+    cpus: 3
     command: --maxrss 3500
   memcached:
     image: memcached

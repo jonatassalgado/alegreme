@@ -12,7 +12,7 @@ COPY . $SCRAPY_ROOT
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-
+RUN mkdir -p log
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh

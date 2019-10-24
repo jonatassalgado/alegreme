@@ -123,6 +123,7 @@ services:
       - ./scrapy/alegreme:/var/www/scrapy/alegreme
       - ./scrapy/data:/var/www/scrapy/data
       - scrapydo_data:/var/www/scrapy/projects
+      - ./logs/scrapy:/var/www/scrapy/log
     ports:
       - "7654:7654"
     restart: always
