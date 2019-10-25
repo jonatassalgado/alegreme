@@ -14,6 +14,17 @@ class FeedsController < ApplicationController
 
 		collections ||= EventServices::CollectionCreator.new(current_user, params)
 
+		new_events_today     = Event.where("created_at > ?", DateTime.now - 1)
+		collection_new_today = collections.call({
+				                                        identifier: 'new-today',
+				                                        events:     new_events_today
+		                                        },
+		                                        {
+				                                        only_in:          new_events_today.map(&:id),
+				                                        order_by_persona: true,
+				                                        in_user_personas: true
+		                                        })
+
 		collection_week = collections.call(
 				{
 						identifier: 'this-week',
@@ -48,16 +59,16 @@ class FeedsController < ApplicationController
 				                  {}
 		                    end
 
-		collection_personas = collections.call(
-				{
-						identifier: 'user-personas',
-						events:     Event.all
-				},
-				{
-						not_in: collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) |
-								        (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
-								        (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
-				})
+		# collection_personas = collections.call(
+		# 		{
+		# 				identifier: 'user-personas',
+		# 				events:     Event.all
+		# 		},
+		# 		{
+		# 				not_in: collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) |
+		# 						        (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
+		# 						        (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
+		# 		})
 
 		collection_explorer = collections.call(
 				{
@@ -67,16 +78,16 @@ class FeedsController < ApplicationController
 						user:             current_user,
 						order_by_persona: true,
 						limit:            12,
-						not_in:           collection_personas.dig(:detail, :init_filters_applyed, :current_events_ids) |
-								                  (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
+						not_in:           (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
 								                  (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
 				}
 		)
 
 		@items = {
-				week:             collection_week,
-				follow:           collection_follow,
-				user_personas:    collection_personas,
+				new_today: collection_new_today,
+				week:      collection_week,
+				follow:    collection_follow,
+				# user_personas:    collection_personas,
 				user_suggestions: collection_suggestions,
 				explorer:         collection_explorer
 		}

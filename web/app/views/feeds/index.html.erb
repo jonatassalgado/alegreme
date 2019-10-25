@@ -11,6 +11,27 @@
   <div class="me-feed me-page__section">
 
     <% if current_user&.personas_assortment_finished? %>
+      <% if @items.dig(:new_today, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+        <%= render partial: "components/collection/collection",
+                   locals:  {
+                       items:      @items[:new_today],
+                       title:      {
+                           principal: "Adicionados nas últimas 24 horas",
+                           secondary: "Foram adicionados #{@items.dig(:new_today, :detail, :total_events_in_collection)} eventos hoje (#{I18n.l(Date.today, format: :short)}) que podem te interessar"
+                       },
+                       identifier: 'new-today',
+                       opts:       {
+                           type:    :large,
+                           filters: {
+                               categories: true,
+                               kinds:      true,
+                               ocurrences: true
+                           },
+                           detail:  @items[:new_today][:detail],
+                           origin:  :feed
+                       }
+                   } %>
+      <% end %>
       <% if @items.dig(:week, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
         <%= render partial: "components/collection/collection",
                    locals:  {
