@@ -63,7 +63,7 @@ module EventServices
 							in_days: @params[:ocurrences] || [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s]
 					},
 					'this-week'          => {
-							in_days:          @params[:ocurrences] || (@today..(@today + 6)).map(&:to_s),
+							in_days:          @params[:ocurrences] || (@today..(@today + 8)).map(&:to_s),
 							in_user_personas: false,
 							order_by_persona: true,
 							group_by:         calculate_items_for_group(nil, auto_balance: false)

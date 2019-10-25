@@ -21,4 +21,12 @@ $fill-color: #ffffff;
     height: 18px;
     margin: 0 10px 0 0;
   }
+
+  .me-top-app-bar & {
+    @include mdc-layout-grid-media-query_("phone") {
+      font-size: 12px;
+      line-height: 1.1em;
+      padding: 12px 8px;
+    }
+  }
 }

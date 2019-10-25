@@ -112,9 +112,9 @@
           <%= link_to "Sair", destroy_user_session_path, method: :delete, class: "me-top-app-bar__logout" %>
         </div>
       <% else %>
-        <%#= link_to root_path do %>
-<!--          <button class="me-button mdc-button mdc-button--unelevated">Pegar convite</button>-->
-        <%# end %>
+        <%= link_to root_path do %>
+          <button class="me-button mdc-button mdc-button--unelevated">Quero um convite</button>
+        <% end %>
         <!--        <div class="me-top-app-bar__signin-link">-->
         <!--          <span onclick="CacheModule.clearCache(); location.assign('/users/auth/google_oauth2')">Entrar</span>-->
         <!--        </div>-->

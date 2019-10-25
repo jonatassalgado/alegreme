@@ -273,7 +273,7 @@ section {
   }
 
   &__cta {
-    width: 185px;
+    width: 204px;
     height: 50px;
     font-family: $font-primary-family;
     font-weight: 600;
@@ -294,7 +294,7 @@ section {
     -webkit-tap-highlight-color: transparent;
     -webkit-user-select: none;
     @include mobile-only {
-      width: 174px;
+      width: 196px;
       height: 65px;
       font-size: 18px;
       font-weight: 600;
