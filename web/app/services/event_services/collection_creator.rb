@@ -66,7 +66,8 @@ module EventServices
 							in_days:          @params[:ocurrences] || (@today..(@today + 8)).map(&:to_s),
 							in_user_personas: false,
 							order_by_persona: true,
-							group_by:         calculate_items_for_group(nil, auto_balance: false)
+							not_in_categories: ['brecho', 'curso'],
+							group_by:         calculate_items_for_group(2, auto_balance: true)
 					},
 					'follow'             => {
 							in_days:            set_initial_dates_filter,

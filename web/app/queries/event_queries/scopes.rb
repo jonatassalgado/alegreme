@@ -248,7 +248,7 @@ module EventQueries
 				opts       = {'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': []}.merge(opts)
 				categories = categories.present? ? (categories - opts[:not_in]) : (Event::CATEGORIES - opts[:not_in])
 
-				if opts[:group_by] && categories.present? || opts[:not_in].present?
+				if opts[:group_by] && categories.present?
 					order_by = ["CASE"]
 					opts[:personas].each_with_index.map do |persona, index|
 						order_by << "WHEN (ml_data -> 'personas' -> 'primary' ->> 'name') = '#{persona}' THEN #{index}"
