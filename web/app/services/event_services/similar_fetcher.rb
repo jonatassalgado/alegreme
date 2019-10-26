@@ -37,7 +37,7 @@ module EventServices
 				counter = 0
 				limit   = @responses[:resources].keys.length
 
-				until mixed_suggestions.length >= 15 || counter >= 10 do
+				until mixed_suggestions.length >= 24 || counter >= 30 do
 					@responses[:resources].keys.each do |key|
 						mixed_suggestions |= [@responses[:resources][key][:similar][counter]]
 					end

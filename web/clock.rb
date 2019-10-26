@@ -30,6 +30,7 @@ module Clockwork
   every(1.day, 'populate:facebook', :at => '06:00') {
     Rake::Task["populate:facebook"].invoke
     Rake::Task["similar:events"].invoke
+    Rake::Task["suggestions:users"].invoke
     Rake::Task["sitemap:refresh"].invoke
     Rake::Task["search:refresh"].invoke
   }
