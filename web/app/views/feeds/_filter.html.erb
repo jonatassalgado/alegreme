@@ -13,7 +13,7 @@
              class="me-chip mdc-chip <%= params_filters and filter_exist_in_ocurrences?(params_filters, filter['string']) ? 'mdc-chip--selected' : nil %>"
              data-turbolinks-scroll="false">
           <div class="mdc-chip__text">
-            <%= filter['decorator'].try(:capitalize) %>
+            <%= filter['decorator'] %>
           </div>
         </div>
       <% else %>
@@ -22,7 +22,7 @@
              data-turbolinks-scroll="false">
 
           <div class="mdc-chip__text">
-            <%= filter.try(:capitalize) %>
+            <%= filter %>
           </div>
         </div>
       <% end %>

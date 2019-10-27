@@ -47,7 +47,7 @@ pt-BR:
     formats:
       default: "%d/%m/%Y"
       long: "%d de %B de %Y"
-      short: "%-d de %b"
+      short: "%-d %b"
       week: "%A"
     month_names:
     -

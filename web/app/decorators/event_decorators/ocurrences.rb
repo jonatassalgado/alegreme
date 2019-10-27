@@ -20,13 +20,13 @@ module EventDecorators
 					return add_to_response 'amanhã', order: 2
 				when 2..6
 					return add_to_response convert_to_literal, order: @difference
-				when 7..30
-					if opts[:active_range]
-						return add_to_response('próximos 30 dias', range: true, order: 8)
-					else
-						return add_to_response(I18n.l(@current_date, format: :short), order: 8)
-					end
-				when 31..90
+				when 7..14
+					# if opts[:active_range]
+					# 	return add_to_response('próximos 30 dias', range: true, order: 8)
+					# else
+						return add_to_response("#{I18n.l(@current_date, format: :week)} · #{I18n.l(@current_date, format: :short)}", order: 8)
+					# end
+				when 14..90
 					if opts[:active_range]
 						return add_to_response('próximos 90 dias', range: true, order: 9)
 					else

@@ -39,56 +39,48 @@
     }
 
     & .mdc-chip {
-      @include mdc-layout-grid-media-query_("desktop") {
-        font-weight: 400;
-        font-size: 9px;
-        height: auto;
-        line-height: 1em;
-        padding: 6px 8px;
-        margin: 2px 0px;
-      }
+      font-weight: 600;
+      font-size: 10px;
+      height: auto;
+      line-height: 1em;
+      padding: 10px 8px;
+      margin: 3px 1px;
+      font-family: $font-primary-family;
+      border-radius: 6px;
+      color: $font-tertiary-color;
+      background-color: $background-color;
+      border: $chip-border-size solid $border-color;
+      text-transform: uppercase;
+      transition: $chip-transition;
+    }
 
+    & .mdc-chip {
       @include mdc-layout-grid-media-query_("phone") {
-        font-size: 11px;
-        height: 34px;
-        margin: 2px;
+        // border: unset;
+      }
+    }
+
+    & .mdc-chip--selected {
+      color: $chip-filter-color-active;
+      background-color: $chip-filter-background-active;
+      border: $chip-border-size solid $chip-filter-border-color-active;
+      @include mdc-layout-grid-media-query_("phone") {
+        border: $chip-border-size solid $chip-filter-background-active;
       }
     }
   }
 
-  &--grid2{
+  &--grid2 {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-column-gap: 16px;
   }
 
 
-  &--grid3{
+  &--grid3 {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     grid-column-gap: 16px;
   }
 
-  & .mdc-chip {
-    color: $font-secondary-color;
-    background-color: $background-color;
-    border: $chip-border-size solid $border-color;
-    border-radius: $chip-filter-radius;
-    font-weight: 400;
-    font-size: 10px;
-    text-transform: uppercase;
-    transition: $chip-transition;
-    @include mdc-layout-grid-media-query_("phone") {
-      // border: unset;
-    }
-  }
-
-  & .mdc-chip--selected {
-    color: $chip-filter-color-active;
-    background-color: $chip-filter-background-active;
-    border: $chip-border-size solid $chip-filter-border-color-active;
-    @include mdc-layout-grid-media-query_("phone") {
-      border: $chip-border-size solid $chip-filter-background-active;
-    }
-  }
 }
