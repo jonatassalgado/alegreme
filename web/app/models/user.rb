@@ -14,6 +14,7 @@ class User < ApplicationRecord
 	include UserDecorators::Permissions
 	include UserDecorators::Requirements
 	include UserDecorators::Suggestions
+	include UserDecorators::Notifications
 
 
 					private

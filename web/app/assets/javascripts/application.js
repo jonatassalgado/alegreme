@@ -12,3 +12,11 @@
 //
 //= require rails-ujs
 //= require serviceworker-companion
+
+window.addEventListener('beforeinstallprompt', (e) => {
+	e.preventDefault();
+});
+
+// document.addEventListener('DOMContentLoaded', function () {
+//
+// });

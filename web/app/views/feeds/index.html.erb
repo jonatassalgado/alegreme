@@ -1,6 +1,24 @@
 <section class="me-page me-page--feed-section is-animated">
   <%= render partial: 'components/swipable/swipable' unless current_user&.personas_assortment_finished? %>
 
+  <% if current_user && current_user&.personas_assortment_finished? %>
+    <div class="me-feed__section me-feed__section--without-margin">
+      <div class="me-notification" data-controller="notification" data-active="<%= 'true' if current_user.notifications_topics_all_active %>">
+        <div class="me-switch mdc-switch" data-target="notification.switch">
+          <div class="mdc-switch__track"></div>
+          <div class="mdc-switch__thumb-underlay">
+            <div class="mdc-switch__thumb">
+              <input data-action="change->notification#change" type="checkbox" <%= 'checked' if current_user.notifications_topics_all_active %> id="another-basic-switch" class="mdc-switch__native-control" role="switch">
+            </div>
+          </div>
+        </div>
+        <label for="another-basic-switch" data-target="notification.label">Notificações
+          <span>Receba até 1 notificação por dia para avisar sobre seus eventos agendados e novos eventos que podem te interessar.</span>
+        </label>
+      </div>
+    </div>
+  <% end %>
+
   <%= render partial: 'saves',
              locals:  {
                  identifier:   'salvos',

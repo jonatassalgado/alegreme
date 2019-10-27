@@ -56,13 +56,9 @@ export default class FloatMenuController extends Controller {
 			const sectionEl                               = document.getElementById(identifier);
 			document.documentElement.style.scrollBehavior = "smooth";
 			if (this.md.mobile()) {
-
-				window.scrollTo(0, sectionEl.offsetTop + 50);
-
+				window.scrollTo(0, sectionEl.offsetTop + 16);
 			} else {
-
-				window.scrollTo(0, sectionEl.offsetTop + 20);
-
+				window.scrollTo(0, sectionEl.offsetTop - 20);
 			}
 			document.documentElement.style.scrollBehavior = ""
 		}, {timeout: 250});

@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 	# GET /users
 	# GET /users.json
 	def index
-		@users = User.order("created_at ASC")
+		@users = User.order("created_at DESC")
 	end
 
 	# GET /users/1
@@ -87,7 +87,25 @@ class UsersController < ApplicationController
 
 	# Never trust parameters from the scary internet, only allow the white list through.
 	def user_params
-		params.require(:user).permit(:name, :id, :personas_primary_name, :personas_primary_score, :personas_secondary_name, :personas_secondary_score, :personas_tertiary_name, :personas_tertiary_score, :personas_quartenary_name, :personas_quartenary_score, :personas_assortment_finished, :personas_assortment_finished_at)
+		params.require(:user).permit(:name,
+		                             :id,
+		                             :personas_primary_name,
+		                             :personas_primary_score,
+		                             :personas_secondary_name,
+		                             :personas_secondary_score,
+		                             :personas_tertiary_name,
+		                             :personas_tertiary_score,
+		                             :personas_quartenary_name,
+		                             :personas_quartenary_score,
+		                             :personas_assortment_finished,
+		                             :personas_assortment_finished_at,
+		                             :notifications_devices,
+		                             :notifications_topics => {
+				                             :all => [
+						                             :requested,
+						                             :active
+				                             ]
+		                             })
 	end
 
 	def authorize_admin_and_user

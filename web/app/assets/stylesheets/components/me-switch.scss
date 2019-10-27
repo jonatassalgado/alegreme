@@ -1,0 +1,5 @@
+@import "variables";
+
+.me-switch {
+  @include mdc-switch-toggled-on-color($brand-color);
+}

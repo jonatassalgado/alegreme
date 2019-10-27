@@ -35,4 +35,8 @@ module Clockwork
     Rake::Task["search:refresh"].invoke
   }
 
+  every(1.day, 'push', :at => '09:15') {
+    Rake::Task["push:new_events_today"].invoke
+  }
+
 end
