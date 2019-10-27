@@ -186,11 +186,13 @@ $description-color: $font-secondary-color;
 
     & .me-icon-button.mdc-icon-button {
       display: none;
-      color: $save-icon-color;
       background: $surface-color;
       transition: 0.2s all ease 0s;
-      border-radius: 100%;
+      border-radius: 10px;
       margin: 6px;
+      & svg {
+        fill: lighten($font-tertiary-color, 15%);
+      }
       @include mdc-layout-grid-media-query_("phone") {
         display: block;
       }
@@ -206,11 +208,17 @@ $description-color: $font-secondary-color;
 
 
       &:hover {
-        color: $save-icon-fill-hover;
+        background: $save-icon-fill-hover;
+        & svg {
+          fill: $surface-color;
+        }
       }
 
       &--on {
-        color: $save-icon-fill-active;
+        background: $save-icon-fill-active;
+        & svg {
+          fill: $surface-color;
+        }
       }
     }
 
@@ -261,24 +269,22 @@ $description-color: $font-secondary-color;
       }
     }
 
-    &.me-card--active {
-      //transform: scale(2, 2);
-      //background: white !important;
-      //z-index: 2;
-      //opacity: 1;
-      //border: 1px solid #f9f9f9 !important;
-      //transition: all 0.6s ease;
-      //
-      //& .me-card___animate {
-      //  transform: scale(0.5,0.5) translate(-38%,-50%);
-      //}
-    }
-
     &:hover {
       & .mdc-card__media {
         //opacity: 1;
       }
     }
+
+    //&[data-event-favorited="true"]::before {
+    //  content: close-quote;
+    //  background: lighten($brand-color, 66%);
+    //  width: 100%;
+    //  height: 100%;
+    //  position: absolute;
+    //  transform: scale(1.1);
+    //  border-radius: 10px;
+    //  z-index: -1;
+    //}
   }
 
   &--single {
@@ -496,7 +502,10 @@ $description-color: $font-secondary-color;
         background: $save-icon-background;
         transition: 0.2s all ease 0s;
         border-radius: 100%;
-        @include mdc-icon-button-ink-color($color: $save-icon-fill);
+        & svg {
+          fill: lighten($font-tertiary-color, 15%);
+        }
+        //@include mdc-icon-button-ink-color($color: $save-icon-fill);
         @include mdc-icon-button-size($width: 32px, $height: 32px, $padding: 6px);
         // @include mdc-elevation($z-value: 4);
 
@@ -505,8 +514,11 @@ $description-color: $font-secondary-color;
         }
 
         &--on {
+          & svg {
+            fill: $brand-color;
+          }
           //background: $icon-background-color;
-          @include mdc-icon-button-ink-color($color: $save-icon-fill-active);
+          //@include mdc-icon-button-ink-color($color: $save-icon-fill-active);
           // @include mdc-elevation($z-value: 2);
         }
 
