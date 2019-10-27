@@ -30,7 +30,7 @@ module EventDecorators
 					if opts[:active_range]
 						return add_to_response('próximos 90 dias', range: true, order: 9)
 					else
-						return add_to_response(I18n.l(@current_date, format: :short), order: 9)
+						return add_to_response("#{I18n.l(@current_date, format: :short)} · #{I18n.l(@current_date, format: :week)}", order: 9)
 					end
 				else
 					if opts[:active_range]
