@@ -24,7 +24,7 @@
         </section>
 
         <% if params[:pwa] %>
-          <div class="login-button" title="Entrar" onclick="location.assign('/users/auth/google_oauth2')">
+          <div class="login-button" title="Entrar" onclick="location.assign('<%= new_user_session_path %>')">
             Entrar
             <span>
           <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
@@ -32,7 +32,7 @@
           </div>
         <% end %>
 
-        <%= render partial: "welcome/invite" %>
+        <%= render partial: "welcome/invite" unless params[:pwa]%>
 
         <button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="" type="button">
           <i class="">
