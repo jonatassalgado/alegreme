@@ -16,7 +16,7 @@
   <section class="me-feed__section" style="margin: 0 auto 25px auto;">
     <div class="me-chip-set__wrapper">
       <div class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
-        <% @categories.delete_if { |category| ['anúncio', 'outlier'].include? category }.each do |category| %>
+        <% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
           <a href="<%= category_events_path category %>" class="me-chip mdc-chip <%= 'mdc-chip--selected' if category == params[:category] %>">
             <span class="mdc-chip__text"><%= category %></span>
           </a>

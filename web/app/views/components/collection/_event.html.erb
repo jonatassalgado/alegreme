@@ -74,7 +74,7 @@
     <div class="me-card__primary-section">
       <span class="me-card__category"
           data-target="event.category">
-          <%= event.categories_primary_name.try(:capitalize) %>
+          <%= link_to event.categories_primary_name.try(:capitalize), category_events_path(event.categories_primary_name) %>
       </span>
       <span aria-hidden="true"> · </span>
       <span class="me-card__date <%= 'is-highlight' if event.day_of_week['decorator'] == 'hoje' %>"

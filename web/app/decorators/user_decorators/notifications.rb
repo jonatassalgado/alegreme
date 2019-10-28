@@ -12,7 +12,7 @@ module UserDecorators
 			end
 
 			def notifications_devices=(value)
-				if notifications['devices'].size >= 5
+				if notifications['devices'].size >= 3
 					notifications['devices'].delete_at(0)
 				end
 

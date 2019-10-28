@@ -19,7 +19,6 @@
     }
   }
 
-
   & h3 {
     font-family: $font-secondary-family;
     color: $font-secondary-color;
@@ -154,6 +153,9 @@
 
       & a {
         color: $font-secondary-color;
+        &:hover {
+          color: $brand-color-aa;
+        }
       }
     }
 

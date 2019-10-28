@@ -9,6 +9,10 @@ $description-color: $font-secondary-color;
   position: relative;
   will-change: opacity, transform;
 
+  & a:hover {
+    color: $brand-color-aa;
+  }
+
   &[data-event-similar-open="true"], &[data-event-similar-open="true"]:hover {
 
     & .me-card__secondary-section a {
@@ -374,7 +378,6 @@ $description-color: $font-secondary-color;
       }
     }
 
-
     & .me-card__topics {
       text-align: center;
       margin: auto;
@@ -431,9 +434,6 @@ $description-color: $font-secondary-color;
       & i {
         float: left;
         margin: 0 10px 0 0;
-        //@include mdc-layout-grid-media-query_("phone") {
-        //  margin: 2px 10px 0 3px;
-        //}
       }
 
       & span {
@@ -452,10 +452,6 @@ $description-color: $font-secondary-color;
 
     & .me-card__date {
       margin: 0;
-
-      //& h3 {
-      //  text-transform: uppercase;
-      //}
     }
 
     & .me-card__description {
@@ -501,7 +497,7 @@ $description-color: $font-secondary-color;
       &.mdc-icon-button {
         background: $save-icon-background;
         transition: 0.2s all ease 0s;
-        border-radius: 100%;
+        border-radius: 10px;
         & svg {
           fill: lighten($font-tertiary-color, 15%);
         }
