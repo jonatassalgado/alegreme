@@ -30,7 +30,7 @@ namespace :populate do
 		end
 
 		data.each do |item|
-			place = create_place(item)
+			place          = create_place(item)
 			event, ml_data = create_event(item)
 
 			unless event
@@ -66,13 +66,14 @@ def create_place(item)
 	else
 		# @geocode = Geocoder.search(Alegreme::Geographic.get_cep_from_address(item['address'])).first if item['address']
 
-		place = Place.new
-		place.details.deep_merge!(name: item['place'])
-		place.geographic.deep_merge!(
-				address: item['address']
-		)
-		place.slug = nil
-		place.save!
+		place = Place.create!({
+				                      details:    {
+						                      name: item['place']
+				                      },
+				                      geographic: {
+						                      address: item['address']
+				                      }
+		                      })
 
 		SetGeolocationJob.perform_later(place.id)
 
@@ -90,13 +91,11 @@ def create_organizer(item, event)
 			puts "#{organizer.details['name']} - Organizador já existe".yellow
 			event.organizers << organizer unless event.organizers.include?(organizer)
 		else
-			organizer = Organizer.new
-			organizer.details.deep_merge!(
-					name: organizer_item
-			)
-
-			organizer.slug = nil
-			organizer.save!
+			organizer = Organizer.create!({
+					                              details: {
+							                              name: organizer_item
+					                              }
+			                              })
 
 			puts "#{organizer_item} - Organizador criado".blue
 
@@ -231,21 +230,21 @@ def create_event(item)
 		ml_data = JSON.parse(features_response.try(:body))
 
 		event.details.deep_merge!(
-			name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
-			description: item['description'],
-			prices:      item['prices'] || []
+				name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
+				description: item['description'],
+				prices:      item['prices'] || []
 		)
 
 		event.ocurrences.deep_merge!(
-			dates: item['datetimes']
+				dates: item['datetimes']
 		)
 
 		event.geographic.deep_merge!(
-			address:      item['address'],
-			# latlon:       @geocode.try(:coordinates),
-			# neighborhood: @geocode.try(:suburb),
-			city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
-			cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
+				address: item['address'],
+				# latlon:       @geocode.try(:coordinates),
+				# neighborhood: @geocode.try(:suburb),
+				city: item['address'] ? item['address'][/Porto Alegre/] : nil,
+				cep:  Alegreme::Geographic.get_cep_from_address(item['address'])
 		)
 
 		event.ml_data.deep_merge!(
@@ -294,11 +293,11 @@ def create_event(item)
 		)
 
 		event.geographic.deep_merge!(
-				address:      item['address'],
+				address: item['address'],
 				# latlon:       @geocode.try(:coordinates),
 				# neighborhood: @geocode.try(:suburb),
-				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
-				cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
+				city: item['address'] ? item['address'][/Porto Alegre/] : nil,
+				cep:  Alegreme::Geographic.get_cep_from_address(item['address'])
 		)
 
 		[event, ml_data]
