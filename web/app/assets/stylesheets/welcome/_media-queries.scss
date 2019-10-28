@@ -32,7 +32,7 @@ $mq-desktop				: 1382px !default;
 
 // Everything larger than a landscape tablet but less than or equal to the desktop
 @mixin desktop-only {
-  @media only screen and (min-width : $mq-tablet-landscape + 1) and (max-width : $mq-desktop) {
+  @media only screen and (min-width : $mq-tablet-landscape + 1) {
     @content;
   }
 }
