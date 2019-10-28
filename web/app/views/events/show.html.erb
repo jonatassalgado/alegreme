@@ -31,10 +31,30 @@
      "@id": "<%= category_events_url(@event.categories_primary_name) %>",
      "name": "<%= "Eventos em Porto Alegre na categoria #{@event.categories_primary_name.try(:capitalize)}" %>"
    }
+  },
+  {
+    "@type": "ListItem",
+    "position": 3,
+    "item":
+     {
+       "@id": "<%= day_events_url(@event.day_of_week['date'].strftime('%d-%m-%Y')) %>",
+       "name": "<%= "Eventos em Porto Alegre dia #{I18n.l(@event.day_of_week['date'], format: :long)}" %>"
+     }
+  },
+  {
+    "@type": "ListItem",
+    "position": 4,
+    "item":
+     {
+       "@id": "<%= place_path(@event.place) %>",
+       "name": "<%= "Eventos em #{limit_place_name_size(@event.place_details_name, 30)}" %>"
+     }
   }
  ]
 }
-</script>
+
+
+  </script>
 
   <script type="application/ld+json">
 {
@@ -77,6 +97,8 @@
 }
 
 
+
+
   </script>
 
   <div id="event" class="me-card me-card--single event-<%= @event.id %>"
@@ -86,6 +108,18 @@
        data-event-identifier="<%= @event.id %>"
        data-event-description-open="false"
        data-event-modifier="single">
+
+    <% unless mobile_device? %>
+      <div class="me-card__breadcrumb">
+        <span><%= link_to "Porto Alegre", city_events_url %></span>
+        <i>></i>
+        <span><%= link_to @event.categories_primary_name, category_events_url(@event.categories_primary_name) %></span>
+        <i>></i>
+        <span><%= link_to I18n.l(@event.day_of_week['date'], format: :long), day_events_url(@event.day_of_week['date'].strftime('%d-%m-%Y')) %></span>
+        <i>></i>
+        <span><%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place) %></span>
+      </div>
+    <% end %>
 
     <div class="me-card__head">
       <div class="me-card__media" style="<%= get_image_style_attr @event %>; background-image: url('<%= @event.image[:original].url(public: true) %>')">
@@ -147,7 +181,7 @@
             </i>
             <div>
               <div class="me-card__place-title">
-                <%= "#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }" %>
+                <%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y')) %>
               </div>
               <span>
               <%= I18n.l(@event.day_of_week['date'], format: :long) %>

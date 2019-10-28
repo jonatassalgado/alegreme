@@ -1,8 +1,8 @@
 include Pagy::Backend
 
 class FeedsController < ApplicationController
-	before_action :authorize_user, except: [:today, :category, :week, :city]
-	before_action :completed_swipable, except: [:today, :category, :week, :city]
+	before_action :authorize_user, except: [:today, :category, :week, :city, :day]
+	before_action :completed_swipable, except: [:today, :category, :week, :city, :day]
 
 
 	def index
@@ -186,7 +186,7 @@ class FeedsController < ApplicationController
 				                                                                              identifier: 'city',
 				                                                                              events:     Event.all
 		                                                                              }, {
-				                                                                              limit: 24,
+				                                                                              limit:           24,
 				                                                                              with_high_score: true
 		                                                                              })
 
@@ -207,6 +207,36 @@ class FeedsController < ApplicationController
 				}
 		}
 	end
+
+	def day
+		@day                = Date.parse params[:day]
+		@events_in_this_day = Event.in_days([@day.beginning_of_day.to_s])
+		@collection         = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                                      identifier: 'day',
+				                                                                                      events:     @events_in_this_day
+		                                                                                      }, {
+				                                                                                      only_in:         @events_in_this_day.map(&:id),
+				                                                                                      limit: 12
+		                                                                                      })
+
+		@locals = {
+				items:      @collection,
+				title:      {
+						principal: "Eventos em Porto Alegre que ocorren dia #{I18n.l(@day, format: :short)}",
+						secondary: "Explore todos os eventos que ocorrem em Porto Alegre - RS no dia #{I18n.l(@day, format: :long)}"
+				},
+				identifier: 'day',
+				opts:       {
+						filters: {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						},
+						detail:  @collection[:detail],
+				}
+		}
+	end
+
 
 	private
 
