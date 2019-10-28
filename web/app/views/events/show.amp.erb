@@ -1,19 +1,19 @@
-<% content_for :meta_title, "Evento #{@event.details_name.gsub(/[^[0-9][$][-]\p{L}\p{M}*+ ]|[+]/i, '')} em Porto Alegre" %>
+<% content_for :meta_title, "Evento #{@event.details_name.gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, '')} em Porto Alegre" %>
 <% content_for :meta_description, strip_tags(limit_description_size(@event.details_description, 160)) %>
-<% content_for :meta_image, @event.image[:original].url %>
+<% content_for :meta_image, @event.image[:original].url(public: true) %>
 
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "<%= @event.details_name.gsub(/[^[0-9][$][-]\p{L}\p{M}*+ ]|[+]/i, '') %>",
+  "name": "<%= @event.details_name.gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, '') %>",
   "startDate": "<%= @event.ld_json.start_date %>",
   "endDate": "<%= @event.ld_json.end_date %>",
   "image": [
-    "<%= @event.image[:original].url %>"
+    "<%= @event.image[:original].url(public: true) %>"
    ],
-  "description": "<%= strip_tags(@event.details_description).gsub(/[^[0-9][$][-]\p{L}\p{M}*+ ]/i, '') %>",
+  "description": "<%= strip_tags(@event.details_description).gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
   "url": "<%= event_path @event %>",
   "location": {
     "@type": "Place",

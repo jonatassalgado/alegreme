@@ -1,8 +1,8 @@
 include Pagy::Backend
 
 class FeedsController < ApplicationController
-	before_action :authorize_user, except: [:today, :category, :week]
-	before_action :completed_swipable, except: [:today, :category, :week]
+	before_action :authorize_user, except: [:today, :category, :week, :city]
+	before_action :completed_swipable, except: [:today, :category, :week, :city]
 
 
 	def index
@@ -170,6 +170,33 @@ class FeedsController < ApplicationController
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos de #{params[:category]} em Porto Alegre - RS"
 				},
 				identifier: 'category',
+				opts:       {
+						filters: {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						},
+						detail:  @collection[:detail],
+				}
+		}
+	end
+
+	def city
+		@collection = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                              identifier: 'city',
+				                                                                              events:     Event.all
+		                                                                              }, {
+				                                                                              limit: 24,
+				                                                                              with_high_score: true
+		                                                                              })
+
+		@locals = {
+				items:      @collection,
+				title:      {
+						principal: "Eventos em Porto Alegre",
+						secondary: "Explore todos os eventos que ocorrem em Porto Alegre - RS"
+				},
+				identifier: 'city',
 				opts:       {
 						filters: {
 								ocurrences: true,

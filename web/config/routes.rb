@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 	get '/feed', to: 'feeds#index'
 	get '/onboarding', to: 'bot#onboarding'
 
+	get '/porto-alegre/eventos', to: 'feeds#city', as: :city_events
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
 	get '/porto-alegre/eventos/semana', to: 'feeds#week', as: :week_events
 	get '/porto-alegre/eventos/categoria/:category', to: 'feeds#category', as: :category_events
