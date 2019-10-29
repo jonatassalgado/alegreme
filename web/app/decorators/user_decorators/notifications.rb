@@ -8,7 +8,7 @@ module UserDecorators
 
 		module InstanceMethods
 			def notifications_devices
-				notifications.dig('devices')
+				notifications.dig('devices') || []
 			end
 
 			def notifications_devices=(value)
@@ -26,7 +26,7 @@ module UserDecorators
 			end
 
 			def notifications_topics
-				notifications.dig('topics')
+				notifications.dig('topics') || {}
 			end
 
 			def notifications_topics=(value)

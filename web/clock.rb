@@ -11,7 +11,7 @@ module Clockwork
   configure do |config|
     config[:logger] = Logger.new('log/clockwork.log')
     config[:tz] = 'America/Sao_Paulo'
-    config[:max_threads] = 5
+    config[:max_threads] = 4
     config[:thread] = true
   end
 
@@ -37,6 +37,10 @@ module Clockwork
 
   every(1.day, 'push', :at => '09:15') {
     Rake::Task["push:new_events_today"].invoke
+  }
+
+  every(1.day, 'push', :at => '17:05') {
+    Rake::Task["push:saved_events_tomorrow"].invoke
   }
 
 end

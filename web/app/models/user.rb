@@ -16,8 +16,16 @@ class User < ApplicationRecord
 	include UserDecorators::Suggestions
 	include UserDecorators::Notifications
 
+	scope 'with_saved_events', lambda {
+		where("jsonb_array_length(taste -> 'events' -> 'saved') > 0")
+	}
 
-					private
+	scope 'with_notifications_actived', lambda {
+		where("(notifications -> 'topics' -> 'all' ->> 'active')::boolean")
+	}
+
+
+	private
 
 	def validate_taste_existence(dictionary = 'events')
 		taste[dictionary] ||= {}
