@@ -3,10 +3,11 @@ import {MDCSwitch}      from '@material/switch';
 import {SnackBarModule} from "../modules/snackbar-module";
 
 export default class NotificationController extends Controller {
-	static targets = ["switch", "label"];
+	static targets = ["switch", "label", "input"];
 
 	initialize() {
-		this.MDCSwitch = new MDCSwitch(this.switchTarget);
+		this.MDCSwitch         = new MDCSwitch(this.switchTarget);
+		this.MDCSwitch.checked = !(("Notification" in window) && Notification.permission === "default");
 	}
 
 	disconnect() {

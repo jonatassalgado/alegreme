@@ -8,7 +8,7 @@
           <div class="mdc-switch__track"></div>
           <div class="mdc-switch__thumb-underlay">
             <div class="mdc-switch__thumb">
-              <input data-action="change->notification#change" type="checkbox" <%= 'checked' if current_user.notifications_topics_all_active %> id="another-basic-switch" class="mdc-switch__native-control" role="switch">
+              <input data-target="notification.input" data-action="change->notification#change" type="checkbox" <%= 'checked' if current_user.notifications_topics_all_active %> id="another-basic-switch" class="mdc-switch__native-control" role="switch">
             </div>
           </div>
         </div>
