@@ -14,7 +14,7 @@ class FeedsController < ApplicationController
 
 		collections ||= EventServices::CollectionCreator.new(current_user, params)
 
-		new_events_today     = Event.where("created_at > ?", DateTime.now - 1)
+		new_events_today     = Event.where("created_at > ?", DateTime.now.beginning_of_day - 2)
 		collection_new_today = collections.call({
 				                                        identifier: 'new-today',
 				                                        events:     new_events_today
@@ -215,8 +215,8 @@ class FeedsController < ApplicationController
 				                                                                                      identifier: 'day',
 				                                                                                      events:     @events_in_this_day
 		                                                                                      }, {
-				                                                                                      only_in:         @events_in_this_day.map(&:id),
-				                                                                                      limit: 12
+				                                                                                      only_in: @events_in_this_day.map(&:id),
+				                                                                                      limit:   12
 		                                                                                      })
 
 		@locals = {
