@@ -47,7 +47,7 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 6
+CONCURRENT_REQUESTS = 5
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -104,8 +104,8 @@ DOWNLOADER_MIDDLEWARES = {
 #      'Firefox/55.0')  # firefox
 # ]
 
-DEPTH_LIMIT = 5
-CLOSESPIDER_ITEMCOUNT=1000
+DEPTH_LIMIT = 4
+CLOSESPIDER_ITEMCOUNT=600
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -138,7 +138,7 @@ AUTOTHROTTLE_ENABLED = True
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = False
+HTTPCACHE_ENABLED = True
 #HTTPCACHE_EXPIRATION_SECS = 0
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
