@@ -13,6 +13,7 @@ module UserDecorators
 
 			def notifications_devices=(value)
 				if notifications['devices'].size >= 3
+					# UnsubscribeDeviceFromPushyJob.perform_later(notifications['devices'][0])
 					notifications['devices'].delete_at(0)
 				end
 

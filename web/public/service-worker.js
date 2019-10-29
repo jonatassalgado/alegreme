@@ -9,14 +9,14 @@ self.addEventListener('push', function (event) {
 
 	var title   = data.title || '';
 	var body    = data.message || '';
-	var actions = data.actions || [];
+	var actions = data.actions ? JSON.parse(data.actions) : [];
 
 	// Notification options
 	var options = {
 		body   : body,
 		icon   : image,
 		badge  : badge,
-		actions: JSON.parse(actions),
+		actions: actions,
 		data   : {
 			url: data.url
 		}
