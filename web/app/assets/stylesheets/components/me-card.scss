@@ -115,21 +115,29 @@ $description-color: $font-secondary-color;
 
   &__similar {
     .me-feed__section & {
-      text-align: center;
-      align-self: center;
       cursor: pointer;
-      color: $font-tertiary-color;
+      color: $brand-color;
       opacity: 0;
       transition: opacity 0.15s ease;
       user-select: none;
       z-index: 2;
       position: relative;
-      top: 6px;
+      top: 3px;
+      left: -8px;
       @include mdc-layout-grid-media-query_("phone") {
         margin-bottom: 12px;
         opacity: 1;
       }
+
+      & .mdc-button::before, .mdc-button::after {
+        background-color: transparent;
+      }
+
+      & svg {
+        fill: $brand-color;
+      }
     }
+
 
     & .me-card__loading svg {
       opacity: 0;
