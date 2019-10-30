@@ -4,6 +4,8 @@ namespace :push do
 	desc 'Envia push para usuários avisando dos eventos salvos'
 	task saved_events_tomorrow: :environment do
 
+		puts "Task push:saved_events_tomorrow iniciada em #{DateTime.now}}".white
+
 		pushy_app = Rpush::Pushy::App.find_by_name("Alegreme")
 
 		unless pushy_app
@@ -41,13 +43,18 @@ namespace :push do
 						          }]
 				}
 				notification.time_to_live     = 18000
-				notification.save!
+				if notification.save!
+					puts "Notificação agendada para #{user.id} no device #{device}".white
+				else
+					puts "Ocorreu algum problema ao criar a notificação para #{user.id} no device #{device}".red
+				end
 			end
 		end
 
 		Rpush.push
 		Rpush.apns_feedback
 
+		puts "Task push:saved_events_tomorrow finalizada em #{DateTime.now}}".white
 		puts "Notificações agendadas para #{users_to_notify.size} usuários".green
 
 	end

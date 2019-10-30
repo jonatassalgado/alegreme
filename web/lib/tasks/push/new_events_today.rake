@@ -4,6 +4,8 @@ namespace :push do
 	desc 'Envia push para usuários sobre os novos eventos adicionados no dia'
 	task new_events_today: :environment do
 
+		puts "Task push:new_events_today iniciada em #{DateTime.now}}".white
+
 		pushy_app = Rpush::Pushy::App.find_by_name("Alegreme")
 
 		unless pushy_app
@@ -37,13 +39,18 @@ namespace :push do
 							          }]
 					}
 					notification.time_to_live     = 14400
-					notification.save!
+					if notification.save!
+						puts "Notificação agendada para #{user.id} no device #{device}".white
+					else
+						puts "Ocorreu algum problema ao criar a notificação para #{user.id} no device #{device}".red
+					end
 				end
 			end
 
 			Rpush.push
 			Rpush.apns_feedback
 
+			puts "Task push:new_events_today finalizada em #{DateTime.now}}".white
 			puts "Notificações agendadas para #{users.size} usuários".green
 		else
 			puts "Notificações não agendadas - Apenas #{events_count} novos".yellow
