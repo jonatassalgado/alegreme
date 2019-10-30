@@ -74,9 +74,10 @@ class FeedsController < ApplicationController
 		collection_explorer = collections.call(
 				{
 						identifier: 'explorer',
-						events:     Event.all
+						events:     Event.limit(100)
 				}, {
 						user:             current_user,
+						limit:            8,
 						order_by_persona: true,
 						not_in:           (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
 								                  (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
