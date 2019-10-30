@@ -5,8 +5,17 @@ class TrainController < ApplicationController
 
 	def index
 		if params[:q]
-			# events         = Event.search(params[:q].downcase, fields: ["name^5", "organizers^3", "place^2", "description", "category"], limit: 40, includes: [:place])
-			# @pagy, @events = pagy(events, items: 30)
+			query = params[:q].downcase.split.delete_if { |word| Event::STOPWORDS.include?(word) }.join(' ')
+
+			@events = Event.search(query, {
+																			fields:       ["name^2", "organizers", "description", "category"],
+																			suggest:      true,
+																			limit:        150,
+																			includes:     [:place],
+																			operator:     "or",
+																			body_options: {min_score: 100}
+																		})
+
 		else
 			events_not_trained_yet = get_events_not_trained_yet
 			@pagy, @events         = pagy(events_not_trained_yet, items: 6)

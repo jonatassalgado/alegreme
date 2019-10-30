@@ -27,4 +27,4 @@
   <%= render partial: 'layouts/classifier/classifier', collection: @events, as: :event, cached: true %>
 </table>
 
-<%== pagy_nav(@pagy) %>
+<%== pagy_nav(@pagy) if @pagy %>
