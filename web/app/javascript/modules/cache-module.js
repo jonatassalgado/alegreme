@@ -47,9 +47,9 @@ const CacheModule = (function () {
 						      if (response) {
 							      console.log("Cache v1:sw-cache-feed-page deleted: ", response);
 						      }
-						      cache.add('/feed').then(() => {
-                                console.log("Cache v1:sw-cache-feed-page updated: ");
-						      })
+						      // cache.add('/feed').then(() => {
+                  //               console.log("Cache v1:sw-cache-feed-page updated: ");
+						      // })
 					      });
 			      })
 			      .catch(reason => {

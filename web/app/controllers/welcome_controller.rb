@@ -1,10 +1,10 @@
 class WelcomeController < ApplicationController
+	before_action :verify_permissions, only: %i[index]
+
 
 	layout 'welcome'
 
 	def index
-		redirect_to feed_path if current_user.try(:admin?)
-
 		@invites_count    = count_invites
 		@events_count     = Rails.cache.fetch("welcome-events-count", expires_in: 1.day) { Event.active.length }
 		@organizers_count = Rails.cache.fetch("welcome-organizers-count", expires_in: 1.day) { Organizer.count }
@@ -27,6 +27,13 @@ class WelcomeController < ApplicationController
 
 
 	private
+
+	def verify_permissions
+		if current_user&.has_permission_to_login?
+			current_user.update_tracked_fields!(request)
+			redirect_to feed_path and return
+		end
+	end
 
 	def count_invites
 		1226 + User.all.count
