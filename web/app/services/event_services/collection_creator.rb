@@ -46,6 +46,7 @@ module EventServices
 					in_kinds:          set_initial_kinds_filter,
 					in_organizers:     set_initial_organizers_filter,
 					in_places:         set_initial_places_filter,
+					in_user_personas:  set_in_user_personas,
 					order_by_date:     set_order_by_date,
 					order_by_persona:  set_order_by_persona,
 					order_by_ids:      set_order_by_ids,
@@ -214,6 +215,14 @@ module EventServices
 
 		def set_initial_places_filter
 			@params[:places] || @opts[:in_places] || []
+		end
+
+		def set_in_user_personas
+			if @params.include?(:init_filters_applyed)
+				@init_filters_applyed['in_user_personas']
+			else
+				@params[:in_user_personas] || @opts[:in_user_personas] || false
+			end
 		end
 
 		def set_order_by_persona

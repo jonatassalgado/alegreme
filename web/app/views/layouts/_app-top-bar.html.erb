@@ -102,7 +102,7 @@
           <img class="me-top-app-bar__picture" src="<%= current_user.picture %>" alt="<%= current_user.name %>">
         <% end %>
         <div style="flex-direction: row">
-          <%= link_to current_user.name, edit_user_path(current_user), class: "me-top-app-bar__name" %> <br>
+          <%= link_to current_user.first_name, edit_user_path(current_user), class: "me-top-app-bar__name" %> <br>
           <%= link_to "Sair", destroy_user_session_path, method: :delete, class: "me-top-app-bar__logout" %>
         </div>
       <% else %>

@@ -16,8 +16,9 @@ module EventQueries
 			scope 'in_user_personas', lambda { |user, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
 				if opts[:turn_on] && user
-					where("(ml_data -> 'personas' -> 'primary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary, 'geral') OR
-           (ml_data -> 'personas' -> 'secondary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary, 'geral')",
+					where("(ml_data -> 'personas' -> 'primary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary) OR
+           (ml_data -> 'personas' -> 'secondary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary) AND
+					 (ml_data -> 'personas' -> 'secondary' ->> 'score')::numeric >= 0.35",
 					      primary:  user.personas_primary_name, secondary: user.personas_secondary_name,
 					      tertiary: user.personas_tertiary_name, quartenary: user.personas_quartenary_name)
 				else

@@ -22,8 +22,9 @@ class FeedsController < ApplicationController
 		                                        {
 				                                        only_in:          new_events_today.map(&:id),
 				                                        order_by_persona: true,
-				                                        in_user_personas: true
-		                                        })
+				                                        in_user_personas: true,
+																								not_in_categories: ['curso']
+		                                        }) if current_user.sign_in_count >= 2
 
 		collection_week = collections.call(
 				{
@@ -77,7 +78,6 @@ class FeedsController < ApplicationController
 				}, {
 						user:             current_user,
 						order_by_persona: true,
-						limit:            12,
 						not_in:           (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
 								                  (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
 				}

@@ -122,7 +122,11 @@ module EventServices
 
 		def get_sockets_status(sockets = {})
 			toggles    = {}
-			order_keys = [:order_by_date, :order_by_persona, :with_high_score]
+			order_keys = [
+				:order_by_date,
+				:order_by_persona,
+				:with_high_score,
+				:in_user_personas]
 
 			sockets.keys.map do |key|
 				if order_keys.include? key
