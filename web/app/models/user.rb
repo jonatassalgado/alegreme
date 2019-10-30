@@ -24,6 +24,9 @@ class User < ApplicationRecord
 		where("(notifications -> 'topics' -> 'all' ->> 'active')::boolean")
 	}
 
+	def remember_me
+    true
+  end
 
 	private
 
