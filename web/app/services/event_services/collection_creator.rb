@@ -64,7 +64,7 @@ module EventServices
 							in_days: @params[:ocurrences] || [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s]
 					},
 					'this-week'          => {
-							in_days:          @params[:ocurrences] || (@today..(@today + 8)).map(&:to_s),
+							in_days:          set_initial_dates_filter || (@today..(@today + 8)).map(&:to_s),
 							in_user_personas: false,
 							order_by_persona: true,
 							not_in_categories: ['brecho', 'curso'],
@@ -200,13 +200,7 @@ module EventServices
 		end
 
 		def set_initial_dates_filter
-			# if params_filters_ocurrences_exist?
-			# 	@params[:ocurrences]
-			# # elsif @init_filters_applyed['in_days']
-			# # 	@init_filters_applyed['in_days']
-			# else
-			@params[:ocurrences] || @opts[:in_days] || []
-			# end
+			@params[:ocurrences] || @opts[:in_days] || @default_filters['ocurrences'] || @init_filters_applyed['in_days'] || []
 		end
 
 		def set_initial_organizers_filter

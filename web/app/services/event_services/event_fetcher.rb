@@ -138,7 +138,6 @@ module EventServices
 
 			default_sockets = {
 					in_days:             false,
-					in_user_personas:    false,
 					in_user_suggestions: false,
 					in_kinds:            false,
 					in_categories:       false,
