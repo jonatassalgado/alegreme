@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 		get 'porto-alegre/eventos/today', to: 'events#today', as: :today_and_tomorrow_events
 		get 'porto-alegre/eventos/week', to: 'events#week', as: :week_events
 		get 'porto-alegre/eventos/category/:category', to: 'events#category', as: :category_events
+		post 'collections', to: 'collections#index', as: :collections
 	end
 
 	get '/feed', to: 'feeds#index'
@@ -44,7 +45,7 @@ Rails.application.routes.draw do
 	resources :users
 	get '/active-invite', to: 'users#active_invite'
 
-	resources :collections, only: [:index]
+
 	resources :categories
 	resources :organizers, path: 'organizadores'
 	resources :places, path: 'porto-alegre/locais'

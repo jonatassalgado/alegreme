@@ -1,5 +1,4 @@
 import {Controller}        from "stimulus";
-import {stringify}         from "query-string";
 import Flipping            from 'flipping';
 import {ProgressBarModule} from "../modules/progressbar-module";
 import * as MobileDetect   from "mobile-detect";
@@ -136,33 +135,31 @@ export default class FilterController extends Controller {
 			if (promises.length) {
 				Promise.all(promises)
 				       .then((resultsArray) => {
-					       const urlWithFilters = stringify(
-						       {
-							       personas            : resultsArray[0],
-							       categories          : resultsArray[1],
-							       ocurrences          : resultsArray[2],
-							       kinds               : resultsArray[3],
-							       identifier          : this.sectionIdentifier,
-							       title               : this.title,
-							       defaults            : this.defaultValue,
-							       init_filters_applyed: this.initFiltersApplyed,
-							       origin              : this.origin,
-							       similar             : opts.similar,
-							       insert_after        : opts.insert_after,
-							       limit               : opts.limit
-						       },
-						       {
-							       arrayFormat: 'bracket'
-						       });
+					       const params = {
+						       personas            : resultsArray[0],
+						       categories          : resultsArray[1],
+						       ocurrences          : resultsArray[2],
+						       kinds               : resultsArray[3],
+						       identifier          : this.sectionIdentifier,
+						       title               : this.title,
+						       defaults            : this.defaultValue,
+						       init_filters_applyed: this.initFiltersApplyed,
+						       origin              : this.origin,
+						       similar             : opts.similar,
+						       insert_after        : opts.insert_after,
+						       limit               : opts.limit
+					       };
 
-					       fetch(`/collections?${urlWithFilters}`, {
-						       method     : 'get',
+					       fetch(`/api/collections`, {
+						       method     : 'POST',
 						       headers    : {
+							       'Content-type'    : 'application/json; charset=UTF-8',
+							       'Accept'          : 'text/javascript',
 							       'X-Requested-With': 'XMLHttpRequest',
-							       'Content-type'    : 'text/javascript; charset=UTF-8',
 							       'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 						       },
-						       credentials: 'same-origin'
+						       credentials: 'same-origin',
+						       body       : JSON.stringify(params)
 					       })
 						       .then(
 							       (response) => {

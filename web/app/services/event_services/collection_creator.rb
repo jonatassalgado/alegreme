@@ -291,7 +291,7 @@ module EventServices
 			if organizers_filter_exist || places_filter_exist
 				return nil
 			else
-				if @params[:limit] && JSON.parse(@params[:limit]) > 8
+				if @params[:limit] && @params[:limit].to_i > 8
 					return nil
 				else
 					if opts[:auto_balance] && params_filter_category_exist?

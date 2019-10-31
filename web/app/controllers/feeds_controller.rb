@@ -74,7 +74,7 @@ class FeedsController < ApplicationController
 		collection_explorer = collections.call(
 				{
 						identifier: 'explorer',
-						events:     Event.limit(100)
+						events:     Event.all
 				}, {
 						user:             current_user,
 						limit:            8,
