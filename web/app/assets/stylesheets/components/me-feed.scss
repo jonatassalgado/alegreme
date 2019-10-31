@@ -73,7 +73,7 @@ $mdc-layout-grid-columns: (
       line-height: 1.2em;
       @include mdc-layout-grid-media-query_("phone") {
         padding: 0 $section-padding-phone;
-        font-size: 14px;
+        font-size: 13px;
       }
     }
 

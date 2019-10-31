@@ -85,7 +85,7 @@
       line-height: 160%;
       @include mdc-layout-grid-media-query_("phone") {
         max-width: 95vw;
-        //text-align: center;
+        font-size: 12px;
         line-height: 1.6em;
       }
 

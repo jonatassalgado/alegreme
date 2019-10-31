@@ -27,7 +27,7 @@
     display: block;
     padding: 0;
     @include mdc-layout-grid-media-query_("phone") {
-      padding: 2px $section-padding-phone;
+      padding: 0 $section-padding-phone;
     }
 
     &[data-target="chip.chipset filter.ocurrences"] {
@@ -60,11 +60,8 @@
       border: $chip-border-size solid $border-color;
       text-transform: uppercase;
       transition: $chip-transition;
-    }
-
-    & .mdc-chip {
       @include mdc-layout-grid-media-query_("phone") {
-        // border: unset;
+        padding: 12px 8px;
       }
     }
 
