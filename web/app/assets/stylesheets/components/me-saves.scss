@@ -171,7 +171,7 @@ $gutter: 6px;
     &__date {
       pointer-events: none;
       margin: 3px 0 0 0;
-      line-height: 1.1em;
+      line-height: 1.3em;
       color: $font-secondary-color;
 
       &:hover {
@@ -190,7 +190,7 @@ $gutter: 6px;
     &__date {
       color: $font-secondary-color;
       text-transform: uppercase;
-      font-size: 12px;
+      font-size: 11px;
       margin: 8px 0 6px 0;
       font-weight: 800;
       min-height: 1.1em;

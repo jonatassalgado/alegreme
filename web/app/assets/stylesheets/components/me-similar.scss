@@ -68,7 +68,7 @@
       right: 4px;
 
       & .me-icon-button.mdc-icon-button {
-        @include mdc-icon-button-size($width: 20px, $height: 20px, $padding: 12px);
+        @include mdc-icon-button-size($width: 16px, $height: 16px, $padding: 8px);
       }
     }
 

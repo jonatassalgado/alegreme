@@ -8,9 +8,6 @@
     <% if current_user and !current_user.taste_events_saved.empty? %>
       <h2 data-target="saves.header" class="">
         Eventos salvos
-<!--        <i class="material-icons">-->
-<!--          chevron_right-->
-<!--        </i>-->
       </h2>
       <div class="me-icon__group">
         <div data-target="saves.scrollLeft" data-action="click->saves#scrollLeft"
@@ -60,7 +57,7 @@
                          data-target="saves-events.overlay"></div>
                   </div>
                   <div class="me-card__date <%= 'is-highlight' if ['hoje', 'amanhã'].include?(event.day_of_week['decorator'])  %>" data-target="saves-events.date">
-                    <%= event.day_of_week['decorator'] %>
+                    <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
                   </div>
                 </a>
               </div>
