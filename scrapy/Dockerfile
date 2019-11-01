@@ -22,4 +22,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 7654
 
 
-CMD scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
+CMD ["scrapy", "shell", "--nolog"]

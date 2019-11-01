@@ -23,6 +23,10 @@ restart:
 down:
 	docker-compose -f docker-compose.development.yml down
 
+ps:
+	docker-compose -f docker-compose.development.yml ps
+	
+
 console:
 	$(EXEC) bash
 

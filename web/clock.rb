@@ -27,15 +27,15 @@ module Clockwork
     Rake::Task["db:dump"].invoke
   }
 
-  every(1.day, 'populate:facebook', :at => '06:00') {
-    Rake::Task["populate:facebook"].invoke
-    Rake::Task["similar:events"].invoke
-    Rake::Task["suggestions:users"].invoke
-    Rake::Task["sitemap:refresh"].invoke
-    Rake::Task["search:refresh"].invoke
-  }
+  # every(1.day, 'populate:facebook', :at => '06:00') {
+  #   Rake::Task["populate:facebook"].invoke
+  #   Rake::Task["similar:events"].invoke
+  #   Rake::Task["suggestions:users"].invoke
+  #   Rake::Task["sitemap:refresh"].invoke
+  #   Rake::Task["search:refresh"].invoke
+  # }
 
-  every(1.day, 'push:new_events_today', :at => '09:15') {
+  every(1.day, 'push:new_events_today', :at => '12:15') {
     Rake::Task["push:new_events_today"].invoke
   }
 

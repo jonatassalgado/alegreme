@@ -150,8 +150,8 @@ services:
       - ./logs/scrapy:/var/www/scrapy/log
     ports:
       - "7654:7654"
-    restart: always
-    command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
+    restart: on-failure
+    # command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
     mem_limit: 3gb
     memswap_limit: 4gb
     cpus: 2
@@ -205,4 +205,16 @@ services:
     memswap_limit: 2gb
     mem_reservation: 256m
     cpus: 1.5
+    restart: always
+  ofelia:
+    image: 'mcuadros/ofelia:latest'
+    volumes:
+      - ./ofelia/conf/config.ini:/etc/ofelia/config.ini
+      - /home/centos/.docker/config.json:/root/.docker/config.json
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./logs/ofelia:/tmp/logs
+    mem_limit: 2gb
+    memswap_limit: 2gb
+    mem_reservation: 256m
+    cpus: 1
     restart: always
