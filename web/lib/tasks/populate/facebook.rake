@@ -13,12 +13,26 @@ require_relative '../../../app/uploaders/image_uploader'
 namespace :populate do
 	desc 'Populate events scraped from facebook'
 	task facebook: :environment do
+
+		puts "Task populate:facebook iniciada em #{DateTime.now}}".white
+
+		last_task_performed = Artifact.where.contains(details: {
+																										name: "populate:facebook",
+																										type: "task"
+																										}).first
+
 		# noinspection RubyArgCount
 		@uploader               = ImageUploader.new(:store)
 		@events_create_counter  = 0
 		@events_similar_counter = 0
 
 		read_file
+
+		if last_task_performed.data['last_file_used'] == @current_file
+			puts "Task já realizada para o arquivo #{@current_file}".yellow
+			return false
+		end
+
 
 		begin
 			data = JSONL.parse(@current_file)
@@ -51,8 +65,24 @@ namespace :populate do
 			associate_event_place(event, place)
 			create_organizer(item, event)
 			classify_event(event, ml_data)
-			save_event(event)
+
+			if save_event(event)
+				if last_task_performed
+					last_task_performed.touch
+				else
+					Artifact.create(
+						details: {
+							name: "populate:facebook",
+							type: "task"
+							},
+						data: {
+							last_file_used: @current_file
+							})
+		    end
+			end
 		end
+
+		puts "Task populate:facebook finalizada em #{DateTime.now}}".white
 	end
 end
 
@@ -106,10 +136,12 @@ end
 
 def save_event(event)
 	event.slug = nil
-	event.save!
 
-	@events_create_counter += 1
-	puts "#{event.details['name'][0..60]} criado #{@events_create_counter}".green
+	if event.save!
+		@events_create_counter += 1
+		puts "#{event.details['name'][0..60]} criado #{@events_create_counter}".green
+		return true
+	end
 end
 
 def classify_event(event, ml_data)

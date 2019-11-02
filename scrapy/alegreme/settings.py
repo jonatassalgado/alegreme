@@ -105,7 +105,7 @@ DOWNLOADER_MIDDLEWARES = {
 # ]
 
 DEPTH_LIMIT = 4
-CLOSESPIDER_ITEMCOUNT=100
+CLOSESPIDER_ITEMCOUNT=120
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
