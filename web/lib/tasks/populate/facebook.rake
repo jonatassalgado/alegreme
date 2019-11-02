@@ -28,9 +28,9 @@ namespace :populate do
 
 		read_file
 
-		if last_task_performed.data['last_file_used'] == @current_file
+		if last_task_performed.try {|ltp| ltp.data['last_file_used'] == @current_file }
 			puts "Task já realizada para o arquivo #{@current_file}".yellow
-			return false
+			abort
 		end
 
 

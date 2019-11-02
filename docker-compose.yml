@@ -160,7 +160,7 @@ services:
     ports:
       - 8050:8050
       - 5023:5023
-    restart: always
+    restart: on-failure
     volumes:
       - splash_data:/var/www/splash/data
     mem_limit: 4gb
@@ -206,15 +206,15 @@ services:
     mem_reservation: 256m
     cpus: 1.5
     restart: always
-  ofelia:
-    image: 'mcuadros/ofelia:latest'
-    volumes:
-      - ./ofelia/conf/config.ini:/etc/ofelia/config.ini
-      - /home/centos/.docker/config.json:/root/.docker/config.json
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./logs/ofelia:/tmp/logs
-    mem_limit: 2gb
-    memswap_limit: 2gb
-    mem_reservation: 256m
-    cpus: 1
-    restart: always
+  # ofelia:
+  #   image: 'mcuadros/ofelia:latest'
+  #   volumes:
+  #     - ./ofelia/conf/config.ini:/etc/ofelia/config.ini
+  #     - /home/centos/.docker/config.json:/root/.docker/config.json
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ./logs/ofelia:/tmp/logs
+  #   mem_limit: 2gb
+  #   memswap_limit: 2gb
+  #   mem_reservation: 256m
+  #   cpus: 1
+  #   restart: always
