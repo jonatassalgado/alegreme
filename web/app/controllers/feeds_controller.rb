@@ -20,19 +20,16 @@ class FeedsController < ApplicationController
 				                                        events:     new_events_today
 		                                        },
 		                                        {
-				                                        only_in:          new_events_today.map(&:id),
-				                                        order_by_persona: true,
-				                                        in_user_personas: true,
-																								not_in_categories: ['curso']
+				                                        only_in:           new_events_today.map(&:id),
+				                                        order_by_persona:  true,
+				                                        in_user_personas:  true,
+				                                        not_in_categories: ['curso']
 		                                        }) if current_user.sign_in_count >= 2
 
 		collection_week = collections.call(
 				{
 						identifier: 'this-week',
 						events:     Event.all
-				},
-				{
-						group_by: 2
 				})
 
 		collection_suggestions = if current_user&.has_events_suggestions?
@@ -43,7 +40,9 @@ class FeedsController < ApplicationController
 					                         }
 			                         )
 			                       else
-				                       {}
+				                       {
+						                       with_high_score: false
+				                       }
 		                         end
 
 		collection_follow = if current_user&.has_following_resources?
@@ -79,6 +78,7 @@ class FeedsController < ApplicationController
 						user:             current_user,
 						limit:            8,
 						order_by_persona: true,
+						with_high_score:  false,
 						not_in:           (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
 								                  (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
 				}
@@ -132,7 +132,8 @@ class FeedsController < ApplicationController
 				                                                                              identifier: 'this-week',
 				                                                                              events:     Event.all
 		                                                                              }, {
-				                                                                              limit: 40
+				                                                                              order_by_persona: true,
+				                                                                              limit:            40
 		                                                                              })
 
 		@locals = {
@@ -159,9 +160,9 @@ class FeedsController < ApplicationController
 				                                                                              identifier: 'category',
 				                                                                              events:     Event.all
 		                                                                              }, {
-				                                                                              in_categories:   [params[:category]],
-				                                                                              with_high_score: true,
-				                                                                              limit:           60
+				                                                                              in_categories:    [params[:category]],
+				                                                                              order_by_persona: true,
+				                                                                              limit:            60
 		                                                                              })
 
 		@locals = {
@@ -187,8 +188,9 @@ class FeedsController < ApplicationController
 				                                                                              identifier: 'city',
 				                                                                              events:     Event.all
 		                                                                              }, {
-				                                                                              limit:           24,
-				                                                                              with_high_score: true
+				                                                                              limit:            24,
+				                                                                              order_by_persona: true,
+				                                                                              with_high_score:  true
 		                                                                              })
 
 		@locals = {
@@ -216,8 +218,9 @@ class FeedsController < ApplicationController
 				                                                                                      identifier: 'day',
 				                                                                                      events:     @events_in_this_day
 		                                                                                      }, {
-				                                                                                      only_in: @events_in_this_day.map(&:id),
-				                                                                                      limit:   12
+				                                                                                      only_in:          @events_in_this_day.map(&:id),
+				                                                                                      order_by_persona: true,
+				                                                                                      limit:            12
 		                                                                                      })
 
 		@locals = {

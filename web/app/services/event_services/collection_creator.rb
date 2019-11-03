@@ -68,7 +68,7 @@ module EventServices
 							in_user_personas: false,
 							order_by_persona: true,
 							not_in_categories: ['brecho', 'curso'],
-							group_by:         calculate_items_for_group(2, auto_balance: true)
+							group_by:         calculate_items_for_group(nil, auto_balance: false)
 					},
 					'follow'             => {
 							in_days:            set_initial_dates_filter,
@@ -86,7 +86,7 @@ module EventServices
 							in_user_personas: get_current_user,
 							in_days:          set_initial_dates_filter,
 							order_by_persona: true,
-							group_by:         calculate_items_for_group(2, auto_balance: true),
+							group_by:         calculate_items_for_group(nil, auto_balance: false),
 							limit:            40
 					}
 			}
@@ -192,7 +192,7 @@ module EventServices
 		end
 
 		def set_initial_categories_filter
-			@params[:categories] || @opts[:in_categories] || @default_filters['categories'] || @init_filters_applyed['in_categories'] || []
+			[@params[:categories], @opts[:in_categories], @init_filters_applyed['in_categories']].find{ |categories_list| !categories_list.blank? } || []
 		end
 
 		def set_initial_kinds_filter
@@ -200,7 +200,7 @@ module EventServices
 		end
 
 		def set_initial_dates_filter
-			@params[:ocurrences] || @opts[:in_days] || @default_filters['ocurrences'] || @init_filters_applyed['in_days'] || []
+			@params[:ocurrences] || @opts[:in_days] || @init_filters_applyed['in_days'] || []
 		end
 
 		def set_initial_organizers_filter
@@ -223,7 +223,7 @@ module EventServices
 			if @params.include?(:init_filters_applyed)
 				@init_filters_applyed['order_by_persona']
 			else
-				@params[:order_by_persona] || @opts[:order_by_persona] || false
+				@params[:order_by_persona] || @opts[:order_by_persona] || true
 			end
 		end
 
