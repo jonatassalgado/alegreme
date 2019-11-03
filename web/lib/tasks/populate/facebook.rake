@@ -28,8 +28,8 @@ namespace :populate do
 
 		read_file
 
-		if last_task_performed.try {|ltp| ltp.data['last_file_used'] == @current_file }
-			puts "Task já realizada para o arquivo #{@current_file}".yellow
+		if last_task_performed.try {|ltp| ltp.data['last_file_used'] == @current_file_name }
+			puts "Task já realizada para o arquivo #{@current_file_name}".yellow
 			abort
 		end
 
@@ -66,26 +66,26 @@ namespace :populate do
 			create_organizer(item, event)
 			classify_event(event, ml_data)
 
-			if save_event(event)
-				if last_task_performed
-					last_task_performed.touch
-				else
-					Artifact.create(
-						details: {
+			save_event(event)
+		end
+
+		if last_task_performed
+			last_task_performed.touch
+		else
+			Artifact.create(
+					details: {
 							name: "populate:facebook",
 							type: "task"
-							},
-						data: {
-							last_file_used: @current_file
-							})
-		    end
-			end
+					},
+					data: {
+							last_file_used: @current_file_name
+					})
 		end
 
 		puts "Task populate:facebook finalizada em #{DateTime.now}}".white
 
 		if @events_create_counter == 0
-			puts "Nenhum evento criado para o arquivo #{@current_file}, abortando próximas tasks...".yellow
+			puts "Nenhum evento criado para o arquivo #{@current_file_name}, abortando próximas tasks...".yellow
 			abort
 		end
 	end
@@ -231,21 +231,21 @@ end
 
 def read_file
 	files     = Dir['/var/www/scrapy/data/scraped/*']
-	last_file = (files.select { |file| file[/events-\d{8}-\d{6}\.jsonl$/] }).max
+	@current_file_name = (files.select { |file| file[/events-\d{8}-\d{6}\.jsonl$/] }).max
 
 	timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
 	artifact = Artifact.create(
 			details: {
-					name: last_file,
+					name: @current_file_name,
 					type: 'scraped'
 			}
 	)
 
-	artifact.file.attach(io: File.open("#{last_file}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
+	artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
 
-	puts "Lendo arquivo JSON #{last_file}".blue
+	puts "Lendo arquivo JSON #{@current_file_name}".blue
 
-	@current_file = File.read(last_file)
+	@current_file = File.read(@current_file_name)
 end
 
 def create_event(item)
