@@ -83,6 +83,11 @@ namespace :populate do
 		end
 
 		puts "Task populate:facebook finalizada em #{DateTime.now}}".white
+
+		if @events_create_counter == 0
+			puts "Nenhum evento criado para o arquivo #{@current_file}, abortando próximas tasks...".yellow
+			abort
+		end
 	end
 end
 
