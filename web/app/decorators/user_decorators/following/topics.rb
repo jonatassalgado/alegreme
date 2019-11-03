@@ -11,11 +11,9 @@ module UserDecorators
 			end
 
 			module InstanceMethods
-				def following_topics(opts = {only: []})
-					raise ArgumentError unless opts[:only].is_a? Symbol
+				def following_topics(opts = {})
 
 					@opts = opts
-
 
 					if @opts[:only] == :name
 						@response = self.all_following.map { |follow| follow.details['name'] }
@@ -31,6 +29,7 @@ module UserDecorators
 						end
 					end
 
+					@response
 				end
 
 				private

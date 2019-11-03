@@ -15,6 +15,25 @@ $gutter: 6px;
     //padding: 35px 0 35px 0;
   }
 
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    @include mobile-only {
+      display: none;
+    }
+
+    & span {
+      font-size: 14px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+    }
+
+    & svg {
+      padding-left: 6px;
+    }
+  }
+
   &__list {
     &::before {
       content: close-quote;

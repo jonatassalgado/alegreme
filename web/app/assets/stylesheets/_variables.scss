@@ -104,3 +104,10 @@ $maybe-color: $font-tertiary-color;
     transform: rotate(360deg);
   }
 }
+
+.is-hoverable {
+  &:hover {
+    color: $brand-color;
+    fill: $brand-color;
+  }
+}

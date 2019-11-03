@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	before_action :set_user, only: %i[show edit update destroy]
-	before_action :authorize_admin, only: [:index, :destroy]
-	before_action :authorize_admin_and_user, only: %i[update edit show]
+	before_action :authorize_admin, only: [:index, :destroy, :edit, :update]
+	before_action :authorize_current_user, only: %i[show]
 	before_action :mount_json, only: %i[edit update]
 
 	def active_invite
@@ -23,6 +23,35 @@ class UsersController < ApplicationController
 	# GET /users/1
 	# GET /users/1.json
 	def show
+		events      = @user.saved_events(as_model: true)
+		@topics     = @user.following_topics
+		@collection = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                              identifier: 'current_user.slug',
+				                                                                              events:     events
+		                                                                              }, {
+				                                                                              with_high_score: false,
+				                                                                              not_in_saved:    false,
+				                                                                              only_in:         events.map(&:id),
+				                                                                              limit:           24
+		                                                                              })
+
+		@locals = {
+				items:      @collection,
+				title:      {
+						principal: "Eventos salvos por você",
+						secondary: "Esta é a sua lista de eventos que ainda não aconteceram"
+				},
+				identifier: "user-saved-events",
+				opts:       {
+						filters: {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						},
+						detail:  @collection[:detail],
+				}
+		}
+
 	end
 
 	# GET /users/new
@@ -79,7 +108,7 @@ class UsersController < ApplicationController
 	# Use callbacks to share common setup or constraints between actions.
 	def set_user
 		@user = if params[:id]
-			        User.find(params[:id])
+			        User.friendly.find(params[:id])
 			      else
 				      current_user
 		        end
@@ -108,7 +137,7 @@ class UsersController < ApplicationController
 		                             })
 	end
 
-	def authorize_admin_and_user
+	def authorize_current_user
 		unless @user&.id == current_user&.id || current_user&.admin?
 			redirect_to root_path, notice: 'Você não tem permissão para realizar esta operação'
 		end

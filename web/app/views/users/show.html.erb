@@ -1,16 +1,25 @@
-<p id="notice"><%= notice %></p>
+<section class="me-page me-page--profile__section is-animated">
 
-<div class="me-single">
-  <div class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+  <%= notice %>
 
-        <a href="<%= url_for(@user) %>/edit">Editar</a>
+  <% content_for :meta_title, "#{@user.first_name} | Alegreme.com" %>
 
-        <%= @user.id %>
-
-        </div>
-      </div>
-    </div>
+  <div class="me-user-profile me-feed__section me-feed__section--without-margin">
+    <% if @user.picture %>
+      <img class="me-user-profile__picture" src="<%= @user.picture %>" alt="<%= @user.first_name %>">
+    <% end %>
+    <h1 class="me-user-profile__name">
+      <%= @user.first_name %>
+    </h1>
   </div>
-</div>
+
+
+  <%# if @topics %>
+<!--    <div class="me-card__topics">-->
+      <%#= render partial: 'components/follow/follow', locals: {user: current_user, chips: @topics.sort, type: 'organizers'} %>
+<!--    </div>-->
+  <%# end %>
+
+  <%= render partial: "components/collection/collection", locals: @locals %>
+</section>
+

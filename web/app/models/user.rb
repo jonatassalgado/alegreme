@@ -4,6 +4,9 @@ class User < ApplicationRecord
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
 	devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
+	extend FriendlyId
+	friendly_id :name, use: :slugged
+
 	acts_as_follower
 
 	include UserDecorators::Following

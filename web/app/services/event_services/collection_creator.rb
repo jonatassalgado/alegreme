@@ -54,6 +54,7 @@ module EventServices
 					not_in:            set_not_in,
 					only_in:           set_only_in,
 					with_high_score:   set_high_score,
+					not_in_saved:      set_not_in_saved,
 					limit:             false
 			}
 		end
@@ -64,11 +65,11 @@ module EventServices
 							in_days: @params[:ocurrences] || [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s]
 					},
 					'this-week'          => {
-							in_days:          set_initial_dates_filter || (@today..(@today + 8)).map(&:to_s),
-							in_user_personas: false,
-							order_by_persona: true,
+							in_days:           set_initial_dates_filter || (@today..(@today + 8)).map(&:to_s),
+							in_user_personas:  false,
+							order_by_persona:  true,
 							not_in_categories: ['brecho', 'curso'],
-							group_by:         calculate_items_for_group(nil, auto_balance: false)
+							group_by:          calculate_items_for_group(nil, auto_balance: false)
 					},
 					'follow'             => {
 							in_days:            set_initial_dates_filter,
@@ -192,7 +193,7 @@ module EventServices
 		end
 
 		def set_initial_categories_filter
-			[@params[:categories], @opts[:in_categories], @init_filters_applyed['in_categories']].find{ |categories_list| !categories_list.blank? } || []
+			[@params[:categories], @opts[:in_categories], @default_filters['categories'], @init_filters_applyed['in_categories']].find { |categories_list| !categories_list.blank? } || []
 		end
 
 		def set_initial_kinds_filter
@@ -277,6 +278,13 @@ module EventServices
 			return @default_filters['with_high_score'] unless @default_filters['with_high_score'].nil?
 			return @init_filters_applyed['with_high_score'] unless @init_filters_applyed['with_high_score'].nil?
 			true
+		end
+
+		def set_not_in_saved
+			return @params[:not_in_saved] unless @params[:not_in_saved].nil?
+			return @opts[:not_in_saved] unless @opts[:not_in_saved].nil?
+			return @init_filters_applyed['not_in_saved'] unless @init_filters_applyed['not_in_saved'].nil?
+			return true
 		end
 
 		def calculate_items_for_group(number = 2, opts = {})

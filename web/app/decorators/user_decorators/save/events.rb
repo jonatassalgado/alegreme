@@ -9,9 +9,14 @@ module UserDecorators
 			end
 
 			module InstanceMethods
-				def saved_events
+				def saved_events(opts = {})
 					if self && !self.taste_events_saved.empty?
-						Event.saved_by_user(self).active.order_by_date.uniq
+						events = Event.saved_by_user(self).active.order_by_date.uniq
+						if opts[:as_model]
+							Event.where(id: events.pluck(:id))
+						else
+							events
+						end
 					else
 						[]
 					end

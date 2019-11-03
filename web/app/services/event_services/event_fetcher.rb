@@ -21,11 +21,11 @@ module EventServices
 			user_suggestions_on = sockets[:in_user_suggestions]
 			follow_on           = sockets[:in_follow_features]
 			order_personas_on   = sockets[:order_by_persona]
-			not_in_saved_on     = sockets[:not_in_saved_on]
 			not_in_on           = sockets[:not_in]
 			only_in_on          = sockets[:only_in]
 			order_by_ids        = sockets[:order_by_ids]
 			order_by_date       = sockets[:order_by_date]
+			not_in_saved_on     = @params[:not_in_saved]
 			days                = @params[:in_days]
 			organizers          = @params[:in_organizers]
 			places              = @params[:in_places]
@@ -145,7 +145,7 @@ module EventServices
 					in_places:           false,
 					in_follow_features:  false,
 					group_by:            false,
-					not_in_saved_on:     true,
+					not_in_saved:        true,
 					not_in_on:           false,
 					only_in_on:          false,
 					order_by_date:       false,
