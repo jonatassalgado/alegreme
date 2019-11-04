@@ -87,6 +87,7 @@ class PlacesController < ApplicationController
 				},
 				identifier: @place.details_name.parameterize,
 				opts:       {
+						followable: @place,
 						filters: {
 								ocurrences: true,
 								kinds:      true,

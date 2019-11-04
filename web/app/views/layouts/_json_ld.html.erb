@@ -3,7 +3,7 @@
         "@type":       "Event",
         "name":        "<%= event.details_name.gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
         "image":       [
-                           "<%= event.image[:original].url(public: true) %>"
+                           "<%= get_original_image_url event %>"
                        ],
         "description": "<%= strip_tags(event.details_description).gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
         "url": "<%= event_path event %>",

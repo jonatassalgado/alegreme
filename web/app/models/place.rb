@@ -5,6 +5,8 @@ class Place < ApplicationRecord
 
   has_many :events
 
+  acts_as_followable
+
   def details_name
     self.details['name']
   end

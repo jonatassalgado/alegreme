@@ -2,11 +2,16 @@
 
 .me-follow-chip-set {
   user-select: none;
+
+  h2 & {
+    margin: 0 0 0 12px;
+  }
+
   @include mdc-layout-grid-media-query_("phone") {
     @include add-horizontal-scroll-items;
   }
 
-    & .mdc-chip {
+  & .mdc-chip {
     background: $background-color;
     border: $chip-border-size solid $border-color;
     @include mdc-layout-grid-media-query_("phone") {

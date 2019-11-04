@@ -6,6 +6,7 @@
   total_events_in_collection = opts.dig(:detail, :total_events_in_collection) || 0
   actual_events_in_collection = opts.dig(:detail, :actual_events_in_collection) || 0
   filters_applyed = opts.dig(:detail, :init_filters_applyed) || {}
+  followable = opts.dig(:followable) || false
   json_request = local_assigns.fetch(:json_request, false)
 
 %>
@@ -21,6 +22,11 @@
   <div class="me-feed__section-head">
     <h2>
       <%= title[:principal] %>
+      <%= render partial: 'components/follow/follow_button', locals: {
+          identifier: identifier,
+          user:       current_user,
+          followable: followable
+      } if followable %>
     </h2>
     <div class="me-feed__section-title-secondary">
       <%= title[:secondary] %>

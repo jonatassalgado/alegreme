@@ -18,15 +18,15 @@ $gutter: 6px;
   &__title {
     display: flex;
     justify-content: space-between;
-    @include mobile-only {
-      display: none;
-    }
 
     & span {
       font-size: 14px;
       font-weight: 400;
       display: flex;
       align-items: center;
+      @include mobile-only {
+        display: none;
+      }
     }
 
     & svg {

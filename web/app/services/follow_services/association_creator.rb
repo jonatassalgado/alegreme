@@ -30,16 +30,16 @@ module FollowServices
 
 		def destroy_transaction
 			if @user.stop_following(@followable)
-				create_response(true)
-			else
 				create_response(false)
+			else
+				create_response(true)
 			end
 		end
 
 
-		def create_response(success)
-			Struct.new('Response', :user, :followable, :saved?)
-			Struct::Response.new(@user, @followable, success)
+		def create_response(following)
+			Struct.new('Response', :user, :followable, :following)
+			Struct::Response.new(@user, @followable, following)
 		end
 
 

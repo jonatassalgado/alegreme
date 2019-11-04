@@ -3,7 +3,7 @@ module UserDecorators
 		module Events
 
 
-			Feature = Struct.new(:categories, :organizers)
+			Feature = Struct.new(:places, :organizers)
 
 			def self.included base
 				base.send :include, InstanceMethods
@@ -18,8 +18,8 @@ module UserDecorators
 
 					@follows.keys.each do |key|
 						case key
-						when 'categories'
-							@features.categories = @follows[key].map { |a| a[:id] }
+						when 'places'
+							@features.places = @follows[key].map { |a| a[:id] }
 						when 'organizers'
 							@features.organizers = @follows[key].map { |a| a[:id] }
 						end
@@ -35,8 +35,8 @@ module UserDecorators
 				private
 
 				def default_response
-					Event.joins(:categories, :organizers)
-							.where("categories.id IN (?) OR organizers.id IN (?)", @features.categories, @features.organizers).distinct
+					Event.joins(:place, :organizers)
+							.where("places.id IN (?) OR organizers.id IN (?)", @features.places, @features.organizers).distinct
 				end
 
 				def pluck_name

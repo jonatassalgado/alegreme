@@ -77,7 +77,7 @@
                        items:      @items[:follow],
                        title:      {
                            principal: "Tópicos que você segue",
-                           secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 3)}".html_safe
+                           secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 6)}.".html_safe
                        },
                        identifier: 'follow',
                        opts:       {

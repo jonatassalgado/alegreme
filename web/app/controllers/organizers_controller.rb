@@ -88,6 +88,7 @@ class OrganizersController < ApplicationController
 				},
 				identifier: @organizer.details['name'].parameterize,
 				opts:       {
+						followable: @organizer,
 						filters: {
 								ocurrences: true,
 								kinds:      true,

@@ -51,7 +51,7 @@
            layout="responsive"
            class="me-event__cover"
            alt="<%= @event.details_name %>"
-           src="<%= @event.image[:feed].url(public: true) %>"
+           src="<%= get_original_image_url @event %>"
            width="1.66"></amp-img>
 
   <%= tag.h1 @event.details_name, class: 'title' %>

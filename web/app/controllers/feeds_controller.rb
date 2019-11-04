@@ -52,8 +52,7 @@ class FeedsController < ApplicationController
 							                    events:     Event.all
 					                    },
 					                    {
-							                    not_in: collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) |
-									                            (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
+							                    not_in: (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
 					                    })
 			                  else
 				                  {}
@@ -79,7 +78,8 @@ class FeedsController < ApplicationController
 						limit:            8,
 						order_by_persona: true,
 						with_high_score:  false,
-						not_in:           (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
+						not_in:           (collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
+								                  (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
 								                  (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
 				}
 		)

@@ -25,9 +25,10 @@ module Api
 						},
 						identifier:   params[:identifier],
 						opts:         {
-								filters: collection[:filters],
-								detail:  collection[:detail],
-								origin:  params[:origin]
+								followable: place,
+								filters:    collection[:filters],
+								detail:     collection[:detail],
+								origin:     params[:origin]
 						},
 						json_request: true
 				}
@@ -49,9 +50,10 @@ module Api
 						},
 						identifier:   params[:identifier],
 						opts:         {
-								filters: collection[:filters],
-								detail:  collection[:detail],
-								origin:  params[:origin]
+								followable: organizer,
+								filters:    collection[:filters],
+								detail:     collection[:detail],
+								origin:     params[:origin]
 						},
 						json_request: true
 				}

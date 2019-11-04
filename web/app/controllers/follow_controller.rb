@@ -43,32 +43,30 @@ class FollowController < ApplicationController
 	def get_followable
 		if params[:type] == 'organizers'
 			Organizer.find params[:resource_id]
-		elsif params[:type] == 'categories'
-			Category.find params[:resource_id]
+		elsif params[:type] == 'places'
+			Place.find params[:resource_id]
 		end
 	end
 
 
 	def get_topics
-		if @expand_to_similar
+		unless @expand_to_similar.blank?
 			similar_events_ids = Event.find(@event_id).similar_data[0...6]
 			similar_events     = Event.where(id: similar_events_ids).active.not_in_saved(current_user)
-			similar_events.map { |similar| similar.organizers[0..6] }.flatten.uniq[0..6].sort
-		else
-			Event.find(@event_id).public_send(@type).sort
+			return similar_events.map { |similar| similar.organizers[0..6] }.flatten.uniq[0..6].sort
+		end
+
+		unless @event_id.blank?
+			return Event.find(@event_id).public_send(@type).sort
 		end
 	end
 
 
 	def render_component
-		if @association.saved?
-			respond_to do |format|
-				format.js { render 'follow/chip-set' }
-			end
-		else
-			respond_to do |format|
-				format.json { render json: @user.errors, status: :unprocessable_entity }
-			end
+
+		respond_to do |format|
+			format.js { render 'follow/chip-set' }
+			format.json { render json: @association }
 		end
 	end
 

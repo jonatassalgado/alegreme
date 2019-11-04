@@ -23,13 +23,13 @@ module UserDecorators
 
 					if @opts[:as] == :list
 						if @opts[:size]
-							@response.map { |response| content_tag :i, response }[0...@opts[:size]].join(", ")
+							return @response.map { |response| content_tag :i, response }[0...@opts[:size]].join(", ")
 						else
-							@response.map { |response| content_tag :i, response }.join(", ")
+							return @response.map { |response| content_tag :i, response }.join(", ")
 						end
+					else
+						@response
 					end
-
-					@response
 				end
 
 				private

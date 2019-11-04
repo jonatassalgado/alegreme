@@ -36,8 +36,8 @@ export default class FollowChipsetController extends Controller {
 				eventElem      : document.getElementById('event'),
 				followable     : chipEl.dataset.followable,
 				type           : chipEl.dataset.type,
-				expandToSimilar: this.expandToSimilar,
 				action         : chipEl.dataset.followed === 'true' ? 'unfollow' : 'follow',
+				expandToSimilar: this.expandToSimilar,
 				eventId        : this.eventId
 			};
 
@@ -56,6 +56,7 @@ export default class FollowChipsetController extends Controller {
 				headers    : {
 					'X-Requested-With': 'XMLHttpRequest',
 					'Content-type'    : 'text/javascript; charset=UTF-8',
+					'Accept'          : 'text/javascript',
 					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 				},
 				credentials: 'same-origin'
@@ -92,6 +93,10 @@ export default class FollowChipsetController extends Controller {
 	get expandToSimilar() {
 		return this.data.get('expand-to-similar');
 	}
+
+	// get componentId() {
+	// 	return this.data.get('id');
+	// }
 
 	get sectionIdentifier() {
 		const section = this.chipsetTarget.closest('[data-controller="section"]');

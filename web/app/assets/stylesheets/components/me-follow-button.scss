@@ -1,0 +1,23 @@
+.me-follow-button {
+  &__text {
+    text-transform: capitalize !important;
+  }
+
+  & .following {
+    display: block;
+  }
+
+  & .follow {
+    display: none;
+  }
+
+  &.mdc-chip--selected {
+    & .following {
+      display: none;
+    }
+
+    & .follow {
+      display: block;
+    }
+  }
+}
