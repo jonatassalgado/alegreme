@@ -51,6 +51,9 @@ $description-color: $font-secondary-color;
     @include mdc-ripple-surface;
     @include mdc-ripple-radius-bounded;
     @include mdc-states;
+    @include mobile-only {
+      box-shadow: none;
+    }
   }
 
   &__section {
@@ -72,7 +75,7 @@ $description-color: $font-secondary-color;
 
   &__secondary-section {
     color: $font-secondary-color;
-    font-size: 16px;
+    font-size: 15px;
     margin: 6px 0 0 0px;
     font-weight: 500;
     //@include mdc-layout-grid-media-query_("phone") {
@@ -87,7 +90,7 @@ $description-color: $font-secondary-color;
   &__tertiary-section {
     color: $font-secondary-color;
     font-size: 14px;
-    margin: 3px 0 0 0;
+    margin: 6px 0 0 0;
     font-weight: 300;
     max-width: 80%;
     //@extend .me-card__section;

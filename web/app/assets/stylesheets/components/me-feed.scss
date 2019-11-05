@@ -26,6 +26,7 @@ $mdc-layout-grid-columns: (
       max-width: unset;
       padding: 24px 0 24px 0;
       margin: 0 auto 12px auto;
+      border-bottom: 1px solid $surface-secondary-color;
     }
 
     &[data-section-load-more-loading="true"] {
@@ -113,7 +114,7 @@ $mdc-layout-grid-columns: (
       padding: 0;
       margin: 0 auto 12px auto;
       @include mobile-only {
-        margin: 0  20px 12px 20px;
+        padding: 0  20px 12px 20px;
       }
     }
   }

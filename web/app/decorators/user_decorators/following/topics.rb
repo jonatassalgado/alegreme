@@ -16,7 +16,7 @@ module UserDecorators
 					@opts = opts
 
 					if @opts[:only] == :name
-						@response = self.all_following.map { |follow| follow.details['name'] }
+						@response = self.all_following.map { |follow| follow.details['name'].capitalize }.uniq
 					else
 						@response = self.all_following
 					end
