@@ -7,11 +7,11 @@
 
   <section>
     <h2>Convites solicitados</h2>
-    <%= line_chart(User.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'America/Sao_Paulo').count, defer: true) %>
+    <%= line_chart(User.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
   </section>
 
   <section>
     <h2>Eventos criados</h2>
-    <%= line_chart(Event.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'America/Sao_Paulo').count, defer: true) %>
+    <%= line_chart(Event.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
   </section>
 </section>
