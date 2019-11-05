@@ -361,6 +361,9 @@ $description-color: $font-secondary-color;
         align-content: center;
         justify-content: center;
         flex-direction: row;
+        width: 100vw;
+        top: -24px;
+        left: -24px;
       }
     }
 
@@ -375,6 +378,8 @@ $description-color: $font-secondary-color;
       @include mdc-layout-grid-media-query_("phone") {
         width: 100%;
         height: 150px;
+        border-radius: 0;
+        box-shadow: none;
       }
     }
 

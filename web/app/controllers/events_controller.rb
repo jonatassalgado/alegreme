@@ -78,15 +78,15 @@ class EventsController < ApplicationController
     if @feature == "personas"
       @event.personas_outlier = params[:outlier] if params[:outlier]
       @event.personas_primary_name = params[:persona] if params[:persona]
-      @event.personas_primary_score = 1 if params[:correct] || params[:persona]
+      @event.personas_primary_score = 0.9 if params[:correct] || params[:persona]
     elsif @feature == "categories"
       @event.categories_outlier = params[:outlier] if params[:outlier]
       @event.categories_primary_name = params[:category] if params[:category]
-      @event.categories_primary_score = 1 if params[:correct] || params[:category]
+      @event.categories_primary_score = 0.9 if params[:correct] || params[:category]
     elsif @feature == "themes"
       @event.theme_outlier = params[:outlier] if params[:outlier]
       @event.theme_name = params[:theme] if params[:theme]
-      @event.theme_score = 1 if params[:correct] || params[:theme]
+      @event.theme_score = 0.9 if params[:correct] || params[:theme]
     elsif @feature == "kinds"
       kinds = JSON.parse(params[:kinds])
       @event.kinds = kinds

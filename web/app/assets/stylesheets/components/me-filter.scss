@@ -6,9 +6,20 @@
   user-select: none;
   margin: 12px 0 0 0;
   @include mdc-layout-grid-media-query_("phone") {
-    // width: calc(100vw - 24px);
-    //width: 100vw;
     margin: 12px 0 3px 0;
+  }
+
+  &::before {
+    @include mdc-layout-grid-media-query_("phone") {
+      background: linear-gradient(270deg, white 10%, transparent);
+      position: absolute;
+      z-index: 5;
+      width: 40px;
+      height: 86px;
+      content: close-quote;
+      right: 0;
+      pointer-events: none;
+    }
   }
 
   &:hover {
@@ -53,7 +64,7 @@
       line-height: 1em;
       padding: 10px 8px;
       margin: 3px 1px;
-      font-family: $font-primary-family;
+      font-family: $font-secondary-family;
       border-radius: 6px;
       color: $font-tertiary-color;
       background-color: $background-color;
