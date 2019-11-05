@@ -194,11 +194,11 @@ services:
   #   ports:
   #     - "9200:9200"
   #   restart: always
-  ofelia:
-    image: 'mcuadros/ofelia:latest'
-    volumes:
-      - ./ofelia/conf/config.ini:/etc/ofelia/config.ini
-      - /home/centos/.docker/config.json:/root/.docker/config.json
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./logs/ofelia:/tmp/logs
-    restart: always
+#  ofelia:
+#    image: 'mcuadros/ofelia:latest'
+#    volumes:
+#      - ./ofelia/conf/config.ini:/etc/ofelia/config.ini
+#      - /home/centos/.docker/config.json:/root/.docker/config.json
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - ./logs/ofelia:/tmp/logs
+#    restart: always
