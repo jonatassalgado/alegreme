@@ -1,0 +1,52 @@
+
+
+.me-bottom-navigation {
+  height: 56px;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  z-index: 5;
+  background: $surface-color;
+  box-shadow: 0px 0px 3px #00000030;
+
+  &__items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__item {
+    @include mdc-ripple-surface;
+    @include mdc-ripple-radius-bounded;
+    @include mdc-states;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: inherit;
+    overflow: hidden;
+
+    &.active {
+      & .icon, .label {
+        fill: $brand-color;
+        color: $brand-color;
+      }
+    }
+
+    & .icon {
+      fill: $font-secondary-color;
+      color: $font-secondary-color;
+      pointer-events: none;
+    }
+
+    & .label {
+      font-size: 12px;
+      font-family: $font-secondary-family;
+      position: relative;
+      top: -3px;
+      pointer-events: none;
+    }
+  }
+}

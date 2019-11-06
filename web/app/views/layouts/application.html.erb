@@ -95,7 +95,7 @@
 <div class="me-top-app-bar__fake-size"></div>
 
 <%= render partial: "layouts/app-top-bar" %>
-<%= render partial: "feeds/float_menu" %>
+<%#= render partial: "feeds/float_menu" %>
 
 <%= yield %>
 
@@ -113,7 +113,7 @@
   </div>
 </div>
 
-
+<%= render partial: 'components/bottom-navigation' %>
 <%= render partial: 'layouts/footer' %>
 
 </body>

@@ -380,7 +380,7 @@ $description-color: $font-secondary-color;
       box-shadow: $media-box-shadow-large;
       @include mdc-layout-grid-media-query_("phone") {
         width: 100%;
-        height: 150px;
+        height: 200px;
         border-radius: 0;
         box-shadow: none;
       }
