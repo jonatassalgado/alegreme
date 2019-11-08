@@ -1,6 +1,6 @@
 <div class="me-feed me-page--search me-page__section">
 
-  <% if @events_found&.suggestions %>
+  <% unless @events_found.try { |events| events.suggestions.blank? } %>
     <section class="me-feed__section" style="margin: 0 auto 25px auto;">
       <div class="me-feed__section-head">
         <h2>Você quis dizer?</h2>
