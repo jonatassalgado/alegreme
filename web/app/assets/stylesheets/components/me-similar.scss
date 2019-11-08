@@ -154,6 +154,9 @@
 
     &__secondary-section {
       font-size: 14px;
+      @include mobile-only {
+        font-size: 12px;
+      }
 
       & a {
         color: $font-secondary-color;
@@ -164,11 +167,11 @@
     }
 
     &__overlay {
-      box-shadow: $media-box-shadow-small;
+      //box-shadow: $media-box-shadow-small;
     }
 
     & .mdc-card__media {
-      border-radius: 2px;
+      border-radius: $media-border-radius;
     }
   }
 

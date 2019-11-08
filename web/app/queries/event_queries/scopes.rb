@@ -182,9 +182,9 @@ module EventQueries
 				if active
 					case opts[:direction]
 					when 'ASC'
-						order(Arel.sql "(ocurrences -> 'dates' ->> 0)::timestamptz ASC")
+						order("(ocurrences -> 'dates' ->> 0)::timestamptz ASC")
 					when 'DESC'
-						order(Arel.sql "(ocurrences -> 'dates' ->> 0)::timestamptz DESC")
+						order("(ocurrences -> 'dates' ->> 0)::timestamptz DESC")
 					end
 				else
 					all

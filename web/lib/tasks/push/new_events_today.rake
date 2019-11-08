@@ -19,7 +19,7 @@ namespace :push do
 		events_count                 = Event.where("created_at > ?", DateTime.now - 1).size
 		events_count_with_high_score = Event.with_high_score.where("created_at > ?", DateTime.now - 1).size
 
-		if events_count_with_high_score >= 12
+		if events_count_with_high_score >= 6
 			users = User.where("(notifications -> 'topics' -> 'all' ->> 'active')::boolean")
 
 			users.each do |user|

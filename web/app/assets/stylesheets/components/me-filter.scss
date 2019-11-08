@@ -9,19 +9,6 @@
     margin: 12px 0 3px 0;
   }
 
-  &::before {
-    @include mdc-layout-grid-media-query_("phone") {
-      background: linear-gradient(270deg, white 10%, transparent);
-      position: absolute;
-      z-index: 5;
-      width: 40px;
-      height: 86px;
-      content: close-quote;
-      right: 0;
-      pointer-events: none;
-    }
-  }
-
   &:hover {
     & .mdc-chip-set .material-icons {
       opacity: 1;
@@ -39,6 +26,19 @@
     padding: 0;
     @include mdc-layout-grid-media-query_("phone") {
       padding: 0 $section-padding-phone;
+    }
+
+    &::before {
+      @include mdc-layout-grid-media-query_("phone") {
+        background: linear-gradient(270deg, white 10%, transparent);
+        position: absolute;
+        z-index: 5;
+        width: 40px;
+        height: 40px;
+        content: close-quote;
+        right: 0;
+        pointer-events: none;
+      }
     }
 
     &[data-target="chip.chipset filter.ocurrences"] {
@@ -63,16 +63,16 @@
       height: auto;
       line-height: 1em;
       padding: 10px 8px;
-      margin: 3px 1px;
+      margin: 3px;
       font-family: $font-secondary-family;
-      border-radius: 6px;
+      //border-radius: 6px;
       color: $font-tertiary-color;
       background-color: $background-color;
       border: $chip-border-size solid $border-color;
       text-transform: uppercase;
       transition: $chip-transition;
       @include mdc-layout-grid-media-query_("phone") {
-        padding: 12px 8px;
+        //padding: 12px 8px;
       }
     }
 

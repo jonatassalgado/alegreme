@@ -14,43 +14,26 @@ $mdc-layout-grid-columns: (
 
 .me-feed {
 
-
-  // & section {
-  //   margin-bottom: 50px;
-  // }
-
   &__section {
     margin: 0 auto 124px auto;
     max-width: 960px;
     @include mdc-layout-grid-media-query_("phone") {
       max-width: unset;
-      padding: 24px 0 24px 0;
-      margin: 0 auto 12px auto;
-      border-bottom: 1px solid $surface-secondary-color;
+      padding: 12px 0 12px 0;
+      margin: 0 auto;
+      border-bottom: 5px solid $surface-secondary-color;
     }
 
-    &[data-section-load-more-loading="true"] {
-      & .me-feed__load-more--mobile {
-        opacity: 0;
-        display: none;
-        &.is-loading {
-          display: block;
-          opacity: 1;
-          & svg {
-            animation-name: rotate;
-            animation-iteration-count: infinite;
-            animation-duration: 1s;
-            animation-timing-function: ease;
-          }
-        }
+    &:last-child {
+      @include mdc-layout-grid-media-query_("phone") {
+        //border-bottom: 0;
       }
     }
-
 
     & h2 {
       margin: 8px 0 4px 0;
       font-weight: 800;
-      max-width: 90%;
+      //max-width: 90%;
       line-height: 1.4em;
       font-size: 24px;
       color: $font-primary-color;
@@ -60,12 +43,15 @@ $mdc-layout-grid-columns: (
       letter-spacing: -0.01em;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       @include mdc-layout-grid-media-query_("phone") {
-        font-size: 22px;
-        line-height: 1em;
+        font-size: 18px;
+        line-height: 1.35em;
         padding: 0 $section-padding-phone;
+        justify-content: space-between;
       }
     }
+
 
     &-title-secondary {
       font-size: 16px;
@@ -74,14 +60,17 @@ $mdc-layout-grid-columns: (
       font-family: $font-secondary-family;
       color: $font-secondary-color;
       line-height: 1.2em;
+
       .me-page--profile__section & {
         margin: 0 0 24px 0;
       }
+
       @include mdc-layout-grid-media-query_("phone") {
         padding: 0 $section-padding-phone;
         font-size: 13px;
+        display: none;
         .me-page--profile__section & {
-          margin: 0 0 12px 0;
+          margin: 12px 0 12px 0;
         }
       }
     }
@@ -95,6 +84,7 @@ $mdc-layout-grid-columns: (
         );
       }
       @include mdc-layout-grid-media-query_("phone") {
+        scroll-snap-align: center;
         @include mdc-layout-grid-cell(
                 $size: "phone",
                 $default-span: 1,
@@ -114,7 +104,7 @@ $mdc-layout-grid-columns: (
       padding: 0;
       margin: 0 auto 12px auto;
       @include mobile-only {
-        padding: 0  20px 12px 20px;
+        padding: 0 20px 12px 20px;
       }
     }
   }
@@ -122,7 +112,7 @@ $mdc-layout-grid-columns: (
   &__section-head {
     // @include section-head;
     display: flex;
-    margin-bottom: 6px;
+    margin-bottom: 12px;
     flex-direction: column;
     @include mdc-layout-grid-media-query_("phone") {
 
@@ -146,31 +136,70 @@ $mdc-layout-grid-columns: (
     text-align: center;
     margin: 35px 0;
     @include mdc-layout-grid-media-query_("phone") {
-      display: none;
+      //display: none;
     }
 
-    &--mobile {
+    &--vertical {
+      [data-controller="feeds"][data-action="index"] & {
+        @include mobile-only {
+          display: none;
+        }
+      }
+
+      [data-controller="feeds"][data-action="index"] [data-section-load-more-loading="true"] & {
+        //display: none;
+      }
+    }
+
+    &--horizontal {
       transition: opacity 0.250ms ease;
       will-change: opacity;
-      @include mdc-layout-grid-media-query_("phone") {
-        order: 1000;
-        display: block;
-        &.is-loading {
+      order: 1000;
+      display: none;
+
+      [data-controller="feeds"][data-action="index"] & {
+        @include mobile-only {
+          display: block;
+
+          & svg {
+            padding: 12px;
+            border: 1px solid $border-color;
+            border-radius: 35px;
+            width: 34px;
+            height: 34px;
+            fill: $font-tertiary-color;
+            position: relative;
+            left: -30px;
+          }
+        }
+      }
+
+      [data-controller="feeds"][data-action="index"] &.is-loading {
+        @include mobile-only {
           display: none;
           opacity: 0;
         }
+      }
 
-        & svg {
-          padding: 12px;
-          border: 1px solid $border-color;
-          border-radius: 35px;
-          width: 34px;
-          height: 34px;
-          fill: $font-secondary-color;
-          position: relative;
-          left: -30px;
+      [data-controller="feeds"][data-action="index"] [data-section-load-more-loading="true"] & {
+        @include mobile-only {
+          opacity: 0;
+          display: none;
+
+          &.is-loading {
+            display: block;
+            opacity: 1;
+
+            & svg {
+              animation-name: rotate;
+              animation-iteration-count: infinite;
+              animation-duration: 1s;
+              animation-timing-function: ease;
+            }
+          }
         }
       }
+
     }
 
     & .mdc-button {
@@ -272,10 +301,11 @@ $mdc-layout-grid-columns: (
     }
 
     @include mdc-layout-grid-media-query_("phone") {
+      scroll-snap-type: x;
       grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
-      grid-template-columns: repeat(100, minmax(60vw, 1fr));
+      grid-template-columns: repeat(100, minmax(80vw, 1fr));
       overflow-y: hidden;
-      padding: 0 $section-padding-phone;
+      padding: 0 70px 0 $section-padding-phone;
     }
 
     &::-webkit-scrollbar {

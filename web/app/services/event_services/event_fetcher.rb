@@ -2,105 +2,78 @@ module EventServices
 	class EventFetcher
 
 
-		def initialize(relation, params)
-			@params   = params
+		def initialize(relation, opts)
+			@opts     = opts
 			@relation = get_event_active_record(relation)
 		end
 
 		def call
-			sockets             = get_sockets_status @params
-			user                = @params[:user]
-			personas            = user.try(:personas_name)
-			high_score_on       = sockets[:with_high_score]
-			categories_on       = sockets[:in_categories]
-			organizers_on       = sockets[:in_organizers]
-			places_on           = sockets[:in_places]
-			in_kinds_on         = sockets[:in_kinds]
-			days_on             = sockets[:in_days]
-			user_personas_on    = sockets[:in_user_personas]
-			user_suggestions_on = sockets[:in_user_suggestions]
-			follow_on           = sockets[:in_follow_features]
-			order_personas_on   = sockets[:order_by_persona]
-			not_in_on           = sockets[:not_in]
-			only_in_on          = sockets[:only_in]
-			order_by_ids        = sockets[:order_by_ids]
-			order_by_date       = sockets[:order_by_date]
-			not_in_saved_on     = @params[:not_in_saved]
-			days                = @params[:in_days]
-			organizers          = @params[:in_organizers]
-			places              = @params[:in_places]
-			categories          = @params[:in_categories]
-			not_categories      = @params[:not_in_categories]
-			not_in              = @params[:not_in]
-			only_in             = @params[:only_in]
-			limit               = @params[:limit]
-			kinds               = @params[:in_kinds]
-			group_by            = @params[:group_by]
+			@user = @opts[:user]
 
 			@relation
 					.active
 					.with_high_score(
-							'turn_on': high_score_on
+							'turn_on': @opts[:with_high_score]
 					)
 					.not_in_saved(
-							user,
-							'turn_on': not_in_saved_on
+							@user,
+							'turn_on': @opts[:not_in_saved]
 					)
 					.not_in(
-							not_in,
-							'turn_on': not_in_on
+							@opts[:not_in],
+							'turn_on': (true unless @opts[:not_in].blank?)
 					)
 					.only_in(
-							only_in,
-							'turn_on': only_in_on
+							@opts[:only_in],
+							'turn_on': (true unless @opts[:only_in].blank?)
 					)
 					.in_days(
-							days,
-							'turn_on': days_on
+							@opts[:in_days],
+							'turn_on': (true unless @opts[:in_days].blank?)
 					)
 					.follow_features_by_user(
-							user,
-							'turn_on': follow_on
+							@user,
+							'turn_on': @opts[:in_follow_features]
 					)
 					.in_user_suggestions(
-							user,
-							'turn_on': user_suggestions_on
+							@user,
+							'turn_on': @opts[:in_user_suggestions]
 					)
 					.in_user_personas(
-							user,
-							'turn_on': user_personas_on
+							@user,
+							'turn_on': @opts[:in_user_personas]
 					)
 					.in_organizers(
-							organizers,
-							'turn_on': organizers_on
+							@opts[:in_organizers],
+							'turn_on': (true unless @opts[:in_organizers].blank?)
 					)
 					.in_places(
-							places,
-							'turn_on': places_on
+							@opts[:in_places],
+							'turn_on': (true unless @opts[:in_places].blank?)
 					)
 					.in_categories(
-							categories,
-							'personas': personas,
-							'group_by': group_by,
-							'turn_on':  categories_on,
-							'not_in':   not_categories
+							@opts[:in_categories],
+							'personas': @user.try(:personas_name),
+							'group_by': @opts[:group_by],
+							'not_in':   @opts[:not_in_categories],
+							'turn_on':  (true unless @opts[:in_categories].blank?)
 					)
 					.in_kinds(
-							kinds,
-							'turn_on': in_kinds_on
+							@opts[:in_kinds],
+							'turn_on': (true unless @opts[:in_kinds].blank?)
 					)
 					.order_by_persona(
-							order_personas_on,
-							personas: personas
+							@opts[:order_by_persona],
+							personas: @user.try(:personas_name)
 					)
 					.order_by_date(
-							order_by_date
+							@opts[:order_by_date]
 					)
 					.order_by_ids(
-							order_by_ids
+							@opts[:order_by_ids]
 					)
 					.limit(
-							limit
+							@opts[:limit]
 					)
 					.includes(
 							:place,
@@ -120,22 +93,23 @@ module EventServices
 			end
 		end
 
-		def get_sockets_status(sockets = {})
-			toggles    = {}
-			order_keys = [
-				:order_by_date,
-				:order_by_persona,
-				:with_high_score,
-				:in_user_personas]
+		def get_sockets_status(params = {})
 
-			sockets.keys.map do |key|
-				if order_keys.include? key
-					toggles[key] = sockets[key]
-				else
-					toggles[key] = true
-				end
-			end
-
+			# toggles    = {}
+			# order_keys = [
+			# 	:order_by_date,
+			# 	:order_by_persona,
+			# 	:with_high_score,
+			# 	:in_user_personas]
+			#
+			# params.keys.map do |param|
+			# 	if order_keys.include? param
+			# 		toggles[param] = params[param]
+			# 	else
+			# 		toggles[param] = true
+			# 	end
+			# end
+			#
 			default_sockets = {
 					in_days:             false,
 					in_user_suggestions: false,
@@ -151,10 +125,11 @@ module EventServices
 					order_by_date:       false,
 					order_by_persona:    false,
 					order_by_ids:        false,
-					with_high_score:     false
+					with_high_score:     false,
+					in_user_personas:    true
 			}
-
-			default_sockets.merge(toggles)
+			#
+			default_sockets.merge(params)
 		end
 
 	end

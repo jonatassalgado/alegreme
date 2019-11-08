@@ -12,4 +12,8 @@
   &:hover {
     border-color: $brand-color;
   }
+
+  @include mobile-only {
+    max-width: 86vw;
+  }
 }

@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
 	devise_for :users, controllers: {
 			omniauth_callbacks: 'users/omniauth_callbacks',
-			passwords: 'users/passwords',
-			sessions: 'users/sessions'
+			passwords:          'users/passwords',
+			sessions:           'users/sessions'
 	}
 
 	root to: 'welcome#index'
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 	get '/onboarding', to: 'bot#onboarding'
 
 	get '/porto-alegre/eventos', to: 'feeds#city', as: :city_events
-	get '/porto-alegre/eventos/:day', to: 'feeds#day', as: :day_events, constraints: { day: /(\d{2})-(\d{2})-(\d{4})/ }
+	get '/porto-alegre/eventos/:day', to: 'feeds#day', as: :day_events, constraints: {day: /(\d{2})-(\d{2})-(\d{4})/}
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
 	get '/porto-alegre/eventos/semana', to: 'feeds#week', as: :week_events
 	get '/porto-alegre/eventos/categoria/:category', to: 'feeds#category', as: :category_events
@@ -39,10 +39,13 @@ Rails.application.routes.draw do
 	get '/terms', to: 'pages#terms'
 	get '/robots.:format', to: 'pages#robots'
 
-	resources :search, only: [:index]
+	resources :search, only: [:index], path: 'busca'
 	resources :train, only: [:index]
 
 	resources :users
+	get '/:user/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
+	get '/:user/seguindo', to: 'feeds#follow', as: :follow_events
+
 	get '/active-invite', to: 'users#active_invite'
 
 

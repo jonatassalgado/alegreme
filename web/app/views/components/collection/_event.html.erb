@@ -23,7 +23,7 @@
        data-event-dominant-color="<%= get_image_dominant_color event %>"
        data-target="event.event"
        id="<%= dom_id event %>">
-    <div class="mdc-card__media mdc-card__media--16-9 <%= 'lazy-bgimage' unless json_request  %>" data-src="<%= get_original_image_url event unless json_request %>" style="<%= get_image_style_attr event, preload: json_request %>">
+    <div data-fixed="true" class="mdc-card__media mdc-card__media--16-9 <%= 'lazy-bgimage' unless json_request  %>" <%= "data-src=#{get_original_image_url(event)}" unless json_request %> style="<%= get_image_style_attr event, preload: json_request %>">
       <% if current_user %>
         <div class="me-card__like-button" data-action="click->event#like">
           <div data-target="event.like">

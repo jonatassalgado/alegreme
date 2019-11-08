@@ -10,6 +10,9 @@
     text-align: left;
     padding: 0 24px;
     align-items: flex-start;
+    [data-controller="search"] & {
+      display: none;
+    }
   }
 
 
@@ -52,6 +55,7 @@
     margin: 24px 0 0 0;
     @include mdc-layout-grid-media-query_("phone") {
       text-align: left;
+      font-size: 11px;
     }
 
     & a {
@@ -84,8 +88,7 @@
       font-size: 16px;
       line-height: 160%;
       @include mdc-layout-grid-media-query_("phone") {
-        max-width: 95vw;
-        font-size: 12px;
+        font-size: 11px;
         line-height: 1.6em;
       }
 
@@ -149,8 +152,7 @@
   &--feeds {
 
     @include mdc-layout-grid-media-query_("phone") {
-      padding: 0 24px 0 74px;
-
+      padding: 0 24px 62px 24px;
     }
   }
 }

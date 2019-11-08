@@ -1,0 +1,21 @@
+.me-see-all {
+  font-size: 11px;
+  display: none;
+  align-items: center;
+  width: 66px;
+  min-width: 66px;
+  justify-content: space-between;
+  color: $font-tertiary-color;
+  font-weight: 400;
+  padding: 0 0 0 3px;
+
+  [data-controller="feeds"][data-action="index"] & {
+    @include mobile-only {
+      display: flex;
+    }
+  }
+
+  & svg {
+    fill: $border-color;
+  }
+}

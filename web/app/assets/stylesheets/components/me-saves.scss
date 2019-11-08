@@ -12,6 +12,7 @@ $gutter: 6px;
   @include mdc-layout-grid-media-query_("phone") {
     margin: 0 auto 0 auto;
     max-width: unset;
+    border-bottom: 5px solid $surface-secondary-color;
     //padding: 35px 0 35px 0;
   }
 
@@ -19,19 +20,19 @@ $gutter: 6px;
     display: flex;
     justify-content: space-between;
 
-    & span {
-      font-size: 14px;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      @include mobile-only {
-        display: none;
-      }
-    }
-
-    & svg {
-      padding-left: 6px;
-    }
+    //& span {
+    //  font-size: 14px;
+    //  font-weight: 400;
+    //  display: flex;
+    //  align-items: center;
+    //  @include mobile-only {
+    //    display: none;
+    //  }
+    //}
+    //
+    //& svg {
+    //  padding-left: 6px;
+    //}
   }
 
   &__list {
@@ -116,7 +117,7 @@ $gutter: 6px;
     font-family: $font-primary-family;
     letter-spacing: -0.01em;
     @include mdc-layout-grid-media-query_("phone") {
-      font-size: 22px;
+      font-size: 18px;
       padding: 0 $section-padding-phone;
       font-family: $font-primary-family;
     }
@@ -219,7 +220,7 @@ $gutter: 6px;
     }
 
     &__remove {
-      background: transparentize($icon-background-color, 0.3);
+      background: transparentize($icon-background-color, 0.4);
       position: absolute;
       top: 5px;
       right: 5px;
@@ -229,16 +230,15 @@ $gutter: 6px;
       display: none;
       z-index: 1;
       border-radius: 100%;
+      fill: $font-secondary-color;
       @include mdc-layout-grid-media-query_("phone") {
-        width: 18px;
-        height: 18px;
         display: block;
-        padding: 4px;
+        padding: 3px;
       }
     }
 
     & .mdc-card__media {
-      border-radius: 3px;
+      border-radius: $media-border-radius;
       overflow: hidden;
       //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: $media-box-shadow-small;

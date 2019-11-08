@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
 		# stored_location_for(resource) || root_path
 	end
 
+
 	private
 
 	# Sentry
@@ -36,6 +37,13 @@ class ApplicationController < ActionController::Base
 		Raven.user_context(id: session[current_user.try(:id)]) # or anything else in session
 		Raven.extra_context(params: params.to_unsafe_h, url: request.url)
 	end
+
+	def authorize_current_user
+		unless @user&.id == current_user&.id || current_user&.admin?
+			redirect_to root_path, notice: 'Você não tem permissão para realizar esta operação'
+		end
+	end
+
 
 
 end

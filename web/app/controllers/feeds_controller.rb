@@ -3,6 +3,7 @@ include Pagy::Backend
 class FeedsController < ApplicationController
 	before_action :authorize_user, except: [:today, :category, :week, :city, :day]
 	before_action :completed_swipable, except: [:today, :category, :week, :city, :day]
+	before_action :authorize_current_user, only: %i[suggestions follow]
 
 
 	def index
@@ -12,92 +13,148 @@ class FeedsController < ApplicationController
 				         :user_first_name => current_user.first_name
 		         })
 
-		collections ||= EventServices::CollectionCreator.new(current_user, params)
+		@collections ||= EventServices::CollectionCreator.new(current_user, params)
 
-		new_events_today     = Event.where("created_at > ?", DateTime.now.beginning_of_day - 2)
-		collection_new_today = collections.call({
-				                                        identifier: 'new-today',
-				                                        events:     new_events_today
-		                                        },
-		                                        {
-				                                        only_in:           new_events_today.map(&:id),
-				                                        order_by_persona:  true,
-				                                        in_user_personas:  true,
-				                                        not_in_categories: ['curso']
-		                                        }) if current_user.sign_in_count >= 2
+		@new_events_today           = Event.where("created_at > ?", DateTime.now.beginning_of_day - 2)
+		@events_this_week           = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
+		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
+		@events_followed_by_user    = Event.follow_features_by_user(current_user)
+		@favorited_events           = current_or_guest_user.saved_events
 
-		collection_week = collections.call(
-				{
-						identifier: 'this-week',
-						events:     Event.all
-				})
 
-		collection_suggestions = if current_user&.has_events_suggestions?
-			                         collections.call(
-					                         {
-							                         identifier: 'user-suggestions',
-							                         events:     Event.all
-					                         }
-			                         )
-			                       else
-				                       {
-						                       with_high_score: false
-				                       }
-		                         end
+		if current_user.sign_in_count >= 2
+			@collection_new_today = @collections.call(
+					{
+							identifier: 'new-today',
+							events:     @new_events_today
+					},
+					{
+							only_in:           @new_events_today.map(&:id),
+							order_by_persona:  true,
+							in_user_personas:  true,
+							not_in_categories: ['curso']
+					})
+		end
 
-		collection_follow = if current_user&.has_following_resources?
-			                    collections.call(
-					                    {
-							                    identifier: 'follow',
-							                    events:     Event.all
-					                    },
-					                    {
-							                    not_in: (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
-					                    })
-			                  else
-				                  {}
-		                    end
+		if @events_this_week.size >= 2
+			@collection_week = @collections.call(
+					{
+							identifier: 'this-week',
+							events:     @events_this_week
+					},
+					{
+							only_in:           @events_this_week.map(&:id),
+							in_user_personas:  true,
+							order_by_persona:  true,
+							not_in_categories: ['brecho', 'curso']
+					})
+		end
 
-		# collection_personas = collections.call(
-		# 		{
-		# 				identifier: 'user-personas',
-		# 				events:     Event.all
-		# 		},
-		# 		{
-		# 				not_in: collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) |
-		# 						        (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
-		# 						        (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
-		# 		})
 
-		collection_explorer = collections.call(
-				{
-						identifier: 'explorer',
-						events:     Event.all
-				}, {
-						user:             current_user,
-						limit:            8,
-						order_by_persona: true,
-						with_high_score:  false,
-						not_in:           (collection_week.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
-								                  (collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []) |
-								                  (collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || [])
-				}
-		)
+		if current_user&.has_events_suggestions?
+			@collection_suggestions = @collections.call(
+					{
+							identifier: 'user-suggestions',
+							events:     @events_in_user_suggestions
+					},
+					{
+							only_in:          @events_in_user_suggestions.map(&:id),
+							order_by_persona: false,
+							order_by_date:    true
+					}
+			)
+		else
+			@collection_suggestions = {}
+		end
+
+
+		if current_user&.has_following_resources?
+			@collection_follow = @collections.call(
+					{
+							identifier: 'follow',
+							events:     @events_followed_by_user
+					},
+					{
+							only_in:          @events_followed_by_user.map(&:id),
+							not_in:           (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
+							order_by_persona: false,
+							order_by_date:    true
+					})
+		else
+			@collection_follow = {}
+		end
+
 
 		@items = {
-				new_today: collection_new_today,
-				week:      collection_week,
-				follow:    collection_follow,
-				# user_personas:    collection_personas,
-				user_suggestions: collection_suggestions,
-				explorer:         collection_explorer
+				new_today:        @collection_new_today,
+				week:             @collection_week,
+				follow:           @collection_follow,
+				user_suggestions: @collection_suggestions
 		}
-
-
-		@favorited_events = current_or_guest_user.saved_events
-
 	end
 
+	def suggestions
+		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
+		@collection                 = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                                              identifier: 'user-suggestions',
+				                                                                                              events:     @events_in_user_suggestions
+		                                                                                              },
+		                                                                                              {
+				                                                                                              only_in:          @events_in_user_suggestions.map(&:id),
+				                                                                                              order_by_persona: false,
+				                                                                                              order_by_date:    true,
+				                                                                                              limit:            48
+		                                                                                              })
+
+		@locals = {
+				items:      @collection,
+				title:      {
+						principal: "Indicados para #{current_user.first_name}",
+						secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
+				},
+				identifier: 'user-suggestions',
+				opts:       {
+						filters: {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						},
+						detail:  @collection[:detail]
+				}
+		}
+	end
+
+	def follow
+		@events_followed_by_user = Event.follow_features_by_user(current_user)
+		@collection              = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                                           identifier: 'follow',
+				                                                                                           events:     @events_followed_by_user
+		                                                                                           },
+		                                                                                           {
+				                                                                                           only_in:          @events_followed_by_user.map(&:id),
+				                                                                                           order_by_persona: false,
+				                                                                                           order_by_date:    true,
+				                                                                                           with_high_score:  false,
+				                                                                                           limit:            48
+		                                                                                           })
+
+		@locals = {
+				items:      @collection,
+				title:      {
+						principal: "Tópicos que você segue",
+						secondary: "Explore os eventos de organizadores, locais e tags que você segue."
+				},
+				identifier: 'follow',
+				opts:       {
+						filters: {
+								ocurrences: true,
+								kinds:      true,
+								categories: true
+						},
+						detail:  @collection[:detail]
+				}
+		}
+	end
 
 	def today
 		@collection = EventServices::CollectionCreator.new(current_user, params).call({
@@ -106,7 +163,7 @@ class FeedsController < ApplicationController
 		                                                                              }, {
 				                                                                              in_days:         [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
 				                                                                              with_high_score: false,
-				                                                                              limit:           100
+				                                                                              limit:           48
 		                                                                              })
 
 		@locals = {
@@ -128,18 +185,21 @@ class FeedsController < ApplicationController
 	end
 
 	def week
-		@collection = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                              identifier: 'this-week',
-				                                                                              events:     Event.all
-		                                                                              }, {
-				                                                                              order_by_persona: true,
-				                                                                              limit:            40
-		                                                                              })
+		@events_this_week = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
+		@collection       = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                                    identifier: 'this-week',
+				                                                                                    events:     @events_this_week
+		                                                                                    }, {
+				                                                                                    only_in:          @events_this_week.map(&:id),
+				                                                                                    in_user_personas: false,
+				                                                                                    order_by_persona: true,
+				                                                                                    limit:            48
+		                                                                                    })
 
 		@locals = {
 				items:      @collection,
 				title:      {
-						principal: "Eventos acontecendo esta semana em Porto Alegre",
+						principal: current_user ? "Acontecendo esta semana" : "Eventos acontecendo esta semana em Porto Alegre",
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 6, format: :week)} (#{I18n.l(Date.today + 6, format: :short)}) em Porto Alegre - RS"
 				},
 				identifier: 'this-week',
@@ -149,7 +209,7 @@ class FeedsController < ApplicationController
 								kinds:      true,
 								categories: true
 						},
-						detail:  @collection[:detail],
+						detail:  @collection[:detail]
 				}
 		}
 	end

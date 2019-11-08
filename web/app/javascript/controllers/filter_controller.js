@@ -32,7 +32,7 @@ export default class FilterController extends Controller {
 							return;
 						}
 
-						if (counter < (states.length - 8)) {
+						if (states.length > 48 && counter < (states.length - 8)) {
 							return;
 						}
 
@@ -132,7 +132,7 @@ export default class FilterController extends Controller {
 				});
 			}
 
-			if (promises.length) {
+			if (promises) {
 				Promise.all(promises)
 				       .then((resultsArray) => {
 					       const params = {

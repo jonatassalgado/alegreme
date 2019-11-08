@@ -1,21 +1,26 @@
-import {Controller}     from "stimulus";
-import {LazyloadModule} from "modules/lazyload-module";
+import {Controller}      from "stimulus";
+import {LazyloadModule}  from "modules/lazyload-module";
+import * as MobileDetect from "mobile-detect";
 
 export default class SectionController extends Controller {
 	static targets = ["section", "filter", "scrollContainer", "loadMoreButton"];
 
 	initialize() {
 		this.scrollLeft = this.data.get('turbolinksPersistScroll');
+		this.md         = new MobileDetect(window.navigator.userAgent);
 		this.pubsub     = {};
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.identifier}.updated`, (data) => {
 			LazyloadModule.lazyloadFeed();
 			this.hasMoreEventsToLoad();
+			// this.scrollLeft = 0;
 			this.data.set("load-more-loading", false);
 		});
 
 
-		this.sectionTarget.parentElement.style.minHeight = `${this.sectionTarget.getBoundingClientRect().height}px`;
+		if (!this.md.mobile()) {
+			this.sectionTarget.parentElement.style.minHeight = `${this.sectionTarget.getBoundingClientRect().height}px`;
+		}
 
 		this.destroy = () => {
 			this.pubsub.sectionUpdated();
@@ -31,11 +36,15 @@ export default class SectionController extends Controller {
 	}
 
 	loadMore() {
-		this.data.set("load-more-loading", true);
+		this.data.set('loadMoreLoading', true);
 
-		this.filterController.filter({
-			limit: parseInt(this.actualEventsInCollection) + 8
-		})
+		if (this.md.mobile() && this.data.get('continueToPath') !== "" && this.data.get('continueToPath') !== undefined) {
+			location.assign(this.data.get('continueToPath'));
+		} else {
+			this.filterController.filter({
+				limit: parseInt(this.actualEventsInCollection) + 16
+			})
+		}
 	}
 
 	hasMoreEventsToLoad() {
@@ -69,7 +78,7 @@ export default class SectionController extends Controller {
 	}
 
 	set scrollLeft(value) {
-		if (value > 0) {
+		if (value >= 0) {
 			this.scrollContainerTarget.scrollLeft = value;
 		}
 	}

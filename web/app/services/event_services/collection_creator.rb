@@ -26,8 +26,8 @@ module EventServices
 					@events     = Event.where(id: [collection[:ids]])
 				end
 
-				@opts            = default_options(opts)
-				@dynamic_filters = default_filters.merge(get_filters_for_collection)
+				@opts            = opts
+				@dynamic_filters = default_filters
 				@all_events      = EventFetcher.new(@events, @dynamic_filters).call
 
 				mount_response
@@ -60,106 +60,21 @@ module EventServices
 		end
 
 		def get_filters_for_collection
-			collections = {
-					'today-and-tomorrow' => {
-							in_days: @params[:ocurrences] || [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s]
-					},
-					'this-week'          => {
-							in_days:           set_initial_dates_filter || (@today..(@today + 8)).map(&:to_s),
-							in_user_personas:  false,
-							order_by_persona:  true,
-							not_in_categories: ['brecho', 'curso'],
-							group_by:          calculate_items_for_group(nil, auto_balance: false)
-					},
-					'follow'             => {
-							in_days:            set_initial_dates_filter,
-							order_by_persona:   false,
-							in_follow_features: true,
-							group_by:           nil
-					},
-					'user-suggestions'   => {
-							in_user_suggestions: true,
-							in_days:             set_initial_dates_filter,
-							order_by_persona:    true,
-							group_by:            calculate_items_for_group(nil, auto_balance: false)
-					},
-					'user-personas'      => {
-							in_user_personas: get_current_user,
-							in_days:          set_initial_dates_filter,
-							order_by_persona: true,
-							group_by:         calculate_items_for_group(nil, auto_balance: false),
-							limit:            40
-					}
-			}
-
-			if collections.key?(@identifier)
-				collections[@identifier]
-			else
-				{}
-			end
+			{}
 		end
 
 		def default_options(opts)
-			default_opts = {
-					'today-and-tomorrow' => {
-							limit: 36
-					},
-					'this-week'          => {
-							all_existing_filters: false,
-							limit:                8
-					},
-					'user-personas'      => {
-							all_existing_filters: false,
-							limit:                8
-					},
-					'follow'             => {
-							all_existing_filters: false,
-							limit:                8
-					},
-					'user-suggestions'   => {
-							all_existing_filters: false,
-							limit:                8
-					}
+			{
+					all_existing_filters: false,
+					limit:                8
 			}
-
-			if default_opts.key?(@identifier)
-				default_opts[@identifier].merge(opts)
-			else
-				{
-						all_existing_filters: false,
-						limit:                8
-				}.merge(opts)
-			end
 		end
 
 		def get_filters_toggle_for_collection
-			filters = {
-					'this-week'        => {
-							categories: true,
-							kinds:      true,
-							ocurrences: true
-					},
-					'user-personas'    => {
-							categories: true,
-							kinds:      true,
-							ocurrences: true
-					},
-					'follow'           => {
-							categories: true,
-							kinds:      true,
-							ocurrences: true
-					},
-					'user-suggestions' => {
-							categories: true,
-							kinds:      true,
-							ocurrences: true
-					}
-			}
-
-			filters[@identifier] || {
-					categories: true,
-					kinds:      true,
-					ocurrences: true
+			{
+					categories: @opts.dig(:filters, :categories) || true,
+					kinds:      @opts.dig(:filters, :kinds) || true,
+					ocurrences: @opts.dig(:filters, :ocurrences) || true
 			}
 		end
 
@@ -185,7 +100,7 @@ module EventServices
 		end
 
 		def set_limit
-			@params[:limit] || @opts[:limit]
+			@params[:limit] || @opts[:limit] || 8
 		end
 
 		def group_by_or_kinds_not_exist?(opts)
@@ -224,7 +139,7 @@ module EventServices
 			if @params.include?(:init_filters_applyed)
 				@init_filters_applyed['order_by_persona']
 			else
-				@params[:order_by_persona] || @opts[:order_by_persona] || true
+				@params[:order_by_persona] || @opts[:order_by_persona] || false
 			end
 		end
 

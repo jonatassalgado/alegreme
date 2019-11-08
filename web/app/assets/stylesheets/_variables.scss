@@ -106,8 +106,16 @@ $maybe-color: $font-tertiary-color;
 }
 
 .is-hoverable {
+  cursor: pointer;
+
   &:hover {
     color: $brand-color;
-    fill: $brand-color;
+    & svg {
+      fill: $brand-color;
+    }
+  }
+
+  &:active {
+    transform: translateY(5px);
   }
 }

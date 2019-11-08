@@ -137,12 +137,6 @@ class UsersController < ApplicationController
 		                             })
 	end
 
-	def authorize_current_user
-		unless @user&.id == current_user&.id || current_user&.admin?
-			redirect_to root_path, notice: 'Você não tem permissão para realizar esta operação'
-		end
-	end
-
 	def mount_json
 		if @user.features.empty?
 			@user.features = {

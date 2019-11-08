@@ -10,15 +10,14 @@
   color: $icon-color;
   user-select: none;
   height: max-content;
-
   @include mdc-layout-grid-media-query_("phone") {
     top: 55px;
     left: 0;
     height: 100vh;
     width: 60px;
     background: #f7f7f7;
-    //touch-action: none;
     box-shadow: inset 0 0 6px #ececec, 1px 0 6px #ffffff85;
+    display: none;
   }
 
   &__nav {
