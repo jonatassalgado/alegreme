@@ -16,20 +16,20 @@ namespace :push do
 			app.save!
 		end
 
-		events_count                 = Event.where("created_at > ?", DateTime.now - 1).size
-		events_count_with_high_score = Event.with_high_score.where("created_at > ?", DateTime.now - 1).size
+		events_count = Event.where("created_at > ?", DateTime.now - 1).size
+		users        = User.where("(notifications -> 'topics' -> 'all' ->> 'active')::boolean")
 
-		if events_count_with_high_score >= 6
-			users = User.where("(notifications -> 'topics' -> 'all' ->> 'active')::boolean")
+		users.each do |user|
+			user_suggestions_count = Event.where("created_at > ?", DateTime.now.beginning_of_day - 1).with_high_score.in_user_personas(user).size
 
-			users.each do |user|
+			if user_suggestions_count >= 2
 				user.notifications_devices.each do |device|
 					notification                  = Rpush::Pushy::Notification.new
 					notification.app              = pushy_app || Rpush::Pushy::App.find_by_name("Alegreme")
 					notification.registration_ids = device
 					notification.data             = {
 							title:   "Oi #{user.first_name}",
-							message: "Foram adicionados #{events_count} eventos hoje, separamos alguns que você pode gostar.",
+							message: "Foram adicionados #{events_count} eventos hoje, separamos #{user_suggestions_count} que você pode gostar.",
 							url:     "https://www.alegreme.com",
 							image:   "https://alegreme.sfo2.digitaloceanspaces.com/stable-images/push-icon-192x192.png",
 							badge:   "https://alegreme.sfo2.digitaloceanspaces.com/stable-images/bagde-alpha-72x72.png",
@@ -45,15 +45,16 @@ namespace :push do
 						puts "Ocorreu algum problema ao criar a notificação para #{user.id} no device #{device}".red
 					end
 				end
+			else
+				puts "Usuário sem eventos novos - Apenas #{user_suggestions_count} novos".yellow
 			end
-
-			Rpush.push
-			Rpush.apns_feedback
-
-			puts "Task push:new_events_today finalizada em #{DateTime.now}}".white
-			puts "Notificações agendadas para #{users.size} usuários".green
-		else
-			puts "Notificações não agendadas - Apenas #{events_count} novos".yellow
 		end
+
+		Rpush.push
+		Rpush.apns_feedback
+
+		puts "Task push:new_events_today finalizada em #{DateTime.now}}".white
+		puts "Notificações agendadas para #{users.size} usuários".green
+
 	end
 end
