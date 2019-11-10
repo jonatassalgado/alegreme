@@ -1,5 +1,6 @@
 import {Controller}      from "stimulus";
 import {LazyloadModule}  from "modules/lazyload-module";
+import {MDCRipple}           from "@material/ripple";
 import * as MobileDetect from "mobile-detect";
 
 export default class SectionController extends Controller {
@@ -9,12 +10,17 @@ export default class SectionController extends Controller {
 		this.scrollLeft = this.data.get('turbolinksPersistScroll');
 		this.md         = new MobileDetect(window.navigator.userAgent);
 		this.pubsub     = {};
+		this.ripples = [];
+
+		this.loadMoreButtonTargets.forEach((button) => {
+			this.ripples.push(new MDCRipple(button));
+		});
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.identifier}.updated`, (data) => {
 			LazyloadModule.lazyloadFeed();
 			this.hasMoreEventsToLoad();
-			// this.scrollLeft = 0;
 			this.data.set("load-more-loading", false);
+			// this.scrollLeft = 0;
 		});
 
 
@@ -25,6 +31,9 @@ export default class SectionController extends Controller {
 		this.destroy = () => {
 			this.pubsub.sectionUpdated();
 			this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+			this.ripples.forEach((ripple) => {
+				ripple.destroy();
+			});
 		};
 
 		document.addEventListener('turbolinks:before-cache', this.destroy, false);
@@ -38,7 +47,7 @@ export default class SectionController extends Controller {
 	loadMore() {
 		this.data.set('loadMoreLoading', true);
 
-		if (this.md.mobile() && this.seeAllTarget.dataset.continueToPath !== "" && this.seeAllTarget.dataset.continueToPath !== undefined) {
+		if (this.seeAllTarget.dataset.continueToPath !== "" && this.seeAllTarget.dataset.continueToPath !== undefined) {
 			location.assign(this.seeAllTarget.dataset.continueToPath);
 		} else {
 			this.filterController.filter({

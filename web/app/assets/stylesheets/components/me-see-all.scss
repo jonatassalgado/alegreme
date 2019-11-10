@@ -10,9 +10,9 @@
   padding: 0 0 0 3px;
 
   [data-controller="feeds"][data-action="index"] & {
-    @include mobile-only {
+    //@include mobile-only {
       display: flex;
-    }
+    //}
   }
 
   & svg {

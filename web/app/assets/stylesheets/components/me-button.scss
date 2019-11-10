@@ -1,6 +1,6 @@
 @import '../_variables';
 
-$fill-color: #ffffff;
+$box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
 .me-button {
   @include mdc-button-filled-accessible($brand-color);
@@ -18,8 +18,29 @@ $fill-color: #ffffff;
   }
 
   & svg {
+    fill: $surface-color;
     height: 18px;
-    margin: 0 10px 0 0;
+  }
+
+  &--transparent {
+    @include mdc-button-filled-accessible($surface-color);
+    box-shadow: $box-shadow;
+
+    & svg {
+      fill: $font-secondary-color
+    }
+  }
+
+  &--with-icon-in-right {
+    & svg {
+      margin: 0 0 0 10px;
+    }
+  }
+
+  &--with-icon-in-left {
+    & svg {
+      margin: 0 10px 0 0;
+    }
   }
 
   .me-top-app-bar & {
