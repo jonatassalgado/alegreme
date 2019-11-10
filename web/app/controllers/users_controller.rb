@@ -35,20 +35,17 @@ class UsersController < ApplicationController
 				                                                                              limit:           24
 		                                                                              })
 
-		@locals = {
-				items:      @collection,
+		@data = {
+				identifier: "user-saved-events",
+				collection: @collection,
 				title:      {
 						principal: "Eventos salvos por você",
 						secondary: "Esta é a sua lista de eventos que ainda não aconteceram"
 				},
-				identifier: "user-saved-events",
-				opts:       {
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail],
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
 				}
 		}
 

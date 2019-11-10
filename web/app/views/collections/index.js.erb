@@ -1,11 +1,11 @@
 (function () {
 
 	const promise = new Promise(function (resolve, reject) {
-		const sectionElem = document.getElementById('<%= @locals[:identifier] %>');
+		const sectionElem = document.getElementById('<%= @data[:identifier] %>');
 
 		requestIdleCallback(function () {
 			requestAnimationFrame(function () {
-				const morph = morphdom.default(sectionElem, '<%= j render partial: "components/collection/collection", locals: @locals %>'.trim(), {
+				const morph = morphdom.default(sectionElem, '<%= j render partial: "components/collection/collection", locals: {data: @data} %>'.trim(), {
 					onBeforeElUpdated: function (fromEl, toEl) {
 						if (fromEl.dataset.fixed == 'true') {
 							return false
@@ -24,10 +24,10 @@
 	})
 
 	promise.then(function (value) {
-		PubSubModule.emit('<%= @locals[:identifier] %>.updated', {
-			itemsCount: <%= @locals[:items].count %>,
+		PubSubModule.emit('<%= @data[:identifier] %>.updated', {
+			itemsCount: <%= @data[:collection][:detail][:total_events_in_collection] %>,
 			params    : {
-				similar: <%= params[:similar] || {} %>
+				similar: <%= @data[:similar] || {} %>
 			}
 		})
 	})

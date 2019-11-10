@@ -4,7 +4,7 @@ class FavoritesController < ApplicationController
 	def create
 		current_user.taste_events_save favorite_params['event_id'].to_i
 
-		@locals = {
+		@data = {
 				identifier:              'salvos',
 				event_identifier:        "event_#{favorite_params['event_id'].to_i}",
 				event_id:                favorite_params['event_id'].to_i,
@@ -22,7 +22,7 @@ class FavoritesController < ApplicationController
 	def destroy
 		current_user.taste_events_unsave favorite_params['event_id'].to_i
 
-		@locals = {
+		@data = {
 				identifier:              'salvos',
 				event_identifier:        "event_#{favorite_params['event_id'].to_i}",
 				event_id:                favorite_params['event_id'].to_i,

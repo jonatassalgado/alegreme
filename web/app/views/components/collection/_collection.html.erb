@@ -1,30 +1,43 @@
 <%
 
-  raise ArgumentError unless identifier && items && title
+  raise ArgumentError unless data
 
-  filters = opts[:filters] || {categories: true, kinds: true, ocurrences: true}
-  total_events_in_collection = opts.dig(:detail, :total_events_in_collection) || 0
-  actual_events_in_collection = opts.dig(:detail, :actual_events_in_collection) || 0
-  filters_applyed = opts.dig(:detail, :init_filters_applyed) || {}
-  # disposition = opts.dig(:disposition) || :horizontal
-  followable = opts.dig(:followable) || false
-  json_request = local_assigns.fetch(:json_request, false)
+  data = {
+      collection:                  {},
+      user:                        current_user,
+      identifier:                  nil,
+      total_events_in_collection:  0,
+      actual_events_in_collection: 0,
+      followable:                  nil,
+      title:                       {
+          principal: nil,
+          secondary: nil
+      },
+      continue_to:                 nil,
+      json_request:                false,
+      origin:                      nil,
+      filters:                     {
+          categories: true,
+          kinds:      true,
+          ocurrences: true
+      }
+  }.deep_merge!(data)
 
 %>
 
 <section class="me-feed__section"
          data-controller="section"
          data-target="section.section"
-         data-section-total-events-in-collection="<%= total_events_in_collection %>"
-         data-section-actual-events-in-collection="<%= actual_events_in_collection %>"
+         data-section-total-events-in-collection="<%= data[:collection][:detail][:total_events_in_collection] %>"
+         data-section-actual-events-in-collection="<%= data[:collection][:detail][:actual_events_in_collection] %>"
          data-section-load-more-loading="false"
          data-observable="float-menu.section"
-         data-section-continue-to-path="<%= opts[:continue_to] %>"
-         id="<%= identifier %>">
+         data-section-continue-to-path="<%= data[:continue_to] %>"
+         id="<%= data[:identifier] %>">
   <div class="me-feed__section-head">
     <h2>
-      <%= title[:principal] %>
-      <% if actual_events_in_collection < total_events_in_collection %>
+      <%= data[:title][:principal] %>
+      <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
         <span class="me-see-all is-hoverable"
               data-fixed="true"
               data-action="click->section#loadMore">
@@ -33,89 +46,83 @@
         </span>
       <% end %>
       <%= render partial: 'components/follow/follow_button', locals: {
-          identifier: identifier,
-          user:       current_user,
-          followable: followable
-      } if followable %>
+          identifier: data[:identifier],
+          user:       data[:user],
+          followable: data[:followable]
+      } if data[:followable] %>
     </h2>
     <div class="me-feed__section-title-secondary">
-      <%= title[:secondary] %>
+      <%= data[:title][:secondary] %>
     </div>
     <%# if filters %>
-      <div class="me-filter"
-           data-controller="filter"
-           data-filter-section-identifier="<%= identifier %>"
-           data-filter-title="<%= title.to_json %>"
-           data-filter-init-filters-applyed="<%= filters_applyed.to_json %>"
-           data-filter-origin="<%= opts[:origin] %>"
-           data-target="filter.filterContainer section.filter">
-        <% if filters[:categories] && !items[:categories].blank? %>
-          <%# cache [items[:categories], params[:categories]], {expires_in: 1.day} do %>
-          <%= render(partial: 'feeds/filter',
-                     locals:  {
-                         initial_filters:              items[:categories],
-                         params_filters:               params[:categories],
-                         filters_that_exist_in_events: items[:categories],
-                         icon_type:                    'filter_list',
-                         type:                         'categories'
-                     },
-                     cached:  true) %>
-          <%# end %>
-        <% end %>
-        <% if (filters[:kinds] && params[:categories] && !items[:kinds].blank?) || (filters[:kinds] && !params[:kinds].blank?) %>
-          <%= render(partial: 'feeds/filter',
-                     locals:  {
-                         initial_filters:              items[:kinds],
-                         params_filters:               params[:kinds],
-                         filters_that_exist_in_events: items[:kinds],
-                         icon_type:                    'filter_list',
-                         type:                         'kinds'
-                     },
-                     cached:  true) %>
-        <% end %>
-        <!-- TODO: remover duplicado-->
-        <% if filters[:ocurrences] && !items[:ocurrences].blank? %>
-          <%= title[:ocurrences] %>
-          <%= render(partial: 'feeds/filter',
-                     locals:  {
-                         initial_filters:              items[:ocurrences],
-                         params_filters:               params[:ocurrences],
-                         filters_that_exist_in_events: items[:ocurrences],
-                         icon_type:                    '',
-                         type:                         'ocurrences'
-                     },
-                     cached:  true) %>
-        <% end %>
-      </div>
+    <div class="me-filter"
+         data-controller="filter"
+         data-filter-section-identifier="<%= data[:identifier] %>"
+         data-filter-title="<%= data[:title].to_json %>"
+         data-filter-init-filters-applyed="<%= data[:collection][:detail][:init_filters_applyed].to_json %>"
+         data-filter-origin="<%= data[:origin] %>"
+         data-target="filter.filterContainer section.filter">
+      <% if data[:filters][:categories] && !data[:collection][:categories].blank? %>
+        <%= render(partial: 'feeds/filter',
+                   locals:  {
+                       initial_filters:              data[:collection][:categories],
+                       params_filters:               params[:categories],
+                       filters_that_exist_in_events: data[:collection][:categories],
+                       icon_type:                    'filter_list',
+                       type:                         'categories'
+                   },
+                   cached:  true) %>
+      <% end %>
+      <% if (data[:filters][:kinds] && params[:categories] && !data[:collection][:kinds].blank?) || (data[:filters][:kinds] && !params[:kinds].blank?) %>
+        <%= render(partial: 'feeds/filter',
+                   locals:  {
+                       initial_filters:              data[:collection][:kinds],
+                       params_filters:               params[:kinds],
+                       filters_that_exist_in_events: data[:collection][:kinds],
+                       icon_type:                    'filter_list',
+                       type:                         'kinds'
+                   },
+                   cached:  true) %>
+      <% end %>
+      <!-- TODO: remover duplicado-->
+      <% if data[:filters][:ocurrences] && !data[:collection][:ocurrences].blank? %>
+        <%= data[:title][:ocurrences] %>
+        <%= render(partial: 'feeds/filter',
+                   locals:  {
+                       initial_filters:              data[:collection][:ocurrences],
+                       params_filters:               params[:ocurrences],
+                       filters_that_exist_in_events: data[:collection][:ocurrences],
+                       icon_type:                    '',
+                       type:                         'ocurrences'
+                   },
+                   cached:  true) %>
+      <% end %>
+    </div>
     <%# end %>
   </div>
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner"
          data-section-turbolinks-persist-scroll="0"
          data-target="section.scrollContainer">
-      <% unless items.empty? %>
-        <%# cache [identifier, items[:events]], {expires_in: 1.minute} do %>
+      <% unless data[:collection].empty? %>
         <%= render(partial:    'components/collection/event',
-                   collection: items[:events],
+                   collection: data[:collection][:events],
                    as:         :event,
                    locals:     {
-                       identifier:   identifier,
-                       json_request: json_request
+                       identifier:   data[:identifier],
+                       json_request: data[:json_request]
                    },
                    cached:     false) %>
-        <%# end %>
 
-        <%# cache [params[:similar], items[:events]], {expires_in: 1.day} do %>
         <%= render(partial: 'components/collection/similar',
                    locals:  {
-                       events:       items[:events],
-                       identifier:   identifier,
-                       json_request: json_request
+                       events:       data[:collection][:events],
+                       identifier:   data[:identifier],
+                       json_request: data[:json_request]
                    },
-                   cached:  true) if !mobile_device? || !['feed'].include?(opts[:origin]) %>
-        <%# end %>
+                   cached:  true) if !mobile_device? || !['feed'].include?(data[:origin]) %>
 
-        <% if actual_events_in_collection < total_events_in_collection %>
+        <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
           <div data-action="click->section#loadMore"
                data-target="section.loadMoreButton"
                class="me-feed__load-more me-feed__load-more--horizontal">
@@ -137,11 +144,11 @@
     </div>
     <%= render(partial: 'components/collection/similar',
                locals:  {
-                   events:     items[:events],
-                   identifier: identifier
+                   events:     data[:collection][:events],
+                   identifier: data[:identifier]
                },
-               cached:  true) if mobile_device? && ['feed'].include?(opts[:origin]) %>
-    <% if actual_events_in_collection < total_events_in_collection %>
+               cached:  true) if mobile_device? && ['feed'].include?(data[:origin]) %>
+    <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
       <div class="me-feed__load-more me-feed__load-more--vertical"
            data-action="click->section#loadMore"
            data-target="section.loadMoreButton">
@@ -150,7 +157,7 @@
         </button>
       </div>
     <% end %>
-    <% unless items[:events] %>
+    <% unless data[:collection][:events] %>
       <div class="me-card me-card--notice mdc-card mdc-card--outlined">
         <div class="me-card__primary-section">
           <i class="material-icons">

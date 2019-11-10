@@ -5,7 +5,7 @@
 
 		requestIdleCallback(function () {
 			if (savesWrapperEl) {
-				const morph = morphdom.default(savesWrapperEl, '<%= j render partial: "feeds/saves", locals: @locals %>'.trim(), {
+				const morph = morphdom.default(savesWrapperEl, '<%= j render partial: "feeds/saves", locals: @data %>'.trim(), {
 					onBeforeElUpdated: function (fromEl, toEl) {
 						return !fromEl.isEqualNode(toEl);
 					}
@@ -21,8 +21,8 @@
 	promise.then(function (value) {
 	  PubSubModule.emit('saves.updated', {
 	    detail: {
-		    currentEventFavorited: <%= @locals[:current_event_favorited] %>,
-		    eventId              : <%= @locals[:event_id] %>
+		    currentEventFavorited: <%= @data[:current_event_favorited] %>,
+		    eventId              : <%= @data[:event_id] %>
 	    }
     })
 	})

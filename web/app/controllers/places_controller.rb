@@ -17,12 +17,26 @@ class PlacesController < ApplicationController
 				                                                                              identifier: 'places',
 				                                                                              events:     events
 		                                                                              }, {
-				                                                                              in_places: [params[:id]],
+				                                                                              in_places:       [params[:id]],
 				                                                                              with_high_score: false,
-				                                                                              limit:  24
+				                                                                              limit:           24
 		                                                                              })
 
-		@locals = mount_section_attrs
+		@data = {
+				identifier: @place.details_name.parameterize,
+				collection: @collection,
+				title:      {
+						principal: @place.details_name,
+						secondary: @place.geographic_address
+				},
+				followable: @place,
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
+				}
+		}
+
 		render 'show'
 
 	end
@@ -77,26 +91,6 @@ class PlacesController < ApplicationController
 	end
 
 	private
-
-	def mount_section_attrs
-		{
-				items:      @collection,
-				title:      {
-						principal: @place.details_name,
-						secondary: @place.geographic_address
-				},
-				identifier: @place.details_name.parameterize,
-				opts:       {
-						followable: @place,
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail],
-				}
-		}
-	end
 
 	# Use callbacks to share common setup or constraints between actions.
 	def set_place

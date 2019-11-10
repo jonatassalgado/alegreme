@@ -16,16 +16,26 @@ class OrganizersController < ApplicationController
 				                                                                              identifier: 'organizers',
 				                                                                              events:     events
 		                                                                              }, {
-				                                                                              in_organizers: [params[:id]],
+				                                                                              in_organizers:   [params[:id]],
 				                                                                              with_high_score: false,
-				                                                                              limit:      24
+				                                                                              limit:           24
 		                                                                              })
 
-		@locals = mount_section_attrs
+		@data = {
+				identifier: @organizer.details['name'].parameterize,
+				collection: @collection,
+				title:      {
+						principal: @organizer.details['name']
+				},
+				followable: @organizer,
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
+				}
+		}
+
 		render 'show'
-		# end
-		# 	end
-		# end
 
 	end
 
@@ -79,25 +89,6 @@ class OrganizersController < ApplicationController
 	end
 
 	private
-
-	def mount_section_attrs
-		{
-				items:      @collection,
-				title:      {
-						principal: @organizer.details['name']
-				},
-				identifier: @organizer.details['name'].parameterize,
-				opts:       {
-						followable: @organizer,
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail]
-				}
-		}
-	end
 
 	# Use callbacks to share common setup or constraints between actions.
 	def set_organizer

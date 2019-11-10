@@ -17,19 +17,17 @@ module Api
 						                                     in_places: initial_filters_applyed['in_places']
 				                                     })
 
-				@locals = {
-						items:        collection,
+				@data = {
+						identifier:   params[:identifier],
+						collection:   collection,
 						title:        {
 								principal: place.details_name,
 								secondary: place.geographic_address
 						},
-						identifier:   params[:identifier],
-						opts:         {
-								followable: place,
-								filters:    collection[:filters],
-								detail:     collection[:detail],
-								origin:     params[:origin]
-						},
+						followable:   place,
+						filters:      collection[:filters],
+						detail:       collection[:detail],
+						origin:       params[:origin],
 						json_request: true
 				}
 			elsif !initial_filters_applyed['in_organizers'].blank?
@@ -43,18 +41,16 @@ module Api
 						                                     in_organizers: initial_filters_applyed['in_organizers']
 				                                     })
 
-				@locals = {
-						items:        collection,
+				@data = {
+						identifier:   params[:identifier],
+						collection:   collection,
 						title:        {
 								principal: organizer.details_name
 						},
-						identifier:   params[:identifier],
-						opts:         {
-								followable: organizer,
-								filters:    collection[:filters],
-								detail:     collection[:detail],
-								origin:     params[:origin]
-						},
+						followable:   organizer,
+						filters:      collection[:filters],
+						detail:       collection[:detail],
+						origin:       params[:origin],
 						json_request: true
 				}
 			else
@@ -63,22 +59,21 @@ module Api
 						                                     events:     Event.all
 				                                     })
 
-				@title = JSON.parse(params[:title])
 
-				@locals = {
-						items:        collection,
-						title:        {
-								principal: @title['principal'],
-								secondary: @title['secondary'].try(:html_safe)
-						},
+				@data = {
 						identifier:   params[:identifier],
-						opts:         {
-								filters: collection[:filters],
-								detail:  collection[:detail],
-								origin:  params[:origin]
+						collection:   collection,
+						title:        {
+								principal: JSON.parse(params[:title])['principal'],
+								secondary: JSON.parse(params[:title])['secondary'].try(:html_safe)
 						},
+						filters:      collection[:filters],
+						origin:       params[:origin],
+						detail:       collection[:detail],
+						similar:      params[:similar],
 						json_request: true
 				}
+
 			end
 
 

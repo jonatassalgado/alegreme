@@ -106,20 +106,17 @@ class FeedsController < ApplicationController
 				                                                                                              limit:            48
 		                                                                                              })
 
-		@locals = {
-				items:      @collection,
+		@data = {
+				identifier: 'user-suggestions',
+				collection: @collection,
 				title:      {
 						principal: "Indicados para #{current_user.first_name}",
 						secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
 				},
-				identifier: 'user-suggestions',
-				opts:       {
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail]
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
 				}
 		}
 	end
@@ -138,20 +135,19 @@ class FeedsController < ApplicationController
 				                                                                                           limit:            48
 		                                                                                           })
 
-		@locals = {
-				items:      @collection,
+		@data = {
+				identifier: 'follow',
+				collection: @collection,
 				title:      {
 						principal: "Tópicos que você segue",
 						secondary: "Explore os eventos de organizadores, locais e tags que você segue."
 				},
-				identifier: 'follow',
 				opts:       {
 						filters: {
 								ocurrences: true,
 								kinds:      true,
 								categories: true
-						},
-						detail:  @collection[:detail]
+						}
 				}
 		}
 	end
@@ -166,20 +162,17 @@ class FeedsController < ApplicationController
 				                                                                              limit:           48
 		                                                                              })
 
-		@locals = {
-				items:      @collection,
+		@data = {
+				identifier: 'today-and-tomorrow',
+				collection: @collection,
 				title:      {
 						principal: "Eventos em Porto Alegre Hoje e Amanhã",
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
 				},
-				identifier: 'today-and-tomorrow',
-				opts:       {
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail],
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
 				}
 		}
 	end
@@ -196,20 +189,21 @@ class FeedsController < ApplicationController
 				                                                                                    limit:            48
 		                                                                                    })
 
-		@locals = {
-				items:      @collection,
+		@props = {
+
+		}
+
+		@data = {
+				identifier: 'this-week',
+				collection: @collection,
 				title:      {
 						principal: current_user ? "Acontecendo esta semana" : "Eventos acontecendo esta semana em Porto Alegre",
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 6, format: :week)} (#{I18n.l(Date.today + 6, format: :short)}) em Porto Alegre - RS"
 				},
-				identifier: 'this-week',
-				opts:       {
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail]
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
 				}
 		}
 	end
@@ -225,20 +219,17 @@ class FeedsController < ApplicationController
 				                                                                              limit:            60
 		                                                                              })
 
-		@locals = {
-				items:      @collection,
+		@data = {
+				identifier: 'category',
+				collection: @collection,
 				title:      {
 						principal: "Eventos na categoria #{params[:category].capitalize} em Porto Alegre",
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos de #{params[:category]} em Porto Alegre - RS"
 				},
-				identifier: 'category',
-				opts:       {
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail],
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
 				}
 		}
 	end
@@ -253,20 +244,17 @@ class FeedsController < ApplicationController
 				                                                                              with_high_score:  true
 		                                                                              })
 
-		@locals = {
-				items:      @collection,
+		@data = {
+				identifier: 'city',
+				collection: @collection,
 				title:      {
 						principal: "Eventos em Porto Alegre",
 						secondary: "Explore todos os eventos que ocorrem em Porto Alegre - RS"
 				},
-				identifier: 'city',
-				opts:       {
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail],
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
 				}
 		}
 	end
@@ -283,20 +271,17 @@ class FeedsController < ApplicationController
 				                                                                                      limit:            12
 		                                                                                      })
 
-		@locals = {
-				items:      @collection,
+		@data = {
+				identifier: 'day',
+				collection: @collection,
 				title:      {
 						principal: "Eventos em Porto Alegre que ocorren dia #{I18n.l(@day, format: :short)}",
 						secondary: "Explore todos os eventos que ocorrem em Porto Alegre - RS no dia #{I18n.l(@day, format: :long)}"
 				},
-				identifier: 'day',
-				opts:       {
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						},
-						detail:  @collection[:detail],
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
 				}
 		}
 	end

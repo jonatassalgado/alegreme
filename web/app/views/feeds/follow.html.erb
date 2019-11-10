@@ -4,6 +4,6 @@
 
   <% content_for :meta_title, "Eventos de tópicos que você segue" %>
 
-  <%= render partial: "components/collection/collection", locals: @locals %>
+  <%= render partial: "components/collection/collection", locals: { data: @data } %>
 
 </section>

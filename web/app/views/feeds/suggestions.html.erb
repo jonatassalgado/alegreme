@@ -4,6 +4,6 @@
 
   <% content_for :meta_title, "Eventos sugeridos para #{current_user.first_name}" %>
 
-  <%= render partial: "components/collection/collection", locals: @locals %>
+  <%= render partial: "components/collection/collection", locals: { data: @data } %>
 
 </section>

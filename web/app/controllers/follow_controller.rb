@@ -6,7 +6,7 @@ class FollowController < ApplicationController
 
 		@association = FollowServices::AssociationCreator.new(current_user.id, get_followable).call
 		@topics      = get_topics
-		@locals      = mount_locals
+		@data        = mount_locals
 
 		render_component
 	end
@@ -16,7 +16,7 @@ class FollowController < ApplicationController
 
 		@association = FollowServices::AssociationCreator.new(current_user.id, get_followable).call(destroy: true)
 		@topics      = get_topics
-		@locals      = mount_locals
+		@data        = mount_locals
 
 		render_component
 	end
@@ -57,7 +57,7 @@ class FollowController < ApplicationController
 		end
 
 		unless @event_id.blank?
-			return Event.find(@event_id).public_send(@type).sort
+			Event.find(@event_id).public_send(@type).sort
 		end
 	end
 

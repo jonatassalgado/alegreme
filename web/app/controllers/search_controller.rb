@@ -28,19 +28,16 @@ class SearchController < ApplicationController
 					                                                                              group_by:          false
 			                                                                              })
 
-			@locals = {
-					items:      @collection,
+			@data = {
+					identifier: "search",
+					collection: @collection,
 					title:      {
 							principal: "Eventos encontrados para \"#{params[:q]}\""
 					},
-					identifier: "search",
-					opts:       {
-							filters: {
-									ocurrences: true,
-									kinds:      true,
-									categories: true
-							},
-							detail:  @collection[:detail]
+					filters:    {
+							ocurrences: true,
+							kinds:      true,
+							categories: true
 					}
 			}
 		else

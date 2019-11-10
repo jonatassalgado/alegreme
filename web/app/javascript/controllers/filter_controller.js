@@ -136,18 +136,18 @@ export default class FilterController extends Controller {
 				Promise.all(promises)
 				       .then((resultsArray) => {
 					       const params = {
-						       personas            : resultsArray[0],
-						       categories          : resultsArray[1],
-						       ocurrences          : resultsArray[2],
-						       kinds               : resultsArray[3],
-						       identifier          : this.sectionIdentifier,
-						       title               : this.title,
-						       defaults            : this.defaultValue,
-						       init_filters_applyed: this.initFiltersApplyed,
-						       origin              : this.origin,
-						       similar             : opts.similar,
-						       insert_after        : opts.insert_after,
-						       limit               : opts.limit
+					           personas            : resultsArray[0],
+					           categories          : resultsArray[1],
+					           ocurrences          : resultsArray[2],
+					           kinds               : resultsArray[3],
+					           identifier          : this.sectionIdentifier,
+					           title               : this.title,
+					           defaults            : this.defaultValue,
+					           init_filters_applyed: this.initFiltersApplyed,
+					           origin              : this.origin,
+					           similar             : opts.similar,
+					           insert_after        : opts.insert_after,
+					           limit               : opts.limit
 					       };
 
 					       fetch(`/api/collections`, {
