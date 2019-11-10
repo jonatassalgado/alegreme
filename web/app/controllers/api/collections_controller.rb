@@ -26,7 +26,6 @@ module Api
 						},
 						followable:   place,
 						filters:      collection[:filters],
-						detail:       collection[:detail],
 						origin:       params[:origin],
 						json_request: true
 				}
@@ -49,7 +48,6 @@ module Api
 						},
 						followable:   organizer,
 						filters:      collection[:filters],
-						detail:       collection[:detail],
 						origin:       params[:origin],
 						json_request: true
 				}
@@ -69,8 +67,8 @@ module Api
 						},
 						filters:      collection[:filters],
 						origin:       params[:origin],
-						detail:       collection[:detail],
 						similar:      params[:similar],
+						continue_to:  params[:continue_to_path],
 						json_request: true
 				}
 

@@ -32,19 +32,20 @@
          data-section-actual-events-in-collection="<%= data[:collection][:detail][:actual_events_in_collection] %>"
          data-section-load-more-loading="false"
          data-observable="float-menu.section"
-         data-section-continue-to-path="<%= data[:continue_to] %>"
          id="<%= data[:identifier] %>">
   <div class="me-feed__section-head">
     <h2>
       <%= data[:title][:principal] %>
-      <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
+      <%# if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
         <span class="me-see-all is-hoverable"
               data-fixed="true"
-              data-action="click->section#loadMore">
-          Ver mais
+              data-action="click->section#loadMore"
+              data-target="section.seeAll"
+              data-continue-to-path="<%= data[:continue_to] %>">
+          Ver tudo
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
         </span>
-      <% end %>
+      <%# end %>
       <%= render partial: 'components/follow/follow_button', locals: {
           identifier: data[:identifier],
           user:       data[:user],
@@ -61,6 +62,7 @@
          data-filter-title="<%= data[:title].to_json %>"
          data-filter-init-filters-applyed="<%= data[:collection][:detail][:init_filters_applyed].to_json %>"
          data-filter-origin="<%= data[:origin] %>"
+         data-filter-continue-to-path="<%= data[:continue_to] %>"
          data-target="filter.filterContainer section.filter">
       <% if data[:filters][:categories] && !data[:collection][:categories].blank? %>
         <%= render(partial: 'feeds/filter',

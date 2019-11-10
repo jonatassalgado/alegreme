@@ -3,7 +3,7 @@ import {LazyloadModule}  from "modules/lazyload-module";
 import * as MobileDetect from "mobile-detect";
 
 export default class SectionController extends Controller {
-	static targets = ["section", "filter", "scrollContainer", "loadMoreButton"];
+	static targets = ['section', 'filter', 'scrollContainer', 'loadMoreButton', 'seeAll'];
 
 	initialize() {
 		this.scrollLeft = this.data.get('turbolinksPersistScroll');
@@ -38,8 +38,8 @@ export default class SectionController extends Controller {
 	loadMore() {
 		this.data.set('loadMoreLoading', true);
 
-		if (this.md.mobile() && this.data.get('continueToPath') !== "" && this.data.get('continueToPath') !== undefined) {
-			location.assign(this.data.get('continueToPath'));
+		if (this.md.mobile() && this.seeAllTarget.dataset.continueToPath !== "" && this.seeAllTarget.dataset.continueToPath !== undefined) {
+			location.assign(this.seeAllTarget.dataset.continueToPath);
 		} else {
 			this.filterController.filter({
 				limit: parseInt(this.actualEventsInCollection) + 16
