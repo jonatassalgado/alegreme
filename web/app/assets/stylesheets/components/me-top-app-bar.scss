@@ -64,8 +64,8 @@ $border-color: #e0e0e0;
     margin: 0 8px 0 0;
     @include mdc-layout-grid-media-query_("phone") {
       margin: 2px 0 0 0;
-      width: 32px;
-      height: 32px;
+      width: 26px;
+      height: 26px;
 
       [data-controller="search"] &, [data-controller="events"] &, [data-controller="places"] &, [data-controller="users"] & {
         display: none;

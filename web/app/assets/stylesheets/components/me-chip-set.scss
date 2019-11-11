@@ -10,6 +10,7 @@
   &__wrapper {
     @include mdc-layout-grid-media-query_("phone") {
       overflow-x: scroll;
+      margin: 0 0 6px 0;
     }
     &::-webkit-scrollbar{
       @include mdc-layout-grid-media-query_("phone") {

@@ -152,15 +152,23 @@
                cached:  true) if mobile_device? && ['feed'].include?(data[:origin]) %>
     <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
       <div class="me-feed__load-more me-feed__load-more--vertical">
-        <button class="me-button me-button--transparent me-button--with-icon-in-right mdc-button"
-                data-target="section.loadMoreButton"
-                data-action="click->section#loadMore">
-          <span class="me-button__label">Ver tudo</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="none" d="M0 0h24v24H0V0z"/>
-            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
-          </svg>
-        </button>
+        <% if data[:origin] == :feed %>
+          <button class="me-button me-button--transparent me-button--with-icon-in-right mdc-button"
+                  data-target="section.loadMoreButton"
+                  data-action="click->section#loadMore">
+            <span class="me-button__label">Ver tudo</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0V0z"/>
+              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+            </svg>
+          </button>
+        <% else %>
+          <button class="me-button me-button--transparent me-button--with-icon-in-right mdc-button"
+                  data-target="section.loadMoreButton"
+                  data-action="click->section#loadMore">
+            <span class="me-button__label">Mostrais mais</span>
+          </button>
+        <% end %>
       </div>
     <% end %>
     <% unless data[:collection][:events] %>

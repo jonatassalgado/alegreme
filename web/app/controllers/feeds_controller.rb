@@ -3,7 +3,7 @@ include Pagy::Backend
 class FeedsController < ApplicationController
 	before_action :authorize_user, except: [:today, :category, :week, :city, :day]
 	before_action :completed_swipable, except: [:today, :category, :week, :city, :day]
-	before_action :authorize_current_user, only: %i[suggestions follow]
+	before_action :authorize_current_user, only: %i[suggestions follow news]
 
 
 	def index
@@ -93,6 +93,33 @@ class FeedsController < ApplicationController
 		}
 	end
 
+	def recent
+		@new_events_today = Event.where("created_at > ?", DateTime.now.beginning_of_day - 1)
+		@collection       = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                                    identifier: 'new-today',
+				                                                                                    events:     @new_events_today
+		                                                                                    },
+		                                                                                    {
+				                                                                                    only_in:           @new_events_today.map(&:id),
+				                                                                                    order_by_persona:  true,
+				                                                                                    in_user_personas:  true
+		                                                                                    })
+
+		@data = {
+				identifier: 'new-today',
+				collection: @collection,
+				title:      {
+						principal: "Adicionados recentemente",
+						secondary: "Foram adicionados #{@collection.dig(:detail, :total_events_in_collection)} eventos nas últimas 15 horas que podem te interessar"
+				},
+				filters:    {
+						ocurrences: true,
+						kinds:      true,
+						categories: true
+				}
+		}
+	end
+
 	def suggestions
 		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
 		@collection                 = EventServices::CollectionCreator.new(current_user, params).call({
@@ -103,7 +130,7 @@ class FeedsController < ApplicationController
 				                                                                                              only_in:          @events_in_user_suggestions.map(&:id),
 				                                                                                              order_by_persona: false,
 				                                                                                              order_by_date:    true,
-				                                                                                              limit:            48
+				                                                                                              limit:            15
 		                                                                                              })
 
 		@data = {
@@ -132,7 +159,7 @@ class FeedsController < ApplicationController
 				                                                                                           order_by_persona: false,
 				                                                                                           order_by_date:    true,
 				                                                                                           with_high_score:  false,
-				                                                                                           limit:            48
+				                                                                                           limit:            15
 		                                                                                           })
 
 		@data = {
@@ -159,7 +186,7 @@ class FeedsController < ApplicationController
 		                                                                              }, {
 				                                                                              in_days:         [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
 				                                                                              with_high_score: false,
-				                                                                              limit:           48
+				                                                                              limit:           15
 		                                                                              })
 
 		@data = {
@@ -186,7 +213,7 @@ class FeedsController < ApplicationController
 				                                                                                    only_in:          @events_this_week.map(&:id),
 				                                                                                    in_user_personas: false,
 				                                                                                    order_by_persona: true,
-				                                                                                    limit:            48
+				                                                                                    limit:            15
 		                                                                                    })
 
 		@props = {
@@ -216,7 +243,7 @@ class FeedsController < ApplicationController
 		                                                                              }, {
 				                                                                              in_categories:    [params[:category]],
 				                                                                              order_by_persona: true,
-				                                                                              limit:            60
+				                                                                              limit:            15
 		                                                                              })
 
 		@data = {
@@ -239,7 +266,7 @@ class FeedsController < ApplicationController
 				                                                                              identifier: 'city',
 				                                                                              events:     Event.all
 		                                                                              }, {
-				                                                                              limit:            24,
+				                                                                              limit:            15,
 				                                                                              order_by_persona: true,
 				                                                                              with_high_score:  true
 		                                                                              })

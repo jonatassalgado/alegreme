@@ -38,7 +38,7 @@
     }
 
     &--selected {
-      border: $chip-border-size solid $chip-follow-border-color;
+      border: 0;
       background: $chip-follow-background-color;
 
       & .mdc-chip__text {

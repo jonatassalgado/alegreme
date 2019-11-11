@@ -202,10 +202,11 @@ $mdc-layout-grid-columns: (
 
     }
 
-    & .mdc-button {
-      font-family: $font-secondary-family;
-      font-size: 12px;
-    }
+    //& .mdc-button {
+    //  font-family: $font-secondary-family;
+    //  font-size: 14px;
+    //  font-weight: 600;
+    //}
   }
 
   &__divider {

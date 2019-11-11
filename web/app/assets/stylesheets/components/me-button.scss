@@ -22,6 +22,15 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
     height: 18px;
   }
 
+  &__label {
+    .me-feed__load-more & {
+      font-family: $font-secondary-family;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+
+
   &--transparent {
     @include mdc-button-filled-accessible($surface-color);
     box-shadow: $box-shadow;

@@ -45,6 +45,7 @@ Rails.application.routes.draw do
 	resources :users
 	get '/:user/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
 	get '/:user/seguindo', to: 'feeds#follow', as: :follow_events
+	get '/:user/novos', to: 'feeds#recent', as: :recent_events
 
 	get '/active-invite', to: 'users#active_invite'
 

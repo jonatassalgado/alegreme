@@ -1,0 +1,9 @@
+<section class="me-page me-page--profile__section is-animated">
+
+  <%= notice %>
+
+  <% content_for :meta_title, "Eventos adicionados nas últimas 24h" %>
+
+  <%= render partial: "components/collection/collection", locals: { data: @data } %>
+
+</section>
