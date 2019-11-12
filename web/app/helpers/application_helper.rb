@@ -1,6 +1,10 @@
 module ApplicationHelper
 	include Pagy::Frontend
 
+	def to_hashtag sentence
+		"##{sentence.gsub(/ /, '')}"
+	end
+
 	def mobile_device?
 		if session[:mobile_param]
 			session[:mobile_param] == "1"

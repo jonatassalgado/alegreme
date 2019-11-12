@@ -13,6 +13,57 @@ $description-color: $font-secondary-color;
     color: $brand-color-aa;
   }
 
+  & a {
+    display: contents;
+  }
+
+  & .mdc-card__title {
+    color: $name-color;
+    line-height: 18px;
+    margin: 6px 0 0 0;
+    font-weight: 400;
+    padding-right: 20px;
+  }
+
+  & .mdc-card__subtitle {
+    color: $description-color;
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  & .mdc-card__media {
+    border-radius: $media-border-radius;
+    border: $media-border-width solid #f7f7f7;
+    //overflow: hidden;
+  }
+
+  & .mdc-card__actions {
+    position: absolute;
+    top: 93px;
+    right: -10px;
+  }
+
+  &--feed {
+    min-height: 176px;
+    font-size: 14px;
+    border: 0;
+    box-shadow: none;
+    margin:6px 0 0 0;
+    position: relative;
+    &:hover {
+      & .me-card__similar {
+        opacity: 1;
+        transform: translate(0px, 0px);
+      }
+
+      & .me-card__place {
+        opacity: 1;
+        transform: translate(0px, 0px);
+      }
+    }
+  }
+
   &__overlay {
     position: absolute;
     display: flex;
@@ -36,15 +87,27 @@ $description-color: $font-secondary-color;
   }
 
   &__primary-section {
-    color: $font-tertiary-color;
+    color: $font-secondary-color;
     text-transform: uppercase;
-    font-size: 12px;
-    margin: 12px 0 0 0px;
-    font-weight: 800;
     line-height: 1.3em;
-    //@extend .me-card__section;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 5;
     & a {
-      color: $font-tertiary-color;
+      //color: $font-tertiary-color;
+    }
+
+    .me-card--single & {
+      color: $font-primary-color;
+      text-transform: none;
+      display: flex;
+      margin: 50px 0;
+      position: relative;
+      @include mdc-layout-grid-media-query_("phone") {
+        flex-direction: column;
+        margin: 24px 0;
+      }
     }
   }
 
@@ -52,11 +115,8 @@ $description-color: $font-secondary-color;
     color: $font-secondary-color;
     font-size: 16px;
     margin: 6px 0 0 0;
+    padding: 0 0 0 6px;
     font-weight: 500;
-    //@include mdc-layout-grid-media-query_("phone") {
-    //  font-size: 16px;
-    //}
-
     & a {
       color: $font-secondary-color;
     }
@@ -66,25 +126,18 @@ $description-color: $font-secondary-color;
     color: $font-secondary-color;
     font-size: 14px;
     margin: 12px 0 0 0;
+    padding: 0 0 0 6px;
     font-weight: 300;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-
-    //& a {
-    //  color: $font-secondary-color;
-    //}
   }
 
-  &__category {
-    color: $font-secondary-color;
-  }
-
-  &__date, &__price {
-
-    &.is-highlight, .is-highlight a {
-      color: $brand-color;
-    }
+  &__quartenary-section {
+    padding: 8px 0 0 6px;
+    font-size: 10px;
+    font-weight: 300;
+    text-transform: lowercase;
   }
 
   &__organizer {
@@ -93,7 +146,13 @@ $description-color: $font-secondary-color;
     }
   }
 
-  .me-card__place {
+  &__place {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    user-select: none;
+    @include mdc-layout-grid-media-query_("phone") {
+      opacity: 1;
+    }
 
     & svg {
       margin: 0 6px 0 0;
@@ -217,19 +276,7 @@ $description-color: $font-secondary-color;
 
 
   &--feed {
-    min-height: 176px;
-    font-size: 14px;
-    border: 0;
-    box-shadow: none;
-    margin: 6px 0 0 0;
-    position: relative;
 
-    &:hover {
-      & .me-card__similar {
-        opacity: 1;
-        transform: translate(0px, 0px);
-      }
-    }
 
     .me-event-single__similar & {
       margin: 6px 0 30px 0;
@@ -437,16 +484,16 @@ $description-color: $font-secondary-color;
       right: 16px;
     }
 
-    & .me-card__primary-section {
-      color: $font-primary-color;
-      text-transform: none;
-      display: flex;
-      margin: 50px 0;
-      @include mdc-layout-grid-media-query_("phone") {
-        flex-direction: column;
-        margin: 24px 0;
-      }
-    }
+    //& .me-card__primary-section {
+      //color: $font-primary-color;
+      //text-transform: none;
+      //display: flex;
+      //margin: 50px 0;
+      //@include mdc-layout-grid-media-query_("phone") {
+      //  flex-direction: column;
+      //  margin: 24px 0;
+      //}
+    //}
 
     & .me-card__place, .me-card__date {
       //background: $background-z0-color;
@@ -486,7 +533,9 @@ $description-color: $font-secondary-color;
     }
 
     & .me-card__address {
+      font-style: normal;
       font-weight: normal;
+      font-size: 12px;
 
       &:hover {
         color: $brand-color;
@@ -589,36 +638,5 @@ $description-color: $font-secondary-color;
         font-weight: 100;
       }
     }
-  }
-
-  & a {
-    display: contents;
-  }
-
-  & .mdc-card__title {
-    color: $name-color;
-    line-height: 18px;
-    margin: 6px 0 0 0;
-    font-weight: 400;
-    padding-right: 20px;
-  }
-
-  & .mdc-card__subtitle {
-    color: $description-color;
-    margin-top: 2px;
-    font-size: 12px;
-    line-height: 14px;
-  }
-
-  & .mdc-card__media {
-    border-radius: $media-border-radius;
-    border: $media-border-width solid $border-color;
-    //overflow: hidden;
-  }
-
-  & .mdc-card__actions {
-    position: absolute;
-    top: 93px;
-    right: -10px;
   }
 }

@@ -45,7 +45,8 @@ class FeedsController < ApplicationController
 					{
 							only_in:           @events_this_week.map(&:id),
 							in_user_personas:  true,
-							order_by_persona:  true,
+							order_by_persona:  false,
+							order_by_date:     true,
 							not_in_categories: ['brecho', 'curso']
 					})
 		end
@@ -100,9 +101,9 @@ class FeedsController < ApplicationController
 				                                                                                    events:     @new_events_today
 		                                                                                    },
 		                                                                                    {
-				                                                                                    only_in:           @new_events_today.map(&:id),
-				                                                                                    order_by_persona:  true,
-				                                                                                    in_user_personas:  true
+				                                                                                    only_in:          @new_events_today.map(&:id),
+				                                                                                    order_by_persona: true,
+				                                                                                    in_user_personas: true
 		                                                                                    })
 
 		@data = {
@@ -130,6 +131,8 @@ class FeedsController < ApplicationController
 				                                                                                              only_in:          @events_in_user_suggestions.map(&:id),
 				                                                                                              order_by_persona: false,
 				                                                                                              order_by_date:    true,
+				                                                                                              in_user_personas: false,
+				                                                                                              with_high_score:  false,
 				                                                                                              limit:            15
 		                                                                                              })
 
@@ -159,6 +162,7 @@ class FeedsController < ApplicationController
 				                                                                                           order_by_persona: false,
 				                                                                                           order_by_date:    true,
 				                                                                                           with_high_score:  false,
+				                                                                                           in_user_personas: false,
 				                                                                                           limit:            15
 		                                                                                           })
 
@@ -212,7 +216,9 @@ class FeedsController < ApplicationController
 		                                                                                    }, {
 				                                                                                    only_in:          @events_this_week.map(&:id),
 				                                                                                    in_user_personas: false,
-				                                                                                    order_by_persona: true,
+				                                                                                    order_by_persona: false,
+				                                                                                    order_by_date:    true,
+				                                                                                    with_high_score:  false,
 				                                                                                    limit:            15
 		                                                                                    })
 
@@ -242,7 +248,10 @@ class FeedsController < ApplicationController
 				                                                                              events:     Event.all
 		                                                                              }, {
 				                                                                              in_categories:    [params[:category]],
-				                                                                              order_by_persona: true,
+				                                                                              in_user_personas: false,
+				                                                                              order_by_persona: false,
+				                                                                              order_by_date:    true,
+				                                                                              with_high_score:  false,
 				                                                                              limit:            15
 		                                                                              })
 
@@ -267,8 +276,10 @@ class FeedsController < ApplicationController
 				                                                                              events:     Event.all
 		                                                                              }, {
 				                                                                              limit:            15,
-				                                                                              order_by_persona: true,
-				                                                                              with_high_score:  true
+				                                                                              in_user_personas: false,
+				                                                                              order_by_persona: false,
+				                                                                              order_by_date:    true,
+				                                                                              with_high_score:  false
 		                                                                              })
 
 		@data = {

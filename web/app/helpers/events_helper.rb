@@ -1,6 +1,6 @@
 module EventsHelper
 	def limit_name_size(name, limit = 60)
-		name.truncate(limit, separator: " ") if name
+		name.titleize.truncate(limit, separator: " ") if name
 	end
 
 	def limit_description_size(name, limit = 140)
