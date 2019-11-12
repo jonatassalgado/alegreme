@@ -34,9 +34,9 @@
               data-target="event.date">
         <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
       </span>
-        <span class="me-card__price <%= 'is-highlight' if (event.details_prices.present? && event.details_prices.min.to_i <= 20) %>">
-          <%= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
-      </span>
+<!--        <span class="me-card__price <%#= 'is-highlight' if (event.details_prices.present? && event.details_prices.min.to_i <= 20) %>">-->
+          <%#= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
+<!--      </span>-->
       </div>
       <% if current_user %>
         <div class="me-card__like-button" data-action="click->event#like">

@@ -19,6 +19,9 @@ class PlacesController < ApplicationController
 		                                                                              }, {
 				                                                                              in_places:       [params[:id]],
 				                                                                              with_high_score: false,
+				                                                                              in_user_personas: false,
+				                                                                              order_by_persona: false,
+				                                                                              order_by_date:    true,
 				                                                                              limit:           24
 		                                                                              })
 

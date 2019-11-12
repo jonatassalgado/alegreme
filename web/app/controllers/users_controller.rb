@@ -29,10 +29,13 @@ class UsersController < ApplicationController
 				                                                                              identifier: 'current_user.slug',
 				                                                                              events:     events
 		                                                                              }, {
-				                                                                              with_high_score: false,
-				                                                                              not_in_saved:    false,
-				                                                                              only_in:         events.map(&:id),
-				                                                                              limit:           24
+				                                                                              with_high_score:  false,
+				                                                                              in_user_personas: false,
+				                                                                              order_by_persona: false,
+				                                                                              order_by_date:    true,
+				                                                                              not_in_saved:     false,
+				                                                                              only_in:          events.map(&:id),
+				                                                                              limit:            24
 		                                                                              })
 
 		@data = {
