@@ -13,31 +13,6 @@ $description-color: $font-secondary-color;
     color: $brand-color-aa;
   }
 
-  &[data-event-similar-open="true"], &[data-event-similar-open="true"]:hover {
-
-    & .me-card__secondary-section a {
-
-    }
-
-    & .me-card__similar {
-      opacity: 1;
-      color: $brand-color;
-    }
-  }
-
-  &[data-event-similar-loading="true"] {
-    & .me-card__expand-more {
-      opacity: 0;
-      display: none;
-    }
-
-    & .me-card__loading svg {
-      opacity: 1;
-      display: block;
-      color: $font-secondary-color;
-    }
-  }
-
   &__overlay {
     position: absolute;
     display: flex;
@@ -75,8 +50,8 @@ $description-color: $font-secondary-color;
 
   &__secondary-section {
     color: $font-secondary-color;
-    font-size: 15px;
-    margin: 6px 0 0 0px;
+    font-size: 16px;
+    margin: 6px 0 0 0;
     font-weight: 500;
     //@include mdc-layout-grid-media-query_("phone") {
     //  font-size: 16px;
@@ -90,13 +65,15 @@ $description-color: $font-secondary-color;
   &__tertiary-section {
     color: $font-secondary-color;
     font-size: 14px;
-    margin: 6px 0 0 0;
+    margin: 12px 0 0 0;
     font-weight: 300;
-    max-width: 80%;
-    //@extend .me-card__section;
-    & a {
-      color: $font-secondary-color;
-    }
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    //& a {
+    //  color: $font-secondary-color;
+    //}
   }
 
   &__category {
@@ -116,44 +93,54 @@ $description-color: $font-secondary-color;
     }
   }
 
+  .me-card__place {
+
+    & svg {
+      margin: 0 6px 0 0;
+    }
+  }
+
   &__similar {
-    .me-feed__section & {
-      cursor: pointer;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    user-select: none;
+    z-index: 2;
+    @include mdc-layout-grid-media-query_("phone") {
+      margin: 12px 0;
+      opacity: 1;
+    }
+
+    .me-card[data-event-similar-open="true"] &, .me-card[data-event-similar-open="true"]:hover & {
       color: $brand-color;
-      opacity: 0;
-      transition: opacity 0.15s ease;
-      user-select: none;
-      z-index: 2;
-      //position: relative;
-      //top: 3px;
-      //left: -8px;
-      @include mdc-layout-grid-media-query_("phone") {
-        margin-bottom: 12px;
-        opacity: 1;
-      }
+    }
 
-      & .mdc-button::before, .mdc-button::after {
-        background-color: transparent;
-      }
+    & .mdc-button::before, .mdc-button::after {
+      background-color: transparent;
+    }
 
-      & svg {
+    & svg {
+      fill: $font-secondary-color;
+
+      .me-card[data-event-similar-open="true"] &, .me-card[data-event-similar-open="true"]:hover & {
         fill: $brand-color;
       }
+
     }
 
 
-    & .me-card__loading svg {
-      opacity: 0;
-      display: none;
-      animation-name: rotate;
-      animation-iteration-count: infinite;
-      animation-duration: 1s;
-      animation-timing-function: ease;
-      padding: 0;
-      @include mdc-layout-grid-media-query_("phone") {
-        //padding: 1px 0 1px 0;
-      }
-    }
+    //& .me-card__loading svg {
+    //  opacity: 0;
+    //  display: none;
+    //  animation-name: rotate;
+    //  animation-iteration-count: infinite;
+    //  animation-duration: 1s;
+    //  animation-timing-function: ease;
+    //  padding: 0;
+    //  @include mdc-layout-grid-media-query_("phone") {
+    //    //padding: 1px 0 1px 0;
+    //  }
+    //}
 
     & svg {
       fill: $font-secondary-color;
@@ -168,10 +155,37 @@ $description-color: $font-secondary-color;
     }
   }
 
+
+  &__expand-more {
+    .me-card[data-event-similar-loading="true"] & {
+      opacity: 0;
+      display: none;
+    }
+  }
+
+  &__loading svg {
+    opacity: 0;
+    display: none;
+    animation-name: rotate;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    padding: 0;
+    @include mdc-layout-grid-media-query_("phone") {
+
+    }
+
+    .me-card[data-event-similar-loading="true"] & {
+      opacity: 1;
+      display: block;
+      fill: $brand-color;
+    }
+  }
+
   &__like-button {
     position: absolute;
     z-index: 2;
-    bottom: -20px;
+    bottom: -18px;
     right: 6px;
     border-radius: 25px;
     overflow: hidden;
@@ -192,10 +206,10 @@ $description-color: $font-secondary-color;
       }
 
       &--on {
-        background: $brand-color;
+        //background: $brand-color;
 
         & svg {
-          fill: $surface-color;
+          fill: #EA4335;
         }
       }
     }
@@ -227,25 +241,25 @@ $description-color: $font-secondary-color;
       min-height: 165px;
     }
 
-    & .mdc-typography--headline1 {
-      color: $font-primary-color;
-    }
+    //& .mdc-typography--headline1 {
+    //  color: $font-primary-color;
+    //}
+    //
+    //& .mdc-typography--headline2 {
+    //  margin: 0 0 6px 0;
+    //}
+    //
+    //& .mdc-typography--subtitle2 {
+    //  margin: 0 0 6px 0;
+    //}
 
-    & .mdc-typography--headline2 {
-      margin: 0 0 6px 0;
-    }
-
-    & .mdc-typography--subtitle2 {
-      margin: 0 0 6px 0;
-    }
-
-    & .mdc-card__primary-action {
-      padding: 6px 0 6px 0;
-
-      &:hover {
-        background: inherit;
-      }
-    }
+    //& .mdc-card__primary-action {
+    //  padding: 6px 0 6px 0;
+    //
+    //  &:hover {
+    //    background: inherit;
+    //  }
+    //}
 
     & .mdc-card__title {
       color: $name-color;
@@ -261,24 +275,25 @@ $description-color: $font-secondary-color;
       }
     }
 
-    & .mdc-card__actions {
-      padding: 0;
-    }
+    //
+    //& .mdc-card__actions {
+    //  padding: 0;
+    //}
 
-    & .mdc-card__media {
-      //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      //box-shadow: $media-box-shadow;
+    //& .mdc-card__media {
+    //  //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    //  //box-shadow: $media-box-shadow;
+    //
+    //  &:hover {
+    //    //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
+    //  }
+    //}
 
-      &:hover {
-        //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
-      }
-    }
-
-    &:hover {
-      & .mdc-card__media {
-        //opacity: 1;
-      }
-    }
+    //&:hover {
+    //  & .mdc-card__media {
+    //    //opacity: 1;
+    //  }
+    //}
 
     //&[data-event-favorited="true"]::before {
     //  content: close-quote;

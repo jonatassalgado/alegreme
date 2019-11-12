@@ -43,6 +43,14 @@ module EventDecorators
 			def details_source_url=(value)
 				details['source_url'] = value
 			end
+
+			def place_details_name
+				place.details['name'].try(:titleize)
+			end
+
+			def place_details_name=(value)
+				place.details['name'] = value
+			end
 		end
 
 		module ClassMethods

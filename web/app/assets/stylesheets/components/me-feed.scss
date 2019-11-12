@@ -304,7 +304,7 @@ $mdc-layout-grid-columns: (
     @include mdc-layout-grid-media-query_("phone") {
       //scroll-snap-type: x;
       grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
-      grid-template-columns: repeat(100, minmax(80vw, 1fr));
+      grid-template-columns: repeat(100, minmax(70vw, 1fr));
       overflow-y: hidden;
       padding: 0 70px 0 $section-padding-phone;
     }

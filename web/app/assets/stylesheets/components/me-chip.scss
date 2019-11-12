@@ -3,8 +3,13 @@
 
 .me-chip {
 
+  .me-card & {
+    //background: none;
+    //border: 1px solid $border-color;
+    margin: 0 6px 6px 0;
+  }
+
   &.mdc-chip {
     font-family: $font-secondary-family;
   }
-
 }

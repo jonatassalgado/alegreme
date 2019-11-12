@@ -7,7 +7,7 @@ module EventsHelper
 		strip_tags(name).truncate(limit, separator: " ") if name
 	end
 
-	def limit_place_name_size(place_name, limit = 35)
+	def limit_place_name_size(place_name, limit = 25)
 		place_name.truncate(limit, separator: " ")
 	end
 

@@ -47,7 +47,7 @@ class Event < ApplicationRecord
 
 	accepts_nested_attributes_for :place, :organizers
 
-	delegate :details_name, to: :place, prefix: true, allow_nil: true
+	# delegate :details_name, to: :place, prefix: true, allow_nil: true
 
 	searchkick(word:        [:name, :description, :category, :place, :organizers],
 	           word_start:  [:name, :place, :organizers],
