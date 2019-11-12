@@ -124,9 +124,9 @@ $description-color: $font-secondary-color;
       transition: opacity 0.15s ease;
       user-select: none;
       z-index: 2;
-      position: relative;
-      top: 3px;
-      left: -8px;
+      //position: relative;
+      //top: 3px;
+      //left: -8px;
       @include mdc-layout-grid-media-query_("phone") {
         margin-bottom: 12px;
         opacity: 1;
