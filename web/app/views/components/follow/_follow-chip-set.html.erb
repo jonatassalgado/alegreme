@@ -1,7 +1,7 @@
 <div class="mdc-chip <%= 'mdc-chip--selected' if user.try {|user| user.following?(followable)} %>"
      data-followed="<%= user.try {|user| user.following?(followable)} %>"
      data-followable="<%= followable.id %>"
-     data-type="<%= type %>"
+     data-type="<%= followable.class.name.underscore.pluralize %>"
      data-target="follow-chipset.chip">
   <% if user %>
     <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"

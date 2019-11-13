@@ -4,7 +4,7 @@
 
   <% content_for :meta_title, "#{@user.first_name} | Alegreme.com" %>
 
-  <div class="me-user-profile me-feed__section me-feed__section--without-margin">
+  <div class="me-user-profile me-feed__section">
     <% if @user.picture %>
       <img class="me-user-profile__picture" src="<%= @user.picture %>" alt="<%= @user.first_name %>">
     <% end %>
@@ -13,12 +13,18 @@
     </h1>
   </div>
 
-
-  <%# if @topics %>
-<!--    <div class="me-card__topics">-->
-      <%#= render partial: 'components/follow/follow', locals: {user: current_user, chips: @topics, event_id: ''} %>
-<!--    </div>-->
-  <%# end %>
+  <section class="me-feed__section">
+    <h2>Tópicos que você segue</h2>
+    <div class="is-horizontal-scrollable">
+      <%= render partial: 'components/follow/follow', locals: {
+          data: {
+              identifier: 'follows-by-user',
+              chips: current_user.following_topics,
+              user:  current_user
+          }
+      } %>
+    </div>
+  </section>
 
   <%= render partial: "components/collection/collection", locals: { data: @data } %>
 </section>

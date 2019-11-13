@@ -38,7 +38,8 @@ export default class FollowChipsetController extends Controller {
 				type           : chipEl.dataset.type,
 				action         : chipEl.dataset.followed === 'true' ? 'unfollow' : 'follow',
 				expandToSimilar: this.expandToSimilar,
-				eventId        : this.eventId
+				eventId        : this.eventId,
+				identifier     : this.identifier
 			};
 
 			if (Object.values(data).map((value) => {
@@ -51,15 +52,20 @@ export default class FollowChipsetController extends Controller {
 		});
 
 		followPromise.then((data) => {
-			fetch(`/${data.type}/${data.followable}/${data.action}?event_id=${data.eventId}&expand_to_similar=${data.expandToSimilar}`, {
-				method     : 'get',
+			fetch(`/${data.type}/${data.followable}/${data.action}`, {
+				method     : 'post',
 				headers    : {
 					'X-Requested-With': 'XMLHttpRequest',
-					'Content-type'    : 'text/javascript; charset=UTF-8',
+					'Content-type'    : 'application/json',
 					'Accept'          : 'text/javascript',
 					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
 				},
-				credentials: 'same-origin'
+				credentials: 'same-origin',
+				body       : JSON.stringify({
+					expand_to_similar: data.expandToSimilar,
+					event_id         : data.eventId,
+					identifier       : data.identifier
+				})
 			})
 				.then(
 					response => {
@@ -88,6 +94,10 @@ export default class FollowChipsetController extends Controller {
 		} else {
 			return this.data.get('similar-to') || null;
 		}
+	}
+
+	get identifier() {
+		return this.chipsetTarget.id;
 	}
 
 	get expandToSimilar() {

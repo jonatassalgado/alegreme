@@ -1,23 +1,30 @@
 <%
 
-  type = local_assigns.fetch(:type, nil)
-  event_id = local_assigns.fetch(:event_id, nil)
-  expand_to_similar = local_assigns.fetch(:expand_to_similar, false)
+  raise ArgumentError unless data
+
+  data = {
+      identifier:        false,
+      user:              nil,
+      type:              nil,
+      event_id:          nil,
+      expand_to_similar: false,
+      chips:             nil
+  }.deep_merge!(data)
 
 %>
 
 <div class="me-follow-chip-set mdc-chip-set"
      data-controller="follow-chipset"
      data-target="follow-chipset.chipset"
-     data-follow-chipset-similar-to="<%= event_id %>"
-     data-follow-chipset-expand-to-similar="<%= expand_to_similar %>"
-     id="<%= "follow-chip-set__#{type}-#{event_id}" %>">
+     data-follow-chipset-similar-to="<%= data[:event_id] %>"
+     data-follow-chipset-expand-to-similar="<%= data[:expand_to_similar] %>"
+     id="<%= data[:identifier] ? data[:identifier] : "follow-chip-set__#{data[:type]}-#{data[:event_id]}" %>">
 
   <%= render partial:    'components/follow/follow-chip-set',
-             collection: chips,
+             collection: data[:chips],
              as:         :followable,
              locals:     {
-                 user: user,
+                 user: data[:user],
                  type: 'organizers'
              } %>
 </div>

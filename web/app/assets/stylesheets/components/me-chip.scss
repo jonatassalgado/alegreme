@@ -2,6 +2,8 @@
 @import "@material/top-app-bar/_mixins";
 
 .me-chip {
+  background: $surface-secondary-color;
+  color: $font-secondary-color;
 
   .me-card__primary-section & {
     background: $surface-color;

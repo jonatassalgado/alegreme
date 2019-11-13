@@ -60,18 +60,22 @@ $mdc-layout-grid-columns: (
       font-family: $font-secondary-family;
       color: $font-secondary-color;
       line-height: 1.2em;
-
+      @include mobile-only {
+        padding: 0 $section-padding-phone;
+        font-size: 11px;
+      }
       .me-page--profile__section & {
         margin: 0 0 24px 0;
-      }
-
-      @include mdc-layout-grid-media-query_("phone") {
-        padding: 0 $section-padding-phone;
-        font-size: 13px;
-        display: none;
-        .me-page--profile__section & {
-          margin: 12px 0 12px 0;
+        @include mobile-only {
+          margin: 0;
         }
+      }
+    }
+
+    &-title-custom {
+      @include mobile-only {
+        padding: 6px 0 0 0;
+        display: block;
       }
     }
 
@@ -118,18 +122,18 @@ $mdc-layout-grid-columns: (
 
     }
 
-    & i {
-      font-style: normal;
-      font-weight: 500;
-      @include mdc-layout-grid-media-query_("phone") {
-        //display: none;
-      }
-    }
+    //& i {
+    //  font-style: normal;
+    //  font-weight: 500;
+    //  @include mdc-layout-grid-media-query_("phone") {
+    //    //display: none;
+    //  }
+    //}
 
-    & a {
-      color: $brand-color;
-      text-decoration: underline;
-    }
+    //& a {
+      //color: $brand-color;
+      //text-decoration: underline;
+    //}
   }
 
   &__load-more {

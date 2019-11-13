@@ -1,9 +1,9 @@
 (function () {
-	let chipEventElem = document.getElementById('<%= "follow-chip-set__#{@data[:type]}-#{@data[:event_id]}" %>');
+	let chipEventElem = document.getElementById('<%= @data[:identifier] %>');
 
 	setTimeout(function () {
 		requestIdleCallback(function (){
-      morphdom.default(chipEventElem, '<%= j render(partial: 'components/follow/follow', locals: @data) %>'.trim(), {
+      morphdom.default(chipEventElem, '<%= j render(partial: 'components/follow/follow', locals: {data: @data}) %>'.trim(), {
         onBeforeElUpdated: function (fromEl, toEl) {
           return !fromEl.isEqualNode(toEl);
         }

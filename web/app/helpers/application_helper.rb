@@ -1,6 +1,14 @@
 module ApplicationHelper
 	include Pagy::Frontend
 
+	def link_to_topic topic
+		if topic.class.name == 'Place'
+			place_path(topic)
+		elsif topic.class.name == 'Organizer'
+			organizer_path(topic)
+		end
+	end
+
 	def to_hashtag sentence
 		"##{sentence.gsub(/ /, '')}"
 	end

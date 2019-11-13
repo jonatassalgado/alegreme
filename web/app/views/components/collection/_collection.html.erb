@@ -52,10 +52,18 @@
           followable: data[:followable]
       } if data[:followable] %>
     </h2>
-    <div class="me-feed__section-title-secondary">
-      <%= data[:title][:secondary] %>
-    </div>
-    <%# if filters %>
+    <% if data[:title][:secondary] %>
+      <div class="me-feed__section-title-secondary">
+        <%= data[:title][:secondary] %>
+      </div>
+    <% end %>
+    <% if data[:title][:custom] %>
+      <div class="me-feed__section-title-custom"
+           data-fixed="true">
+        <%= data[:title][:custom] %>
+      </div>
+    <% end %>
+    <%# if data[:filters][:categories] || data[:filters][:ocurrences] || data[:filters][:kinds] %>
     <div class="me-filter"
          data-controller="filter"
          data-filter-section-identifier="<%= data[:identifier] %>"

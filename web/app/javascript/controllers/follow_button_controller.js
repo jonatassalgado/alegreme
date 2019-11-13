@@ -44,7 +44,7 @@ export default class FollowButtonController extends Controller {
 
 		followPromise.then((data) => {
 			fetch(`/${data.type}/${data.followable}/${data.action}`, {
-				method     : 'get',
+				method     : 'post',
 				headers    : {
 					'X-Requested-With': 'XMLHttpRequest',
 					'Content-type'    : 'application/json; charset=UTF-8',

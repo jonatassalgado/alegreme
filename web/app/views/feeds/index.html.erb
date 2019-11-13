@@ -26,26 +26,26 @@
              } if current_user && current_user&.personas_assortment_finished? %>
 
 
-  <div class="me-feed me-page__section">
+  <section class="me-feed me-page__section">
 
     <% if current_user&.personas_assortment_finished? %>
       <% if @items.dig(:new_today, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
         <%= render partial: "components/collection/collection", locals: {
             data: {
-                identifier: 'new-today',
-                collection: @items[:new_today],
-                title:      {
+                identifier:  'new-today',
+                collection:  @items[:new_today],
+                title:       {
                     principal: "Adicionados recentemente",
                     secondary: "Foram adicionados #{@items.dig(:new_today, :detail, :total_events_in_collection)} eventos nas últimas 24 horas que podem te interessar"
                 },
-                type:       :large,
-                filters:    {
+                type:        :large,
+                filters:     {
                     categories: false,
                     kinds:      false,
                     ocurrences: true
                 },
                 continue_to: "/#{current_user.slug}/novos",
-                origin:     :feed
+                origin:      :feed
             }
         } %>
       <% end %>
@@ -69,20 +69,35 @@
             }
         } %>
       <% end %>
+
+
       <% if current_user && @items.dig(:follow, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+        <% follow_custom_title = capture do %>
+          <div class="me-chip-set__wrapper">
+            <div class="me-chip-set mdc-chip-set">
+              <% current_user.following_topics.each do |topic| %>
+                <a href="<%= link_to_topic topic %>" class="me-chip mdc-chip">
+                <span class="mdc-chip__text">
+                  <%= topic.details_name %>
+                </span>
+                </a>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
         <%= render partial: "components/collection/collection", locals: {
             data: {
                 identifier:  'follow',
                 collection:  @items[:follow],
                 title:       {
                     principal: "Tópicos que você segue",
-                    secondary: "Explore os eventos de organizadores, locais e tags que você segue como #{current_user.following_topics(only: :name, as: :list, size: 6)}.".html_safe
+                    custom:    follow_custom_title
                 },
                 type:        :large,
                 filters:     {
                     categories: false,
                     kinds:      false,
-                    ocurrences: true
+                    ocurrences: false
                 },
                 detail:      @items[:follow][:detail],
                 origin:      :feed,
@@ -161,5 +176,5 @@
         } %>
       <% end %>
     <% end %>
-  </div>
+  </section>
 </section>
