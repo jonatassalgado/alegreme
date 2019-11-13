@@ -96,6 +96,7 @@ $description-color: $font-secondary-color;
     text-transform: uppercase;
     line-height: 1em;
     display: flex;
+    flex-wrap: wrap;
     position: absolute;
     top: 6px;
     left: 6px;
