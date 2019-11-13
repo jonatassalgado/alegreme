@@ -8,6 +8,11 @@ $description-color: $font-secondary-color;
 .me-card {
   position: relative;
   will-change: opacity, transform;
+  .me-similar & {
+    background: none;
+    min-height: 150px;
+    border-radius: 2px;
+  }
 
   & a:hover {
     color: $brand-color-aa;
@@ -34,7 +39,7 @@ $description-color: $font-secondary-color;
 
   & .mdc-card__media {
     border-radius: $media-border-radius;
-    border: $media-border-width solid #f7f7f7;
+    //border: $media-border-width solid #f7f7f7;
     //overflow: hidden;
   }
 
@@ -89,15 +94,12 @@ $description-color: $font-secondary-color;
   &__primary-section {
     color: $font-secondary-color;
     text-transform: uppercase;
-    line-height: 1.3em;
+    line-height: 1em;
+    display: flex;
     position: absolute;
     top: 6px;
     left: 6px;
     z-index: 5;
-    & a {
-      //color: $font-tertiary-color;
-    }
-
     .me-card--single & {
       color: $font-primary-color;
       text-transform: none;
@@ -109,6 +111,10 @@ $description-color: $font-secondary-color;
         margin: 24px 0;
       }
     }
+    .me-similar & {
+      font-size: 10px;
+      font-weight: 500;
+    }
   }
 
   &__secondary-section {
@@ -117,8 +123,21 @@ $description-color: $font-secondary-color;
     margin: 6px 0 0 0;
     padding: 0 0 0 6px;
     font-weight: 500;
+    .me-similar & {
+      font-size: 14px;
+      //@include mobile-only {
+      //  font-size: 14px;
+      //}
+    }
+
     & a {
       color: $font-secondary-color;
+      .me-similar & {
+        color: $font-secondary-color;
+        &:hover {
+          color: $brand-color-aa;
+        }
+      }
     }
   }
 
@@ -153,6 +172,9 @@ $description-color: $font-secondary-color;
     @include mdc-layout-grid-media-query_("phone") {
       opacity: 1;
     }
+    .me-card--single & {
+      opacity: 1;
+    }
 
     & svg {
       margin: 0 6px 0 0;
@@ -180,11 +202,11 @@ $description-color: $font-secondary-color;
 
     & svg {
       fill: $font-secondary-color;
+      margin: 0 0 1px 3px;
 
       .me-card[data-event-similar-open="true"] &, .me-card[data-event-similar-open="true"]:hover & {
         fill: $brand-color;
       }
-
     }
 
 

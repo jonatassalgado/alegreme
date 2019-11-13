@@ -51,10 +51,10 @@
     grid-gap: 12px;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     @include mdc-layout-grid-media-query_("phone") {
-      grid-template-columns: repeat(20, minmax(18vw, 1fr));
+      grid-template-columns: repeat(20, minmax(25vw, 1fr));
       overflow-x: scroll;
       padding: 0 ($section-padding-phone / 2);
-      margin: 6px 0 12px 0;
+      margin: 0;
     }
 
     &::-webkit-scrollbar {
@@ -142,36 +142,36 @@
   }
 
   & .me-card {
-    background: none;
-    min-height: 150px;
-    border-radius: 2px;
+    //background: none;
+    //min-height: 150px;
+    //border-radius: 2px;
 
-    &__primary-section {
-      font-size: 10px;
-      font-weight: 500;
-    }
+    //&__primary-section {
+    //  font-size: 10px;
+    //  font-weight: 500;
+    //}
 
-    &__secondary-section {
-      font-size: 14px;
-      @include mobile-only {
-        font-size: 12px;
-      }
+    //&__secondary-section {
+    //  font-size: 14px;
+    //  @include mobile-only {
+    //    font-size: 12px;
+    //  }
+    //
+    //  & a {
+    //    color: $font-secondary-color;
+    //    &:hover {
+    //      color: $brand-color-aa;
+    //    }
+    //  }
+    //}
+    //
+    //&__overlay {
+    //  //box-shadow: $media-box-shadow-small;
+    //}
 
-      & a {
-        color: $font-secondary-color;
-        &:hover {
-          color: $brand-color-aa;
-        }
-      }
-    }
-
-    &__overlay {
-      //box-shadow: $media-box-shadow-small;
-    }
-
-    & .mdc-card__media {
-      border-radius: $media-border-radius;
-    }
+    //& .mdc-card__media {
+    //  border-radius: $media-border-radius;
+    //}
   }
 
   &::before {

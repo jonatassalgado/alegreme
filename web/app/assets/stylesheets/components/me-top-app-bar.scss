@@ -6,7 +6,7 @@ $font-color: $font-primary-color;
 $border-color: #e0e0e0;
 
 .me-top-app-bar {
-  background-color: $fill-color;
+  background-color: darken($surface-color, 1%);
   color: $font-color;
   position: fixed;
   top: 0;

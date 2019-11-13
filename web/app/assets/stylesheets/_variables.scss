@@ -45,7 +45,7 @@ $font-tertiary-color: #7D7D7D; // transparentize($font-secondary-color, 0.20);
 
 $media-box-shadow-small: 0 0 3px #00000038;
 $media-box-shadow-large: 0 0 6px #00000038;
-$media-border-radius: 6px;
+$media-border-radius: 8px;
 $media-border-width: 1px;
 
 $save-icon-fill: $font-secondary-color;
@@ -116,6 +116,6 @@ $maybe-color: $font-tertiary-color;
   }
 
   &:active {
-    transform: translateY(5px);
+    transform: translateY(4px);
   }
 }

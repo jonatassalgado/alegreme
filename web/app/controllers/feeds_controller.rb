@@ -209,7 +209,7 @@ class FeedsController < ApplicationController
 	end
 
 	def week
-		@events_this_week = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
+		@events_this_week = Event.all
 		@collection       = EventServices::CollectionCreator.new(current_user, params).call({
 				                                                                                    identifier: 'this-week',
 				                                                                                    events:     @events_this_week
@@ -219,6 +219,7 @@ class FeedsController < ApplicationController
 				                                                                                    order_by_persona: false,
 				                                                                                    order_by_date:    true,
 				                                                                                    with_high_score:  false,
+				                                                                                    in_days:          (DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s),
 				                                                                                    limit:            15
 		                                                                                    })
 

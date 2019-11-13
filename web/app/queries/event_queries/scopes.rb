@@ -182,9 +182,9 @@ module EventQueries
 				if active
 					case opts[:direction]
 					when 'ASC'
-						order("(ocurrences -> 'dates' ->> 0)::timestamptz ASC")
+						order("(ocurrences -> 'dates' ->> 0)::timestamptz ASC").order_by_score
 					when 'DESC'
-						order("(ocurrences -> 'dates' ->> 0)::timestamptz DESC")
+						order("(ocurrences -> 'dates' ->> 0)::timestamptz DESC").order_by_score
 					end
 				else
 					all

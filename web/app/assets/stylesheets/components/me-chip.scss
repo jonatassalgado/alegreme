@@ -5,7 +5,7 @@
 
   .me-card__primary-section & {
     background: $surface-color;
-    color: $font-secondary-color;
+    color: $font-tertiary-color;
     box-shadow: 0 1px 5px #0000003b;
     font-size: 10px;
     margin: 0 6px 0 0;
@@ -19,16 +19,24 @@
 
     &.hoje {
       font-weight: 600;
-      background: $brand-color;
-      color: $surface-color;
+      //background: $brand-color;
+      color: $brand-color-aa;
       padding: 4px 10px;
       font-size: 11px;
+      & i {
+        width: 6px;
+        height: 6px;
+        background: $brand-color;
+        border-radius: 3px;
+        margin: 0 5px 0 0;
+        box-shadow: 0 0 6px $brand-color;
+      }
     }
 
     &.amanha {
       font-weight: 600;
       //background: lighten($brand-color, 63%);
-      color: $brand-color-aa;
+      //color: $brand-color-aa;
       padding: 4px 10px;
       font-size: 11px;
     }
@@ -42,9 +50,18 @@
   .me-card__tertiary-section & {
     margin: 0 6px 6px 0;
     font-size: 11px;
+    background: $surface-secondary-color;
+    color: $font-tertiary-color;
+    & a {
+      color: $font-tertiary-color;
+    }
+
+    & svg {
+      fill: $font-tertiary-color
+    }
   }
 
-  &.mdc-chip {
-    font-family: $font-secondary-family;
-  }
+  //&.mdc-chip {
+  //  font-family: $font-secondary-family;
+  //}
 }

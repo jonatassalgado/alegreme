@@ -32,11 +32,13 @@
         <!--        <span aria-hidden="true"> · </span>-->
         <span class="me-chip mdc-chip me-card__date <%= event.day_of_week['decorator'].parameterize %>"
               data-target="event.date">
-        <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
-      </span>
-<!--        <span class="me-card__price <%#= 'is-highlight' if (event.details_prices.present? && event.details_prices.min.to_i <= 20) %>">-->
-          <%#= " · R$#{event.details_prices.min}" if event.details_prices.present? %>
-<!--      </span>-->
+          <i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
+        </span>
+        <% if event.details_prices.present? %>
+          <span class="me-chip mdc-chip me-card__price <%= 'is-highlight' if (event.details_prices.present? && event.details_prices.min.to_i <= 20) %>">
+            <%= "R$#{event.details_prices.min}" %>
+          </span>
+        <% end %>
       </div>
       <% if current_user %>
         <div class="me-card__like-button" data-action="click->event#like">
@@ -83,12 +85,12 @@
         </div>
       <% end %>
     </div>
-    <% unless event_type == 'similar'%>
+    <% unless event_type == 'similar' %>
       <div class="me-card__quartenary-section">
         <div class="me-card__category"
-              data-target="event.category">
+             data-target="event.category">
           <%= link_to "##{event.categories_primary_name.try(:capitalize)}", category_events_path(event.categories_primary_name) %>
-          <%= event.organizers.map {|organizer| link_to(to_hashtag(organizer.details_name), organizer_path(organizer)) }.join(" ").html_safe %>
+          <%= event.organizers.limit(10).map { |organizer| link_to(to_hashtag(organizer.details_name), organizer_path(organizer)) }.join(" ").html_safe %>
         </div>
       </div>
     <% end %>
@@ -107,13 +109,14 @@
              data-target="event.place"
              title="<%= event.place_details_name %>">
           <svg width="8" height="11" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 0C1.78857 0 0 1.76836 0 3.9548C0 6.31073 2.52571 9.55932 3.56571 10.7966C3.79429 11.0678 4.21143 11.0678 4.44 10.7966C5.47429 9.55932 8 6.31073 8 3.9548C8 1.76836 6.21143 0 4 0ZM4 5.36723C3.21143 5.36723 2.57143 4.73446 2.57143 3.9548C2.57143 3.17514 3.21143 2.54237 4 2.54237C4.78857 2.54237 5.42857 3.17514 5.42857 3.9548C5.42857 4.73446 4.78857 5.36723 4 5.36723Z" fill="#4B4B4B"/>
+            <path d="M4 0C1.78857 0 0 1.76836 0 3.9548C0 6.31073 2.52571 9.55932 3.56571 10.7966C3.79429 11.0678 4.21143 11.0678 4.44 10.7966C5.47429 9.55932 8 6.31073 8 3.9548C8 1.76836 6.21143 0 4 0ZM4 5.36723C3.21143 5.36723 2.57143 4.73446 2.57143 3.9548C2.57143 3.17514 3.21143 2.54237 4 2.54237C4.78857 2.54237 5.42857 3.17514 5.42857 3.9548C5.42857 4.73446 4.78857 5.36723 4 5.36723Z"/>
           </svg>
-          <%= link_to limit_place_name_size(event.place_details_name), place_path(event.place) %>
+          <%= link_to limit_place_name_size(event.place_details_name, 15), place_path(event.place) %>
         </div>
       <% end %>
       <% if display_similar && event.similar_data.empty? == false %>
         <div class="me-card__similar me-chip mdc-chip"
+             data-action="click->event#showSimilar"
              data-action="click->event#showSimilar"
              data-target="event.similar"
              title="Mostrar eventos parecidos">
