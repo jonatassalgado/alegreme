@@ -17,7 +17,7 @@ namespace :push do
 		end
 
 		users_to_notify              = []
-		users_with_saved_events      = User.select("features, taste, notifications").with_notifications_actived.with_saved_events
+		users_with_saved_events      = User.with_notifications_actived.with_saved_events
 		events_occuring_tomorrow_ids = Event.select("id").in_days([Date.tomorrow.to_s]).map(&:id)
 
 		users_with_saved_events.each do |user|
@@ -51,8 +51,10 @@ namespace :push do
 			end
 		end
 
-		Rpush.push
-		Rpush.apns_feedback
+		if Rails.env == 'production'
+			Rpush.push
+			Rpush.apns_feedback
+		end
 
 		puts "Task push:saved_events_tomorrow finalizada em #{DateTime.now}}".white
 		puts "Notificações agendadas para #{users_to_notify.size} usuários".green
