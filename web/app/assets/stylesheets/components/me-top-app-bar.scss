@@ -136,7 +136,9 @@ $border-color: #e0e0e0;
       }
 
       [data-controller="search"] & {
-        display: none;
+        @include mdc-layout-grid-media-query_("phone") {
+          display: none;
+        }
       }
     }
   }

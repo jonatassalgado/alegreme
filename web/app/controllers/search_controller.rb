@@ -12,7 +12,7 @@ class SearchController < ApplicationController
 					limit:        150,
 					includes:     [:place],
 					operator:     "or",
-					body_options: {min_score: 100}
+					body_options: {min_score: 10}
 			})
 
 			@collection = EventServices::CollectionCreator.new(current_user, params).call({
@@ -20,19 +20,19 @@ class SearchController < ApplicationController
 					                                                                              ids:        @events_found.map(&:id)
 			                                                                              },
 			                                                                              {
-					                                                                              only_in:           @events_found.map(&:id),
-					                                                                              with_high_score:   false,
-					                                                                              order_by_personas: false,
-					                                                                              order_by_date:     false,
-					                                                                              order_by_ids:      @events_found.map(&:id),
-					                                                                              group_by:          false
+					                                                                              only_in:          @events_found.map(&:id),
+					                                                                              in_user_personas: false,
+					                                                                              order_by_persona: false,
+					                                                                              with_high_score:  false,
+					                                                                              order_by_ids:     @events_found.map(&:id),
+					                                                                              group_by:         false
 			                                                                              })
 
 			@data = {
 					identifier: "search",
 					collection: @collection,
 					title:      {
-							principal: "Eventos encontrados para \"#{params[:q]}\""
+							principal: "#{@collection.dig(:detail, :total_events_in_collection)} eventos encontrados para \"#{params[:q]}\""
 					},
 					filters:    {
 							ocurrences: true,

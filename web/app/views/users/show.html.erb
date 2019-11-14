@@ -19,8 +19,8 @@
       <%= render partial: 'components/follow/follow', locals: {
           data: {
               identifier: 'follows-by-user',
-              chips: current_user.following_topics,
-              user:  current_user
+              chips: @user.following_topics,
+              user:  @user
           }
       } %>
     </div>
