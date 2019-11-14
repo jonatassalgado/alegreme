@@ -61,7 +61,35 @@
   }
 
   &--search {
+    padding: 24px 0 0 0;
+    min-height: 45vh;
+    // @include is-open-up-animated;
+    @include mdc-layout-grid-media-query_("phone") {
+      padding: 0 0 0 0;
+    }
 
+    & .mdc-layout-grid {
+      padding: 0;
+    }
+
+    @include mdc-layout-grid-media-query_("phone") {
+      & .mdc-layout-grid {
+        padding: 0 24px;
+      }
+
+      & .mdc-layout-grid__cell {
+        grid-column-end: span 8;
+      }
+
+      & .me-feed__section {
+        //padding: 0;
+      }
+
+      & .me-card--feed {
+        margin: 0 0 34px 0;
+      }
+
+    }
   }
 
   &--train-section {
