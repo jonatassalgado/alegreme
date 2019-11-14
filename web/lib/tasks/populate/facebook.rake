@@ -267,7 +267,7 @@ def create_event(item)
 		ml_data = JSON.parse(features_response.try(:body))
 
 		event.details.deep_merge!(
-				name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
+				name:        item['name'],
 				description: item['description'],
 				prices:      item['prices'] || []
 		)
@@ -310,7 +310,7 @@ def create_event(item)
 		event   = Event.new
 
 		event.details.deep_merge!(
-				name:        item['name'].gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, ''),
+				name:        item['name'],
 				description: item['description'],
 				source_url:  item['source_url'],
 				prices:      item['prices'] || []

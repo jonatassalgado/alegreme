@@ -144,7 +144,11 @@ class EventSpider(scrapy.Spider):
                   'https://www.facebook.com/pg/FestivaldaCervejaPOA/events',
                   'https://www.facebook.com/pg/mercadodepulgaspoa/events',
                   'https://www.facebook.com/pg/lojaprofana/events',
-                  'https://www.facebook.com/pg/casadestemperados/events']
+                  'https://www.facebook.com/pg/casadestemperados/events',
+                  'https://www.facebook.com/pg/festaacabouchorare/events',
+                  'https://www.facebook.com/pg/zonaexpfm/events',
+                  'https://www.facebook.com/pg/gomarec/events',
+                  'https://www.facebook.com/pg/darumT/events']
 
     random.shuffle(start_urls)
 
