@@ -218,7 +218,7 @@ class FeedsController < ApplicationController
 				                                                                                    in_user_personas: false,
 				                                                                                    order_by_persona: false,
 				                                                                                    order_by_date:    true,
-				                                                                                    with_high_score:  false,
+				                                                                                    with_high_score:  true,
 				                                                                                    in_days:          (DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s),
 				                                                                                    limit:            15
 		                                                                                    })
@@ -281,7 +281,7 @@ class FeedsController < ApplicationController
 				                                                                              in_user_personas: false,
 				                                                                              order_by_persona: false,
 				                                                                              order_by_date:    true,
-				                                                                              with_high_score:  false
+				                                                                              with_high_score:  true
 		                                                                              })
 
 		@data = {

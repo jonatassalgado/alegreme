@@ -1,6 +1,6 @@
 import {Controller}      from "stimulus";
 import {LazyloadModule}  from "modules/lazyload-module";
-import {MDCRipple}           from "@material/ripple";
+import {MDCRipple}       from "@material/ripple";
 import * as MobileDetect from "mobile-detect";
 
 export default class SectionController extends Controller {
@@ -10,7 +10,7 @@ export default class SectionController extends Controller {
 		this.scrollLeft = this.data.get('turbolinksPersistScroll');
 		this.md         = new MobileDetect(window.navigator.userAgent);
 		this.pubsub     = {};
-		this.ripples = [];
+		this.ripples    = [];
 
 		this.loadMoreButtonTargets.forEach((button) => {
 			this.ripples.push(new MDCRipple(button));
@@ -47,7 +47,9 @@ export default class SectionController extends Controller {
 	loadMore() {
 		this.data.set('loadMoreLoading', true);
 
-		if (this.seeAllTarget.dataset.continueToPath !== "" && this.seeAllTarget.dataset.continueToPath !== undefined) {
+		if (this.actualEventsInCollection >= 24 &&
+			this.seeAllTarget.dataset.continueToPath !== "" &&
+			this.seeAllTarget.dataset.continueToPath !== undefined) {
 			location.assign(this.seeAllTarget.dataset.continueToPath);
 		} else {
 			this.filterController.filter({
