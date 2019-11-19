@@ -32,7 +32,7 @@ parse_event_script = """
         result, error = splash:wait_for_resume([[
             function main(splash) {
                 var checkExist = setInterval(function() {
-                    if (document.querySelector("._63ew").innerText) {
+                    if (document.querySelector("._63ew").innerText && document.querySelector("._2ycp._5xhk").innerText) {
                         clearInterval(checkExist);
                                                 splash.resume();
                     }

@@ -256,6 +256,11 @@ def create_event(item)
 		return [false, false]
 	end
 
+	if item['datetimes'].blank?
+		puts "#{@events_create_counter}: #{item['name']} - Evento sem data raspada".red
+		return [false, false]
+	end
+
 	query                     = Base64.encode64(item['description'])
 	features_params           = {query: query}
 	features_uri              = URI("#{ENV['API_URL']}:5000/event/features")
