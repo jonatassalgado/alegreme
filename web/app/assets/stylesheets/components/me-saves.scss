@@ -7,7 +7,7 @@ $gutter: 6px;
 .me-saves {
   margin: 35px auto 0 auto;
   //padding: 0 0 25px 0;
-  max-width: 960px;
+  max-width: $main-content-width;
   position: relative;
   @include mdc-layout-grid-media-query_("phone") {
     margin: 0 auto 0 auto;
@@ -214,6 +214,10 @@ $gutter: 6px;
       margin: 8px 0 6px 0;
       font-weight: 800;
       min-height: 1.1em;
+      @include mobile-only {
+        font-size: 9px;
+      }
+
       &.is-highlight, .is-highlight a {
         color: $brand-color;
       }
@@ -238,6 +242,7 @@ $gutter: 6px;
     }
 
     & .mdc-card__media {
+      border-radius: $media-border-radius;
       border-radius: $media-border-radius;
       overflow: hidden;
       //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);

@@ -16,7 +16,7 @@ $mdc-layout-grid-columns: (
 
   &__section {
     margin: 0 auto 124px auto;
-    max-width: 960px;
+    max-width: $main-content-width;
     @include mdc-layout-grid-media-query_("phone") {
       max-width: unset;
       padding: 12px 0 12px 0;

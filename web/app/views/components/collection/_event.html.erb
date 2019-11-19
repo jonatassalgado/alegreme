@@ -30,10 +30,15 @@
         <%#= link_to event.categories_primary_name.try(:capitalize), category_events_path(event.categories_primary_name) %>
         <!--      </span>-->
         <!--        <span aria-hidden="true"> · </span>-->
-        <span class="me-chip mdc-chip me-card__date <%= event.day_of_week['decorator'].parameterize %>"
+        <div class="me-chip mdc-chip me-card__date <%= event.day_of_week['decorator'].parameterize %>"
               data-target="event.date">
-          <i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
-        </span>
+          <span>
+            <i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
+          </span>
+          <span class="me-card__date-distance-in-words">
+            <%= "Daqui #{distance_of_time_in_words event.first_day_time, DateTime.now}" %>
+          </span>
+        </div>
         <% if event.details_prices.present? %>
           <span class="me-chip mdc-chip me-card__price <%= 'is-highlight' if (event.details_prices.present? && event.details_prices.min.to_i <= 20) %>">
             <%= "R$#{event.details_prices.min}" %>
