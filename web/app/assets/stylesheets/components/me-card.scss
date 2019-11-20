@@ -192,6 +192,8 @@ $description-color: $font-secondary-color;
     }
     .me-card--single & {
       opacity: 1;
+      padding: 0;
+      margin: 0;
     }
 
     & svg {
