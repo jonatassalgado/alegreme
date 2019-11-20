@@ -6,7 +6,7 @@ export default class SnackbarController extends Controller {
   static targets = [];
 
   initialize() {
-    CacheModule.clearCache();
+    // CacheModule.clearCache();
     
     caches.open('v1:sw-cache-feed-page').then(function(cache) {
       cache.delete('/').then(function(response) {

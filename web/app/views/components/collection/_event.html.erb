@@ -23,7 +23,7 @@
        data-event-dominant-color="<%= get_image_dominant_color event %>"
        data-target="event.event"
        id="<%= dom_id event %>">
-    <div data-fixed="true" class="mdc-card__media mdc-card__media--16-9 <%= 'lazy-bgimage' unless json_request %>" <%= "data-src=#{get_original_image_url(event)}" unless json_request %> style="<%= get_image_style_attr event, preload: json_request %>">
+    <div data-fixed="true" class="mdc-card__media mdc-card__media--16-9 <%= 'lazy-bgimage' unless json_request %>" <%= "data-src=#{get_feed_image_url(event)}" unless json_request %> style="<%= get_image_style_attr event, preload: json_request %>">
       <div class="me-card__primary-section">
         <!--      <span class="me-chip mdc-chip me-card__category"-->
         <!--            data-target="event.category">-->

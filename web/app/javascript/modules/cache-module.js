@@ -13,6 +13,18 @@ const CacheModule = (function () {
 	};
 
 	module.activateTurbolinks = () => {
+		if (!caches.has("v1:sw-cache-feed-page")) {
+			caches.open("v1:sw-cache-feed-page")
+			      .then(cache => {
+				      cache.add('/feed').then(() => {
+					      console.log("Cache v1:sw-cache-feed-page updated");
+				      })
+			      })
+			      .catch(reason => {
+				      console.log(reason);
+			      });
+		}
+
 		// const feedCache = caches.has("v1:sw-cache-feed-page");
 		// const staticResourcesCache = caches.has("v1:sw-cache-static-resources");
 		// const staticImagesCache = caches.has("v1:sw-cache-static-images");
@@ -47,9 +59,9 @@ const CacheModule = (function () {
 						      if (response) {
 							      console.log("Cache v1:sw-cache-feed-page deleted: ", response);
 						      }
-						      // cache.add('/feed').then(() => {
-                  //               console.log("Cache v1:sw-cache-feed-page updated: ");
-						      // })
+						      cache.add('/feed').then(() => {
+                                console.log("Cache v1:sw-cache-feed-page updated: ");
+						      })
 					      });
 			      })
 			      .catch(reason => {

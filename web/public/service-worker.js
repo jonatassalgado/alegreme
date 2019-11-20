@@ -41,12 +41,19 @@ self.addEventListener('notificationclick', function (event) {
 var CACHE_VERSION = "v1";
 var CACHE_NAME    = CACHE_VERSION + ":sw-cache-";
 
-workbox.setConfig({debug: false})
+workbox.setConfig({debug: true})
+
 
 workbox.routing.registerRoute(
 	"/",
 	new workbox.strategies.NetworkFirst({
-		cacheName: CACHE_NAME + "welcome-page"
+		cacheName: CACHE_NAME + "welcome-page",
+		plugins  : [
+			new workbox.expiration.Plugin({
+				maxEntries   : 5,
+				maxAgeSeconds: 7 * 24 * 60 * 60
+			})
+		]
 	})
 );
 
@@ -86,20 +93,29 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
 	/.+(?:js|css)+.*$/,
 	new workbox.strategies.CacheFirst({
-		cacheName: CACHE_NAME + "static-resources"
+		cacheName: CACHE_NAME + "static-resources",
+		plugins  : [
+			new workbox.expiration.Plugin({
+				maxEntries   : 20,
+				maxAgeSeconds: 7 * 24 * 60 * 60
+			})
+		]
 	})
 );
 
 workbox.routing.registerRoute(
-	/.+(png|jpg|jpeg|svg|gif)+.*/,
+	/^https:\/\/alegreme\.sfo2\.digitaloceanspaces\.com\/store/,
 	new workbox.strategies.CacheFirst({
 		cacheName: CACHE_NAME + "static-images",
 		plugins  : [
+			new workbox.cacheableResponse.Plugin({
+				statuses: [0, 200]
+			}),
 			new workbox.expiration.Plugin({
 				// Cache only 20 images.
-				maxEntries   : 30,
+				maxEntries   : 100,
 				// Cache for a maximum of a week.
-				maxAgeSeconds: 1 * 24 * 60 * 60
+				maxAgeSeconds: 7 * 24 * 60 * 60
 			})
 		]
 	})
@@ -108,20 +124,38 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
 	/.+(porto-alegre\/eventos\/)+.*/,
 	new workbox.strategies.NetworkFirst({
-		cacheName: CACHE_NAME + "events-page"
+		cacheName: CACHE_NAME + "events-page",
+		plugins  : [
+			new workbox.expiration.Plugin({
+				maxEntries   : 10,
+				maxAgeSeconds: 7 * 24 * 60 * 60
+			})
+		]
 	})
 );
 
 workbox.routing.registerRoute(
-	/.+feed/,
+	/.+\/feed/,
 	new workbox.strategies.NetworkFirst({
-		cacheName: CACHE_NAME + "feed-page"
+		cacheName: CACHE_NAME + "feed-page",
+		plugins  : [
+			new workbox.expiration.Plugin({
+				maxEntries   : 10,
+				maxAgeSeconds: 7 * 24 * 60 * 60
+			})
+		]
 	})
 );
 
 workbox.routing.registerRoute(
 	/.+(\?(categories\[\]|ocurrences\[\]|personas\[\])+.*)|\/?$/,
 	new workbox.strategies.NetworkFirst({
-		cacheName: CACHE_NAME + "filters-page"
+		cacheName: CACHE_NAME + "filters-page",
+		plugins  : [
+			new workbox.expiration.Plugin({
+				maxEntries   : 10,
+				maxAgeSeconds: 7 * 24 * 60 * 60
+			})
+		]
 	})
 );
