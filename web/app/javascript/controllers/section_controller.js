@@ -48,9 +48,9 @@ export default class SectionController extends Controller {
 		this.data.set('loadMoreLoading', true);
 
 		if (this.actualEventsInCollection >= 24 &&
-			this.seeAllTarget.dataset.continueToPath !== "" &&
-			this.seeAllTarget.dataset.continueToPath !== undefined) {
-			location.assign(this.seeAllTarget.dataset.continueToPath);
+			this.loadMoreButtonTarget.dataset.continueToPath !== "" &&
+			this.loadMoreButtonTarget.dataset.continueToPath !== undefined) {
+			location.assign(this.loadMoreButtonTarget.dataset.continueToPath);
 		} else {
 			this.filterController.filter({
 				limit: parseInt(this.actualEventsInCollection) + 16

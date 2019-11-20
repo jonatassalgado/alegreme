@@ -133,6 +133,7 @@
         <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
           <div data-action="click->section#loadMore"
                data-target="section.loadMoreButton"
+               data-continue-to-path="<%= data[:continue_to] %>"
                class="me-feed__load-more me-feed__load-more--horizontal">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="none" d="M0 0h24v24H0V0z"/>
@@ -160,8 +161,8 @@
       <div class="me-feed__load-more me-feed__load-more--vertical">
         <% if data[:origin] == :feed %>
           <button class="me-button me-button--transparent me-button--with-icon-in-right mdc-button"
-                  data-target="section.loadMoreButton"
-                  data-action="click->section#loadMore">
+                  data-action="click->section#loadMore"
+                  data-target="section.loadMoreButton">
             <span class="me-button__label">Ver tudo</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
               <path fill="none" d="M0 0h24v24H0V0z"/>
