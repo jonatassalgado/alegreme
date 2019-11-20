@@ -8,9 +8,11 @@ export default class NotificationController extends Controller {
 	initialize() {
 		this.MDCSwitch = new MDCSwitch(this.switchTarget);
 
-		if (Pushy.isRegistered() === null) {
+		Pushy.validateDeviceCredentials().then((response) => {
+			this.MDCSwitch.checked = true;
+		}, (error) => {
 			this.MDCSwitch.checked = false;
-		}
+		})
 	}
 
 	disconnect() {

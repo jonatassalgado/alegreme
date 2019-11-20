@@ -53,7 +53,7 @@ namespace :push do
 		Rpush.push
 		Rpush.apns_feedback
 
-		puts "Task push:new_events_today finalizada em #{DateTime.now}}".white
+		puts "Task push:new_events_today finalizada em #{DateTime.now}".white
 		puts "Notificações agendadas para #{users.size} usuários".green
 
 	end

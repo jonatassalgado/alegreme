@@ -56,7 +56,7 @@ namespace :push do
 			Rpush.apns_feedback
 		end
 
-		puts "Task push:saved_events_tomorrow finalizada em #{DateTime.now}}".white
+		puts "Task push:saved_events_tomorrow finalizada em #{DateTime.now}".white
 		puts "Notificações agendadas para #{users_to_notify.size} usuários".green
 
 	end
