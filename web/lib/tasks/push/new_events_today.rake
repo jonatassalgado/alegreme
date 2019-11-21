@@ -35,7 +35,8 @@ namespace :push do
 							badge:   "https://alegreme.sfo2.digitaloceanspaces.com/stable-images/bagde-alpha-72x72.png",
 							actions: [{
 									          action: 'open-app',
-									          title:  "Ver Agora"
+									          title:  "Ver Agora",
+														icon: 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/bagde-alpha-view-72x72.png'
 							          }]
 					}
 					notification.time_to_live     = 14400
@@ -50,9 +51,11 @@ namespace :push do
 			end
 		end
 
-		Rpush.push
-		Rpush.apns_feedback
-
+		if Rails.env == 'production'
+			Rpush.push
+			Rpush.apns_feedback
+		end
+		
 		puts "Task push:new_events_today finalizada em #{DateTime.now}".white
 		puts "Notificações agendadas para #{users.size} usuários".green
 

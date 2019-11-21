@@ -39,7 +39,8 @@ namespace :push do
 						badge:   "https://alegreme.sfo2.digitaloceanspaces.com/stable-images/bagde-alpha-72x72.png",
 						actions: [{
 								          action: 'open-app',
-								          title:  "Ver Eventos"
+								          title:  "Ver Eventos",
+													icon: 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/bagde-alpha-view-72x72.png'
 						          }]
 				}
 				notification.time_to_live     = 18000
