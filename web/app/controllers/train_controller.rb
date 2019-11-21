@@ -25,7 +25,13 @@ class TrainController < ApplicationController
 	private
 
 	def get_events_not_trained_yet
-		order = params[:desc] ? "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC" : "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC"
+		if params[:desc]
+			order = "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC"
+		elsif params[:category]
+			order = "(ml_data -> 'categories' -> 'primary' ->> 'name') = '#{params[:category]}' DESC"
+		else
+			order = "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC"
+		end
 
 		Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
 				.order(order)
