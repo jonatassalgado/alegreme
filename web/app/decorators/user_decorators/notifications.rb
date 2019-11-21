@@ -35,7 +35,7 @@ module UserDecorators
 			end
 
 			def notifications_topics_all_active
-				notifications.dig('topics', 'all', 'active')
+				notifications.dig('topics', 'all', 'active') || false
 			end
 
 		end

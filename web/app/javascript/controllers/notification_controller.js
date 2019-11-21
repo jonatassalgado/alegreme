@@ -8,11 +8,16 @@ export default class NotificationController extends Controller {
 	initialize() {
 		this.MDCSwitch = new MDCSwitch(this.switchTarget);
 
-		Pushy.validateDeviceCredentials().then((response) => {
-			this.MDCSwitch.checked = true;
-		}, (error) => {
+		if (this.data.get('active') === 'true') {
+			Pushy.validateDeviceCredentials().then((response) => {
+				this.MDCSwitch.checked = true;
+			}, (error) => {
+				this.MDCSwitch.checked = false;
+				this.status            = false;
+			})
+		} else {
 			this.MDCSwitch.checked = false;
-		})
+		}
 	}
 
 	disconnect() {
@@ -20,6 +25,10 @@ export default class NotificationController extends Controller {
 	}
 
 	change(event) {
+		this.status = this.MDCSwitch.checked;
+	}
+
+	set status(status) {
 		Pushy.register({appId: '5db4abb3c5e2e11635961378'}).then(deviceToken => {
 			const params = {
 				user: {
@@ -27,7 +36,7 @@ export default class NotificationController extends Controller {
 					notifications_topics : {
 						all: {
 							requested: true,
-							active   : event.target.checked
+							active   : status
 						}
 					}
 				}
@@ -47,7 +56,7 @@ export default class NotificationController extends Controller {
 				.then(
 					response => {
 						response.text().then(data => {
-							if (event.target.checked) {
+							if (status) {
 								SnackBarModule.show('Notificações ativadas com sucesso');
 							} else {
 								SnackBarModule.show('Notificações desativadas');
@@ -59,10 +68,9 @@ export default class NotificationController extends Controller {
 					SnackBarModule.show('Não foi possível ativar as notificações!');
 					console.log('Fetch Error :-S', err);
 				});
-
-			// Succeeded, optionally do something to alert the user
 		}).catch(function (err) {
 			console.error(err);
+			SnackBarModule.show('Algo deu errado');
 		});
 	}
 }

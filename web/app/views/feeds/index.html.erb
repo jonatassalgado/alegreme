@@ -3,7 +3,7 @@
 
   <% if current_user && current_user&.personas_assortment_finished? %>
     <div class="me-feed__section me-feed__section--without-margin">
-      <div class="me-notification" data-controller="notification" data-active="<%= 'true' if current_user.notifications_topics_all_active %>">
+      <div class="me-notification" data-controller="notification" data-notification-active="<%= current_user.notifications_topics_all_active %>">
         <div class="me-switch mdc-switch" data-target="notification.switch">
           <div class="mdc-switch__track"></div>
           <div class="mdc-switch__thumb-underlay">
