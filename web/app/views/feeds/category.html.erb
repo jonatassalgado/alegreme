@@ -25,7 +25,7 @@
     </div>
   </section>
 
-  <%= render partial: "components/collection/collection", locals: { data: @data } %>
+  <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
 
   <% unless current_user %>
     <%= link_to root_path, style: "display: flex" do %>

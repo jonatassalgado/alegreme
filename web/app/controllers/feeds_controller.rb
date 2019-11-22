@@ -60,8 +60,10 @@ class FeedsController < ApplicationController
 					},
 					{
 							only_in:          @events_in_user_suggestions.map(&:id),
-							order_by_persona: false,
-							order_by_date:    true
+							in_user_personas: false,
+							order_by_persona: true,
+							order_by_date:    false,
+							with_high_score:  false
 					}
 			)
 		else
@@ -111,7 +113,7 @@ class FeedsController < ApplicationController
 				collection: @collection,
 				title:      {
 						principal: "Adicionados recentemente",
-						secondary: "Foram adicionados #{@collection.dig(:detail, :total_events_in_collection)} eventos nas últimas 15 horas que podem te interessar"
+						secondary: "Foram adicionados #{@collection.dig(:detail, :total_events_in_collection)} eventos nas últimas 16 horas que podem te interessar"
 				},
 				filters:    {
 						ocurrences: true,
@@ -133,7 +135,7 @@ class FeedsController < ApplicationController
 				                                                                                              order_by_date:    true,
 				                                                                                              in_user_personas: false,
 				                                                                                              with_high_score:  false,
-				                                                                                              limit:            15
+				                                                                                              limit:            16
 		                                                                                              })
 
 		@data = {
@@ -163,7 +165,7 @@ class FeedsController < ApplicationController
 				                                                                                           order_by_date:    true,
 				                                                                                           with_high_score:  false,
 				                                                                                           in_user_personas: false,
-				                                                                                           limit:            15
+				                                                                                           limit:            16
 		                                                                                           })
 
 		@data = {
@@ -190,7 +192,7 @@ class FeedsController < ApplicationController
 		                                                                              }, {
 				                                                                              in_days:         [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
 				                                                                              with_high_score: false,
-				                                                                              limit:           15
+				                                                                              limit:           16
 		                                                                              })
 
 		@data = {
@@ -220,7 +222,7 @@ class FeedsController < ApplicationController
 				                                                                                    order_by_date:    true,
 				                                                                                    with_high_score:  true,
 				                                                                                    in_days:          (DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s),
-				                                                                                    limit:            15
+				                                                                                    limit:            16
 		                                                                                    })
 
 		@props = {
@@ -254,7 +256,7 @@ class FeedsController < ApplicationController
 				                                                                              order_by_persona: false,
 				                                                                              order_by_date:    true,
 				                                                                              with_high_score:  false,
-				                                                                              limit:            15
+				                                                                              limit:            16
 		                                                                              })
 
 		@data = {
@@ -277,7 +279,7 @@ class FeedsController < ApplicationController
 				                                                                              identifier: 'city',
 				                                                                              events:     Event.all
 		                                                                              }, {
-				                                                                              limit:            15,
+				                                                                              limit:            16,
 				                                                                              in_user_personas: false,
 				                                                                              order_by_persona: false,
 				                                                                              order_by_date:    true,

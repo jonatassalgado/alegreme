@@ -72,12 +72,12 @@ export default class EventController extends Controller {
 	showEventDetails() {
 		if (this.md.mobile()) {
 		} else {
-			if (this.data.get("favorited") === "false") {
+			if (this.data.get("favorited") === "false" && this.hasLikeButtonTarget) {
 				this.likeButtonTarget.style.display = "inline";
 			}
 
 			this.eventTarget.addEventListener("mouseout", () => {
-				if (this.data.get("favorited") === "false") {
+				if (this.data.get("favorited") === "false" && this.hasLikeButtonTarget) {
 					this.likeButtonTarget.style.display = "none";
 				}
 			});
@@ -108,15 +108,18 @@ export default class EventController extends Controller {
 	updateLikeButtonStyle(eventId) {
 		const active = this.data.get('favorited');
 
-		if (active === 'true') {
-			this.likeButtonTarget.style.display = 'inline';
-			this.likeButtonTarget.classList.add('mdc-icon-button--on')
-		} else {
-			this.likeButtonTarget.classList.remove('mdc-icon-button--on');
-			if (eventId != this.identifier) {
-				this.likeButtonTarget.style.display = 'none';
+		if (this.hasLikeButtonTarget) {
+			if (active === 'true') {
+				this.likeButtonTarget.style.display = 'inline';
+				this.likeButtonTarget.classList.add('mdc-icon-button--on')
+			} else {
+				this.likeButtonTarget.classList.remove('mdc-icon-button--on');
+				if (eventId != this.identifier) {
+					this.likeButtonTarget.style.display = 'none';
+				}
 			}
 		}
+
 	};
 
 	like() {

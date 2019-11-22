@@ -23,6 +23,10 @@
       }
   }.deep_merge!(data)
 
+  props = {
+    infinite_scroll: false
+  }.deep_merge!(props || {})
+
 %>
 
 <section class="me-feed__section"
@@ -31,9 +35,15 @@
          data-section-total-events-in-collection="<%= data[:collection][:detail][:total_events_in_collection] %>"
          data-section-actual-events-in-collection="<%= data[:collection][:detail][:actual_events_in_collection] %>"
          data-section-load-more-loading="false"
+         data-section-infinite-scroll="<%= props[:infinite_scroll] %>"
          data-observable="float-menu.section"
          id="<%= data[:identifier] %>">
   <div class="me-feed__section-head">
+    <% if data[:title][:tertiary] %>
+      <div class="me-feed__section-title-tertiary">
+        <%= data[:title][:tertiary] %>
+      </div>
+    <% end %>
     <h2>
       <%= data[:title][:principal] %>
       <%# if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>

@@ -11,10 +11,37 @@ export default class SectionController extends Controller {
 		this.md         = new MobileDetect(window.navigator.userAgent);
 		this.pubsub     = {};
 		this.ripples    = [];
+		this.rootMargin = this.md.mobile() ? '1000px' : '500px';
 
 		this.loadMoreButtonTargets.forEach((button) => {
 			this.ripples.push(new MDCRipple(button));
 		});
+
+		if (this.data.get('infiniteScroll') === 'true') {
+			this.observer = new IntersectionObserver((entries, observer) => {
+					entries.forEach((entry) => {
+
+						if (this.hasLoadMoreButtonTarget) {
+							if (entry.isIntersecting) {
+								entry.target.disabled = true;
+								entry.target.querySelector('.me-button__label').innerText = 'Carregando...';
+								this.loadMore();
+							} else {
+
+							}
+						}
+					})
+				},
+				{
+					threshold : 0.1,
+					rootMargin: this.rootMargin
+				}
+			);
+
+			this.loadMoreButtonTargets.forEach((loadMoreButton) => {
+				this.observer.observe(loadMoreButton);
+			});
+		}
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.identifier}.updated`, (data) => {
 			LazyloadModule.lazyloadFeed();

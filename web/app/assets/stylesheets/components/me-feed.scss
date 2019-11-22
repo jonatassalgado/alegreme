@@ -31,7 +31,7 @@ $mdc-layout-grid-columns: (
     }
 
     & h2 {
-      margin: 8px 0 4px 0;
+      margin: 0 0 0 0;
       font-weight: 800;
       //max-width: 90%;
       line-height: 1.4em;
@@ -69,6 +69,20 @@ $mdc-layout-grid-columns: (
         @include mobile-only {
           margin: 0;
         }
+      }
+    }
+
+    &-title-tertiary {
+      font-size: 10px;
+      display: block;
+      font-weight: 300;
+      font-family: $font-secondary-family;
+      color: $font-tertiary-color;
+      line-height: 1em;
+      text-transform: uppercase;
+      @include mobile-only {
+        padding: 0 $section-padding-phone;
+        font-size: 9px;
       }
     }
 

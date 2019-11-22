@@ -63,7 +63,8 @@ module Api
 						collection:   collection,
 						title:        {
 								principal: JSON.parse(params[:title])['principal'],
-								secondary: JSON.parse(params[:title])['secondary'].try(:html_safe)
+								secondary: JSON.parse(params[:title])['secondary'].try(:html_safe),
+								tertiary:  JSON.parse(params[:title])['tertiary'],
 						},
 						filters:      collection[:filters],
 						origin:       params[:origin],
@@ -87,4 +88,3 @@ module Api
 
 	end
 end
-

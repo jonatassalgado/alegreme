@@ -4,6 +4,6 @@
 
   <% content_for :meta_title, "Eventos adicionados nas últimas 24h" %>
 
-  <%= render partial: "components/collection/collection", locals: { data: @data } %>
+  <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
 
 </section>
