@@ -12,7 +12,7 @@ $gutter: 6px;
   @include mdc-layout-grid-media-query_("phone") {
     margin: 0 auto 0 auto;
     max-width: unset;
-    border-bottom: 5px solid $surface-secondary-color;
+    border-bottom: 5px solid $surface-tertiary-color;
     //padding: 35px 0 35px 0;
   }
 

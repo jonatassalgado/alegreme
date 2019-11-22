@@ -40,6 +40,7 @@ $background-z1-color: #ffffff;
 $surface-z10-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.07);
 $surface-color: #ffffff;
 $surface-secondary-color: #f7f7f7;
+$surface-tertiary-color: darken($surface-secondary-color, 5%);
 
 $font-primary-color: lighten($brand-color-high-contrast, 10%); // #1D2A4C; // #000100;
 //$brand-color-left: #2191FB;
