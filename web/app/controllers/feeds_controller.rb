@@ -309,16 +309,19 @@ class FeedsController < ApplicationController
 				                                                                                      events:     @events_in_this_day
 		                                                                                      }, {
 				                                                                                      only_in:          @events_in_this_day.map(&:id),
-				                                                                                      order_by_persona: true,
-				                                                                                      limit:            12
+																																															in_user_personas: false,
+																																														  order_by_persona: true,
+																																														  order_by_date:    false,
+																																														  with_high_score:  false,
+				                                                                                      limit:            16
 		                                                                                      })
 
 		@data = {
 				identifier: 'day',
 				collection: @collection,
 				title:      {
-						principal: "Eventos em Porto Alegre que ocorren dia #{I18n.l(@day, format: :short)}",
-						secondary: "Explore todos os eventos que ocorrem em Porto Alegre - RS no dia #{I18n.l(@day, format: :long)}"
+						principal: "Eventos em Porto Alegre que ocorren dia #{I18n.l(@day, format: :long)}",
+						secondary: "Acontecem #{@collection[:detail][:total_events_in_collection]} eventos neste dia"
 				},
 				filters:    {
 						ocurrences: true,

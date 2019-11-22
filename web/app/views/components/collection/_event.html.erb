@@ -31,7 +31,8 @@
         <!--      </span>-->
         <!--        <span aria-hidden="true"> · </span>-->
         <div class="me-chip mdc-chip me-card__date <%= event.day_of_week['decorator'].parameterize %>"
-              data-target="event.date">
+              data-target="event.date"
+              onclick="Turbolinks.visit('<%= day_events_path event.day_of_week['date'].strftime('%d-%m-%Y') %>')">
           <span>
             <i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
           </span>
