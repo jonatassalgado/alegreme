@@ -27,7 +27,7 @@ module Clockwork
     Rake::Task["push:new_events_today"].invoke
   }
 
-  every(1.day, 'push:saved_events_tomorrow', :at => '17:05') {
+  every(1.day, 'push:saved_events_tomorrow', :at => '21:15') {
     Rake::Task["push:saved_events_tomorrow"].invoke
   }
 
