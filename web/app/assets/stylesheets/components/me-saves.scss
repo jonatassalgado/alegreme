@@ -143,14 +143,14 @@ $gutter: 6px;
     display: grid;
     grid-gap: 12px;
     grid-template-columns: inherit;
-    grid-template-rows: minmax(120px, 1fr);
+    grid-template-rows: minmax(110px, 1fr);
     grid-auto-flow: column;
     grid-auto-columns: 54px;
     padding-bottom: calc(0.75 * #{$gutter});
     margin-bottom: calc(-0.25 * #{$gutter});
     // @include add-horizontal-scroll-wrapper();
     @include mdc-layout-grid-media-query_("phone") {
-      grid-auto-columns: 45px;
+      grid-auto-columns: 50px;
       padding: 0 $section-padding-phone;
     }
   }
@@ -175,84 +175,6 @@ $gutter: 6px;
     }
   }
 
-  & .me-card {
-    min-height: 132px;
-    cursor: pointer;
-    font-size: 11px;
-    border: 0;
-    box-shadow: none;
-    background-color: inherit;
-    @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
-    @include mdc-layout-grid-media-query_("phone") {
-      min-height: 100px;
-    }
-
-    &__title,
-    &__date {
-      pointer-events: none;
-      margin: 3px 0 0 0;
-      line-height: 1.3em;
-      color: $font-secondary-color;
-
-      &:hover {
-        background: inherit;
-      }
-    }
-
-    &__title {
-      color: $font-primary-color;
-      font-size: 13px;
-      margin: 12px 0 0 0;
-      font-weight: 400;
-      padding-right: 6px;
-    }
-
-    &__date {
-      color: $font-secondary-color;
-      text-transform: uppercase;
-      font-size: 11px;
-      margin: 8px 0 6px 0;
-      font-weight: 800;
-      min-height: 1.1em;
-      @include mobile-only {
-        font-size: 9px;
-      }
-
-      &.is-highlight, .is-highlight a {
-        color: $brand-color;
-      }
-    }
-
-    &__remove {
-      background: transparentize($icon-background-color, 0.4);
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-      display: none;
-      z-index: 1;
-      border-radius: 100%;
-      fill: $font-secondary-color;
-      @include mdc-layout-grid-media-query_("phone") {
-        display: block;
-        padding: 3px;
-      }
-    }
-
-    & .mdc-card__media {
-      border-radius: $media-border-radius;
-      border-radius: $media-border-radius;
-      overflow: hidden;
-      //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      //box-shadow: $media-box-shadow-small;
-
-      &:hover {
-        //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
-      }
-    }
-  }
 
   & .me-icon__group {
     position: absolute;

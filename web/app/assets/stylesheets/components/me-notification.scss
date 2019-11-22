@@ -11,6 +11,9 @@
 
   & label {
     padding: 0 12px;
+    @include mobile-only {
+      font-size: 13px;
+    }
 
     & span {
       opacity: 0.6;

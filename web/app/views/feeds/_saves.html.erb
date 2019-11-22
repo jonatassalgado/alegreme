@@ -62,8 +62,8 @@
                   <div class="me-card__overlay"
                        data-target="saves-events.overlay"></div>
                 </div>
-                <div class="me-card__date <%= 'is-highlight' if ['hoje', 'amanhã'].include?(event.day_of_week['decorator']) %>" data-target="saves-events.date">
-                  <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %> <br>
+                <div class="me-card__date <%= event.day_of_week['decorator'].parameterize %>" data-target="saves-events.date">
+                  <span><i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %></span>
                   <span class="me-card__date-distance-in-words">
                     <%= "Daqui #{distance_of_time_in_words event.first_day_time, DateTime.now}" %>
                   </span>
