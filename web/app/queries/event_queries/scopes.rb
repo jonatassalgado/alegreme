@@ -138,6 +138,10 @@ module EventQueries
 				end
 			}
 
+			scope 'in_next_2_hours', lambda {
+				where("(ocurrences -> 'dates' ->> 0)::timestamptz BETWEEN ? AND ?", DateTime.now - 2.hours, DateTime.now)
+			}
+
 			scope 'in_days', lambda { |ocurrences, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
 

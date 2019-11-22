@@ -31,4 +31,8 @@ module Clockwork
     Rake::Task["push:saved_events_tomorrow"].invoke
   }
 
+  every(3.hours, 'push:saved_events_shortly') {
+    Rake::Task["push:saved_events_shortly"].invoke
+  }
+
 end
