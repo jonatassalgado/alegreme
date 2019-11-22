@@ -19,21 +19,9 @@ module Clockwork
     puts "Running #{job}"
   end
 
-  # every(5.seconds, 'test') {
-  #   puts "teste #{DateTime.now.strftime("%Y%m%d-%H%M%S")}"
-  # }
-
   every(1.day, 'db:dump', :at => '23:00') {
     Rake::Task["db:dump"].invoke
   }
-
-  # every(1.day, 'populate:facebook', :at => '06:00') {
-  #   Rake::Task["populate:facebook"].invoke
-  #   Rake::Task["similar:events"].invoke
-  #   Rake::Task["suggestions:users"].invoke
-  #   Rake::Task["sitemap:refresh"].invoke
-  #   Rake::Task["search:refresh"].invoke
-  # }
 
   every(1.day, 'push:new_events_today', :at => '12:15') {
     Rake::Task["push:new_events_today"].invoke

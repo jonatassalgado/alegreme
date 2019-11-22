@@ -15,7 +15,7 @@ class FeedsController < ApplicationController
 
 		@collections ||= EventServices::CollectionCreator.new(current_user, params)
 
-		@new_events_today           = Event.where("created_at > ?", DateTime.now.beginning_of_day - 1)
+		@new_events_today           = Event.where("created_at > ?", DateTime.now - 24.hours)
 		@events_this_week           = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
 		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
 		@events_followed_by_user    = Event.follow_features_by_user(current_user)
@@ -95,7 +95,7 @@ class FeedsController < ApplicationController
 	end
 
 	def recent
-		@new_events_today = Event.where("created_at > ?", DateTime.now.beginning_of_day - 1)
+		@new_events_today = Event.where("created_at > ?", DateTime.now - 24.hours)
 		@collection       = EventServices::CollectionCreator.new(current_user, params).call({
 				                                                                                    identifier: 'new-today',
 				                                                                                    events:     @new_events_today

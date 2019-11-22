@@ -16,11 +16,11 @@ namespace :push do
 			app.save!
 		end
 
-		events_count = Event.where("created_at > ?", DateTime.now - 1).size
+		events_count = Event.where("created_at > ?", DateTime.now - 24.hours).size
 		users        = User.where("(notifications -> 'topics' -> 'all' ->> 'active')::boolean")
 
 		users.each do |user|
-			user_suggestions_count = Event.where("created_at > ?", DateTime.now.beginning_of_day - 1).with_high_score.in_user_personas(user).size
+			user_suggestions_count = Event.where("created_at > ?", DateTime.now - 24.hours).with_high_score.in_user_personas(user).size
 
 			if user_suggestions_count >= 2
 				user.notifications_devices.each do |device|
@@ -55,7 +55,7 @@ namespace :push do
 			Rpush.push
 			Rpush.apns_feedback
 		end
-		
+
 		puts "Task push:new_events_today finalizada em #{DateTime.now}".white
 		puts "Notificações agendadas para #{users.size} usuários".green
 
