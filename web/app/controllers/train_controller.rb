@@ -26,18 +26,30 @@ class TrainController < ApplicationController
 
 	def get_events_not_trained_yet
 		if params[:desc]
-			order = "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC"
+			Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
+				.order("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC")
+				.includes(:place)
+		elsif params[:name]
+				Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200 AND (details ->> 'name') LIKE ?", "%#{params[:name]}%")
+					.order("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC")
+					.includes(:place)
 		elsif params[:category]
-			order = "(ml_data -> 'categories' -> 'primary' ->> 'name') = '#{params[:category]}' DESC"
+			Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200 AND (ml_data -> 'categories' -> 'primary' ->> 'name') = ?", params[:category])
+				.order("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC")
+				.includes(:place)
+		elsif params[:place]
+			place = Place.friendly.find(params[:place])
+
+			place.events.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
+				.order("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC")
+				.includes(:place)
 		else
-			order = "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC"
+			Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
+				.order("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC")
+				.includes(:place)
 		end
 
-		Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
-				.order(order)
-				.includes(:place)
 
-		# Event.all.order("updated_at DESC")
 	end
 
 end

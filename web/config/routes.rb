@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 	get '/robots.:format', to: 'pages#robots'
 
 	resources :search, only: [:index], path: 'busca'
-	resources :train, only: [:index]
+	get 'train', to: 'train#index', as: :train
 
 	resources :users
 	get '/:user/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
