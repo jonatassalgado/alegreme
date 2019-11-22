@@ -7,7 +7,7 @@ namespace :ml do
 
 	desc "Retreina todos os eventos com score abaixo de 0.9"
 	task retrain: :environment do
-		events_to_retrain = Event.where("( ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.90 AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.90 AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier' AND (ml_data -> 'personas' -> 'primary' ->> 'name') != 'outlier'").uniq
+		events_to_retrain = Event.active.where("( ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.90 AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.90 AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier' AND (ml_data -> 'personas' -> 'primary' ->> 'name') != 'outlier'").uniq
 
 		events_to_retrain.each do |event|
 			event_retrained = retrain_event event
@@ -71,4 +71,3 @@ namespace :ml do
 		end
 	end
 end
-
