@@ -37,7 +37,7 @@
             <i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
           </span>
           <span class="me-card__date-distance-in-words">
-            <%= "Daqui #{distance_of_time_in_words event.first_day_time, DateTime.now}" %>
+            <%= event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words event.first_day_time, DateTime.now}" %>
           </span>
         </div>
         <% if event.details_prices.present? %>

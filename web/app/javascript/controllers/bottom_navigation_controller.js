@@ -37,7 +37,7 @@ export default class BottomNavigationController extends Controller {
 	goto(event) {
 		const path = event.target.dataset.path;
 		setTimeout(() => {
-			window.Turbolinks.visit(path, {action: "restore"});
+			window.Turbolinks.visit(path);
 		}, 300);
 	}
 
