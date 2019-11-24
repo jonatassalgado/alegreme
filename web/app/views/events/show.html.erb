@@ -183,7 +183,7 @@
               <%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", I18n.l(@event.day_of_week['date'], format: :long)) %>
             </div>
             <span>
-              <%= "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>
+              <%= @event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>
           </span>
           </div>
         </div>
