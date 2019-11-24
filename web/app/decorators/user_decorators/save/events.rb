@@ -11,7 +11,7 @@ module UserDecorators
 			module InstanceMethods
 				def saved_events(opts = {})
 					if self && !self.taste_events_saved.empty?
-						events = Event.saved_by_user(self).active.order_by_date.uniq
+						events = Event.saved_by_user(self).where("(ocurrences -> 'dates' ->> 0)::timestamptz > ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", DateTime.now - 12.hours).order_by_date.uniq
 						if opts[:as_model]
 							Event.where(id: events.pluck(:id))
 						else
