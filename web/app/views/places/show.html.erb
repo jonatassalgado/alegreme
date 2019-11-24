@@ -12,6 +12,6 @@
 
   </script>
 
-  <%= render partial: "components/collection/collection", locals: { data: @data } %>
+  <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
 </section>
 

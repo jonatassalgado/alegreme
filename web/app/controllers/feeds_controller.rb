@@ -256,8 +256,8 @@ class FeedsController < ApplicationController
 				                                                                              in_categories:    [params[:category]],
 				                                                                              in_user_personas: false,
 				                                                                              not_in_saved:     false,
-				                                                                              order_by_persona: false,
-				                                                                              order_by_date:    true,
+				                                                                              order_by_persona: true,
+				                                                                              order_by_date:    false,
 				                                                                              with_high_score:  false,
 				                                                                              limit:            16
 		                                                                              })
@@ -271,8 +271,8 @@ class FeedsController < ApplicationController
 				},
 				filters:    {
 						ocurrences: true,
-						kinds:      true,
-						categories: true
+						kinds:      false,
+						categories: false
 				}
 		}
 	end

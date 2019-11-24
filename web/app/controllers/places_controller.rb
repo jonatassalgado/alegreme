@@ -36,8 +36,8 @@ class PlacesController < ApplicationController
 				followable: @place,
 				filters:    {
 						ocurrences: true,
-						kinds:      true,
-						categories: true
+						kinds:      false,
+						categories: false
 				}
 		}
 

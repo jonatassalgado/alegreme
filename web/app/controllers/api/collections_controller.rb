@@ -21,13 +21,25 @@ module Api
 						identifier:   params[:data][:identifier],
 						collection:   collection,
 						title:        {
-								principal: place.details_name,
-								secondary: place.geographic_address
+								principal: JSON.parse(params[:data][:title])['principal'],
+								secondary: JSON.parse(params[:data][:title])['secondary'].try(:html_safe),
+								tertiary:  JSON.parse(params[:data][:title])['tertiary'],
 						},
 						followable:   place,
 						filters:      collection[:filters],
+						categories:   params[:data][:categories],
+						ocurrences:   params[:data][:ocurrences],
+						kinds:        params[:data][:kinds],
 						origin:       params[:data][:origin],
+						similar:      params[:data][:similar],
+						continue_to:  params[:data][:continue_to_path],
+						insert_after: params[:data][:insert_after],
 						json_request: true
+				}
+
+				@props = {
+						infinite_scroll: params[:props][:infinite_scroll],
+						disposition:     params[:props][:disposition]
 				}
 			elsif !initial_filters_applyed['in_organizers'].blank?
 				organizer = Organizer.friendly.find(initial_filters_applyed['in_organizers'][0])
@@ -44,12 +56,25 @@ module Api
 						identifier:   params[:data][:identifier],
 						collection:   collection,
 						title:        {
-								principal: organizer.details_name
+								principal: JSON.parse(params[:data][:title])['principal'],
+								secondary: JSON.parse(params[:data][:title])['secondary'].try(:html_safe),
+								tertiary:  JSON.parse(params[:data][:title])['tertiary'],
 						},
 						followable:   organizer,
 						filters:      collection[:filters],
+						categories:   params[:data][:categories],
+						ocurrences:   params[:data][:ocurrences],
+						kinds:        params[:data][:kinds],
 						origin:       params[:data][:origin],
+						similar:      params[:data][:similar],
+						continue_to:  params[:data][:continue_to_path],
+						insert_after: params[:data][:insert_after],
 						json_request: true
+				}
+
+				@props = {
+						infinite_scroll: params[:props][:infinite_scroll],
+						disposition:     params[:props][:disposition]
 				}
 			else
 				collection = collection_creator.call({

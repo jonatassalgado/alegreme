@@ -34,8 +34,8 @@ class OrganizersController < ApplicationController
 				followable: @organizer,
 				filters:    {
 						ocurrences: true,
-						kinds:      true,
-						categories: true
+						kinds:      false,
+						categories: false
 				}
 		}
 

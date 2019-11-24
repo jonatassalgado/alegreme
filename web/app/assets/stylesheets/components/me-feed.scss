@@ -93,6 +93,13 @@ $mdc-layout-grid-columns: (
           margin: 0;
         }
       }
+
+      [data-controller="places"][data-action="show"] & {
+        @include mobile-only {
+          margin: 5px 0;
+          max-width: 50%;
+        }
+      }
     }
 
     &-title-tertiary {
