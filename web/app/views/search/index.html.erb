@@ -20,7 +20,12 @@
   <% end %>
 
   <% if @data&.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
-    <%= render partial: "components/collection/collection", locals: {data: @data} %>
+    <%= render partial: "components/collection/collection", locals: {
+        data:  @data,
+        props: {
+            infinite_scroll: true
+        }
+    } %>
   <% elsif @data&.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter == 0 } %>
     <section class="me-feed__section" style="margin: 0 auto 25px auto;">
       <div class="me-feed__section-head">

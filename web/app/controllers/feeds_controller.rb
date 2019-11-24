@@ -81,7 +81,7 @@ class FeedsController < ApplicationController
 					},
 					{
 							only_in:           @events_this_week.map(&:id),
-							not_in:           (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) | @collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids )|| []),
+							not_in:            (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) | @collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
 							in_user_personas:  false,
 							order_by_persona:  true,
 							order_by_date:     false,
@@ -107,7 +107,8 @@ class FeedsController < ApplicationController
 		                                                                                    {
 				                                                                                    only_in:          @new_events_today.map(&:id),
 				                                                                                    order_by_persona: true,
-				                                                                                    in_user_personas: true
+				                                                                                    in_user_personas: true,
+				                                                                                    with_high_score:  false
 		                                                                                    })
 
 		@data = {
@@ -254,7 +255,7 @@ class FeedsController < ApplicationController
 		                                                                              }, {
 				                                                                              in_categories:    [params[:category]],
 				                                                                              in_user_personas: false,
-																																											not_in_saved:     false,
+				                                                                              not_in_saved:     false,
 				                                                                              order_by_persona: false,
 				                                                                              order_by_date:    true,
 				                                                                              with_high_score:  false,
@@ -311,10 +312,10 @@ class FeedsController < ApplicationController
 				                                                                                      events:     @events_in_this_day
 		                                                                                      }, {
 				                                                                                      only_in:          @events_in_this_day.map(&:id),
-																																															in_user_personas: false,
-																																														  order_by_persona: true,
-																																														  order_by_date:    false,
-																																														  with_high_score:  false,
+				                                                                                      in_user_personas: false,
+				                                                                                      order_by_persona: true,
+				                                                                                      order_by_date:    false,
+				                                                                                      with_high_score:  false,
 				                                                                                      limit:            16
 		                                                                                      })
 
