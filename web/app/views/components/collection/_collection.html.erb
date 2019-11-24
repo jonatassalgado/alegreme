@@ -20,11 +20,13 @@
           categories: true,
           kinds:      true,
           ocurrences: true
-      }
+      },
+      insert_after: nil
   }.deep_merge!(data)
 
   props = {
-    infinite_scroll: false
+      infinite_scroll: false,
+      disposition:     :vertical
   }.deep_merge!(props || {})
 
 %>
@@ -36,6 +38,7 @@
          data-section-actual-events-in-collection="<%= data[:collection][:detail][:actual_events_in_collection] %>"
          data-section-load-more-loading="false"
          data-section-infinite-scroll="<%= props[:infinite_scroll] %>"
+         data-section-disposition="<%= props[:disposition] %>"
          data-observable="float-menu.section"
          id="<%= data[:identifier] %>">
   <div class="me-feed__section-head">
@@ -71,7 +74,6 @@
         <%= data[:title][:custom] %>
       </div>
     <% end %>
-    <%# if data[:filters][:categories] || data[:filters][:ocurrences] || data[:filters][:kinds] %>
     <div class="me-filter"
          data-controller="filter"
          data-filter-section-identifier="<%= data[:identifier] %>"
@@ -116,7 +118,6 @@
                    cached:  true) %>
       <% end %>
     </div>
-    <%# end %>
   </div>
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner"
@@ -134,11 +135,15 @@
 
         <%= render(partial: 'components/collection/similar',
                    locals:  {
-                       events:       data[:collection][:events],
-                       identifier:   data[:identifier],
-                       json_request: data[:json_request]
+                       data: {
+                           similar:      data[:similar],
+                           events:       data[:collection][:events],
+                           identifier:   data[:identifier],
+                           json_request: data[:json_request],
+                           insert_after: data[:insert_after]
+                       }
                    },
-                   cached:  true) if !mobile_device? || !['feed'].include?(data[:origin]) %>
+                   cached:  true) if !mobile_device? || props[:disposition] == 'vertical' %>
 
         <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
           <div data-action="click->section#loadMore"
@@ -157,16 +162,19 @@
             </svg>
           </div>
         <% end %>
-
-
       <% end %>
     </div>
     <%= render(partial: 'components/collection/similar',
                locals:  {
-                   events:     data[:collection][:events],
-                   identifier: data[:identifier]
+                   data: {
+                       similar:      data[:similar],
+                       events:       data[:collection][:events],
+                       identifier:   data[:identifier],
+                       json_request: data[:json_request],
+                       insert_after: data[:insert_after]
+                   }
                },
-               cached:  true) if mobile_device? && ['feed'].include?(data[:origin]) %>
+               cached:  true) if mobile_device? && props[:disposition] == 'horizontal' %>
     <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
       <div class="me-feed__load-more me-feed__load-more--vertical">
         <% if data[:origin] == :feed %>

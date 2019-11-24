@@ -3,7 +3,7 @@ module Api
 	class CollectionsController < ApplicationController
 
 		def index
-			collection_creator = EventServices::CollectionCreator.new(current_user, params)
+			collection_creator = EventServices::CollectionCreator.new(current_user, params[:data])
 
 			if !initial_filters_applyed['in_places'].blank?
 				place  = Place.friendly.find(initial_filters_applyed['in_places'][0])
@@ -18,7 +18,7 @@ module Api
 				                                     })
 
 				@data = {
-						identifier:   params[:identifier],
+						identifier:   params[:data][:identifier],
 						collection:   collection,
 						title:        {
 								principal: place.details_name,
@@ -26,7 +26,7 @@ module Api
 						},
 						followable:   place,
 						filters:      collection[:filters],
-						origin:       params[:origin],
+						origin:       params[:data][:origin],
 						json_request: true
 				}
 			elsif !initial_filters_applyed['in_organizers'].blank?
@@ -41,48 +41,55 @@ module Api
 				                                     })
 
 				@data = {
-						identifier:   params[:identifier],
+						identifier:   params[:data][:identifier],
 						collection:   collection,
 						title:        {
 								principal: organizer.details_name
 						},
 						followable:   organizer,
 						filters:      collection[:filters],
-						origin:       params[:origin],
+						origin:       params[:data][:origin],
 						json_request: true
 				}
 			else
 				collection = collection_creator.call({
-						                                     identifier: params[:identifier],
+						                                     identifier: params[:data][:identifier],
 						                                     events:     Event.all
 				                                     })
 
 
 				@data = {
-						identifier:   params[:identifier],
+						identifier:   params[:data][:identifier],
 						collection:   collection,
 						title:        {
-								principal: JSON.parse(params[:title])['principal'],
-								secondary: JSON.parse(params[:title])['secondary'].try(:html_safe),
-								tertiary:  JSON.parse(params[:title])['tertiary'],
+								principal: JSON.parse(params[:data][:title])['principal'],
+								secondary: JSON.parse(params[:data][:title])['secondary'].try(:html_safe),
+								tertiary:  JSON.parse(params[:data][:title])['tertiary'],
 						},
 						filters:      collection[:filters],
-						origin:       params[:origin],
-						similar:      params[:similar],
-						continue_to:  params[:continue_to_path],
+						origin:       params[:data][:origin],
+						similar:      params[:data][:similar],
+						continue_to:  params[:data][:continue_to_path],
+						insert_after: params[:data][:insert_after],
 						json_request: true
+				}
+
+				@props = {
+						infinite_scroll: params[:props][:infinite_scroll],
+						disposition:     params[:props][:disposition]
 				}
 
 			end
 
-
-			render 'collections/index'
+			respond_to do |format|
+				format.js { render 'collections/collection' }
+			end
 		end
 
 		private
 
 		def initial_filters_applyed
-			JSON.parse(params[:init_filters_applyed])
+			JSON.parse(params[:data][:init_filters_applyed])
 		end
 
 

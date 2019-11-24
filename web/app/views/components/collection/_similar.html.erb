@@ -1,24 +1,29 @@
 <%
 
-  similar_to = params.fetch(:similar, false)
-  order = params.fetch(:insert_after, 4)
-  user = local_assigns.fetch(:user, current_user)
-  similar_to_show = mobile_device? ? 8 : 6
+  raise ArgumentError unless data
 
-  if similar_to
-    event              = events.detect { |event| event.id == similar_to.to_i } || Event.find(similar_to)
-    similar_events_ids = event.similar_data[0...similar_to_show]
-    similar_events     = Event.where(id: similar_events_ids).order_by_ids(similar_events_ids).active.not_in_saved(user)
-    identifier         = local_assigns.fetch(:identifier, 'similar')
-    json_request       = local_assigns.fetch(:json_request, false)
+  data = {
+      identifier:       'similar',
+      events:           [],
+      similar:          false,
+      insert_after:     4,
+      user:             current_user,
+      units_to_display: mobile_device? ? 8 : 6,
+      json_request:     false
+  }.deep_merge!(data)
+
+
+  if data[:similar]
+    event              = data[:events].detect { |event| event.id == data[:similar].to_i } || Event.find(data[:similar])
+    similar_events_ids = event.similar_data[0...data[:units_to_display]]
+    similar_events     = Event.where(id: similar_events_ids).order_by_ids(similar_events_ids).active.not_in_saved(data[:user])
   end
 
 %>
-
-<% if similar_to %>
-  <div id="similar-to-<%= similar_to %>"
+<% if data[:similar] %>
+  <div id="similar-to-<%= data[:similar] %>"
        class="me-similar"
-       style="order: <%= order %>">
+       style="order: <%= data[:insert_after] %>">
     <h3>
       Similares a <%= link_to(limit_name_size(event.details['name'], 60), event_path(event)) %>
     </h3>
@@ -30,12 +35,12 @@
                  locals:     {
                      display_similar: false,
                      display_place:   false,
-                     identifier:      identifier,
+                     identifier:      data[:identifier],
                      type:            'similar',
-                     json_request:    json_request
+                     json_request:    data[:json_request]
                  } %>
 
-      <% if similar_events.length < similar_to_show %>
+      <% if similar_events.length < data[:units_to_display] %>
         <div class="me-similar__empty">
           <span>Estes são todos os eventos similares que encontrei.</span>
         </div>

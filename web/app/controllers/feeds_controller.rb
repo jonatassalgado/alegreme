@@ -63,7 +63,7 @@ class FeedsController < ApplicationController
 							in_user_personas: false,
 							order_by_persona: true,
 							order_by_date:    false,
-							with_high_score:  false
+							with_high_score:  true
 					}
 			)
 		else

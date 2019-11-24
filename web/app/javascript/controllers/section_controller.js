@@ -23,7 +23,7 @@ export default class SectionController extends Controller {
 
 						if (this.hasLoadMoreButtonTarget) {
 							if (entry.isIntersecting) {
-								entry.target.disabled = true;
+								entry.target.disabled                                     = true;
 								entry.target.querySelector('.me-button__label').innerText = 'Carregando...';
 								this.loadMore();
 							} else {
@@ -80,7 +80,9 @@ export default class SectionController extends Controller {
 			location.assign(this.loadMoreButtonTarget.dataset.continueToPath);
 		} else {
 			this.filterController.filter({
-				limit: parseInt(this.actualEventsInCollection) + 16
+				limit          : parseInt(this.actualEventsInCollection) + 16,
+				disposition    : this.data.get('disposition'),
+				infinite_scroll: this.data.get('infinite_scroll')
 			})
 		}
 	}

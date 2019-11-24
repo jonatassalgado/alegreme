@@ -42,7 +42,7 @@ export default class EventController extends Controller {
 					requestIdleCallback(() => {
 						const eventEl = document.getElementById(`similar-to-${data.params.similar}`);
 
-						if (eventEl === undefined) return;
+						if (eventEl === null) return;
 
 						document.documentElement.style.scrollBehavior = "smooth";
 						if(this.md.mobile()) {
