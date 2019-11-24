@@ -8,6 +8,9 @@
     .me-feed__section-head & {
       padding: 0 25px 0 15px;
     }
+    [data-controller="search"][data-action="index"] & {
+      width: auto;
+    }
   }
 
 

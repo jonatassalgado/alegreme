@@ -32,5 +32,18 @@
         <h2>Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
       </div>
     </section>
+  <% else %>
+    <section class="me-feed__section" style="margin: 0 auto 25px auto;">
+      <h2>Categorias</h2> <br>
+      <div class="me-chip-set__wrapper">
+        <div class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
+          <% @categories.each do |category| %>
+            <a href="<%= category_events_path category %>" class="me-chip mdc-chip <%= 'mdc-chip--selected' if category == params[:category] %>">
+              <span class="mdc-chip__text"><%= category %></span>
+            </a>
+          <% end %>
+        </div>
+      </div>
+    </section>
   <% end %>
 </div>

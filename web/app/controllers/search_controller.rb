@@ -28,6 +28,7 @@ class SearchController < ApplicationController
 					                                                                              group_by:         false
 			                                                                              })
 
+
 			@data = {
 					identifier: "search",
 					collection: @collection,
@@ -41,7 +42,7 @@ class SearchController < ApplicationController
 					}
 			}
 		else
-
+			@categories = Event::CATEGORIES.dup.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }
 		end
 	end
 
