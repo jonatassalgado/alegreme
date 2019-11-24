@@ -47,7 +47,7 @@ export default class ChipController extends Controller {
 			case "filter":
 				// flipping.read();
 				setTimeout(() => {
-					this.filterController.filter();
+					this.sectionController.filter();
 				}, 250);
 				break;
 			case "kinds":
@@ -101,13 +101,13 @@ export default class ChipController extends Controller {
 	}
 
 
-	get filterController() {
+	get sectionController() {
 		const parentClassifier = this.context.element.closest(
-			'[data-controller="filter"]'
+			'[data-controller="section"]'
 		);
 		return this.application.getControllerForElementAndIdentifier(
 			parentClassifier,
-			"filter"
+			"section"
 		);
 	}
 

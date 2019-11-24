@@ -1,16 +1,26 @@
+<%
+
+  raise ArgumentError unless data
+
+  data = {
+      initial_filters:              nil,
+      type:                         nil,
+      filters_that_exist_in_events: [],
+      params_filters:               []
+  }.deep_merge!(data)
+
+%>
+
 <div class="me-chip-set__wrapper">
   <div data-controller="chip"
-       data-chip-default-value="<%= initial_filters.to_json %>"
+       data-chip-default-value="<%= data[:initial_filters].to_json %>"
        data-chip-type="filter"
-       data-target="chip.chipset filter.<%= type %>"
-       class="me-chip-set <%= (['kinds'].include?(type)) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'choice' %>">
-<!--    <i class="material-icons">-->
-      <%#= icon_type %>
-<!--    </i>-->
-    <% Array(filters_that_exist_in_events).each do |filter| %>
-      <% if type == 'ocurrences' %>
+       data-target="chip.chipset section.<%= data[:type] %>"
+       class="me-chip-set <%= (['kinds'].include?(data[:type])) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'choice' %>">
+    <% Array(data[:filters_that_exist_in_events]).each do |filter| %>
+      <% if data[:type] == 'ocurrences' %>
         <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter['string'] %>"
-             class="me-chip mdc-chip <%= params_filters and filter_exist_in_ocurrences?(params_filters, filter['string']) ? 'mdc-chip--selected' : nil %>"
+             class="me-chip mdc-chip <%= data[:params_filters] and filter_exist_in_ocurrences?(data[:params_filters], filter['string']) ? 'mdc-chip--selected' : nil %>"
              data-turbolinks-scroll="false">
           <div class="mdc-chip__text">
             <%= filter['decorator'] %>
@@ -18,7 +28,7 @@
         </div>
       <% else %>
         <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter %>"
-             class="me-chip mdc-chip <%= params_filters.try(:to_s) and params_filters.include?(filter) ? 'mdc-chip--selected' : nil %>"
+             class="me-chip mdc-chip <%= data[:params_filters].try(:to_s) and data[:params_filters].include?(filter) ? 'mdc-chip--selected' : nil %>"
              data-turbolinks-scroll="false">
 
           <div class="mdc-chip__text">

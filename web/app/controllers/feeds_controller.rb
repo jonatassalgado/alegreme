@@ -36,21 +36,6 @@ class FeedsController < ApplicationController
 					})
 		end
 
-		if @events_this_week.size >= 2
-			@collection_week = @collections.call(
-					{
-							identifier: 'this-week',
-							events:     @events_this_week
-					},
-					{
-							only_in:           @events_this_week.map(&:id),
-							in_user_personas:  true,
-							order_by_persona:  false,
-							order_by_date:     true,
-							not_in_categories: ['brecho', 'curso']
-					})
-		end
-
 
 		if current_user&.has_events_suggestions?
 			@collection_suggestions = @collections.call(
@@ -85,6 +70,23 @@ class FeedsController < ApplicationController
 					})
 		else
 			@collection_follow = {}
+		end
+
+
+		if @events_this_week.size >= 2
+			@collection_week = @collections.call(
+					{
+							identifier: 'this-week',
+							events:     @events_this_week
+					},
+					{
+							only_in:           @events_this_week.map(&:id),
+							not_in:           (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) | @collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids )|| []),
+							in_user_personas:  false,
+							order_by_persona:  true,
+							order_by_date:     false,
+							not_in_categories: ['brecho', 'curso']
+					})
 		end
 
 
@@ -283,7 +285,7 @@ class FeedsController < ApplicationController
 				                                                                              in_user_personas: false,
 				                                                                              order_by_persona: false,
 				                                                                              order_by_date:    true,
-				                                                                              with_high_score:  true
+				                                                                              with_high_score:  false
 		                                                                              })
 
 		@data = {
@@ -291,7 +293,7 @@ class FeedsController < ApplicationController
 				collection: @collection,
 				title:      {
 						principal: "Eventos em Porto Alegre",
-						secondary: "Explore todos os eventos que ocorrem em Porto Alegre - RS"
+						secondary: current_user ? "Explore todos os eventos ordenados por dia sem filtro de perfil" : "Explore todos os eventos que ocorrem em Porto Alegre - RS"
 				},
 				filters:    {
 						ocurrences: true,

@@ -19,7 +19,7 @@ $mdc-layout-grid-columns: (
     max-width: $main-content-width;
     @include mdc-layout-grid-media-query_("phone") {
       max-width: unset;
-      padding: 12px 0 12px 0;
+      padding: 15px 0 12px 0;
       margin: 0 auto;
       border-bottom: 5px solid $surface-tertiary-color;
     }
@@ -68,8 +68,8 @@ $mdc-layout-grid-columns: (
       justify-content: space-between;
       @include mdc-layout-grid-media-query_("phone") {
         font-size: 18px;
-        line-height: 1.35em;
-        padding: 0 $section-padding-phone;
+        line-height: 1em;
+        padding: 3px $section-padding-phone 0;
         justify-content: space-between;
       }
     }
@@ -168,7 +168,7 @@ $mdc-layout-grid-columns: (
   &__section-head {
     // @include section-head;
     display: flex;
-    margin-bottom: 12px;
+    //margin-bottom: 12px;
     flex-direction: column;
     @include mdc-layout-grid-media-query_("phone") {
 
@@ -218,6 +218,15 @@ $mdc-layout-grid-columns: (
             fill: $font-tertiary-color;
             position: relative;
             left: -30px;
+          }
+        }
+      }
+
+      [data-controller="feeds"][data-action="index"] [data-section-disposition="vertical"][data-section-load-more-loading="true"] & {
+        &.is-loading {
+          @include mobile-only {
+            display: none;
+            opacity: 0;
           }
         }
       }
