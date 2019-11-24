@@ -54,6 +54,7 @@
 }
 
 
+
   </script>
 
   <script type="application/ld+json">
@@ -95,6 +96,7 @@
     "validFrom": "<%= @event.ld_json.valid_from %>"
   }
 }
+
 
 
 
@@ -170,22 +172,20 @@
           <% end %>
         </div>
         <div class="me-card__date">
-          <% if @event.place %>
-            <i class="material-icons">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M0 0h24v24H0z" fill="none"/>
-                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-              </svg>
-            </i>
-            <div>
-              <div class="me-card__place-title">
-                <%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y')) %>
-              </div>
-              <span>
-              <%= I18n.l(@event.day_of_week['date'], format: :long) %>
-          </span>
+          <i class="material-icons">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+            </svg>
+          </i>
+          <div>
+            <div class="me-card__place-title">
+              <%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", I18n.l(@event.day_of_week['date'], format: :long)) %>
             </div>
-          <% end %>
+            <span>
+              <%= "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>
+          </span>
+          </div>
         </div>
       </div>
 
@@ -193,10 +193,10 @@
         <%#= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.categories.sort, event_id: @event.id, type: 'categories' } %>
         <%= render partial: 'components/follow/follow', locals: {
             data: {
-                user: current_user,
-                chips: @event.organizers.sort,
+                user:     current_user,
+                chips:    @event.organizers.sort,
                 event_id: @event.id,
-                type: 'organizers'
+                type:     'organizers'
             }
         } %>
       </div>
