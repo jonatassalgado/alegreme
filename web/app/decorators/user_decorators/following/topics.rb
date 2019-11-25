@@ -11,25 +11,8 @@ module UserDecorators
 			end
 
 			module InstanceMethods
-				def following_topics(opts = {})
-
-					@opts = opts
-
-					if @opts[:only] == :name
-						@response = self.all_following.map { |follow| follow.details['name'].capitalize }.uniq
-					else
-						@response = self.all_following
-					end
-
-					if @opts[:as] == :list
-						if @opts[:size]
-							return @response.map { |response| content_tag :i, response }[0...@opts[:size]].join(", ")
-						else
-							return @response.map { |response| content_tag :i, response }.join(", ")
-						end
-					else
-						@response
-					end
+				def following_topics
+					self.following_by_type('Organizer') | self.following_by_type('Place')
 				end
 
 				private

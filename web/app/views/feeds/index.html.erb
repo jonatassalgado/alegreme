@@ -86,11 +86,10 @@
         <% follow_custom_title = capture do %>
           <div class="me-chip-set__wrapper">
             <div class="me-chip-set mdc-chip-set">
-              <% current_user.following_topics.each do |topic| %>
-                <a href="<%= link_to_topic topic %>" class="me-chip mdc-chip">
-                <span class="mdc-chip__text">
-                  <%= topic.details_name %>
-                </span>
+              <% current_user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
+                <a href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| current_user.last_sign_in_at < event.created_at } %>">
+                  <%= topic.details_name.titleize %>
+                  <i class="me-chip__counter"><%= topic.events.active.size %></i>
                 </a>
               <% end %>
             </div>
