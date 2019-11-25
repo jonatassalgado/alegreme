@@ -104,6 +104,10 @@ class Event < ApplicationRecord
 		datetimes
 	end
 
+	# scope 'similar_events', -> |user|
+	# 	Event.where(id: self.similar_data).order_by_ids(self.similar_data).active.not_in_saved(user)
+	# end
+
 
 	private
 
