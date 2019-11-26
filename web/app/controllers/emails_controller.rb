@@ -2,7 +2,7 @@ class EmailsController < ApplicationController
 	before_action :authorize_admin
 
 	def send_request_invite_confirmation
-		@user = User.find params[:user_id]
+		@user = User.friendly.find params[:user_id]
 
 		respond_to do |format|
 			if @user.email.present?
@@ -19,7 +19,7 @@ class EmailsController < ApplicationController
 
 
 	def send_invite_activation_link
-		@user = User.find params[:user_id]
+		@user = User.friendly.find params[:user_id]
 
 		@user.features.deep_merge!({
 				                           'demographic' => {
