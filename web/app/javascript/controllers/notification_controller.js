@@ -12,8 +12,7 @@ export default class NotificationController extends Controller {
 			Pushy.validateDeviceCredentials().then((response) => {
 				this.MDCSwitch.checked = true;
 			}, (error) => {
-				this.MDCSwitch.checked = false;
-				this.status            = false;
+				this.status = true;
 			})
 		} else {
 			this.MDCSwitch.checked = false;
@@ -57,8 +56,10 @@ export default class NotificationController extends Controller {
 					response => {
 						response.text().then(data => {
 							if (status) {
-								SnackBarModule.show('Notificações ativadas com sucesso');
+								this.MDCSwitch.checked = true;
+								SnackBarModule.show('Notificações ativadas');
 							} else {
+								this.MDCSwitch.checked = false;
 								SnackBarModule.show('Notificações desativadas');
 							}
 						});
