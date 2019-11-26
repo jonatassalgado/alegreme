@@ -13,17 +13,18 @@ const CacheModule = (function () {
 	};
 
 	module.activateTurbolinks = () => {
-		if (!caches.has("v1:sw-cache-feed-page")) {
+		if (navigator.serviceWorker && !caches.has("v1:sw-cache-feed-page")) {
 			caches.open("v1:sw-cache-feed-page")
-			      .then(cache => {
-				      cache.add('/feed').then(() => {
-					      console.log("Cache v1:sw-cache-feed-page updated");
-				      })
-			      })
-			      .catch(reason => {
-				      console.log(reason);
-			      });
+			.then(cache => {
+				cache.add('/feed').then(() => {
+					console.log("Cache v1:sw-cache-feed-page updated");
+				})
+			})
+			.catch(reason => {
+				console.log(reason);
+			});
 		}
+
 
 		// const feedCache = caches.has("v1:sw-cache-feed-page");
 		// const staticResourcesCache = caches.has("v1:sw-cache-static-resources");
@@ -50,7 +51,7 @@ const CacheModule = (function () {
 	};
 
 	module.clearCache = (cacheNames, attrs) => {
-		if (!cacheNames || cacheNames.includes("feed-page")) {
+		if (navigator.serviceWorker && !cacheNames || cacheNames.includes("feed-page")) {
 			caches.open("v1:sw-cache-feed-page")
 			      .then(cache => {
 				      cache
@@ -69,7 +70,7 @@ const CacheModule = (function () {
 			      });
 		}
 
-		if (cacheNames && cacheNames.includes("events-page")) {
+		if (navigator.serviceWorker && cacheNames && cacheNames.includes("events-page")) {
 			caches
 				.open("v1:sw-cache-events-page")
 				.then(cache => {
