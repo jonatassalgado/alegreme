@@ -87,6 +87,13 @@ class EventSpider(scrapy.Spider):
     http_pass = 'password'
 
     name = 'event'
+
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'alegreme.pipelines.EventPipeline': 400
+        }
+    }
+
     allowed_domains = ['facebook.com']
     start_urls = ['https://www.facebook.com/pg/SerenataIluminada/events',
                   'https://www.facebook.com/pg/CCMQportoalegre/events',

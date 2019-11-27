@@ -9,7 +9,7 @@ data/
 keystore
 logs/
 sitemap.xml.gz
-scrapy/scraped
+scrapy/data
 web/Gemfile.lock
 web/*.rbc
 web/capybara-*.html

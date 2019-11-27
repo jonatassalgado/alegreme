@@ -122,7 +122,6 @@ services:
     volumes:
       - ./scrapy/alegreme:/var/www/scrapy/alegreme
       - ./scrapy/data:/var/www/scrapy/data
-      - scrapydo_data:/var/www/scrapy/projects
       - ./logs/scrapy:/var/www/scrapy/log
     ports:
       - "7654:7654"
@@ -130,7 +129,7 @@ services:
 #    mem_limit: 3gb
 #    memswap_limit: 4gb
 #    cpus: 0.5
-    command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
+    # command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
   splash:
     image: scrapinghub/splash
     ports:

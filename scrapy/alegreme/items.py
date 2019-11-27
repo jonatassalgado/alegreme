@@ -9,7 +9,8 @@ import scrapy
 import re
 import dateparser
 
-from scrapy.loader.processors import Join, MapCompose, TakeFirst
+from scrapy.loader import ItemLoader
+from scrapy.loader.processors import Join, MapCompose, TakeFirst, Identity
 from urllib.parse import unquote
 
 
@@ -83,3 +84,29 @@ class Event(scrapy.Item):
     organizers = scrapy.Field()
     organizers_fallback_a = scrapy.Field()
     pass
+
+
+class Movie(scrapy.Item):
+    name = scrapy.Field()
+    dates = scrapy.Field(input_processor=Identity())
+    pass
+
+
+class MovieOcurrence(scrapy.Item):
+    date = scrapy.Field(output_processor=TakeFirst())
+    places = scrapy.Field(input_processor=Identity())
+
+class MovieOcurrenceLoader(ItemLoader):
+    default_item_class=MovieOcurrence
+
+
+class MoviePlace(scrapy.Item):
+    name = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    # place = scrapy.Field(
+    #     output_processor=TakeFirst()
+    # )
+
+class MoviePlaceLoader(ItemLoader):
+    default_item_class=MoviePlace

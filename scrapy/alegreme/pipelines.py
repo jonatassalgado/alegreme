@@ -14,7 +14,7 @@ from scrapy.exporters import JsonLinesItemExporter
 from scrapy.utils.project import get_project_settings
 
 
-class AlegremePipeline(object):
+class EventPipeline(object):
 
     file = None
 
@@ -56,5 +56,30 @@ class AlegremePipeline(object):
         else:
             item['datetimes'][0] = dateparser.parse(item['datetimes'][0])
 
+        self.exporter.export_item(item)
+        return item
+
+
+
+class MoviePipeline(object):
+
+    file = None
+
+    def open_spider(self, spider):
+        settings = get_project_settings()
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        pwd = settings.get('PWD')
+        self.file = open(pwd + '/scraped/movies-' + timestr + '.jsonl', 'wb')
+
+        self.exporter = JsonLinesItemExporter(self.file)
+        self.exporter.start_exporting()
+
+
+    def close_spider(self, spider):
+        self.exporter.finish_exporting()
+        self.file.close()
+
+
+    def process_item(self, item, spider):
         self.exporter.export_item(item)
         return item

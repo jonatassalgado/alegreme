@@ -17,7 +17,7 @@ Aplicativo com objetivo de fazer as pessoas aproveitarem mais a cidade de Porto 
 
 ##### development
     sudo docker run -p 8050:8050 -p 5023:5023 scrapinghub/splash
-    scrapy crawl event -s CLOSESPIDER_ITEMCOUNT=25
+    scrapy crawl event -s CLOSESPIDER_ITEMCOUNT=5
 
 ##### production
     scrapy-do --pidfile -n scrapy-do --config scrapydo.conf

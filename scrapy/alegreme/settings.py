@@ -105,7 +105,7 @@ DOWNLOADER_MIDDLEWARES = {
 # ]
 
 DEPTH_LIMIT = 4
-CLOSESPIDER_ITEMCOUNT = 120
+CLOSESPIDER_ITEMCOUNT = 2
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -115,13 +115,13 @@ CLOSESPIDER_ITEMCOUNT = 120
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'alegreme.pipelines.AlegremePipeline': 300,
-}
+# ITEM_PIPELINES = {
+#    'alegreme.pipelines.AlegremePipeline': 300,
+# }
 
 LOG_ENABLED = True
 LOG_FILE = '/var/www/scrapy/log/output.log'
-LOG_LEVEL = 'INFO'
+LOG_LEVEL = 'DEBUG'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -138,8 +138,8 @@ AUTOTHROTTLE_ENABLED = True
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = 86400
+HTTPCACHE_ENABLED = False
+# HTTPCACHE_EXPIRATION_SECS = 86400
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
