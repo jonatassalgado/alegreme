@@ -91,7 +91,9 @@ class EventSpider(scrapy.Spider):
     custom_settings = {
         'ITEM_PIPELINES': {
             'alegreme.pipelines.EventPipeline': 400
-        }
+        },
+        'CLOSESPIDER_ITEMCOUNT': 120,
+        'DEPTH_LIMIT': 4
     }
 
     allowed_domains = ['facebook.com']

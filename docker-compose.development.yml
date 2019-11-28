@@ -117,6 +117,7 @@ services:
     environment:
         SPLASH_URL: http://splash:8050
         IS_DOCKER: 'true'
+        ENV: 'development'
     depends_on:
       - splash
     volumes:

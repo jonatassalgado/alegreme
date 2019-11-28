@@ -104,8 +104,8 @@ DOWNLOADER_MIDDLEWARES = {
 #      'Firefox/55.0')  # firefox
 # ]
 
-DEPTH_LIMIT = 4
-CLOSESPIDER_ITEMCOUNT = 2
+# DEPTH_LIMIT = 4
+# CLOSESPIDER_ITEMCOUNT = 2
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -121,7 +121,11 @@ CLOSESPIDER_ITEMCOUNT = 2
 
 LOG_ENABLED = True
 LOG_FILE = '/var/www/scrapy/log/output.log'
-LOG_LEVEL = 'DEBUG'
+
+if os.environ.get('ENV') == 'production':
+    LOG_LEVEL = 'INFO'
+else:
+    LOG_LEVEL = 'DEBUG'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -138,8 +142,9 @@ AUTOTHROTTLE_ENABLED = True
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = False
-# HTTPCACHE_EXPIRATION_SECS = 86400
+if os.environ.get('ENV') == 'production':
+    HTTPCACHE_ENABLED = True
+    HTTPCACHE_EXPIRATION_SECS = 80000
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'

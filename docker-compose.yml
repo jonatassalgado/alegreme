@@ -140,6 +140,7 @@ services:
     environment:
       SPLASH_URL: http://splash:8050
       IS_DOCKER: 'true'
+      ENV: 'production'
       PRIVATE_IP: '10.136.227.110'
       PUBLIC_IP: '159.89.84.18'
     depends_on:
