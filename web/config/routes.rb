@@ -59,6 +59,7 @@ Rails.application.routes.draw do
 		resource :favorite, only: [:create, :destroy]
 	end
 
+	resources :movies, path: 'porto-alegre/cinema'
 
 	get '/send_request_invite_confirmation/:user_id', to: 'emails#send_request_invite_confirmation', as: :send_request_invite_confirmation
 	get '/send_invite_activation_link/:user_id', to: 'emails#send_invite_activation_link', as: :send_invite_activation_link

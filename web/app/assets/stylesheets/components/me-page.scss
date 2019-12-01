@@ -32,10 +32,8 @@
       border-bottom: 1px solid #efefef;
     }
 
-    & .mdc-layout-grid {
-      @include mdc-layout-grid-media-query_("phone") {
-        // padding: 0 $section-padding-phone;
-      }
+    &-title {
+      padding: 0 $section-padding-phone;
     }
   }
 
@@ -99,6 +97,15 @@
 
     @include mdc-layout-grid-media-query_("phone") {
       // padding-top: 45px;
+    }
+  }
+
+  &--single {
+    max-width: 700px;
+    margin: auto;
+    @include is-open-up-animated;
+    @include mdc-layout-grid-media-query_("phone") {
+      //padding: 24px;
     }
   }
 

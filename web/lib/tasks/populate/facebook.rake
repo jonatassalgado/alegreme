@@ -7,7 +7,7 @@ require 'jsonl'
 
 require_relative '../../geographic.rb'
 require_relative '../../../config/initializers/shrine.rb'
-require_relative '../../../app/uploaders/image_uploader'
+require_relative '../../../app/uploaders/event_image_uploader'
 
 
 namespace :populate do
@@ -22,7 +22,7 @@ namespace :populate do
 																										}).first
 
 		# noinspection RubyArgCount
-		@uploader               = ImageUploader.new(:store)
+		@uploader               = EventImageUploader.new(:store)
 		@events_create_counter  = 0
 		@events_similar_counter = 0
 
@@ -33,6 +33,7 @@ namespace :populate do
 			abort
 		end
 
+		create_artifact
 
 		begin
 			data = JSONL.parse(@current_file)
@@ -233,16 +234,6 @@ def read_file
 	files     = Dir['/var/www/scrapy/data/scraped/*']
 	@current_file_name = (files.select { |file| file[/events-\d{8}-\d{6}\.jsonl$/] }).max
 
-	timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
-	artifact = Artifact.create(
-			details: {
-					name: @current_file_name,
-					type: 'scraped'
-			}
-	)
-
-	artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
-
 	puts "Lendo arquivo JSON #{@current_file_name}".blue
 
 	@current_file = File.read(@current_file_name)
@@ -343,6 +334,18 @@ def create_event(item)
 		)
 
 		[event, ml_data]
+	end
+
+	def create_artifact
+		timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
+		artifact = Artifact.create(
+				details: {
+						name: @current_file_name,
+						type: 'scraped'
+				}
+		)
+
+		artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
 	end
 
 end

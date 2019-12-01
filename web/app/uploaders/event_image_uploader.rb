@@ -1,6 +1,6 @@
 require 'image_processing/mini_magick'
 
-class ImageUploader < Shrine
+class EventImageUploader < Shrine
   plugin :processing
   plugin :versions
   plugin :delete_raw

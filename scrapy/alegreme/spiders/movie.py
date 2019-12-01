@@ -129,7 +129,7 @@ class MovieSpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'alegreme.pipelines.MoviePipeline': 400
         },
-        'CLOSESPIDER_ITEMCOUNT': 2
+        'CLOSESPIDER_ITEMCOUNT': 50
     }
 
     allowed_domains = ['google.com']

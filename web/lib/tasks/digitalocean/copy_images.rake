@@ -4,14 +4,14 @@ require 'net/http'
 require 'down'
 
 require_relative '../../../config/initializers/shrine.rb'
-require_relative '../../../app/uploaders/image_uploader'
+require_relative '../../../app/uploaders/event_image_uploader'
 
 
 namespace :digitalocean do
 	desc 'Copy images from host storage to Digital Cloud space'
 	task copy_images: :environment do
 		# noinspection RubyArgCount
-		@uploader               = ImageUploader.new(:store)
+		@uploader               = EventImageUploader.new(:store)
 		@events_create_counter  = 0
 		@events_similar_counter = 0
 		@events = Event.all

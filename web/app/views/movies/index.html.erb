@@ -1,0 +1,49 @@
+<section class="me-page is-animated">
+
+  <%= notice %>
+
+  <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
+
+  <div class="me-page__section">
+    <h2 class="me-page__section-title">
+      Filmes em cartaz
+    </h2>
+
+    <div class="me-movie__container">
+      <div class="me-movie__grid">
+        <% @movies.each do |movie| %>
+          <%= link_to movie_path(movie) do %>
+            <div class="me-movie">
+              <div class="me-movie__cover">
+                <%= image_tag(movie.image[:medium].url) if movie.image[:medium] %>
+              </div>
+              <h3 class="me-movie__name">
+                <%= movie.details['name'] %>
+              </h3>
+              <div class="me-movie__genre">
+                <%= movie.details['genre'] %>
+              </div>
+<!--              <div class="me-movie__description">-->
+                <%#= limit_description_size movie.details['description'] %>
+<!--              </div>-->
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%# content_for :meta_description, "" %>
+
+  <!--  <script type="application/ld+json">-->
+  <!--  [<%#= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]-->
+
+  <!--  </script>-->
+
+  <%#= render partial: "components/collection/collection", locals: {data: @data, props: {infinite_scroll: true} } %>
+
+  <%# unless current_user %>
+  <%#= link_to root_path, style: "display: flex" do %>
+  <!--      <img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%#= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">-->
+  <%# end %>
+  <%# end %>
+</section>

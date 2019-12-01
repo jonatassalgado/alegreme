@@ -16,7 +16,7 @@ class Event < ApplicationRecord
 		]
 	end
 
-	include ImageUploader::Attachment.new(:image)
+	include EventImageUploader::Attachment.new(:image)
 	include Rails.application.routes.url_helpers
 
 	include EventDecorators::Details

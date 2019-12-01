@@ -1,0 +1,82 @@
+<section class="me-page is-animated">
+
+  <%= notice %>
+
+  <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
+
+  <div class="me-page__section me-page--single">
+    <div class="me-movie__container">
+      <!--      <div class="me-movie__grid">-->
+      <div class="me-movie me-movie--single">
+        <div class="me-movie__cover">
+          <%= image_tag(@movie.image[:medium].url) if @movie.image[:medium] %>
+        </div>
+        <h3 class="me-movie__name">
+          <%= @movie.details['name'] %>
+        </h3>
+        <div class="me-movie__genre">
+          <%= @movie.details['genre'] %>
+        </div>
+        <div class="me-movie__description">
+          <%= @movie.details['description'] %>
+        </div>
+        <div class="me-movie__trailler">
+          <%= @movie.details['trailler'] %>
+        </div>
+        <% if @movie.dates %>
+          <div class="me-movie__dates">
+            <% @movie.dates.each do |date| %>
+              <div class="me-movie__date">
+                <div class="me-movie__date-name">
+                  <%= "#{I18n.l(date['date'].to_date, format: :week).upcase} - #{I18n.l(date['date'].to_date, format: :short)}" %>
+                </div>
+                <% if date['places'] %>
+                  <div class="me-movie__places">
+                    <% date['places'].each do |place| %>
+                      <div class="me-movie__place">
+                        <div class="me-movie__place-name">
+                          <%= link_to place['name'], place['address'] %>
+                        </div>
+                        <% if place['languages'] %>
+                          <div class="me-movie__languages">
+                            <% place['languages'].each do |language| %>
+                              <div class="me-movie__language">
+                                <div class="me-movie__language-name"><%= language['name'] %></div>
+                                <div class="me-movie__times">
+                                  <% language['times'].each do |time| %>
+                                    <span class="me-movie__time">
+                                      <%= time %>
+                                    </span>
+                                  <% end %>
+                                </div>
+                              </div>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <!--      </div>-->
+    </div>
+  </div>
+  <%# content_for :meta_description, "" %>
+
+  <!--  <script type="application/ld+json">-->
+  <!--  [<%#= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]-->
+
+  <!--  </script>-->
+
+  <%#= render partial: "components/collection/collection", locals: {data: @data, props: {infinite_scroll: true} } %>
+
+  <%# unless current_user %>
+  <%#= link_to root_path, style: "display: flex" do %>
+  <!--      <img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%#= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">-->
+  <%# end %>
+  <%# end %>
+</section>
