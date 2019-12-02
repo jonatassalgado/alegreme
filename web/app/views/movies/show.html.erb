@@ -46,10 +46,12 @@
                               <div class="me-movie__language">
                                 <div class="me-movie__language-name"><%= language['name'] %></div>
                                 <div class="me-movie__times">
-                                  <% language['times'].each do |time| %>
-                                    <span class="me-movie__time">
-                                      <%= time %>
-                                    </span>
+                                  <% if language['times'] %>
+                                    <% language['times'].each do |time| %>
+                                      <span class="me-movie__time">
+                                        <%= time %>
+                                      </span>
+                                    <% end %>
                                   <% end %>
                                 </div>
                               </div>
