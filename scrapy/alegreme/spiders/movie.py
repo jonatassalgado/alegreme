@@ -63,7 +63,7 @@ parse_movie_script = """
 
         assert(splash:go(splash.args.url))
 
-        assert(splash:wait(1))
+        assert(splash:wait(5))
         splash.scroll_position = {y=500}
 
         result, error = splash:wait_for_resume([[
@@ -71,7 +71,7 @@ parse_movie_script = """
                 var checkExist = setInterval(function() {
                     if (document.querySelector(".tb_c.tb_stc").innerText) {
                         clearInterval(checkExist);
-                                                splash.resume();
+                        splash.resume();
                     }
                 }, 2000);
             }
@@ -99,7 +99,7 @@ parse_movie_cover_script = """
 
         assert(splash:go(splash.args.url))
 
-        assert(splash:wait(1))
+        assert(splash:wait(3))
         splash.scroll_position = {y=500}
 
         result, error = splash:wait_for_resume([[
