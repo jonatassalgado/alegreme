@@ -1,4 +1,9 @@
-<section class="me-page me-page--feed-section is-animated">
+<%= render partial: "feeds/float_menu" unless mobile_device? %>
+
+<section class="me-page me-page--feed is-animated">
+
+  <%= render partial: 'components/tab-bar', locals: {props: {active: :events}} %>
+
   <%= render partial: 'components/swipable/swipable' unless current_user&.personas_assortment_finished? %>
 
   <% if current_user && current_user&.personas_assortment_finished? %>

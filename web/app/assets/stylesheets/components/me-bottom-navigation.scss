@@ -28,6 +28,7 @@
     justify-content: center;
     width: 100%;
     height: inherit;
+    position: relative;
 
     &.active {
       & .icon, .label {

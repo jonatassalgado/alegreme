@@ -45,7 +45,7 @@
 <% if params['controller'] == 'devise/sessions' || current_page?(controller: 'feeds', action: 'index') %>
   <%= render partial: "layouts/app-top-bar" %>
   <%= render partial: "feeds/float_menu" %>
-  <section class="me-page me-page--feed-section is-animated">
+  <section class="me-page me-page--feed is-animated">
     <!--    <div class="me-overlay"></div>-->
     <%= yield %>
   </section>

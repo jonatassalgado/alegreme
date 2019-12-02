@@ -7,7 +7,7 @@
 <div id="saves" class="me-saves" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
   <% if current_user and !current_user.taste_events_saved.empty? %>
     <h2 data-target="saves.header" class="me-saves__title">
-      Eventos salvos
+      Favoritos
       <%= link_to user_path current_user do %>
       <span class="me-see-all is-hoverable">
           Ver tudo

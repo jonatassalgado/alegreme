@@ -47,15 +47,8 @@
     }
   }
 
-  &--feed-section {
-    margin: 12px 0 0 0;
-    //max-width: 85%;
-    // padding-top: 35px;
-
-    @include mdc-layout-grid-media-query_("phone") {
-      margin: 6px 0 0 0;
-      // padding: 0 0 0 60px;
-    }
+  &--feed {
+    margin: 0;
   }
 
   &--search {

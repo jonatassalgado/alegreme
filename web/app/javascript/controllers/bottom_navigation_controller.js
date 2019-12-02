@@ -1,5 +1,6 @@
-import {Controller} from "stimulus";
-import {MDCRipple}  from '@material/ripple';
+import {Controller}        from "stimulus";
+import {MDCRipple}         from '@material/ripple';
+import {ProgressBarModule} from "../modules/progressbar-module";
 
 export default class BottomNavigationController extends Controller {
 	static targets = ['navigation', 'item', 'home', 'search', 'explore'];
@@ -36,8 +37,9 @@ export default class BottomNavigationController extends Controller {
 
 	goto(event) {
 		const path = event.target.dataset.path;
+		ProgressBarModule.hide();
 		setTimeout(() => {
-			window.Turbolinks.visit(path);
+			window.Turbolinks.visit(path)
 		}, 300);
 	}
 

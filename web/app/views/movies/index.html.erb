@@ -1,15 +1,16 @@
 <section class="me-page is-animated">
 
+  <%= render partial: 'components/tab-bar', locals: {props: {active: :cinema}} %>
+
   <%= notice %>
 
   <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
   <div class="me-page__section">
-    <h2 class="me-page__section-title">
-      Filmes em cartaz
-    </h2>
-
     <div class="me-movie__container">
+      <h2 class="me-movie__container-title">
+        Filmes em cartaz
+      </h2>
       <div class="me-movie__grid">
         <% @movies.each do |movie| %>
           <%= link_to movie_path(movie) do %>

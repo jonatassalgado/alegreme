@@ -20,15 +20,18 @@
         <div class="me-movie__description">
           <%= @movie.details['description'] %>
         </div>
-        <div class="me-movie__trailler">
-          <%= @movie.details['trailler'] %>
-        </div>
+        <% if @movie.details['trailler'] %>
+          <div class="me-movie__trailler mdc-chip" onclick="location.assign('<%= @movie.details['trailler'] %>')">
+            <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg></i>
+            Ver trailler
+          </div>
+        <% end %>
         <% if @movie.dates %>
           <div class="me-movie__dates">
-            <% @movie.dates.each do |date| %>
+            <% @movie.dates.select{|date| date['date'].to_date >= Date.today}.each do |date| %>
               <div class="me-movie__date">
                 <div class="me-movie__date-name">
-                  <%= "#{I18n.l(date['date'].to_date, format: :week).upcase} - #{I18n.l(date['date'].to_date, format: :short)}" %>
+                  <%= "#{day_of_week(date['date']).upcase} - #{I18n.l(date['date'].to_date, format: :long)}" %>
                 </div>
                 <% if date['places'] %>
                   <div class="me-movie__places">

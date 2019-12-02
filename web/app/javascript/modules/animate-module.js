@@ -42,5 +42,3 @@ const AnimateModule = (function () {
 })();
 
 export {AnimateModule};
-
-

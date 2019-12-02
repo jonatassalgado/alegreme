@@ -70,10 +70,6 @@ $mdc-theme-primary: $brand-color;
 @import "@material/elevation/mdc-elevation";
 @import "@material/snackbar/mdc-snackbar";
 @import "@material/dialog/mdc-dialog";
-@import "@material/tab-bar/mdc-tab-bar";
-@import "@material/tab-scroller/mdc-tab-scroller";
-@import "@material/tab-indicator/mdc-tab-indicator";
-@import "@material/tab/mdc-tab";
 @import "@material/switch/mdc-switch";
 @import "template";
 @import "components/me-components";
@@ -124,7 +120,7 @@ a {
   background-color: $brand-color;
   @include mdc-layout-grid-media-query_("phone") {
     height: 3px;
-    top: 54px;
+    top: 0px;
   }
 }
 

@@ -40,4 +40,55 @@ module ApplicationHelper
 	def google_maps_url address
 		"https://www.google.com/maps/search/?api=1&query=#{address}"
 	end
+
+	def day_of_week(day, opts = {})
+		return if day.blank?
+
+		@today        = Date.current
+		@current_date = day.to_date
+		@difference   = @current_date.mjd - DateTime.now.mjd
+
+		case @difference
+		when 0
+			return 'hoje'
+		when 1
+			return 'amanhã'
+		when 2..6
+			return case @current_date.wday
+			       when 0
+				       'domingo'
+			       when 1
+				       'segunda'
+			       when 2
+				       'terça'
+			       when 3
+				       'quarta'
+			       when 4
+				       'quinta'
+			       when 5
+				       'sexta'
+			       when 6
+				       'sábado'
+			       end
+		when 7..14
+			# if opts[:active_range]
+			# 	return add_to_response('próximos 30 dias', range: true, order: 8)
+			# else
+			return "#{I18n.l(@current_date, format: :week)} · #{I18n.l(@current_date, format: :short)}"
+			# end
+		when 14..90
+			if opts[:active_range]
+				return 'próximos 90 dias'
+			else
+				return "#{I18n.l(@current_date, format: :short)} · #{I18n.l(@current_date, format: :week)}"
+			end
+		else
+			if opts[:active_range]
+				nil
+			else
+				return I18n.l(@current_date, format: :short)
+			end
+		end
+	end
+
 end

@@ -1,8 +1,21 @@
+@import "@material/tab-bar/mdc-tab-bar";
+@import "@material/tab-scroller/mdc-tab-scroller";
+@import "@material/tab-indicator/mdc-tab-indicator";
+@import "@material/tab/mdc-tab";
+
 .me-tab-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  background: white;
-  box-shadow: 0 0px 4px #00000036;
+  @include mdc-tab-bar-density(-4);
+  border-bottom: 5px solid $surface-tertiary-color;
+  margin: 0 0 6px 0;
+  display: inline-block;
+  @include mobile-only {
+    @include mdc-tab-bar-density(-2);
+  }
+
+  & .mdc-tab__text-label {
+    text-transform: capitalize;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+  }
 }

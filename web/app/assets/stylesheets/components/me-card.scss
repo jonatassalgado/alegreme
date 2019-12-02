@@ -395,7 +395,7 @@ $description-color: $font-secondary-color;
       display: none;
       background: $surface-color;
       transition: 0.2s all ease 0s;
-      @include mdc-icon-button-size($width: 18px, $height: 18px, $padding: 10px);
+      @include mdc-icon-button-icon-size($width: 18px, $height: 18px, $padding: 10px);
 
       & svg {
         fill: lighten($font-tertiary-color, 30%);

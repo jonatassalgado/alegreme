@@ -3,8 +3,20 @@
   grid-column-end: 2 span;
   overflow: hidden;
 
+  &.me-movie--single {
+    padding: 24px 0 0 0;
+  }
+
   &__container {
     padding: 0 $section-padding-phone;
+    @include desktop-only {
+      max-width: 1000px;
+      margin: auto;
+    }
+  }
+
+  &__container-title {
+
   }
 
   &__grid {
@@ -12,7 +24,7 @@
     grid-template-rows: minmax(100px, 1fr);
     text-align: center;
     grid-gap: 12px;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     @include mobile-only {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -52,7 +64,7 @@
   }
 
   &__trailler {
-    display: none;
+    margin: 0 0 12px 0;
   }
 
   &__genre {
@@ -82,9 +94,10 @@
 
   &__date-name {
     font-weight: 800;
-    font-size: 18px;
-    padding: 12px 12px;
-    background: $surface-secondary-color;
+    font-size: 17px;
+    padding: 12px 12px 6px 0px;
+    border-bottom: 1px solid $border-color;
+    // background: $surface-secondary-color;
   }
 
   &__places {
@@ -96,12 +109,12 @@
   }
 
   &__place {
-    margin: 12px 0 24px 15px;
+    margin: 12px 0 24px 20px;
   }
 
   &__place-name {
     font-weight: 800;
-    font-size: 16px;
+    font-size: 15px;
     & a {
       color: $font-secondary-color;
     }
@@ -129,4 +142,3 @@
   }
 
 }
-
