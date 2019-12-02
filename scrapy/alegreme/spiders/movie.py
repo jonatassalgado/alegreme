@@ -99,7 +99,8 @@ parse_movie_cover_script = """
 
         assert(splash:go(splash.args.url))
 
-        assert(splash:wait(3))
+        assert(splash:wait(5))
+        document.querySelector('.rg_ic.rg_i').click();
         splash.scroll_position = {y=500}
 
         result, error = splash:wait_for_resume([[
@@ -167,10 +168,11 @@ class MovieSpider(scrapy.Spider):
     def parse_movie(self, response):
         movie_container_el = response.xpath('(//*[contains(@class, "lr_container")])[1]')
         movie_right_card_el = response.xpath('(//*[contains(@class, "EyBRub")])[1]')
-        movie_cover_link = response.xpath('//a[contains(@class, "bia")]/@href').get()
 
         loader = ItemLoader(item=Movie(), selector=movie_container_el)
         loader.add_xpath('name', './/*[contains(@class, "lr_c_h")]/span/text()')
+
+        movie_cover_link =  "https://www.google.com/images?q=" + loader.item['name'].replace(" ", "+").lower() + "+filme+cartaz&tbm=isch"
 
         if movie_right_card_el is not None:
             loader.add_value('description', movie_right_card_el.xpath('.//*[contains(@class, "kno-rdesc")]/div/span/text()').get())
@@ -183,7 +185,7 @@ class MovieSpider(scrapy.Spider):
 
         if movie_cover_link:
             yield SplashRequest(
-                url=urljoin(response.url, movie_cover_link),
+                url=movie_cover_link,
                 callback=self.parse_cover_meta,
                 dont_filter=True,
                 meta={'loader': loader},
