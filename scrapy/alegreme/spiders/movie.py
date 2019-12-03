@@ -230,5 +230,5 @@ class MovieSpider(scrapy.Spider):
 
     def parse_cover_meta(self, response):
         loader = response.meta['loader']
-        loader.add_value('cover', urljoin(response.url, response.xpath('.//*[contains(@class, "irc_mi")]/@src').get()))
+        loader.add_xpath('cover', './/*[contains(@class, "irc_mi")]/@src')
         return loader.load_item()
