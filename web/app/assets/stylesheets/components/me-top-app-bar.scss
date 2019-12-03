@@ -161,6 +161,10 @@ $border-color: #e0e0e0;
 
   & .mdc-top-app-bar__row {
     padding: 0 12px;
+    @include desktop-only {
+      max-width: 1080px;
+      margin: auto;
+    }
     @include mdc-layout-grid-media-query_("phone") {
       height: 56px;
       display: flex;

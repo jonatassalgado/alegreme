@@ -5,11 +5,28 @@
 
 .me-tab-bar {
   @include mdc-tab-bar-density(-4);
-  border-bottom: 5px solid $surface-tertiary-color;
+  // border-bottom: 5px solid $surface-tertiary-color;
+  background: $surface-color;
   margin: 0 0 6px 0;
   display: inline-block;
+  @include desktop-only {
+    margin: 0 0 24px 0;
+  }
   @include mobile-only {
     @include mdc-tab-bar-density(-2);
+  }
+
+  & .mdc-tab {
+    @include desktop-only {
+      max-width: 100px;
+    }
+  }
+
+  & .mdc-tab-scroller {
+    @include desktop-only {
+      width: 1050px;
+      margin: auto;
+    }
   }
 
   & .mdc-tab__text-label {
@@ -18,4 +35,5 @@
     letter-spacing: 0.3px;
     font-weight: 600;
   }
+
 }

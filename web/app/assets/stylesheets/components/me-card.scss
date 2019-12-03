@@ -6,8 +6,30 @@ $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
 
 .me-card {
+  background: $background-color;
   position: relative;
   will-change: opacity, transform;
+
+  &--feed {
+    min-height: 176px;
+    font-size: 14px;
+    border: 0;
+    box-shadow: none;
+    margin:6px 0 0 0;
+    position: relative;
+    &:hover {
+      & .me-card__similar {
+        opacity: 1;
+        transform: translate(0px, 0px);
+      }
+
+      & .me-card__place {
+        opacity: 1;
+        transform: translate(0px, 0px);
+      }
+    }
+  }
+
   .me-similar & {
     background: none;
     min-height: 150px;
@@ -26,17 +48,17 @@ $description-color: $font-secondary-color;
       min-height: 100px;
     }
 
-    &__title,
-    &__date {
-      pointer-events: none;
-      margin: 3px 0 0 0;
-      line-height: 1.3em;
-      color: $font-secondary-color;
-
-      &:hover {
-        background: inherit;
-      }
-    }
+    // &__title,
+    // &__date {
+    //   pointer-events: none;
+    //   margin: 3px 0 0 0;
+    //   line-height: 1.3em;
+    //   color: $font-secondary-color;
+    //
+    //   &:hover {
+    //     background: inherit;
+    //   }
+    // }
 
     &__title {
       color: $font-primary-color;
@@ -165,25 +187,6 @@ $description-color: $font-secondary-color;
     right: -10px;
   }
 
-  &--feed {
-    min-height: 176px;
-    font-size: 14px;
-    border: 0;
-    box-shadow: none;
-    margin:6px 0 0 0;
-    position: relative;
-    &:hover {
-      & .me-card__similar {
-        opacity: 1;
-        transform: translate(0px, 0px);
-      }
-
-      & .me-card__place {
-        opacity: 1;
-        transform: translate(0px, 0px);
-      }
-    }
-  }
 
   &__overlay {
     position: absolute;
@@ -213,9 +216,9 @@ $description-color: $font-secondary-color;
     line-height: 1em;
     display: flex;
     flex-wrap: wrap;
-    position: absolute;
-    top: 6px;
-    left: 6px;
+    // position: absolute;
+    // top: 6px;
+    // left: 6px;
     z-index: 5;
     .me-card--single & {
       color: $font-primary-color;

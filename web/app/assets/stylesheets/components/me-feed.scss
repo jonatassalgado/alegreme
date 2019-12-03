@@ -17,6 +17,14 @@ $mdc-layout-grid-columns: (
   &__section {
     margin: 0 auto 124px auto;
     max-width: $main-content-width;
+    // @include desktop-only {
+    //   margin: 24px auto 12px auto;
+    //   max-width: 1040px;
+    //   background: white;
+    //   padding: 0 12px;
+    //   border-radius: 6px;
+    // }
+
     @include mdc-layout-grid-media-query_("phone") {
       max-width: unset;
       padding: 15px 0 12px 0;
@@ -108,7 +116,7 @@ $mdc-layout-grid-columns: (
       font-weight: 300;
       font-family: $font-secondary-family;
       color: $font-tertiary-color;
-      line-height: 1em;
+      line-height: 1.4em;
       text-transform: uppercase;
       @include mobile-only {
         padding: 0 $section-padding-phone;

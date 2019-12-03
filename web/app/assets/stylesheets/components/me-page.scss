@@ -16,7 +16,7 @@
 
   &__section {
     padding: 24px 0;
-    background: $background-z1-color;
+    // background: $background-z1-color;
     @include mdc-layout-grid-media-query_("phone") {
       padding: 6px 0;
     }

@@ -14,17 +14,17 @@ s3_options = {
 		region:            'sfo2'
 }
 
-if Rails.env == 'development' || Rails.env == 'test'
-	Shrine.storages = {
-			cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
-			store: Shrine::Storage::FileSystem.new("public", prefix: "uploads"),
-	}
-else
+# if Rails.env == 'development' || Rails.env == 'test'
+# 	Shrine.storages = {
+# 			cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
+# 			store: Shrine::Storage::FileSystem.new("public", prefix: "uploads"),
+# 	}
+# else
 	Shrine.storages = {
 			cache: Shrine::Storage::S3.new(prefix: "cache", upload_options: {acl: 'public-read'}, **s3_options),
 			store: Shrine::Storage::S3.new(prefix: "store", upload_options: {acl: 'public-read'}, **s3_options)
 	}
-end
+# end
 
 
 Shrine.plugin :activerecord
@@ -32,4 +32,3 @@ Shrine.plugin :cached_attachment_data # for retaining the cached file across for
 Shrine.plugin :restore_cached_data # re-extract metadata when attaching a cached file
 Shrine.plugin :determine_mime_type, analyzer: :mimemagic
 Shrine.plugin :infer_extension, force: true
-
