@@ -9,6 +9,7 @@ from urllib.parse import urljoin
 from alegreme.items import Movie, MovieOcurrenceLoader, MoviePlaceLoader, MovieLanguageLoader
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
+from scrapy.loader.processors import TakeFirst
 
 search_movies_script = """
     function main(splash, args)
@@ -100,7 +101,7 @@ parse_movie_cover_script = """
         assert(splash:go(splash.args.url))
 
         assert(splash:wait(5))
-        document.querySelector('.rg_ic.rg_i').click();
+        assert(splash:runjs("document.querySelector('.rg_ic.rg_i').click()"))
         splash.scroll_position = {y=500}
 
         result, error = splash:wait_for_resume([[
@@ -172,7 +173,7 @@ class MovieSpider(scrapy.Spider):
         loader = ItemLoader(item=Movie(), selector=movie_container_el)
         loader.add_xpath('name', './/*[contains(@class, "lr_c_h")]/span/text()')
 
-        movie_cover_link =  "https://www.google.com/images?q=" + loader.item['name'].replace(" ", "+").lower() + "+filme+cartaz&tbm=isch"
+        movie_cover_link =  "https://www.google.com/images?q=" + loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower() + "+filme+cartaz&tbm=isch"
 
         if movie_right_card_el is not None:
             loader.add_value('description', movie_right_card_el.xpath('.//*[contains(@class, "kno-rdesc")]/div/span/text()').get())
