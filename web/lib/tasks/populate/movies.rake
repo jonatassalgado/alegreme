@@ -57,7 +57,7 @@ module PopulateMoviesRake
 
 	def set_cover(item, movie)
 		return unless item['cover']
-		return true if item.image
+		return true if movie.image
 
 		begin
 			movie_cover_file = Down.download(item['cover'])
