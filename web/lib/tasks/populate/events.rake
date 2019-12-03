@@ -255,19 +255,18 @@ module PopulateEventsRake
 
 			[event, ml_data]
 		end
+	end
 
-		def create_artifact
-			timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
-			artifact = Artifact.create(
-					details: {
-							name: @current_file_name,
-							type: 'scraped'
-					}
-			)
+	def create_artifact
+		timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
+		artifact = Artifact.create(
+				details: {
+						name: @current_file_name,
+						type: 'scraped'
+				}
+		)
 
-			artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
-		end
-
+		artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
 	end
 end
 
