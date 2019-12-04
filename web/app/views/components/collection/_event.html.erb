@@ -96,7 +96,7 @@
         <div class="me-card__category"
              data-target="event.category">
           <%= link_to "##{event.categories_primary_name.try(:capitalize)}", category_events_path(event.categories_primary_name) %>
-          <%= event.organizers.limit(10).map { |organizer| link_to(to_hashtag(organizer.details_name), organizer_path(organizer)) }.join(" ").html_safe %>
+          <%= event.organizers.limit(2).map { |organizer| link_to(to_hashtag(organizer.details_name), organizer_path(organizer)) }.join(" ").html_safe %>
         </div>
       </div>
     <% end %>
@@ -127,7 +127,7 @@
              data-action="click->event#showSimilar"
              data-target="event.similar"
              title="Mostrar eventos parecidos">
-          Ver similares
+          Similares
           <i class="me-card__expand-more material-icons">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
               <path opacity=".87" fill="none" d="M24 24H0V0h24v24z"/>

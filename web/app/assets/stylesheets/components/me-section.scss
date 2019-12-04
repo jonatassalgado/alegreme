@@ -1,0 +1,57 @@
+.me-section {
+  width: 100%;
+  margin: 12px 0;
+  padding: 24px 0;
+  background: $surface-color;
+  @include desktop-only {
+    display: flex;
+    justify-content: center;
+    margin: 2px 0;
+  }
+  @include mdc-layout-grid-media-query_("phone") {
+    max-width: unset;
+    padding: 15px 0 12px 0;
+    margin: 6px auto;
+    //border-bottom: 5px solid $surface-tertiary-color;
+  }
+
+
+  &__inner {
+    @include desktop-only {
+      width: $main-content-width;
+      //width: calc(100% - 48px);
+    }
+  }
+
+  & h2 {
+    margin: 6px 0 12px 0;
+    font-weight: 800;
+    //max-width: 90%;
+    line-height: 1.4em;
+    font-size: 24px;
+    color: $font-primary-color;
+    font-family: $font-primary-family;
+    position: relative;
+    z-index: 3;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include mdc-layout-grid-media-query_("phone") {
+      font-size: 18px;
+      line-height: 1em;
+      padding: 3px $section-padding-phone 0;
+      justify-content: space-between;
+    }
+  }
+
+
+  //&--without-margin {
+  //  padding: 0;
+  //  margin: 0 auto 12px auto;
+  //  @include mobile-only {
+  //    padding: 0 20px 12px 20px;
+  //  }
+  //}
+
+}

@@ -103,7 +103,7 @@
 
   </script>
 
-  <div id="event" class="me-card me-card--single event-<%= @event.id %>"
+  <div id="event" class="me-card me-event-single event-<%= @event.id %>"
        data-controller="event"
        data-target="event.event"
        data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"

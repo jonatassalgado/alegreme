@@ -3,8 +3,8 @@
   <%= notice %>
 
   <% unless @events_found&.suggestions.blank? %>
-    <section class="me-feed__section" style="margin: 0 auto 25px auto;">
-      <div class="me-feed__section-head">
+    <section class="me-section" style="margin: 0 auto 25px auto;">
+      <div class="me-section-head">
         <h2>Você quis dizer?</h2>
       </div>
       <div class="me-chip-set__wrapper">
@@ -27,13 +27,13 @@
         }
     } %>
   <% elsif @data&.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter == 0 } %>
-    <section class="me-feed__section" style="margin: 0 auto 25px auto;">
-      <div class="me-feed__section-head">
+    <section class="me-section" style="margin: 0 auto 25px auto;">
+      <div class="me-section-head">
         <h2>Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
       </div>
     </section>
   <% else %>
-    <section class="me-feed__section" style="margin: 0 auto 25px auto;">
+    <section class="me-section" style="margin: 0 auto 25px auto;">
       <h2>Categorias</h2> <br>
       <div class="me-chip-set__wrapper">
         <div class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">

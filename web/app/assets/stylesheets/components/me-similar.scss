@@ -76,11 +76,11 @@
       }
     }
 
-    & .mdc-layout-grid__cell {
+    .me-collection & .mdc-layout-grid__cell {
       @include mdc-layout-grid-cell(
-        $size: "desktop",
-        $default-span: 2,
-        $gutter: 16px
+              $size: "desktop",
+              $default-span: 2,
+              $gutter: 16px
       );
       @include mdc-layout-grid-media-query_("phone") {
         @include mdc-layout-grid-cell(

@@ -2,9 +2,9 @@
   &__content {
 
     &--underline {
-      @include desktop-only {
+      //@include desktop-only {
         width: 80px;
-      }
+      //}
     }
   }
 }

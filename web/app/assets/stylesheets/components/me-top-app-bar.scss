@@ -8,7 +8,7 @@ $border-color: #e0e0e0;
 .me-top-app-bar {
   background-color: $surface-color;
   color: $font-color;
-  position: fixed;
+  position: absolute;
   top: 0;
   user-select: none;
   // border-bottom: 1px solid lighten($border-color, 8%);
@@ -162,7 +162,7 @@ $border-color: #e0e0e0;
   & .mdc-top-app-bar__row {
     padding: 0 12px;
     @include desktop-only {
-      max-width: 1080px;
+      //max-width: 1080px;
       margin: auto;
     }
     @include mdc-layout-grid-media-query_("phone") {

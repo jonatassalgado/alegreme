@@ -79,7 +79,7 @@ html {
 }
 
 body {
-  height: 100vh;
+  //height: 100vh;
   // overflow: hidden;
   margin: 0;
   font-family: $font-secondary-family;
@@ -88,7 +88,7 @@ body {
   color: $font-secondary-color;
 
   @include mdc-layout-grid-media-query_("phone") {
-    background: $background-color;
+    background: $background-secondary-color;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;

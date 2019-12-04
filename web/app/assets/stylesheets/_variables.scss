@@ -1,7 +1,7 @@
 @import "welcome/media-queries";
 @import "mixins";
 
-$main-content-width: 1040px;
+$main-content-width: calc(100% - 73px); // 1040px;
 
 $brand-color: #03994C;
 $brand-color-aa: darken(#03994C, 5%);
@@ -11,7 +11,7 @@ $brand-color-high-contrast: #0C0F0A;
 
 $border-color: #E1E1E1;
 
-$font-primary-family: 'Montserrat', sans-serif;
+$font-primary-family: 'M PLUS Rounded 1c', sans-serif;
 $font-secondary-family: 'Roboto', sans-serif;
 
 $section-padding-phone: 20px;
@@ -34,8 +34,7 @@ $section-padding-phone: 20px;
 }
 
 $background-color: #f7f7f7;
-$background-z0-color: #FAFAFA;
-$background-z1-color: #ffffff;
+$background-secondary-color: darken($background-color, 5%);
 
 $surface-z10-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.07);
 $surface-color: #ffffff;

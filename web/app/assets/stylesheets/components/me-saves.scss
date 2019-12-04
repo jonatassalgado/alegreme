@@ -5,14 +5,14 @@
 $gutter: 6px;
 
 .me-saves {
-  margin: 35px auto 35px auto;
+  //margin: 35px auto 35px auto;
   //padding: 0 0 25px 0;
-  max-width: $main-content-width;
+  //max-width: $main-content-width;
   position: relative;
   @include mdc-layout-grid-media-query_("phone") {
     margin: 0 auto 0 auto;
     max-width: unset;
-    border-bottom: 5px solid $surface-tertiary-color;
+    //border-bottom: 5px solid $surface-tertiary-color;
     //padding: 35px 0 35px 0;
   }
 

@@ -14,332 +14,168 @@ $mdc-layout-grid-columns: (
 
 .me-feed {
 
-  &__section {
-    margin: 0 auto 124px auto;
-    max-width: $main-content-width;
-    // @include desktop-only {
-    //   margin: 24px auto 12px auto;
-    //   max-width: 1040px;
-    //   background: white;
-    //   padding: 0 12px;
-    //   border-radius: 6px;
-    // }
 
-    @include mdc-layout-grid-media-query_("phone") {
-      max-width: unset;
-      padding: 15px 0 12px 0;
-      margin: 0 auto;
-      border-bottom: 5px solid $surface-tertiary-color;
-    }
+  //
+  //&__section-head {
+  //  // @include section-head;
+  //  display: flex;
+  //  //margin-bottom: 12px;
+  //  flex-direction: column;
+  //  @include mdc-layout-grid-media-query_("phone") {
+  //
+  //  }
+  //
+  //}
 
-    &[data-section-disposition="horizontal"] {
-      & .mdc-layout-grid__inner {
-        @include mdc-layout-grid-media-query_("phone") {
-          grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
-          overflow-y: hidden;
-          grid-template-columns: repeat(100, minmax(70vw, 1fr));
-          padding: 0 70px 0 $section-padding-phone;
-        }
-      }
-    }
+  //&__load-more {
+  //  text-align: center;
+  //  margin: 35px 0;
+  //  @include mdc-layout-grid-media-query_("phone") {
+  //    //display: none;
+  //  }
+  //
+  //  &--vertical {
+  //    [data-controller="feeds"][data-action="index"] & {
+  //      @include mobile-only {
+  //        display: none;
+  //      }
+  //    }
+  //
+  //    [data-controller="feeds"][data-action="index"] [data-section-disposition="vertical"] & {
+  //      display: block;
+  //    }
+  //  }
+  //
+  //  &--horizontal {
+  //    transition: opacity 0.250ms ease;
+  //    will-change: opacity;
+  //    order: 1000;
+  //    display: none;
+  //
+  //    [data-controller="feeds"][data-action="index"] [data-section-disposition="vertical"] & {
+  //      display: none;
+  //    }
+  //
+  //    [data-controller="feeds"][data-action="index"] & {
+  //      @include mobile-only {
+  //        display: block;
+  //
+  //        & svg {
+  //          padding: 12px;
+  //          border: 1px solid $border-color;
+  //          border-radius: 35px;
+  //          width: 34px;
+  //          height: 34px;
+  //          fill: $font-tertiary-color;
+  //          position: relative;
+  //          left: -30px;
+  //        }
+  //      }
+  //    }
+  //
+  //    [data-controller="feeds"][data-action="index"] [data-section-disposition="vertical"][data-section-load-more-loading="true"] & {
+  //      &.is-loading {
+  //        @include mobile-only {
+  //          display: none;
+  //          opacity: 0;
+  //        }
+  //      }
+  //    }
+  //
+  //    [data-controller="feeds"][data-action="index"] &.is-loading {
+  //      @include mobile-only {
+  //        display: none;
+  //        opacity: 0;
+  //      }
+  //    }
+  //
+  //    [data-controller="feeds"][data-action="index"] [data-section-load-more-loading="true"] & {
+  //      @include mobile-only {
+  //        opacity: 0;
+  //        display: none;
+  //
+  //        &.is-loading {
+  //          display: block;
+  //          opacity: 1;
+  //
+  //          & svg {
+  //            animation-name: rotate;
+  //            animation-iteration-count: infinite;
+  //            animation-duration: 1s;
+  //            animation-timing-function: ease;
+  //          }
+  //        }
+  //      }
+  //    }
+  //
+  //  }
+  //
+  //}
 
-    &[data-section-disposition="vertical"] {
-      & .mdc-layout-grid__inner {
-        @include mdc-layout-grid-media-query_("phone") {
-          grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
-          overflow-y: hidden;
-          grid-template-columns: repeat(1, minmax(100%, 1fr));
-          padding: 0 $section-padding-phone;
-        }
-      }
-    }
+  //&__divider {
+  //  display: none;
+  //  width: 100px;
+  //  height: 2px;
+  //  background: $brand-color;
+  //  border-radius: 1px;
+  //  margin: 12px 0 26px 0;
+  //  @include mdc-layout-grid-media-query_("tablet") {
+  //    margin: 12px var(--mdc-layout-grid-margin-phone, 16px) 26px var(--mdc-layout-grid-margin-phone, 16px);
+  //  }
+  //  @include mdc-layout-grid-media-query_("phone") {
+  //    display: none;
+  //  }
+  //}
 
-    &:last-child {
-      @include mdc-layout-grid-media-query_("phone") {
-        //border-bottom: 0;
-      }
-    }
-
-    & h2 {
-      margin: 0 0 0 0;
-      font-weight: 800;
-      //max-width: 90%;
-      line-height: 1.4em;
-      font-size: 24px;
-      color: $font-primary-color;
-      font-family: $font-primary-family;
-      position: relative;
-      z-index: 3;
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      @include mdc-layout-grid-media-query_("phone") {
-        font-size: 18px;
-        line-height: 1em;
-        padding: 3px $section-padding-phone 0;
-        justify-content: space-between;
-      }
-    }
-
-
-    &-title-secondary {
-      font-size: 16px;
-      display: block;
-      font-weight: 300;
-      font-family: $font-secondary-family;
-      color: $font-secondary-color;
-      line-height: 1.2em;
-      @include mobile-only {
-        padding: 0 $section-padding-phone;
-        font-size: 11px;
-      }
-
-      .me-page--profile__section & {
-        margin: 0 0 24px 0;
-        @include mobile-only {
-          margin: 0;
-        }
-      }
-
-      [data-controller="places"][data-action="show"] & {
-        @include mobile-only {
-          margin: 5px 0;
-          max-width: 50%;
-        }
-      }
-    }
-
-    &-title-tertiary {
-      font-size: 10px;
-      display: block;
-      font-weight: 300;
-      font-family: $font-secondary-family;
-      color: $font-tertiary-color;
-      line-height: 1.4em;
-      text-transform: uppercase;
-      @include mobile-only {
-        padding: 0 $section-padding-phone;
-        font-size: 9px;
-      }
-    }
-
-    &-title-custom {
-      @include mobile-only {
-        padding: 6px 0 0 0;
-        display: block;
-      }
-    }
-
-    & .mdc-layout-grid__inner {
-      @include mdc-layout-grid-media-query_("desktop") {
-        @include mdc-layout-grid-inner(
-                $size: "desktop",
-                $margin: 0,
-                $gutter: 15px
-        );
-      }
-
-      &::-webkit-scrollbar {
-        @include mdc-layout-grid-media-query_("phone") {
-          display: none;
-        }
-      }
-    }
-
-    & .mdc-layout-grid__cell {
-      @include mdc-layout-grid-media-query_("desktop") {
-        @include mdc-layout-grid-cell(
-                $size: "desktop",
-                $default-span: 3,
-                $gutter: 24px
-        );
-      }
-      @include mdc-layout-grid-media-query_("phone") {
-        @include mdc-layout-grid-cell(
-                $size: "phone",
-                $default-span: 1,
-                $gutter: 16px
-        );
-      }
-
-      &:last-child {
-        @include mdc-layout-grid-media-query_("phone") {
-          padding: 0 $section-padding-phone 0 0;
-          margin: 0 (-$section-padding-phone) 0 0;
-        }
-      }
-    }
-
-    &--without-margin {
-      padding: 0;
-      margin: 0 auto 12px auto;
-      @include mobile-only {
-        padding: 0 20px 12px 20px;
-      }
-    }
-  }
-
-  &__section-head {
-    // @include section-head;
-    display: flex;
-    //margin-bottom: 12px;
-    flex-direction: column;
-    @include mdc-layout-grid-media-query_("phone") {
-
-    }
-
-  }
-
-  &__load-more {
-    text-align: center;
-    margin: 35px 0;
-    @include mdc-layout-grid-media-query_("phone") {
-      //display: none;
-    }
-
-    &--vertical {
-      [data-controller="feeds"][data-action="index"] & {
-        @include mobile-only {
-          display: none;
-        }
-      }
-
-      [data-controller="feeds"][data-action="index"] [data-section-disposition="vertical"] & {
-        display: block;
-      }
-    }
-
-    &--horizontal {
-      transition: opacity 0.250ms ease;
-      will-change: opacity;
-      order: 1000;
-      display: none;
-
-      [data-controller="feeds"][data-action="index"] [data-section-disposition="vertical"] & {
-        display: none;
-      }
-
-      [data-controller="feeds"][data-action="index"] & {
-        @include mobile-only {
-          display: block;
-
-          & svg {
-            padding: 12px;
-            border: 1px solid $border-color;
-            border-radius: 35px;
-            width: 34px;
-            height: 34px;
-            fill: $font-tertiary-color;
-            position: relative;
-            left: -30px;
-          }
-        }
-      }
-
-      [data-controller="feeds"][data-action="index"] [data-section-disposition="vertical"][data-section-load-more-loading="true"] & {
-        &.is-loading {
-          @include mobile-only {
-            display: none;
-            opacity: 0;
-          }
-        }
-      }
-
-      [data-controller="feeds"][data-action="index"] &.is-loading {
-        @include mobile-only {
-          display: none;
-          opacity: 0;
-        }
-      }
-
-      [data-controller="feeds"][data-action="index"] [data-section-load-more-loading="true"] & {
-        @include mobile-only {
-          opacity: 0;
-          display: none;
-
-          &.is-loading {
-            display: block;
-            opacity: 1;
-
-            & svg {
-              animation-name: rotate;
-              animation-iteration-count: infinite;
-              animation-duration: 1s;
-              animation-timing-function: ease;
-            }
-          }
-        }
-      }
-
-    }
-
-  }
-
-  &__divider {
-    display: none;
-    width: 100px;
-    height: 2px;
-    background: $brand-color;
-    border-radius: 1px;
-    margin: 12px 0 26px 0;
-    @include mdc-layout-grid-media-query_("tablet") {
-      margin: 12px var(--mdc-layout-grid-margin-phone, 16px) 26px var(--mdc-layout-grid-margin-phone, 16px);
-    }
-    @include mdc-layout-grid-media-query_("phone") {
-      display: none;
-    }
-  }
-
-  &__empty {
-    color: $font-secondary-color;
-    order: 8;
-    border-radius: 5px;
-    grid-column-end: span 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    font-size: 12px;
-    padding: 0 12px;
-    margin: 0 0 115px 0;
-    border: 1px solid $border-color;
-
-    & i {
-      font-size: 2em;
-    }
-  }
-
-  & .mdc-typography--headline1 {
-    @include mdc-layout-grid-media-query_("tablet") {
-      padding: var(--mdc-layout-grid-margin-phone, 16px);
-      line-height: 1.5em;
-      font-size: 1.6em;
-      text-align: center;
-    }
-    @include mdc-layout-grid-media-query_("phone") {
-      padding: var(--mdc-layout-grid-margin-phone, 16px);
-      line-height: 1.5em;
-      font-size: 1.6em;
-      text-align: center;
-      margin-bottom: 0;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      margin-top: 15px;
-    }
-  }
-
-  & .mdc-layout-grid {
-    --mdc-layout-grid-margin-phone: 0;
-    --mdc-layout-grid-gutter-phone: 0 16px;
-
-    --mdc-layout-grid-margin-desktop: 0;
-    --mdc-layout-grid-gutter-desktop: 25px 16px;
-
-    & a {
-      text-decoration: none;
-    }
-  }
+  //&__empty {
+  //  color: $font-secondary-color;
+  //  order: 8;
+  //  border-radius: 5px;
+  //  grid-column-end: span 3;
+  //  display: flex;
+  //  flex-direction: column;
+  //  align-items: center;
+  //  text-align: center;
+  //  justify-content: center;
+  //  font-size: 12px;
+  //  padding: 0 12px;
+  //  margin: 0 0 115px 0;
+  //  border: 1px solid $border-color;
+  //
+  //  & i {
+  //    font-size: 2em;
+  //  }
+  //}
+  //
+  //& .mdc-typography--headline1 {
+  //  @include mdc-layout-grid-media-query_("tablet") {
+  //    padding: var(--mdc-layout-grid-margin-phone, 16px);
+  //    line-height: 1.5em;
+  //    font-size: 1.6em;
+  //    text-align: center;
+  //  }
+  //  @include mdc-layout-grid-media-query_("phone") {
+  //    padding: var(--mdc-layout-grid-margin-phone, 16px);
+  //    line-height: 1.5em;
+  //    font-size: 1.6em;
+  //    text-align: center;
+  //    margin-bottom: 0;
+  //    border-top-left-radius: 20px;
+  //    border-top-right-radius: 20px;
+  //    margin-top: 15px;
+  //  }
+  //}
+  //
+  //& .mdc-layout-grid {
+  //  --mdc-layout-grid-margin-phone: 0;
+  //  --mdc-layout-grid-gutter-phone: 0 16px;
+  //
+  //  --mdc-layout-grid-margin-desktop: 0;
+  //  --mdc-layout-grid-gutter-desktop: 25px 16px;
+  //
+  //  & a {
+  //    text-decoration: none;
+  //  }
+  //}
 
 }

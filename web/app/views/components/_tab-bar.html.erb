@@ -10,20 +10,20 @@
   <div class="mdc-tab-scroller">
     <div class="mdc-tab-scroller__scroll-area">
       <div class="mdc-tab-scroller__scroll-content">
-        <button onclick="Turbolinks.visit('/feed')" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == :events %>" role="tab" aria-selected="true" tabindex="0">
+        <button onclick="Turbolinks.visit('/feed')" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'feeds' %>" role="tab" aria-selected="true" tabindex="0">
           <span class="mdc-tab__content">
             <span class="mdc-tab__text-label">Eventos</span>
           </span>
-          <span class="me-tab-indicator mdc-tab-indicator <%= 'mdc-tab-indicator--active' if props[:active] == :events %>">
+          <span class="me-tab-indicator mdc-tab-indicator <%= 'mdc-tab-indicator--active' if props[:active] == 'feeds' %>">
             <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
           </span>
           <span class="mdc-tab__ripple"></span>
         </button>
-        <button onclick="Turbolinks.visit('/porto-alegre/cinema')" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == :cinema %>" role="tab" aria-selected="true" tabindex="1">
+        <button onclick="Turbolinks.visit('/porto-alegre/cinema')" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'cinema' %>" role="tab" aria-selected="true" tabindex="1">
           <span class="mdc-tab__content">
             <span class="mdc-tab__text-label">Cinema</span>
           </span>
-          <span class="mdc-tab-indicator <%= 'mdc-tab-indicator--active' if props[:active] == :cinema %>">
+          <span class="mdc-tab-indicator <%= 'mdc-tab-indicator--active' if props[:active] == 'cinema' %>">
             <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
           </span>
           <span class="mdc-tab__ripple"></span>

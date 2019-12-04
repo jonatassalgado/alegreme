@@ -118,9 +118,9 @@ export default class SectionController extends Controller {
 		});
 
 
-		if (!this.md.mobile()) {
-			this.sectionTarget.parentElement.style.minHeight = `${this.sectionTarget.getBoundingClientRect().height}px`;
-		}
+		// if (!this.md.mobile()) {
+		// 	this.sectionTarget.parentElement.style.minHeight = `${this.sectionTarget.getBoundingClientRect().height}px`;
+		// }
 
 		this.destroy = () => {
 			this.pubsub.sectionUpdated();
