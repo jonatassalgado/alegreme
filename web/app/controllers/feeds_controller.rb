@@ -81,7 +81,7 @@ class FeedsController < ApplicationController
 					},
 					{
 							only_in:           @events_this_week.map(&:id),
-							not_in:            (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) | @collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
+							not_in:            (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || []) | (@collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
 							in_user_personas:  false,
 							order_by_persona:  true,
 							order_by_date:     false,
