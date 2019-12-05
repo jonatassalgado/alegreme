@@ -47,7 +47,10 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 5
+if os.environ.get('ENV') == 'production':
+    CONCURRENT_REQUESTS = 5
+else:
+    CONCURRENT_REQUESTS = 1
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -147,7 +150,7 @@ if os.environ.get('ENV') == 'production':
     HTTPCACHE_EXPIRATION_SECS = 80000
 else:
     HTTPCACHE_ENABLED = False
-    
+
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'

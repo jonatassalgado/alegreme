@@ -28,7 +28,6 @@ module PopulateMoviesRake
 			)
 			movie.dates = item['dates']
 			puts "#{@movies_create_counter}: #{item['name']} - Filme já existe (atualizado)".white
-
 		else
 			movie = Movie.new
 			movie.details.deep_merge!(
@@ -40,8 +39,9 @@ module PopulateMoviesRake
 			)
 
 			movie.dates = item['dates']
-			movie
 		end
+
+		movie
 	end
 
 
@@ -56,7 +56,14 @@ module PopulateMoviesRake
 
 
 	def set_cover(item, movie)
-		return unless item['cover']
+		unless movie
+			puts "#{movie.inspect} - Não existe".yellow
+		end
+
+		unless item['cover']
+			puts "#{item['name']} - Próximo (atributo cover não capturado durante scrapy)".yellow
+		end
+
 		return true if movie&.image
 
 		begin
@@ -74,7 +81,7 @@ module PopulateMoviesRake
 			movie.image = movie_cover_file
 			puts "#{item['name']} - Upload de imagem".blue
 		rescue
-			puts "#{item['name']} - Erro no upload da image #{e}".red
+			puts "#{item['name']} - Erro no upload da image #{e} - #{movie.image.inspect}".red
 			return false
 		end
 
@@ -146,7 +153,6 @@ namespace :populate do
 			movie = create_movie(item)
 
 			unless set_cover(item, movie)
-				puts "#{item['name']} - Próximo (atributo cover não capturado durante scrapy)".yellow
 				next
 			end
 

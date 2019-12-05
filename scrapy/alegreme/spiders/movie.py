@@ -33,9 +33,9 @@ search_movies_script = """
         result, error = splash:wait_for_resume([[
             function main(splash) {
                 var checkExist = setInterval(function() {
-                    if (document.querySelector(".QagNAb").innerText) {
+                    if (document.querySelector(".klitem").innerHTML) {
                         clearInterval(checkExist);
-                                                splash.resume();
+                        splash.resume();
                     }
                 }, 1000);
             }
@@ -100,9 +100,12 @@ parse_movie_cover_script = """
 
         assert(splash:go(splash.args.url))
 
+        splash.scroll_position = {y=200}
+
         assert(splash:wait(5))
-        assert(splash:runjs("document.querySelector('.rg_ic.rg_i').click()"))
-        splash.scroll_position = {y=500}
+
+        local cover = splash:select('[data-ri=\"0\"] a')
+        cover:mouse_click()
 
         result, error = splash:wait_for_resume([[
             function main(splash) {
@@ -176,7 +179,7 @@ class MovieSpider(scrapy.Spider):
         movie_cover_link =  "https://www.google.com/images?q=" + loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower() + "+filme+cartaz&tbm=isch"
 
         if movie_right_card_el is not None:
-            loader.add_value('description', movie_right_card_el.xpath('.//*[contains(@class, "kno-rdesc")]/div/span/text()').get())
+            loader.add_value('description', movie_right_card_el.xpath('substring-after(substring-before(string(.//*[contains(@class, "kno-rdesc")]), "…"), "Descrição")').get())
             loader.add_value('trailler', movie_right_card_el.xpath('.//*[contains(@class, "B1uW2d")]/@href').get())
             loader.add_value('genre', movie_right_card_el.xpath('.//*[contains(@class, "wwUB2c")]/span/text()').get())
 
@@ -216,19 +219,25 @@ class MovieSpider(scrapy.Spider):
         place_loader.add_value('address', urljoin(response.url, place_el.xpath('.//*[contains(@class, "ObBBIf")]/a/@href')[0].extract()))
 
         languages_els = place_el.xpath('.//*[contains(@class, "YHR1ce")]')
-        for index, language_el in enumerate(languages_els):
-            place_loader.add_value('languages', self.parse_language_meta(response, place_el, index))
+
+        if languages_els:
+            for index, language_el in enumerate(languages_els):
+                place_loader.add_value('languages', self.parse_language_meta(response, place_el, index))
+
+        else:
+            place_loader.add_value('languages', self.parse_language_meta(response, place_el, 0))
 
         return dict(place_loader.load_item())
 
     def parse_language_meta(self, response, place_el, index):
         language_loader = MovieLanguageLoader()
-        language_loader.add_value('name', place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()')[index].extract())
-        language_loader.add_value('screen_type', place_el.xpath('.//*[contains(@class, "lr_c_vn")]/text()')[index].extract())
-        language_loader.add_value('times', place_el.xpath('.//*[contains(@class, "lr_c_s")]')[index].xpath('.//*[contains(@class, "std-ts")]/text()').extract())
+        language_loader.add_value('name', place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()')[index].extract()) if place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()') else None
+        language_loader.add_value('screen_type', place_el.xpath('.//*[contains(@class, "lr_c_vn")]/text()')[index].extract()) if place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()') else None
+        language_loader.add_value('times', place_el.xpath('.//*[contains(@class, "lr_c_s")]')[index].xpath('.//*[contains(@class, "std-ts")]/text()').extract()) if place_el.xpath('.//*[contains(@class, "lr_c_s")]') else None
         return dict(language_loader.load_item())
 
     def parse_cover_meta(self, response):
         loader = response.meta['loader']
+        loader.selector = response
         loader.add_xpath('cover', './/*[contains(@class, "irc_mi")]/@src')
         return loader.load_item()

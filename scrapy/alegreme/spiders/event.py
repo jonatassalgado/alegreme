@@ -157,7 +157,8 @@ class EventSpider(scrapy.Spider):
                   'https://www.facebook.com/pg/festaacabouchorare/events',
                   'https://www.facebook.com/pg/zonaexpfm/events',
                   'https://www.facebook.com/pg/gomarec/events',
-                  'https://www.facebook.com/pg/darumT/events']
+                  'https://www.facebook.com/pg/darumT/events',
+                  'https://www.facebook.com/pg/basepoa/events']
 
     random.shuffle(start_urls)
 
