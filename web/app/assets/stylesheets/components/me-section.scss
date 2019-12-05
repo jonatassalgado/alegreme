@@ -19,7 +19,9 @@
   &__inner {
     @include desktop-only {
       width: $main-content-width;
-      //width: calc(100% - 48px);
+    }
+    .me-section--full & {
+      width: 100%;
     }
   }
 

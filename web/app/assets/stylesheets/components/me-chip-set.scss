@@ -15,6 +15,9 @@
 
   .me-collection__title-custom & {
     padding: 0;
+    @include mobile-only {
+      padding: 0 24px 0 16px;
+    }
   }
 
 

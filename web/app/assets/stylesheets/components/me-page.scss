@@ -104,12 +104,12 @@
     }
   }
 
-  &--events {
+  &--centralized {
     max-width: 700px;
-    margin: auto;
+    margin: 24px auto;
     @include is-open-up-animated;
     @include mdc-layout-grid-media-query_("phone") {
-      padding: 24px;
+      //padding: 24px;
     }
   }
 
