@@ -3,7 +3,8 @@
 $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
 .me-button {
-  @include mdc-button-filled-accessible($brand-color);
+  background: $brand-color;
+  color: $surface-color;
   font-family: $font-primary-family;
   font-weight: 600;
   text-transform: none;
@@ -32,8 +33,9 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
 
   &--transparent {
-    @include mdc-button-filled-accessible($surface-color);
+    background: $surface-color;
     box-shadow: $box-shadow;
+    color: $font-primary-color;
 
     & svg {
       fill: $font-secondary-color
