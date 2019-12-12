@@ -70,6 +70,9 @@
     grid-template-columns: 50% 1fr;
     grid-gap: 24px;
     @include with-divider;
+    @include mobile-only {
+      grid-template-columns: auto;
+    }
   }
 
   &__head {

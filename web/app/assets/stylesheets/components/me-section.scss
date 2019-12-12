@@ -69,7 +69,7 @@
     justify-content: space-between;
     @include mdc-layout-grid-media-query_("phone") {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 800;
       line-height: 1em;
       padding: 3px $section-padding-phone 0;
       justify-content: space-between;

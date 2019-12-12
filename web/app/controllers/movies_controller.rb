@@ -3,6 +3,7 @@ class MoviesController < ApplicationController
 
 	def index
 		@movies = Movie.select("*").from(Movie.select("*, jsonb_array_elements(dates) as date")).where("(date ->> 'date') > ?", DateTime.now.beginning_of_day).uniq
+		# @movies = Movie.all
 	end
 
 	def show

@@ -9,14 +9,14 @@
   @include mdc-tab-bar-density(-3);
   background: $surface-color;
   display: block;
-  // border-bottom: 1px solid $background-color;
   width: auto;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  // border-bottom: 1px solid $background-color;
   @include desktop-only {
     z-index: 2;
     padding: 0 0 0 73px;
-    position: sticky;
-    top: 0;
-    //margin: 0 0 24px 0;
   }
   @include mobile-only {
     @include mdc-tab-bar-density(-1);
