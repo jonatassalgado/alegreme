@@ -1,4 +1,4 @@
-<section class="me-page me-page--profile__section is-animated">
+<section class="me-page me-page--profile is-animated">
 
   <%= notice %>
 
@@ -14,18 +14,24 @@
   </div>
 
   <section class="me-section">
-    <h2>Tópicos que você segue</h2>
-    <div class="is-horizontal-scrollable">
-      <%= render partial: 'components/follow/follow', locals: {
+    <div class="me-section__inner">
+      <h2>Tópicos que você segue</h2>
+      <div class="is-horizontal-scrollable">
+        <%= render partial: 'components/follow/follow', locals: {
           data: {
-              identifier: 'follows-by-user',
-              chips: @user.following_topics,
-              user:  @user
+            identifier: 'follows-by-user',
+            chips: @user.following_topics,
+            user:  @user
           }
-      } %>
+        } %>
+      </div>
     </div>
   </section>
 
-  <%= render partial: "components/collection/collection", locals: { data: @data } %>
-</section>
+  <section class="me-section">
+    <div class="me-section__inner">
+      <%= render partial: "components/collection/collection", locals: { data: @data } %>
+    </div>
+  </section>
 
+</section>

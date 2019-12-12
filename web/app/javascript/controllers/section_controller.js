@@ -29,7 +29,7 @@ export default class SectionController extends Controller {
 						if (this.hasLoadMoreButtonTarget) {
 							if (entry.isIntersecting) {
 								entry.target.disabled                                     = true;
-								entry.target.querySelector('.me-button__label').innerText = 'Carregando...';
+								entry.target.innerText = 'Carregando...';
 								this.loadMore();
 							} else {
 

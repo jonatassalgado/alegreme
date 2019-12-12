@@ -6,7 +6,7 @@ $main-content-width: calc(100% - 73px); // 1040px;
 $brand-color: #03994C;
 $brand-color-aa: darken(#03994C, 5%);
 $brand-color-aaa: darken(#03994C, 10%);
-$brand-color-right: #2191FB;
+$brand-color-complementary: #993127;
 $brand-color-high-contrast: #0C0F0A;
 
 $border-color: #E1E1E1;
@@ -111,7 +111,7 @@ $maybe-color: $font-tertiary-color;
 .is-hoverable {
   cursor: pointer;
 
-  &:hover {
+  &:hover, & a:hover {
     color: $brand-color;
     & svg {
       fill: $brand-color;

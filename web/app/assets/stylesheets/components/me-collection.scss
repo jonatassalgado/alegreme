@@ -20,6 +20,16 @@
         padding: 0 $section-padding-phone;
       }
     }
+
+    & .mdc-layout-grid__cell {
+      @include mdc-layout-grid-media-query_("phone") {
+        padding: $section-padding-phone 0;
+      }
+    }
+  }
+
+  &__head {
+    margin-bottom: 24px;
   }
 
   &__title-secondary {
@@ -34,10 +44,10 @@
       font-size: 11px;
     }
 
-    .me-page--profile__section & {
-      margin: 0 0 24px 0;
+    .me-page--profile & {
+      margin: 0 0 12px 0;
       @include mobile-only {
-        margin: 0;
+        // margin: 0;
       }
     }
 
@@ -50,16 +60,16 @@
   }
 
   &__title-tertiary {
-    font-size: 10px;
+    font-size: 11px;
     display: block;
-    font-weight: 300;
+    font-weight: 500;
     font-family: $font-secondary-family;
-    color: $font-tertiary-color;
+    color: $brand-color-complementary;
     line-height: 1.4em;
     text-transform: uppercase;
     @include mobile-only {
       padding: 0 $section-padding-phone;
-      font-size: 9px;
+      font-size: 10px;
     }
   }
 
@@ -119,6 +129,7 @@
       will-change: opacity;
       order: 1000;
       display: none;
+      align-self: center;
 
       [data-controller="feeds"][data-action="index"] [data-section-disposition="vertical"] & {
         display: none;

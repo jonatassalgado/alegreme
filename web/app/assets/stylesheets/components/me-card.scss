@@ -65,6 +65,7 @@ $description-color: $font-secondary-color;
     //   }
     // }
 
+
     &__title {
       color: $font-primary-color;
       font-size: 13px;
@@ -184,12 +185,12 @@ $description-color: $font-secondary-color;
     background: linear-gradient(to top, #ffffff38, transparent);
     overflow: hidden;
     border-radius: $media-border-radius;
+    box-shadow: 0px 1px 3px #0000001c;
     //box-shadow: $media-box-shadow-large;
     @include mdc-ripple-surface;
     @include mdc-ripple-radius-bounded;
     @include mdc-states;
     @include mobile-only {
-      box-shadow: none;
     }
   }
 
@@ -237,12 +238,15 @@ $description-color: $font-secondary-color;
   }
 
   &__date-distance-in-words {
-    color: lighten($font-tertiary-color, 10%);
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1;
     padding: 2px 0 0 0;
     @include mobile-only {
-      font-size: 8px;
+      font-size: 10px;
+    }
+
+    .me-saves & {
+      font-weight: 300;
     }
   }
 
@@ -252,6 +256,12 @@ $description-color: $font-secondary-color;
     margin: 6px 0 0 0;
     padding: 0 0 0 6px;
     font-weight: 500;
+    [data-section-disposition="vertical"] & {
+      @include mobile-only {
+        font-size: 20px;
+        line-height: 1.4em;
+      }
+    }
     .me-similar & {
       font-size: 14px;
       //@include mobile-only {
@@ -408,7 +418,7 @@ $description-color: $font-secondary-color;
       display: none;
       background: $surface-color;
       transition: 0.2s all ease 0s;
-      @include mdc-icon-button-icon-size($width: 18px, $height: 18px, $padding: 10px);
+      @include mdc-icon-button-icon-size($width: 20px, $height: 20px, $padding: 10px);
 
       & svg {
         fill: lighten($font-tertiary-color, 30%);

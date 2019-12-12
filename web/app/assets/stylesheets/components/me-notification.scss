@@ -27,7 +27,7 @@
     box-shadow: none;
     color: $font-tertiary-color;
     @include mobile-only {
-      padding: 18px 0 6px 0;
+      padding: 6px $section-padding-phone;
     }
 
     & label span {
