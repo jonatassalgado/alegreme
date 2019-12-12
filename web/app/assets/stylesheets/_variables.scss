@@ -20,7 +20,7 @@ $section-padding-phone: 24px;
   max-width: 95%;
   padding: 0 0 0 10%;
 
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     max-width: unset;
     padding: 0;
   }
@@ -28,7 +28,7 @@ $section-padding-phone: 24px;
 
 @mixin section-head {
 
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     padding: 0 $section-padding-phone;
   }
 }

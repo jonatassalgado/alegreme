@@ -1,7 +1,7 @@
 @import "@material/card/_mixins";
 @import "@material/layout-grid/_mixins";
 @import "@material/layout-grid/_variables";
-@import "../_variables";
+
 
 $name-color: $font-primary-color;
 $description-color: $font-secondary-color;
@@ -21,7 +21,7 @@ $mdc-layout-grid-columns: (
   //  display: flex;
   //  //margin-bottom: 12px;
   //  flex-direction: column;
-  //  @include mdc-layout-grid-media-query_("phone") {
+  //  @include mobile-only {
   //
   //  }
   //
@@ -30,7 +30,7 @@ $mdc-layout-grid-columns: (
   //&__load-more {
   //  text-align: center;
   //  margin: 35px 0;
-  //  @include mdc-layout-grid-media-query_("phone") {
+  //  @include mobile-only {
   //    //display: none;
   //  }
   //
@@ -122,7 +122,7 @@ $mdc-layout-grid-columns: (
   //  @include mdc-layout-grid-media-query_("tablet") {
   //    margin: 12px var(--mdc-layout-grid-margin-phone, 16px) 26px var(--mdc-layout-grid-margin-phone, 16px);
   //  }
-  //  @include mdc-layout-grid-media-query_("phone") {
+  //  @include mobile-only {
   //    display: none;
   //  }
   //}
@@ -154,7 +154,7 @@ $mdc-layout-grid-columns: (
   //    font-size: 1.6em;
   //    text-align: center;
   //  }
-  //  @include mdc-layout-grid-media-query_("phone") {
+  //  @include mobile-only {
   //    padding: var(--mdc-layout-grid-margin-phone, 16px);
   //    line-height: 1.5em;
   //    font-size: 1.6em;

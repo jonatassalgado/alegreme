@@ -1,8 +1,8 @@
-@import "../_variables";
+
 
 .me-chip-set {
   text-align: left;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     text-align: left;
     width: max-content;
     .me-section-head & {
@@ -22,19 +22,19 @@
 
 
   &__wrapper {
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       overflow-x: scroll;
       margin: 0 0 6px 0;
     }
     &::-webkit-scrollbar{
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         display: none;
       }
     }
   }
 
   &--categories {
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       padding: 0 16px;
     }
 

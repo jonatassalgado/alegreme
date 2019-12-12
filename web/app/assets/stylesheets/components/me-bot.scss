@@ -1,4 +1,4 @@
-@import "../_variables";
+
 
 .me-bot{
   max-width: 600px;
@@ -10,7 +10,7 @@
 .me-bot__container {
   margin: 6px 12px 6px 52px;
   transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     margin: 6px 0 6px 36px;
   }
 }

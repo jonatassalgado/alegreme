@@ -3,7 +3,7 @@
   will-change: opacity, transform;
   &.is-animated {
     opacity: 0;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
 
     }
   }
@@ -15,7 +15,7 @@
   &.is-animated {
     opacity: 0;
     transform: translate(0, 85px);
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       transform: translate(0, 10vh) scale(0.95);
     }
   }

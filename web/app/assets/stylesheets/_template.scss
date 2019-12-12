@@ -8,7 +8,7 @@
   position: relative;
   z-index: 3;
   letter-spacing: -0.01em;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     font-size: 24px;
     line-height: 1em;
     max-width: 70vw;
@@ -27,7 +27,7 @@
     color: $font-secondary-color;
     line-height: 1.6em;
     //margin-top: 8px;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       display: none;
     }
   }

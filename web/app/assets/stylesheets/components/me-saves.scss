@@ -1,6 +1,4 @@
 @import "@material/card/_mixins";
-@import "../_mixins";
-@import "../variables";
 
 $gutter: 6px;
 
@@ -9,7 +7,7 @@ $gutter: 6px;
   //padding: 0 0 25px 0;
   //max-width: $main-content-width;
   position: relative;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     margin: 0 auto 0 auto;
     max-width: unset;
     //border-bottom: 5px solid $surface-tertiary-color;
@@ -48,7 +46,7 @@ $gutter: 6px;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.1s linear;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         content: none;
       }
     }
@@ -65,7 +63,7 @@ $gutter: 6px;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.1s linear;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         content: none;
       }
     }
@@ -116,14 +114,14 @@ $gutter: 6px;
     font-weight: 800;
     font-family: $font-primary-family;
     letter-spacing: -0.01em;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       font-size: 18px;
       padding: 0 $section-padding-phone;
       font-family: $font-primary-family;
     }
 
     & i {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         display: none;
       }
     }
@@ -134,7 +132,7 @@ $gutter: 6px;
     --mdc-layout-grid-gutter-desktop: 8px;
     @include add-horizontal-scroll-wrapper();
     @include no-scroll-bar();
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       padding: 0;
     }
   }
@@ -149,7 +147,7 @@ $gutter: 6px;
     padding-bottom: calc(0.75 * #{$gutter});
     margin-bottom: calc(-0.25 * #{$gutter});
     // @include add-horizontal-scroll-wrapper();
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       grid-auto-columns: 50px;
       padding: 0 $section-padding-phone;
     }
@@ -163,12 +161,12 @@ $gutter: 6px;
     justify-content: normal;
     width: auto;
     grid-column-end: span 2;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       scroll-snap-align: none;
     }
 
     &:last-child {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         padding: 0 $section-padding-phone 0 0;
         margin: 0 (-$section-padding-phone) 0 0;
       }
@@ -190,7 +188,7 @@ $gutter: 6px;
     z-index: 2;
     padding: 12px;
     transition: opacity 0.4s ease;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       display: none;
     }
 

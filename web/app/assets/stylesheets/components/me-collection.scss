@@ -2,7 +2,7 @@
 
   &[data-section-disposition="horizontal"] {
     & .mdc-layout-grid__inner {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
         overflow-y: hidden;
         grid-template-columns: repeat(100, minmax(70vw, 1fr));
@@ -13,7 +13,7 @@
 
   &[data-section-disposition="vertical"] {
     & .mdc-layout-grid__inner {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
         overflow-y: hidden;
         grid-template-columns: repeat(1, minmax(100%, 1fr));
@@ -22,7 +22,7 @@
     }
 
     & .mdc-layout-grid__cell {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         padding: $section-padding-phone 0;
       }
     }
@@ -110,7 +110,7 @@
       background: $background-color;
     }
 
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
 
     }
 
@@ -202,7 +202,7 @@
     }
 
     &::-webkit-scrollbar {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         display: none;
       }
     }
@@ -216,7 +216,7 @@
               $gutter: 24px
       );
     }
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       @include mdc-layout-grid-cell(
               $size: "phone",
               $default-span: 1,
@@ -225,7 +225,7 @@
     }
 
     &:last-child {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         padding: 0 $section-padding-phone 0 0;
         margin: 0 (-$section-padding-phone) 0 0;
       }

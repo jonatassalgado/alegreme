@@ -1,4 +1,4 @@
-@import '../variables';
+
 
 .me-float-menu {
   position: fixed;
@@ -10,7 +10,7 @@
   user-select: none;
   height: 100vh;
   background: $surface-secondary-color;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     top: 55px;
     left: 0;
     height: 100vh;
@@ -28,7 +28,7 @@
     padding: 115px 0 0 0;
     text-align: center;
     font-size: 10px;
-    @include  mdc-layout-grid-media-query_("phone") {
+    @include  mobile-only {
       width: 100%;
       padding: 20px 0 0 0;
       font-size: 10px;

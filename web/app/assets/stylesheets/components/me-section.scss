@@ -67,7 +67,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       font-size: 18px;
       font-weight: 800;
       line-height: 1em;

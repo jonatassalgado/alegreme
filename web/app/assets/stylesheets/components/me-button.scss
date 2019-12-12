@@ -1,4 +1,4 @@
-@import '../_variables';
+
 
 $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
@@ -13,7 +13,7 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
   border-radius: 36px;
   padding: 12px 16px;
   height: auto;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     padding: 16px 18px;
   }
 
@@ -53,7 +53,7 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
   }
 
   .me-top-app-bar & {
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       font-size: 12px;
       line-height: 1.1em;
       padding: 12px 8px;

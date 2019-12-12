@@ -1,4 +1,4 @@
-@import "../_variables";
+
 
 .me-footer {
   margin: 0;
@@ -6,7 +6,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     text-align: left;
     padding: 0 24px;
     align-items: flex-start;
@@ -30,7 +30,7 @@
     }
 
     & .manifesto {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         display: none;
       }
     }
@@ -39,7 +39,7 @@
   &__image {
     margin: 50px 0;
     width: 100%;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       margin: 0 0 24px 0;
     }
   }
@@ -53,7 +53,7 @@
     line-height: 20px;
     text-align: center;
     margin: 24px 0 0 0;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       text-align: left;
       font-size: 11px;
     }
@@ -68,7 +68,7 @@
     margin: 125px 0 75px 0;
     width: 100vw;
     max-width: 1090px;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       margin: 75px 0 75px 0;
     }
 
@@ -87,7 +87,7 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 160%;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         font-size: 11px;
         line-height: 1.6em;
       }
@@ -112,7 +112,7 @@
 
     & img, picture {
       max-width: 100%;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         margin: 6px auto;
       }
     }
@@ -125,7 +125,7 @@
       margin: 0 auto 50px auto;
       padding: 0;
       text-align: center;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         font-size: 31px;
         line-height: 0;
         margin: 65px auto 0 auto;
@@ -143,14 +143,14 @@
   }
 
   &__credits, &__vamodale {
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       display: none;
     }
   }
 
   &--feeds {
 
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       padding: 0 24px 62px 24px;
     }
   }

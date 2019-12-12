@@ -1,4 +1,4 @@
-@import "variables";
+
 
 .me-similar {
   grid-column: 12 span;
@@ -9,7 +9,7 @@
   padding: 10px 24px;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     grid-column: 1 span;
     width: auto;
     padding: 0;
@@ -40,7 +40,7 @@
     z-index: 2;
     animation-name: show-in;
     animation-duration: 1s;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       font-size: 12px;
       padding: 0 12px;
     }
@@ -60,7 +60,7 @@
     margin: 6px 0 25px 0;
     grid-gap: 12px;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       grid-template-columns: repeat(20, minmax(25vw, 1fr));
       overflow-x: scroll;
       padding: 0 ($section-padding-phone / 2);
@@ -68,7 +68,7 @@
     }
 
     &::-webkit-scrollbar {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         display: none;
       }
     }
@@ -88,7 +88,7 @@
               $default-span: 2,
               $gutter: 16px
       );
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         @include mdc-layout-grid-cell(
         $size: "phone",
         $default-span: 2,
@@ -105,7 +105,7 @@
     animation-name: show-in;
     animation-duration: 1s;
     width: 100%;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       @include add-horizontal-scroll-wrapper;
       @include no-scroll-bar;
       padding: 6px 0;
@@ -119,7 +119,7 @@
       justify-content: center;
       //padding: 0 15%;
       padding-bottom: 15px;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         padding: 0 8px;
       }
       //border-bottom: 1px solid darken($background-color, 5%);
@@ -128,7 +128,7 @@
 
   &__topics {
     display: none;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
     }
   }
 

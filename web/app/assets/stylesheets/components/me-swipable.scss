@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     //margin: 0 0 15px 0;
     //height: -webkit-fill-available;
     //padding: 150px 0 0 0;
@@ -22,7 +22,7 @@
     //overflow-x: hidden;
     width: calc(40vw - 20px);
     padding: 106px 30vw;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       width: calc(100vw - 64px);
       padding: 150px 24px 66px 24px;
     }
@@ -38,7 +38,7 @@
     transition: opacity 0.4s linear;
     max-width: 420px;
     padding: 100px 24px 66px 24px;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       padding: 94px 24px 0 24px;
     }
   }
@@ -47,7 +47,7 @@
     margin: 0 auto 12px auto;
     line-height: 1.3em;
     text-align: center;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       text-align: center;
       max-width: 88%;
     }
@@ -58,7 +58,7 @@
       font-size: 24px;
       margin: 0 0 5px 0;
       line-height: 1em;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         font-size: 20px;
       }
     }
@@ -90,7 +90,7 @@
     flex-wrap: wrap;
     align-content: flex-end;
     // padding: 15px 30px 15px 15px;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       // padding: 15px;
     }
 
@@ -105,7 +105,7 @@
       padding: 0 15px;
       max-width: 80%;
       font-family: "Montserrat";
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         font-size: 20px;
         padding: 0 12px;
       }
@@ -117,7 +117,7 @@
       font-weight: 400;
       padding: 0 15px 15px;
       font-family: "Varela Round";
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         font-size: 12px;
         padding: 3px 12px 12px;
       }
@@ -186,7 +186,7 @@
     top: 0;
     border-radius: 12px;
     overflow: hidden;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       height: 190px;
     }
   }
@@ -283,7 +283,7 @@
     width: 100%;
     position: relative;
     margin: 15px 0 0 0;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       //display: none;
       margin: 15px 0 25px 0;
     }

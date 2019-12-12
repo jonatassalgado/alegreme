@@ -5,7 +5,7 @@
   display: inline;
   user-select: none;
   margin: 12px 0 0 0;
-  @include mdc-layout-grid-media-query_("phone") {
+  @include mobile-only {
     margin: 12px 0 3px 0;
   }
 
@@ -24,12 +24,12 @@
   & .mdc-chip-set {
     display: block;
     padding: 0;
-    @include mdc-layout-grid-media-query_("phone") {
+    @include mobile-only {
       padding: 0 $section-padding-phone;
     }
 
     &::before {
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         background: linear-gradient(270deg, white 10%, transparent);
         position: absolute;
         z-index: 5;
@@ -71,7 +71,7 @@
       border: $chip-border-size solid $border-color;
       text-transform: uppercase;
       transition: $chip-transition;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         //padding: 12px 8px;
       }
     }
@@ -80,7 +80,7 @@
       color: $chip-filter-color-active;
       background-color: $chip-filter-background-active;
       border: $chip-border-size solid $chip-filter-border-color-active;
-      @include mdc-layout-grid-media-query_("phone") {
+      @include mobile-only {
         border: $chip-border-size solid $chip-filter-background-active;
       }
     }
