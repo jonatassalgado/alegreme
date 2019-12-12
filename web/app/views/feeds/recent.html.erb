@@ -1,9 +1,13 @@
-<section class="me-page me-page--profile__section is-animated">
+<section class="me-page me-page--profile is-animated">
 
   <%= notice %>
 
   <% content_for :meta_title, "Eventos adicionados nas últimas 24h" %>
 
-  <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
+  <section class="me-section">
+    <section class="me-section__inner">
+      <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
+    </section>
+  </section>
 
 </section>

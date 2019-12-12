@@ -1,19 +1,19 @@
 <section class="me-page is-animated">
 
-  <%= render partial: 'components/tab-bar', locals: {props: {active: :cinema}} %>
-
   <%= notice %>
 
   <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
   <div class="me-page__section">
-    <div class="me-movie__container">
-      <h2 class="me-movie__container-title">
-        Filmes em cartaz
-      </h2>
-      <div class="me-movie__grid">
-        <% @movies.each do |movie| %>
-          <%= link_to movie_path(movie) do %>
+    <section class="me-section">
+      <section class="me-section__inner">
+        <h2 class="me-movie__container-title">
+          Filmes em cartaz
+        </h2>
+        <div class="me-movie__container">
+          <div class="me-movie__grid">
+            <% @movies.each do |movie| %>
+            <%= link_to movie_path(movie) do %>
             <div class="me-movie">
               <div class="me-movie__cover">
                 <%= image_tag(movie.image[:medium].url) if movie.image[:medium] %>
@@ -24,14 +24,16 @@
               <div class="me-movie__genre">
                 <%= movie.details['genre'] %>
               </div>
-<!--              <div class="me-movie__description">-->
+              <!--              <div class="me-movie__description">-->
                 <%#= limit_description_size movie.details['description'] %>
-<!--              </div>-->
+                <!--              </div>-->
+              </div>
+              <% end %>
+              <% end %>
             </div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
+          </div>
+      </section>
+    </section>
   </div>
   <%# content_for :meta_description, "" %>
 

@@ -45,7 +45,7 @@
   <link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Montserrat:400,700|Roboto:300,400,500,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=M+PLUS+Rounded+1c:400,700,900|Montserrat:400,700|Roboto:300,400,500,700&display=swap">
 
   <%= Gon::Base.render_data %>
 
@@ -95,6 +95,7 @@
 <div class="me-top-app-bar__fake-size"></div>
 
 <%= render partial: "layouts/app-top-bar" %>
+<%= render partial: 'components/tab-bar', locals: {props: {active: controller_name}} %>
 
 <%= yield %>
 

@@ -8,7 +8,7 @@ $border-color: #e0e0e0;
 .me-top-app-bar {
   background-color: $surface-color;
   color: $font-color;
-  position: fixed;
+  position: absolute;
   top: 0;
   user-select: none;
   // border-bottom: 1px solid lighten($border-color, 8%);
@@ -21,6 +21,10 @@ $border-color: #e0e0e0;
   }
 
   [data-controller="search"] & {
+    box-shadow: none;
+  }
+
+  [data-action="search"] & {
     box-shadow: none;
   }
 
@@ -161,10 +165,15 @@ $border-color: #e0e0e0;
 
   & .mdc-top-app-bar__row {
     padding: 0 12px;
+    @include desktop-only {
+      //max-width: 1080px;
+      margin: auto;
+    }
     @include mdc-layout-grid-media-query_("phone") {
       height: 56px;
       display: flex;
       align-items: center;
+      padding: 0 $section-padding-phone;
     }
   }
 
@@ -211,10 +220,4 @@ $border-color: #e0e0e0;
     }
   }
 
-  &--bot-on {
-    @include mdc-layout-grid-media-query_("phone") {
-      padding: 0;
-      margin: 0;
-    }
-  }
 }

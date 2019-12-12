@@ -1,4 +1,4 @@
-<section class="me-page me-page--profile__section is-animated">
+<section class="me-page me-page--profile is-animated">
   <% content_for :canonical_url, today_events_url %>
   <% content_for :amp_url, today_events_url(format: :amp) %>
 
@@ -12,7 +12,12 @@
 
   </script>
 
-  <%= render partial: "components/collection/collection", locals: { data: @data } %>
+  <section class="me-section">
+    <section class="me-section__inner">
+      <%= render partial: "components/collection/collection", locals: { data: @data } %>
+    </section>
+  </section>
+
 
   <% unless current_user %>
     <%= link_to root_path, style: "display: flex" do %>

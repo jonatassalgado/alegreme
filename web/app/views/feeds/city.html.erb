@@ -12,7 +12,11 @@
   [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
   </script>
 
-  <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
+  <section class="me-section">
+    <section class="me-section__inner">
+      <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
+    </section>
+  </section>
 
   <% unless current_user %>
     <%= link_to root_path, style: "display: flex" do %>

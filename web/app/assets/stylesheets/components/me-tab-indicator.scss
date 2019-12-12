@@ -1,0 +1,10 @@
+.mdc-tab-indicator {
+  &__content {
+
+    &--underline {
+      //@include desktop-only {
+        width: 80px;
+      //}
+    }
+  }
+}

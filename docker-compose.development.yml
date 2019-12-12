@@ -4,49 +4,49 @@ volumes:
   db_data:
   db_backup:
   api_data:
-  scrapydo_data:
-  splash_data:
+  # scrapydo_data:
+  # splash_data:
 #  redis_data:
   # scrapy_shared:
   # search_data:
 services:
-  app:
-    build:
-      context: ./web
-      dockerfile: ./Dockerfile
-    depends_on:
-      - db
-      - api
-      - scrapy
-      # - search
-      # - memcached
-      # - redis
-      # - bot
-    volumes:
-      - bundle_cache:/bundle
-      - ./scrapy/data:/var/www/scrapy/data
-      - ./web:/var/www/alegreme
-      - ./storage:/var/www/alegreme/storage
-      - ./logs/app:/var/www/alegreme/log
-    environment:
-      RAILS_ENV: development
-      RACK_ENV: development
-      RAILS_SERVE_STATIC_FILES: 'false'
-      PGHOST: db
-      PGUSER: postgres
-      API_URL: http://api
-      IS_DOCKER: 'true'
-      HTTP_HOST: 'www.alegreme.com'
-      NODE_ENV: development
-      JOB_WORKER_URL: redis://redis:6379/0
-      RAILS_MAX_THREADS: 5
-      ELASTICSEARCH_URL: http://search:9200
-    restart: always
-    ports:
-      - 3000:3000
-    stdin_open: true
-    tty: true
-    command: bundle exec puma -C config/puma/puma-development.rb
+  # app:
+  #   build:
+  #     context: ./web
+  #     dockerfile: ./Dockerfile
+  #   depends_on:
+  #     - db
+  #     - api
+  #     # - scrapy
+  #     # - search
+  #     # - memcached
+  #     # - redis
+  #     # - bot
+  #   volumes:
+  #     - bundle_cache:/bundle
+  #     # - ./scrapy/data:/var/www/scrapy/data
+  #     - ./web:/var/www/alegreme
+  #     # - ./storage:/var/www/alegreme/storage
+  #     # - ./logs/app:/var/www/alegreme/log:delegated
+  #   environment:
+  #     RAILS_ENV: development
+  #     RACK_ENV: development
+  #     RAILS_SERVE_STATIC_FILES: 'false'
+  #     PGHOST: db
+  #     PGUSER: postgres
+  #     API_URL: http://api
+  #     IS_DOCKER: 'true'
+  #     HTTP_HOST: 'www.alegreme.com'
+  #     NODE_ENV: development
+  #     JOB_WORKER_URL: redis://redis:6379/0
+  #     RAILS_MAX_THREADS: 5
+  #     ELASTICSEARCH_URL: http://search:9200
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   stdin_open: true
+  #   tty: true
+  #   command: bundle exec puma -C config/puma/puma-development.rb
 #    mem_limit: 6gb
 #    memswap_limit: 6gb
 #    mem_reservation: 256m
@@ -101,49 +101,49 @@ services:
       - "5000:5000"
     volumes:
       - api_data:/var/www/api/data
-      - ./scrapy/data:/var/www/scrapy/data
-      - ./ml/api:/var/www/ml/api
-      - ./logs/api:/var/www/ml/api/log
+      # - ./scrapy/data:/var/www/scrapy/data:delegated
+      # - ./ml/api:/var/www/ml/api:delegated
+      # - ./logs/api:/var/www/ml/api/log:delegated
     environment:
       IS_DOCKER: 'true'
 #    mem_limit: 3gb
 #    memswap_limit: 4gb
 #    mem_reservation: 256m
 #    cpus: 0.7
-  scrapy:
-    build:
-      context: ./scrapy
-      dockerfile: ./Dockerfile
-    environment:
-        SPLASH_URL: http://splash:8050
-        IS_DOCKER: 'true'
-        ENV: 'development'
-    depends_on:
-      - splash
-    volumes:
-      - ./scrapy/alegreme:/var/www/scrapy/alegreme
-      - ./scrapy/data:/var/www/scrapy/data
-      - ./logs/scrapy:/var/www/scrapy/log
-    ports:
-      - "7654:7654"
-    restart: always
+  # scrapy:
+  #   build:
+  #     context: ./scrapy
+  #     dockerfile: ./Dockerfile
+  #   environment:
+  #       SPLASH_URL: http://splash:8050
+  #       IS_DOCKER: 'true'
+  #       ENV: 'development'
+  #   depends_on:
+  #     - splash
+  #   volumes:
+  #     - ./scrapy/alegreme:/var/www/scrapy/alegreme
+  #     - ./scrapy/data:/var/www/scrapy/data
+  #     - ./logs/scrapy:/var/www/scrapy/log
+  #   ports:
+  #     - "7654:7654"
+  #   restart: always
 #    mem_limit: 3gb
 #    memswap_limit: 4gb
 #    cpus: 0.5
     # command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
-  splash:
-    image: scrapinghub/splash
-    ports:
-      - 8050:8050
-      - 5023:5023
-    restart: always
-    volumes:
-      - splash_data:/var/www/splash/data
+  # splash:
+  #   image: scrapinghub/splash
+  #   ports:
+  #     - 8050:8050
+  #     - 5023:5023
+  #   restart: always
+  #   volumes:
+  #     - splash_data:/var/www/splash/data
 #    mem_limit: 5gb
 #    memswap_limit: 5gb
 #    mem_reservation: 256m
 #    cpus: 0.7
-    command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
+    # command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
 #  memcached:
 #    image: memcached
 #    command: memcached -m 64

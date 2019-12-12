@@ -3,7 +3,7 @@ import {MDCRipple}         from '@material/ripple';
 import {ProgressBarModule} from "../modules/progressbar-module";
 
 export default class BottomNavigationController extends Controller {
-	static targets = ['navigation', 'item', 'home', 'search', 'explore'];
+	static targets = ['navigation', 'item', 'events', 'search', 'cinema'];
 
 	initialize() {
 		this.ripples = [];
@@ -19,10 +19,10 @@ export default class BottomNavigationController extends Controller {
 		};
 
 
-		if (/(\/feed)/.test(document.location.href)) {
-			this.homeTarget.classList.add('active');
-		} else if ((/(\/porto-alegre|\/sugestoes|\/seguindo)/.test(document.location.href))) {
-			this.exploreTarget.classList.add('active');
+		if (/(\/feed|\/porto-alegre\/eventos)/.test(document.location.href)) {
+			this.eventsTarget.classList.add('active');
+		} else if ((/(\/porto-alegre\/cinema)/.test(document.location.href))) {
+			this.cinemaTarget.classList.add('active');
 		} else if ((/(\/busca)/.test(document.location.href))) {
 			this.searchTarget.classList.add('active');
 			document.querySelector('.mdc-text-field__input').focus();

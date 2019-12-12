@@ -34,7 +34,7 @@
 
 %>
 
-<section class="me-feed__section"
+<section class="me-collection"
          data-controller="section"
          data-target="section.section"
          data-section-total-events-in-collection="<%= data[:collection][:detail][:total_events_in_collection] %>"
@@ -49,9 +49,9 @@
          data-section-title="<%= data[:title].to_json %>"
          data-observable="float-menu.section"
          id="<%= data[:identifier] %>">
-  <div class="me-feed__section-head">
+  <div class="me-collection__head">
     <% if data[:title][:tertiary] %>
-      <div class="me-feed__section-title-tertiary">
+      <div class="me-collection__title-tertiary">
         <%= data[:title][:tertiary] %>
       </div>
     <% end %>
@@ -72,12 +72,12 @@
       } if data[:followable] %>
     </h2>
     <% if data[:title][:secondary] %>
-      <div class="me-feed__section-title-secondary">
+      <div class="me-collection__title-secondary">
         <%= data[:title][:secondary] %>
       </div>
     <% end %>
     <% if data[:title][:custom] %>
-      <div class="me-feed__section-title-custom"
+      <div class="me-collection__title-custom"
            data-fixed="true">
         <%= data[:title][:custom] %>
       </div>
@@ -159,13 +159,13 @@
           <div data-action="click->section#loadMore"
                data-target="section.loadMoreButton"
                data-continue-to-path="<%= data[:continue_to] %>"
-               class="me-feed__load-more me-feed__load-more--horizontal">
+               class="me-collection__load-more me-collection__load-more--horizontal">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="none" d="M0 0h24v24H0V0z"/>
               <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
             </svg>
           </div>
-          <div class="me-feed__load-more me-feed__load-more--horizontal is-loading">
+          <div class="me-collection__load-more me-collection__load-more--horizontal is-loading">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path fill="none" d="M0 0h24v24H0V0z"/>
               <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
@@ -186,7 +186,9 @@
                },
                cached:  true) if mobile_device? && props[:disposition] == 'horizontal' %>
     <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
-      <div class="me-feed__load-more me-feed__load-more--vertical">
+      <div class="me-collection__load-more me-collection__load-more--vertical is-hoverable"
+           data-action="click->section#loadMore"
+           data-target="section.loadMoreButton">
         <%# if data[:origin] == :feed %>
         <!--          <button class="me-button me-button--transparent me-button--with-icon-in-right mdc-button"-->
         <!--                  data-action="click->section#loadMore"-->
@@ -198,11 +200,7 @@
         <!--            </svg>-->
         <!--          </button>-->
         <%# else %>
-        <button class="me-button me-button--transparent me-button--with-icon-in-right mdc-button"
-                data-target="section.loadMoreButton"
-                data-action="click->section#loadMore">
-          <span class="me-button__label">Mostrar mais</span>
-        </button>
+        Mostrar mais
         <%# end %>
       </div>
     <% end %>

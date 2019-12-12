@@ -5,11 +5,18 @@
   @include mdc-layout-grid-media-query_("phone") {
     text-align: left;
     width: max-content;
-    .me-feed__section-head & {
+    .me-section-head & {
       padding: 0 25px 0 15px;
     }
     [data-controller="search"][data-action="index"] & {
       width: auto;
+    }
+  }
+
+  .me-collection__title-custom & {
+    padding: 0;
+    @include mobile-only {
+      padding: 0 24px 0 16px;
     }
   }
 

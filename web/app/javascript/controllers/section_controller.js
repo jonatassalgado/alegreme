@@ -29,7 +29,7 @@ export default class SectionController extends Controller {
 						if (this.hasLoadMoreButtonTarget) {
 							if (entry.isIntersecting) {
 								entry.target.disabled                                     = true;
-								entry.target.querySelector('.me-button__label').innerText = 'Carregando...';
+								entry.target.innerText = 'Carregando...';
 								this.loadMore();
 							} else {
 
@@ -118,9 +118,9 @@ export default class SectionController extends Controller {
 		});
 
 
-		if (!this.md.mobile()) {
-			this.sectionTarget.parentElement.style.minHeight = `${this.sectionTarget.getBoundingClientRect().height}px`;
-		}
+		// if (!this.md.mobile()) {
+		// 	this.sectionTarget.parentElement.style.minHeight = `${this.sectionTarget.getBoundingClientRect().height}px`;
+		// }
 
 		this.destroy = () => {
 			this.pubsub.sectionUpdated();

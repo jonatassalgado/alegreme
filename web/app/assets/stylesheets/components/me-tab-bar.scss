@@ -4,18 +4,55 @@
 @import "@material/tab/mdc-tab";
 
 .me-tab-bar {
-  @include mdc-tab-bar-density(-4);
-  border-bottom: 5px solid $surface-tertiary-color;
-  margin: 0 0 6px 0;
-  display: inline-block;
+  // border-bottom: 5px solid $surface-tertiary-color;
+  //margin: 0 0 6px 0;
+  @include mdc-tab-bar-density(-3);
+  background: $surface-color;
+  display: block;
+  // border-bottom: 1px solid $background-color;
+  width: auto;
+  @include desktop-only {
+    z-index: 2;
+    padding: 0 0 0 73px;
+    position: sticky;
+    top: 0;
+    //margin: 0 0 24px 0;
+  }
   @include mobile-only {
-    @include mdc-tab-bar-density(-2);
+    @include mdc-tab-bar-density(-1);
+    // display: none;
+    //border-bottom: 6px solid $background-color;
+  }
+
+  & .mdc-tab {
+    width: auto;
+    // max-width: 100px;
+    @include desktop-only {
+
+    }
+  }
+
+  & .mdc-tab-scroller {
+    @include desktop-only {
+      width: $main-content-width;
+      margin: auto;
+    }
   }
 
   & .mdc-tab__text-label {
-    text-transform: capitalize;
     font-size: 12px;
     letter-spacing: 0.3px;
     font-weight: 600;
   }
+
+  & .mdc-tab-scroller__scroll-content {
+    flex: initial;
+  }
+
+  & .mdc-tab-indicator__content {
+    border-top-width: 4px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
 }

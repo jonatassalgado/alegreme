@@ -2,14 +2,14 @@
 
 .me-float-menu {
   position: fixed;
-  top: 105px;
-  bottom: 90px;
-  left: 2px;
+  top: 0;
+  left: 0;
   z-index: 1;
   will-change: transform;
   color: $icon-color;
   user-select: none;
-  height: max-content;
+  height: 100vh;
+  background: $surface-secondary-color;
   @include mdc-layout-grid-media-query_("phone") {
     top: 55px;
     left: 0;
@@ -25,7 +25,7 @@
     flex-direction: column;
     align-items: center;
     width: 72px;
-    padding: 25px 0 0 0;
+    padding: 115px 0 0 0;
     text-align: center;
     font-size: 10px;
     @include  mdc-layout-grid-media-query_("phone") {
@@ -50,7 +50,7 @@
     height: 48px;
     display: none;
     justify-content: center;
-    margin-bottom: 25px;
+    margin-bottom: 36px;
     cursor: pointer;
     flex-direction: column;
     align-items: center;

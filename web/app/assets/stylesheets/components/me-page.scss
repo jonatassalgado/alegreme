@@ -1,11 +1,6 @@
 @import "variables";
 
 .me-page {
-  --mdc-layout-grid-margin-phone: 0;
-  --mdc-layout-grid-gutter-phone: 0 16px;
-  --mdc-layout-grid-margin-desktop: 0;
-  --mdc-layout-grid-gutter-desktop: 25px 16px;
-
   color: $font-primary-color;
   @include is-show-in-animated;
   @include mdc-layout-grid-media-query_("phone") {
@@ -16,7 +11,7 @@
 
   &__section {
     padding: 24px 0;
-    background: $background-z1-color;
+    // background: $background-z1-color;
     @include mdc-layout-grid-media-query_("phone") {
       padding: 6px 0;
     }
@@ -28,8 +23,8 @@
     }
 
     &--z0 {
-      background: $background-z0-color;
-      border-bottom: 1px solid #efefef;
+      //background: $background-z0-color;
+      //border-bottom: 1px solid #efefef;
     }
 
     &-title {
@@ -48,7 +43,9 @@
   }
 
   &--feed {
-    margin: 0;
+    @include desktop-only {
+      margin: 0 0 0 73px;
+    }
   }
 
   &--search {
@@ -72,7 +69,7 @@
         //grid-column-end: span 8;
       }
 
-      & .me-feed__section {
+      & .me-section {
         //padding: 0;
       }
 
@@ -102,16 +99,16 @@
     }
   }
 
-  &--events {
+  &--centralized {
     max-width: 700px;
-    margin: auto;
+    margin: 24px auto;
     @include is-open-up-animated;
     @include mdc-layout-grid-media-query_("phone") {
-      padding: 24px;
+      //padding: 24px;
     }
   }
 
-  &--profile__section {
+  &--profile {
     padding: 24px 0 0 0;
     min-height: 45vh;
     @include is-open-up-animated;
@@ -132,7 +129,7 @@
       //  grid-column-end: span 8;
       //}
       //
-      //& .me-feed__section {
+      //& .me-section {
       //  //padding: 0;
       //}
 

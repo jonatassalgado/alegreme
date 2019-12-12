@@ -12,7 +12,7 @@
   }
 
   & .mdc-chip {
-    background: $background-color;
+    background: $surface-color;
     border: $chip-border-size solid $border-color;
     @include mdc-layout-grid-media-query_("phone") {
       height: 36px;

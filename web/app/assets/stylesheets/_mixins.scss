@@ -22,7 +22,7 @@
 }
 
 @mixin add-horizontal-scroll-wrapper() {
-  overflow-x: scroll;
+  overflow-x: scroll !important;
   overflow-y: hidden;
   //scroll-snap-type: x proximity;
   //scroll-behavior: smooth;
@@ -56,4 +56,3 @@
     border-radius: 10px;
   }
 }
-

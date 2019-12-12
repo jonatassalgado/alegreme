@@ -79,16 +79,16 @@ html {
 }
 
 body {
-  height: 100vh;
+  //height: 100vh;
   // overflow: hidden;
   margin: 0;
   font-family: $font-secondary-family;
   font-size: 14px;
-  background: $background-z1-color;
+  background: $background-color;
   color: $font-secondary-color;
 
   @include mdc-layout-grid-media-query_("phone") {
-    background: $background-color;
+    background: $background-secondary-color;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
@@ -267,7 +267,3 @@ a {
 .abcRioButtonErrorState .abcRioButtonWorkingWrapper {
   display: none
 }
-
-
-
-

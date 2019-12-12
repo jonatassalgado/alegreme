@@ -4,22 +4,33 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 #
-default: &default
+
+production:
   adapter: postgresql
   encoding: unicode
-  host: db
   pool: 5
   timeout: 5000
   username: <%= Rails.application.credentials[Rails.env.to_sym][:db_user] %>
   password: <%= Rails.application.credentials[Rails.env.to_sym][:db_password] %>
-development:
-  <<: *default
-  database: development
-
-production:
-  <<: *default
+  host: db
   database: production
 
+development:
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  username: <%= Rails.application.credentials[Rails.env.to_sym][:db_user] %>
+  password: <%= Rails.application.credentials[Rails.env.to_sym][:db_password] %>
+  url: postgres://postgres:docker@localhost:5432/db
+  database: development
+
 test:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  username: <%= Rails.application.credentials[Rails.env.to_sym][:db_user] %>
+  password: <%= Rails.application.credentials[Rails.env.to_sym][:db_password] %>
+  url: postgres://postgres:docker@localhost:5432/db
   database: test
