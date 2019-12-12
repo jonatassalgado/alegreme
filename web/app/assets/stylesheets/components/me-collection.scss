@@ -23,15 +23,22 @@
 
     & .mdc-layout-grid__cell {
       @include mobile-only {
-        padding: $section-padding-phone 0;
+        padding: 0 0 $section-padding-phone 0;
+        // border-bottom: 1px solid $surface-color;
       }
+      // &:last-child {
+      //   @include mobile-only {
+      //     border-bottom: none;
+      //   };
+      // }
     }
   }
 
   &__head {
     margin-bottom: 24px;
-    position: sticky;
-    top: 0;
+    @include mobile-only {
+      border-bottom: 1px solid $surface-secondary-color;
+    }
   }
 
   &__title-secondary {

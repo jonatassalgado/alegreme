@@ -104,7 +104,7 @@
     margin: 24px auto;
     @include is-open-up-animated;
     @include mobile-only {
-      //padding: 24px;
+      margin: 12px auto;
     }
   }
 

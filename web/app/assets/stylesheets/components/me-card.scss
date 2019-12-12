@@ -295,6 +295,9 @@ $description-color: $font-secondary-color;
     font-size: 10px;
     font-weight: 300;
     text-transform: lowercase;
+    & a {
+      color: $font-tertiary-color;
+    }
   }
 
   &__organizer {
