@@ -274,8 +274,11 @@ $background-color: #f3f5f7;
 
   &__image {
     margin: 50px 0;
-    width: 100%;
+    @include desktop-only {
+      min-width: 900px;
+    }
     @include mobile-only {
+      width: 100%;
       margin: 0 0 24px 0;
     }
   }
