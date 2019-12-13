@@ -11,13 +11,15 @@
   position: sticky;
   top: 0;
   z-index: 5;
+  box-shadow: 0 0 3px #00000030;
   @include desktop-only {
     z-index: 2;
     padding: 0 0 0 73px;
+    top: 64px;
   }
   @include mobile-only {
     @include mdc-tab-bar-density(-1);
-    box-shadow: 0 0 3px #00000030;
+    top: 0;
   }
 
   & .mdc-tab {

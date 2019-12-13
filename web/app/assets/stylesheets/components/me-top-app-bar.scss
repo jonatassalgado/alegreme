@@ -8,12 +8,15 @@ $border-color: #e0e0e0;
 .me-top-app-bar {
   background-color: $surface-color;
   color: $font-color;
-  position: absolute;
   top: 0;
   user-select: none;
   z-index: 10;
+  position: relative;
+  @include desktop-only {
+    position: sticky;
+  }
   @include mobile-only {
-    
+    position: relative;
   }
 
   [data-controller="search"] & {
