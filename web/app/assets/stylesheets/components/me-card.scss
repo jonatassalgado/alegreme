@@ -257,7 +257,7 @@ $description-color: $font-secondary-color;
     font-weight: 500;
     [data-section-disposition="vertical"] & {
       @include mobile-only {
-        font-size: 20px;
+        font-size: 18px;
         line-height: 1.4em;
       }
     }

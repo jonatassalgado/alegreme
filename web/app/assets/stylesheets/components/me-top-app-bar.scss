@@ -11,21 +11,27 @@ $border-color: #e0e0e0;
   position: absolute;
   top: 0;
   user-select: none;
-  // border-bottom: 1px solid lighten($border-color, 8%);
-  //box-shadow: 0 0 3px #00000030;
+  z-index: 10;
   @include mobile-only {
-    // &.mdc-top-app-bar--fixed-scrolled {
-    //   background-color: $background-color;
-    //   box-shadow: unset;
-    // }
+    
   }
 
   [data-controller="search"] & {
     box-shadow: none;
+    & .mdc-top-app-bar__row {
+      @include mobile-only {
+        padding: 0 12px;
+      }
+    }
   }
 
   [data-action="search"] & {
     box-shadow: none;
+    & .mdc-top-app-bar__row {
+      @include mobile-only {
+        padding: 0 12px;
+      }
+    }
   }
 
   // &.mdc-top-app-bar--fixed-scrolled {

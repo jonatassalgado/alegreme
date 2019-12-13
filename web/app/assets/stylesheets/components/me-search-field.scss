@@ -28,6 +28,9 @@ $field-height: 44px;
 
   & .material-icons {
     vertical-align: middle;
+    @include mobile-only {
+      display: none;
+    }
   }
 
   &.mdc-text-field--focused {
@@ -49,7 +52,7 @@ $field-height: 44px;
     border-bottom-color: transparent !important;
     align-self: baseline;
     @include mobile-only {
-      padding: 0 12px;
+      padding: 0 6px;
       font-size: 13px;
       font-weight: 400;
     }

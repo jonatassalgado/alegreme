@@ -12,10 +12,9 @@
       </section>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
         <div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"
-             data-controller="chat"
-             data-target="chat.field"
-             data-turbolinks-permanent
-             id="me-chat">
+             data-controller="search"
+             data-target="search.search"
+             data-turbolinks-permanent>
           <form action="/busca"
                 method="get"
                 name="search"
@@ -31,9 +30,12 @@
                    class="mdc-text-field__input"
                    id="text-field-shape-one"
                    placeholder="O que você está buscando hoje?"
-                   type="text">
-            <input style="display: none;"
-                   type="submit"/>
+                   type="text"
+                   data-target="search.input">
+            <input class="me-button mdc-button"
+                   type="submit" value="Buscar"
+                   data-target="search.submit"
+                   data-action="click->search#searching"/>
           </form>
         </div>
       </section>

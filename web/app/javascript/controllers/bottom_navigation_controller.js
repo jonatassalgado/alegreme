@@ -37,9 +37,9 @@ export default class BottomNavigationController extends Controller {
 
 	goto(event) {
 		const path = event.target.dataset.path;
-		ProgressBarModule.hide();
+		ProgressBarModule.show();
 		setTimeout(() => {
-			window.Turbolinks.visit(path)
+			location.assign(path)
 		}, 300);
 	}
 

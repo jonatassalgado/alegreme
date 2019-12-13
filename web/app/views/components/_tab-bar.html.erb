@@ -8,11 +8,11 @@
 
 <% if mobile_device? &&
       (controller_name == 'feeds') %>
-  <div class="me-tab-bar mdc-tab-bar" role="tablist">
+  <div class="me-tab-bar mdc-tab-bar" role="tablist" data-controller="tab-bar" data-target="tab-bar.tabBar">
     <div class="mdc-tab-scroller">
       <div class="mdc-tab-scroller__scroll-area is-horizontal-scrollable">
         <div class="mdc-tab-scroller__scroll-content">
-          <button onclick="Turbolinks.visit('/feed')" class="mdc-tab <%= 'mdc-tab--active' if controller_name == 'feeds' && action_name == 'index' %>" role="tab" aria-selected="true" tabindex="0">
+          <button data-action="click->tab-bar#open" data-tab-path="/feed" class="mdc-tab <%= 'mdc-tab--active' if controller_name == 'feeds' && action_name == 'index' %>" role="tab" aria-selected="<%= controller_name == 'feeds' && action_name == 'index'  ? 'true' : 'false' %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Para você</span>
             </span>
@@ -21,7 +21,7 @@
             </span>
             <span class="mdc-tab__ripple"></span>
           </button>
-          <button onclick="Turbolinks.visit('/porto-alegre/eventos/hoje')" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'today' %>" role="tab" aria-selected="true" tabindex="0">
+          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/eventos/hoje" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'today' %>" role="tab" aria-selected="<%= action_name == 'today'  ? 'true' : 'false' %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Hoje e Amanhã</span>
             </span>
@@ -30,7 +30,7 @@
             </span>
             <span class="mdc-tab__ripple"></span>
           </button>
-          <button onclick="Turbolinks.visit('/porto-alegre/eventos/semana')" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'week' %>" role="tab" aria-selected="true" tabindex="0">
+          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/eventos/semana" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'week' %>" role="tab" aria-selected="<%= action_name == 'week'  ? 'true' : 'false' %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Esta Semana</span>
             </span>
@@ -39,7 +39,7 @@
             </span>
             <span class="mdc-tab__ripple"></span>
           </button>
-          <button onclick="Turbolinks.visit('/porto-alegre/eventos')" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'city' %>" role="tab" aria-selected="true" tabindex="0">
+          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/eventos" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'city' %>" role="tab" aria-selected="<%= action_name == 'city' ? 'true' : 'false' %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Explorar tudo</span>
             </span>
@@ -60,7 +60,7 @@
     <div class="mdc-tab-scroller">
       <div class="mdc-tab-scroller__scroll-area">
         <div class="mdc-tab-scroller__scroll-content">
-          <button onclick="Turbolinks.visit('/feed')" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'feeds' %>" role="tab" aria-selected="true" tabindex="0">
+          <button data-action="click->tab-bar#open" data-tab-path="/feed" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'feeds' %>" role="tab" aria-selected="true">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Eventos</span>
             </span>
@@ -69,7 +69,7 @@
             </span>
             <span class="mdc-tab__ripple"></span>
           </button>
-          <button onclick="Turbolinks.visit('/porto-alegre/cinema')" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'movies' %>" role="tab" aria-selected="true" tabindex="1">
+          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/cinema" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'movies' %>" role="tab" aria-selected="true">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Cinema</span>
             </span>
