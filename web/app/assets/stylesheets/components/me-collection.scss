@@ -51,6 +51,7 @@
     @include mobile-only {
       padding: 0 $section-padding-phone;
       font-size: 11px;
+      display: none;
     }
 
     .me-page--profile & {
