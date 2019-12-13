@@ -11,6 +11,9 @@
     <h1 class="me-user-profile__name">
       <%= @user.first_name %>
     </h1>
+    <div class="me-user-profile__persona">
+      <%= @user.personas_name.join(", ") %>
+    </div>
   </div>
 
   <section class="me-section">
