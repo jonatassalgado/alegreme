@@ -6,7 +6,7 @@ class UserDecoratorTest < ActiveSupport::TestCase
 	end
 
 	test "events_from_followed_features" do
-		context 'exist 2 events from features followed' do |context|
+		context 'exist 2 events from features fodevillowed' do |context|
 			user    = create(:user)
 			event_a = create(:event)
 			event_b = create(:event, details: {name: 'Feira do Livro'})

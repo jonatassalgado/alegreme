@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	before_action :set_user, only: %i[show edit update destroy]
 	before_action :authorize_admin, only: [:index, :destroy, :edit, :update]
-	before_action :authorize_current_user, only: %i[show]
+	# before_action :authorize_current_user, only: %i[show]
 	before_action :mount_json, only: %i[edit update]
 
 	def active_invite

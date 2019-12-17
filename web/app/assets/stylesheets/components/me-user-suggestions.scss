@@ -1,0 +1,39 @@
+.me-user-suggestions {
+
+  &__inner {
+    display: grid;
+    grid-template-columns: minmax(40px, 1fr);
+    grid-auto-flow: column;
+    grid-gap: 0 12px;
+    padding: 0px 24px;
+    width: max-content;
+  }
+
+  &__user {
+    width: 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__picture {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    background: $surface-secondary-color;
+    border-radius: 100%;
+    & img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__name {
+    font-family: $font-primary-family;
+    color: $font-secondary-color;
+    font-weight: 600;
+    font-size: 10px;
+    margin: 3px 0 0 0;
+  }
+}

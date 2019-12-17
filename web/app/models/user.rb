@@ -45,6 +45,7 @@ class User < ApplicationRecord
 			taste[dictionary]['total_likes']    ||= 0
 			taste[dictionary]['total_views']    ||= 0
 			taste[dictionary]['total_dislikes'] ||= 0
+			taste[dictionary]['updated_at']     ||= DateTime.now
 		end
 	end
 end

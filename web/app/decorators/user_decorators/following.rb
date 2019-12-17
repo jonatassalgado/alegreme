@@ -3,6 +3,7 @@ module UserDecorators
 
 			include UserDecorators::Following::Events
 			include UserDecorators::Following::Topics
+			include UserDecorators::Following::Users
 
 			def self.included base
 				base.send :include, InstanceMethods

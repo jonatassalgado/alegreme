@@ -41,6 +41,7 @@ module UserDecorators
 						validate_taste_existence 'events'
 						taste['events']['saved'] << event_id.to_i
 						taste['events']['total_saves'] += 1
+						taste['events']['updated_at']   = DateTime.now
 
 						event.save && save
 					end
@@ -60,6 +61,7 @@ module UserDecorators
 						validate_taste_existence 'events'
 						taste['events']['saved'].delete event_id.to_i
 						taste['events']['total_saves'] -= 1
+						taste['events']['updated_at']   = DateTime.now
 
 						event.save && save
 					end

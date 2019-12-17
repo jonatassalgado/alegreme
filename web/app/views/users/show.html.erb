@@ -6,7 +6,7 @@
 
   <div class="me-user-profile me-section">
     <% if @user.picture %>
-      <img class="me-user-profile__picture" src="<%= @user.picture %>" alt="<%= @user.first_name %>">
+      <img class="me-user-profile__picture" src="<%= @user.picture %>" alt="">
     <% end %>
     <h1 class="me-user-profile__name">
       <%= @user.first_name %>
@@ -21,8 +21,8 @@
       <h2>Tópicos que você segue</h2>
       <div class="me-chip-set__wrapper">
         <div class="me-chip-set mdc-chip-set">
-          <% current_user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
-            <a href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| current_user.last_sign_in_at < event.created_at } %>">
+          <% @user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
+            <a href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| @user.last_sign_in_at < event.created_at } %>">
               <%= topic.details_name.titleize %>
               <i class="me-chip__counter"><%= topic.events.active.size %></i>
             </a>
