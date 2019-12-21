@@ -46,9 +46,9 @@ class UsersController < ApplicationController
 						secondary: "Esta é a sua lista de eventos que ainda não aconteceram"
 				},
 				filters:    {
-						ocurrences: true,
-						kinds:      true,
-						categories: true
+						ocurrences: false,
+						kinds:      false,
+						categories: false
 				}
 		}
 

@@ -22,8 +22,9 @@ development:
   timeout: 5000
   username: <%= Rails.application.credentials[Rails.env.to_sym][:db_user] %>
   password: <%= Rails.application.credentials[Rails.env.to_sym][:db_password] %>
-  url: postgres://postgres:docker@localhost:5432/db
   database: development
+  host: db
+#  url: postgres://postgres:docker@localhost:5432/db
 
 test:
   adapter: postgresql
@@ -32,5 +33,6 @@ test:
   timeout: 5000
   username: <%= Rails.application.credentials[Rails.env.to_sym][:db_user] %>
   password: <%= Rails.application.credentials[Rails.env.to_sym][:db_password] %>
-  url: postgres://postgres:docker@localhost:5432/db
   database: test
+#  url: postgres://postgres:docker@localhost:5432/db
+  host: db

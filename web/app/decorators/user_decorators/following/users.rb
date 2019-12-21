@@ -9,70 +9,77 @@ module UserDecorators
 			end
 
 			module InstanceMethods
+				['user', 'organizer', 'place'].each do |entity_name|
+					define_method "follow_#{entity_name}" do |entity_obj|
+						entity_class           = Object.const_get entity_name.capitalize
+						follower               = entity_obj.is_a?(ApplicationRecord) ? entity_obj : entity_class.find(entity_obj.to_i)
+						entity_name_pluralized = entity_name.pluralize
 
-				def follow_user(user_id)
-					user = User.find user_id.to_i
+						ActiveRecord::Base.transaction do
+							self.following     = validate_schema(:following)
 
-					ActiveRecord::Base.transaction do
-						user.followers['users'] << id
-						user.followers['total_user'] += 1
+							unless self.following[entity_name_pluralized].include?(follower.id)
+								follower.followers = validate_schema(:followers)
 
-						# validate_taste_existence 'users'
-						self.follows['users'] << user_id.to_i
-						self.follows['users']['total_follows'] += 1
-						self.follows['users']['updated_at']     = DateTime.now
+								self.following["#{entity_name_pluralized}_total_follows"] += 1
+								follower.followers['users_total_followers']               += 1
+								self.following[entity_name_pluralized]                    |= [follower.id]
+								follower.followers['users']                               |= [id]
+								self.following['users_updated_at']                        = DateTime.now
+							end
 
-						user.save && self.save
+							follower.save && self.save
+						end
+					rescue ActiveRecord::RecordInvalid
+						puts 'Não foi possível salvar sua ação (ERRO 8124)!'
 					end
 
-					# UpdateUserEventsSuggestionsJob.perform_later(self.id)
-				rescue ActiveRecord::RecordInvalid
-					puts 'Não foi possível salvar sua ação (ERRO 7813)!'
-				end
+					define_method "unfollow_#{entity_name}" do |entity_obj|
+						entity_class           = Object.const_get entity_name.capitalize
+						follower               = entity_obj.is_a?(ApplicationRecord) ? entity_obj : entity_class.find(entity_obj.to_i)
+						entity_name_pluralized = entity_name.pluralize
 
-				def unfollow_user(user_id)
-          user = User.find user_id.to_i
+						ActiveRecord::Base.transaction do
+							self.following = validate_schema(:following)
 
-					ActiveRecord::Base.transaction do
-						user.followers['users'].delete id
-						user.followers['total_user'] -= 1
+							if self.following[entity_name_pluralized].include?(follower.id)
+								self.following["#{entity_name_pluralized}_total_follows"] -= 1
+								follower.followers['users_total_followers']               -= 1
+								self.following[entity_name_pluralized].delete follower.id
+								follower.followers['users'].delete id
+								self.following['users_updated_at'] = DateTime.now
+							end
 
-						# validate_taste_existence 'users'
-						self.follows['users'].delete user_id.to_i
-						self.follows['users']['total_follows'] -= 1
-						self.follows['users']['updated_at']     = DateTime.now
-
-						user.save && self.save
+							follower.save && self.save
+						end
+					rescue ActiveRecord::RecordInvalid
+						puts 'Não foi possível salvar sua ação (ERRO 8124)!'
 					end
 
-					# UpdateUserEventsSuggestionsJob.perform_later(self.id)
+					define_method "following_#{entity_name}?" do |entity_obj|
+						follower_id = entity_obj.is_a?(ApplicationRecord) ? entity_obj.id : entity_obj.to_i
 
-				rescue ActiveRecord::RecordInvalid
-					puts 'Não foi possível salvar sua ação (ERRO 7814)!'
-				end
+						self.following[entity_name.pluralize].include? follower_id
+					end
 
-				def taste_events_saved?(event_id)
-					if taste['events']
-						taste['events']['saved'].include? event_id.to_i
-					else
-						false
+					define_method "following_#{entity_name.pluralize}" do
+						following[entity_name.pluralize] || []
 					end
 				end
 
-				def taste_events_saved
-					taste['events']['saved']
-				end
 
-				private
-
-			end
-
-			module ClassMethods
 			end
 
 
 			private
 
 		end
+
+		module ClassMethods
+		end
+
+
+		private
+
 	end
 end

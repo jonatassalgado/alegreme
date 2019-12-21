@@ -5,6 +5,7 @@ require 'database_cleaner'
 require 'awesome_print'
 require 'devise'
 
+
 # include Devise::Test::ControllerHelpers
 # include Devise::Test::IntegrationHelpers
 include FactoryBot::Syntax::Methods
@@ -25,11 +26,11 @@ class ActionDispatch::IntegrationTest
     DatabaseCleaner.clean
   end
 
-  def context(should, &block)
-    block.call(should.upcase)
+  def context(context, &block)
+    block.call(context.upcase)
   end
 
-  def is(action, &block)
+  def it(action, &block)
     block.call(action.upcase)
   end
 
@@ -54,11 +55,11 @@ class ActiveSupport::TestCase
     DatabaseCleaner.clean
   end
 
-  def context(should, &block)
-    block.call(should.upcase)
+  def context(context, &block)
+    block.call(context.upcase)
   end
 
-  def is(action, &block)
+  def it(action, &block)
     block.call(action.upcase)
   end
 

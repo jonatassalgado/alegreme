@@ -11,9 +11,44 @@
     <h1 class="me-user-profile__name">
       <%= @user.first_name %>
     </h1>
-    <div class="me-user-profile__persona">
-      <%= @user.personas_name.join(", ") %>
-    </div>
+    <!--    <div class="me-user-profile__persona">-->
+    <%#= @user.personas_name.join(", ") %>
+    <!--    </div>-->
+    <% if current_user != @user %>
+      <div class="me-user-profile__follow-button">
+        <%= render partial: 'components/follow/follow_button', locals: {
+            user:       current_user,
+            followable: @user
+        } %>
+      </div>
+    <% end %>
+
+    <% if @user.followers['users_total_followers'] > 0 %>
+      <div class="me-user-profile__follow-counter">
+        <%= @user.followers['users_total_followers'] > 1 ? "#{@user.followers['users_total_followers']} seguidores" : "#{@user.followers['users_total_followers']} seguidor" %>
+      </div>
+    <% end %>
+
+    <% if current_user == @user  %>
+      <div class="me-user-profile__followers">
+        <div class="me-user-suggestions">
+          <div class="me-user-suggestions__inner">
+            <% User.where("id IN (?)", @user.followers['users']).order("last_sign_in_at DESC").limit(10).each do |user| %>
+              <%= link_to user_path user do %>
+                <div class="me-user-suggestions__user">
+                  <div class="me-user-suggestions__picture">
+                    <img src="<%= user.picture %>" alt="">
+                  </div>
+                  <div class="me-user-suggestions__name">
+                    <%= user.first_name %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <section class="me-section">
@@ -34,7 +69,7 @@
 
   <section class="me-section">
     <div class="me-section__inner">
-      <%= render partial: "components/collection/collection", locals: { data: @data } %>
+      <%= render partial: "components/collection/collection", locals: {data: @data} %>
     </div>
   </section>
 

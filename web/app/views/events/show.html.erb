@@ -191,9 +191,9 @@
               </div>
             </div>
           </div>
-          <div class="me-event-single__topics">
+<!--          <div class="me-event-single__topics">-->
             <%#= render partial: 'components/follow/follow-chip-set', locals: { user: current_user, chips: @event.categories.sort, event_id: @event.id, type: 'categories' } %>
-            <%= render partial: 'components/follow/follow', locals: {
+            <%#= render partial: 'components/follow/follow', locals: {
                 data: {
                     user:     current_user,
                     chips:    @event.organizers.sort,
@@ -201,7 +201,7 @@
                     type:     'organizers'
                 }
             } %>
-          </div>
+<!--          </div>-->
           <div class="me-event-single__description">
             <div class="me-event-single__description-wrapper">
               <%= @event.details_description.html_safe %>

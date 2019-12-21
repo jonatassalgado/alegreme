@@ -4,7 +4,7 @@ class Organizer < ApplicationRecord
 
   has_and_belongs_to_many :events
 
-  acts_as_followable
+  #acts_as_followable
 
   def details_name
     self.details['name']

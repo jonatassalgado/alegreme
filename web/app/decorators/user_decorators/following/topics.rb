@@ -12,7 +12,7 @@ module UserDecorators
 
 			module InstanceMethods
 				def following_topics
-					self.following_by_type('Organizer') | self.following_by_type('Place')
+					Organizer.where(id: self.following_organizers) | Place.where(id: self.following_places)
 				end
 
 				private

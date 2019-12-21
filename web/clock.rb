@@ -19,20 +19,22 @@ module Clockwork
     puts "Running #{job}"
   end
 
-  every(1.day, 'db:dump', :at => '23:00') {
-    Rake::Task["db:dump"].invoke
-  }
+  if Rails.env != 'test'
+    every(1.day, 'db:dump', :at => '23:00') {
+      Rake::Task["db:dump"].invoke
+    }
 
-  every(1.day, 'push:new_events_today', :at => '12:15') {
-    Rake::Task["push:new_events_today"].invoke
-  }
+    every(1.day, 'push:new_events_today', :at => '12:15') {
+      Rake::Task["push:new_events_today"].invoke
+    }
 
-  every(1.day, 'push:saved_events_tomorrow', :at => '21:15') {
-    Rake::Task["push:saved_events_tomorrow"].invoke
-  }
+    every(1.day, 'push:saved_events_tomorrow', :at => '21:15') {
+      Rake::Task["push:saved_events_tomorrow"].invoke
+    }
 
-  every(3.hours, 'push:saved_events_shortly') {
-    Rake::Task["push:saved_events_shortly"].invoke
-  }
+    every(3.hours, 'push:saved_events_shortly') {
+      Rake::Task["push:saved_events_shortly"].invoke
+    }
+  end
 
 end

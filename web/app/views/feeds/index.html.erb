@@ -26,16 +26,18 @@
     <div class="me-section__inner">
       <div class="me-user-suggestions">
         <div class="me-user-suggestions__inner">
-          <% User.where("last_sign_in_at > ?", Date.today - 10.days).each do |user| %>
-          <div class="me-user-suggestions__user">
-            <div class="me-user-suggestions__picture">
-              <img src="<%= user.picture %>" alt="">
-            </div>
-            <div class="me-user-suggestions__name">
-              <%= link_to user.first_name, user_path(user) %>
-              <%= "Novo" if user.taste['events']['updated_at'] && current_user.last_sign_in_at.to_datetime < user.taste['events']['updated_at'].try(:to_datetime) %>
-            </div>
-          </div>
+          <% User.where("id IN (?) AND last_sign_in_at > ?", current_user.following_users, Date.today - 10.days).order("last_sign_in_at DESC").each do |user| %>
+            <%= link_to user_path user do %>
+              <div class="me-user-suggestions__user">
+                <div class="me-user-suggestions__picture">
+                  <img src="<%= user.picture %>" alt="">
+                </div>
+                <div class="me-user-suggestions__name">
+                  <%= user.first_name %>
+                  <%= "Novo" if user.taste['events']['updated_at'] && current_user.last_sign_in_at.to_datetime < user.taste['events']['updated_at'].try(:to_datetime) %>
+                </div>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -214,9 +216,9 @@
                     origin:     :feed
                 }
             } %>
-        </div>
-      </section>
-    <% end %>
+          </div>
+        </section>
+      <% end %>
 
 
     <% end %>

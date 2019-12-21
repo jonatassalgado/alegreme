@@ -7,7 +7,7 @@ class User < ApplicationRecord
 	extend FriendlyId
 	friendly_id :name, use: :slugged
 
-	acts_as_follower
+	#acts_as_follower
 
 	include UserDecorators::Following
 	include UserDecorators::Save
@@ -28,10 +28,13 @@ class User < ApplicationRecord
 	}
 
 	def remember_me
-    true
-  end
+		true
+	end
+
+
 
 	private
+
 
 	def validate_taste_existence(dictionary = 'events')
 		taste[dictionary] ||= {}

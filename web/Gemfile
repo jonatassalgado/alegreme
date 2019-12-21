@@ -161,6 +161,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'timecop'
   gem 'database_cleaner'
+  gem 'minitest'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

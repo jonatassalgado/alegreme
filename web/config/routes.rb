@@ -65,8 +65,8 @@ Rails.application.routes.draw do
 	get '/send_invite_activation_link/:user_id', to: 'emails#send_invite_activation_link', as: :send_invite_activation_link
 
 
-	post ':type/:resource_id/follow', to: 'follow#follow', as: :follow
-	post ':type/:resource_id/unfollow', to: 'follow#unfollow', as: :unfollow
+	post ':type/:resource_id/follow', to: 'follow#follow'
+	post ':type/:resource_id/unfollow', to: 'follow#unfollow'
 
 	authenticate :user, lambda { |u| u.admin? } do
 		mount Sidekiq::Web => '/sidekiq'

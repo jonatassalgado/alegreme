@@ -8,11 +8,11 @@
 
 <div class="me-follow-chip-set"
      data-controller="follow-button"
-     data-follow-button-identifier="<%= identifier %>"
-     data-follow-button-followed="<%= user.try { |user| user.following?(followable) } %>"
+     data-follow-button-identifier="<%= followable.slug || followable.id %>"
+     data-follow-button-followed="<%= user.try { |user| user.public_send("following_#{followable.class.name.parameterize}?", followable) } %>"
      data-follow-button-followable="<%= followable.id %>"
      data-follow-button-type="<%= followable.class.name.parameterize.pluralize %>">
-  <div class="me-follow-button mdc-chip <%= 'mdc-chip--selected' if user.try { |user| user.following?(followable) } %>"
+  <div class="me-follow-button mdc-chip <%= 'mdc-chip--selected' if user.try { |user| user.public_send("following_#{followable.class.name.parameterize}?", followable) } %>"
        data-action="click->follow-button#follow"
        data-target="follow-button.button"
        id="add-to-favorites">
@@ -28,7 +28,7 @@
     </i>
     <div class="me-follow-button__text mdc-chip__text"
          data-target="follow-button.text">
-      <%= user.try { |user| user.following?(followable) } ? 'Seguindo' : 'Seguir' %>
+      <%= user.try { |user| user.public_send("following_#{followable.class.name.parameterize}?", followable) } ? 'Seguindo' : 'Seguir' %>
     </div>
   </div>
 </div>

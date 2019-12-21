@@ -1,11 +1,13 @@
 module FollowServices
 	class AssociationCreator
 
-		def initialize(user, followable)
-			raise ArgumentError, 'followable precisa ser um model' unless followable.is_a?(ApplicationRecord)
+		def initialize(user, followable_id, followable_type)
+			#raise ArgumentError, 'followable precisa ser um model' unless followable.is_a?(ApplicationRecord)
+
+			followable_class = Object.const_get followable_type.singularize.capitalize
 
 			@user       = user.is_a?(ApplicationRecord) ? user : User.find(user)
-			@followable = followable
+			@followable = followable_class.find followable_id
 		end
 
 		def call(opts = {})
@@ -21,7 +23,7 @@ module FollowServices
 		private
 
 		def create_transaction
-			if @user.follow(@followable)
+			if @user.public_send("follow_#{@followable.class.name.underscore}", @followable)
 				create_response(true)
 			else
 				create_response(false)
@@ -29,7 +31,7 @@ module FollowServices
 		end
 
 		def destroy_transaction
-			if @user.stop_following(@followable)
+			if @user.public_send("unfollow_#{@followable.class.name.underscore}", @followable)
 				create_response(false)
 			else
 				create_response(true)

@@ -256,9 +256,10 @@ Devise.setup do |config|
 	# ==> OmniAuth
 	# Add a new OmniAuth provider. Check the wiki for more information on setting
 	# up on your models and hooks.
-	config.omniauth :google_oauth2, Rails.application.credentials[Rails.env.to_sym][:google][:app_id], Rails.application.credentials[Rails.env.to_sym][:google][:app_secret], {}
-	config.omniauth :facebook, Rails.application.credentials[Rails.env.to_sym][:facebook][:app_id], Rails.application.credentials[Rails.env.to_sym][:facebook][:app_secret], token_params: { parse: :json }
-
+	if Rails.env != 'test'
+		config.omniauth :google_oauth2, Rails.application.credentials[Rails.env.to_sym][:google][:app_id], Rails.application.credentials[Rails.env.to_sym][:google][:app_secret], {}
+		config.omniauth :facebook, Rails.application.credentials[Rails.env.to_sym][:facebook][:app_id], Rails.application.credentials[Rails.env.to_sym][:facebook][:app_secret], token_params: { parse: :json }
+	end
 
 	# ==> Warden configuration
 	# If you want to use other strategies, that are not supported by Devise, or
