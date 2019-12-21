@@ -28,8 +28,7 @@
     }
 
     & button {
-      @include mdc-button-ink-color($surface-color);
-      @include mdc-states-base-color($brand-color);
+      @include mdc-button-container-fill-color($brand-color);
       font-family: $font-primary-family;
     }
   }

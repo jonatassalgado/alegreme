@@ -3,8 +3,8 @@
 $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
 .me-button {
-  background: $brand-color;
-  color: $surface-color;
+  @include mdc-button-container-fill-color($brand-color);
+  @include mdc-button-ink-color($surface-color);
   font-family: $font-primary-family;
   font-weight: 600;
   text-transform: none;
@@ -33,9 +33,11 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
 
   &--transparent {
-    background: $surface-color;
+    @include mdc-button-container-fill-color($surface-color);
+    @include mdc-button-ink-color($font-primary-color);
+    // background: $surface-color;
+    // color: $font-primary-color;
     box-shadow: $box-shadow;
-    color: $font-primary-color;
 
     & svg {
       fill: $font-secondary-color
@@ -56,12 +58,15 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
   .me-top-app-bar & {
     font-size: 12px;
-    color: $font-secondary-color;
+    @include mdc-button-ink-color($font-secondary-color);
+    @include mdc-button-container-fill-color($surface-color);
+    // color: $font-secondary-color;
     border: 1px solid $font-secondary-color;
     padding: 3px 6px;
     &:hover {
-      color: $brand-color;
+      @include mdc-button-ink-color($brand-color);
       border: 1px solid $brand-color;
+      // color: $brand-color;
     }
 
     @include mobile-only {
