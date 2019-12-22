@@ -4,33 +4,34 @@
 
   <%= render partial: 'components/swipable/swipable' unless current_user&.personas_assortment_finished? %>
 
-  <div class="me-section">
-    <div class="me-section__inner">
-      <div class="me-notification" data-controller="notification" data-notification-active="<%= current_user.notifications_topics_all_active %>">
-        <div class="me-switch mdc-switch" data-target="notification.switch">
-          <div class="mdc-switch__track"></div>
-          <div class="mdc-switch__thumb-underlay">
-            <div class="mdc-switch__thumb">
-              <input data-target="notification.input" data-action="change->notification#change" type="checkbox" <%= 'checked' if current_user.notifications_topics_all_active %> id="another-basic-switch" class="mdc-switch__native-control" role="switch">
+  <% unless current_user.notifications_topics_all_requested %>
+    <div class="me-section">
+      <div class="me-section__inner">
+        <div class="me-notification" data-controller="notification" data-notification-active="<%= current_user.notifications_topics_all_active %>">
+          <div class="me-switch mdc-switch" data-target="notification.switch">
+            <div class="mdc-switch__track"></div>
+            <div class="mdc-switch__thumb-underlay">
+              <div class="mdc-switch__thumb">
+                <input data-target="notification.input" data-action="change->notification#change" type="checkbox" <%= 'checked' if current_user.notifications_topics_all_active %> id="another-basic-switch" class="mdc-switch__native-control" role="switch">
+              </div>
             </div>
           </div>
+          <label for="another-basic-switch" data-target="notification.label">Notificações
+            <span>Receba até 1 notificação por dia para avisar sobre seus eventos agendados e novos eventos que podem te interessar.</span>
+          </label>
         </div>
-        <label for="another-basic-switch" data-target="notification.label">Notificações
-          <span>Receba até 1 notificação por dia para avisar sobre seus eventos agendados e novos eventos que podem te interessar.</span>
-        </label>
       </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="me-section">
     <div class="me-section__inner">
       <div class="me-user-suggestions">
         <div class="me-user-suggestions__inner">
-          <% User.where("id IN (?) AND last_sign_in_at > ?", current_user.following_users, Date.today - 10.days).order("last_sign_in_at DESC").each do |user| %>
+          <% User.where("id IN (?) AND last_sign_in_at > ?", current_user.following_users, Date.today - 7.days).order("last_sign_in_at DESC").each do |user| %>
             <%= link_to user_path user do %>
               <div class="me-user-suggestions__user">
-                <div class="me-user-suggestions__picture">
-                  <img src="<%= user.picture %>" alt="">
+                <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
                 </div>
                 <div class="me-user-suggestions__name">
                   <%= user.first_name %>
@@ -124,7 +125,7 @@
       <section class="me-section">
         <div class="me-section__inner">
           <% if current_user && @items.dig(:follow, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
-            <% follow_custom_title = capture do %>
+            <% follow_topics_custom = capture do %>
               <div class="me-chip-set__wrapper">
                 <div class="me-chip-set mdc-chip-set">
                   <% current_user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
@@ -142,7 +143,7 @@
                     collection:  @items[:follow],
                     title:       {
                         principal: "Tópicos que você segue",
-                        custom:    follow_custom_title
+                        custom:    follow_topics_custom
                     },
                     type:        :large,
                     filters:     {
@@ -162,6 +163,53 @@
           <% end %>
         </div>
       </section>
+
+
+      <% if current_user && @items.dig(:following_users, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+        <section class="me-section">
+          <div class="me-section__inner">
+            <% follow_users_custom = capture do %>
+              <div class="me-user-suggestions">
+                <div class="me-user-suggestions__inner">
+                  <% User.where("id IN (?) AND last_sign_in_at > ?", current_user.following_users, Date.today - 7.days).order("last_sign_in_at DESC").each do |user| %>
+                    <%= link_to user_path user do %>
+                      <div class="me-user-suggestions__user">
+                        <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
+                        </div>
+                        <div class="me-user-suggestions__name">
+                          <%= user.first_name %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+            <%= render partial: "components/collection/collection", locals: {
+                data:  {
+                    identifier: 'following-users',
+                    collection: @items[:following_users],
+                    title:      {
+                        principal: "Pessoas que você segue",
+                        custom:    follow_users_custom
+                    },
+                    type:       :large,
+                    filters:    {
+                        categories: false,
+                        kinds:      false,
+                        ocurrences: false
+                    },
+                    detail:     @items[:following_users][:detail],
+                    origin:     :feed,
+                    #continue_to: "/#{current_user.slug}/sugestoes"
+                },
+                props: {
+                    disposition: :horizontal
+                }
+            } %>
+          </div>
+        </section>
+      <% end %>
 
 
       <section class="me-section">

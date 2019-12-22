@@ -19,7 +19,8 @@ class FeedsController < ApplicationController
 		@events_this_week           = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
 		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
 		@events_followed_by_user    = Event.follow_features_by_user(current_user)
-		@favorited_events           = current_or_guest_user.saved_events
+		@favorited_events           = current_user.saved_events
+		@events_from_followed_users = Event.where("? @> ANY (ARRAY(select jsonb_array_elements(entries -> 'saved_by')))", current_user.following['users'].to_json)
 
 
 		if current_user.sign_in_count >= 2
@@ -30,7 +31,8 @@ class FeedsController < ApplicationController
 					},
 					{
 							only_in:           @new_events_today.map(&:id),
-							order_by_persona:  true,
+							order_by_persona:  false,
+							order_by_date:     true,
 							in_user_personas:  true,
 							not_in_categories: ['curso']
 					})
@@ -46,8 +48,8 @@ class FeedsController < ApplicationController
 					{
 							only_in:          @events_in_user_suggestions.map(&:id),
 							in_user_personas: false,
-							order_by_persona: true,
-							order_by_date:    false,
+							order_by_persona: false,
+							order_by_date:    true,
 							with_high_score:  true
 					}
 			)
@@ -73,6 +75,23 @@ class FeedsController < ApplicationController
 		end
 
 
+		if @events_from_followed_users.size > 0
+			@collection_following_users = @collections.call(
+					{
+							identifier: 'following-users',
+							events:     @events_from_followed_users
+					},
+					{
+							only_in:          @events_from_followed_users.map(&:id),
+							in_user_personas: false,
+							order_by_persona: false,
+							order_by_date:    true,
+							with_high_score:  false,
+							not_in_saved:     false
+					})
+		end
+
+
 		if @events_this_week.size >= 2
 			@collection_week = @collections.call(
 					{
@@ -83,8 +102,8 @@ class FeedsController < ApplicationController
 							only_in:           @events_this_week.map(&:id),
 							not_in:            (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || []) | (@collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
 							in_user_personas:  false,
-							order_by_persona:  true,
-							order_by_date:     false,
+							order_by_persona:  false,
+							order_by_date:     true,
 							not_in_categories: ['brecho', 'curso']
 					})
 		end
@@ -94,6 +113,7 @@ class FeedsController < ApplicationController
 				new_today:        @collection_new_today,
 				week:             @collection_week,
 				follow:           @collection_follow,
+				following_users:  @collection_following_users,
 				user_suggestions: @collection_suggestions
 		}
 	end
@@ -193,12 +213,12 @@ class FeedsController < ApplicationController
 				                                                                              identifier: 'today-and-tomorrow',
 				                                                                              events:     Event.all
 		                                                                              }, {
-				                                                                              in_days:         [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
-																																											in_user_personas: false,
-																																											order_by_persona: false,
-																																											order_by_date:    true,
-																																											with_high_score:  true,
-				                                                                              limit:           16
+				                                                                              in_days:          [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
+				                                                                              in_user_personas: false,
+				                                                                              order_by_persona: false,
+				                                                                              order_by_date:    true,
+				                                                                              with_high_score:  true,
+				                                                                              limit:            16
 		                                                                              })
 
 		@data = {

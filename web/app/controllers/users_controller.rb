@@ -42,8 +42,7 @@ class UsersController < ApplicationController
 				identifier: "user-saved-events",
 				collection: @collection,
 				title:      {
-						principal: "Eventos salvos por você",
-						secondary: "Esta é a sua lista de eventos que ainda não aconteceram"
+						principal: "Eventos salvos por #{current_user == @user ? 'você' : @user.first_name}"
 				},
 				filters:    {
 						ocurrences: false,

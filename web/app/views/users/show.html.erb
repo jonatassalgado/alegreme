@@ -36,8 +36,7 @@
             <% User.where("id IN (?)", @user.followers['users']).order("last_sign_in_at DESC").limit(10).each do |user| %>
               <%= link_to user_path user do %>
                 <div class="me-user-suggestions__user">
-                  <div class="me-user-suggestions__picture">
-                    <img src="<%= user.picture %>" alt="">
+                  <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
                   </div>
                   <div class="me-user-suggestions__name">
                     <%= user.first_name %>
@@ -53,7 +52,7 @@
 
   <section class="me-section">
     <div class="me-section__inner">
-      <h2>Tópicos que você segue</h2>
+      <h2>Tópicos que <%= current_user == @user ? 'você' : @user.first_name %> segue</h2>
       <div class="me-chip-set__wrapper">
         <div class="me-chip-set mdc-chip-set">
           <% @user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>

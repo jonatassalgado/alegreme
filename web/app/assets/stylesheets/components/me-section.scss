@@ -51,6 +51,9 @@
         width: 100% !important;
       }
     }
+    .me-section--with-padding & {
+      padding: $section-padding-phone;
+    }
   }
 
   & h2 {

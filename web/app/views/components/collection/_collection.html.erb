@@ -58,13 +58,14 @@
     <h2>
       <%= data[:title][:principal] %>
       <%# if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
+      <% unless data[:continue_to].blank? %>
       <span class="me-see-all is-hoverable"
             data-fixed="true"
             onclick="Turbolinks.visit('<%= data[:continue_to] %>')">
           Ver tudo
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
         </span>
-      <%# end %>
+      <% end %>
       <%= render partial: 'components/follow/follow_button', locals: {
           identifier: data[:identifier],
           user:       data[:user],
@@ -83,50 +84,50 @@
       </div>
     <% end %>
     <% unless data[:title][:custom] %>
-    <div class="me-filter"
-         data-target="section.filter">
-      <% if data[:filters][:categories] && !data[:collection][:categories].blank? %>
-        <%= render(partial: 'feeds/filter',
-                   locals:  {
-                       data: {
-                           initial_filters:              data[:collection][:categories],
-                           params_filters:               data[:categories],
-                           filters_that_exist_in_events: data[:collection][:categories],
-                           icon_type:                    'filter_list',
-                           type:                         'categories'
-                       }
-                   },
-                   cached:  true) %>
-      <% end %>
-      <% if (data[:filters][:kinds] && data[:categories] && !data[:collection][:kinds].blank?) || (data[:filters][:kinds] && !params[:kinds].blank?) %>
-        <%= render(partial: 'feeds/filter',
-                   locals:  {
-                       data: {
-                           initial_filters:              data[:collection][:kinds],
-                           params_filters:               data[:kinds],
-                           filters_that_exist_in_events: data[:collection][:kinds],
-                           icon_type:                    'filter_list',
-                           type:                         'kinds'
-                       }
-                   },
-                   cached:  true) %>
-      <% end %>
-      <!-- TODO: remover duplicado-->
-      <% if data[:filters][:ocurrences] && !data[:collection][:ocurrences].blank? %>
-        <%= data[:title][:ocurrences] %>
-        <%= render(partial: 'feeds/filter',
-                   locals:  {
-                       data: {
-                           initial_filters:              data[:collection][:ocurrences],
-                           params_filters:               data[:ocurrences],
-                           filters_that_exist_in_events: data[:collection][:ocurrences],
-                           icon_type:                    '',
-                           type:                         'ocurrences'
-                       }
-                   },
-                   cached:  true) %>
-      <% end %>
-    </div>
+      <div class="me-filter"
+           data-target="section.filter">
+        <% if data[:filters][:categories] && !data[:collection][:categories].blank? %>
+          <%= render(partial: 'feeds/filter',
+                     locals:  {
+                         data: {
+                             initial_filters:              data[:collection][:categories],
+                             params_filters:               data[:categories],
+                             filters_that_exist_in_events: data[:collection][:categories],
+                             icon_type:                    'filter_list',
+                             type:                         'categories'
+                         }
+                     },
+                     cached:  true) %>
+        <% end %>
+        <% if (data[:filters][:kinds] && data[:categories] && !data[:collection][:kinds].blank?) || (data[:filters][:kinds] && !params[:kinds].blank?) %>
+          <%= render(partial: 'feeds/filter',
+                     locals:  {
+                         data: {
+                             initial_filters:              data[:collection][:kinds],
+                             params_filters:               data[:kinds],
+                             filters_that_exist_in_events: data[:collection][:kinds],
+                             icon_type:                    'filter_list',
+                             type:                         'kinds'
+                         }
+                     },
+                     cached:  true) %>
+        <% end %>
+        <!-- TODO: remover duplicado-->
+        <% if data[:filters][:ocurrences] && !data[:collection][:ocurrences].blank? %>
+          <%= data[:title][:ocurrences] %>
+          <%= render(partial: 'feeds/filter',
+                     locals:  {
+                         data: {
+                             initial_filters:              data[:collection][:ocurrences],
+                             params_filters:               data[:ocurrences],
+                             filters_that_exist_in_events: data[:collection][:ocurrences],
+                             icon_type:                    '',
+                             type:                         'ocurrences'
+                         }
+                     },
+                     cached:  true) %>
+        <% end %>
+      </div>
     <% end %>
   </div>
   <div class="mdc-layout-grid">

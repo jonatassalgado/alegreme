@@ -55,12 +55,12 @@
 <% end %>
 
 <% if !mobile_device? &&
-      controller_name == 'feeds' %>
+      (controller_name == 'feeds' || controller_name == 'movies') %>
   <div class="me-tab-bar mdc-tab-bar" data-controller="tab-bar" data-target="tab-bar.tabBar" role="tablist">
     <div class="mdc-tab-scroller">
       <div class="mdc-tab-scroller__scroll-area">
         <div class="mdc-tab-scroller__scroll-content">
-          <button data-action="click->tab-bar#open" data-tab-path="/feed" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'feeds' %>" role="tab" aria-selected="true">
+          <button data-action="click->tab-bar#open" data-tab-path="/feed" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'feeds' %>" role="tab" aria-selected="<%= props[:active] == 'feeds' ? 'true' : 'false' %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Eventos</span>
             </span>
@@ -69,7 +69,7 @@
             </span>
             <span class="mdc-tab__ripple"></span>
           </button>
-          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/cinema" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'movies' %>" role="tab" aria-selected="true">
+          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/cinema" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'movies' %>" role="tab" aria-selected="<%= props[:active] == 'movies' ? 'true' : 'false' %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Cinema</span>
             </span>

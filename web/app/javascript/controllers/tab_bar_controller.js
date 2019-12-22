@@ -6,10 +6,10 @@ export default class TabBarController extends Controller {
 	static targets = ['tabBar'];
 
 	initialize() {
-    this.tabBarMDC = new MDCTabBar(this.tabBarTarget);
+		this.tabBarMDC = new MDCTabBar(this.tabBarTarget);
 
 		this.destroy = () => {
-      this.tabBarMDC.destroy();
+			this.tabBarMDC.destroy();
 		};
 
 		document.addEventListener('turbolinks:before-cache', this.destroy, false);

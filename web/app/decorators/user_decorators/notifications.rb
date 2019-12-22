@@ -38,6 +38,10 @@ module UserDecorators
 				notifications.dig('topics', 'all', 'active') || false
 			end
 
+			def notifications_topics_all_requested
+				notifications.dig('topics', 'all', 'requested') || false
+			end
+
 		end
 
 		module ClassMethods

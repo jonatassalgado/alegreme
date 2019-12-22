@@ -32,8 +32,8 @@
 
   & .mdc-tab-scroller {
     @include desktop-only {
-      width: $main-content-width;
-      margin: auto;
+      width: max-content;
+      //margin: auto;
     }
   }
 
