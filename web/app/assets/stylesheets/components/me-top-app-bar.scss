@@ -76,6 +76,9 @@ $border-color: #e0e0e0;
     width: 35px;
     height: 35px;
     margin: 0 8px 0 0;
+    background-color: $surface-color;
+    background-size: cover;
+    background-repeat: no-repeat;
     @include mobile-only {
       margin: 2px 0 0 0;
       width: 26px;

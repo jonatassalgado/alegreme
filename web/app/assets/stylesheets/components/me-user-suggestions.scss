@@ -10,6 +10,9 @@
     grid-gap: 0 12px;
     padding: 0 24px;
     width: max-content;
+    @include desktop-only {
+      padding: 0;
+    }
   }
 
   &__user {
