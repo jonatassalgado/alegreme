@@ -127,3 +127,20 @@ $maybe-color: $font-tertiary-color;
   @include add-horizontal-scroll-wrapper;
   @include no-scroll-bar
  }
+
+@mixin is-empty {
+  font-weight: 600;
+  font-size: 30px;
+  color: $font-tertiary-color;
+  @include mobile-only {
+    width: calc(100% - 60px);
+    font-size: 16px;
+    left: 30px;
+    & span {
+      width: 100%;
+    }
+  }
+  &:hover {
+    color: $brand-color;
+  }
+}

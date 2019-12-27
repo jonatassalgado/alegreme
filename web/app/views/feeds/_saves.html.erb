@@ -4,8 +4,8 @@
 
 %>
 
-<div id="saves" class="me-saves" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
-  <% if current_user and !current_user.taste_events_saved.empty? %>
+<% if current_user and saved_events.present? %>
+  <div id="saves" class="me-saves" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
     <h2 data-target="saves.header" class="me-saves__title">
       Favoritos
       <%= link_to user_path current_user do %>
@@ -72,17 +72,36 @@
             </div>
           </div>
         <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
 
-        <% if saved_events.length < 6 %>
-          <div class="me-saves__empty">
-            <!--              <i class="material-icons-sharp sentiment-satisfied">-->
-            <!--                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><circle cx="15.5" cy="9.5" r="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm4.41-6.11c-.35-.22-.82-.11-1.03.24-.74 1.17-2 1.87-3.38 1.87s-2.64-.7-3.38-1.88c-.22-.35-.68-.46-1.03-.24-.35.22-.46.68-.24 1.03C8.37 16.54 10.1 17.5 12 17.5s3.63-.97 4.65-2.58c.22-.35.11-.81-.24-1.03z"/></svg>-->
-            <!--              </i>-->
-            <span>Explore as coleções de eventos abaixo e os salve para ver aqui.</span>
+
+<% if current_user and saved_events.empty? %>
+  <div id="saves" class="me-saves me-saves--empty">
+    <div class="me-saves__info">
+      <span>
+        Salve eventos com ❤ para vê-los aqui
+      </span>
+    </div>
+    <div class="me-saves__list mdc-layout-grid"
+         data-target="saves.list">
+      <div class="mdc-layout-grid__inner">
+        <% 8.times do %>
+          <div class="mdc-layout-grid__cell">
+            <div class="me-card mdc-card me-card--saves">
+              <div class="mdc-card__media mdc-card__media--16-9" style="">
+                <div class="me-card__overlay"></div>
+              </div>
+              <div class="me-card__date">
+                <span class="me-card__date-distance-in-words">Iniciou há 1 hora</span>
+              </div>
+            </div>
           </div>
         <% end %>
       </div>
     </div>
+  </div>
+<% end %>
 
-  <% end %>
-</div>

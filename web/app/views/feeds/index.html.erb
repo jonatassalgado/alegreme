@@ -24,26 +24,17 @@
     </div>
   <% end %>
 
+
   <div class="me-section">
     <div class="me-section__inner">
-      <div class="me-user-suggestions">
-        <div class="me-user-suggestions__inner">
-          <% User.where("id IN (?) AND last_sign_in_at > ?", current_user.following_users, Date.today - 7.days).order("last_sign_in_at DESC").each do |user| %>
-            <%= link_to user_path user do %>
-              <div class="me-user-suggestions__user">
-                <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
-                </div>
-                <div class="me-user-suggestions__name">
-                  <%= user.first_name %>
-                  <%= "Novo" if user.taste['events']['updated_at'] && current_user.last_sign_in_at.to_datetime < user.taste['events']['updated_at'].try(:to_datetime) %>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
+      <%= render partial: "components/user_suggestions", locals: {
+          data: {
+              following_users: @following_users
+          }
+      } %>
     </div>
   </div>
+
 
   <% if current_user && current_user&.personas_assortment_finished? %>
     <section class="me-section">
@@ -59,8 +50,6 @@
 
 
   <% if current_user && current_user&.personas_assortment_finished? %>
-    <!--    <section class="me-feed me-page__section">-->
-
     <% if current_user&.personas_assortment_finished? %>
       <% if @items.dig(:new_today, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
         <section class="me-section">
@@ -71,14 +60,17 @@
                     collection:  @items[:new_today],
                     title:       {
                         principal: "Adicionados recentemente",
-                        # secondary: "Foram adicionados #{@items.dig(:new_today, :detail, :total_events_in_collection)} eventos nas últimas 24 horas que podem te interessar",
-                        tertiary: "Com base no seu perfil"
+                        tertiary:  "Com base no seu perfil"
                     },
                     type:        :large,
                     filters:     {
                         categories: false,
                         kinds:      false,
                         ocurrences: false
+                    },
+                    info:        {
+                        assert: true,
+                        text:   'Descubra seu perfil para ver eventos recém adicionados'
                     },
                     continue_to: "/#{current_user.slug}/novos",
                     origin:      :feed
@@ -108,6 +100,10 @@
                         categories: false,
                         kinds:      false,
                         ocurrences: false
+                    },
+                    info:        {
+                        assert: true,
+                        text:   'Salve eventos com ❤ para receber sugestões com base no seu gosto'
                     },
                     detail:      @items[:user_suggestions][:detail],
                     origin:      :feed,
@@ -151,6 +147,10 @@
                         kinds:      false,
                         ocurrences: false
                     },
+                    info:        {
+                        assert: true,
+                        text:   'Siga locais e organizadores para ver seus eventos aqui'
+                    },
                     detail:      @items[:follow][:detail],
                     origin:      :feed,
                     continue_to: "/#{current_user.slug}/seguindo"
@@ -171,7 +171,7 @@
             <% follow_users_custom = capture do %>
               <div class="me-user-suggestions">
                 <div class="me-user-suggestions__inner">
-                  <% User.where("id IN (?) AND last_sign_in_at > ?", current_user.following_users, Date.today - 7.days).order("last_sign_in_at DESC").each do |user| %>
+                  <% User.following_users(current_user).each do |user| %>
                     <%= link_to user_path user do %>
                       <div class="me-user-suggestions__user">
                         <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
@@ -198,6 +198,10 @@
                         categories: false,
                         kinds:      false,
                         ocurrences: false
+                    },
+                    info:        {
+                        assert: true,
+                        text:   'Siga pessoas para ver seus eventos aqui'
                     },
                     detail:     @items[:following_users][:detail],
                     origin:     :feed,
@@ -229,6 +233,10 @@
                         categories: false,
                         kinds:      false,
                         ocurrences: true
+                    },
+                    info:        {
+                        assert: true,
+                        text:   'Descubra seu perfil para ver os eventos da semana sugeridos'
                     },
                     continue_to: '/porto-alegre/eventos/semana',
                     origin:      :feed
@@ -267,10 +275,6 @@
           </div>
         </section>
       <% end %>
-
-
     <% end %>
-    <!--    </section>-->
   <% end %>
-
 </section>

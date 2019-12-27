@@ -1,0 +1,49 @@
+<%
+
+  raise ArgumentError unless data
+
+  data = {
+      following_users: []
+  }.deep_merge!(data)
+
+%>
+
+<% if data[:following_users].present? %>
+  <div class="me-user-suggestions">
+    <div class="me-user-suggestions__inner">
+      <% data[:following_users].each do |user| %>
+        <%= link_to user_path user do %>
+          <div class="me-user-suggestions__user">
+            <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
+            </div>
+            <div class="me-user-suggestions__name">
+              <%= user.first_name %>
+              <%#= "Novo" if user.taste['events']['updated_at'] && current_user.last_sign_in_at.to_datetime < user.taste['events']['updated_at'].try(:to_datetime) %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="me-user-suggestions me-user-suggestions--empty">
+    <a href="/users">
+      <div class="me-user-suggestions__info">
+      <span>
+        Siga pessoas para ver seus eventos aqui
+      </span>
+      </div>
+    </a>
+    <div class="me-user-suggestions__inner">
+      <% 16.times do %>
+        <div class="me-user-suggestions__user">
+          <div class="me-user-suggestions__picture" style="">
+          </div>
+          <div class="me-user-suggestions__name">
+            Lorem Ipsum
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

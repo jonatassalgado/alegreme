@@ -70,7 +70,9 @@ Rails.application.routes.draw do
 
 	authenticate :user, lambda { |u| u.admin? } do
 		mount Sidekiq::Web => '/sidekiq'
+		get 'admin/users', to: 'users#admin'
 	end
+
 
 	get 'job/submit/:who/:message', to: 'job#submit'
 

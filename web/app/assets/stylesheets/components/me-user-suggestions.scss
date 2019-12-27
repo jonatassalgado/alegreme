@@ -3,6 +3,12 @@
     padding: 0 0 12px 0;
   }
 
+  &--empty {
+    //pointer-events: none;
+    user-select: none;
+    position: relative;
+  }
+
   &__inner {
     display: grid;
     grid-template-columns: minmax(40px, 1fr);
@@ -21,6 +27,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
     .me-collection__title-custom & {
       width: 36px;
     }
@@ -33,10 +40,12 @@
     border-radius: 100%;
     background-color: $surface-secondary-color;
     background-size: cover;
+
     .me-collection__title-custom & {
       width: 36px;
       height: 36px;
     }
+
     & img {
       width: 100%;
       height: auto;
@@ -49,5 +58,33 @@
     font-weight: 600;
     font-size: 10px;
     margin: 3px 0 0 0;
+
+    .me-user-suggestions--empty & {
+      font-size: 7px;
+      color: $surface-secondary-color;
+      background-color: $surface-secondary-color;
+    }
+  }
+
+  &__info {
+    .me-user-suggestions--empty & {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include is-empty;
+    }
+  }
+
+  & span {
+    .me-user-suggestions--empty & {
+      background: white;
+      padding: 6px 10px;
+      border-radius: 12px;
+    }
   }
 }

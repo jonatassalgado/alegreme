@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 	before_action :set_user, only: %i[show edit update destroy]
-	before_action :authorize_admin, only: [:index, :destroy, :edit]
+	before_action :authorize_user, only: %i[index]
+	before_action :authorize_admin, only: [:admin, :destroy, :edit]
 	before_action :authorize_current_user, only: %i[show update]
 	before_action :mount_json, only: %i[edit update]
 
@@ -14,10 +15,16 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def admin
+		@users = User.order("created_at DESC")
+		render 'users/admin/index'
+	end
+
 	# GET /users
 	# GET /users.json
 	def index
-		@users = User.order("created_at DESC")
+		@users = User.recents
+		render 'users/index'
 	end
 
 	# GET /users/1

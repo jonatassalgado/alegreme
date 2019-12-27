@@ -20,6 +20,29 @@
     //border-bottom: 5px solid $surface-tertiary-color;
   }
 
+  &__title {
+    margin: 6px 0 12px 0;
+    font-weight: 800;
+    //max-width: 90%;
+    line-height: 1.4em;
+    font-size: 24px;
+    color: $font-primary-color;
+    font-family: $font-primary-family;
+    position: relative;
+    z-index: 3;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include mobile-only {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1em;
+      padding: 0 12px 0 $section-padding-phone;
+      justify-content: space-between;
+    }
+  }
+
   &--full {
     @include mobile-only {
       padding: 0;
@@ -54,33 +77,11 @@
     .me-section--with-padding & {
       padding: $section-padding-phone;
     }
-  }
-
-  & h2 {
-    margin: 6px 0 12px 0;
-    font-weight: 800;
-    //max-width: 90%;
-    line-height: 1.4em;
-    font-size: 24px;
-    color: $font-primary-color;
-    font-family: $font-primary-family;
-    position: relative;
-    z-index: 3;
-    letter-spacing: -0.01em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    @include mobile-only {
-      font-size: 16px;
-      font-weight: 800;
-      line-height: 1em;
-      padding: 0 12px 0 $section-padding-phone;
-      justify-content: space-between;
+    .me-section--centralized & {
+      max-width: 700px;
     }
-    [data-controller="movies"][data-action="index"] & {
-      @include mobile-only {
-        padding: 0;
-      }
+    .me-section--centralized-small & {
+      max-width: 400px;
     }
   }
 

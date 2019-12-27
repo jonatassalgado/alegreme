@@ -6,6 +6,11 @@ $description-color: $font-secondary-color;
   position: relative;
   will-change: opacity, transform;
 
+  &--empty {
+    user-select: none;
+    pointer-events: none;
+  }
+
   &--feed {
     min-height: 176px;
     font-size: 14px;
@@ -48,19 +53,6 @@ $description-color: $font-secondary-color;
     @include mobile-only {
       min-height: 100px;
     }
-
-    // &__title,
-    // &__date {
-    //   pointer-events: none;
-    //   margin: 3px 0 0 0;
-    //   line-height: 1.3em;
-    //   color: $font-secondary-color;
-    //
-    //   &:hover {
-    //     background: inherit;
-    //   }
-    // }
-
 
     &__title {
       color: $font-primary-color;
@@ -140,8 +132,10 @@ $description-color: $font-secondary-color;
 
   & .mdc-card__media {
     border-radius: $media-border-radius;
-    //border: $media-border-width solid #f7f7f7;
-    //overflow: hidden;
+  }
+
+  &.me-card--empty .mdc-card__media {
+    background-color: $surface-secondary-color;
   }
 
   & .mdc-card__actions {
@@ -161,11 +155,13 @@ $description-color: $font-secondary-color;
     overflow: hidden;
     border-radius: $media-border-radius;
     box-shadow: 0px 1px 3px #0000001c;
-    //box-shadow: $media-box-shadow-large;
     @include mdc-ripple-surface;
     @include mdc-ripple-radius-bounded;
     @include mdc-states;
     @include mobile-only {
+    }
+    .me-card--empty & {
+      box-shadow: none;
     }
   }
 
@@ -181,10 +177,6 @@ $description-color: $font-secondary-color;
     flex-wrap: wrap;
     z-index: 5;
     margin: 0 0 12px 6px;
-    // position: absolute;
-    // top: 6px;
-    // left: 6px;
-    //display: none;
     .me-card--single & {
       color: $font-primary-color;
       text-transform: none;
@@ -199,6 +191,11 @@ $description-color: $font-secondary-color;
     .me-similar & {
       font-size: 10px;
       font-weight: 500;
+    }
+    .me-card--empty & {
+      color: $surface-secondary-color;
+      background-color: $surface-secondary-color;
+      width: max-content;
     }
   }
 
@@ -230,6 +227,12 @@ $description-color: $font-secondary-color;
       font-weight: 600;
       color: $brand-color-aa;
     }
+
+    .me-card--empty & {
+      color: $surface-secondary-color;
+      background-color: $surface-secondary-color;
+      width: max-content;
+    }
   }
 
   &__date-distance-in-words {
@@ -259,11 +262,15 @@ $description-color: $font-secondary-color;
     }
     .me-similar & {
       font-size: 14px;
-      //@include mobile-only {
-      //  font-size: 14px;
-      //}
     }
-
+    .me-card--empty & {
+      & a {
+        color: $surface-secondary-color;
+        background-color: $surface-secondary-color;
+        width: max-content;
+        display: inline;
+      }
+    }
     & a {
       color: $font-secondary-color;
       .me-similar & {
@@ -284,6 +291,11 @@ $description-color: $font-secondary-color;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    .me-card--empty & {
+      color: $surface-secondary-color;
+      background-color: $surface-secondary-color;
+      width: max-content;
+    }
   }
 
   &__quartenary-section {
@@ -291,6 +303,14 @@ $description-color: $font-secondary-color;
     font-size: 10px;
     font-weight: 300;
     text-transform: lowercase;
+    .me-card--empty & {
+      & a {
+        color: $surface-secondary-color;
+        background-color: $surface-secondary-color;
+        width: max-content;
+        display: inline;
+      }
+    }
     & a {
       color: $font-tertiary-color;
     }
@@ -436,326 +456,6 @@ $description-color: $font-secondary-color;
     }
   }
 
-
-  &--feed {
-
-    //
-    //.me-event-single__similar & {
-    //  margin: 6px 0 30px 0;
-    //}
-
-    //@include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
-    //
-    //@include mobile-only {
-    //  min-height: 165px;
-    //}
-
-    //& .mdc-typography--headline1 {
-    //  color: $font-primary-color;
-    //}
-    //
-    //& .mdc-typography--headline2 {
-    //  margin: 0 0 6px 0;
-    //}
-    //
-    //& .mdc-typography--subtitle2 {
-    //  margin: 0 0 6px 0;
-    //}
-
-    //& .mdc-card__primary-action {
-    //  padding: 6px 0 6px 0;
-    //
-    //  &:hover {
-    //    background: inherit;
-    //  }
-    //}
-
-    //& .mdc-card__title {
-    //  color: $name-color;
-    //  font-size: 14px;
-    //  line-height: 1.2em;
-    //  margin: 6px 0 0 0;
-    //  font-family: Roboto;
-    //  font-weight: 500;
-    //
-    //  @include mobile-only {
-    //    margin: 6px 0 0 0;
-    //    color: $font-secondary-color;
-    //  }
-    //}
-
-    //
-    //& .mdc-card__actions {
-    //  padding: 0;
-    //}
-
-    //& .mdc-card__media {
-    //  //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-    //  //box-shadow: $media-box-shadow;
-    //
-    //  &:hover {
-    //    //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
-    //  }
-    //}
-
-    //&:hover {
-    //  & .mdc-card__media {
-    //    //opacity: 1;
-    //  }
-    //}
-
-    //&[data-event-favorited="true"]::before {
-    //  content: close-quote;
-    //  background: lighten($brand-color, 66%);
-    //  width: 100%;
-    //  height: 100%;
-    //  position: absolute;
-    //  transform: scale(1.1);
-    //  border-radius: 10px;
-    //  z-index: -1;
-    //}
-  }
-
-  //&--single {
-    //padding: 35px 0;
-    //font-size: 16px;
-    //line-height: 1.4em;
-    //@include mobile-only {
-    //  padding: 0;
-    //}
-    //
-    //&[data-event-description-open="true"] {
-    //
-    //  & .me-card__description-wrapper {
-    //    max-height: unset;
-    //    text-align: left;
-    //
-    //    & br {
-    //      content: unset;
-    //    }
-    //
-    //    &::before {
-    //      display: none;
-    //    }
-    //  }
-    //
-    //  & .me-card__description {
-    //    & button {
-    //      display: none;
-    //    }
-    //  }
-    //}
-    //
-    //& .me-card__breadcrumb {
-    //  display: -webkit-box;
-    //  display: flex;
-    //  flex-direction: row;
-    //  margin: 0 0 12px 0;
-    //  text-transform: uppercase;
-    //  font-size: 11px;
-    //  @include mobile-only {
-    //    display: none;
-    //  }
-    //
-    //  & span {
-    //    padding: 0 12px;
-    //  }
-    //
-    //  & i {
-    //    font-style: normal;
-    //  }
-    //}
-    //
-    //& .me-card__primary-section {
-    //  color: $font-secondary-color;
-    //
-    //  & a {
-    //    color: $font-secondary-color;
-    //  }
-    //}
-    //
-    //& .me-card__head {
-    //  display: flex;
-    //  flex-direction: row;
-    //  align-items: baseline;
-    //  height: 450px;
-    //  flex-wrap: wrap;
-    //  justify-content: center;
-    //  align-content: baseline;
-    //  position: relative;
-    //  @include mobile-only {
-    //    height: auto;
-    //    align-content: center;
-    //    justify-content: center;
-    //    flex-direction: row;
-    //    width: 100vw;
-    //    top: -24px;
-    //    left: -24px;
-    //  }
-    //}
-    //
-    //& .me-card__media {
-    //  width: 100%;
-    //  height: 370px;
-    //  background-size: cover;
-    //  background-position: center;
-    //  border-radius: $media-border-radius;
-    //  position: relative;
-    //  box-shadow: $media-box-shadow-large;
-    //  @include mobile-only {
-    //    width: 100%;
-    //    height: 200px;
-    //    border-radius: 0;
-    //    box-shadow: none;
-    //  }
-    //}
-    //
-    //& .me-card__name {
-    //  padding: 0;
-    //  margin: 25px 0 30px 15px;
-    //  width: 100%;
-    //  text-align: center;
-    //  line-height: 1.3em;
-    //  font-family: $font-primary-family;
-    //  font-weight: 800;
-    //  font-size: 28px;
-    //  color: $font-primary-color;
-    //  @include mobile-only {
-    //    font-size: 21px;
-    //    width: 90%;
-    //    text-align: center;
-    //    margin: 15px 0 0 0;
-    //  }
-    //}
-    //
-    //& .me-card__topics {
-    //  text-align: center;
-    //  margin: auto;
-    //
-    //  & .mdc-chip-set {
-    //    display: inline;
-    //  }
-    //
-    //  & .mdc-chip__text {
-    //    font-size: 12px;
-    //  }
-    //}
-    //
-    //& .me-card__like-button {
-    //  bottom: -20px;
-    //  right: 16px;
-    //}
-    //
-    ////& .me-card__primary-section {
-    //  //color: $font-primary-color;
-    //  //text-transform: none;
-    //  //display: flex;
-    //  //margin: 50px 0;
-    //  //@include mobile-only {
-    //  //  flex-direction: column;
-    //  //  margin: 24px 0;
-    //  //}
-    ////}
-    //
-    //& .me-card__place, .me-card__date {
-    //  //background: $background-z0-color;
-    //  padding: 10px;
-    //  margin: 0 15px 0 0;
-    //  border-radius: 5px;
-    //  width: 50%;
-    //  @include mobile-only {
-    //    width: auto;
-    //    margin: 0 0 16px 0;
-    //    display: flex;
-    //  }
-    //
-    //  &-title {
-    //    font-style: normal;
-    //    font-weight: bold;
-    //    font-size: 14px;
-    //    margin: 0 0 3px 0;
-    //    line-height: 1em;
-    //    text-transform: capitalize;
-    //
-    //    & a:hover {
-    //      color: $brand-color;
-    //    }
-    //  }
-    //
-    //  & i {
-    //    float: left;
-    //    margin: 0 10px 0 0;
-    //  }
-    //
-    //  & span {
-    //    font-style: normal;
-    //    font-weight: normal;
-    //    font-size: 12px;
-    //  }
-    //}
-    //
-    //& .me-card__address {
-    //  font-style: normal;
-    //  font-weight: normal;
-    //  font-size: 12px;
-    //
-    //  &:hover {
-    //    color: $brand-color;
-    //  }
-    //}
-    //
-    //& .me-card__date {
-    //  margin: 0;
-    //}
-    //
-    //& .me-card__description {
-    //  margin: 35px 0;
-    //
-    //  & button {
-    //    margin: auto;
-    //    display: block;
-    //  }
-    //}
-    //
-    //& .me-card__description-wrapper {
-    //  font-weight: normal;
-    //  font-size: 16px;
-    //  line-height: 1.6em;
-    //  position: relative;
-    //  max-height: 150px;
-    //  overflow: hidden;
-    //  text-align: justify;
-    //
-    //  & br {
-    //    content: close-quote;
-    //  }
-    //
-    //  &::before {
-    //    content: close-quote;
-    //    width: 100%;
-    //    height: 100%;
-    //    position: absolute;
-    //    background: linear-gradient(0deg, #FFFFFF 15%, transparent 100%);
-    //    z-index: 2;
-    //  }
-    //
-    //  & a {
-    //    text-decoration: underline;
-    //    color: $link-color;
-    //  }
-    //}
-    //
-    //& .me-icon-button.mdc-icon-button {
-    //  display: block;
-    //}
-    //
-    //& .mdc-typography--body2 {
-    //  font-weight: 400;
-    //  padding: 0 16px 16px;
-    //  font-family: Cabin;
-    //  font-size: 14px;
-    //}
-  //}
 
   &--notice {
     min-height: 30vh;

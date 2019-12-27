@@ -19,6 +19,14 @@ class User < ApplicationRecord
 	include UserDecorators::Suggestions
 	include UserDecorators::Notifications
 
+	scope 'following_users', lambda { |user|
+		where("id IN (?) AND last_sign_in_at > ?", user.following_users, Date.today - 14.days).order("last_sign_in_at DESC")
+	}
+
+	scope 'recents', lambda {
+		where("last_sign_in_at > ?", Date.today - 14.days).order("last_sign_in_at DESC")
+	}
+
 	scope 'with_saved_events', lambda {
 		where("jsonb_array_length(taste -> 'events' -> 'saved') > 0")
 	}

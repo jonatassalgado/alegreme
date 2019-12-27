@@ -20,6 +20,7 @@ class FeedsController < ApplicationController
 		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
 		@events_followed_by_user    = Event.follow_features_by_user(current_user)
 		@favorited_events           = current_user.saved_events
+		@following_users            = User.following_users(current_user)
 		@events_from_followed_users = Event.where("? @> ANY (ARRAY(select jsonb_array_elements(entries -> 'saved_by')))", current_user.following['users'].to_json)
 
 
