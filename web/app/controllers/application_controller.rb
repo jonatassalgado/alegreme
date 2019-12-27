@@ -39,11 +39,12 @@ class ApplicationController < ActionController::Base
 	end
 
 	def authorize_current_user
-		unless @user&.id == current_user&.id || current_user&.admin?
+		user = User.friendly.find params[:id]
+
+		unless user&.id == current_user&.id || current_user&.admin?
 			redirect_to root_path, notice: 'Você não tem permissão para realizar esta operação'
 		end
 	end
-
 
 
 end

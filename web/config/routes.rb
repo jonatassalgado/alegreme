@@ -43,9 +43,9 @@ Rails.application.routes.draw do
 	get 'train', to: 'train#index', as: :train
 
 	resources :users
-	get '/:user/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
-	get '/:user/seguindo', to: 'feeds#follow', as: :follow_events
-	get '/:user/novos', to: 'feeds#recent', as: :recent_events
+	get '/:id/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
+	get '/:id/seguindo', to: 'feeds#follow', as: :follow_events
+	get '/:id/novos', to: 'feeds#recent', as: :recent_events
 
 	get '/active-invite', to: 'users#active_invite'
 

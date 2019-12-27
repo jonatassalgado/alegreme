@@ -2,7 +2,7 @@
 
 <section class="me-page me-page--feed is-animated">
 
-  <%= render partial: 'components/swipable/swipable' if current_user&.personas_assortment_finished? == true %>
+  <%= render partial: 'components/swipable/swipable' if current_user && current_user.personas_assortment_finished? == false %>
 
   <% if current_user && current_user.notifications_topics_all_requested == false %>
     <div class="me-section">
@@ -50,37 +50,37 @@
 
 
   <%# if current_user && current_user&.personas_assortment_finished? %>
-  <%# if @items.dig(:new_today, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
-  <section class="me-section">
-    <div class="me-section__inner">
-      <%= render partial: "components/collection/collection", locals: {
-          data:  {
-              identifier:  'new-today',
-              collection:  @items[:new_today],
-              title:       {
-                  principal: "Adicionados recentemente",
-                  tertiary:  "Com base no seu perfil"
-              },
-              type:        :large,
-              filters:     {
-                  categories: false,
-                  kinds:      false,
-                  ocurrences: false
-              },
-              info:        {
-                  assert: true,
-                  text:   'Descubra seu perfil para ver eventos recém adicionados'
-              },
-              continue_to: "/#{current_user&.slug}/novos",
-              origin:      :feed
-          },
-          props: {
-              disposition: :horizontal
-          }
-      } %>
-    </div>
-  </section>
-  <%# end %>
+  <% if @items.dig(:new_today, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+    <section class="me-section">
+      <div class="me-section__inner">
+        <%= render partial: "components/collection/collection", locals: {
+            data:  {
+                identifier:  'new-today',
+                collection:  @items[:new_today],
+                title:       {
+                    principal: "Adicionados recentemente",
+                    tertiary:  "Com base no seu perfil"
+                },
+                type:        :large,
+                filters:     {
+                    categories: false,
+                    kinds:      false,
+                    ocurrences: false
+                },
+                info:        {
+                    assert: true,
+                    text:   'Descubra seu perfil para ver eventos recém adicionados'
+                },
+                continue_to: "/#{current_user&.slug}/novos",
+                origin:      :feed
+            },
+            props: {
+                disposition: :horizontal
+            }
+        } %>
+      </div>
+    </section>
+  <% end %>
 
   <%# if current_user && @items.dig(:user_suggestions, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
   <section class="me-section">
@@ -166,7 +166,7 @@
   </section>
 
 
-  <%# if current_user && @items.dig(:following_users, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+  <% unless current_user&.following_users %>
     <section class="me-section">
       <div class="me-section__inner">
         <% follow_users_custom = capture do %>
@@ -214,7 +214,7 @@
         } %>
       </div>
     </section>
-  <%# end %>
+  <% end %>
 
 
   <section class="me-section">

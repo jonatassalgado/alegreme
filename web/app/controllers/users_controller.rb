@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-	before_action :set_user, only: %i[show edit update destroy]
-	before_action :authorize_user, only: %i[index]
+	before_action :set_user, only: [:show, :edit, :update, :destroy]
+	before_action :authorize_user, only: [:index, :show]
 	before_action :authorize_admin, only: [:admin, :destroy, :edit]
-	before_action :authorize_current_user, only: %i[show update]
-	before_action :mount_json, only: %i[edit update]
+	before_action :authorize_current_user, only: [:update]
+	before_action :mount_json, only: [:edit, :update]
 
 	def active_invite
 		@user = User.find_by_reset_password_token params[:reset_password_token]
