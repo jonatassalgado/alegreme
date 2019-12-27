@@ -28,15 +28,15 @@
 }
 
 .me-bot__container:not(.no-icon)::before {
-  content: "";
-  position: absolute;
-  left: -4px;
-  bottom: -4px;
-  height: 0;
-  border-style: solid;
-  border-width: 20px 20px 10px 0;
-  border-color: transparent #fff transparent transparent;
-  transform: rotate(-30deg)
+  //content: "";
+  //position: absolute;
+  //left: -4px;
+  //bottom: -4px;
+  //height: 0;
+  //border-style: solid;
+  //border-width: 20px 20px 10px 0;
+  //border-color: transparent #fff transparent transparent;
+  //transform: rotate(-30deg)
 }
 
 .me-bot__container:not(.no-icon)::after {
