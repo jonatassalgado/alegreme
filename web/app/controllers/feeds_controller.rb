@@ -1,7 +1,7 @@
 include Pagy::Backend
 
 class FeedsController < ApplicationController
-	before_action :authorize_user, except: [:today, :category, :week, :city, :day]
+	before_action :authorize_user, except: [:index, :today, :category, :week, :city, :day]
 	before_action :completed_swipable, except: [:today, :category, :week, :city, :day]
 	before_action :authorize_current_user, only: %i[suggestions follow news]
 
@@ -9,8 +9,8 @@ class FeedsController < ApplicationController
 	def index
 		gon.push({
 				         :env             => Rails.env,
-				         :user_id         => current_user.id,
-				         :user_first_name => current_user.first_name
+				         :user_id         => current_user.try(:id),
+				         :user_first_name => current_user.try(:first_name)
 		         })
 
 		@collections ||= EventServices::CollectionCreator.new(current_user, params)
@@ -19,12 +19,12 @@ class FeedsController < ApplicationController
 		@events_this_week           = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
 		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
 		@events_followed_by_user    = Event.follow_features_by_user(current_user)
-		@favorited_events           = current_user.saved_events
+		@favorited_events           = current_user.try(:saved_events)
 		@following_users            = User.following_users(current_user)
-		@events_from_followed_users = Event.where("? @> ANY (ARRAY(select jsonb_array_elements(entries -> 'saved_by')))", current_user.following['users'].to_json)
+		@events_from_followed_users = Event.from_followed_users(current_user)
 
 
-		if current_user.sign_in_count >= 2
+		if current_user&.sign_in_count.try { |counter| counter >= 2 }
 			@collection_new_today = @collections.call(
 					{
 							identifier: 'new-today',
@@ -37,6 +37,8 @@ class FeedsController < ApplicationController
 							in_user_personas:  true,
 							not_in_categories: ['curso']
 					})
+		else
+			@collection_new_today = {}
 		end
 
 
@@ -90,6 +92,8 @@ class FeedsController < ApplicationController
 							with_high_score:  false,
 							not_in_saved:     false
 					})
+		else
+			@collection_following_users = {}
 		end
 
 
@@ -107,6 +111,8 @@ class FeedsController < ApplicationController
 							order_by_date:     true,
 							not_in_categories: ['brecho', 'curso']
 					})
+		else
+			@collection_week = {}
 		end
 
 
@@ -370,7 +376,7 @@ class FeedsController < ApplicationController
 	end
 
 	def completed_swipable
-		if current_user.need_to_finish_swipable?
+		if current_user&.need_to_finish_swipable?
 			redirect_to onboarding_path
 		end
 	end

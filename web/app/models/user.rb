@@ -20,6 +20,7 @@ class User < ApplicationRecord
 	include UserDecorators::Notifications
 
 	scope 'following_users', lambda { |user|
+		return User.none unless user
 		where("id IN (?) AND last_sign_in_at > ?", user.following_users, Date.today - 14.days).order("last_sign_in_at DESC")
 	}
 

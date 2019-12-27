@@ -38,7 +38,7 @@
 
 %>
 
-<% if data[:collection][:detail][:total_events_in_collection] > 0 %>
+<% if data.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
   <section class="me-collection"
            data-controller="section"
            data-target="section.section"

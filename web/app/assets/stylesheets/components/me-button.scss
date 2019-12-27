@@ -56,7 +56,7 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
     }
   }
 
-  .me-top-app-bar & {
+  .me-search-field & {
     font-size: 12px;
     @include mdc-button-ink-color($font-secondary-color);
     @include mdc-button-container-fill-color($surface-color);
