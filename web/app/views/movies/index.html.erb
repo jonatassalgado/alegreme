@@ -7,10 +7,10 @@
   <div class="me-page__section">
     <section class="me-section">
       <section class="me-section__inner">
-        <h2 class="me-section__title">
-          Filmes nos cinemas de Porto Alegre
-        </h2>
         <div class="me-movie__container">
+          <h2 class="me-movie__container-title">
+            Filmes nos cinemas de Porto Alegre
+          </h2>
           <div class="me-movie__grid">
             <% @movies.each do |movie| %>
             <%= link_to movie_path(movie) do %>

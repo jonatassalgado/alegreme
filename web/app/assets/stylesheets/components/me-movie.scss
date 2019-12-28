@@ -16,7 +16,17 @@
   }
 
   &__container-title {
+    font-weight: 800;
+    line-height: 1.4em;
+    font-size: 24px;
+    color: $font-primary-color;
+    font-family: $font-primary-family;
     padding: 3px 0 12px;
+    @include mobile-only {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1em;
+    }
   }
 
   &__grid {
