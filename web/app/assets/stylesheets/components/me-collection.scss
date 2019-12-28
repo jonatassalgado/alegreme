@@ -93,12 +93,12 @@
       display: none;
     }
 
-    .me-page--profile & {
-      margin: 0 0 12px 0;
-      @include mobile-only {
-        // margin: 0;
-      }
-    }
+    //.me-page--profile & {
+    //  margin: 0 0 12px 0;
+    //  @include mobile-only {
+    //    // margin: 0;
+    //  }
+    //}
 
     .me-collection--empty & {
       color: $surface-secondary-color;
