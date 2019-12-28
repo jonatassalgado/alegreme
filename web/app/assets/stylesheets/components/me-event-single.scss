@@ -96,6 +96,12 @@
       border-radius: 0;
       box-shadow: none;
     }
+
+    & img {
+      width: inherit;
+      height: inherit;
+      object-fit: cover;
+    }
   }
 
   &__name {

@@ -148,7 +148,8 @@
           </div>
         </div>
         <% end %>
-          <div class="me-event-single__media" style="<%= get_image_style_attr @event %>; background-image: url('<%= @event.image[:original].url(public: true) %>')">
+          <div class="me-event-single__media" style="<%= get_image_style_attr @event %>">
+            <img src="<%= @event.image[:original].url(public: true) %>" alt="">
           </div>
         </div>
         <div class="me-event-single__content">
