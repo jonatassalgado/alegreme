@@ -32,7 +32,7 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
   }
 
 
-  &--transparent {
+  &--floating {
     @include mdc-button-container-fill-color($surface-color);
     @include mdc-button-ink-color($font-primary-color);
     // background: $surface-color;
@@ -42,6 +42,24 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
     & svg {
       fill: $font-secondary-color
     }
+  }
+
+  &--transparent {
+    @include mdc-button-container-fill-color($surface-color);
+    @include mdc-button-ink-color($font-primary-color);
+
+    &.me-button--secondary {
+      @include mdc-button-ink-color($font-secondary-color);
+    }
+
+    & svg {
+      fill: $font-secondary-color
+    }
+  }
+
+  &--small {
+    font-size: 14px;
+    padding: 8px 12px;
   }
 
   &--with-icon-in-right {

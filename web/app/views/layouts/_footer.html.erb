@@ -5,6 +5,12 @@
     data-srcset="<%= image_url 'welcome/porto-alegre@512w' %> 512w, <%= image_url 'welcome/porto-alegre' %> 1248w"
     class="me-footer__image lazyload"/>
 
+  <% unless mobile_device? %>
+    <a style="margin: 0 0 25px 0" href="https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+      <%= image_tag "welcome/google-play-banner.png" %>
+    </a>
+  <% end %>
+
   <div class="me-footer__social-links">
     <!-- <a href="https://www.instagram.com/portoalegreme">instagram</a> · -->
     <!-- <a href="https://twitter.com/portoalegreme">twitter</a> · -->
@@ -13,7 +19,8 @@
   <div class="me-footer__credits">
     Feito
     <!-- <a href="https://www.instagram.com/jonataseduardo/">@jonataseduardo</a> -->
-    com <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    com
+    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M11.7054 0.257324C10.0657 0.257324 8.63837 1.23748 7.99993 2.65639C7.36149 1.23889 5.93415 0.257324 4.29446 0.257324C2.05571 0.257324 0.234619 2.07982 0.234619 4.31857C0.234619 9.36701 7.51759 13.5239 7.82837 13.6983C7.88181 13.7278 7.93946 13.7433 7.99853 13.7433C8.05759 13.7433 8.11665 13.7278 8.16868 13.6983C8.47806 13.5239 15.7638 9.36701 15.7638 4.31857C15.7652 2.07982 13.9442 0.257324 11.7054 0.257324Z" fill="#DB4437"/>
     </svg>
     ️no Centro Histórico de Porto Alegre

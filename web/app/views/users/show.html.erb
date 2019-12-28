@@ -52,7 +52,7 @@
 
   <section class="me-section">
     <div class="me-section__inner">
-      <h2>Tópicos que <%= current_user == @user ? 'você' : @user.first_name %> segue</h2>
+      <h2 class="me-section__title">Tópicos que <%= current_user == @user ? 'você' : @user.first_name %> segue</h2>
       <div class="me-chip-set__wrapper">
         <div class="me-chip-set mdc-chip-set">
           <% @user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>

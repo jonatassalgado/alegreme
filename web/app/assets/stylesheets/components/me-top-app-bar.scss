@@ -19,6 +19,18 @@ $border-color: #e0e0e0;
     position: relative;
   }
 
+  [data-controller="registrations"] & {
+    & .me-search-field {
+      display: none;
+    }
+  }
+
+  [data-controller="sessions"] & {
+    & .me-search-field {
+      display: none;
+    }
+  }
+
   [data-controller="search"] & {
     box-shadow: none;
     & .mdc-top-app-bar__row {
@@ -67,7 +79,13 @@ $border-color: #e0e0e0;
     font-size: 14px;
     width: 100%;
     @include mobile-only {
-      display: none;
+      color: $font-tertiary-color;
+      font-weight: 500;
+    }
+    [data-controller="search"] &, [data-controller="events"] &, [data-controller="places"] &, [data-controller="users"] & {
+      @include mobile-only {
+        display: none;
+      }
     }
   }
 
@@ -76,11 +94,11 @@ $border-color: #e0e0e0;
     width: 35px;
     height: 35px;
     margin: 0 8px 0 0;
-    background-color: $surface-color;
+    background-color: $surface-secondary-color;
     background-size: cover;
     background-repeat: no-repeat;
     @include mobile-only {
-      margin: 2px 0 0 0;
+      margin: 2px 6px 0 0;
       width: 26px;
       height: 26px;
 

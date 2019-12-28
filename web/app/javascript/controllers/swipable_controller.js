@@ -302,7 +302,7 @@ export default class SwipableController extends Controller {
 												setTimeout(() => {
 													document.querySelector('.final-state').classList.add('active');
 													setTimeout(() => {
-														Turbolinks.visit("/feed");
+														location.assign("/feed");
 													}, 3500)
 												}, 150);
 											});

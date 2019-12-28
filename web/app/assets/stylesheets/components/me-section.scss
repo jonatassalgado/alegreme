@@ -52,6 +52,10 @@
     }
   }
 
+  &--full-height {
+    min-height: 80vh;
+  }
+
   [data-controller="events"][data-action="show"] & {
     @include desktop-only {
       margin: 12px 0;
@@ -79,9 +83,11 @@
     }
     .me-section--centralized & {
       max-width: 700px;
+      margin: 0 auto;
     }
     .me-section--centralized-small & {
-      max-width: 400px;
+      max-width: 350px;
+      margin: 0 auto;
     }
   }
 

@@ -14,10 +14,10 @@ class ApplicationController < ActionController::Base
 			redirect_to root_path, notice: 'Acesso somente para usuários logados' and return
 		end
 
-		unless current_user.has_permission_to_login?
-			sign_out current_user
-			redirect_to root_path, notice: 'Seu convite ainda não foi ativado'
-		end
+		#unless current_user.has_permission_to_login?
+		#	sign_out current_user
+		#	redirect_to root_path, notice: 'Seu convite ainda não foi ativado'
+		#end
 	end
 
 	def authorize_admin

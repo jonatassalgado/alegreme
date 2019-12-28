@@ -18,9 +18,16 @@
     }
   }
 
-  & .me-button:not(:disabled) {
+  & .me-button, & .me-button:not(:disabled) {
     background: $surface-color;
     margin: 0 0 6px 0;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+
+    & svg {
+      margin-right: 12px;
+    }
   }
 
   & .me-button--gmail {

@@ -180,16 +180,30 @@ section {
 }
 
 .invite {
-  margin: 20px 0 0 0;
+  margin: 25px 0 0 0;
   position: relative;
   width: 100%;
   user-select: none;
   transition: transform 350ms ease;
   @include mobile-only {
-    margin: 24px auto 0 auto;
+    margin: 25px auto 0 auto;
     padding-bottom: 45px;
     .is-pwa & {
       margin: 16px auto 0 auto;
+    }
+  }
+
+  &__playstore-link {
+    color: $font-tertiary-color;
+    font-weight: 500;
+    margin: 15px 0 0 12px;
+    @include mobile-only {
+      margin: 16px 0 0 0;
+    }
+
+    & a {
+      font-weight: 800;
+      color: $font-secondary-color;
     }
   }
 
@@ -303,10 +317,10 @@ section {
       font-size: 18px;
       font-weight: 600;
       margin: 0 12px 6px 0;
-      .is-pwa & {
-        width: calc(100% - 48px);
-        margin: 0 auto 0 auto;
-      }
+      //.is-pwa & {
+      //  width: calc(100% - 48px);
+      //  margin: 0 auto 0 auto;
+      //}
     }
 
     &:hover {
@@ -335,6 +349,7 @@ section {
       width: 130px;
       margin: 0 0 0 0;
       box-shadow: $surface-z10-box-shadow;
+
       &:hover {
         color: $font-secondary-color;
         background: $surface-color;

@@ -12,7 +12,7 @@ module UserDecorators
 			end
 
 			def name=(value)
-				features['demographic']['name'] = name
+				features['demographic']['name'] = value
 			end
 
 			def first_name
@@ -24,7 +24,7 @@ module UserDecorators
 			end
 
 			def picture=(value)
-				features['demographic']['picture'] = picture
+				features['demographic']['picture'] = value
 			end
 
 			def demographic=(values)

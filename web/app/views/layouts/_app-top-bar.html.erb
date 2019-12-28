@@ -102,9 +102,9 @@
           </svg>
         </a>
         <% unless current_user %>
-          <span>
-            Aproveite a cidade de Porto Alegre
-          </span>
+          <!--          <span>-->
+          <!--            Aproveite a cidade de Porto Alegre-->
+          <!--          </span>-->
         <% end %>
       </section>
       <section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
@@ -140,18 +140,23 @@
     <section
       class="me-top-app-bar__section me-top-app-bar__section--right mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
       <% if current_user %>
-        <% if current_user.picture %>
+        <%# if current_user.picture %>
           <%= link_to user_path(current_user) do %>
             <div class="me-top-app-bar__picture is-hoverable" style="background-image: url('<%= current_user.picture %>')"></div>
           <% end %>
-        <% end %>
+        <%# end %>
         <div style="flex-direction: row">
           <%= link_to current_user.first_name, user_path(current_user), class: "me-top-app-bar__name" %> <br>
           <%= link_to "Sair", destroy_user_session_path, method: :delete, class: "me-top-app-bar__logout" %>
         </div>
       <% else %>
-        <%= link_to new_user_session_path do %>
-          <button class="me-button mdc-button">Entrar</button>
+        <% if !['registrations', 'sessions'].include? controller_name %>
+          <%= link_to new_user_registration_path do %>
+            <button class="me-button me-button--transparent me-button--small me-button--secondary mdc-button">Criar uma conta</button>
+          <% end %>
+          <%= link_to new_user_session_path do %>
+            <button class="me-button me-button--transparent me-button--small mdc-button">Entrar</button>
+          <% end %>
         <% end %>
       <% end %>
     </section>

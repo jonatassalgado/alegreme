@@ -8,4 +8,12 @@
       width: calc(100vw - 48px);
     }
   }
+
+  &__info {
+
+    & a {
+      color: $brand-color;
+      text-decoration: underline;
+    }
+  }
 }

@@ -23,16 +23,16 @@
           <h2>Aprendemos o que você gosta e não gosta para te sugerir eventos, atividades, promoções e serviços que vão de lazer a educação. Assim, você descobre coisas novas e não perde o que já conhece.</h2>
         </section>
 
-        <% if params[:pwa] %>
-          <div class="login-button" title="Entrar" onclick="location.assign('<%= new_user_session_path %>')">
-            Entrar
-            <span>
-          <%= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
-        </span>
-          </div>
-        <% end %>
+        <%# if params[:pwa] %>
+<!--        <div class="login-button" title="Entrar" onclick="location.assign('<%= new_user_session_path %>')">-->
+<!--          Entrar-->
+<!--          <span>-->
+          <%#= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
+<!--        </span>-->
+<!--        </div>-->
+        <%# end %>
 
-        <%= render partial: "welcome/invite" unless params[:pwa]%>
+        <%= render partial: "welcome/invite" %>
 
         <button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="" type="button">
           <i class="">
@@ -250,10 +250,10 @@
     </div>
   </section>
 
-  <% unless params[:pwa] %>
-    <section class="invite-float">
-      <%= render partial: "welcome/invite" %>
-    </section>
-  <% end %>
+  <%# unless params[:pwa] %>
+  <section class="invite-float">
+    <%= render partial: "welcome/invite" %>
+  </section>
+  <%# end %>
 
 </div>

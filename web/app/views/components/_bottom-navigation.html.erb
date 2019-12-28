@@ -1,22 +1,39 @@
-<div data-controller="bottom-navigation" class="me-bottom-navigation">
-  <div class="me-bottom-navigation__items">
-    <div data-target="bottom-navigation.item bottom-navigation.events" data-action="click->bottom-navigation#goto" data-path="/feed" class="me-bottom-navigation__item mdc-ripple-surface">
-      <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M20 12c0-.76.43-1.42 1.06-1.76.6-.33.94-1.01.94-1.7V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.89-1.99 1.99v2.55c0 .69.33 1.37.94 1.69C3.58 10.58 4 11.24 4 12s-.43 1.43-1.06 1.76c-.6.33-.94 1.01-.94 1.7v2.25C2 19.1 2.9 20 4 20h16c1.1 0 2-.9 2-2v-2.54c0-.69-.34-1.37-.94-1.7-.63-.34-1.06-1-1.06-1.76zm-5.5 4.1L12 14.5l-2.5 1.61c-.38.24-.87-.11-.75-.55l.75-2.88-2.3-1.88c-.35-.29-.17-.86.29-.89l2.96-.17 1.08-2.75c.17-.42.77-.42.93 0l1.08 2.76 2.96.17c.45.03.64.6.29.89l-2.3 1.88.76 2.86c.12.45-.37.8-.75.55z"/></svg></i>
-      <span class="label">
+<% if current_user %>
+  <div data-controller="bottom-navigation" class="me-bottom-navigation">
+    <div class="me-bottom-navigation__items">
+      <div data-target="bottom-navigation.item bottom-navigation.events" data-action="click->bottom-navigation#goto" data-path="/feed" class="me-bottom-navigation__item mdc-ripple-surface">
+        <i class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M20 12c0-.76.43-1.42 1.06-1.76.6-.33.94-1.01.94-1.7V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.89-1.99 1.99v2.55c0 .69.33 1.37.94 1.69C3.58 10.58 4 11.24 4 12s-.43 1.43-1.06 1.76c-.6.33-.94 1.01-.94 1.7v2.25C2 19.1 2.9 20 4 20h16c1.1 0 2-.9 2-2v-2.54c0-.69-.34-1.37-.94-1.7-.63-.34-1.06-1-1.06-1.76zm-5.5 4.1L12 14.5l-2.5 1.61c-.38.24-.87-.11-.75-.55l.75-2.88-2.3-1.88c-.35-.29-.17-.86.29-.89l2.96-.17 1.08-2.75c.17-.42.77-.42.93 0l1.08 2.76 2.96.17c.45.03.64.6.29.89l-2.3 1.88.76 2.86c.12.45-.37.8-.75.55z"/>
+          </svg>
+        </i>
+        <span class="label">
         Eventos
       </span>
-    </div>
-    <div data-target="bottom-navigation.item bottom-navigation.cinema" data-action="click->bottom-navigation#goto" data-path="/porto-alegre/cinema" class="me-bottom-navigation__item mdc-ripple-surface">
-      <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></i>
-      <span class="label">
+      </div>
+      <div data-target="bottom-navigation.item bottom-navigation.cinema" data-action="click->bottom-navigation#goto" data-path="/porto-alegre/cinema" class="me-bottom-navigation__item mdc-ripple-surface">
+        <i class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
+            <path d="M0 0h24v24H0z" fill="none"/>
+          </svg>
+        </i>
+        <span class="label">
         Cinema
       </span>
-    </div>
-    <div data-target="bottom-navigation.item bottom-navigation.search" data-action="click->bottom-navigation#goto" data-path="/busca" class="me-bottom-navigation__item mdc-ripple-surface">
-      <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></i>
-      <span class="label">
+      </div>
+      <div data-target="bottom-navigation.item bottom-navigation.search" data-action="click->bottom-navigation#goto" data-path="/busca" class="me-bottom-navigation__item mdc-ripple-surface">
+        <i class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+        </i>
+        <span class="label">
         Busca
       </span>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
