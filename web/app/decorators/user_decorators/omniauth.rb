@@ -14,7 +14,6 @@ module UserDecorators
 		module ClassMethods
 
 			def from_omniauth(auth, guest_user, params)
-				ap auth
 				case auth.provider
 				when 'google_oauth2'
 					googleId = auth.uid
