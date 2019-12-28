@@ -31,9 +31,9 @@ module EventServices
 							@opts[:in_days],
 							'turn_on': (true unless @opts[:in_days].blank?)
 					)
-					.follow_features_by_user(
+					.following_topics_by_user(
 							@user,
-							'turn_on': @opts[:in_follow_features]
+							'turn_on': @opts[:in_following_topics]
 					)
 					.in_user_suggestions(
 							@user,
@@ -117,7 +117,7 @@ module EventServices
 					in_categories:       false,
 					in_organizers:       false,
 					in_places:           false,
-					in_follow_features:  false,
+					in_following_topics:  false,
 					group_by:            false,
 					not_in_saved:        true,
 					not_in_on:           false,

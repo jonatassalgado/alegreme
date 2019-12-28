@@ -166,55 +166,53 @@
   </section>
 
 
-  <% unless current_user&.following_users %>
-    <section class="me-section">
-      <div class="me-section__inner">
-        <% follow_users_custom = capture do %>
-          <div class="me-user-suggestions">
-            <div class="me-user-suggestions__inner">
-              <% User.following_users(current_user).each do |user| %>
-                <%= link_to user_path user do %>
-                  <div class="me-user-suggestions__user">
-                    <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
-                    </div>
-                    <div class="me-user-suggestions__name">
-                      <%= user.first_name %>
-                    </div>
+  <section class="me-section">
+    <div class="me-section__inner">
+      <% follow_users_custom = capture do %>
+        <div class="me-user-suggestions">
+          <div class="me-user-suggestions__inner">
+            <% User.following_users(current_user).each do |user| %>
+              <%= link_to user_path user do %>
+                <div class="me-user-suggestions__user">
+                  <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
                   </div>
-                <% end %>
+                  <div class="me-user-suggestions__name">
+                    <%= user.first_name %>
+                  </div>
+                </div>
               <% end %>
-            </div>
+            <% end %>
           </div>
-        <% end %>
-        <%= render partial: "components/collection/collection", locals: {
-            data:  {
-                identifier: 'following-users',
-                collection: @items[:following_users],
-                title:      {
-                    principal: "Pessoas que você segue",
-                    custom:    follow_users_custom
-                },
-                type:       :large,
-                filters:    {
-                    categories: false,
-                    kinds:      false,
-                    ocurrences: false
-                },
-                info:       {
-                    assert: true,
-                    text:   'Siga pessoas para ver seus eventos aqui'
-                },
-                detail:     @items[:following_users][:detail],
-                origin:     :feed,
-                #continue_to: "/#{current_user&.slug}/sugestoes"
-            },
-            props: {
-                disposition: :horizontal
-            }
-        } %>
-      </div>
-    </section>
-  <% end %>
+        </div>
+      <% end %>
+      <%= render partial: "components/collection/collection", locals: {
+          data:  {
+              identifier: 'following-users',
+              collection: @items[:following_users],
+              title:      {
+                  principal: "Pessoas que você segue",
+                  custom:    follow_users_custom
+              },
+              type:       :large,
+              filters:    {
+                  categories: false,
+                  kinds:      false,
+                  ocurrences: false
+              },
+              info:       {
+                  assert: true,
+                  text:   'Siga pessoas para ver seus eventos aqui'
+              },
+              detail:     @items[:following_users][:detail],
+              origin:     :feed,
+              #continue_to: "/#{current_user&.slug}/sugestoes"
+          },
+          props: {
+              disposition: :horizontal
+          }
+      } %>
+    </div>
+  </section>
 
 
   <section class="me-section">

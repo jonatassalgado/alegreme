@@ -24,7 +24,7 @@ class UserDecoratorFollowEventsTest < ActiveSupport::TestCase
 			#user.follow(organizer_b)
 			#user.follow(category_a)
 
-			#assert_equal 2, user.events_from_following_features.count, "#{context} -> should return all events with same features liked"
+			#assert_equal 2, user.events_from_following_topics.count, "#{context} -> should return all events with same features liked"
 		end
 
 		context 'exist 1 event from features followed' do |context|
@@ -43,7 +43,7 @@ class UserDecoratorFollowEventsTest < ActiveSupport::TestCase
 			#user.follow(organizer_b)
 			#user.follow(category_a)
 
-			#assert_equal 1, user.events_from_following_features.count, "#{context} -> should return all events with same features liked"
+			#assert_equal 1, user.events_from_following_topics.count, "#{context} -> should return all events with same features liked"
 		end
 	end
 end

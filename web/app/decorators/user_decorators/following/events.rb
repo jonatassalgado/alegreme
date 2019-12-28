@@ -11,8 +11,8 @@ module UserDecorators
 			end
 
 			module InstanceMethods
-				def events_from_following_features(opts = {})
-					following_topics.map { |topic| topic.events }.compact!
+				def events_from_following_topics(opts = {})
+					Event.includes(:organizers, :place).where("organizers.id IN (?) OR places.id IN (?)", self.following_organizers, self.following_places).references(:organizers, :place)
 					#@opts     = opts
 					#@features = Feature.new
 					#@follows  = self.follows.map { |f| {id: f.followable_id, model: f.followable_type} }.group_by { |a| a[:model].pluralize.underscore }

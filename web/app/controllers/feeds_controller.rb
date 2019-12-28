@@ -15,13 +15,13 @@ class FeedsController < ApplicationController
 
 		@collections ||= EventServices::CollectionCreator.new(current_user, params)
 
-		@new_events_today           = Event.where("created_at > ?", DateTime.now - 24.hours)
-		@events_this_week           = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
-		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
-		@events_followed_by_user    = Event.follow_features_by_user(current_user)
-		@favorited_events           = current_user.try(:saved_events)
-		@following_users            = User.following_users(current_user)
-		@events_from_followed_users = Event.from_followed_users(current_user)
+		@new_events_today             = Event.where("created_at > ?", DateTime.now - 24.hours)
+		@events_this_week             = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
+		@events_in_user_suggestions   = Event.in_user_suggestions(current_user)
+		@events_from_following_topics = current_user.try(:events_from_following_topics)
+		@favorited_events             = current_user.try(:saved_events)
+		@following_users              = User.following_users(current_user)
+		@events_from_followed_users   = Event.from_followed_users(current_user)
 
 
 		if current_user&.sign_in_count.try { |counter| counter >= 2 }
@@ -65,10 +65,10 @@ class FeedsController < ApplicationController
 			@collection_follow = @collections.call(
 					{
 							identifier: 'follow',
-							events:     @events_followed_by_user
+							events:     @events_from_following_topics
 					},
 					{
-							only_in:          @events_followed_by_user.map(&:id),
+							only_in:          @events_from_following_topics.map(&:id),
 							not_in:           (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
 							order_by_persona: false,
 							order_by_date:    true
@@ -184,19 +184,19 @@ class FeedsController < ApplicationController
 	end
 
 	def follow
-		@events_followed_by_user = Event.follow_features_by_user(current_user)
-		@collection              = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                                           identifier: 'follow',
-				                                                                                           events:     @events_followed_by_user
-		                                                                                           },
-		                                                                                           {
-				                                                                                           only_in:          @events_followed_by_user.map(&:id),
-				                                                                                           order_by_persona: false,
-				                                                                                           order_by_date:    true,
-				                                                                                           with_high_score:  false,
-				                                                                                           in_user_personas: false,
-				                                                                                           limit:            16
-		                                                                                           })
+		@events_from_following_topics = current_user.try(:events_from_following_topics)
+		@collection                   = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                                                identifier: 'follow',
+				                                                                                                events:     @events_from_following_topics
+		                                                                                                },
+		                                                                                                {
+				                                                                                                only_in:          @events_from_following_topics.map(&:id),
+				                                                                                                order_by_persona: false,
+				                                                                                                order_by_date:    true,
+				                                                                                                with_high_score:  false,
+				                                                                                                in_user_personas: false,
+				                                                                                                limit:            16
+		                                                                                                })
 
 		@data = {
 				identifier: 'follow',

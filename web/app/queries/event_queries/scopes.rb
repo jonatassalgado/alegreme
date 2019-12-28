@@ -58,11 +58,11 @@ module EventQueries
 				end
 			}
 
-			scope 'follow_features_by_user', lambda { |user, opts = {}|
+			scope 'following_topics_by_user', lambda { |user, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
 
 				if opts[:turn_on] && user
-					user.events_from_following_features
+					user.events_from_following_topics
 				else
 					all
 				end
