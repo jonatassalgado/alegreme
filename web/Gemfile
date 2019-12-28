@@ -32,6 +32,7 @@ gem 'rpush'
 gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
+gem 'recaptcha'
 
 
 gem 'lupa', git: 'https://github.com/edelpero/lupa.git'
