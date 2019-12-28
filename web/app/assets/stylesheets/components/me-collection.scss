@@ -76,6 +76,7 @@
   &__head {
     margin-bottom: 24px;
     @include mobile-only {
+      margin-bottom: 12px;
       border-bottom: 1px solid $surface-secondary-color;
     }
   }
