@@ -22,7 +22,7 @@
 }
 
 @mixin add-horizontal-scroll-wrapper() {
-  overflow-x: scroll !important;
+  overflow-x: scroll;
   overflow-y: hidden;
   //scroll-snap-type: x proximity;
   //scroll-behavior: smooth;
