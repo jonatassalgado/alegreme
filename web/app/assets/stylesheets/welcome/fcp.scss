@@ -188,6 +188,7 @@ section {
   @include mobile-only {
     margin: 25px auto 0 auto;
     padding-bottom: 45px;
+    flex-direction: column;
     .is-pwa & {
       margin: 16px auto 0 auto;
     }
@@ -317,6 +318,9 @@ section {
       font-size: 18px;
       font-weight: 600;
       margin: 0 12px 12px 0;
+      .invite-float & {
+        width: calc(100vw - 48px);
+      }
       //.is-pwa & {
       //  width: calc(100% - 48px);
       //  margin: 0 auto 0 auto;
