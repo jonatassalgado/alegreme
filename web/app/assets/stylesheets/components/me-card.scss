@@ -262,7 +262,7 @@ $description-color: $font-secondary-color;
     }
     [data-section-disposition="vertical"] & {
       @include mobile-only {
-        font-size: 18px;
+        font-size: 14px;
         line-height: 1.4em;
       }
     }

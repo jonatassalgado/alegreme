@@ -8,11 +8,11 @@
 
 <% if mobile_device? &&
       (controller_name == 'feeds') %>
-  <div class="me-tab-bar mdc-tab-bar" role="tablist" data-controller="tab-bar" data-target="tab-bar.tabBar">
+  <div id="tab-bar" class="me-tab-bar mdc-tab-bar" role="tablist" data-controller="tab-bar" data-target="tab-bar.tabBar" data-turbolinks-permanent>
     <div class="mdc-tab-scroller">
       <div class="mdc-tab-scroller__scroll-area is-horizontal-scrollable">
         <div class="mdc-tab-scroller__scroll-content">
-          <button data-action="click->tab-bar#open" data-tab-path="/feed" class="mdc-tab <%= 'mdc-tab--active' if controller_name == 'feeds' && action_name == 'index' %>" role="tab" aria-selected="<%= controller_name == 'feeds' && action_name == 'index'  ? 'true' : 'false' %>">
+          <button data-action="click->tab-bar#open" data-tab-path="/feed" class="mdc-tab <%= 'mdc-tab--active' if controller_name == 'feeds' && action_name == 'index' %>" role="tab" aria-selected="<%= controller_name == 'feeds' && action_name == 'index'  ? 'true' : 'false' %>" data-tab-identifier="0">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Para você</span>
             </span>
@@ -21,25 +21,16 @@
             </span>
             <span class="mdc-tab__ripple"></span>
           </button>
-          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/eventos/hoje" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'today' %>" role="tab" aria-selected="<%= action_name == 'today'  ? 'true' : 'false' %>">
+          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/eventos/categoria/festa" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'category' %>" role="tab" aria-selected="<%= action_name == 'category'  ? 'true' : 'false' %>" data-tab-identifier="1">
             <span class="mdc-tab__content">
-              <span class="mdc-tab__text-label">Hoje e Amanhã</span>
+              <span class="mdc-tab__text-label">Categorias</span>
             </span>
-            <span class="me-tab-indicator mdc-tab-indicator <%= 'mdc-tab-indicator--active' if action_name == 'today' %>">
+            <span class="me-tab-indicator mdc-tab-indicator <%= 'mdc-tab-indicator--active' if action_name == 'category' %>">
               <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
             </span>
             <span class="mdc-tab__ripple"></span>
           </button>
-          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/eventos/semana" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'week' %>" role="tab" aria-selected="<%= action_name == 'week'  ? 'true' : 'false' %>">
-            <span class="mdc-tab__content">
-              <span class="mdc-tab__text-label">Esta Semana</span>
-            </span>
-            <span class="me-tab-indicator mdc-tab-indicator <%= 'mdc-tab-indicator--active' if action_name == 'week' %>">
-              <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-            </span>
-            <span class="mdc-tab__ripple"></span>
-          </button>
-          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/eventos" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'city' %>" role="tab" aria-selected="<%= action_name == 'city' ? 'true' : 'false' %>">
+          <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/eventos" class="mdc-tab <%= 'mdc-tab--active' if action_name == 'city' %>" role="tab" aria-selected="<%= action_name == 'city' ? 'true' : 'false' %>" data-tab-identifier="2">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Explorar tudo</span>
             </span>
