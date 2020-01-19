@@ -152,10 +152,10 @@
       <% else %>
         <% if !['registrations', 'sessions'].include? controller_name %>
           <%= link_to new_user_registration_path do %>
-            <button class="me-button me-button--transparent me-button--small me-button--secondary mdc-button">Criar uma conta</button>
+            <button class="me-button me-button--transparent me-button--small me-button--secondary mdc-button">Criar conta</button>
           <% end %>
           <%= link_to new_user_session_path do %>
-            <button class="me-button me-button--transparent me-button--small mdc-button">Entrar</button>
+            <button class="me-button me-button--transparent me-button--small me-button--secondary mdc-button">Entrar</button>
           <% end %>
         <% end %>
       <% end %>

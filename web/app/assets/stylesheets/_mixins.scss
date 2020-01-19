@@ -1,8 +1,8 @@
 @mixin is-show-in-animated() {
-  transition: opacity 250ms ease, transform 250ms ease;
-  will-change: opacity, transform;
+  // transition: opacity 250ms ease, transform 250ms ease;
+  // will-change: opacity, transform;
   &.is-animated {
-    opacity: 0;
+    // opacity: 0;
     @include mobile-only {
 
     }
@@ -10,13 +10,13 @@
 }
 
 @mixin is-open-up-animated() {
-  transition: opacity 200ms ease, transform 250ms ease;
-  will-change: opacity, transform;
+  // transition: opacity 200ms ease, transform 250ms ease;
+  // will-change: opacity, transform;
   &.is-animated {
-    opacity: 0;
-    transform: translate(0, 85px);
+    // opacity: 0;
+    // transform: translate(0, 85px);
     @include mobile-only {
-      transform: translate(0, 10vh) scale(0.95);
+      // transform: translate(0, 10vh) scale(0.95);
     }
   }
 }
