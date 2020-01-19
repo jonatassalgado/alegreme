@@ -43,6 +43,7 @@
   &__cover {
     display: flex;
     justify-content: center;
+    background-color: $surface-secondary-color;
     & img {
       border-radius: $media-border-radius;
       width: 100%;
