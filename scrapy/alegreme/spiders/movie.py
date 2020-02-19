@@ -110,7 +110,7 @@ parse_movie_cover_script = """
         result, error = splash:wait_for_resume([[
             function main(splash) {
                 var checkExist = setInterval(function() {
-                    if (document.querySelectorAll(".irc_mi")[1].src !== "") {
+                    if (document.querySelectorAll(".rg_i")[1].src !== "") {
                         clearInterval(checkExist);
                         splash.resume();
                     }
@@ -239,5 +239,5 @@ class MovieSpider(scrapy.Spider):
     def parse_cover_meta(self, response):
         loader = response.meta['loader']
         loader.selector = response
-        loader.add_xpath('cover', './/*[contains(@class, "irc_mi")]/@src')
+        loader.add_xpath('cover', '(.//*[contains(@id, "islsp")]//*[contains(@alt, "Resultado de imagem para")]/@src)[1]')
         return loader.load_item()

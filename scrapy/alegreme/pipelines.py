@@ -10,6 +10,7 @@ import json
 import dateparser
 import re
 import time
+import os.path
 from scrapy.exporters import JsonLinesItemExporter
 from scrapy.utils.project import get_project_settings
 
@@ -69,7 +70,20 @@ class MoviePipeline(object):
         settings = get_project_settings()
         timestr = time.strftime("%Y%m%d-%H%M%S")
         pwd = settings.get('PWD')
-        self.file = open(pwd + '/scraped/movies-' + timestr + '.jsonl', 'wb')
+        file_path = pwd + '/scraped/movies-' + timestr + '.jsonl'
+
+        try:
+            if os.path.isdir(pwd + '/scraped'):
+                print("The directory /scraped already exists")
+            else:
+                os.makedirs(pwd + '/scraped')
+        except IOError as exception:
+            raise IOError('%s: %s' % (path, exception.strerror))
+
+        try:
+            self.file = open(file_path, 'wb')
+        except IOError:
+            self.file = open(file_path, 'w+')
 
         self.exporter = JsonLinesItemExporter(self.file)
         self.exporter.start_exporting()
