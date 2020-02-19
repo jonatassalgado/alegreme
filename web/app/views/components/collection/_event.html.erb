@@ -23,28 +23,18 @@
        data-event-dominant-color="<%= get_image_dominant_color event %>"
        data-target="event.event"
        id="<%= dom_id event %>">
-       <div class="me-card__primary-section">
+       <!-- <div class="me-card__primary-section"> -->
          <!--      <span class="me-chip mdc-chip me-card__category"-->
          <!--            data-target="event.category">-->
          <%#= link_to event.categories_primary_name.try(:capitalize), category_events_path(event.categories_primary_name) %>
          <!--      </span>-->
          <!--        <span aria-hidden="true"> · </span>-->
-         <div class="me-card__date is-hoverable <%= event.day_of_week['decorator'].parameterize %>"
-               data-target="event.date"
-               onclick="Turbolinks.visit('<%= day_events_path event.day_of_week['date'].strftime('%d-%m-%Y') %>')">
-           <span>
-             <i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
-           </span>
-           <span class="me-card__date-distance-in-words">
-              · <%= event.first_day_time.to_datetime.iso8601 > DateTime.now.iso8601 ? "Daqui #{distance_of_time_in_words event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words event.first_day_time, DateTime.now}" %>
-           </span>
-         </div>
          <% if event.details_prices.present? %>
            <!-- <span class="me-card__price <%#= 'is-highlight' if (event.details_prices.present? && event.details_prices.min.to_i <= 20) %>"> -->
              <%#= "R$#{event.details_prices.min}" %>
            <!-- </span> -->
          <% end %>
-       </div>
+       <!-- </div> -->
     <div data-fixed="true" class="mdc-card__media mdc-card__media--16-9 <%= 'lazy-bgimage' unless json_request %>" <%= "data-src=#{get_feed_image_url(event)}" unless json_request %> style="<%= get_image_style_attr event, preload: json_request %>">
       <% if current_user %>
         <div class="me-card__like-button" data-action="click->event#like">
@@ -91,15 +81,27 @@
         </div>
       <% end %>
     </div>
-    <% unless event_type == 'similar' %>
-      <div class="me-card__quartenary-section">
+    <%# unless event_type == 'similar' %>
+      <!-- <div class="me-card__quartenary-section">
         <div class="me-card__category"
-             data-target="event.category">
-          <%= link_to "##{event.categories_primary_name.try(:capitalize)}", category_events_path(event.categories_primary_name) %>
-          <%= event.organizers.limit(2).map { |organizer| link_to(to_hashtag(organizer.details_name), organizer_path(organizer)) }.join(" ").html_safe %>
-        </div>
+             data-target="event.category"> -->
+          <%#= link_to "##{event.categories_primary_name.try(:capitalize)}", category_events_path(event.categories_primary_name) %>
+          <%#= event.organizers.limit(2).map { |organizer| link_to(to_hashtag(organizer.details_name), organizer_path(organizer)) }.join(" ").html_safe %>
+        <!-- </div>
+      </div> -->
+    <%# end %>
+    <div class="me-card__primary-section">
+      <div class="me-card__date is-hoverable <%= event.day_of_week['decorator'].parameterize %>"
+        data-target="event.date"
+        onclick="Turbolinks.visit('<%= day_events_path event.day_of_week['date'].strftime('%d-%m-%Y') %>')">
+        <span>
+          <i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
+        </span>
+        <span class="me-card__date-distance-in-words">
+          · <%= event.first_day_time.to_datetime.iso8601 > DateTime.now.iso8601 ? "Daqui #{distance_of_time_in_words event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words event.first_day_time, DateTime.now}" %>
+        </span>
       </div>
-    <% end %>
+    </div>
     <div class="me-card__secondary-section">
       <div class="me-card__title"
            data-target="event.name"

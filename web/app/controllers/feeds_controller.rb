@@ -328,8 +328,8 @@ class FeedsController < ApplicationController
 				},
 				filters:    {
 						ocurrences: true,
-						kinds:      true,
-						categories: true
+						kinds:      false,
+						categories: false
 				}
 		}
 	end

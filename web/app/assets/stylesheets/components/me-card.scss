@@ -16,7 +16,7 @@ $description-color: $font-secondary-color;
     font-size: 14px;
     border: 0;
     box-shadow: none;
-    margin:6px 0 0 0;
+    margin: 0 0 0 0;
     position: relative;
     @include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
     @include mobile-only {
@@ -176,7 +176,11 @@ $description-color: $font-secondary-color;
     display: flex;
     flex-wrap: wrap;
     z-index: 5;
-    margin: 0 0 12px 6px;
+    margin: 0 0 0 6px;
+    font-size: 10px;
+    @include mobile-only {
+      font-size: 9px;
+    }
     .me-card--single & {
       color: $font-primary-color;
       text-transform: none;
@@ -204,8 +208,11 @@ $description-color: $font-secondary-color;
       flex-direction: column;
       align-items: flex-start;
       color: lighten($font-tertiary-color, 10%);
-      font-size: 10px;
+      // font-size: 10px;
       line-height: 1;
+      padding: 0;
+      margin: 12px 0 0 0;
+      text-transform: uppercase;
     }
 
     &.hoje {
@@ -236,11 +243,11 @@ $description-color: $font-secondary-color;
   }
 
   &__date-distance-in-words {
-    font-size: 10px;
+    // font-size: 10px;
     line-height: 1;
     padding: 2px 0 0 0;
     @include mobile-only {
-      font-size: 10px;
+      // font-size: 10px;
     }
 
     .me-saves & {
@@ -254,14 +261,17 @@ $description-color: $font-secondary-color;
     margin: 6px 0 0 0;
     padding: 0 0 0 6px;
     font-weight: 500;
+    @include mobile-only {
+      font-size: 13px;
+    }
     [data-section-disposition="vertical"] & {
       @include mobile-only {
-        font-size: 18px;
+        font-size: 14px;
         line-height: 1.4em;
       }
     }
     .me-similar & {
-      font-size: 14px;
+      font-size: 12px;
     }
     .me-card--empty & {
       & a {
@@ -291,6 +301,9 @@ $description-color: $font-secondary-color;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    @include mobile-only {
+      font-size: 8px;
+    }
     .me-card--empty & {
       color: $surface-secondary-color;
       background-color: $surface-secondary-color;
@@ -438,12 +451,13 @@ $description-color: $font-secondary-color;
       transition: 0.2s all ease 0s;
       @include mdc-icon-button-icon-size($width: 20px, $height: 20px, $padding: 10px);
 
-      & svg {
-        fill: lighten($font-tertiary-color, 30%);
+      @include mobile-only {
+        @include mdc-icon-button-icon-size($width: 16px, $height: 16px, $padding: 8px);
+        display: block;
       }
 
-      @include mobile-only {
-        display: block;
+      & svg {
+        fill: lighten($font-tertiary-color, 30%);
       }
 
       &--on {

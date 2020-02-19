@@ -48,6 +48,40 @@
   </section>
   <%# end %>
 
+  <section class="me-section">
+    <div class="me-section__inner">
+      <% if @items.dig(:week, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+        <%= render partial: "components/collection/collection", locals: {
+            data:  {
+                identifier:  'this-week',
+                collection:  @items[:week],
+                title:       {
+                    principal: "Acontecendo esta semana",
+                    # secondary: "Hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 8, format: :week)} (#{I18n.l(Date.today + 7, format: :short)})",
+                    tertiary: "Com base no seu perfil"
+                },
+                type:        :large,
+                filters:     {
+                    categories: false,
+                    kinds:      false,
+                    ocurrences: false
+                },
+                info:        {
+                    assert: true,
+                    text:   'Descubra seu perfil para ver os eventos da semana sugeridos'
+                },
+                continue_to: '/porto-alegre/eventos/semana',
+                origin:      :feed
+            },
+            props: {
+                disposition:     :horizontal,
+                infinite_scroll: true
+            }
+        } %>
+      <% end %>
+    </div>
+  </section>
+
 
   <%# if current_user && current_user&.personas_assortment_finished? %>
   <% if @items.dig(:new_today, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
@@ -215,41 +249,6 @@
   </section>
 
 
-  <section class="me-section">
-    <div class="me-section__inner">
-      <% if @items.dig(:week, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
-        <%= render partial: "components/collection/collection", locals: {
-            data:  {
-                identifier:  'this-week',
-                collection:  @items[:week],
-                title:       {
-                    principal: "Acontecendo esta semana",
-                    # secondary: "Hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 8, format: :week)} (#{I18n.l(Date.today + 7, format: :short)})",
-                    tertiary: "Com base no seu perfil"
-                },
-                type:        :large,
-                filters:     {
-                    categories: false,
-                    kinds:      false,
-                    ocurrences: true
-                },
-                info:        {
-                    assert: true,
-                    text:   'Descubra seu perfil para ver os eventos da semana sugeridos'
-                },
-                continue_to: '/porto-alegre/eventos/semana',
-                origin:      :feed
-            },
-            props: {
-                disposition:     :vertical,
-                infinite_scroll: true
-            }
-        } %>
-      <% end %>
-    </div>
-  </section>
-
-
   <% if @items.dig(:explorer, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
     <section class="me-section">
       <div class="me-section__inner">
@@ -274,6 +273,13 @@
       </div>
     </section>
   <% end %>
+
+  <% if mobile_device? %>
+    <div class="me-button" onclick="Turbolinks.visit('/porto-alegre/eventos')" style="max-width: 80vw; margin: 36px auto; text-align: center">
+      Explorar todos os eventos
+    </div>
+  <% end %>
+
   <%# end %>
   <%# end %>
 </section>

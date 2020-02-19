@@ -9,7 +9,7 @@
       @include mobile-only {
         grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
         overflow-y: hidden;
-        grid-template-columns: repeat(100, minmax(70vw, 1fr));
+        grid-template-columns: repeat(100, minmax(56vw, 1fr));
         padding: 0 70px 0 $section-padding-phone;
       }
     }
@@ -53,7 +53,7 @@
     align-items: center;
     justify-content: space-between;
     @include mobile-only {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 800;
       line-height: 1em;
       padding: 0 12px 0 $section-padding-phone;
@@ -74,10 +74,11 @@
   }
 
   &__head {
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
+    margin-bottom: 12px;
     @include mobile-only {
-      margin-bottom: 12px;
-      border-bottom: 1px solid $surface-secondary-color;
+      // margin-bottom: 12px;
+      // border-bottom: 1px solid $surface-secondary-color;
     }
   }
 
@@ -125,7 +126,7 @@
     text-transform: uppercase;
     @include mobile-only {
       padding: 0 $section-padding-phone;
-      font-size: 10px;
+      font-size: 8px;
     }
 
     .me-collection--empty & {

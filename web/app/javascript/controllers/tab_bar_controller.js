@@ -6,24 +6,23 @@ export default class TabBarController extends Controller {
 	static targets = ['tabBar'];
 
 	initialize() {
-		this.tabBarMDC = new MDCTabBar(this.tabBarTarget);
+		this.tabBarMDC                        = new MDCTabBar(this.tabBarTarget);
+		// this.tabBarMDC.useAutomaticActivation = false;
+		// this.tabBarMDC.focusOnActivate        = false;
 
 		this.destroy = () => {
-			this.tabBarMDC.destroy();
+			// this.tabBarMDC.destroy();
 		};
-
-		document.addEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
 	disconnect() {
-		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
+		// document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
 	open(event) {
-		ProgressBarModule.show();
-		setTimeout(() => {
-			location.assign(event.target.parentElement.dataset.tabPath);
-		}, 300)
+		// this.tabBarMDC.scrollIntoView(event.target.offsetParent.dataset.tabIdentifier);
+		// this.tabBarMDC.activateTab(event.target.offsetParent.dataset.tabIdentifier);
+		Turbolinks.visit(event.target.parentElement.dataset.tabPath);
 	}
 
 }

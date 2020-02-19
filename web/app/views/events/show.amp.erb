@@ -14,7 +14,7 @@
     "<%= @event.image[:original].url(public: true) %>"
    ],
   "description": "<%= strip_tags(@event.details_description).gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
-  "url": "<%= event_path @event %>",
+  "url": "<%= event_path(@event, format: :html) %>",
   "location": {
     "@type": "Place",
     "name": "<%= @event.place_details_name %>",
@@ -29,7 +29,7 @@
         "name": "BR"
        }
     },
-    "url": "<%= place_path @event.place %>"
+    "url": "<%= place_path(@event.place, format: :html) %>"
   },
   "offers": {
     "@type": "AggregateOffer",
@@ -37,7 +37,7 @@
     "lowPrice": "<%= @event.ld_json.low_price %>",
     "highPrice": "<%= @event.ld_json.high_price %>",
     "priceCurrency": "BRL",
-    "url": "<%= event_path @event %>",
+    "url": "<%= event_path(@event, format: :html) %>",
     "availability": "<%= @event.ld_json.availability %>",
     "validFrom": "<%= @event.ld_json.valid_from %>"
   }
