@@ -1,3 +1,5 @@
+web/package.json
+web/package-lock.json
 ml/api/log/
 hint-report/
 .DS_Store

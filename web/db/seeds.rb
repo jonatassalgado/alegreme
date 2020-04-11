@@ -35,6 +35,13 @@ User.create(
 										"score": "1"
 								}
 						}
+				},
+				'demographic' => {
+						'name'    => 'Admin',
+						'beta'    => {
+								'requested' => true,
+								'activated' => true
+						}
 				}
 		},
 		admin:    true

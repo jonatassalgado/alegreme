@@ -5,7 +5,7 @@ volumes:
   db_backup:
   api_data:
   # scrapydo_data:
-  splash_data:
+  # splash_data:
   #  redis_data:
   # scrapy_shared:
   # search_data:
@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
       - api
-      - scrapy
+      # - scrapy
       # - search
       # - memcached
       # - redis
@@ -25,7 +25,7 @@ services:
     volumes:
       - bundle_cache:/bundle
       # - ./scrapy/data:/var/www/scrapy/data
-      - ./web:/var/www/alegreme
+      - ./web/app:/var/www/alegreme/app:ro
       # - ./storage:/var/www/alegreme/storage
       # - ./logs/app:/var/www/alegreme/log:delegated
     environment:
@@ -99,8 +99,8 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "5000:5000"
-    volumes:
-      - api_data:/var/www/api/data
+    # volumes:
+      # - api_data:/var/www/api/data
       # - ./scrapy/data:/var/www/scrapy/data:delegated
       # - ./ml/api:/var/www/ml/api:delegated
       # - ./logs/api:/var/www/ml/api/log:delegated
@@ -110,40 +110,40 @@ services:
     #    memswap_limit: 4gb
     #    mem_reservation: 256m
     #    cpus: 0.7
-  scrapy:
-    build:
-      context: ./scrapy
-      dockerfile: ./Dockerfile
-    environment:
-        SPLASH_URL: http://splash:8050
-        IS_DOCKER: 'true'
-        ENV: 'development'
-    depends_on:
-      - splash
-    volumes:
-      - ./scrapy/alegreme:/var/www/scrapy/alegreme
-      - ./scrapy/data:/var/www/scrapy/data
-      - ./logs/scrapy:/var/www/scrapy/log
-    ports:
-      - "7654:7654"
-    restart: always
-    mem_limit: 3gb
-    memswap_limit: 4gb
-    cpus: 0.5
-    command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
-  splash:
-    image: scrapinghub/splash
-    ports:
-      - 8050:8050
-      - 5023:5023
-    restart: always
-    volumes:
-      - splash_data:/var/www/splash/data
-    mem_limit: 5gb
-    memswap_limit: 5gb
-    mem_reservation: 256m
-    cpus: 0.7
-    command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
+  # scrapy:
+  #   build:
+  #     context: ./scrapy
+  #     dockerfile: ./Dockerfile
+  #   environment:
+  #       SPLASH_URL: http://splash:8050
+  #       IS_DOCKER: 'true'
+  #       ENV: 'development'
+  #   depends_on:
+  #     - splash
+  #   volumes:
+  #     - ./scrapy/alegreme:/var/www/scrapy/alegreme
+  #     - ./scrapy/data:/var/www/scrapy/data
+  #     - ./logs/scrapy:/var/www/scrapy/log
+  #   ports:
+  #     - "7654:7654"
+  #   restart: always
+  #   mem_limit: 3gb
+  #   memswap_limit: 4gb
+  #   cpus: 0.5
+  #   command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
+  # splash:
+  #   image: scrapinghub/splash
+  #   ports:
+  #     - 8050:8050
+  #     - 5023:5023
+  #   restart: always
+  #   volumes:
+  #     - splash_data:/var/www/splash/data
+  #   mem_limit: 5gb
+  #   memswap_limit: 5gb
+  #   mem_reservation: 256m
+  #   cpus: 0.7
+  #   command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
   #  memcached:
   #    image: memcached
   #    command: memcached -m 64

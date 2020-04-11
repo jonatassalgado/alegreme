@@ -15,7 +15,7 @@ build-service:
 	docker-compose -f docker-compose.development.yml up -d --no-deps --build $(APP)
 
 up:
-	docker-compose -f docker-compose.development.yml up -d
+	docker-compose -f docker-compose.development.yml up
 
 restart:
 	docker-compose -f docker-compose.development.yml restart
@@ -25,7 +25,7 @@ down:
 
 ps:
 	docker-compose -f docker-compose.development.yml ps
-	
+
 
 console:
 	$(EXEC) bash
