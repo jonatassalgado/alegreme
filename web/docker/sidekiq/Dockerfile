@@ -48,12 +48,12 @@ RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 
-ADD . $SIDEKIQ_ROOT
+COPY . $SIDEKIQ_ROOT
 
-RUN rake assets:clobber
-RUN rake webpacker:clobber
-RUN rake assets:precompile
-RUN rake webpacker:compile
+# RUN rake assets:clobber
+# RUN rake webpacker:clobber
+# RUN rake assets:precompile
+# RUN rake webpacker:compile
 RUN yarn install
 
 

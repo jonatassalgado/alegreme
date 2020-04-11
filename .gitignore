@@ -1,9 +1,7 @@
-web/package.json
 web/package-lock.json
 ml/api/log/
 hint-report/
 .DS_Store
-web/package.json
 web/yarn-error.log
 web/core
 web/stats.json

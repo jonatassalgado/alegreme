@@ -24,6 +24,17 @@
     </div>
   <% end %>
 
+  <% if @new_events_today.size > 0 %>
+    <div class="me-section">
+      <div class="me-section__inner">
+        <div class="me-info">
+          <div class="me-info__content">
+            Foram adicionados <%= @new_events_today.size %> eventos nas últimas 24 horas!
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
   <div class="me-section">
     <div class="me-section__inner">

@@ -79,7 +79,7 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 COPY Gemfile Gemfile
 
-RUN bundle install --jobs 20 --retry 5 
+RUN bundle install --jobs 20 --retry 5
 RUN bundle update --bundler
 
 COPY . $RAILS_ROOT
