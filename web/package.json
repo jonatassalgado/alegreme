@@ -8,11 +8,8 @@
     "@material/tab-bar": "^4.0.0",
     "@material/tab-scroller": "^4.0.0",
     "@rails/webpacker": "https://github.com/rails/webpacker",
-    "botkit": "^0.7.0",
-    "botui": "^0.3.9",
     "chart.js": "^2.8.0",
     "chartkick": "^3.1.1",
-    "conversational-form": "^1.0.1",
     "default-passive-events": "^1.0.10",
     "expose-loader": "^0.7.5",
     "flipping": "^1.1.0",
@@ -22,17 +19,13 @@
     "mobile-detect": "^1.4.3",
     "morphdom": "^2.5.4",
     "nanoevents": "^2.0.0",
-    "postal": "^2.0.5",
     "pwa-install-prompt": "^1.1.0",
     "query-string": "^6.4.2",
-    "rellax": "^1.10.0",
-    "scrollbooster": "^1.1.0",
     "stimulus": "^1.1.1",
     "turbolinks": "^5.2.0",
     "unpoly": "^0.60.3"
   },
   "devDependencies": {
-    "hint": "^5.3.1",
     "webpack-bundle-analyzer": "^3.4.1",
     "webpack-dev-server": "^3.1.14"
   }

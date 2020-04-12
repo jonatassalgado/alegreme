@@ -82,15 +82,16 @@ COPY Gemfile Gemfile
 RUN bundle install --jobs 20 --retry 5
 RUN bundle update --bundler
 
-COPY . $RAILS_ROOT
+ADD . $RAILS_ROOT
 
 RUN bash -c "cat /proc/sys/fs/inotify/max_user_watches"
 
-# RUN rake assets:clobber
-# RUN rake webpacker:clobber
-# RUN rake assets:precompile
-# RUN rake webpacker:compile
+RUN rake assets:clobber
+RUN rake webpacker:clobber
+
 RUN yarn install
+RUN rake assets:precompile
+RUN rake webpacker:compile
 
 EXPOSE 3000
 
