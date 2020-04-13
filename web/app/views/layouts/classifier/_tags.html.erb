@@ -14,12 +14,12 @@
 			<div class="mdc-dialog__surface">
 				<h2 class="mdc-dialog__title" id="my-dialog-title"><%= type.capitalize %></h2>
 				<div class="mdc-dialog__content" id="my-dialog-content">
-					<div data-controller="chip" data-target="tags.tags">
-						<div data-chip-type="tags" data-target="chip.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
+					<div data-controller="filter" data-target="tags.tags">
+						<div data-filter-type="tags" data-target="filter.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
 							<% tags_to_select.each do |tag| %>
-								<div data-target="chip.chip" data-action="click->chip#select"
+								<div data-target="filter.chip" data-action="click->filter#select"
 									class="me-chip mdc-chip <%= event.tags_of_type(type).include?(tag) ? 'mdc-chip--selected' : nil %>"
-									data-chip-tag-type="things" data-turbolinks-scroll="false">
+									data-filter-tag-type="things" data-turbolinks-scroll="false">
 									<div class="mdc-chip__checkmark">
 										<svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
 											<path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />

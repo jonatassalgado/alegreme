@@ -181,7 +181,7 @@ export default class SectionController extends Controller {
 				promises[2] = this.ocurrencesController.MDCChipSet.selectedChipIds.map((chipId) => {
 					const chipElement = this.ocurrencesController.chipsetTarget.querySelector(`#${chipId}`);
 					if (chipElement) {
-						return chipElement.dataset.chipValue.toLowerCase();
+						return chipElement.dataset.filterValue.toLowerCase();
 					}
 				});
 			}
@@ -303,21 +303,21 @@ export default class SectionController extends Controller {
 	}
 
 	get personasController() {
-		return this.application.getControllerForElementAndIdentifier(this.personasTarget, 'chip');
+		return this.application.getControllerForElementAndIdentifier(this.personasTarget, 'filter');
 	}
 
 
 	get categoriesController() {
-		return this.application.getControllerForElementAndIdentifier(this.categoriesTarget, 'chip');
+		return this.application.getControllerForElementAndIdentifier(this.categoriesTarget, 'filter');
 	}
 
 	get kindsController() {
-		return this.application.getControllerForElementAndIdentifier(this.kindsTarget, 'chip');
+		return this.application.getControllerForElementAndIdentifier(this.kindsTarget, 'filter');
 	}
 
 
 	get ocurrencesController() {
-		return this.application.getControllerForElementAndIdentifier(this.ocurrencesTarget, 'chip');
+		return this.application.getControllerForElementAndIdentifier(this.ocurrencesTarget, 'filter');
 	}
 
 	get defaultValue() {

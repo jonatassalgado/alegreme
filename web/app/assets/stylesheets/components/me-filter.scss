@@ -56,37 +56,6 @@
       opacity: 0;
       transition: opacity 0.2s ease-in;
     }
-
-    & .mdc-chip {
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 10px;
-      height: auto;
-      line-height: 1em;
-      padding: 8px 20px;
-      margin: 3px;
-      font-family: $font-secondary-family;
-      // border-radius: 3px;
-      color: $font-tertiary-color;
-      background-color: transparent;
-      border: $chip-border-size solid $border-color;
-      text-transform: capitalize;
-      transition: $chip-transition;
-      @include mobile-only {
-        padding: 8px 20px;
-        font-size: 11px;
-        font-weight: 600;
-      }
-    }
-
-    & .mdc-chip--selected {
-      color: $chip-filter-color-active;
-      background-color: $chip-filter-background-active;
-      border: 0;
-      @include mobile-only {
-        border: 0;
-      }
-    }
   }
 
   &--grid2 {

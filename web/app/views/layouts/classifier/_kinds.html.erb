@@ -8,11 +8,11 @@
 			<div class="mdc-dialog__surface">
 				<h2 class="mdc-dialog__title" id="my-dialog-title">Tipo (kind)</h2>
 				<div class="mdc-dialog__content" id="my-dialog-content">
-					<div data-controller="chip" data-target="kinds.chipsKinds">
-						<div data-chip-type="kinds" data-target="chip.chipset"
+					<div data-controller="filter" data-target="kinds.chipsKinds">
+						<div data-filter-type="kinds" data-target="filter.chipset"
 							class="me-chip-set mdc-chip-set mdc-chip-set--filter mdc-chip-set--input">
 							<% Artifact.kinds_whitelist.sort.each do |kind| %>
-								<div data-target="chip.chip" data-action="click->chip#select"
+								<div data-target="filter.chip" data-action="click->filter#select"
 									class="me-chip mdc-chip <%= event.kinds_name.include?(kind) ? 'mdc-chip--selected' : nil %>"
 									data-turbolinks-scroll="false">
 									<div class="mdc-chip__checkmark">

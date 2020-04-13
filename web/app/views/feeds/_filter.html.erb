@@ -12,14 +12,14 @@
 %>
 
 <div class="me-chip-set__wrapper">
-  <div data-controller="chip"
-       data-chip-default-value="<%= data[:initial_filters].to_json %>"
-       data-chip-type="filter"
-       data-target="chip.chipset section.<%= data[:type] %>"
+  <div data-controller="filter"
+       data-filter-default-value="<%= data[:initial_filters].to_json %>"
+       data-filter-type="filter"
+       data-target="filter.chipset section.<%= data[:type] %>"
        class="me-chip-set <%= (['kinds'].include?(data[:type])) ? 'me-chip-set--small' : nil %> mdc-chip-set mdc-chip-set--<%= variant ||= 'choice' %>">
     <% Array(data[:filters_that_exist_in_events]).each do |filter| %>
       <% if data[:type] == 'ocurrences' %>
-        <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter['string'] %>"
+        <div data-target="filter.chip" data-action="click->filter#select" data-filter-value="<%= filter['string'] %>"
              class="me-chip mdc-chip <%= data[:params_filters] and filter_exist_in_ocurrences?(data[:params_filters], filter['string']) ? 'mdc-chip--selected' : nil %>"
              data-turbolinks-scroll="false">
           <div class="mdc-chip__text">
@@ -27,7 +27,7 @@
           </div>
         </div>
       <% else %>
-        <div data-target="chip.chip" data-action="click->chip#select" data-chip-value="<%= filter %>"
+        <div data-target="filter.chip" data-action="click->filter#select" data-filter-value="<%= filter %>"
              class="me-chip mdc-chip <%= data[:params_filters].try(:to_s) and data[:params_filters].include?(filter) ? 'mdc-chip--selected' : nil %>"
              data-turbolinks-scroll="false">
 
