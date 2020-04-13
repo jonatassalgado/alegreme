@@ -26,6 +26,7 @@ services:
       - bundle_cache:/bundle
       # - ./scrapy/data:/var/www/scrapy/data
       - ./web/app:/var/www/alegreme/app:ro
+      - ./web/config:/var/www/alegreme/config:ro
       # - ./storage:/var/www/alegreme/storage
       # - ./logs/app:/var/www/alegreme/log:delegated
     environment:

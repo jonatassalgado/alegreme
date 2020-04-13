@@ -296,7 +296,7 @@ class FeedsController < ApplicationController
 				identifier: 'category',
 				collection: @collection,
 				title:      {
-						principal: "Eventos na categoria #{params[:category].capitalize} em Porto Alegre",
+						principal: "Eventos na categoria #{params[:category].try(:capitalize)} em Porto Alegre",
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos de #{params[:category]} em Porto Alegre - RS"
 				},
 				filters:    {

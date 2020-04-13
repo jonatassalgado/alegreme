@@ -4,14 +4,15 @@
 
   <%= notice %>
 
-  <% content_for :meta_title, "Eventos de #{params[:category].capitalize} em Porto Alegre - RS" %>
-  <% content_for :meta_description, "Descubra eventos de #{params[:category]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
+  <% content_for :meta_title, params[:category] ? "Eventos de #{params[:category].capitalize} em Porto Alegre - RS" : "Eventos de todas as categorias em Porto Alegre - RS" %>
+  <% content_for :meta_description, params[:category] ? "Descubra eventos de #{params[:category]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" : "Descubra eventos de todas as categorias que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
 
   <script type="application/ld+json">
   [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
 
 
   </script>
+
 
   <section class="me-section">
     <div class="me-chip-set__wrapper">
@@ -25,11 +26,23 @@
     </div>
   </section>
 
-  <section class="me-section">
-    <section class="me-section__inner">
-      <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
+  <% if params[:category] %>
+    <section class="me-section">
+      <section class="me-section__inner">
+        <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
+      </section>
     </section>
-  </section>
+  <% else %>
+    <div class="me-section">
+      <div class="me-section__inner">
+        <div class="me-info">
+          <div class="me-info__content">
+            Selecione uma categoria acima para ver os eventos aqui
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
   <% unless current_user %>
     <%= link_to root_path, style: "display: flex" do %>

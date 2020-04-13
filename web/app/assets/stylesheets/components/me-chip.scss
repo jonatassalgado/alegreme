@@ -100,4 +100,10 @@
     //  font-weight: 600;
     //}
   }
+
+  .me-chip-set--categories &.mdc-chip--selected {
+    color: $chip-filter-color-active;
+    background-color: $chip-filter-background-active;
+    border: 0;
+  }
 }
