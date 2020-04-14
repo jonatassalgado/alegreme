@@ -33,20 +33,6 @@
     }
   }
 
-  &--categories {
-    @include mobile-only {
-      padding: 0 16px;
-    }
-
-    & .mdc-chip {
-      background: none;
-      border: 1px solid #e0e0e0;
-      &--selected {
-        border: 0;
-      }
-    }
-  }
-
   &--small {
     margin: 2px 0 2px 12px;
 

@@ -104,7 +104,7 @@
   .me-chip-set--categories &.mdc-chip--selected {
     color: $chip-filter-color-active;
     background-color: $chip-filter-background-active;
-    border: 0;
+    border-color: $chip-filter-background-active;
   }
 
   .me-filter & {
@@ -132,10 +132,7 @@
   .me-filter &.mdc-chip--selected {
     color: $chip-filter-color-active;
     background-color: $chip-filter-background-active;
-    border: 0;
-    @include mobile-only {
-      border: 0;
-    }
+    border-color: $chip-filter-background-active;
   }
 
 }

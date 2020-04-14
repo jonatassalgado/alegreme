@@ -15,12 +15,16 @@
 
 
   <section class="me-section">
-    <div class="me-chip-set__wrapper">
-      <div class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
+    <div data-controller="categories" data-target="categories.wrapper" data-categories-selected="<%= params[:category] %>" class="me-chip-set__wrapper">
+      <div data-target="categories.chipset" class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
         <% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
-          <a href="<%= category_events_path category %>" class="me-chip mdc-chip <%= 'mdc-chip--selected' if category == params[:category] %>">
+          <div data-action="click->categories#select"
+            data-category-url="<%= category_events_path category %>"
+            data-category-slug="<%= category %>"
+            class="me-chip mdc-chip">
+            <div class="mdc-chip__ripple"></div>
             <span class="mdc-chip__text"><%= category %></span>
-          </a>
+          </div>
         <% end %>
       </div>
     </div>
