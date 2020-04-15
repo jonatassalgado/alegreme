@@ -314,6 +314,7 @@
     }
 
     & .mdc-button__icon {
+      overflow: hidden;
       @include mdc-button-ink-color($font-tertiary-color);
       @include mdc-states-base-color($border-color);
     }
