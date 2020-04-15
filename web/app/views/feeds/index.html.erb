@@ -287,8 +287,9 @@
   <% end %>
 
   <% if mobile_device? %>
-    <div class="me-button" onclick="Turbolinks.visit('/porto-alegre/eventos')" style="max-width: 80vw; margin: 36px auto; text-align: center">
-      Explorar todos os eventos
+    <div data-controller="button" data-target="button.button" class="me-button mdc-button mdc-button--raised" onclick="Turbolinks.visit('/porto-alegre/eventos')" style="max-width: 80vw; margin: 36px auto; text-align: center; display: block">
+      <div class="mdc-button__ripple"></div>
+      <span class="mdc-button__label">Explorar todos os eventos</span>
     </div>
   <% end %>
 
