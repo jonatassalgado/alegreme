@@ -52,6 +52,12 @@
     }
   }
 
+  &--condensed {
+    @include mobile-only {
+      margin: 1px 0;
+    }
+  }
+
   &--full-height {
     min-height: 80vh;
   }

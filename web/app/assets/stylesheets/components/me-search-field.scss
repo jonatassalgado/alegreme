@@ -9,12 +9,12 @@ $field-height: 44px;
   align-self: center;
   width: 100%;
   height: $field-height;
-  border-radius: 12px;
+  border-radius: 8px;
   transition: height 0.2s linear;
   padding: 0 12px;
   margin: auto;
   @include mobile-only {
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
     [data-controller="search"] & {
       width: 100%;

@@ -85,7 +85,7 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
     @include mdc-button-container-fill-color($surface-color);
     padding: 3px 6px;
     @include mobile-only {
-      border: 1px solid $font-secondary-color;
+      border: 1px solid $border-color;
     }
     &:hover {
       @include mdc-button-ink-color($brand-color);
