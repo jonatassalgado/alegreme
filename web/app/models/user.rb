@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
 	scope 'following_users', lambda { |user|
 		return User.none unless user
-		where("id IN (?) AND last_sign_in_at > ?", user.following_users, Date.today - 14.days).order("last_sign_in_at DESC")
+		where("id IN (?)", user.following_users).order("last_sign_in_at DESC")
 	}
 
 	scope 'recents', lambda {
