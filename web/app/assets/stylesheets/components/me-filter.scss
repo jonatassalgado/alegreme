@@ -21,43 +21,6 @@
     font-weight: 400;
   }
 
-  & .mdc-chip-set {
-    display: block;
-    padding: 0;
-    @include mobile-only {
-      padding: 0 $section-padding-phone;
-    }
-
-    &::before {
-      @include mobile-only {
-        background: linear-gradient(270deg, white 10%, transparent);
-        position: absolute;
-        z-index: 5;
-        width: 40px;
-        height: 40px;
-        content: close-quote;
-        right: 0;
-        pointer-events: none;
-      }
-    }
-
-    &[data-target="chip.chipset section.ocurrences"] {
-      & .mdc-chip {
-        @include desktop-only {
-          padding: 6px;
-        }
-      }
-    }
-
-    & .material-icons {
-      vertical-align: middle;
-      padding: 0 6px 0 0;
-      color: $font-secondary-color;
-      opacity: 0;
-      transition: opacity 0.2s ease-in;
-    }
-  }
-
   &--grid2 {
     display: grid;
     grid-template-columns: 2fr 1fr;

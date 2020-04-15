@@ -76,9 +76,12 @@
   &__head {
     // margin-bottom: 24px;
     margin-bottom: 12px;
-    @include mobile-only {
-      // margin-bottom: 12px;
-      // border-bottom: 1px solid $surface-secondary-color;
+    [data-section-disposition="vertical"] & {
+      @include mobile-only {
+        border-bottom: 1px solid $border-color;
+        padding: 0 0 6px 0;
+        margin: 0 0 16px 0;
+      }
     }
   }
 

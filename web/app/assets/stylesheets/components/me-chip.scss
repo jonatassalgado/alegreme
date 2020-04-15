@@ -2,8 +2,8 @@
 @import "@material/top-app-bar/_mixins";
 
 .me-chip {
-  background: $surface-secondary-color;
-  color: $font-secondary-color;
+  // background: $surface-secondary-color;
+  // color: $font-secondary-color;
 
   .me-section-title-custom & {
     color: $font-tertiary-color;
@@ -108,24 +108,24 @@
   }
 
   .me-filter & {
-    border-radius: 20px;
-    font-weight: 500;
-    font-size: 10px;
-    height: auto;
-    line-height: 1em;
-    padding: 8px 20px;
-    margin: 3px;
+    // border-radius: 20px;
+    // font-weight: 500;
+    // font-size: 10px;
+    // height: auto;
+    // line-height: 1em;
+    // padding: 8px 20px;
+    // margin: 3px;
     font-family: $font-secondary-family;
-    // border-radius: 3px;
-    color: $font-tertiary-color;
-    background-color: transparent;
+    border-radius: 6px;
+    // color: $font-tertiary-color;
+    background: none;
     border: $chip-border-size solid $border-color;
     text-transform: capitalize;
     // transition: $chip-transition;
     @include mobile-only {
-      padding: 8px 20px;
-      font-size: 11px;
-      font-weight: 600;
+      // padding: 8px 20px;
+      // font-size: 11px;
+      // font-weight: 600;
     }
   }
 
