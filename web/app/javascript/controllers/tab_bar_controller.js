@@ -22,7 +22,12 @@ export default class TabBarController extends Controller {
 	open(event) {
 		// this.tabBarMDC.scrollIntoView(event.target.offsetParent.dataset.tabIdentifier);
 		// this.tabBarMDC.activateTab(event.target.offsetParent.dataset.tabIdentifier);
-		Turbolinks.visit(event.target.parentElement.dataset.tabPath);
+
+		PubSubModule.emit("tabBar.update", {})
+
+		setTimeout(() => {
+			Turbolinks.visit(event.target.parentElement.dataset.tabPath);
+		}, 250)
 	}
 
 }

@@ -1,6 +1,6 @@
 <%= render partial: "feeds/float_menu" unless mobile_device? %>
 
-<section class="me-page me-page--feed is-animated">
+<section data-controller="page" data-target="page.page" class="me-page me-page--feed is-animated">
 
   <%= render partial: 'components/swipable/swipable' if current_user && current_user.personas_assortment_finished? == false %>
 
