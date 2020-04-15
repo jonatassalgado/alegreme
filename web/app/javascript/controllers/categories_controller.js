@@ -34,7 +34,11 @@ export default class CategoriesController extends Controller {
 			smooth:   true
 		};
 
-		Turbolinks.visit(categoryUrl);
+		PubSubModule.emit("categories.update", {});
+
+		setTimeout(() => {
+			Turbolinks.visit(categoryUrl);
+		}, 500)
 	}
 
 	set scrollOffset(values) {

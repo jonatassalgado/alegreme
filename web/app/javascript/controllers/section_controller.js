@@ -112,9 +112,13 @@ export default class SectionController extends Controller {
 		});
 
 
-
 		this.pubsub.sectionCreate = PubSubModule.on(`${this.identifier}.create`, (data) => {
 			this.filter(data);
+		});
+
+
+		this.pubsub.categoriesUpdate = PubSubModule.on("categories.update", (data) => {
+			this.sectionTarget.style.opacity = 0;
 		});
 
 
@@ -125,6 +129,7 @@ export default class SectionController extends Controller {
 		this.destroy = () => {
 			this.pubsub.sectionUpdated();
 			this.pubsub.sectionCreate();
+			this.pubsub.categoriesUpdate();
 			this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
 			this.ripples.forEach((ripple) => {
 				ripple.destroy();
