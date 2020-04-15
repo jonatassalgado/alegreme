@@ -169,12 +169,12 @@ $gutter: 6px;
     pointer-events: none;
     user-select: none;
     & .mdc-card__media {
-      background-color: $surface-secondary-color;
+      background-color: $empty-color;
     }
 
     & .me-card__date-distance-in-words {
-      background: $surface-secondary-color;
-      color: $surface-secondary-color;
+      background: $empty-color;
+      color: $empty-color;
       width: max-content;
     }
   }

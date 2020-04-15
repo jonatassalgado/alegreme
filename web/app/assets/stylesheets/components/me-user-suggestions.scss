@@ -44,7 +44,7 @@
     height: 50px;
     overflow: hidden;
     border-radius: 100%;
-    background-color: $surface-secondary-color;
+    background-color: $empty-color;
     background-size: cover;
 
     .me-collection__title-custom & {
@@ -67,8 +67,8 @@
 
     .me-user-suggestions--empty & {
       font-size: 7px;
-      color: $surface-secondary-color;
-      background-color: $surface-secondary-color;
+      color: $empty-color;
+      background-color: $empty-color;
     }
   }
 

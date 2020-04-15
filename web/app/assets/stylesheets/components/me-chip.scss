@@ -71,14 +71,14 @@
   .me-card__tertiary-section & {
     margin: 0 6px 6px 0;
     font-size: 11px;
-    background: $surface-secondary-color;
-    color: $font-tertiary-color;
+    // background: $surface-secondary-color;
+    // color: $font-tertiary-color;
     @include mobile-only {
       font-size: 8px;
     }
 
     & a {
-      color: $font-tertiary-color;
+      // color: $font-tertiary-color;
     }
 
     & svg {

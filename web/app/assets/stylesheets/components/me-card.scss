@@ -135,7 +135,7 @@ $description-color: $font-secondary-color;
   }
 
   &.me-card--empty .mdc-card__media {
-    background-color: $surface-secondary-color;
+    background-color: $empty-color;
   }
 
   & .mdc-card__actions {
@@ -197,8 +197,8 @@ $description-color: $font-secondary-color;
       font-weight: 500;
     }
     .me-card--empty & {
-      color: $surface-secondary-color;
-      background-color: $surface-secondary-color;
+      color: $empty-color;
+      background-color: $empty-color;
       width: max-content;
       margin: 0 0 6px 0;
     }
@@ -237,8 +237,8 @@ $description-color: $font-secondary-color;
     }
 
     .me-card--empty & {
-      color: $surface-secondary-color;
-      background-color: $surface-secondary-color;
+      color: $empty-color;
+      background-color: $empty-color;
       width: max-content;
     }
   }
@@ -276,8 +276,8 @@ $description-color: $font-secondary-color;
     }
     .me-card--empty & {
       & a {
-        color: $surface-secondary-color;
-        background-color: $surface-secondary-color;
+        color: $empty-color;
+        background-color: $empty-color;
         width: max-content;
         display: inline;
       }
@@ -306,8 +306,8 @@ $description-color: $font-secondary-color;
       font-size: 8px;
     }
     .me-card--empty & {
-      color: $surface-secondary-color;
-      background-color: $surface-secondary-color;
+      color: $empty-color;
+      background-color: $empty-color;
       width: max-content;
     }
   }
@@ -319,8 +319,8 @@ $description-color: $font-secondary-color;
     text-transform: lowercase;
     .me-card--empty & {
       & a {
-        color: $surface-secondary-color;
-        background-color: $surface-secondary-color;
+        color: $empty-color;
+        background-color: $empty-color;
         width: max-content;
         display: inline;
       }
