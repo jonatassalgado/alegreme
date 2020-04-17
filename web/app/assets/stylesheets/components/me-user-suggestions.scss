@@ -23,6 +23,7 @@
     }
     .me-collection__title-custom & {
       grid-template-columns: 36px 36px;
+      grid-auto-columns: 36px;
     }
   }
 
