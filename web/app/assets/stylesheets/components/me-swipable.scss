@@ -36,9 +36,9 @@
   &__items {
     transition: opacity 0.4s linear;
     max-width: 420px;
-    padding: 100px 24px 66px 24px;
+    padding: 40px 24px 26px 24px;
     @include mobile-only {
-      padding: 94px 24px 0 24px;
+      padding: 12px 24px 0 24px;
     }
   }
 
@@ -75,6 +75,11 @@
     &.hidden {
       display: none;
     }
+  }
+
+  &__skip {
+    font-family: $font-secondary-family;
+    color: $font-secondary-color;
   }
 
   &__item {

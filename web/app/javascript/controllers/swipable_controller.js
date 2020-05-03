@@ -5,7 +5,7 @@ import {ProgressBarModule} from "../modules/progressbar-module";
 
 
 export default class SwipableController extends Controller {
-	static targets = ["swipable", "onboarding", "items"];
+	static targets = ["swipable", "onboarding", "items", "skip"];
 
 	initialize() {
 		this.md   = new MobileDetect(window.navigator.userAgent);
@@ -83,6 +83,8 @@ export default class SwipableController extends Controller {
 			    setTimeout(() => {
 				    this.onboardingTarget.style.display = 'none';
 				    this.itemsTarget.style.display      = '';
+
+						this.skipTarget.style.display       = '';
 
 				    requestAnimationFrame(() => {
 					    this.itemsTarget.style.opacity = '';

@@ -376,7 +376,7 @@ class FeedsController < ApplicationController
 	end
 
 	def completed_swipable
-		if current_user&.need_to_finish_swipable?
+		if current_user&.need_to_finish_swipable? && !params[:skip_swipable]
 			redirect_to onboarding_path
 		end
 	end

@@ -2,10 +2,10 @@
 
 <section data-controller="page" data-target="page.page" class="me-page me-page--feed is-animated">
 
-  <%= render partial: 'components/swipable/swipable' if current_user && current_user.personas_assortment_finished? == false %>
+  <%= render partial: 'components/swipable/swipable' if current_user && current_user.personas_assortment_finished? == false && @swipable_items %>
 
-  <% if current_user && current_user.notifications_topics_all_requested == false %>
-    <div class="me-section">
+  <%# if current_user && current_user.notifications_topics_all_requested == false %>
+    <!-- <div class="me-section">
       <div class="me-section__inner">
         <div class="me-notification" data-controller="notification" data-notification-active="<%= current_user&.notifications_topics_all_active %>">
           <div class="me-switch mdc-switch" data-target="notification.switch">
@@ -21,8 +21,8 @@
           </label>
         </div>
       </div>
-    </div>
-  <% end %>
+    </div> -->
+  <%# end %>
 
   <% if @new_events_today.size > 0 %>
     <div class="me-section">

@@ -54,4 +54,7 @@
       <h2>Buscando eventos específicos para você...</h2>
     </div>
   </div>
+  <div data-target="swipable.skip" class="me-swipable__skip" data-turbolinks="false" style="display: none">
+    <%= link_to "Pular esta etapa por agora", feed_path(skip_swipable: true) %>
+  </div>
 </div>

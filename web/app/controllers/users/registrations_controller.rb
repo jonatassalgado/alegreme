@@ -48,6 +48,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 	end
 
 	def check_captcha
+		return if Rails.env != :production
 		unless verify_recaptcha(action: 'sign_up', minimum_score: 0.5)
 			self.resource = resource_class.new sign_up_params
 			resource.validate # Look for any other validation errors besides Recaptcha

@@ -22,7 +22,6 @@ const UILandingBot = class UILandingBot {
 				container.style.opacity   = 1;
 				container.style.transform = 'translateX(0)';
 				if (resolve) {
-					console.log(resolve);
 					resolve(container);
 				}
 			});
