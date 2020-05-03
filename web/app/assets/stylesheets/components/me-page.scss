@@ -8,6 +8,11 @@
     overflow: hidden;
   }
 
+  [data-controller="events"][data-action="show"] & {
+    @include mobile-only {
+      padding-top: 56px;
+    }
+  }
 
   &__section {
     padding: 24px 0;

@@ -41,6 +41,12 @@ $border-color: #e0e0e0;
     }
   }
 
+  [data-controller="events"][data-action="show"] & {
+    @include mobile-only {
+      position: fixed;
+    }
+  }
+
   [data-action="search"] & {
     box-shadow: none;
     & .mdc-top-app-bar__row {

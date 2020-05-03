@@ -72,6 +72,9 @@ scrapy-schedule-job:
 test:
 	$(RUN) bash -c "rails test"
 
+restore-backup:
+	$(RUN) bash -c "rake restore:backup"
+
 cloud:
 	ssh root@159.89.84.18
 
