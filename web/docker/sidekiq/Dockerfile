@@ -50,12 +50,12 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 COPY . $SIDEKIQ_ROOT
 
-# RUN rake assets:clobber
-# RUN rake webpacker:clobber
+RUN rake assets:clobber
+RUN rake webpacker:clobber
 
 RUN yarn install
-# RUN rake assets:precompile
-# RUN rake webpacker:compile
+RUN rake assets:precompile
+RUN rake webpacker:compile
 
 
 CMD bundle exec sidekiq -C config.yml
