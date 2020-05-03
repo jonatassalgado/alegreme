@@ -25,7 +25,7 @@ class User < ApplicationRecord
 	}
 
 	scope 'recents', lambda {
-		where("last_sign_in_at > ?", Date.today - 14.days).order("last_sign_in_at DESC")
+		where("last_sign_in_at > ?", Date.today - 60.days).order("last_sign_in_at DESC")
 	}
 
 	scope 'with_saved_events', lambda {
