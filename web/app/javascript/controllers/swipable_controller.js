@@ -81,21 +81,25 @@ export default class SwipableController extends Controller {
 		    })
 		    .then(ok => {
 			    setTimeout(() => {
-				    this.onboardingTarget.style.display = 'none';
-				    this.itemsTarget.style.display      = '';
+						requestAnimationFrame(() => {
 
-						this.skipTarget.style.display       = '';
+							this.onboardingTarget.style.opacity = 0;
 
-				    requestAnimationFrame(() => {
-					    this.itemsTarget.style.opacity = '';
-					    window.scrollTo(0, 0);
-					    if (this.hasSwipableTarget) {
-						    requestIdleCallback(() => {
-							    this.stackedCards();
-							    this.swipableTarget.style.minHeight     = `${this.swipableTarget.offsetHeight}px`;
-							    document.documentElement.style.overflow = 'hidden';
-						    }, {timeout: 250});
-					    }
+							setTimeout(() => {
+								if (this.hasSwipableTarget) {
+									this.onboardingTarget.style.display = 'none';
+									this.itemsTarget.style.opacity = 1;
+
+									this.stackedCards();
+									this.swipableTarget.style.minHeight     = `${this.swipableTarget.offsetHeight}px`;
+									document.documentElement.style.overflow = 'hidden';
+
+									window.scrollTo(0, 0);
+
+									this.itemsTarget.style.display = 'block';
+								}
+							}, 450)
+
 				    });
 			    }, 4000);
 		    })
@@ -297,16 +301,20 @@ export default class SwipableController extends Controller {
 										response => {
 											response.text().then(data => {
 												document.documentElement.style.overflow = '';
-												document.querySelector('.stackedcards').classList.add('hidden');
-												document.querySelector('.global-actions').classList.add('hidden');
-												document.querySelector('.me-swipable__question').classList.add('hidden');
-												document.querySelector('.final-state').classList.remove('hidden');
+												// document.querySelector('.stackedcards').classList.add('hidden');
+												// document.querySelector('.global-actions').classList.add('hidden');
+												// document.querySelector('.me-swipable__question').classList.add('hidden');
+												document.querySelector('.me-swipable__items').style.opacity = 0;
 												setTimeout(() => {
-													document.querySelector('.final-state').classList.add('active');
+													document.querySelector('.me-swipable__items').style.display = 'none';
+
+													document.querySelector('.final-state').style.display = 'block';
+													document.querySelector('.final-state').style.opacity = 1;
+
 													setTimeout(() => {
 														location.assign("/feed");
 													}, 3500)
-												}, 150);
+												}, 450);
 											});
 										}
 									)

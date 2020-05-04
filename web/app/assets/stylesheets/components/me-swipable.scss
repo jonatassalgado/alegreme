@@ -22,6 +22,8 @@
     //overflow-x: hidden;
     width: calc(40vw - 20px);
     padding: 106px 30vw;
+    transition: opacity 400ms linear;
+    will-change: opacity;
     @include mobile-only {
       width: calc(100vw - 64px);
       padding: 150px 24px 66px 24px;
@@ -34,9 +36,12 @@
   }
 
   &__items {
-    transition: opacity 0.4s linear;
+    transition: opacity 400ms linear;
+    will-change: opacity;
     max-width: 420px;
     padding: 40px 24px 26px 24px;
+    opacity: 0;
+    display: none;
     @include mobile-only {
       padding: 12px 24px 0 24px;
     }
@@ -80,6 +85,8 @@
   &__skip {
     font-family: $font-secondary-family;
     color: $font-secondary-color;
+    text-align: center;
+    padding-top: 24px;
   }
 
   &__item {
@@ -351,17 +358,10 @@
     transition: opacity 0.4s linear;
     text-align: center;
     max-width: 300px;
-  }
-
-  & .final-state.active {
-    opacity: 1;
-  }
-
-  & .final-state.hidden {
     opacity: 0;
     display: none;
   }
-
+  
   & .mdc-button__icon {
     margin: 0;
     width: auto;

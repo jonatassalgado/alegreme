@@ -7,8 +7,7 @@
        data-target="swipable.onboarding"></div>
 
   <div class="me-swipable__items"
-       data-target="swipable.items"
-       style="display: none; opacity: 0">
+       data-target="swipable.items">
     <div class="me-swipable__question">
       <h2>Você iria neste evento?</h2>
       <span>Indique abaixo os eventos que você iria ou não para já receber sugestões que tem a ver com seu gosto</span>
@@ -50,11 +49,11 @@
         <i class="material-icons mdc-button__icon" aria-hidden="true">thumb_up</i>
       </button>
     </div>
-    <div class="final-state hidden">
-      <h2>Buscando eventos específicos para você...</h2>
+    <div data-target="swipable.skip" class="me-swipable__skip" data-turbolinks="false">
+      <%= link_to "Pular esta etapa por agora", feed_path(skip_swipable: true) %>
     </div>
   </div>
-  <div data-target="swipable.skip" class="me-swipable__skip" data-turbolinks="false" style="display: none">
-    <%= link_to "Pular esta etapa por agora", feed_path(skip_swipable: true) %>
+  <div class="final-state">
+    <h2>Buscando eventos específicos para você...</h2>
   </div>
 </div>
