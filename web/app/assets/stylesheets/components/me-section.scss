@@ -35,11 +35,17 @@
     align-items: center;
     justify-content: space-between;
     @include mobile-only {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 800;
       line-height: 1em;
       padding: 0 12px 0 $section-padding-phone;
       justify-content: space-between;
+    }
+  }
+
+  &__description {
+    @include mobile-only {
+      padding: 0 12px 0 $section-padding-phone;
     }
   }
 

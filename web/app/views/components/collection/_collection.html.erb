@@ -13,6 +13,7 @@
           principal: nil,
           secondary: nil
       },
+      empty_message: nil,
       continue_to:                 nil,
       json_request:                false,
       origin:                      nil,
@@ -38,8 +39,8 @@
 
 %>
 
-<% if data.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
-  <section class="me-collection"
+
+  <section class="me-collection <% 'me-collection--empty' if data.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>"
            data-controller="section"
            data-target="section.section"
            data-section-total-events-in-collection="<%= data[:collection][:detail][:total_events_in_collection] %>"
@@ -135,47 +136,99 @@
         </div>
       <% end %>
     </div>
+    <% if data.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter == 0 } && data[:empty_message] %>
+      <div class="me-collection__empty-message">
+        <%= data[:empty_message] %>
+      </div>
+    <% end %>
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner"
            data-section-turbolinks-persist-scroll="0"
            data-target="section.scrollContainer">
-        <% unless data[:collection].empty? %>
-          <%= render(partial:    'components/collection/event',
-                     collection: data[:collection][:events],
-                     as:         :event,
-                     locals:     {
-                         identifier:   data[:identifier],
-                         json_request: data[:json_request]
-                     },
-                     cached:     false) %>
+        <% if data.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+          <% unless data[:collection].empty? %>
+            <%= render(partial:    'components/collection/event',
+                       collection: data[:collection][:events],
+                       as:         :event,
+                       locals:     {
+                           identifier:   data[:identifier],
+                           json_request: data[:json_request]
+                       },
+                       cached:     false) %>
 
-          <%= render(partial: 'components/collection/similar',
-                     locals:  {
-                         data: {
-                             similar:      data[:similar],
-                             events:       data[:collection][:events],
-                             identifier:   data[:identifier],
-                             json_request: data[:json_request],
-                             insert_after: data[:insert_after]
-                         }
-                     },
-                     cached:  true) if !mobile_device? || props[:disposition] == 'vertical' %>
+            <%= render(partial: 'components/collection/similar',
+                       locals:  {
+                           data: {
+                               similar:      data[:similar],
+                               events:       data[:collection][:events],
+                               identifier:   data[:identifier],
+                               json_request: data[:json_request],
+                               insert_after: data[:insert_after]
+                           }
+                       },
+                       cached:  true) if !mobile_device? || props[:disposition] == 'vertical' %>
 
-          <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
-            <div data-action="click->section#loadMore"
-                 data-target="section.loadMoreButton"
-                 data-continue-to-path="<%= data[:continue_to] %>"
-                 class="me-collection__load-more me-collection__load-more--horizontal">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="none" d="M0 0h24v24H0V0z"/>
-                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
-              </svg>
-            </div>
-            <div class="me-collection__load-more me-collection__load-more--horizontal is-loading">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="none" d="M0 0h24v24H0V0z"/>
-                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-              </svg>
+            <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
+              <div data-action="click->section#loadMore"
+                   data-target="section.loadMoreButton"
+                   data-continue-to-path="<%= data[:continue_to] %>"
+                   class="me-collection__load-more me-collection__load-more--horizontal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="none" d="M0 0h24v24H0V0z"/>
+                  <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+                </svg>
+              </div>
+              <div class="me-collection__load-more me-collection__load-more--horizontal is-loading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="none" d="M0 0h24v24H0V0z"/>
+                  <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                </svg>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <% 4.times do %>
+            <div class="mdc-layout-grid__cell" id="cell-follow-544-event_6238" style="order: 1;">
+              <div class="me-card me-card--feed me-card--empty mdc-card mdc-card--outlined" id="event_6238">
+                <div class="me-card__primary-section">
+                  <div class="me-card__date is-hoverable" data-target="event.date">
+                    <span>hoje 22:00</span>
+                    <span class="me-card__date-distance-in-words"> · Daqui 2 horas  </span>
+                  </div>
+                </div>
+                <div data-fixed="true" class="mdc-card__media mdc-card__media--16-9 lazy-bgimage" style="">
+                  <div class="me-card__like-button" data-action="click->event#like">
+                    <div data-target="event.like">
+                      <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button mdc-ripple-upgraded--unbounded mdc-ripple-upgraded" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false" style="display: none; --mdc-ripple-fg-size:0px; --mdc-ripple-fg-scale:NaN; --mdc-ripple-left:0px; --mdc-ripple-top:0px;">
+                        <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">
+                          <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"></path>
+                          </svg>
+                        </i>
+                        <i class="material-icons-sharp mdc-icon-button__icon">
+                          <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"></path>
+                          </svg>
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                  <a href="#">
+                    <div class="me-card__overlay mdc-ripple-surface mdc-ripple-upgraded" data-target="event.overlay"></div>
+                  </a>
+                </div>
+                <div class="me-card__quartenary-section">
+                  <div class="me-card__category" data-target="event.category">
+                    <a href="#">#Festa</a>
+                    <a href="#">#Margot</a>
+                  </div>
+                </div>
+                <div class="me-card__secondary-section">
+                  <div class="me-card__title" data-target="event.name" title="QNT #12 Merry Christmas :: 26.12 :: @Margot">
+                    <a href="#">Qnt #12 Merry Christmas / 26.12 / @Margot</a>
+                  </div>
+                </div>
+              </div>
             </div>
           <% end %>
         <% end %>
@@ -213,63 +266,3 @@
       <% end %>
     </div>
   </section>
-<% else %>
-  <section class="me-collection me-collection--empty"
-           data-section-disposition="horizontal">
-    <div class="me-collection__info">
-      <span>
-        <%= data[:info][:text] %>
-      </span>
-    </div>
-    <div class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner"
-           data-section-turbolinks-persist-scroll="0"
-           data-target="section.scrollContainer">
-        <% 4.times do %>
-          <div class="mdc-layout-grid__cell" id="cell-follow-544-event_6238" style="order: 1;">
-            <div class="me-card me-card--feed me-card--empty mdc-card mdc-card--outlined" id="event_6238">
-              <div class="me-card__primary-section">
-                <div class="me-card__date is-hoverable" data-target="event.date">
-                  <span>hoje 22:00</span>
-                  <span class="me-card__date-distance-in-words"> · Daqui 2 horas  </span>
-                </div>
-              </div>
-              <div data-fixed="true" class="mdc-card__media mdc-card__media--16-9 lazy-bgimage" style="">
-                <div class="me-card__like-button" data-action="click->event#like">
-                  <div data-target="event.like">
-                    <button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button mdc-ripple-upgraded--unbounded mdc-ripple-upgraded" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false" style="display: none; --mdc-ripple-fg-size:0px; --mdc-ripple-fg-scale:NaN; --mdc-ripple-left:0px; --mdc-ripple-top:0px;">
-                      <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">
-                        <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"></path>
-                        </svg>
-                      </i>
-                      <i class="material-icons-sharp mdc-icon-button__icon">
-                        <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"></path>
-                        </svg>
-                      </i>
-                    </button>
-                  </div>
-                </div>
-                <a href="#">
-                  <div class="me-card__overlay mdc-ripple-surface mdc-ripple-upgraded" data-target="event.overlay"></div>
-                </a>
-              </div>
-              <div class="me-card__quartenary-section">
-                <div class="me-card__category" data-target="event.category">
-                  <a href="#">#Festa</a>
-                  <a href="#">#Margot</a>
-                </div>
-              </div>
-              <div class="me-card__secondary-section">
-                <div class="me-card__title" data-target="event.name" title="QNT #12 Merry Christmas :: 26.12 :: @Margot">
-                  <a href="#">Qnt #12 Merry Christmas / 26.12 / @Margot</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </section>
-<% end %>

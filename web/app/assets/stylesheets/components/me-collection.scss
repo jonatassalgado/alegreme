@@ -102,13 +102,6 @@
       display: none;
     }
 
-    //.me-page--profile & {
-    //  margin: 0 0 12px 0;
-    //  @include mobile-only {
-    //    // margin: 0;
-    //  }
-    //}
-
     .me-collection--empty & {
       color: $surface-secondary-color;
       background-color: $surface-secondary-color;
@@ -147,6 +140,13 @@
     @include mobile-only {
       padding: 6px 0 0 0;
       display: block;
+    }
+  }
+
+  &__empty-message {
+    margin: 12px 0;
+    @include mobile-only {
+      padding: 0 12px 0 $section-padding-phone;
     }
   }
 

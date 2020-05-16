@@ -51,6 +51,7 @@ class UsersController < ApplicationController
 				title:      {
 						principal: "Eventos salvos por #{current_user == @user ? 'você' : @user.first_name}"
 				},
+				empty_message: "#{current_user == @user ? 'Você' : @user.first_name} não possuí nenhum evento salvo ainda",
 				filters:    {
 						ocurrences: false,
 						kinds:      false,
