@@ -1,0 +1,161 @@
+<%= javascript_pack_tag 'text-field', 'select', 'data-turbolinks-track': 'reload', defer: true %>
+
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :id, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Id</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mdc-form-field">
+    <div class="mdc-checkbox">
+      <%= form.check_box(:personas_assortment_finished?, {class: 'mdc-checkbox__native-control'}, 'true', 'false') %>
+      <div class="mdc-checkbox__background">
+        <svg class="mdc-checkbox__checkmark"
+             viewBox="0 0 24 24">
+          <path class="mdc-checkbox__checkmark-path"
+                fill="none"
+                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+        </svg>
+        <div class="mdc-checkbox__mixedmark"></div>
+      </div>
+    </div>
+    <label for="checkbox-1">Checkbox 1</label>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:personas_primary_name, ["", "aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Persona primária</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :personas_primary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:personas_secondary_name, ["", "aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Persona secundária</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :personas_secondary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:personas_tertiary_name, ["", "aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Persona terciária</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :personas_tertiary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-select mdc-select--outlined">
+      <i class="mdc-select__dropdown-icon"></i>
+      <%= form.select(:personas_quartenary_name, ["", "aventureiro", "cult", "geek", "hipster", "praieiro", "turista", "underground", "zeen"], {}, { class: "mdc-select__native-control"} ) %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="width: 32.75px;">
+          <label for="outlined" class="mdc-floating-label mdc-floating-label--float-above" style="">Persona quarta</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="me-text-field__container me-text-field--fullwidth">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <%= form.text_field :personas_quartenary_score, class: 'mdc-text-field__input' %>
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch" style="">
+          <label class="mdc-floating-label" for="text-field-outlined" style="">Score</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <button class="demo-button mdc-button mdc-button--unelevated mdc-ripple-upgraded">
+    <span class="mdc-button__label">Salvar</span>
+  </button>
+
+<% end %>

@@ -1,9 +1,20 @@
-<section class="with-section-constraints">
-  <h1>Editing User</h1>
+<section class="me-page">
+  <div class="me-user-profile me-section">
+    <% if @user.picture %>
+      <img class="me-user-profile__picture" src="<%= @user.picture %>" alt="">
+    <% end %>
+    <h1 class="me-user-profile__name">
+      <%= @user.first_name %>
+    </h1>
+  </div>
 
-  <%= render 'form', user: @user %>
-
-  <%= link_to 'Show', @user %> |
-  <%= link_to 'Back', users_path %>
+  <section class="me-section me-section--with-padding">
+    <div class="me-section__inner">
+      <% if current_user.admin? %>
+        <%= render 'users/admin/form', user: @user %>
+      <% else %>
+        <%= render 'form', user: @user %>
+      <% end %>
+    </section>
+    </div>
 </section>
-

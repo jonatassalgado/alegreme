@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 	before_action :set_user, only: [:show, :edit, :update, :destroy]
 	before_action :authorize_user, only: [:index, :show]
-	before_action :authorize_admin, only: [:admin, :destroy, :edit]
-	before_action :authorize_current_user, only: [:update]
+	before_action :authorize_admin, only: [:admin, :destroy]
+	before_action :authorize_current_user, only: [:update, :edit]
 	before_action :mount_json, only: [:edit, :update]
 
 	def active_invite
@@ -123,25 +123,30 @@ class UsersController < ApplicationController
 
 	# Never trust parameters from the scary internet, only allow the white list through.
 	def user_params
-		params.require(:user).permit(:name,
-		                             :id,
-		                             :personas_primary_name,
-		                             :personas_primary_score,
-		                             :personas_secondary_name,
-		                             :personas_secondary_score,
-		                             :personas_tertiary_name,
-		                             :personas_tertiary_score,
-		                             :personas_quartenary_name,
-		                             :personas_quartenary_score,
-		                             :personas_assortment_finished,
-		                             :personas_assortment_finished_at,
-		                             :notifications_devices,
-		                             :notifications_topics => {
-				                             :all => [
-						                             :requested,
-						                             :active
-				                             ]
-		                             })
+		if current_user.admin?
+			params.require(:user).permit(:name,
+				:id,
+				:personas_primary_name,
+				:personas_primary_score,
+				:personas_secondary_name,
+				:personas_secondary_score,
+				:personas_tertiary_name,
+				:personas_tertiary_score,
+				:personas_quartenary_name,
+				:personas_quartenary_score,
+				:personas_assortment_finished,
+				:personas_assortment_finished_at,
+				:notifications_devices,
+				:notifications_topics => {
+					:all => [
+						:requested,
+						:active
+					]
+					})
+		else
+			params.require(:user).permit(:name)
+		end
+
 	end
 
 	def mount_json
