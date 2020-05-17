@@ -4,10 +4,12 @@ class User < ApplicationRecord
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
 	devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
+	validates :name, :length => { :in => 3..60 }
+
 	extend FriendlyId
 	friendly_id :name, use: :slugged
 
-	#acts_as_follower
+	include UserImageUploader::Attachment.new(:image)
 
 	include UserDecorators::Following
 	include UserDecorators::Save

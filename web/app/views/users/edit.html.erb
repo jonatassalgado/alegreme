@@ -1,20 +1,16 @@
 <section class="me-page">
-  <div class="me-user-profile me-section">
-    <% if @user.picture %>
-      <img class="me-user-profile__picture" src="<%= @user.picture %>" alt="">
-    <% end %>
-    <h1 class="me-user-profile__name">
-      <%= @user.first_name %>
-    </h1>
-  </div>
-
-  <section class="me-section me-section--with-padding">
+  <section class="me-section me-section--full-height">
     <div class="me-section__inner">
-      <% if current_user.admin? %>
-        <%= render 'users/admin/form', user: @user %>
-      <% else %>
-        <%= render 'form', user: @user %>
-      <% end %>
+      <div class="me-section__description">
+        <h2>
+          Editar conta
+        </h2>
+        <%# if current_user.admin? %>
+          <%#= render 'users/admin/form', user: @user %>
+        <%# else %>
+          <%= render 'form', user: @user %>
+        <%# end %>
+      </div>
     </section>
     </div>
 </section>

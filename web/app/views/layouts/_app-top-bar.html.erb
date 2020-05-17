@@ -144,7 +144,7 @@
       <% if current_user %>
         <%# if current_user.picture %>
           <%= link_to user_path(current_user) do %>
-            <div class="me-top-app-bar__picture is-hoverable" style="background-image: url('<%= current_user.picture %>')"></div>
+            <div class="me-top-app-bar__picture is-hoverable" style="background-image: url('<%= current_user.picture :small %>')"></div>
           <% end %>
         <%# end %>
         <div style="flex-direction: row">

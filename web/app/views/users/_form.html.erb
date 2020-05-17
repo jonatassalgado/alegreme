@@ -2,10 +2,10 @@
 
 <%= notice %>
 
-<%= form_with(model: user, local: true) do |form| %>
+<%= form_with(model: user, local: true, html: { enctype: "multipart/form-data" }) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <p><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</p>
 
       <ul>
       <% user.errors.full_messages.each do |message| %>
@@ -15,6 +15,14 @@
     </div>
   <% end %>
 
+  <% if @user.picture %>
+    <img class="me-user-profile__picture" src="<%= @user.picture %>">
+  <% else %>
+    Você não possui nenhuma foto, envie clicando ao lado.
+  <% end %>
+
+  <%= form.hidden_field :image, value: @user.cached_image_data %>
+  <%= form.file_field :image, class: "me-file-button" %>
 
   <div class="me-text-field__container me-text-field--fullwidth">
     <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">

@@ -19,8 +19,12 @@ module UserDecorators
 				name.try(:split).try(:first)
 			end
 
-			def picture
-				features.dig('demographic', 'picture')
+			def picture(size = :medium)
+				if image.try {|img| img[size] }
+					image[size].url(public: true)
+				else
+					features.dig('demographic', 'picture')
+				end
 			end
 
 			def picture=(value)

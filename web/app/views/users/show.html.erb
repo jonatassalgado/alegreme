@@ -39,7 +39,7 @@
               <% User.where("id IN (?)", @user.followers['users']).order("last_sign_in_at DESC").limit(10).each do |user| %>
               <%= link_to user_path user do %>
               <div class="me-user-suggestions__user">
-                <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
+                <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture :small %>')">
                 </div>
                 <div class="me-user-suggestions__name">
                   <%= user.first_name %>
