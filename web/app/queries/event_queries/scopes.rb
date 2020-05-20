@@ -40,6 +40,15 @@ module EventQueries
 				end
 			}
 
+			scope 'not_in_disliked', lambda { |user, opts = {}|
+				opts = {'turn_on': true}.merge(opts)
+				if opts[:turn_on] && user
+					where.not(id: user.taste_events_disliked)
+				else
+					all
+				end
+			}
+
 			scope 'not_in', lambda { |ids, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
 				if opts[:turn_on] && !ids.blank?

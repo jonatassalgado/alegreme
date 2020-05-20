@@ -11,9 +11,16 @@
   justify-content: center;
   flex-direction: column;
   @include mobile-only {
+    min-height: 350px;
     //margin: 0 0 15px 0;
     //height: -webkit-fill-available;
     //padding: 150px 0 0 0;
+  }
+
+  &[data-swipable-chat-on="true"] {
+    @include mobile-only {
+      box-shadow: inset 0px 0px 12px #00000026;
+    }
   }
 
   &__onboarding {
@@ -21,12 +28,15 @@
     //overflow-y: scroll;
     //overflow-x: hidden;
     width: calc(40vw - 20px);
-    padding: 106px 30vw;
+    padding: 36px 20vw 44px 20vw;
     transition: opacity 400ms linear;
     will-change: opacity;
     @include mobile-only {
       width: calc(100vw - 64px);
-      padding: 150px 24px 66px 24px;
+      padding: 12px 24px 74px 24px;
+      max-height: 275px;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
     }
 
     & button {
@@ -39,11 +49,15 @@
     transition: opacity 400ms linear;
     will-change: opacity;
     max-width: 420px;
-    padding: 40px 24px 26px 24px;
+    padding: 0 24px 26px 24px;
     opacity: 0;
     display: none;
     @include mobile-only {
-      padding: 12px 24px 0 24px;
+      padding: 0 24px 0 24px;
+    }
+
+    & svg {
+      fill: #6c6c6c;
     }
   }
 
@@ -74,6 +88,7 @@
       line-height: 130%;
       color: $font-secondary-color;
       margin: 0 auto;
+      display: none;
       //max-width: 80%;
     }
 
@@ -100,6 +115,7 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-end;
+    padding: 0 0 12px 0;
     // padding: 15px 30px 15px 15px;
     @include mobile-only {
       // padding: 15px;
@@ -123,6 +139,7 @@
     }
 
     &-description {
+      display: none;
       font-size: 14px;
       line-height: 1.1em;
       font-weight: 400;
@@ -162,6 +179,7 @@
   & .stackedcards {
     position: relative;
     display: inline-block;
+    z-index: 3;
 
     &.hidden {
       display: none;
@@ -198,7 +216,8 @@
     border-radius: 12px;
     overflow: hidden;
     @include mobile-only {
-      height: 190px;
+      height: 200px;
+      min-width: calc(100vw - 48px);
     }
   }
 
@@ -285,6 +304,10 @@
   & .stackedcards .stackedcards-container > :nth-child(1) {
     position: relative;
     display: block;
+    min-width: 410px;
+    @include mobile-only {
+      min-width: calc(100vw - 48px);
+    }
   }
 
   /* global actions buttons*/
@@ -294,6 +317,7 @@
     width: 100%;
     position: relative;
     margin: 15px 0 0 0;
+    z-index: 2;
     @include mobile-only {
       //display: none;
       margin: 15px 0 25px 0;
@@ -361,7 +385,7 @@
     opacity: 0;
     display: none;
   }
-  
+
   & .mdc-button__icon {
     margin: 0;
     width: auto;

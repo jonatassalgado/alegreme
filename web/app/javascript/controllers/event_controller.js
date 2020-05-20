@@ -125,8 +125,8 @@ export default class EventController extends Controller {
 	like() {
 		PubSubModule.emit('event.like');
 
-		fetch(`/porto-alegre/eventos/${this.identifier}/favorite`, {
-			method     : this.isFavorited,
+		fetch(`/api/taste/events/${this.identifier}/${this.isFavorited}`, {
+			method     : 'post',
 			headers    : {
 				'X-Requested-With': 'XMLHttpRequest',
 				'Content-type'    : 'text/javascript; charset=UTF-8',
@@ -168,9 +168,9 @@ export default class EventController extends Controller {
 
 	get isFavorited() {
 		if (this.data.get("favorited") === "true") {
-			return "delete";
+			return "unsave";
 		} else {
-			return "post";
+			return "save";
 		}
 	}
 

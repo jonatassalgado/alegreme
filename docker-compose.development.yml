@@ -29,6 +29,7 @@ services:
       - ./web/config:/var/www/alegreme/config:ro
       - ./web/lib:/var/www/alegreme/lib:ro
       - ./web/db/backups:/var/www/alegreme/db/backups:ro
+      - ./web/db/migrate:/var/www/alegreme/db/migrate:ro
       # - ./storage:/var/www/alegreme/storage
       # - ./logs/app:/var/www/alegreme/log:delegated
     environment:

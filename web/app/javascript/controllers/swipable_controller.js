@@ -11,100 +11,109 @@ export default class SwipableController extends Controller {
 		this.md   = new MobileDetect(window.navigator.userAgent);
 		this.uilb = new UILandingBot(this.onboardingTarget);
 
-		this.uilb
-		    .message({
-			    content: `Olá ${gon.user_first_name} 👋`,
-			    delay  : 150
-		    })
-		    .then(ok =>
-			    this.uilb.message({
-				    cssClass: "no-icon",
-				    content :
-					    "Vamos aproveitar a cidade de Porto Alegre juntos!",
-				    delay   : 2000
-			    })
-		    )
-		    .then(ok =>
-			    this.uilb.message({
-				    cssClass: "no-icon",
-				    content :
-					    "Inicialmente vamos te sugerir eventos, mas logo também iremos sugerir filmes no cinema, serviços, promoções e experiências",
-				    delay   : 1500
-			    }))
-		    .then(ok =>
-			    this.uilb.message({
-				    cssClass: "no-icon",
-				    content :
-					    "Chega de papo, vamos começar!",
-				    delay   : 4000
-			    })
-		    )
-		    .then(ok =>
-			    this.uilb.message({
-				    cssClass: "no-icon",
-				    content :
-					    "Para sugerir eventos que tem a ver com você, primeiro me diga o que você gosta e não gosta",
-				    delay   : 1000
-			    })
-		    )
-		    .then(ok =>
-			    this.uilb.message({
-				    cssClass: "no-icon",
-				    content : "Vamos lá?",
-				    delay   : 4000
-			    })
-		    )
-		    .then(ok =>
-			    this.uilb.action({
-				    type : "button",
-				    delay: 500,
-				    items: [
-					    {
-						    text : "Vamos",
-						    value: "Vamos!"
-					    }
-				    ]
-			    })
-		    )
-		    .then(ok =>
-			    this.uilb.message({
-				    delay  : 250,
-				    human  : true,
-				    content: ok
-			    })
-		    )
-		    .then(ok => {
-			    this.uilb.message({
-				    content: "Carregando opções...",
-				    delay  : 1500
-			    })
-		    })
-		    .then(ok => {
-			    setTimeout(() => {
+		if (gon.user_sign_in_count <= 1 && gon.user_taste_events_saved < 1) {
+			this.uilb
+				.message({
+					content: `Olá ${gon.user_first_name} 👋`,
+					delay  : 150
+				})
+				.then(ok =>
+					this.uilb.message({
+						cssClass: "no-icon",
+						content :
+							"Vamos aproveitar a cidade de Porto Alegre juntos!",
+						delay   : 2000
+					})
+				)
+				.then(ok =>
+					this.uilb.message({
+						cssClass: "no-icon",
+						content :
+							"Inicialmente vamos te sugerir eventos, mas logo também iremos sugerir filmes no cinema, serviços, promoções e experiências",
+						delay   : 1500
+					}))
+				.then(ok =>
+					this.uilb.message({
+						cssClass: "no-icon",
+						content :
+							"Chega de papo, vamos começar!",
+						delay   : 4000
+					})
+				)
+				.then(ok =>
+					this.uilb.message({
+						cssClass: "no-icon",
+						content :
+							"Para sugerir eventos que tem a ver com você, primeiro me diga o que você gosta e não gosta",
+						delay   : 1000
+					})
+				)
+				.then(ok =>
+					this.uilb.message({
+						cssClass: "no-icon",
+						content : "Vamos lá?",
+						delay   : 4000
+					})
+				)
+				.then(ok =>
+					this.uilb.action({
+						type : "button",
+						delay: 500,
+						items: [
+							{
+								text : "Vamos",
+								value: "Vamos!"
+							}
+						]
+					})
+				)
+				.then(ok =>
+					this.uilb.message({
+						delay  : 250,
+						human  : true,
+						content: ok
+					})
+				)
+				.then(ok => {
+					this.uilb.message({
+						content: "Carregando opções...",
+						delay  : 1500
+					})
+				})
+				.then(ok => {
+					setTimeout(() => {
 						requestAnimationFrame(() => {
 
 							this.onboardingTarget.style.opacity = 0;
 
 							setTimeout(() => {
 								if (this.hasSwipableTarget) {
+									this.data.set('chat-on', false);
 									this.onboardingTarget.style.display = 'none';
 									this.itemsTarget.style.opacity = 1;
-
 									this.stackedCards();
-									this.swipableTarget.style.minHeight     = `${this.swipableTarget.offsetHeight}px`;
-									document.documentElement.style.overflow = 'hidden';
-
-									window.scrollTo(0, 0);
-
 									this.itemsTarget.style.display = 'block';
 								}
 							}, 450)
 
-				    });
-			    }, 4000);
-		    })
-		    .catch(error => console.log('error', error));
+						});
+					}, 4000);
+				})
+				.catch(error => console.log('error', error));
+
+		} else {
+			setTimeout(() => {
+				if (this.hasSwipableTarget) {
+					this.data.set('chat-on', false);
+					this.onboardingTarget.style.display = 'none';
+					this.itemsTarget.style.opacity = 1;
+					this.stackedCards();
+					this.itemsTarget.style.display = 'block';
+				}
+			}, 450)
+		}
 	}
+
 
 	disconnect() {
 
@@ -261,46 +270,46 @@ export default class SwipableController extends Controller {
 			if (counter === maxElements) {
 				//Event listener created to know when transition ends and changes states
 
-				fetch(`${HOST}/user/persona?query=${JSON.stringify(answers)}`, {
-					method : 'GET',
-					headers: {
-						'Content-type': 'text/javascript; charset=UTF-8'
-					}
-				})
-					.then(response => {
-							response.json().then(data => {
+				// fetch(`${HOST}/user/persona?query=${JSON.stringify(answers)}`, {
+				// 	method : 'GET',
+				// 	headers: {
+				// 		'Content-type': 'text/javascript; charset=UTF-8'
+				// 	}
+				// })
+				// 	.then(response => {
+				// 			response.json().then(data => {
 
-								const params = {
-									'user': {
-										'personas_primary_name'          : data.classification.personas.primary.name,
-										'personas_secondary_name'        : data.classification.personas.secondary.name,
-										'personas_tertiary_name'         : data.classification.personas.tertiary.name,
-										'personas_quartenary_name'       : data.classification.personas.quartenary.name,
-										'personas_primary_score'         : data.classification.personas.primary.score,
-										'personas_secondary_score'       : data.classification.personas.secondary.score,
-										'personas_tertiary_score'        : data.classification.personas.tertiary.score,
-										'personas_quartenary_score'      : data.classification.personas.quartenary.score,
-										'personas_assortment_finished'   : true,
-										'personas_assortment_finished_at': new Date().toJSON()
+								// const params = {
+								// 	'user': {
+								// 		'personas_primary_name'          : data.classification.personas.primary.name,
+								// 		'personas_secondary_name'        : data.classification.personas.secondary.name,
+								// 		'personas_tertiary_name'         : data.classification.personas.tertiary.name,
+								// 		'personas_quartenary_name'       : data.classification.personas.quartenary.name,
+								// 		'personas_primary_score'         : data.classification.personas.primary.score,
+								// 		'personas_secondary_score'       : data.classification.personas.secondary.score,
+								// 		'personas_tertiary_score'        : data.classification.personas.tertiary.score,
+								// 		'personas_quartenary_score'      : data.classification.personas.quartenary.score,
+								// 		'personas_assortment_finished'   : true,
+								// 		'personas_assortment_finished_at': new Date().toJSON()
+								//
+								// 	}
+								// };
 
-									}
-								};
-
-								fetch(`${location.origin}/users/${gon.user_id}`, {
-									method     : 'PATCH',
-									headers    : {
-										'Content-type'    : 'application/json; charset=UTF-8',
-										'Accept'          : 'application/json',
-										'X-Requested-With': 'XMLHttpRequest',
-										'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
-									},
-									credentials: 'same-origin',
-									body       : JSON.stringify(params)
-								})
-									.then(
-										response => {
-											response.text().then(data => {
-												document.documentElement.style.overflow = '';
+								// fetch(`${location.origin}/users/${gon.user_id}`, {
+								// 	method     : 'PATCH',
+								// 	headers    : {
+								// 		'Content-type'    : 'application/json; charset=UTF-8',
+								// 		'Accept'          : 'application/json',
+								// 		'X-Requested-With': 'XMLHttpRequest',
+								// 		'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+								// 	},
+								// 	credentials: 'same-origin',
+								// 	body       : JSON.stringify(params)
+								// })
+								// 	.then(
+								// 		response => {
+								// 			response.text().then(data => {
+												// document.documentElement.style.overflow = '';
 												// document.querySelector('.stackedcards').classList.add('hidden');
 												// document.querySelector('.global-actions').classList.add('hidden');
 												// document.querySelector('.me-swipable__question').classList.add('hidden');
@@ -313,20 +322,20 @@ export default class SwipableController extends Controller {
 
 													setTimeout(() => {
 														location.assign("/feed");
-													}, 3500)
-												}, 450);
-											});
-										}
-									)
-									.catch(err => {
-										console.log('Fetch Error :-S', err);
-									});
-							});
-						}
-					)
-					.catch(err => {
-						console.log('Fetch Error :-S', err);
-					});
+													}, 1500)
+												}, 1500);
+									// 		});
+									// 	}
+									// )
+									// .catch(err => {
+									// 	console.log('Fetch Error :-S', err);
+									// });
+							// });
+					// 	}
+					// )
+					// .catch(err => {
+					// 	console.log('Fetch Error :-S', err);
+					// });
 			}
 		}
 
@@ -387,6 +396,26 @@ export default class SwipableController extends Controller {
 		function onSwipeLeft() {
 			answers.push('-1');
 
+			fetch(`/api/taste/events/${currentElementObj.id}/dislike`, {
+				method     : "post",
+				headers    : {
+					'X-Requested-With': 'XMLHttpRequest',
+					'Content-type'    : 'text/javascript; charset=UTF-8',
+					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+				},
+				credentials: 'same-origin'
+			})
+				.then(
+					response => {
+						response.text().then(data => {
+
+						});
+					}
+				)
+				.catch(err => {
+					console.log('Fetch Error :-S', err);
+				});
+
 			removeNoTransition();
 			transformUi(-pixelsToMoveCardOnSwipe, 0, 0, currentElementObj);
 			if (useOverlays) {
@@ -404,6 +433,33 @@ export default class SwipableController extends Controller {
 //Swipe active card to right.
 		function onSwipeRight() {
 			answers.push('1');
+
+			PubSubModule.emit('event.like');
+
+			fetch(`/api/taste/events/${currentElementObj.id}/save?swipable=true`, {
+				method     : "post",
+				headers    : {
+					'X-Requested-With': 'XMLHttpRequest',
+					'Content-type'    : 'text/javascript; charset=UTF-8',
+					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+				},
+				credentials: 'same-origin'
+			})
+				.then(
+					response => {
+						response.text().then(data => {
+							eval(data);
+							CacheModule.clearCache(['feed-page', 'events-page'], {
+								event: {
+									identifier: currentElementObj.id
+								}
+							});
+						});
+					}
+				)
+				.catch(err => {
+					console.log('Fetch Error :-S', err);
+				});
 
 			removeNoTransition();
 			transformUi(pixelsToMoveCardOnSwipe, 0, 0, currentElementObj);
@@ -786,7 +842,8 @@ export default class SwipableController extends Controller {
 			currentY = evt.changedTouches[0].pageY;
 
 			translateX = currentX - startX;
-			translateY = currentY - startY;
+			translateY = 0;
+			// translateY = currentY - startY;
 
 			setOverlayOpacity();
 

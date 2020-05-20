@@ -5,11 +5,11 @@
         <h2>
           Editar conta
         </h2>
-        <%# if current_user.admin? %>
-          <%#= render 'users/admin/form', user: @user %>
-        <%# else %>
+        <% if current_user.admin? %>
+          <%= render 'users/admin/form', user: @user %>
+        <% else %>
           <%= render 'form', user: @user %>
-        <%# end %>
+        <% end %>
       </div>
     </section>
     </div>

@@ -2,15 +2,17 @@ include Pagy::Backend
 
 class FeedsController < ApplicationController
 	before_action :authorize_user, except: [:index, :today, :category, :week, :city, :day]
-	before_action :completed_swipable, except: [:today, :category, :week, :city, :day]
+	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 	before_action :authorize_current_user, only: %i[suggestions follow news]
 
 
 	def index
 		gon.push({
-				         :env             => Rails.env,
-				         :user_id         => current_user.try(:id),
-				         :user_first_name => current_user.try(:first_name)
+				         :env                     => Rails.env,
+				         :user_id                 => current_user.try(:id),
+				         :user_first_name         => current_user.try(:first_name),
+								 :user_sign_in_count      => current_user&.sign_in_count,
+								 :user_taste_events_saved => current_user&.taste_events_saved&.size
 		         })
 
 		@collections ||= EventServices::CollectionCreator.new(current_user, params)
@@ -22,7 +24,7 @@ class FeedsController < ApplicationController
 		@favorited_events             = current_user.try(:saved_events)
 		@following_users              = User.following_users(current_user)
 		@events_from_followed_users   = Event.from_followed_users(current_user)
-
+		@swipable_items               = get_swipable_items
 
 		if current_user&.sign_in_count.try { |counter| counter >= 2 }
 			@collection_new_today = @collections.call(
@@ -378,6 +380,20 @@ class FeedsController < ApplicationController
 	def completed_swipable
 		if current_user&.need_to_finish_swipable? && !params[:skip_swipable]
 			redirect_to onboarding_path
+		end
+	end
+
+	def get_swipable_items
+		events = Event.active.not_in_saved(current_user).not_in_disliked(current_user).in_categories([], {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(24)
+
+		events.map do |event|
+			{
+					id:             event.id,
+					name:           event.details_name,
+					image_url:      event.image[:feed].url(public: true),
+					description:    helpers.strip_tags(event.details_description).truncate(160),
+					dominant_color: helpers.get_image_dominant_color(event)
+			}
 		end
 	end
 

@@ -21,8 +21,8 @@ export default class SavesEventsController extends Controller {
 
 
 	remove() {
-		fetch(`/porto-alegre/eventos/${this.identifier}/favorite`, {
-			method     : 'delete',
+		fetch(`/api/taste/events/${this.identifier}/unsave`, {
+			method     : 'post',
 			headers    : {
 				'X-Requested-With': 'XMLHttpRequest',
 				'Content-type'    : 'text/javascript; charset=UTF-8',

@@ -27,7 +27,6 @@ gem 'friendly_id', '~> 5.2.4'
 # Push Notifications
 gem 'rpush'
 
-
 # Devise
 gem 'devise'
 gem 'omniauth-google-oauth2'

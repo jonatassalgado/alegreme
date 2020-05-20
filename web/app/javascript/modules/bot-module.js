@@ -51,9 +51,9 @@ const UILandingBot = class UILandingBot {
 	scrollToEnd() {
 		setTimeout(() => {
 			const onboardingEl = document.querySelector('.me-swipable__onboarding');
-			document.documentElement.style.scrollBehavior = 'smooth';
-			window.scrollTo(0, onboardingEl.scrollHeight);
-			document.documentElement.style.scrollBehavior = '';
+			// document.querySelector(".me-swipable").style.scrollBehavior = 'smooth';
+			onboardingEl.scrollTo(0, onboardingEl.scrollHeight);
+			// document.querySelector(".me-swipable").style.scrollBehavior = '';
 		}, 300);
 	}
 

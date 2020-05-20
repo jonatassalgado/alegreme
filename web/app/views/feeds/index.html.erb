@@ -2,8 +2,6 @@
 
 <section data-controller="page" data-target="page.page" class="me-page me-page--feed is-animated">
 
-  <%= render partial: 'components/swipable/swipable' if current_user && current_user.personas_assortment_finished? == false && @swipable_items %>
-
   <%# if current_user && current_user.notifications_topics_all_requested == false %>
     <!-- <div class="me-section">
       <div class="me-section__inner">
@@ -24,12 +22,27 @@
     </div> -->
   <%# end %>
 
-  <% if @new_events_today.size > 0 %>
+  <% if current_user && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try {|last_view_at| last_view_at < (DateTime.now - 1.day)}) %>
+    <div class="me-section">
+      <div class="me-section__inner">
+        <div class="me-section__title">
+          Você iria neste evento?
+        </div>
+          <%= render partial: 'components/swipable/swipable' if current_user && @swipable_items %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if current_user && @new_events_today.size > 0 %>
     <div class="me-section">
       <div class="me-section__inner">
         <div class="me-info">
           <div class="me-info__content">
-            Foram adicionados <%= @new_events_today.size %> eventos nas últimas 24 horas!
+            <% if @new_events_today.size == 1 %>
+              <%= link_to "Foi adicionado um evento nas últimas 24 horas!", recent_events_path(current_user)%>
+            <% else %>
+              <%= link_to "Foram adicionados #{@new_events_today.size} eventos nas últimas 24 horas!", recent_events_path(current_user)%>
+            <% end %>
           </div>
         </div>
       </div>
@@ -38,6 +51,9 @@
 
   <div class="me-section">
     <div class="me-section__inner">
+      <div class="me-section__title">
+        Seguindo
+      </div>
       <%= render partial: "components/user_suggestions", locals: {
           data: {
               following_users: @following_users
