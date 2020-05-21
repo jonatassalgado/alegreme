@@ -189,7 +189,9 @@
                 <a href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| current_user&.last_sign_in_at < event.created_at } %>">
                   <div class="mdc-chip__ripple"></div>
                   <%= topic.details_name.titleize %>
-                  <i class="me-chip__counter"><%= topic.events.active.size %></i>
+                  <% if topic.events.active.size > 0 %>
+                    <i class="me-chip__counter"><%= topic.events.active.size %></i>
+                  <% end %>
                 </a>
               <% end %>
             </div>

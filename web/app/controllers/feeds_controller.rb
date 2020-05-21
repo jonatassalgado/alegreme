@@ -73,6 +73,8 @@ class FeedsController < ApplicationController
 							only_in:          @events_from_following_topics.map(&:id),
 							not_in:           (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
 							in_user_personas: false,
+							with_high_score:  false,
+							not_in_saved:     false,
 							order_by_persona: false,
 							order_by_date:    true
 					})
@@ -385,7 +387,7 @@ class FeedsController < ApplicationController
 	end
 
 	def get_swipable_items
-		events = Event.active.not_in_saved(current_user).not_in_disliked(current_user).in_categories([], {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(24)
+		events = Event.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories([], {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(24)
 
 		events.map do |event|
 			{
