@@ -22,7 +22,7 @@
     </div> -->
   <%# end %>
 
-  <% if current_user && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try {|last_view_at| last_view_at < (DateTime.now - 1.day)}) %>
+  <% if current_user && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try {|last_view_at| last_view_at < (DateTime.now - 8.hours)}) %>
     <div class="me-section">
       <div class="me-section__inner">
         <div class="me-section__title">
@@ -49,18 +49,18 @@
     </div>
   <% end %>
 
-  <div class="me-section">
+  <!-- <div class="me-section">
     <div class="me-section__inner">
       <div class="me-section__title">
         Seguindo
       </div>
-      <%= render partial: "components/user_suggestions", locals: {
+      <%#= render partial: "components/user_suggestions", locals: {
           data: {
               following_users: @following_users
           }
       } %>
     </div>
-  </div>
+  </div> -->
 
 
   <%# if current_user && current_user&.personas_assortment_finished? %>

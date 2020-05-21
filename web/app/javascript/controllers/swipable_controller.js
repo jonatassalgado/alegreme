@@ -130,7 +130,7 @@ export default class SwipableController extends Controller {
 		let maxElements; //Total of stacked cards on DOM.
 		let currentPosition           = 0; //Keep the position of active stacked card.
 		let counter                   = 0;
-		const velocity                = 0.25; //Minimum velocity allowed to trigger a swipe.
+		const velocity                = 0.5; //Minimum velocity allowed to trigger a swipe.
 		const pixelsToMoveCardOnSwipe = this.md.mobile() ? 600 : 800;
 		let answers                   = [];
 		let isFirstTime               = true;

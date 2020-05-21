@@ -5,7 +5,7 @@
   bottom: 0;
   z-index: 5;
   background: darken($surface-color, 1%);
-  box-shadow: 0 0 3px #00000030;
+  box-shadow: 0 -1px 3px rgba(0,0,0,0.2);
   @include desktop-only {
     display: none;
   }
