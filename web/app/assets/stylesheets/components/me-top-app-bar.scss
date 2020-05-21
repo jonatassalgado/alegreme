@@ -44,6 +44,7 @@ $border-color: #e0e0e0;
   [data-controller="events"][data-action="show"] & {
     @include mobile-only {
       position: fixed;
+      box-shadow: 0px 1px 6px 1px #00000030;
     }
   }
 
