@@ -26,7 +26,7 @@ class FeedsController < ApplicationController
 		@events_from_followed_users   = Event.from_followed_users(current_user)
 		@swipable_items               = get_swipable_items
 
-		if current_user&.sign_in_count.try { |counter| counter >= 2 }
+		if current_user&.sign_in_count.try { |counter| counter >= 2 } && @new_events_today.size > 3
 			@collection_new_today = @collections.call(
 					{
 							identifier: 'new-today',
@@ -72,6 +72,7 @@ class FeedsController < ApplicationController
 					{
 							only_in:          @events_from_following_topics.map(&:id),
 							not_in:           (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
+							in_user_personas: false,
 							order_by_persona: false,
 							order_by_date:    true
 					})
