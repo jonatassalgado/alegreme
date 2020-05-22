@@ -317,13 +317,14 @@ export default class SwipableController extends Controller {
 												setTimeout(() => {
 													document.querySelector('.me-swipable__items').style.display = 'none';
 
-													document.querySelector('.final-state').style.display = 'block';
+													document.querySelector('.final-state').style.display = 'flex';
 													document.querySelector('.final-state').style.opacity = 1;
 
+													ProgressBarModule.show();
 													setTimeout(() => {
 														location.assign("/feed");
-													}, 1500)
-												}, 1500);
+													}, 500)
+												}, 1000);
 									// 		});
 									// 	}
 									// )
