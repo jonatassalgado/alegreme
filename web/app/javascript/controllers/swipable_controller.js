@@ -396,7 +396,7 @@ export default class SwipableController extends Controller {
 		function onSwipeLeft() {
 			answers.push('-1');
 
-			fetch(`/api/taste/events/${currentElementObj.id}/dislike`, {
+			fetch(`/api/taste/events/${currentElementObj.id}/dislike?swipable=true`, {
 				method     : "post",
 				headers    : {
 					'X-Requested-With': 'XMLHttpRequest',
