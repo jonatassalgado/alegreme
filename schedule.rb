@@ -19,3 +19,7 @@ end
 every 2.days do
   command "cd /root/alegreme && > logs/api/error.log"
 end
+
+every 1.month do
+  command "cd /root/alegreme && sudo ./init-letsencrypt.sh"
+end
