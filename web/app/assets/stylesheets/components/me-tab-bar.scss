@@ -20,7 +20,7 @@
   @include mobile-only {
     @include mdc-tab-bar-density(-1);
     top: 0;
-    margin-bottom: 3px;
+    margin-bottom: 1px;
   }
 
   & .mdc-tab {

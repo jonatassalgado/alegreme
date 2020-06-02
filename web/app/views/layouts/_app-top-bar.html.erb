@@ -141,7 +141,7 @@
     <% end %>
     <section class="me-top-app-bar__section me-top-app-bar__section--right mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
       <% if ['show'].include?(params[:action]) && mobile_device? %>
-          <amp-social-share type="system"  width="36" height="36"></amp-social-share>
+          <amp-social-share type="system"class="custom-style"  width="36" height="36"></amp-social-share>
       <% elsif ['feeds'].include?(params[:controller]) %>
         <%# if current_user.picture %>
           <%= link_to user_path(current_user) do %>

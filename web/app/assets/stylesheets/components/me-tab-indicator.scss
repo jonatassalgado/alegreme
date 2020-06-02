@@ -1,10 +1,13 @@
-.mdc-tab-indicator {
-  &__content {
+.me-tab-indicator {
 
-    &--underline {
-      //@include desktop-only {
-        width: 80px;
-      //}
+  & .mdc-tab-indicator {
+    &__content {
+
+      &--underline {
+        //@include desktop-only {
+        width: 50px;
+        //}
+      }
     }
   }
 }

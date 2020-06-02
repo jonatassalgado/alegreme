@@ -56,7 +56,7 @@ body {
   color: $font-secondary-color;
 
   @include mobile-only {
-    background: $background-secondary-color;
+    background: $background-color;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
@@ -65,9 +65,10 @@ body {
 }
 
 amp-social-share.custom-style {
-    background-color: $font-tertiary-color;
-    border-radius: 6px;
-  }
+  background-color: #d4d4d4;
+  border-radius: 50px;
+  background-size: inherit;
+}
 
 a {
   text-decoration: none;

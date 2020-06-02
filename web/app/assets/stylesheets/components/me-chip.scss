@@ -20,6 +20,10 @@
     }
   }
 
+  .me-collection__title-custom & {
+    font-weight: 500;
+  }
+
   .me-card__primary-section & {
     background: $surface-color;
     color: $font-tertiary-color;

@@ -37,11 +37,10 @@
   // }
 
   & h3 {
-    font-family: $font-secondary-family;
+    font-family: $font-primary-family;
     color: $font-secondary-color;
     font-weight: bold;
     font-size: 14px;
-    text-transform: uppercase;
     grid-column-end: 12 span;
     line-height: 1.2em;
     z-index: 2;
@@ -49,7 +48,7 @@
     animation-duration: 1s;
     @include mobile-only {
       font-size: 12px;
-      padding: 0 12px;
+      padding: 6px 12px;
     }
 
     & a {

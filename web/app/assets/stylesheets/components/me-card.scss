@@ -440,15 +440,15 @@ $description-color: $font-secondary-color;
   &__like-button {
     position: absolute;
     z-index: 2;
-    top: 12px;
-    right: 12px;
+    top: 8px;
+    right: 8px;
     border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.25);
+    // box-shadow: 0 1px 12px rgba(0, 0, 0, 0.25);
 
     & .me-icon-button.mdc-icon-button {
       display: none;
-      background: $surface-color;
+      background: transparentize($surface-color, 0.05);
       transition: 0.2s all ease 0s;
       @include mdc-icon-button-icon-size($width: 20px, $height: 20px, $padding: 10px);
 

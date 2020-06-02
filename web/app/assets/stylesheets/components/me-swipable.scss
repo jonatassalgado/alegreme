@@ -387,6 +387,9 @@
     align-items: center;
     opacity: 0;
     display: none;
+    @include mobile-only {
+      width: 100%;
+    }
     & h2 {
       font-family: $font-secondary-family;
       padding: 0 15px;

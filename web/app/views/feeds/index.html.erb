@@ -185,7 +185,7 @@
         <% if current_user %>
           <div class="me-chip-set__wrapper">
             <div class="me-chip-set mdc-chip-set">
-              <% current_user&.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
+              <% current_user&.following_topics.filter { |topic| topic.events.active.size > 0 }.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
                 <a href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| current_user&.last_sign_in_at < event.created_at } %>">
                   <div class="mdc-chip__ripple"></div>
                   <%= topic.details_name.titleize %>
