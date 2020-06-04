@@ -2,12 +2,12 @@
   font-size: 11px;
   display: none;
   align-items: center;
-  width: 66px;
-  min-width: 66px;
   justify-content: flex-end;
-  color: $font-tertiary-color;
-  font-weight: 400;
-  padding: 0 0 0 6px;
+  color: $font-secondary-color;
+  font-weight: 300;
+  padding: 3px 6px 3px 8px;
+  border-radius: 16px;
+  background: whitesmoke;
   @include mobile-only {
     font-size: 9px;
   }

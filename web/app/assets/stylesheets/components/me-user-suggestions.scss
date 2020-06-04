@@ -1,6 +1,6 @@
 .me-user-suggestions {
   .me-collection__title-custom & {
-    padding: 0 0 12px 0;
+    // padding: 0 0 12px 0;
   }
 
   &--empty {
@@ -67,7 +67,7 @@
   &__name {
     font-family: $font-primary-family;
     color: $font-secondary-color;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 10px;
     margin: 3px 0 0 0;
 

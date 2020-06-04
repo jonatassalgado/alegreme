@@ -260,7 +260,7 @@ $description-color: $font-secondary-color;
     font-size: 16px;
     margin: 6px 0 0 0;
     padding: 0 0 0 6px;
-    font-weight: 500;
+    font-weight: 400;
     @include mobile-only {
       font-size: 13px;
     }
@@ -452,7 +452,7 @@ $description-color: $font-secondary-color;
       @include mdc-icon-button-icon-size($width: 20px, $height: 20px, $padding: 10px);
 
       @include mobile-only {
-        @include mdc-icon-button-icon-size($width: 16px, $height: 16px, $padding: 8px);
+        @include mdc-icon-button-icon-size($width: 18px, $height: 18px, $padding: 10px);
         display: block;
       }
 

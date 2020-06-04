@@ -1,13 +1,13 @@
 
 
 @mixin is-clickable {
-  background: $border-color;
+  background: whitesmoke;
   padding: 4px 8px;
   border-radius: 12px;
   display: inline-block;
   line-height: 1em;
   &:hover {
-    background: lighten($border-color, 5%);
+    background: whitesmoke;
   }
 }
 
@@ -180,7 +180,7 @@
 
     &-title {
       font-style: normal;
-      font-weight: bold;
+      font-weight: 400;
       font-size: 14px;
       margin: 0 0 3px 0;
       line-height: 1em;
@@ -198,8 +198,12 @@
 
     & span {
       font-style: normal;
-      font-weight: normal;
+      font-weight: 300;
       font-size: 12px;
+    }
+
+    & svg {
+      fill: $icon-color;
     }
   }
 

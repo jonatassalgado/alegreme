@@ -65,9 +65,20 @@ body {
 }
 
 amp-social-share.custom-style {
-  background-color: #d4d4d4;
+  background-image: unset;
+  background-color: whitesmoke;
   border-radius: 50px;
   background-size: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $font-secondary-color;
+  padding: 6px 12px;
+  margin: 0 -12px 0 0;
+  & svg {
+    fill: $icon-color;
+    margin: 0 -3px 0 6px;
+  }
 }
 
 a {

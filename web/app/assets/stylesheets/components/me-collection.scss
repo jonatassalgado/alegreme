@@ -40,7 +40,7 @@
 
   & h2 {
     margin: 6px 0 12px 0;
-    font-weight: 800;
+    font-weight: 500;
     //max-width: 90%;
     line-height: 1.4em;
     font-size: 24px;
@@ -53,7 +53,7 @@
     justify-content: space-between;
     @include mobile-only {
       font-size: 18px;
-      font-weight: 800;
+      font-weight: 500;
       line-height: 1em;
       padding: 0 12px 0 $section-padding-phone;
       justify-content: space-between;
@@ -121,7 +121,7 @@
     display: block;
     font-weight: 500;
     font-family: $font-secondary-family;
-    color: $brand-color-complementary;
+    color: $font-secondary-color;
     line-height: 1.4em;
     text-transform: uppercase;
     @include mobile-only {
