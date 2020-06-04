@@ -35,7 +35,7 @@ $tab-bar-shadow: 0px 1px 6px 1px #00000030;
   }
 }
 
-$background-color: #EDEFF1;
+$background-color: white; // #EDEFF1
 $background-secondary-color: darken($background-color, 5%);;
 
 $surface-z10-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
@@ -52,7 +52,7 @@ $empty-color: $surface-tertiary-color;
 
 $media-box-shadow-small: 0 0 3px #00000038;
 $media-box-shadow-large: 0 0 6px #00000038;
-$media-border-radius: 8px;
+$media-border-radius: 6px;
 $media-border-width: 1px;
 
 $save-icon-fill: $font-secondary-color;

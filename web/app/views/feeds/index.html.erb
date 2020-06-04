@@ -25,9 +25,9 @@
   <% if current_user && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try {|last_view_at| last_view_at < (DateTime.now - 8.hours)}) %>
     <div class="me-section">
       <div class="me-section__inner">
-        <div class="me-section__title">
+        <!-- <div class="me-section__title">
           Você iria neste evento?
-        </div>
+        </div> -->
           <%= render partial: 'components/swipable/swipable' if current_user && @swipable_items %>
       </div>
     </div>

@@ -98,8 +98,7 @@ $description-color: $font-secondary-color;
     & .mdc-card__media {
       border-radius: $media-border-radius;
       overflow: hidden;
-      //transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      //box-shadow: $media-box-shadow-small;
+      box-shadow: $media-box-shadow-small;
 
       &:hover {
         //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
@@ -132,6 +131,7 @@ $description-color: $font-secondary-color;
 
   & .mdc-card__media {
     border-radius: $media-border-radius;
+    box-shadow: $media-box-shadow-small;
   }
 
   &.me-card--empty .mdc-card__media {
@@ -154,7 +154,6 @@ $description-color: $font-secondary-color;
     background: linear-gradient(to top, #ffffff38, transparent);
     overflow: hidden;
     border-radius: $media-border-radius;
-    box-shadow: 0px 1px 3px #0000001c;
     @include mdc-ripple-surface;
     @include mdc-ripple-radius-bounded;
     @include mdc-states;

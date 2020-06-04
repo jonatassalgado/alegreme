@@ -74,7 +74,7 @@
 
   &__head {
     // margin-bottom: 24px;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
     [data-section-disposition="vertical"] & {
       @include mobile-only {
         border-bottom: 1px solid $border-color;

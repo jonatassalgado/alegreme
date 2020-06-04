@@ -22,6 +22,8 @@
 
   .me-collection__title-custom & {
     font-weight: 500;
+    padding: 20px 13px;
+    border-radius: 24px;
   }
 
   .me-card__primary-section & {
@@ -79,8 +81,8 @@
     // color: $font-tertiary-color;
     @include mobile-only {
       font-size: 10px;
-      border: 1px solid $border-color;
-      background: none;
+      // border: 1px solid $border-color;
+      background: whitesmoke;
     }
 
     & a {
