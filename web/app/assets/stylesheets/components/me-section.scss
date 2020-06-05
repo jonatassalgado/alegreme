@@ -61,7 +61,7 @@
 
   &--condensed {
     @include mobile-only {
-      margin: 1px 0;
+      padding: 12px 0;
     }
   }
 
