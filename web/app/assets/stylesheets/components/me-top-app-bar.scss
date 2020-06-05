@@ -35,7 +35,6 @@ $border-color: #e0e0e0;
     box-shadow: none;
     & .mdc-top-app-bar__row {
       @include mobile-only {
-        padding: 0 12px;
         height: 70px;
       }
     }

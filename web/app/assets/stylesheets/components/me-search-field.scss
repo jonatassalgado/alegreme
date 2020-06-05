@@ -3,7 +3,7 @@
 
 $icon-color: #616161;
 $border-color: #e0e0e0;
-$field-height: 44px;
+$field-height: 50px;
 
 .me-search-field {
   align-self: center;
@@ -15,7 +15,7 @@ $field-height: 44px;
   margin: auto;
   @include mobile-only {
     border-radius: 6px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.35);
     [data-controller="search"] & {
       width: 100%;
     }

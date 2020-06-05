@@ -39,17 +39,17 @@
       </div>
     </section>
   <% else %>
-    <section class="me-section me-section--condensed">
+    <!-- <section class="me-section me-section--condensed">
       <div class="me-section__inner">
-        <h2 class="me-section__title">Pessoas</h2>
-        <%= render partial: "components/user_suggestions", locals: {
+        <h2 class="me-section__title">Pessoas</h2> -->
+        <%#= render partial: "components/user_suggestions", locals: {
             data: {
                 following_users: User.recents
             }
         } %>
-      </div>
-    </section>
-    <section class="me-section me-section--condensed">
+      <!-- </div>
+    </section> -->
+    <section class="me-section me-section--without-padding">
       <div class="me-section__inner">
         <h2 class="me-section__title">Categorias</h2>
         <div class="me-chip-set__wrapper">

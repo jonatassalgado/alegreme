@@ -23,6 +23,9 @@
         display: none;
       }
     }
+    [data-controller="search"] & {
+      padding: 0 16px;
+    }
   }
 
   .me-collection__title-custom & {

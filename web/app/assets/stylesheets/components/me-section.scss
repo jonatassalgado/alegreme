@@ -37,7 +37,7 @@
     justify-content: space-between;
     @include mobile-only {
       font-size: 18px;
-      font-weight: 800;
+      font-weight: 500;
       line-height: 1em;
       padding: 0 12px 0 $section-padding-phone;
       justify-content: space-between;
@@ -67,6 +67,10 @@
 
   &--full-height {
     min-height: 80vh;
+  }
+
+  &--without-padding {
+    padding: 0;
   }
 
   .me-page &:last-child {

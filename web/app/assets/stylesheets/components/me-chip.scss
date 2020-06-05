@@ -2,8 +2,8 @@
 @import "@material/top-app-bar/_mixins";
 
 .me-chip {
-  // background: $surface-secondary-color;
-  // color: $font-secondary-color;
+  font-weight: 300;
+  background: whitesmoke;
 
   .me-section-title-custom & {
     color: $font-tertiary-color;
