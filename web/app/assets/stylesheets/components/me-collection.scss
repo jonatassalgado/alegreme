@@ -10,7 +10,7 @@
         grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
         overflow-y: hidden;
         grid-template-columns: repeat(100, minmax(56vw, 1fr));
-        padding: 0 70px 0 $section-padding-phone;
+        padding: 6px 70px 0 $section-padding-phone;
       }
     }
   }
@@ -165,6 +165,12 @@
 
     &--vertical {
       [data-controller="feeds"][data-action="index"] & {
+        @include mobile-only {
+          display: none;
+        }
+      }
+
+      [data-controller="events"][data-action="show"] & {
         @include mobile-only {
           display: none;
         }

@@ -69,6 +69,10 @@
     min-height: 80vh;
   }
 
+  .me-page &:last-child {
+    box-shadow: unset;
+  }
+
   [data-controller="events"][data-action="show"] & {
     @include desktop-only {
       margin: 12px 0;

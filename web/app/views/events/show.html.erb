@@ -6,6 +6,9 @@
 <% content_for :canonical_url, event_url(@event, format: :html) %>
 <% content_for :amp_url, event_url(@event, format: :amp) %>
 
+<% content_for :share_button_text, @event.details_name %>
+<% content_for :share_button_url, event_path(@event, format: :html) %>
+
 <script type="application/ld+json">
 {
  "@context": "http://schema.org",
@@ -222,26 +225,30 @@
     <a href="/train">Treinar</a>
   <% end %>
 
-  <div class="me-section">
+  <section class="me-section">
     <div class="me-section__inner">
-      <section class="me-event-single__similar">
-        <h2 class="me-h2 me-h2--centralize">Eventos similares</h2>
-        <div class="mdc-layout-grid">
-          <div class="mdc-layout-grid__inner">
-            <%= render partial:    'components/collection/event',
-                       collection: @similar_events,
-                       as:         :event,
-                       locals:     {
-                           identifier:      @event.slug,
-                           json_request:    false,
-                           display_similar: false
-                       },
-                       cached:     true %>
-          </div>
-        </div>
-      </section>
+      <%= render partial: "components/collection/collection", locals: {
+          data: {
+              identifier: 'similar',
+              collection: @similar_collection,
+              title:      {
+                  principal: "Eventos similares",
+              },
+              type:       :large,
+              filters:    {
+                  categories: false,
+                  kinds:      false,
+                  ocurrences: false
+              }
+          },
+          props: {
+            disposition:     :horizontal,
+            display_similar: false,
+            infinite_scroll: false
+          }
+      } %>
     </div>
-  </div>
+  </section>
 
 
   <% unless current_user %>

@@ -13,7 +13,19 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @similar_events = Event.includes(:place).active.where(id: @event.similar_data).order_by_ids(@event.similar_data).not_in_saved(current_user).limit(6)
+    @similar_events     = Event.includes(:place).active.where(id: @event.similar_data).order_by_ids(@event.similar_data).not_in_saved(current_user).limit(10)
+    @similar_collection = EventServices::CollectionCreator.new(current_user, params).call({
+                                                                                            identifier: 'similar',
+                                                                                            events:     @similar_events
+                                                                                        },
+                                                                                        {
+                                                                                            only_in:          @similar_events.map(&:id),
+                                                                                            order_by_persona: false,
+                                                                                            order_by_date:    false,
+                                                                                            in_user_personas: false,
+                                                                                            with_high_score:  false
+                                                                                        })
+
 
     respond_to do |format|
       format.html { render :show }

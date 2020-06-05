@@ -8,7 +8,8 @@
     overflow: hidden;
   }
 
-  [data-controller="events"][data-action="show"] & {
+  [data-controller="events"][data-action="show"] &,
+  [data-controller="places"][data-action="show"] & {
     @include mobile-only {
       padding-top: 56px;
     }
