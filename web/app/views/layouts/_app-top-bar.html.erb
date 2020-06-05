@@ -150,12 +150,12 @@
             <span>Enviar</span>
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>
           </amp-social-share>
-      <% elsif ['feeds'].include?(params[:controller]) %>
-        <%# if current_user.picture %>
+      <% elsif ['feeds'].include?(params[:controller]) && current_user %>
+        <% if current_user&.picture %>
           <%= link_to user_path(current_user) do %>
             <div class="me-top-app-bar__picture is-hoverable" style="background-image: url('<%= current_user.picture :small %>')"></div>
           <% end %>
-        <%# end %>
+        <% end %>
         <div style="flex-direction: row">
           <%= link_to current_user.first_name, user_path(current_user), class: "me-top-app-bar__name" %> <br>
           <%= link_to "Sair", destroy_user_session_path, method: :delete, class: "me-top-app-bar__logout" %>
@@ -163,10 +163,7 @@
       <% elsif !current_user %>
         <% if !['registrations', 'sessions'].include? controller_name %>
           <%= link_to new_user_registration_path do %>
-            <button class="me-button me-button--transparent me-button--small me-button--secondary mdc-button">Criar conta</button>
-          <% end %>
-          <%= link_to new_user_session_path do %>
-            <button class="me-button me-button--transparent me-button--small me-button--secondary mdc-button">Entrar</button>
+            <button class="me-button me-button--small mdc-button">Criar conta</button>
           <% end %>
         <% end %>
       <% end %>

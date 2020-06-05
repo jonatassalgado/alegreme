@@ -21,7 +21,7 @@
   display: inline-block;
   padding: 15px;
   position: relative;
-  border: 1px solid $border-color;
+  background: whitesmoke;
   &.is-human {
     background: $border-color;
   }
@@ -42,7 +42,7 @@
 .me-bot__container:not(.no-icon)::after {
   align-items: center;
   justify-content: center;
-  background: $border-color;
+  background: whitesmoke;
   border-radius: 50%;
   content: "A";
   display: flex;

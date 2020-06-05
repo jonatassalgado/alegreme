@@ -99,10 +99,6 @@ $description-color: $font-secondary-color;
       border-radius: $media-border-radius;
       overflow: hidden;
       box-shadow: $media-box-shadow-small;
-
-      &:hover {
-        //box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.24);
-      }
     }
   }
 
@@ -136,6 +132,7 @@ $description-color: $font-secondary-color;
 
   &.me-card--empty .mdc-card__media {
     background-color: $empty-color;
+    box-shadow: unset;
   }
 
   & .mdc-card__actions {

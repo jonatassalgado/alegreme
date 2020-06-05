@@ -60,12 +60,8 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
   &--small {
     font-size: 14px;
-    padding: 8px 12px;
-
-    .me-top-app-bar__section & {
-      font-size: 10px;
-      padding: 6px 8px;
-    }
+    padding: 8px 16px;
+    font-weight: 400;
   }
 
   &--with-icon-in-right {

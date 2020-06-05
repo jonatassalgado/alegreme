@@ -23,7 +23,7 @@
   <%# end %>
 
   <% if current_user && @swipable_items.size > 0 && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try {|last_view_at| last_view_at < (DateTime.now - 8.hours)}) %>
-    <div class="me-section">
+    <div class="me-section <%= 'me-section--without-padding' if current_user&.swipable.dig('events', 'last_view_at').blank? %>">
       <div class="me-section__inner">
         <!-- <div class="me-section__title">
           Você iria neste evento?
@@ -63,17 +63,17 @@
   </div> -->
 
 
-  <%# if current_user && current_user&.personas_assortment_finished? %>
-  <section class="me-section">
-    <div class="me-section__inner">
-      <%= render partial: 'saves',
-                 locals:  {
-                     identifier:   'salvos',
-                     saved_events: @favorited_events
-                 } %>
-    </div>
-  </section>
-  <%# end %>
+  <% if current_user %>
+    <section class="me-section">
+      <div class="me-section__inner">
+        <%= render partial: 'saves',
+                   locals:  {
+                       identifier:   'salvos',
+                       saved_events: @favorited_events
+                   } %>
+      </div>
+    </section>
+  <% end %>
 
   <section class="me-section">
     <div class="me-section__inner">
@@ -85,7 +85,7 @@
                 title:       {
                     principal: "Acontecendo esta semana",
                     # secondary: "Hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 8, format: :week)} (#{I18n.l(Date.today + 7, format: :short)})",
-                    tertiary: "Com base no seu perfil"
+                    tertiary: ("Com base no seu perfil" if current_user)
                 },
                 type:        :large,
                 filters:     {
@@ -120,7 +120,7 @@
                 collection:  @items[:new_today],
                 title:       {
                     principal: "Adicionados recentemente",
-                    tertiary:  "Com base no seu perfil"
+                    tertiary:  (current_user ? "Com base no seu perfil" : "Crie uma conta para ver os eventos abaixo")
                 },
                 type:        :large,
                 filters:     {
@@ -151,9 +151,9 @@
               identifier:  'user-suggestions',
               collection:  @items[:user_suggestions],
               title:       {
-                  principal: "Escolhidos a dedo para #{current_user&.first_name}",
+                  principal: "Escolhidos a dedo para #{current_user&.first_name || 'você'}",
                   # secondary: "Explore os eventos com alta recomendação para seu gosto pessoal",
-                  tertiary: "Com base nos eventos salvos"
+                  tertiary: (current_user ? "Com base nos eventos salvos" : "Crie uma conta para ver os eventos abaixo")
               },
               type:        :large,
               filters:     {
@@ -204,6 +204,7 @@
               collection:  @items[:follow],
               title:       {
                   principal: "Tópicos que você segue",
+                  tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
                   custom:    follow_topics_custom
               },
               type:        :large,
@@ -255,6 +256,7 @@
               collection: @items[:following_users],
               title:      {
                   principal: "Pessoas que você segue",
+                  tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
                   custom:    follow_users_custom
               },
               type:       :large,

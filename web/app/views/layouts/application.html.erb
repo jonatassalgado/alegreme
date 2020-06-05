@@ -85,7 +85,7 @@
   <!-- End Facebook Pixel Code -->
 
 </head>
-<body data-controller="<%= controller_name %>" data-action="<%= action_name %>">
+<body data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 <!-- Google Tag Manager (noscript) -->
 <noscript>
   <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WH7RVCR"
@@ -95,8 +95,10 @@
 
 <!-- <div class="me-top-app-bar__fake-size"></div> -->
 
-<%= render partial: "layouts/app-top-bar" %>
-<%= render partial: 'components/tab-bar', locals: {props: {active: controller_name}} %>
+<div class="me-head" data-controller="head" data-target="head.head">
+  <%= render partial: 'layouts/app-top-bar' %>
+  <%= render partial: 'components/tab-bar', locals: {props: {active: controller_name}} %>
+</div>
 
 <%= yield %>
 

@@ -11,7 +11,7 @@
   justify-content: center;
   flex-direction: column;
   @include mobile-only {
-    min-height: 350px;
+    // min-height: 350px;
     //margin: 0 0 15px 0;
     //height: -webkit-fill-available;
     //padding: 150px 0 0 0;
@@ -19,7 +19,8 @@
 
   &[data-swipable-chat-on="true"] {
     @include mobile-only {
-      box-shadow: inset 0px 0px 12px #00000026;
+      padding: 0;
+      // box-shadow: inset 0px 0px 12px #00000026;
     }
   }
 
@@ -41,6 +42,7 @@
 
     & button {
       @include mdc-button-container-fill-color($brand-color);
+      font-weight: 300;
       font-family: $font-primary-family;
     }
   }
@@ -343,7 +345,7 @@
       justify-content: center;
       font-weight: 600;
       align-items: center;
-      background: $border-color;
+      background: whitesmoke;
       @include mdc-button-ink-color($font-tertiary-color);
       //@include mdc-button-outline-color($font-secondary-color)
     }

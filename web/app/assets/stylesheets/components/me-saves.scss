@@ -168,8 +168,9 @@ $gutter: 6px;
   &--empty {
     pointer-events: none;
     user-select: none;
-    & .mdc-card__media {
+    & .me-card .mdc-card__media {
       background-color: $empty-color;
+      box-shadow: unset;
     }
 
     & .me-card__date-distance-in-words {
