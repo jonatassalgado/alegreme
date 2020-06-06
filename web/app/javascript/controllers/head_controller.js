@@ -5,12 +5,12 @@ export default class HeadController extends Controller {
 
 	initialize() {
 		if (this.hasHeadTarget) {
-			var lastScrollTop = 0;
+			this.lastScrollTop = 0;
 
-			window.addEventListener('scroll', (e) => {
+			this.animateHeadOnScroll = () => {
 				var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 				if (window.scrollY > 250) {
-					if (currentScrollTop > lastScrollTop){
+					if (currentScrollTop > this.lastScrollTop){
 						requestAnimationFrame(() => {
 							this.headTarget.style.transform = 'translateY(-50px)'
 						});
@@ -24,13 +24,15 @@ export default class HeadController extends Controller {
 						this.headTarget.style.transform = 'translateY(0)'
 					});
 				}
-				lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-			}, {capture: false, passive: true});
+				this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+			}
+
+			window.addEventListener('scroll', this.animateHeadOnScroll, {capture: false, passive: true});
 		}
 	}
 
 	disconnect() {
-
+		window.removeEventListener('scroll', this.animateHeadOnScroll, false);
 	}
 
 }
