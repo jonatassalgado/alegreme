@@ -138,7 +138,7 @@ class MovieSpider(scrapy.Spider):
     }
 
     allowed_domains = ['google.com']
-    start_urls = ['https://www.google.com/search?q=filmes+porto+alegre+cinema']
+    start_urls = ['https://www.google.com/search?q=movies+porto+alegre+cinema']
 
     def start_requests(self):
         for url in self.start_urls:

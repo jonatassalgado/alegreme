@@ -17,6 +17,9 @@ build-service:
 up:
 	docker-compose -f docker-compose.development.yml up
 
+up-scrapy:
+	docker-compose -f docker-compose.development.scrapy.yml up
+
 restart:
 	docker-compose -f docker-compose.development.yml restart
 
