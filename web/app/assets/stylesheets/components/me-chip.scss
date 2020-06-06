@@ -77,11 +77,11 @@
   .me-card__tertiary-section & {
     margin: 0 6px 6px 0;
     font-size: 11px;
-    // background: $surface-secondary-color;
-    // color: $font-tertiary-color;
+    height: auto;
+    padding: 3px 10px;
+
     @include mobile-only {
       font-size: 10px;
-      // border: 1px solid $border-color;
       background: whitesmoke;
       font-weight: 300;
     }

@@ -1,5 +1,3 @@
-
-
 .me-similar {
   grid-column: 12 span;
   display: grid;
@@ -48,7 +46,7 @@
     animation-duration: 1s;
     @include mobile-only {
       font-size: 12px;
-      padding: 6px 12px;
+      padding: 6px 24px;
     }
 
     & a {
@@ -69,7 +67,7 @@
     @include mobile-only {
       grid-template-columns: repeat(20, minmax(22vw, 1fr));
       overflow-x: scroll;
-      padding: 0 ($section-padding-phone / 2);
+      padding: 0 $section-padding-phone;
       margin: 0;
     }
 

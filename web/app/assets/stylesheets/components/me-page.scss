@@ -10,10 +10,15 @@
   [data-controller="events"][data-action="show"] &,
   [data-controller="places"][data-action="show"] &,
   [data-controller="registrations"] &,
-  [data-controller="sessions"] &
-   {
+  [data-controller="sessions"] & {
     @include mobile-only {
       padding-top: 56px;
+    }
+  }
+
+  [data-controller="search"] & {
+    @include mobile-only {
+      padding-top: 80px;
     }
   }
 

@@ -1,4 +1,6 @@
 .me-collection {
+  --mdc-layout-grid-gutter-desktop: 24px;
+  --mdc-layout-grid-gutter-phone: 16px;
 
   &--empty {
     position: relative;
@@ -7,7 +9,7 @@
   &[data-section-disposition="horizontal"] {
     & .mdc-layout-grid__inner {
       @include mobile-only {
-        grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
+        grid-gap: var(--mdc-layout-grid-gutter-phone, 16px);
         overflow-y: hidden;
         grid-template-columns: repeat(100, minmax(56vw, 1fr));
         padding: 6px 70px 0 $section-padding-phone;
@@ -18,7 +20,7 @@
   &[data-section-disposition="vertical"] {
     & .mdc-layout-grid__inner {
       @include mobile-only {
-        grid-gap: var(--mdc-layout-grid-gutter-desktop, 15px);
+        grid-gap: var(--mdc-layout-grid-gutter-phone, 16px);
         overflow-y: hidden;
         grid-template-columns: repeat(1, minmax(100%, 1fr));
         padding: 0 $section-padding-phone;
@@ -74,7 +76,7 @@
 
   &__head {
     // margin-bottom: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     [data-section-disposition="vertical"] & {
       @include mobile-only {
         border-bottom: 1px solid $border-color;

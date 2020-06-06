@@ -24,6 +24,12 @@
     }
   }
 
+  &[data-swipable-chat-on="false"] {
+    @include mobile-only {
+      padding: 24px 0;
+    }
+  }
+
   &__onboarding {
     height: 100%;
     //overflow-y: scroll;
