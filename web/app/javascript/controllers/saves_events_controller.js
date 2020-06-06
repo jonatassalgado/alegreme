@@ -1,6 +1,6 @@
-import {Controller} from "stimulus"
-import {MDCRipple}  from '@material/ripple';
-
+import {Controller}    from "stimulus"
+import {MDCRipple}     from '@material/ripple';
+import {AnimateModule} from "../modules/animate-module";
 
 export default class SavesEventsController extends Controller {
 	static targets = ["event", "overlay", "title", "date", "remove"];
@@ -11,6 +11,9 @@ export default class SavesEventsController extends Controller {
 		}
 	}
 
+	animateOnClick() {
+		AnimateModule.animatePageHide();
+	}
 
 	showEventDetails(event) {
 		this.removeTarget.style.display = "inline";

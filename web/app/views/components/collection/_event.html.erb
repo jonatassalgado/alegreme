@@ -62,7 +62,8 @@
       <% end %>
       <a href="<%= event.url %>">
         <div class="me-card__overlay mdc-ripple-surface"
-             data-target="event.overlay"></div>
+             data-target="event.overlay"
+             data-action="click->event#animateOnClick"></div>
       </a>
       <% if false %>
         <div class="me-card__like-button"

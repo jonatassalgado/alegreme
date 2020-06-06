@@ -57,10 +57,11 @@
               </div>
               <a href="<%= event.url %>"
                  title="<%= event.details_name %>">
-                <div class="mdc-card__media mdc-card__media--16-9" style="<%= get_image_style_attr event, preload: true %>">
-                  <!-- <div class="mdc-card__media mdc-card__media--16-9 lazy-bgimage" data-src="<%#= event.image[:feed].url %>" style="<%#= get_image_style_attr event %>"> -->
+                <div class="mdc-card__media mdc-card__media--16-9"
+                     style="<%= get_image_style_attr event, preload: true %>">
                   <div class="me-card__overlay"
-                       data-target="saves-events.overlay"></div>
+                       data-target="saves-events.overlay"
+                       data-action="click->saves-events#animateOnClick"></div>
                 </div>
                 <div class="me-card__date <%= event.day_of_week['decorator'].parameterize %>" data-target="saves-events.date">
                   <span><i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %></span>

@@ -4,6 +4,7 @@ import {MDCRipple}           from "@material/ripple";
 import {MDCIconButtonToggle} from "@material/icon-button";
 import * as MobileDetect     from "mobile-detect";
 import {ProgressBarModule}   from "../modules/progressbar-module";
+import {AnimateModule}       from "../modules/animate-module";
 
 export default class EventController extends Controller {
 	static targets = [
@@ -67,6 +68,10 @@ export default class EventController extends Controller {
 
 	disconnect() {
 		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	animateOnClick() {
+		AnimateModule.animatePageHide();
 	}
 
 	showEventDetails() {
