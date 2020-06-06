@@ -1,11 +1,13 @@
 import {Controller} from 'stimulus';
+import {MDCRipple}  from '@material/ripple';
 
 export default class HeadController extends Controller {
-	static targets = ['head'];
+	static targets = ['head', 'backButton', 'backButtonRipple'];
 
 	initialize() {
 		if (this.hasHeadTarget) {
-			this.lastScrollTop = 0;
+			this.lastScrollTop    = 0;
+			this.backButtonRipple = new MDCRipple(this.backButtonRippleTarget);
 
 			this.animateHeadOnScroll = () => {
 				var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -32,6 +34,7 @@ export default class HeadController extends Controller {
 	}
 
 	disconnect() {
+		this.backButtonRipple.destroy();
 		window.removeEventListener('scroll', this.animateHeadOnScroll, false);
 	}
 

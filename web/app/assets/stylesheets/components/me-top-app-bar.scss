@@ -13,7 +13,7 @@ $border-color: #e0e0e0;
   z-index: 10;
   position: relative;
   @include desktop-only {
-    position: sticky;
+
   }
   @include mobile-only {
     position: relative;
@@ -124,6 +124,38 @@ $border-color: #e0e0e0;
     }
   }
 
+  &__logo {
+    display: inherit;
+  }
+
+  &__back-button {
+    display: none;
+    @include mobile-only {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin: 0px 12px 0px -12px;
+      color: $font-tertiary-color;
+      background: whitesmoke;
+      border-radius: 24px;
+      height: 40px;
+      width: 40px;
+      border: 0;
+      overflow: hidden;
+      position: relative;
+      outline: none;
+      justify-content: center;
+    }
+    &-ripple {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      @include mdc-ripple-surface;
+      @include mdc-ripple-radius-bounded;
+      @include mdc-states;
+    }
+  }
+
   &__section {
     flex: 1 1 0;
     padding: 0 12px;
@@ -183,28 +215,6 @@ $border-color: #e0e0e0;
           display: none;
         }
       }
-    }
-  }
-
-  &__logo {
-    display: inherit;
-  }
-
-  &__back-button {
-    display: none;
-    @include mobile-only {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      margin: 0px 12px 0px -12px;
-      color: $font-tertiary-color;
-      background: whitesmoke;
-      border-radius: 24px;
-      height: 40px;
-      width: 40px;
-      border: 0;
-      outline: none;
-      justify-content: center;
     }
   }
 
