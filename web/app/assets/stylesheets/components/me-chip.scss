@@ -117,20 +117,13 @@
   }
 
   .me-filter & {
-    // border-radius: 20px;
-    // font-weight: 500;
-    // font-size: 10px;
-    // height: auto;
-    // line-height: 1em;
-    // padding: 8px 20px;
-    // margin: 3px;
     font-family: $font-secondary-family;
     border-radius: 6px;
-    // color: $font-tertiary-color;
     background: none;
     border: $chip-border-size solid $border-color;
     text-transform: capitalize;
-    // transition: $chip-transition;
+    font-size: 11px;
+    font-weight: 300;
     @include mobile-only {
       // padding: 8px 20px;
       // font-size: 11px;

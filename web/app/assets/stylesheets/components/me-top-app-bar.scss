@@ -154,6 +154,10 @@ $border-color: #e0e0e0;
       @include mdc-ripple-radius-bounded;
       @include mdc-states;
     }
+    & svg {
+      fill: $icon-color;
+      height: -webkit-fill-available;
+    }
   }
 
   &__section {

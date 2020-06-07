@@ -79,9 +79,9 @@
     margin-bottom: 12px;
     [data-section-disposition="vertical"] & {
       @include mobile-only {
-        border-bottom: 1px solid $border-color;
+        // border-bottom: 1px solid $border-color;
         padding: 0 0 6px 0;
-        margin: 0 0 16px 0;
+        margin: 0 0 6px 0;
       }
     }
   }

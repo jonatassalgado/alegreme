@@ -1,6 +1,13 @@
-<header class="me-top-app-bar mdc-top-app-bar <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>"
-        id="top-bar">
+<header class="me-top-app-bar mdc-top-app-bar <%= controller == 'events' ? 'me-top-app-bar--events' : '' %>" id="top-bar">
   <div class="mdc-top-app-bar__row">
+    <button class="me-top-app-bar__back-button"
+            onclick="window.AnimateModule.animateBackbutton()"
+            style="display: <%= (['show'].include?(params[:action]) && mobile_device?) ? 'block' : 'none' %>">
+        <div data-target="head.backButtonRipple" class="me-top-app-bar__back-button-ripple"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M20 11H6.83l2.88-2.88c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0L3.71 11.3c-.39.39-.39 1.02 0 1.41L8.3 17.3c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L6.83 13H20c.55 0 1-.45 1-1s-.45-1-1-1z"/>
+        </svg>
+    </button>
     <% if ['feeds', 'search'].include? params[:controller] %>
       <section class="me-top-app-bar__section me-top-app-bar__section--left mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <a class="me-top-app-bar__logo is-hoverable" href="/">
@@ -57,13 +64,6 @@
     <% end %>
     <% if ['show'].include?(params[:action]) && mobile_device? %>
       <% if current_user %>
-        <button class="me-top-app-bar__back-button"
-                onclick="window.AnimateModule.animateBackbutton()">
-            <div data-target="head.backButtonRipple" class="me-top-app-bar__back-button-ripple"></div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path d="M20 11H6.83l2.88-2.88c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0L3.71 11.3c-.39.39-.39 1.02 0 1.41L8.3 17.3c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L6.83 13H20c.55 0 1-.45 1-1s-.45-1-1-1z"/>
-            </svg>
-        </button>
         <a class="me-top-app-bar__logo is-hoverable" href="/">
           <svg xmlns="http://www.w3.org/2000/svg" width="120" height="28" fill="none" viewBox="0 0 120 28">
             <defs/>
@@ -146,8 +146,8 @@
             data-param-text="<%= content_for :share_button_text %>"
             data-param-url="<%= content_for :share_button_url %>"
             data-param-attribution="Alegreme"
-            width="auto"
-            height="auto">
+            width="78"
+            height="28">
             <span>Enviar</span>
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>
           </amp-social-share>

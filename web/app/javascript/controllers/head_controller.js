@@ -7,14 +7,18 @@ export default class HeadController extends Controller {
 	initialize() {
 		if (this.hasHeadTarget) {
 			this.lastScrollTop    = 0;
-			this.backButtonRipple = new MDCRipple(this.backButtonRippleTarget);
+
+			if (this.hasBackButtonRippleTarget) {
+				this.backButtonRipple = new MDCRipple(this.backButtonRippleTarget);
+			}
 
 			this.animateHeadOnScroll = () => {
 				var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
 				if (window.scrollY > 250) {
 					if (currentScrollTop > this.lastScrollTop){
 						requestAnimationFrame(() => {
-							this.headTarget.style.transform = 'translateY(-50px)'
+							this.headTarget.style.transform = 'translateY(-56px)'
 						});
 					} else {
 						requestAnimationFrame(() => {
@@ -34,7 +38,9 @@ export default class HeadController extends Controller {
 	}
 
 	disconnect() {
-		this.backButtonRipple.destroy();
+		if (this.hasBackButtonRippleTarget) {
+			this.backButtonRipple.destroy();
+		}
 		window.removeEventListener('scroll', this.animateHeadOnScroll, false);
 	}
 

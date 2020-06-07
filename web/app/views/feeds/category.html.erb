@@ -14,7 +14,7 @@
   </script>
 
 
-  <section class="me-section">
+  <section class="me-section me-section--condensed">
     <div data-controller="categories" data-target="categories.wrapper" data-categories-selected="<%= params[:category] %>" class="me-chip-set__wrapper">
       <div data-target="categories.chipset" class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
         <% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
@@ -31,7 +31,7 @@
   </section>
 
   <% if params[:category] %>
-    <section class="me-section">
+    <section class="me-section me-section--without-padding">
       <section class="me-section__inner">
         <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
       </section>
