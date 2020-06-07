@@ -52,6 +52,22 @@ module UserDecorators
 							                          }
 					                          })
 
+					if picture
+						begin
+							user_picture = Down.download(picture)
+						rescue Down::Error => e
+							puts "#{name} - Erro no download da imagem (#{picture}) - #{e}"
+						else
+							puts "#{name} - Download da imagem (#{picture}) - Sucesso"
+						end
+
+						begin
+							event.image = user_picture
+						rescue
+							puts "#{name} - Atribuição da imagem (#{picture}) - Erro"
+						end
+					end
+
 					user.save
 
 					user

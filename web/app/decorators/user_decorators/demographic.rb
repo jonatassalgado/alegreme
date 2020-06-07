@@ -23,7 +23,12 @@ module UserDecorators
 				if image.try {|img| img[size] }
 					image[size].url(public: true)
 				else
-					features.dig('demographic', 'picture')
+					animal = ['cat', 'dog', 'lion', 'coala', 'rabbit', 'tiger', 'fox'].sample
+					if size == :small
+						ActionController::Base.helpers.image_path("avatars/#{animal}-small")
+					else
+						ActionController::Base.helpers.image_path("avatars/#{animal}-medium")
+					end
 				end
 			end
 

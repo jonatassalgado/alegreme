@@ -9,6 +9,7 @@
 
   [data-controller="events"][data-action="show"] &,
   [data-controller="places"][data-action="show"] &,
+  [data-controller="users"] &,
   [data-controller="registrations"] &,
   [data-controller="sessions"] & {
     @include mobile-only {
