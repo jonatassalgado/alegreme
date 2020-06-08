@@ -38,9 +38,10 @@
   }.deep_merge!(data)
 
   props = {
-      infinite_scroll: false,
-      display_similar: true,
-      disposition:     :vertical
+      infinite_scroll:   false,
+      display_similar:   true,
+      display_load_more: true,
+      disposition:       :vertical
   }.deep_merge!(props || {})
 
 %>
@@ -175,7 +176,7 @@
                        },
                        cached:  true) if !mobile_device? || props[:disposition] == 'vertical' %>
 
-            <% if data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
+            <% if props[:display_load_more] && data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
               <div data-action="click->section#loadMore"
                    data-target="section.loadMoreButton"
                    data-continue-to-path="<%= data[:continue_to] %>"
@@ -251,7 +252,7 @@
                      }
                  },
                  cached:  true) if mobile_device? && props[:disposition] == 'horizontal' %>
-      <% if !mobile_device? && data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
+      <% if !mobile_device? && props[:display_load_more] && data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
         <div class="me-collection__load-more me-collection__load-more--vertical is-hoverable"
              data-action="click->section#loadMore"
              data-target="section.loadMoreButton">
