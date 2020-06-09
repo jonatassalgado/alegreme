@@ -3,6 +3,18 @@ module EventQueries
 		extend ActiveSupport::Concern
 
 		included do
+
+			scope 'in_neighborhoods', lambda { |neighborhoods, opts = {}|
+				opts = {'turn_on': true}.merge(opts)
+
+				return Event.none unless neighborhoods
+				if opts[:turn_on]
+					where("(geographic ->> 'neighborhood') IN (:neighborhoods)", neighborhoods: neighborhoods)
+				else
+					all
+				end
+			}
+
 			scope 'from_followed_users', lambda { |follower|
 				return Event.none unless follower
 				where("? @> ANY (ARRAY(select jsonb_array_elements(entries -> 'saved_by')))", follower.following['users'].to_json)

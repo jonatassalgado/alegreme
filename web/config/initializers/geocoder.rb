@@ -1,5 +1,7 @@
 
 Geocoder.configure(
     timeout: 15,
-    cache: {}
+    lookup: :google,
+    api_key: Rails.application.credentials[Rails.env.to_sym][:google][:geocoding_key],
+    cache: {},
 )

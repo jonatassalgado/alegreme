@@ -1,4 +1,8 @@
 class String
+	def parameterize_with_accents
+		self.underscore.gsub(" ", "-")
+	end
+
 	def numeric?
 		Float(self) != nil rescue false
 	end

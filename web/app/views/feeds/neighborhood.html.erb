@@ -4,8 +4,8 @@
 
   <%= notice %>
 
-  <% content_for :meta_title, params[:category] ? "Eventos de #{params[:category].capitalize} em Porto Alegre - RS" : "Eventos de todas as categorias em Porto Alegre - RS" %>
-  <% content_for :meta_description, params[:category] ? "Descubra eventos de #{params[:category]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" : "Descubra eventos de todas as categorias que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
+  <% content_for :meta_title, params[:neighborhood] ? "Eventos no bairro #{params[:neighborhood].capitalize} em Porto Alegre - RS" : "Eventos de todos os bairros em Porto Alegre - RS" %>
+  <% content_for :meta_description, params[:neighborhood] ? "Descubra eventos do bairro #{params[:neighborhood]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" : "Descubra eventos de todas as categorias que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
 
   <script type="application/ld+json">
   [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
@@ -15,22 +15,22 @@
 
 
   <section class="me-section me-section--condensed">
-    <div data-controller="chipset" data-target="chipset.wrapper" data-chipset-selected="<%= params[:category] %>" class="me-collection__title-custom me-chip-set__wrapper">
+    <div data-controller="chipset" data-target="chipset.wrapper" data-chipset-selected="<%= params[:neighborhood].parameterize %>" class="me-collection__title-custom me-chip-set__wrapper">
       <div data-target="chipset.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
-        <% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
+        <% @neighborhoods.each do |neighborhood| %>
           <div data-action="click->chipset#select"
-            data-chipset-url="<%= category_events_path category %>"
-            data-chipset-slug="<%= category %>"
+            data-chipset-url="<%= neighborhood_events_path neighborhood.parameterize_with_accents %>"
+            data-chipset-slug="<%= neighborhood.parameterize %>"
             class="me-chip mdc-chip">
             <div class="mdc-chip__ripple"></div>
-            <span class="mdc-chip__text"><%= category %></span>
+            <span class="mdc-chip__text"><%= neighborhood %></span>
           </div>
         <% end %>
       </div>
     </div>
   </section>
 
-  <% if params[:category] %>
+  <% if params[:neighborhood] %>
     <section class="me-section me-section--without-padding">
       <section class="me-section__inner">
         <%= render partial: "components/collection/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
@@ -41,7 +41,7 @@
       <div class="me-section__inner">
         <div class="me-info">
           <div class="me-info__content">
-            Selecione uma categoria acima para ver os eventos aqui
+            Selecione uma opção acima para ver os eventos aqui
           </div>
         </div>
       </div>

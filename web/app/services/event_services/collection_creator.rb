@@ -47,6 +47,7 @@ module EventServices
 					in_organizers:     set_initial_organizers_filter,
 					in_places:         set_initial_places_filter,
 					in_user_personas:  set_in_user_personas,
+					in_neighborhoods:  set_initial_neighborhoods_filter,
 					order_by_date:     set_order_by_date,
 					order_by_persona:  set_order_by_persona,
 					order_by_ids:      set_order_by_ids,
@@ -109,6 +110,10 @@ module EventServices
 
 		def set_initial_categories_filter
 			[@params[:categories], @opts[:in_categories], @default_filters['categories'], @init_filters_applyed['in_categories']].find { |categories_list| !categories_list.blank? } || []
+		end
+
+		def set_initial_neighborhoods_filter
+			[@params[:neighborhoods], @opts[:in_neighborhoods], @default_filters['neighborhoods'], @init_filters_applyed['in_neighborhoods']].find { |neighborhood_list| !neighborhood_list.blank? } || []
 		end
 
 		def set_initial_kinds_filter

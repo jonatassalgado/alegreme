@@ -177,7 +177,6 @@
   </section>
   <%# end %>
 
-
   <section class="me-section">
     <div class="me-section__inner">
       <%# if current_user && @items.dig(:follow, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
@@ -281,30 +280,48 @@
   </section>
 
 
-  <% if @items.dig(:explorer, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
-    <section class="me-section">
-      <div class="me-section__inner">
-        <%= render partial: "components/collection/collection", locals: {
-            data: {
-                identifier: 'explorer',
-                collection: @items[:explorer],
-                title:      {
-                    principal: "Explorar todos os eventos",
-                    secondary: "Use os filtros abaixo e seja feliz :)"
-                },
-                type:       :large,
-                filters:    {
-                    categories: true,
-                    kinds:      false,
-                    ocurrences: true
-                },
-                detail:     @items[:explorer][:detail],
-                origin:     :feed
-            }
-        } %>
+  <% neighborhoods_custom = capture do %>
+    <div class="me-chip-set__wrapper">
+      <div class="me-chip-set mdc-chip-set mdc-chip-set--choice">
+        <% ['Cidade Baixa', 'Centro Histórico', 'Bom Fim', 'Moinhos de Vento'].each do |neighborhood| %>
+          <%= link_to neighborhood_events_path(neighborhood.parameterize), class: "me-chip mdc-chip #{'mdc-chip--selected' if neighborhood == 'Cidade Baixa'}" do %>
+            <div class="mdc-chip__ripple"></div>
+            <%= neighborhood.titleize %>
+          <% end %>
+        <% end %>
       </div>
-    </section>
+    </div>
   <% end %>
+  <section class="me-section">
+    <div class="me-section__inner">
+      <%= render partial: "components/collection/collection", locals: {
+          data:  {
+              identifier:  'my-neighborhood',
+              collection:  @items[:neighborhood],
+              title:       {
+                  principal: "Nos bairros da sua cidade",
+                  tertiary: (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
+                  custom:   neighborhoods_custom
+              },
+              type:        :large,
+              filters:     {
+                  categories: false,
+                  kinds:      false,
+                  ocurrences: false
+              },
+              info:        {
+                  assert: true,
+                  text:   nil
+              },
+              detail:      @items[:neighborhood][:detail],
+              origin:      :feed
+          },
+          props: {
+              disposition: :horizontal
+          }
+      } %>
+    </div>
+  </section>
 
   <% if mobile_device? %>
     <div data-controller="button" data-target="button.button" class="me-button mdc-button mdc-button--raised" onclick="Turbolinks.visit('/porto-alegre/eventos')" style="max-width: 80vw; margin: 36px auto; text-align: center; display: block">

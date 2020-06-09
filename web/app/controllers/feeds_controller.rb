@@ -24,6 +24,7 @@ class FeedsController < ApplicationController
 		@favorited_events             = current_user.try(:saved_events)
 		@following_users              = User.following_users(current_user)
 		@events_from_followed_users   = Event.from_followed_users(current_user)
+		@events_in_my_neighborhood    = Event.in_neighborhoods(["Cidade Baixa"])
 		@swipable_items               = get_swipable_items
 
 		if current_user&.sign_in_count.try { |counter| counter >= 2 } && @new_events_today.size > 3
@@ -120,13 +121,30 @@ class FeedsController < ApplicationController
 			@collection_week = {}
 		end
 
+		if @events_in_my_neighborhood.size >= 0
+			@collection_neighborhood = @collections.call(
+					{
+							identifier: 'neighborhood',
+							events:     @events_in_my_neighborhood
+					},
+					{
+							only_in:           @events_in_my_neighborhood.map(&:id),
+							in_user_personas:  false,
+							order_by_persona:  false,
+							order_by_date:     true
+					})
+		else
+			@collection_neighborhood = {}
+		end
+
 
 		@items = {
 				new_today:        @collection_new_today,
 				week:             @collection_week,
 				follow:           @collection_follow,
 				following_users:  @collection_following_users,
-				user_suggestions: @collection_suggestions
+				user_suggestions: @collection_suggestions,
+				neighborhood:     @collection_neighborhood
 		}
 	end
 
@@ -306,6 +324,36 @@ class FeedsController < ApplicationController
 				},
 				filters:    {
 						ocurrences: true,
+						kinds:      false,
+						categories: false
+				}
+		}
+	end
+
+	def neighborhood
+		@neighborhoods = Event::NEIGHBORHOODS.dup
+		@collection    = EventServices::CollectionCreator.new(current_user, params).call({
+				                                                                              identifier: 'neighborhood',
+				                                                                              events:     Event.all
+		                                                                              }, {
+				                                                                              in_neighborhoods: [params[:neighborhood].titleize],
+				                                                                              in_user_personas: false,
+				                                                                              not_in_saved:     false,
+				                                                                              order_by_persona: false,
+																																											with_high_score:  false,
+				                                                                              order_by_date:    true,
+				                                                                              limit:            100
+		                                                                              })
+
+		@data = {
+				identifier: 'neighborhood',
+				collection: @collection,
+				title:      {
+						principal: "Eventos no bairro #{params[:neighborhood].titleize} de Porto Alegre",
+						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos do bairro #{params[:neighborhood].titleize} em Porto Alegre - RS"
+				},
+				filters:    {
+						ocurrences: false,
 						kinds:      false,
 						categories: false
 				}

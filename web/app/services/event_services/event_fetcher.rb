@@ -51,6 +51,10 @@ module EventServices
 							@opts[:in_places],
 							'turn_on': (true unless @opts[:in_places].blank?)
 					)
+					.in_neighborhoods(
+						@opts[:in_neighborhoods],
+						'turn_on': (true unless @opts[:in_neighborhoods].blank?)
+					)
 					.in_categories(
 							@opts[:in_categories],
 							'personas': @user.try(:personas_name),
@@ -115,9 +119,10 @@ module EventServices
 					in_user_suggestions: false,
 					in_kinds:            false,
 					in_categories:       false,
+					in_neighborhoods:    false,
 					in_organizers:       false,
 					in_places:           false,
-					in_following_topics:  false,
+					in_following_topics: false,
 					group_by:            false,
 					not_in_saved:        true,
 					not_in_on:           false,

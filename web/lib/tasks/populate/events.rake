@@ -20,7 +20,7 @@ module PopulateEventsRake
 
 			place
 		else
-			# @geocode = Geocoder.search(Alegreme::Geographic.get_cep_from_address(item['address'])).first if item['address']
+			@geocode = Geocoder.search(item['address']).first if item['address']
 
 			place = Place.create!({
 					                      details:    {
@@ -193,11 +193,11 @@ module PopulateEventsRake
 			)
 
 			event.geographic.deep_merge!(
-					address: item['address'],
-					# latlon:       @geocode.try(:coordinates),
-					# neighborhood: @geocode.try(:suburb),
-					city: item['address'] ? item['address'][/Porto Alegre/] : nil,
-					cep:  Alegreme::Geographic.get_cep_from_address(item['address'])
+					address:      item['address'],
+					latlon:       @geocode.try(:coordinates),
+					neighborhood: @geocode.try {|geo| geo.address_components_of_type(:sublocality)[0]["long_name"]},
+					city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
+					cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
 			)
 
 			event.ml_data.deep_merge!(
@@ -247,8 +247,8 @@ module PopulateEventsRake
 
 			event.geographic.deep_merge!(
 					address: item['address'],
-					# latlon:       @geocode.try(:coordinates),
-					# neighborhood: @geocode.try(:suburb),
+					latlon:       @geocode.try(:coordinates),
+					neighborhood: @geocode.try {|geo| geo.address_components_of_type(:sublocality)[0]["long_name"]},
 					city: item['address'] ? item['address'][/Porto Alegre/] : nil,
 					cep:  Alegreme::Geographic.get_cep_from_address(item['address'])
 			)

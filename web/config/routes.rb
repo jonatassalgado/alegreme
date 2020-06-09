@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
 	get '/porto-alegre/eventos/semana', to: 'feeds#week', as: :week_events
 	get '/porto-alegre/eventos/categoria(/:category)', to: 'feeds#category', as: :category_events
+	get '/porto-alegre/:neighborhood/eventos', to: 'feeds#neighborhood', as: :neighborhood_events
 
 	patch '/invite', to: 'welcome#invite'
 	get '/retrain', to: 'events#retrain'
