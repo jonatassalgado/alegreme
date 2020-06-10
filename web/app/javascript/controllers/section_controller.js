@@ -131,6 +131,7 @@ export default class SectionController extends Controller {
 			this.pubsub.sectionCreate();
 			this.pubsub.categoriesUpdate();
 			this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+			this.sectionTarget.style.opacity = 1;
 			this.ripples.forEach((ripple) => {
 				ripple.destroy();
 			});

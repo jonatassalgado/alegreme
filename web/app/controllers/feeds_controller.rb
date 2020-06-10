@@ -1,7 +1,7 @@
 include Pagy::Backend
 
 class FeedsController < ApplicationController
-	before_action :authorize_user, except: [:index, :today, :category, :week, :city, :day]
+	before_action :authorize_user, except: [:index, :today, :category, :week, :city, :day, :neighborhood]
 	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 	before_action :authorize_current_user, only: %i[suggestions follow news]
 
@@ -349,7 +349,7 @@ class FeedsController < ApplicationController
 				identifier: 'neighborhood',
 				collection: @collection,
 				title:      {
-						principal: "Eventos no bairro #{params[:neighborhood].titleize} de Porto Alegre",
+						principal: "Eventos no bairro #{params[:neighborhood].titleize}",
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos do bairro #{params[:neighborhood].titleize} em Porto Alegre - RS"
 				},
 				filters:    {

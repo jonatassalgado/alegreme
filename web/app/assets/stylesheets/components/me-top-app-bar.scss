@@ -41,7 +41,12 @@ $border-color: #e0e0e0;
   }
 
   [data-controller="events"][data-action="show"] &,
-  [data-controller="places"][data-action="show"] & {
+  [data-controller="places"][data-action="show"] &,
+  [data-controller="feeds"][data-action="neighborhood"] &,
+  [data-controller="feeds"][data-action="follow"] &,
+  [data-controller="feeds"][data-action="week"] &,
+  [data-controller="feeds"][data-action="suggestions"] &,
+  [data-controller="users"] & {
     @include mobile-only {
       position: fixed;
       box-shadow: 0 0 6px 0 #00000030;
@@ -161,8 +166,8 @@ $border-color: #e0e0e0;
   }
 
   &__section {
-    flex: 1 1 0;
-    padding: 0 12px;
+    // flex: 1 1 0;
+    // padding: 0 12px;
     @include mobile-only {
       padding: 0;
     }

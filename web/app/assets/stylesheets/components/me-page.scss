@@ -9,6 +9,10 @@
 
   [data-controller="events"][data-action="show"] &,
   [data-controller="places"][data-action="show"] &,
+  [data-controller="feeds"][data-action="neighborhood"] &,
+  [data-controller="feeds"][data-action="follow"] &,
+  [data-controller="feeds"][data-action="week"] &,
+  [data-controller="feeds"][data-action="suggestions"] &,
   [data-controller="users"] &,
   [data-controller="registrations"] &,
   [data-controller="sessions"] & {

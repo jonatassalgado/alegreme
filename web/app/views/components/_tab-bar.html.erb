@@ -2,13 +2,15 @@
 
   props = {
       active:       nil,
-      movies_count: Movie.select("*").from(Movie.select("*, jsonb_array_elements(dates) as date")).where("(date ->> 'date') > ?", DateTime.now.beginning_of_day).count
+      movies_count: Movie.select("*").from(Movie.select("*, jsonb_array_elements(dates) as date")).where("(date ->> 'date') > ?", DateTime.now.beginning_of_day).count,
+      visible: mobile_device? &&
+               (controller_name == 'feeds') &&
+               ['index', 'category', 'city'].include?(params[:action])
   }.deep_merge!(props || {})
 
 %>
 
-<% if mobile_device? &&
-      (controller_name == 'feeds') %>
+<% if props[:visible] %>
   <div id="tab-bar" class="me-tab-bar mdc-tab-bar" role="tablist" data-controller="tab-bar" data-target="tab-bar.tabBar" data-turbolinks-permanent>
     <div class="mdc-tab-scroller">
       <div class="mdc-tab-scroller__scroll-area is-horizontal-scrollable">
