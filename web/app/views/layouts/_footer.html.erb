@@ -1,10 +1,4 @@
 <section class="me-footer <%= "me-footer--#{params[:controller]}" if params[:controller] %>">
-  <img
-    data-sizes="auto"
-    data-src="<%= image_url 'welcome/porto-alegre' %>"
-    data-srcset="<%= image_url 'welcome/porto-alegre@512w' %> 512w, <%= image_url 'welcome/porto-alegre' %> 1248w"
-    class="me-footer__image lazyload"/>
-
   <% unless mobile_device? %>
     <a style="margin: 0 0 25px 0" href="https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
       <%= image_tag "welcome/google-play-banner.png" %>
