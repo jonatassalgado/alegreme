@@ -45,14 +45,14 @@
   <link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-  <link rel="preload" href="https://fonts.googleapis.com/icon?family=Roboto:300,400,500,700&display=swap">
+  <link rel="preload" as="font" href="https://fonts.googleapis.com/icon?family=Roboto:300,400,500,700&display=swap">
   <% if content_for? :preload_image %>
     <link rel="preload" as="image" href="<%= content_for :preload_image %>">
   <% end %>
 
   <%= Gon::Base.render_data %>
 
-  <script src="https://sdk.pushy.me/web/1.0.5/pushy-sdk.js" defer></script>
+  <!-- <script src="https://sdk.pushy.me/web/1.0.5/pushy-sdk.js" defer></script> -->
 
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
