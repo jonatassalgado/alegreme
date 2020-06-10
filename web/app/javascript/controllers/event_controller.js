@@ -70,7 +70,11 @@ export default class EventController extends Controller {
 		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
-	animateOnClick() {
+	handleEventClick() {
+		AnimateModule.animatePageHide();
+	}
+
+	handlePlaceClick() {
 		AnimateModule.animatePageHide();
 	}
 

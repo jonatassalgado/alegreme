@@ -2,7 +2,7 @@
 
  props = {
    visible: {
-     backbutton:     ['show', 'neighborhood', 'follow', 'week'].include?(params[:action]) &&
+     backbutton:     ['show', 'neighborhood', 'follow', 'week', 'suggestions'].include?(params[:action]) &&
                      mobile_device?,
      section_middle: (['feeds'].include?(params[:controller]) && !mobile_device?) ||
      ['search'].include?(params[:controller]),

@@ -4,6 +4,7 @@ import {MDCRipple}         from "@material/ripple";
 import * as MobileDetect   from "mobile-detect";
 import Flipping            from "flipping";
 import {ProgressBarModule} from "../modules/progressbar-module";
+import {AnimateModule}     from "modules/animate-module"
 
 export default class SectionController extends Controller {
 	static targets = ['section', 'filter', 'scrollContainer', 'loadMoreButton', 'seeAll', 'personas', 'categories', 'ocurrences', 'kinds'];
@@ -145,7 +146,16 @@ export default class SectionController extends Controller {
 		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
-	loadMore() {
+	seeMoreInNewPage() {
+		if (this.data.has('continueToPath')) {
+			AnimateModule.animatePageHide();
+			setTimeout(() => {
+				Turbolinks.visit(this.data.get('continueToPath'));
+			}, 250)
+		}
+	}
+
+	loadMoreHere() {
 		this.data.set('loadMoreLoading', true);
 
 		// if (this.actualEventsInCollection >= 36 &&

@@ -74,7 +74,7 @@
         <% if data[:continue_to].present? && current_user %>
           <span class="me-see-all is-hoverable"
               data-fixed="true"
-              onclick="Turbolinks.visit('<%= data[:continue_to] %>')">
+              data-action="click->section#seeMoreInNewPage">
             Ver tudo
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
           </span>
@@ -99,7 +99,7 @@
       <% unless data[:title][:custom] %>
         <div class="me-filter"
              data-target="section.filter">
-          <% if data[:filters][:categories] && !data[:collection][:categories].blank? %>
+          <% if data[:filters][:categories] && data[:collection][:categories].present? && data[:collection][:categories].size > 2 %>
             <%= render(partial: 'feeds/filter',
                        locals:  {
                            data: {
@@ -112,7 +112,7 @@
                        },
                        cached:  true) %>
           <% end %>
-          <% if (data[:filters][:kinds] && data[:categories] && !data[:collection][:kinds].blank?) || (data[:filters][:kinds] && !params[:kinds].blank?) %>
+          <% if (data[:filters][:kinds] && data[:categories] && data[:collection][:kinds].present? && data[:collection][:kinds].size > 3) || (data[:filters][:kinds] && !params[:kinds].blank?) %>
             <%= render(partial: 'feeds/filter',
                        locals:  {
                            data: {
@@ -126,7 +126,7 @@
                        cached:  true) %>
           <% end %>
           <!-- TODO: remover duplicado-->
-          <% if data[:filters][:ocurrences] && !data[:collection][:ocurrences].blank? %>
+          <% if data[:filters][:ocurrences] && data[:collection][:ocurrences].present? && data[:collection][:ocurrences].size > 3 %>
             <%= data[:title][:ocurrences] %>
             <%= render(partial: 'feeds/filter',
                        locals:  {
@@ -177,7 +177,7 @@
                        cached:  true) if !mobile_device? || props[:disposition] == 'vertical' %>
 
             <% if props[:display_load_more] && data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
-              <div data-action="click->section#loadMore"
+              <div data-action="click->section#loadMoreHere"
                    data-target="section.loadMoreButton"
                    data-continue-to-path="<%= data[:continue_to] %>"
                    class="me-collection__load-more me-collection__load-more--horizontal">
@@ -254,7 +254,7 @@
                  cached:  true) if mobile_device? && props[:disposition] == 'horizontal' %>
       <% if !mobile_device? && props[:display_load_more] && data[:collection][:detail][:actual_events_in_collection] < data[:collection][:detail][:total_events_in_collection] %>
         <div class="me-collection__load-more me-collection__load-more--vertical is-hoverable"
-             data-action="click->section#loadMore"
+             data-action="click->section#loadMoreHere"
              data-target="section.loadMoreButton">
           Mostrar mais
         </div>
