@@ -1,17 +1,28 @@
 .me-movie {
   width: 100%;
   grid-column-end: 2 span;
-  overflow: hidden;
+  position: relative;
 
-  &.me-movie--single {
-    padding: 24px 0 0 0;
+  &__vote {
+    position: absolute;
+    left: 6px;
+    top: -8px;
+    background: whitesmoke;
+    z-index: 2;
+    padding: 3px 6px;
+    border-radius: 2px;
+    font-weight: 500;
+    color: $font-secondary-color;
+    box-shadow: 0 0 1px #0000003d;
+    font-size: 10px;
   }
 
   &__container {
-    padding: 0 $section-padding-phone;
     @include desktop-only {
-      max-width: 1000px;
       margin: auto;
+    }
+    @include mobile-only {
+      padding: 12px $section-padding-phone;
     }
   }
 
@@ -40,52 +51,77 @@
     }
   }
 
+  &__inner {
+    padding: 0 $section-padding-phone;
+  }
+
   &__cover {
     display: flex;
     justify-content: center;
-    background-color: $surface-secondary-color;
+    min-height: 198px;
+    position: relative;
+    // background-color: $surface-secondary-color;
     & img {
       border-radius: $media-border-radius;
       width: 100%;
       max-width: 200px;
-      min-height: 260px;
+      // min-height: 260px;
       [data-action="show"] & {
-        min-height: 305px;
+        // min-height: 305px;
       }
+    }
+    .me-movie--single & {
+      min-height: 300px;
     }
   }
 
-  &__name {
+  &__title {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: $font-primary-color;
     margin: 6px 0 3px 0;
     .me-movie--single & {
       padding: 0;
-      margin: 25px 0 30px 0;
+      margin: 25px 0 3px 0;
       text-align: center;
       line-height: 1.3em;
       font-family: $font-primary-family;
-      font-weight: 800;
+      font-weight: 600;
       font-size: 28px;
       color: $font-primary-color;
       @include mobile-only {
         font-size: 21px;
         text-align: center;
-        margin: 15px 0 24px 0;
-
+        margin: 15px 0 3px 0;
       }
     }
   }
 
   &__trailler {
     margin: 0 0 12px 0;
+
+    & svg {
+      fill: $icon-color;
+    }
+
+    .me-movie__cover & {
+      font-size: 12px;
+      font-weight: 400;
+      position: absolute;
+      left: 6px;
+      bottom: 6px;
+      margin: 0;
+    }
   }
 
   &__genre {
     font-size: 11px;
     color: $font-tertiary-color;
-    padding: 0 0 6px 0;
+    margin: 0 0 24px 0;
+    font-weight: 300;
+    @include mobile-only {
+      text-align: center;
+    }
   }
 
   &__description {

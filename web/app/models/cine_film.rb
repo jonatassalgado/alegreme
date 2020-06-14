@@ -1,0 +1,5 @@
+class CineFilm < Movie
+
+
+
+end

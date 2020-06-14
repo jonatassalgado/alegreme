@@ -77,15 +77,14 @@
 
   <section class="me-section">
     <div class="me-section__inner">
-      <% if @items.dig(:week, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
-        <%= render partial: "components/collection/collection", locals: {
+      <%# if @items.dig(:week, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
+        <%= render partial: "components/collection/events/collection", locals: {
             data:  {
                 identifier:  'this-week',
                 collection:  @items[:week],
                 title:       {
                     principal: "Acontecendo esta semana",
-                    # secondary: "Hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 8, format: :week)} (#{I18n.l(Date.today + 7, format: :short)})",
-                    tertiary: ("Com base no seu perfil" if current_user)
+                    tertiary:  (current_user ? "Com base no seu perfil" : "Crie uma conta para ver os eventos abaixo")
                 },
                 type:        :large,
                 filters:     {
@@ -105,7 +104,7 @@
                 infinite_scroll: true
             }
         } %>
-      <% end %>
+      <%# end %>
     </div>
   </section>
 
@@ -114,7 +113,7 @@
   <% if @items.dig(:new_today, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
     <section class="me-section">
       <div class="me-section__inner">
-        <%= render partial: "components/collection/collection", locals: {
+        <%= render partial: "components/collection/events/collection", locals: {
             data:  {
                 identifier:  'new-today',
                 collection:  @items[:new_today],
@@ -146,7 +145,7 @@
   <%# if current_user && @items.dig(:user_suggestions, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
   <section class="me-section">
     <div class="me-section__inner">
-      <%= render partial: "components/collection/collection", locals: {
+      <%= render partial: "components/collection/events/collection", locals: {
           data:  {
               identifier:  'user-suggestions',
               collection:  @items[:user_suggestions],
@@ -197,7 +196,7 @@
           </div>
         <% end %>
       <% end %>
-      <%= render partial: "components/collection/collection", locals: {
+      <%= render partial: "components/collection/events/collection", locals: {
           data:  {
               identifier:  'follow',
               collection:  @items[:follow],
@@ -249,7 +248,7 @@
           </div>
         </div>
       <% end %>
-      <%= render partial: "components/collection/collection", locals: {
+      <%= render partial: "components/collection/events/collection", locals: {
           data:  {
               identifier: 'following-users',
               collection: @items[:following_users],
@@ -294,7 +293,7 @@
   <% end %>
   <section class="me-section">
     <div class="me-section__inner">
-      <%= render partial: "components/collection/collection", locals: {
+      <%= render partial: "components/collection/events/collection", locals: {
           data:  {
               identifier:  'my-neighborhood',
               collection:  @items[:neighborhood],

@@ -59,7 +59,9 @@ Rails.application.routes.draw do
 	resources :artifacts
 
 	resources :events, path: 'porto-alegre/eventos'
-	resources :movies, path: 'porto-alegre/cinema'
+	resources :movies, path: 'porto-alegre/filmes', as: :movies
+	resources :cine_films, controller: 'movies', type: 'CineFilm', path: 'porto-alegre/cinemas', as: :cine_films
+	resources :streamings, controller: 'movies', type: 'Streaming', path: 'porto-alegre/streamings', as: :streamings
 
 	get '/send_request_invite_confirmation/:user_id', to: 'emails#send_request_invite_confirmation', as: :send_request_invite_confirmation
 	get '/send_invite_activation_link/:user_id', to: 'emails#send_invite_activation_link', as: :send_invite_activation_link

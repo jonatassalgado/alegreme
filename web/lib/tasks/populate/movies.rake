@@ -11,7 +11,7 @@ require_relative '../../../app/uploaders/movie_image_uploader'
 module PopulateMoviesRake
 
 	def create_movie(item)
-		movie = Movie.where.contains(details: {name: item['name']}).first
+		movie = Movie.where.contains(details: {title: item['name']}).first
 
 		if item['dates'].blank?
 			puts "#{@movies_create_counter}: #{item['name']} - Evento sem data raspada".red
@@ -20,8 +20,8 @@ module PopulateMoviesRake
 
 		if movie
 			movie.details.deep_merge!(
-					name:        item['name'],
-					genre:       item['genre'],
+					title:       item['name'],
+					genres:      [item['genre']],
 					description: item['description'],
 					cover:       item['cover'],
 					trailler:    item['trailler']
@@ -31,8 +31,8 @@ module PopulateMoviesRake
 		else
 			movie = Movie.new
 			movie.details.deep_merge!(
-					name:        item['name'],
-					genre:       item['genre'],
+					title:       item['name'],
+					genres:      [item['genre']],
 					description: item['description'],
 					cover:       item['cover'],
 					trailler:    item['trailler']
@@ -40,6 +40,8 @@ module PopulateMoviesRake
 
 			movie.dates = item['dates']
 		end
+
+		movie.type = 'CineFilm'
 
 		movie
 	end

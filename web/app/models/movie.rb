@@ -3,10 +3,8 @@ class Movie < ApplicationRecord
 	include MovieImageUploader::Attachment.new(:image)
 
 	extend FriendlyId
-	friendly_id :details_name, use: :slugged
+	friendly_id :details_title, use: :slugged
 
-	def details_name
-		details['name']
-	end
+	include MovieDecorators::Streamings
 
 end

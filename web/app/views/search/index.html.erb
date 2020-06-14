@@ -24,7 +24,7 @@
   <% if @data&.dig(:collection, :detail, :total_events_in_collection).try { |counter| counter > 0 } %>
     <section class="me-section me-section--condensed">
       <div class="me-section__inner">
-        <%= render partial: "components/collection/collection", locals: {
+        <%= render partial: "components/collection/events/collection", locals: {
             data:  @data,
             props: {
                 infinite_scroll: true

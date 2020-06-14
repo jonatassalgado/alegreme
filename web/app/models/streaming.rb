@@ -1,0 +1,5 @@
+class Streaming < Movie
+
+
+
+end

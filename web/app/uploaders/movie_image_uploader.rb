@@ -22,7 +22,7 @@ class MovieImageUploader < Shrine
 
       {
           medium: pipeline.resize_to_fill!(200, 305),
-          small: pipeline.resize_to_fill!(46,70)
+          small: pipeline.resize_to_fill!(80,122)
       }
 		end
 	end

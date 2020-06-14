@@ -1,0 +1,37 @@
+<%
+
+  raise ArgumentError unless data
+
+  data = {
+    collection: {
+      movies: []
+    },
+    title:  {}
+  }.deep_merge!(data)
+
+  props = {
+
+  }.deep_merge!(props || {})
+
+%>
+
+<div class="me-collection">
+  <div class="me-collection__head">
+    <div class="me-collection__title-tertiary">
+      <%= data[:title][:tertiary] %>
+    </div>
+    <h2>
+      <%= data[:title][:principal] %>
+    </h2>
+  </div>
+  <div class="me-collection" data-section-disposition="horizontal">
+    <div class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        <%= render(partial: 'components/collection/movie',
+                   collection: data[:collection][:movies],
+                   as:         :movie,
+                   cached:     true) %>
+      </div>
+    </div>
+  </div>
+</div>

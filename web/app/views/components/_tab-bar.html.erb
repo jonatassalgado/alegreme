@@ -2,7 +2,7 @@
 
   props = {
       active:       nil,
-      movies_count: Movie.select("*").from(Movie.select("*, jsonb_array_elements(dates) as date")).where("(date ->> 'date') > ?", DateTime.now.beginning_of_day).count,
+      movies_count: Movie.all.size,
       visible: mobile_device? &&
                (controller_name == 'feeds') &&
                ['index', 'category', 'city'].include?(params[:action])
@@ -64,9 +64,9 @@
             <span class="mdc-tab__ripple"></span>
           </button>
           <% if props[:movies_count] > 0 %>
-            <button data-action="click->tab-bar#open" data-tab-path="/porto-alegre/cinema" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'movies' %>" role="tab" aria-selected="<%= props[:active] == 'movies' ? 'true' : 'false' %>">
+            <button data-action="click->tab-bar#open" data-tab-path="<%= movies_path %>" class="mdc-tab <%= 'mdc-tab--active' if props[:active] == 'movies' %>" role="tab" aria-selected="<%= props[:active] == 'movies' ? 'true' : 'false' %>">
               <span class="mdc-tab__content">
-                <span class="mdc-tab__text-label">Cinema</span>
+                <span class="mdc-tab__text-label">Filmes</span>
               </span>
               <span class="mdc-tab-indicator <%= 'mdc-tab-indicator--active' if props[:active] == 'movies' %>">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>

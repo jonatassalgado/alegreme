@@ -47,7 +47,7 @@ export default class BottomNavigationController extends Controller {
 
 		if (/(\/feed|\/porto-alegre\/eventos)/.test(document.location.href)) {
 			this.eventsTarget.classList.add('active');
-		} else if ((/(\/porto-alegre\/cinema)/.test(document.location.href))) {
+		} else if ((/(\/porto-alegre\/filmes)/.test(document.location.href))) {
 			this.cinemaTarget.classList.add('active');
 		} else if ((/(\/busca)/.test(document.location.href))) {
 			this.searchTarget.classList.add('active');

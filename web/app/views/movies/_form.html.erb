@@ -1,0 +1,185 @@
+<%= javascript_pack_tag 'text-field', 'select', 'data-turbolinks-track': 'reload', defer: true %>
+
+<%= notice %>
+
+<%= form_with(model: movie, local: true, html: { enctype: "multipart/form-data", "data-controller": "form", "data-target": "form.form" }) do |form| %>
+  <% if movie.errors.any? %>
+    <div id="error_explanation">
+      <p><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</p>
+
+      <ul>
+      <% movie.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @movie.image %>
+    <img src="<%= @movie.image[:medium].url(public: true) %>">
+  <% else %>
+    O filme não possui imagem.
+  <% end %>
+
+  <%= form.hidden_field :image, value: @movie.cached_image_data %>
+  <%= form.file_field :image, class: "me-file-button" %>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= form.text_field :details_title, class: 'mdc-text-field__input' %>
+        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch" style="">
+            <label class="mdc-floating-label" for="text-field-outlined" style="">Título</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= form.text_field :details_original_title, class: 'mdc-text-field__input' %>
+        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch" style="">
+            <label class="mdc-floating-label" for="text-field-outlined" style="">Título original</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <label class="mdc-text-field mdc-text-field--textarea">
+        <%= form.text_area :details_description, {class: 'mdc-text-field__input', 'aria-labelledby': 'my-label-id', rows: '6'} %>
+        <span class="mdc-notched-outline">
+          <span class="mdc-notched-outline__leading"></span>
+          <span class="mdc-notched-outline__notch">
+            <span class="mdc-floating-label" id="my-label-id">Descrição</span>
+          </span>
+          <span class="mdc-notched-outline__trailing"></span>
+        </span>
+      </label>
+    </div>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= form.text_field :details_cover, class: 'mdc-text-field__input' %>
+        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch" style="">
+            <label class="mdc-floating-label" for="text-field-outlined" style="">Imagem cover</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= form.text_field :details_trailler, class: 'mdc-text-field__input' %>
+        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch" style="">
+            <label class="mdc-floating-label" for="text-field-outlined" style="">Trailler</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= form.text_field :details_popularity, class: 'mdc-text-field__input' %>
+        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch" style="">
+            <label class="mdc-floating-label" for="text-field-outlined" style="">Popularidade</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= form.text_field :details_vote_average, class: 'mdc-text-field__input' %>
+        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch" style="">
+            <label class="mdc-floating-label" for="text-field-outlined" style="">Avaliação média</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= form.text_field :details_adult, class: 'mdc-text-field__input' %>
+        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch" style="">
+            <label class="mdc-floating-label" for="text-field-outlined" style="">Adulto?</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="me-text-field__container me-text-field--fullwidth">
+      <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+        <%= form.text_field :details_tmdb_id, class: 'mdc-text-field__input' %>
+        <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch" style="">
+            <label class="mdc-floating-label" for="text-field-outlined" style="">TMDB id</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Streamings</h2>
+
+    <div class="me-form__list">
+      <%= form.fields_for :streamings do |streaming_form| %>
+        <div data-list-group-index="<%= streaming_form.index %>" class="me-form__list-group">
+          <div class="me-text-field__container me-text-field--fullwidth">
+            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+              <%= streaming_form.text_field :display_name, class: 'me-form__list-item mdc-text-field__input' %>
+              <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch" style="">
+                  <label class="mdc-floating-label" for="text-field-outlined" style="">Name</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+          </div>
+          <div class="me-text-field__container me-text-field--fullwidth">
+            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+              <%= streaming_form.text_field :url, class: 'me-form__list-item mdc-text-field__input' %>
+              <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch" style="">
+                  <label class="mdc-floating-label" for="text-field-outlined" style="">Url</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+          </div>
+          <%= streaming_form.hidden_field :_destroy, class:'me-form__list-item' %>
+          <span data-action="click->form#removeField" class="me-button me-button--small me-button--floating mdc-button me-form__remove-field-button">Remover</span>
+          <span data-action="click->form#addField" class="me-button me-button--small me-button--floating mdc-button me-form__add-field-button" style="display: none">Adicionar</span>
+        </div>
+      <% end %>
+    </div>
+
+
+    <button class="me-form__submit-button me-button mdc-button">
+      <span class="me-button__label mdc-button__label">Salvar</span>
+    </button>
+
+  <% end %>

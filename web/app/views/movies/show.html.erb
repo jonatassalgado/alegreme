@@ -4,59 +4,66 @@
 
   <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
-  <div class="me-page__section me-page--single">
-    <div class="me-section">
-      <div class="me-section__inner">
-        <div class="me-movie__container">
-          <div class="me-movie me-movie--single">
-            <div class="me-movie__cover">
-              <%= image_tag(@movie.image[:medium].url, style: "background: #{JSON.parse(@movie.image_data).dig('medium', 'metadata', 'dominant_color')}") if @movie.image[:medium] %>
-            </div>
-            <h3 class="me-movie__name">
-              <%= @movie.details['name'] %>
-            </h3>
-            <div class="me-movie__genre">
-              <%= @movie.details['genre'] %>
-            </div>
-            <div class="me-movie__description">
-              <%= @movie.details['description'] %>
-            </div>
-            <% if @movie.details['trailler'] %>
-            <div class="me-movie__trailler mdc-chip" onclick="location.assign('<%= @movie.details['trailler'] %>')">
+  <div class="me-section">
+    <div class="me-section__inner">
+      <div class="me-movie me-movie--single">
+        <div class="me-movie__cover">
+          <%= image_tag(@movie.image[:medium].url, style: "background: #{JSON.parse(@movie.image_data).dig('medium', 'metadata', 'dominant_color')}") if @movie.image[:medium] %>
+        </div>
+        <div class="me-movie__inner">
+          <h3 class="me-movie__title">
+            <%= @movie.details_title %> (<%= @movie.details_vote_average %>⭐)
+          </h3>
+          <div class="me-movie__genre">
+            <%= @movie.details_genres.join(", ") %>
+          </div>
+          <% if @movie.details_trailler %>
+          <a href="<%= @movie.details_trailler %>">
+            <div class="me-movie__trailler me-chip mdc-chip">
               <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg></i>
               Ver trailler
             </div>
-            <% end %>
-            <% if @movie.dates %>
-            <div class="me-movie__dates">
-              <% @movie.dates.select{|date| date['date'].to_date >= Date.today}.each do |date| %>
-              <div class="me-movie__date">
-                <div class="me-movie__date-name">
-                  <%= "#{day_of_week(date['date']).upcase} - #{I18n.l(date['date'].to_date, format: :long)}" %>
-                </div>
-                <% if date['places'] %>
-                <div class="me-movie__places">
-                  <% date['places'].each do |place| %>
-                  <div class="me-movie__place">
-                    <div class="me-movie__place-name">
-                      <%= link_to place['name'], place['address'] %>
-                    </div>
-                    <% if place['languages'] %>
-                    <div class="me-movie__languages">
-                      <% place['languages'].each do |language| %>
-                      <div class="me-movie__language">
-                        <div class="me-movie__language-name"><%= language['name'] %></div>
-                        <div class="me-movie__times">
-                          <% if language['times'] %>
-                          <% language['times'].each do |time| %>
-                          <span class="me-movie__time">
-                            <%= time %>
-                          </span>
-                          <% end %>
-                          <% end %>
-                        </div>
+          </a>
+          <% end %>
+          <% @movie.streamings.each do |streaming| %>
+          <a href="<%= streaming.url %>">
+            <div class="me-movie__trailler me-chip mdc-chip">
+              <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg></i>
+              <%= streaming.display_name %>
+            </div>
+          </a>
+          <% end %>
+          <div class="me-movie__description">
+            <%= @movie.details_description %>
+          </div>
+          <% if @movie.dates.any? {|date| date['date']} %>
+          <div class="me-movie__dates">
+            <% @movie.dates.select{|date| date['date'].to_date >= Date.today}.each do |date| %>
+            <div class="me-movie__date">
+              <div class="me-movie__date-name">
+                <%= "#{day_of_week(date['date']).upcase} - #{I18n.l(date['date'].to_date, format: :long)}" %>
+              </div>
+              <% if date['places'] %>
+              <div class="me-movie__places">
+                <% date['places'].each do |place| %>
+                <div class="me-movie__place">
+                  <div class="me-movie__place-name">
+                    <%= link_to place['name'], place['address'] %>
+                  </div>
+                  <% if place['languages'] %>
+                  <div class="me-movie__languages">
+                    <% place['languages'].each do |language| %>
+                    <div class="me-movie__language">
+                      <div class="me-movie__language-name"><%= language['name'] %></div>
+                      <div class="me-movie__times">
+                        <% if language['times'] %>
+                        <% language['times'].each do |time| %>
+                        <span class="me-movie__time">
+                          <%= time %>
+                        </span>
+                        <% end %>
+                        <% end %>
                       </div>
-                      <% end %>
                     </div>
                     <% end %>
                   </div>
@@ -69,6 +76,7 @@
             <% end %>
           </div>
         </div>
+        <% end %>
       </div>
     </div>
   </div>
