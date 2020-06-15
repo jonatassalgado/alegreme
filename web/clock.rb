@@ -24,17 +24,21 @@ module Clockwork
       Rake::Task["db:dump"].invoke
     }
 
-    every(1.day, 'push:new_events_today', :at => '12:15') {
-      Rake::Task["push:new_events_today"].invoke
-    }
-
-    every(1.day, 'push:saved_events_tomorrow', :at => '21:15') {
-      Rake::Task["push:saved_events_tomorrow"].invoke
-    }
-
-    every(3.hours, 'push:saved_events_shortly') {
-      Rake::Task["push:saved_events_shortly"].invoke
-    }
+    # every(1.day, 'push:new_events_today', :at => '12:15') {
+    #   Rake::Task["push:new_events_today"].invoke
+    # }
+    #
+    # every(1.day, 'push:saved_events_tomorrow', :at => '21:15') {
+    #   Rake::Task["push:saved_events_tomorrow"].invoke
+    # }
+    #
+    # every(3.hours, 'push:saved_events_shortly') {
+    #   Rake::Task["push:saved_events_shortly"].invoke
+    # }
+    #
+    # every(7.days, 'populate:movies:new_release') {
+    #   Rake::Task["populate:movies:new_release"].invoke
+    # }
   end
 
 end

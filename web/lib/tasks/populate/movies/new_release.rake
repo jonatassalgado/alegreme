@@ -10,7 +10,7 @@ require 'openssl'
 require_relative '../../../../config/initializers/shrine.rb'
 require_relative '../../../../app/uploaders/movie_image_uploader'
 
-module PopulateMoviesPopularRake
+module PopulateMoviesNewReleaseRake
 
 	def create_movie(item)
 
@@ -126,7 +126,7 @@ module PopulateMoviesPopularRake
 	  movie_query    = item['title']
 	  max_result     = 1
 
-	  url            = URI("https://www.googleapis.com/youtube/v3/search?part=snippet&regionCode=BR&maxResults=#{max_result}&q=#{ERB::Util.url_encode(movie_query)}%20filme%20trailler&key=#{google_api_key}")
+	  url            = URI("https://www.googleapis.com/youtube/v3/search?part=id&regionCode=BR&maxResults=#{max_result}&q=#{ERB::Util.url_encode(movie_query)}%20filme%20trailler&fields=items(id(videoId))&key=#{google_api_key}")
 
 	  http = Net::HTTP.new(url.host, url.port)
 	  http.use_ssl = true
@@ -136,7 +136,21 @@ module PopulateMoviesPopularRake
 	  request['Accept'] = 'application/json'
 
 	  response = http.request(request)
-	  videoId  = JSON.parse(response.read_body)['items'][0]['id']['videoId']
+
+		begin
+			parsed_response = JSON.parse(response.read_body)
+			if parsed_response.has_key?('error')
+				puts "Erro ao consumir api do Youtube".red
+				return false
+			else
+				videoId = parsed_response['items'][0]['id']['videoId']
+			end
+		rescue JSON::ParserError => e
+			puts "Erro ao ler arquivo JSON: #{e}".red
+			return false
+		else
+			puts "Arquivo JSON parseado".blue
+		end
 
 		if videoId
 			puts "#{item['title']} - Video de trailler capturado com sucesso".blue
@@ -223,9 +237,9 @@ namespace :populate do
 	namespace :movies do
 
 		desc 'Populate popular movies from tmdb'
-		task popular: :environment do |t|
+		task new_release: :environment do |t|
 
-			include PopulateMoviesPopularRake
+			include PopulateMoviesNewReleaseRake
 
 			puts "Task populate:movies:popular iniciada em #{DateTime.now}".white
 
