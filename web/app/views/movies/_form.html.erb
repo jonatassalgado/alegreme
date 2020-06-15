@@ -2,7 +2,7 @@
 
 <%= notice %>
 
-<%= form_with(model: movie, local: true, html: { enctype: "multipart/form-data", "data-controller": "form", "data-target": "form.form" }) do |form| %>
+<%= form_with(model: movie, local: true, html: { class: "me-form", enctype: "multipart/form-data", "data-controller": "form", "data-target": "form.form" }) do |form| %>
   <% if movie.errors.any? %>
     <div id="error_explanation">
       <p><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</p>
@@ -141,9 +141,9 @@
       </div>
     </div>
 
-    <h2>Streamings</h2>
-
     <div class="me-form__list">
+      <h2>Streamings</h2>
+
       <%= form.fields_for :streamings do |streaming_form| %>
         <div data-list-group-index="<%= streaming_form.index %>" class="me-form__list-group">
           <div class="me-text-field__container me-text-field--fullwidth">
@@ -170,16 +170,75 @@
               </div>
             </div>
           </div>
-          <%= streaming_form.hidden_field :_destroy, class:'me-form__list-item' %>
           <span data-action="click->form#removeField" class="me-button me-button--small me-button--floating mdc-button me-form__remove-field-button">Remover</span>
           <span data-action="click->form#addField" class="me-button me-button--small me-button--floating mdc-button me-form__add-field-button" style="display: none">Adicionar</span>
         </div>
       <% end %>
     </div>
 
+    <div class="me-form__chip-set">
+      <h2>Coleções</h2>
+
+      <div data-controller="form-chip-set" data-form-chip-set-model="<%= @movie.model_name.name.downcase %>" data-form-chip-set-column="collections" class="me-form__chip-set">
+        <div data-target="form-chip-set.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter mdc-chip-set--input">
+          <% Movie::COLLECTIONS.each_with_index do |collection, index| %>
+          <div data-target="form-chip-set.chip" data-action="MDCChip:selection->form-chip-set#chipSelection" class="me-chip mdc-chip <%= 'mdc-chip--selected' if @movie.collections.include?(collection)%>">
+            <div class="mdc-chip__checkmark">
+              <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+                <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
+                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+              </svg>
+            </div>
+            <div class="mdc-chip__text">
+              <%= collection.downcase %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+        <div class="me-text-field__container">
+          <div data-target="form-chip-set.inputContainer"
+          class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label mdc-text-field--dense mdc-text-field--with-trailing-icon">
+          <%= text_field_tag 'chip', nil, class: 'mdc-text-field__input', :"data-target" => "form-chip-set.input" %>
+          <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch" style="">
+              <label class="mdc-floating-label" for="text-field-outlined" style="">Adicionar uma coleção</label>
+            </div>
+            <div class="mdc-notched-outline__trailing"></div>
+          </div>
+        </div>
+      </div>
+      <span data-action="click->form-chip-set#create" class="me-button mdc-button me-button--small me-button--floating">
+        <span class="mdc-button__label">Adicionar</span>
+      </span>
+      <div data-target="form-chip-set.hiddenInputs"></div>
+    </div>
+    </div>
+
+    <div class="me-form__type">
+      <h2>Tipo</h2>
+      <div class="me-text-field__container me-text-field--fullwidth">
+        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+          <%= form.text_field :type, value: @movie.model_name.name, class: 'mdc-text-field__input' %>
+          <div class="mdc-notched-outline mdc-notched-outline--upgraded">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch" style="">
+              <label class="mdc-floating-label" for="text-field-outlined" style="">Tipo</label>
+            </div>
+            <div class="mdc-notched-outline__trailing"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <button class="me-form__submit-button me-button mdc-button">
       <span class="me-button__label mdc-button__label">Salvar</span>
     </button>
+
+    <%= link_to @movie, method: :delete, data: { confirm: 'Tem certeza?' } do %>
+      <button class="me-form__submit-button me-button mdc-button me-button--floating">
+        <span class="me-button__label mdc-button__label">Remover</span>
+      </button>
+    <% end %>
 
   <% end %>

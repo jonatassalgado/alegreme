@@ -4,19 +4,40 @@
 
   <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
-  <section class="me-section me-section--condensed">
-    <section class="me-section__inner">
-      <%= render(partial: 'components/collection/movies/collection', locals: {
-                                                                      data: {
-                                                                        collection: {
-                                                                          movies: @movies
-                                                                        },
-                                                                        title: {
-                                                                          principal: "Filmes lançados nos últimos 30 dias",
-                                                                          tertiary:  "Populares nos serviços de streaming"
+  <% if @movies[:new_release] %>
+    <section class="me-section me-section--condensed">
+      <section class="me-section__inner">
+        <%= render(partial: 'components/collection/movies/collection', locals: {
+                                                                        data: {
+                                                                          collection: {
+                                                                            movies: @movies[:new_release]
+                                                                          },
+                                                                          title: {
+                                                                            principal: "Adicionados nos últimos 30 dias",
+                                                                            tertiary:  "Populares nos serviços de streaming"
+                                                                          }
                                                                         }
-                                                                      }
-                                                                    }) %>
+                                                                      }) %>
+      </section>
     </section>
-  </section>
+  <% end %>
+
+  <% if @movies[:editors_choice] %>
+    <section class="me-section me-section--condensed">
+      <section class="me-section__inner">
+        <%= render(partial: 'components/collection/movies/collection', locals: {
+                                                                        data: {
+                                                                          collection: {
+                                                                            movies: @movies[:editors_choice]
+                                                                          },
+                                                                          title: {
+                                                                            principal: "Escolha dos editores",
+                                                                            tertiary:  "Disponíveis nos serviços de streaming"
+                                                                          }
+                                                                        }
+                                                                      }) %>
+      </section>
+    </section>
+  <% end %>
+
 </section>

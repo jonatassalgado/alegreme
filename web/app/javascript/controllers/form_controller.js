@@ -1,7 +1,9 @@
-import {Controller}        from "stimulus";
+import {Controller} from "stimulus";
+import {MDCChipSet} from '@material/chips';
+
 
 export default class FormController extends Controller {
-	static targets = ['form'];
+	static targets = ['form', 'chip-set'];
 
 	initialize() {
 
@@ -75,6 +77,11 @@ export default class FormController extends Controller {
           list.lastElementChild.querySelector('.me-form__add-field-button').style.display = '';
         });
       }
+			if (this.hasChipSetTarget) {
+				this.chipSetTargets.forEach((chipSet, i) => {
+					this.chipSets = new MDCChipSet(chipSet);
+				});
+			}
     }
   }
 

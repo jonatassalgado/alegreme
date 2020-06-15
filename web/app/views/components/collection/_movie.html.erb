@@ -1,22 +1,24 @@
-<div class="me-movie mdc-layout-grid__cell">
-  <%= link_to send("#{movie.type.underscore}_path", movie) do %>
-    <div class="me-movie__vote">
-      <%= movie.details_vote_average %> ⭐
-    </div>
-    <div class="me-movie__cover">
-      <%= image_tag(movie.image[:medium].url(public: true)) if movie.image[:medium] %>
-      <% if movie.details_trailler %>
-        <div class="me-movie__trailler me-chip mdc-chip" onclick="location.assign('<%= movie.details_trailler %>')">
-          <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg></i>
-          Ver trailler
-        </div>
-      <% end %>
-    </div>
-    <h3 class="me-movie__title">
-      <%= movie.details_title %>
-    </h3>
-    <div class="me-movie__genre">
-      <%= movie.details_genres.join(", ") %>
-    </div>
-  <% end %>
-</div>
+<% if movie.image.try {|image| image[:medium]} %>
+  <div class="me-movie mdc-layout-grid__cell">
+    <%= link_to send("#{movie.type.underscore}_path", movie) do %>
+      <div class="me-movie__vote">
+        <%= movie.details_vote_average %> ⭐
+      </div>
+      <div class="me-movie__cover">
+        <%= image_tag(movie.image[:medium].url(public: true)) if movie.image.try {|image| image[:medium]} %>
+        <% if movie.details_trailler.present? %>
+          <div class="me-movie__trailler me-chip mdc-chip" onclick="location.assign('<%= movie.details_trailler %>')">
+            <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg></i>
+            Ver trailler
+          </div>
+        <% end %>
+      </div>
+      <h3 class="me-movie__title">
+        <%= movie.details_title %>
+      </h3>
+      <!-- <div class="me-movie__genre">
+        <%#= movie.details_genres.join(", ") %>
+      </div> -->
+    <% end %>
+  </div>
+<% end %>

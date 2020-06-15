@@ -8,6 +8,10 @@
     }
   }
 
+  & h2 {
+    margin: 60px 0 12px 0;
+  }
+
   &__info {
 
     & a {
@@ -16,16 +20,19 @@
     }
   }
 
-  &__remove-field-button {
-
-  }
-
-  &__add-field-button {
-    
-  }
-
   &__submit-button {
     margin: 24px 0;
     float: right;
+  }
+
+  &__list {
+
+  }
+
+  &__chip-set {
+
+    & .me-text-field__container {
+      margin: 6px 0 12px 0;
+    }
   }
 }

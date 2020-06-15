@@ -30,13 +30,19 @@
     & .mdc-layout-grid__cell {
       @include mobile-only {
         padding: 0 0 $section-padding-phone 0;
-        // border-bottom: 1px solid $surface-color;
       }
-      // &:last-child {
-      //   @include mobile-only {
-      //     border-bottom: none;
-      //   };
-      // }
+    }
+  }
+
+
+  & .mdc-layout-grid__cell {
+    [data-model="movie"] & {
+      @include desktop-only {
+        grid-column-end: span 2;
+      }
+      @include mobile-only {
+        grid-column-end: span 1;
+      }
     }
   }
 

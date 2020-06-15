@@ -73,7 +73,7 @@ export default class FilterController extends Controller {
 	}
 
 	setSelected(chipEl) {
-		const chipTemplate          = (text) => html`
+		const chipTemplate = (text) => html`
 		      <div class="mdc-chip__checkmark">
 		        <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
 		          <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />

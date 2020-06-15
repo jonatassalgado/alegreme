@@ -1,10 +1,14 @@
 class Movie < ApplicationRecord
 
-	include MovieImageUploader::Attachment.new(:image)
+	COLLECTIONS = ['new release', 'editors choice'].sort.freeze
 
 	extend FriendlyId
-	friendly_id :details_title, use: :slugged
+
+	include MovieImageUploader::Attachment.new(:image)
 
 	include MovieDecorators::Streamings
+	include MovieDecorators::Collections
+
+	friendly_id :details_title, use: :slugged
 
 end

@@ -1,7 +1,7 @@
 <div class="me-text-field__container me-text-field--fullwidth">
-  <div data-target="chip.inputContainer"
+  <div data-target="filter.inputContainer"
     class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label mdc-text-field--with-trailing-icon">
-    <%= text_field_tag 'chip', nil, class: 'mdc-text-field__input', :"data-target" => "chip.input" %>
+    <%= text_field_tag 'chip', nil, class: 'mdc-text-field__input', :"data-target" => "filter.input" %>
     <div class="mdc-notched-outline mdc-notched-outline--upgraded">
       <div class="mdc-notched-outline__leading"></div>
       <div class="mdc-notched-outline__notch" style="">
@@ -11,7 +11,6 @@
     </div>
   </div>
 </div>
-<button data-action="click->chip#create" class="mdc-button" style="float: right">
-  <i class="material-icons mdc-button__icon" aria-hidden="true">add_circle</i>
+<span data-action="click->filter#create" class="me-button mdc-button me-button--small" style="float: right">
   <span class="mdc-button__label">Adicionar</span>
-</button>
+</span>

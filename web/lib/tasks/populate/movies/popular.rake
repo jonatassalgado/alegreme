@@ -67,6 +67,8 @@ module PopulateMoviesPopularRake
 				tmdb_id:        item['id']
 			)
 
+			movie.collections = ['new release']
+
 			[movie, :created]
 		end
 	end

@@ -2,9 +2,10 @@ class MoviesController < ApplicationController
 	before_action :authorize_admin, only: [:new, :edit, :create, :update, :destroy]
 
 	def index
-		# @movies = Movie.select("*").from(Movie.select("*, jsonb_array_elements(dates) as date")).where("(date ->> 'date') > ?", DateTime.now.beginning_of_day).uniq
-		# @movies = Movie.where("created_at > :time", time: DateTime.now - 30).order("(details ->> 'vote_average')::numeric DESC")
-		@movies = Movie.where("created_at > :time AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30).order("(details ->> 'vote_average')::numeric DESC")
+		@movies = {
+			new_release:    Movie.where("created_at > :time AND collections::jsonb ? 'new release' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30),
+			editors_choice: Movie.where("created_at > :time AND collections::jsonb ? 'editors choice' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30)
+		}
 	end
 
 	def show
@@ -20,6 +21,7 @@ class MoviesController < ApplicationController
 		model  = get_model(params[:type])
 		@movie = model.new
 		@movie.build_streaming
+		@movie.build_collections
 	end
 
 	# GET /movies/1/edit
@@ -81,12 +83,18 @@ class MoviesController < ApplicationController
 
 
 	def get_model type
-     return type.classify.constantize
+		if type
+			return type.classify.constantize
+		else
+			Movie
+		end
   end
 
 	def model_params
-		logger.debug params[:type].underscore.to_sym
-		params.require(params[:type].underscore.to_sym).permit(
+		model = params[:type] ? params[:type].underscore.to_sym : :movie
+
+		params.require(model).permit(
+			:image,
 			:details_original_title,
 			:details_title,
 			:details_genres,
@@ -97,6 +105,8 @@ class MoviesController < ApplicationController
 			:details_vote_average,
 			:details_adult,
 			:details_tmdb_id,
-		  streamings_attributes: [:display_name, :url])
+			:type,
+		  streamings_attributes: [:display_name, :url],
+		  collections_attributes: [])
 		end
 end
