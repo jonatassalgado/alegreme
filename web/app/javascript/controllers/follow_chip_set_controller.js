@@ -2,15 +2,15 @@ import {Controller} from "stimulus";
 import {MDCChipSet} from '@material/chips';
 
 
-export default class FollowChipsetController extends Controller {
-	static targets = ['chipset', "chip"];
+export default class FollowChipSetController extends Controller {
+	static targets = ['chipSet', "chip"];
 
 	initialize() {
 		this.pubsub = {};
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
 			setTimeout(() => {
-				this.chipSet = new MDCChipSet(this.chipsetTarget);
+				this.chipSet = new MDCChipSet(this.chipSetTarget);
 			}, 550)
 		});
 
@@ -28,7 +28,7 @@ export default class FollowChipsetController extends Controller {
 
 	follow(event) {
 		const followPromise = new Promise((resolve, reject) => {
-			const chipEl = event.target.closest('[data-target="follow-chipset.chip"]');
+			const chipEl = event.target.closest('[data-target="follow-chip-set.chip"]');
 
 			const data = {
 				chipIconElem   : event.target,
@@ -97,7 +97,7 @@ export default class FollowChipsetController extends Controller {
 	}
 
 	get identifier() {
-		return this.chipsetTarget.id;
+		return this.chipSetTarget.id;
 	}
 
 	get expandToSimilar() {
@@ -109,8 +109,8 @@ export default class FollowChipsetController extends Controller {
 	// }
 
 	get sectionIdentifier() {
-		const section = this.chipsetTarget.closest('[data-controller="section"]');
-		if (this.hasChipsetTarget && section) {
+		const section = this.chipSetTarget.closest('[data-controller="section"]');
+		if (this.hasChipSetTarget && section) {
 			return section.id;
 		}
 	}

@@ -11,6 +11,7 @@
       [data-model="movie"] & {
         @include mobile-only {
           grid-template-columns: repeat(100, minmax(40vw, 1fr));
+          padding: 10px 70px 0 $section-padding-phone;
         }
       }
       @include mobile-only {
