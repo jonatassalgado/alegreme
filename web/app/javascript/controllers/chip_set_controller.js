@@ -1,11 +1,12 @@
 import {Controller}   from "stimulus";
 
-export default class ChipsetController extends Controller {
-	static targets = ["wrapper", "chipset"];
+export default class ChipSetController extends Controller {
+	static targets = ["wrapper", "chipSet"];
 
 	connect() {
-		if (this.hasChipsetTarget && this.data.has("selected")) {
-			this.chipsetTarget.querySelector(`[data-chipset-slug="${this.data.get("selected")}"]`).classList.add("mdc-chip--selected");
+		
+		if (this.hasChipSetTarget && this.data.get("selected") != "") {
+			this.chipSetTarget.querySelector(`[data-chip-set-slug="${this.data.get("selected")}"]`).classList.add("mdc-chip--selected");
 		}
 
 		this.destroy = () => {
@@ -14,9 +15,9 @@ export default class ChipsetController extends Controller {
 
 		document.addEventListener('turbolinks:before-cache', this.destroy, false);
 
-		if (this.chipsetTarget.querySelector(".mdc-chip--selected")) {
+		if (this.chipSetTarget.querySelector(".mdc-chip--selected")) {
 			this.scrollOffset = {
-				position: this.chipsetTarget.querySelector(".mdc-chip--selected").offsetLeft,
+				position: this.chipSetTarget.querySelector(".mdc-chip--selected").offsetLeft,
 				smooth:   false
 			};
 		}
@@ -29,17 +30,17 @@ export default class ChipsetController extends Controller {
 
 	select(event) {
 		const categoryEl   = event.currentTarget;
-		const chipsetUrl  = categoryEl.dataset.chipsetUrl;
+		const chipSetUrl  = categoryEl.dataset.chipSetUrl;
 
 		this.scrollOffset = {
 			position: categoryEl.offsetLeft,
 			smooth:   true
 		};
 
-		PubSubModule.emit("chipset.update", {});
+		PubSubModule.emit("chip-set.update", {});
 
 		setTimeout(() => {
-			Turbolinks.visit(chipsetUrl);
+			Turbolinks.visit(chipSetUrl);
 		}, 500)
 	}
 

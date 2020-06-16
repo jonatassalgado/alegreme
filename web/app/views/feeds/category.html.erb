@@ -15,12 +15,12 @@
 
 
   <section class="me-section me-section--condensed">
-    <div data-controller="chipset" data-target="chipset.wrapper" data-chipset-selected="<%= params[:category] %>" class="me-collection__title-custom me-chip-set__wrapper">
-      <div data-target="chipset.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
+    <div data-controller="chip-set" data-target="chip-set.wrapper" data-chip-set-selected="<%= params[:category] %>" class="me-collection__title-custom me-chip-set__wrapper">
+      <div data-target="chip-set.chipSet" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
         <% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
-          <div data-action="click->chipset#select"
-            data-chipset-url="<%= category_events_path category %>"
-            data-chipset-slug="<%= category %>"
+          <div data-action="click->chip-set#select"
+            data-chip-set-url="<%= category_events_path category %>"
+            data-chip-set-slug="<%= category %>"
             class="me-chip mdc-chip">
             <div class="mdc-chip__ripple"></div>
             <span class="mdc-chip__text"><%= category %></span>

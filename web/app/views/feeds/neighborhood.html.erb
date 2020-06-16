@@ -15,12 +15,12 @@
 
 
   <section class="me-section me-section--condensed">
-    <div data-controller="chipset" data-target="chipset.wrapper" data-chipset-selected="<%= params[:neighborhood].parameterize %>" class="me-collection__title-custom me-chip-set__wrapper">
-      <div data-target="chipset.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
+    <div data-controller="chip-set" data-target="chip-set.wrapper" data-chip-set-selected="<%= params[:neighborhood].parameterize %>" class="me-collection__title-custom me-chip-set__wrapper">
+      <div data-target="chip-set.chipSet" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
         <% @neighborhoods.each do |neighborhood| %>
-          <div data-action="click->chipset#select"
-            data-chipset-url="<%= neighborhood_events_path neighborhood.parameterize_with_accents %>"
-            data-chipset-slug="<%= neighborhood.parameterize %>"
+          <div data-action="click->chip-set#select"
+            data-chip-set-url="<%= neighborhood_events_path neighborhood.parameterize_with_accents %>"
+            data-chip-set-slug="<%= neighborhood.parameterize %>"
             class="me-chip mdc-chip">
             <div class="mdc-chip__ripple"></div>
             <span class="mdc-chip__text"><%= neighborhood %></span>

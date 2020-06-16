@@ -118,7 +118,7 @@ export default class SectionController extends Controller {
 		});
 
 
-		this.pubsub.categoriesUpdate = PubSubModule.on("chipset.update", (data) => {
+		this.pubsub.categoriesUpdate = PubSubModule.on("chip-set.update", (data) => {
 			this.sectionTarget.style.opacity = 0;
 		});
 
