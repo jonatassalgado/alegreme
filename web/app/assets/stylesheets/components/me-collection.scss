@@ -8,6 +8,11 @@
 
   &[data-section-disposition="horizontal"] {
     & .mdc-layout-grid__inner {
+      [data-model="movie"] & {
+        @include mobile-only {
+          grid-template-columns: repeat(100, minmax(40vw, 1fr));
+        }
+      }
       @include mobile-only {
         grid-gap: var(--mdc-layout-grid-gutter-phone, 16px);
         overflow-y: hidden;
