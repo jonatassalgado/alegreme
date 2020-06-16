@@ -15,7 +15,7 @@
 
 %>
 
-<div class="me-collection" data-model="movie">
+<div data-controller="movie-collection" class="me-collection" data-model="movie">
   <div class="me-collection__head">
     <div class="me-collection__title-tertiary">
       <%= data[:title][:tertiary] %>
@@ -26,7 +26,9 @@
   </div>
   <div class="me-collection" data-section-disposition="horizontal">
     <div class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__inner"
+           data-movie-collection-turbolinks-persist-scroll="0"
+           data-target="movie-collection.scrollContainer">
         <%= render(partial: 'components/collection/movie',
                    collection: data[:collection][:movies],
                    as:         :movie,
