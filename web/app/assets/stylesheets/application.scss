@@ -58,7 +58,7 @@ body {
   @include mobile-only {
     background: $background-color;
     user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     -webkit-touch-callout: none;
     //-webkit-overflow-scrolling: touch;
   }
@@ -186,7 +186,7 @@ a {
 }
 
 .abcRioButtonBlue .abcRioButtonContentWrapper {
-  border: 1px solid transparent
+  border: 1px solid rgba(255, 255, 255, 0)
 }
 
 .abcRioButtonErrorWrapper,

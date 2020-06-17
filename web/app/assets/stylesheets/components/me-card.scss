@@ -148,7 +148,7 @@ $description-color: $font-secondary-color;
     width: 100%;
     top: 0;
     height: 100%;
-    background: linear-gradient(to top, #ffffff38, transparent);
+    background: linear-gradient(to top, #ffffff38, rgba(255, 255, 255, 0));
     overflow: hidden;
     border-radius: $media-border-radius;
     @include mdc-ripple-surface;
@@ -367,7 +367,7 @@ $description-color: $font-secondary-color;
     }
 
     & .mdc-button::before, .mdc-button::after {
-      background-color: transparent;
+      background-color: rgba(255, 255, 255, 0);
     }
 
     & svg {

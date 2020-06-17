@@ -17,7 +17,7 @@ $gutter: 6px;
   &__list {
     &::before {
       content: close-quote;
-      background: linear-gradient(to left, transparent, $background-color);
+      background: linear-gradient(to left, rgba(255, 255, 255, 0), $background-color);
       width: 126px;
       height: 90%;
       position: absolute;
@@ -34,7 +34,7 @@ $gutter: 6px;
 
     &::after {
       content: close-quote;
-      background: linear-gradient(to right, transparent, $background-color);
+      background: linear-gradient(to right, rgba(255, 255, 255, 0), $background-color);
       width: 126px;
       height: 90%;
       position: absolute;
