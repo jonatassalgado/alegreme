@@ -1,10 +1,12 @@
 <% if movie.image.try {|image| image[:medium]} %>
-  <div class="me-movie mdc-layout-grid__cell">
-    <%= link_to send("#{movie.type.underscore}_path", movie) do %>
+  <div data-controller="movie" data-target="movie.movie" class="me-movie mdc-layout-grid__cell">
       <div class="me-movie__vote">
         <%= movie.details_vote_average %> ⭐
       </div>
       <div class="me-movie__cover">
+        <%= link_to send("#{movie.type.underscore}_path", movie) do %>
+          <div data-target="movie.coverRipple" data-action="click->movie#handleEventClick" class="me-movie__ripple mdc-ripple-surface"></div>
+        <% end %>
         <%= image_tag(movie.image[:medium].url(public: true)) if movie.image.try {|image| image[:medium]} %>
         <% if movie.details_trailler.present? %>
           <div class="me-movie__trailler me-chip mdc-chip" onclick="location.assign('<%= movie.details_trailler %>')">
@@ -14,11 +16,7 @@
         <% end %>
       </div>
       <h3 class="me-movie__title">
-        <%= movie.details_title %>
+        <%= link_to movie.details_title, send("#{movie.type.underscore}_path", movie) %>
       </h3>
-      <!-- <div class="me-movie__genre">
-        <%#= movie.details_genres.join(", ") %>
-      </div> -->
-    <% end %>
   </div>
 <% end %>

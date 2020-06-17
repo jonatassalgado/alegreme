@@ -1,11 +1,11 @@
 import {Controller}        from "stimulus";
 import {MDCRipple}         from '@material/ripple';
-import {ProgressBarModule} from "../modules/progressbar-module";
+import {AnimateModule}     from "../modules/animate-module";
 
 export default class BottomNavigationController extends Controller {
 	static targets = ['navigation', 'item', 'events', 'search', 'cinema'];
 
-	initialize() {
+	connect() {
 		this.ripples = [];
 
 		this.itemTargets.forEach((item) => {
@@ -38,36 +38,48 @@ export default class BottomNavigationController extends Controller {
 			window.addEventListener('scroll', this.animateNavigationOnScroll, {capture: false, passive: true});
 		}
 
-		this.destroy = () => {
-			this.ripples.forEach((ripple) => {
-				ripple.destroy();
-			});
-		};
-
 
 		if (/(\/feed|\/porto-alegre\/eventos)/.test(document.location.href)) {
 			this.eventsTarget.classList.add('active');
-		} else if ((/(\/porto-alegre\/filmes)/.test(document.location.href))) {
+		} else if ((/(\/porto-alegre\/filmes)/.test(document.location.href)) ||
+		(/(\/porto-alegre\/streamings)/.test(document.location.href))) {
 			this.cinemaTarget.classList.add('active');
 		} else if ((/(\/busca)/.test(document.location.href))) {
 			this.searchTarget.classList.add('active');
 			document.querySelector('.mdc-text-field__input').focus();
 		}
 
-		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+
 	}
 
 	disconnect() {
-		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 		window.removeEventListener('scroll', this.animateNavigationOnScroll, false);
+		this.ripples.forEach((ripple) => {
+			ripple.destroy();
+		});
+		this.itemTargets.forEach((item, i) => {
+			item.classList.remove('active');
+		});
 	}
 
 	goto(event) {
+		AnimateModule.animatePageHide();
+
+		const unactiveItemsPromise = new Promise((resolve, reject) => {
+			this.itemTargets.forEach((item, i) => {
+				item.classList.remove('active');
+			});
+			resolve();
+		})
+
+		unactiveItemsPromise.then(() => {
+			event.target.classList.add('active');
+		})
+
 		const path = event.target.dataset.path;
-		ProgressBarModule.show();
 		setTimeout(() => {
-			location.assign(path)
-		}, 300);
+			Turbolinks.visit(path)
+		}, 250)
 	}
 
 }

@@ -58,21 +58,37 @@
   &__cover {
     display: flex;
     justify-content: center;
-    min-height: 198px;
     position: relative;
-    // background-color: $surface-secondary-color;
+    overflow: hidden;
+    border-radius: $media-border-radius;
+    height: 270px;
+    @include mobile-only {
+      height: 194px;
+    }
     & img {
-      border-radius: $media-border-radius;
       width: 100%;
       max-width: 200px;
-      // min-height: 260px;
+      object-fit: cover;
+
       [data-action="show"] & {
         // min-height: 305px;
       }
     }
+
     .me-movie--single & {
-      min-height: 300px;
+      height: 305px;
+      width: 200px;
+      margin: auto;
     }
+  }
+
+  &__ripple {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    @include mdc-ripple-surface;
+    @include mdc-ripple-radius-bounded;
+    @include mdc-states;
   }
 
   &__title {

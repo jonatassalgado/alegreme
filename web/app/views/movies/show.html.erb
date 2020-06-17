@@ -78,11 +78,10 @@
         </div>
         <% end %>
       </div>
+      <% if current_user&.admin? %>
+      <%= link_to "Editar", edit_movie_path(@movie) %>
+      <% end %>
     </div>
   </div>
-
-  <% if current_user&.admin? %>
-    <%= link_to "Editar", edit_movie_path(@movie) %>
-  <% end %>
 
 </section>
