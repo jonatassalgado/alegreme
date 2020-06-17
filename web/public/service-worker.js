@@ -46,7 +46,7 @@ workbox.setConfig({debug: false})
 
 workbox.routing.registerRoute(
 	"/",
-	new workbox.strategies.NetworkFirst({
+	new workbox.strategies.StaleWhileRevalidate({
 		cacheName: CACHE_NAME + "welcome-page",
 		plugins  : [
 			new workbox.expiration.Plugin({
@@ -135,13 +135,26 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-	/.+\/feed/,
+	/.+(porto-alegre\/(filmes|streamings)\/)+.*/,
+	new workbox.strategies.NetworkFirst({
+		cacheName: CACHE_NAME + "movies-page",
+		plugins  : [
+			new workbox.expiration.Plugin({
+				maxEntries   : 10,
+				maxAgeSeconds: 2 * 24 * 60 * 60
+			})
+		]
+	})
+);
+
+workbox.routing.registerRoute(
+	/.+\/(feed|porto-alegre\/filmes)/,
 	new workbox.strategies.NetworkFirst({
 		cacheName: CACHE_NAME + "feed-page",
 		plugins  : [
 			new workbox.expiration.Plugin({
 				maxEntries   : 10,
-				maxAgeSeconds: 7 * 24 * 60 * 60
+				maxAgeSeconds: 2 * 24 * 60 * 60
 			})
 		]
 	})
