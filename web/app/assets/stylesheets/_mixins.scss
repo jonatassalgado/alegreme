@@ -24,6 +24,7 @@
 @mixin add-horizontal-scroll-wrapper() {
   overflow-x: scroll;
   overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   //scroll-snap-type: x proximity;
   //scroll-behavior: smooth;
 }
