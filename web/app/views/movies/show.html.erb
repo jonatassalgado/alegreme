@@ -1,8 +1,11 @@
+<% content_for :meta_title, "Ver online #{@movie.details_title}" %>
+
+<% content_for :share_button_text, @movie.details_title %>
+<% content_for :share_button_url, movie_path(@movie, format: :html) %>
+
 <section class="me-page is-animated">
 
   <%= notice %>
-
-  <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
   <div class="me-section">
     <div class="me-section__inner">

@@ -6,11 +6,11 @@
   &__vote {
     position: absolute;
     left: 6px;
-    top: -8px;
+    top: 6px;
     background: whitesmoke;
     z-index: 2;
-    padding: 3px 6px;
-    border-radius: 2px;
+    padding: 3px 8px;
+    border-radius: 16px;
     font-weight: 500;
     color: $font-secondary-color;
     box-shadow: 0 0 1px #0000003d;
@@ -60,10 +60,12 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-    border-radius: $media-border-radius;
     height: 270px;
+    border-radius: $media-border-radius;
+    box-shadow: $media-box-shadow-small;
     @include mobile-only {
-      height: 194px;
+      min-height: 194px;
+      height: auto;
     }
     & img {
       width: 100%;
