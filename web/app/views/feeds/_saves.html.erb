@@ -58,7 +58,8 @@
               <a href="<%= event.url %>"
                  title="<%= event.details_name %>">
                 <div class="mdc-card__media mdc-card__media--16-9"
-                     style="<%= get_image_style_attr event, preload: true %>">
+                     style="<%= get_image_style_attr event, preload: false %>">
+                  <%= image_tag get_feed_image_url(event), loading: :lazy %>
                   <div class="me-card__overlay"
                        data-target="saves-events.overlay"
                        data-action="click->saves-events#animateOnClick"></div>

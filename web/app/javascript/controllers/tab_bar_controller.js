@@ -40,7 +40,6 @@ export default class TabBarController extends Controller {
 					return tab.root_.attributes['data-section'].value == value;
 				})[0]
 
-				if (!this.isPreview) this.scrollerTarget.scrollLeft = currentTab.root_.offsetLeft;
 				currentTab.activate()
 		}
 	}

@@ -128,6 +128,14 @@ $description-color: $font-secondary-color;
   & .mdc-card__media {
     border-radius: $media-border-radius;
     box-shadow: $media-box-shadow-small;
+    overflow: hidden;
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+    }
   }
 
   &.me-card--empty .mdc-card__media {
