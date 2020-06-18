@@ -103,7 +103,8 @@ a {
 .turbolinks-progress-bar {
   height: 5px;
   background-color: $brand-color;
-  visibility: hidden;
+  box-shadow: 0 1px 5px #03994c8f;
+  // visibility: hidden;
   @include mobile-only {
     height: 3px;
     top: 0px;

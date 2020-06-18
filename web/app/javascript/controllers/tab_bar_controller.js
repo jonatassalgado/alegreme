@@ -11,15 +11,18 @@ export default class TabBarController extends Controller {
 		this.setActiveTab          = this.currentAction;
 		this.activeAnimateOnScroll = true;
 
+		this.destroy = () => {
+			this.setTurbolinksPersistScroll = this.scrollerTarget.scrollLeft;
+			this.MDCTabBar.tabList_.forEach((tab) => {
+				tab.deactivate();
+			})
+			this.MDCTabBar.destroy();
+		}
+
 		document.addEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
 	disconnect() {
-		this.setTurbolinksPersistScroll = this.scrollerTarget.scrollLeft;
-		this.MDCTabBar.tabList_.forEach((tab) => {
-			tab.deactivate();
-		})
-		this.MDCTabBar.destroy();
 		window.removeEventListener('scroll', this.animateTabBarOnScroll, false);
 		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}

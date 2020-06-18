@@ -8,6 +8,7 @@ const CacheModule = (function () {
 
 	const startTurbolinks = () => {
 		Turbolinks.start();
+		Turbolinks.setProgressBarDelay(500);
 		status.turbolinksStarted = true;
 		console.log("[TURBOLINKS]: started");
 	};
