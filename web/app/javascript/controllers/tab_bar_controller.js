@@ -3,12 +3,47 @@ import {MDCTabBar}         from '@material/tab-bar';
 import {ProgressBarModule} from '../modules/progressbar-module';
 
 export default class TabBarController extends Controller {
-	static targets = ['tabBar'];
+	static targets = ['tabBar', 'scroller'];
 
-	initialize() {
-		this.tabBarMDC = new MDCTabBar(this.tabBarTarget);
+	connect() {
+		this.setScrollLeft         = this.data.get('turbolinksPersistScroll');
+		this.MDCTabBar             = new MDCTabBar(this.tabBarTarget);
+		this.setActiveTab          = this.currentAction;
+		this.activeAnimateOnScroll = true;
 
-		if (this.hasTabBarTarget) {
+		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	disconnect() {
+		this.setTurbolinksPersistScroll = this.scrollerTarget.scrollLeft;
+		this.MDCTabBar.tabList_.forEach((tab) => {
+			tab.deactivate();
+		})
+		this.MDCTabBar.destroy();
+		window.removeEventListener('scroll', this.animateTabBarOnScroll, false);
+		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
+	}
+
+	open(event) {
+		// PubSubModule.emit("tabBar.update", {})
+		setTimeout(() => {
+			Turbolinks.visit(event.target.parentElement.dataset.tabPath);
+		}, 150)
+	}
+
+	set setActiveTab(value) {
+		if (value) {
+				const currentTab = this.MDCTabBar.tabList_.filter((tab) => {
+					return tab.root_.attributes['data-section'].value == value;
+				})[0]
+
+				if (!this.isPreview) this.scrollerTarget.scrollLeft = currentTab.root_.offsetLeft;
+				currentTab.activate()
+		}
+	}
+
+	set activeAnimateOnScroll(value) {
+		if (value && this.hasTabBarTarget) {
 			this.lastScrollTop = 0;
 
 			this.animateTabBarOnScroll = () => {
@@ -30,25 +65,24 @@ export default class TabBarController extends Controller {
 
 			window.addEventListener('scroll', this.animateTabBarOnScroll, {capture: false, passive: true});
 		}
-
-		this.destroy = () => {
-			window.removeEventListener('scroll', this.animateTabBarOnScroll, false);
-		};
 	}
 
-	disconnect() {
-		// document.removeEventListener('turbolinks:before-cache', this.destroy, false);
+	set setTurbolinksPersistScroll(value) {
+		this.data.set('turbolinksPersistScroll', value);
 	}
 
-	open(event) {
-		// this.tabBarMDC.scrollIntoView(event.target.offsetParent.dataset.tabIdentifier);
-		// this.tabBarMDC.activateTab(event.target.offsetParent.dataset.tabIdentifier);
-
-		PubSubModule.emit("tabBar.update", {})
-
-		setTimeout(() => {
-			Turbolinks.visit(event.target.parentElement.dataset.tabPath);
-		}, 250)
+	set setScrollLeft(value) {
+		if (value >= 0) {
+			this.scrollerTarget.scrollLeft = value;
+		}
 	}
+
+	get currentAction() {
+		return `${document.body.dataset.controller}#${document.body.dataset.action}`
+	}
+
+	get isPreview() {
+    return document.documentElement.hasAttribute('data-turbolinks-preview');
+  }
 
 }

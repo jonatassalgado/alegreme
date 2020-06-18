@@ -11,7 +11,7 @@
     <div class="me-section__inner">
       <div class="me-movie me-movie--single">
         <div class="me-movie__cover">
-          <%= image_tag(@movie.image[:medium].url, style: "background: #{JSON.parse(@movie.image_data).dig('medium', 'metadata', 'dominant_color')}") if @movie.image %>
+          <%= image_tag(@movie.image[:medium].url(public: true), style: "background: #{JSON.parse(@movie.image_data).dig('medium', 'metadata', 'dominant_color')}") if @movie.image %>
         </div>
         <div class="me-movie__inner">
           <h3 class="me-movie__title">

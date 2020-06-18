@@ -100,7 +100,7 @@
 
 <div class="me-head" data-controller="head" data-target="head.head">
   <%= render partial: 'layouts/app-top-bar' %>
-  <%= render partial: 'components/tab-bar', locals: {props: {active: controller_name}} %>
+  <%= render partial: 'components/tab-bar', locals: {props: {active: "#{controller_name}##{action_name}"}} %>
 </div>
 
 <%= yield %>
