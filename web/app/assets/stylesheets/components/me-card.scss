@@ -63,36 +63,36 @@ $description-color: $font-secondary-color;
     }
 
     &__date {
-      color: $font-secondary-color;
-      text-transform: uppercase;
-      font-size: 11px;
-      margin: 8px 0 6px 0;
-      padding: 0 0 0 5px;
-      font-weight: 800;
-      min-height: 1.1em;
-      display: flex;
-      flex-direction: column;
+      // color: $font-secondary-color;
+      // text-transform: uppercase;
+      // font-size: 11px;
+      // margin: 8px 0 6px 0;
+      // padding: 0 0 0 5px;
+      // font-weight: 800;
+      // min-height: 1.1em;
+      // display: flex;
+      // flex-direction: column;
       @include mobile-only {
         font-size: 9px;
       }
     }
 
     &__remove {
-      background: transparentize($icon-background-color, 0.4);
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-      display: none;
-      z-index: 1;
-      border-radius: 100%;
-      fill: $font-secondary-color;
-      @include mobile-only {
-        display: block;
-        padding: 3px;
-      }
+      // background: transparentize($icon-background-color, 0.4);
+      // position: absolute;
+      // top: 5px;
+      // right: 5px;
+      // width: 16px;
+      // height: 16px;
+      // cursor: pointer;
+      // display: none;
+      // z-index: 1;
+      // border-radius: 100%;
+      // fill: $font-secondary-color;
+      // @include mobile-only {
+      //   display: block;
+      //   padding: 3px;
+      // }
     }
 
     & .mdc-card__media {

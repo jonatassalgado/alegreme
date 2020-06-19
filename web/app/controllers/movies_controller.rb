@@ -3,8 +3,9 @@ class MoviesController < ApplicationController
 
 	def index
 		@movies = {
-			new_release:    Movie.where("created_at > :time AND collections::jsonb ? 'new release' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30),
-			editors_choice: Movie.where("created_at > :time AND collections::jsonb ? 'editors choice' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30)
+			saved:          current_user.try(:saved_movies),
+			new_release:    Movie.where("created_at > :time AND collections::jsonb ? 'new release' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30).not_in_saved(current_user),
+			editors_choice: Movie.where("created_at > :time AND collections::jsonb ? 'editors choice' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30).not_in_saved(current_user)
 		}
 	end
 

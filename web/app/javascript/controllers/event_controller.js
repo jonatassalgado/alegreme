@@ -23,16 +23,8 @@ export default class EventController extends Controller {
 	initialize() {
 		this.itemsPerRow        = 4;
 		this.md                 = new MobileDetect(window.navigator.userAgent);
-		this.adjustForDevice    = this.md.mobile();
 		this.activeInteractions = true;
 		this.pubsub             = {};
-
-		this.pubsub.savesUpdated = PubSubModule.on(`saves.updated`, (data) => {
-			if (data.detail.eventId == this.identifier) {
-				this.likeStatus = data.detail.currentEventFavorited;
-				this.updateLikeButtonStyle(data.detail.eventId);
-			}
-		});
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
 			if (data.params.similar == this.identifier) {
@@ -59,7 +51,6 @@ export default class EventController extends Controller {
 
 		this.destroy = () => {
 			this.activeInteractions = false;
-			this.pubsub.savesUpdated();
 			this.pubsub.sectionUpdated();
 		};
 
@@ -131,36 +122,6 @@ export default class EventController extends Controller {
 
 	};
 
-	like() {
-		PubSubModule.emit('event.like');
-
-		fetch(`/api/taste/events/${this.identifier}/${this.isFavorited}`, {
-			method     : 'post',
-			headers    : {
-				'X-Requested-With': 'XMLHttpRequest',
-				'Content-type'    : 'text/javascript; charset=UTF-8',
-				'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
-			},
-			credentials: 'same-origin'
-		})
-			.then(
-				response => {
-					response.text().then(data => {
-						eval(data);
-						CacheModule.clearCache(['feed-page', 'events-page'], {
-							event: {
-								identifier: this.identifier
-							}
-						});
-					});
-				}
-			)
-			.catch(err => {
-				console.log('Fetch Error :-S', err);
-			});
-
-	}
-
 	readMore() {
 		this.data.set('description-open', true);
 	}
@@ -172,14 +133,6 @@ export default class EventController extends Controller {
 			return order;
 		} else {
 			return (Math.ceil(order / this.itemsPerRow)) * this.itemsPerRow
-		}
-	}
-
-	get isFavorited() {
-		if (this.data.get("favorited") === "true") {
-			return "unsave";
-		} else {
-			return "save";
 		}
 	}
 
@@ -216,19 +169,6 @@ export default class EventController extends Controller {
 		}
 	}
 
-	set likeStatus(status) {
-		this.data.set("favorited", status);
-	}
-
-	set likeCount(value) {
-		const likeElementsCounts = document.querySelectorAll(
-			`[data-event-identifier="${value.event_id}"] .me-like-count`
-		);
-		likeElementsCounts.forEach(count => {
-			count.textContent = value.event_likes_count;
-		});
-	}
-
 	set activeInteractions(value) {
 		if (value) {
 			if (this.hasOverlayTarget && !this.overlayRipple) {
@@ -249,15 +189,4 @@ export default class EventController extends Controller {
 		}
 	}
 
-	set adjustForDevice(isMobile) {
-		const isFavorited = this.data.get("favorited") === "false";
-		const isSingle    = this.data.get("modifier") === "single";
-
-		if (isMobile) {
-		} else {
-			if (isFavorited && !isSingle) {
-				this.likeButtonTarget.style.display = "none";
-			}
-		}
-	}
 }

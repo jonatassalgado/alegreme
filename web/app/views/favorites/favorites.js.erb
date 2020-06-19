@@ -1,7 +1,7 @@
 (function () {
 
 	const promise = new Promise(function (resolve, reject) {
-		const savesWrapperEl = document.getElementById('saves');
+		const savesWrapperEl = document.getElementById('<%= @data[:identifier] %>');
 
 		requestIdleCallback(function () {
 			if (savesWrapperEl) {
@@ -21,8 +21,8 @@
 	promise.then(function (value) {
 	  PubSubModule.emit('saves.updated', {
 	    detail: {
-		    currentEventFavorited: <%= @data[:current_event_favorited] %>,
-		    eventId              : <%= @data[:event_id] %>
+		    currentResourceFavorited: <%= @data[:current_resource_favorited] %>,
+		    resourceId              : <%= @data[:resource_id] %>
 	    }
     })
 	})

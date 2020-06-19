@@ -22,6 +22,7 @@ class Event < ApplicationRecord
 	include EventDecorators::MLData
 	include EventDecorators::LDJson
 
+	include Scopes
 	include EventQueries::Scopes
 
 	friendly_id :slug_candidates, use: :slugged

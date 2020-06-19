@@ -12,7 +12,7 @@ class User < ApplicationRecord
 	include UserImageUploader::Attachment.new(:image)
 
 	include UserDecorators::Following
-	include UserDecorators::Save
+	include UserDecorators::Taste
 	include UserDecorators::Personas
 	include UserDecorators::Demographic
 	include UserDecorators::Omniauth

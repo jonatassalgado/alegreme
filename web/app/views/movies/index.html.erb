@@ -4,6 +4,18 @@
 
   <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
+  <% if current_user %>
+    <section class="me-section me-section--condensed">
+      <div class="me-section__inner">
+        <%= render partial: 'feeds/saves',
+                   locals:  {
+                       identifier:   'movies_saved',
+                       saved_resources: @movies[:saved]
+                   } %>
+      </div>
+    </section>
+  <% end %>
+
   <% if @movies[:new_release] %>
     <section class="me-section me-section--condensed">
       <section class="me-section__inner">

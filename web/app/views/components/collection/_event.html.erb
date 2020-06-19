@@ -3,6 +3,7 @@
   identifier = local_assigns.fetch(:identifier, 'similar')
   event_type = local_assigns.fetch(:type, 'default')
   is_similar_open = params[:similar].to_i == event.id ? true : false
+  display_name = local_assigns.fetch(:display_name, true)
   display_similar = local_assigns.fetch(:display_similar, true)
   display_place = local_assigns.fetch(:display_place, true)
   json_request = local_assigns.fetch(:json_request, false)
@@ -26,9 +27,13 @@
     <div class="mdc-card__media mdc-card__media--16-9" style="<%= get_image_style_attr event, preload: false %>">
       <%= image_tag get_feed_image_url(event), loading: :lazy %>
       <% if current_user %>
-        <div class="me-card__like-button" data-action="click->event#like">
-          <div data-target="event.like">
-            <button data-target="event.likeButton"
+        <div data-controller="save-button"
+            data-action="click->save-button#like"
+            data-save-button-resource-name="<%= event.class.name.tableize %>"
+            data-save-button-resource-id="<%= event.id %>"
+            data-save-button-saved="<%= current_user.taste_events_saved? event.id %>"
+            class="me-card__like-button">
+            <button data-target="save-button.saveButton"
                     id="add-to-favorites"
                     class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_events_saved?(event.id) %>"
                     aria-label="Add to favorites"
@@ -46,7 +51,6 @@
                 </svg>
               </i>
             </button>
-          </div>
         </div>
       <% end %>
       <a href="<%= event.url %>">
@@ -54,32 +58,7 @@
              data-target="event.overlay"
              data-action="click->event#handleEventClick"></div>
       </a>
-      <% if false %>
-        <div class="me-card__like-button"
-             data-action="click->event#like">
-          <div data-target="event.like">
-            <button data-target="event.likeButton"
-                    id="add-to-favorites"
-                    class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_events_saved?(event.id) %>"
-                    aria-label="Add to favorites"
-                    aria-hidden="true"
-                    aria-pressed="false">
-              <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
-              <i class="material-icons mdc-icon-button__icon">star</i>
-            </button>
-          </div>
-        </div>
-      <% end %>
     </div>
-    <%# unless event_type == 'similar' %>
-      <!-- <div class="me-card__quartenary-section">
-        <div class="me-card__category"
-             data-target="event.category"> -->
-          <%#= link_to "##{event.categories_primary_name.try(:capitalize)}", category_events_path(event.categories_primary_name) %>
-          <%#= event.organizers.limit(2).map { |organizer| link_to(to_hashtag(organizer.details_name), organizer_path(organizer)) }.join(" ").html_safe %>
-        <!-- </div>
-      </div> -->
-    <%# end %>
     <div class="me-card__primary-section">
       <div class="me-card__date is-hoverable <%= event.day_of_week['decorator'].parameterize %>"
         data-target="event.date"
@@ -92,15 +71,17 @@
         </span>
       </div>
     </div>
-    <div class="me-card__secondary-section">
-      <div class="me-card__title"
-           data-target="event.name"
-           title="<%= event.details_name %>">
-        <%= link_to limit_name_size(event.details_name), event_path(event) %>
+    <% if display_name %>
+      <div class="me-card__secondary-section">
+        <div class="me-card__title"
+             data-target="event.name"
+             title="<%= event.details_name %>">
+          <%= link_to limit_name_size(event.details_name), event_path(event) %>
+        </div>
+        <%= event.ml_data['personas']['primary'].to_json if Rails.env == 'development' && params[:debug] %>
+        <%= event.ml_data['categories']['primary'].to_json if Rails.env == 'development' && params[:debug] %>
       </div>
-      <%= event.ml_data['personas']['primary'].to_json if Rails.env == 'development' && params[:debug] %>
-      <%= event.ml_data['categories']['primary'].to_json if Rails.env == 'development' && params[:debug] %>
-    </div>
+    <% end %>
     <div class="me-card__tertiary-section">
       <% if display_place %>
         <%= link_to place_path(event.place) do %>

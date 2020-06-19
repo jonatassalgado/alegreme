@@ -64,7 +64,7 @@
     border-radius: $media-border-radius;
     box-shadow: $media-box-shadow-small;
     @include mobile-only {
-      min-height: 194px;
+      min-height: 220px;
       height: auto;
     }
     & img {

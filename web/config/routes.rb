@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 		get 'porto-alegre/eventos/week', to: 'events#week', as: :week_events
 		get 'porto-alegre/eventos/category/:category', to: 'events#category', as: :category_events
 		post 'collections', to: 'collections#index', as: :collections
-		post 'taste/events/:event/:taste', to: 'taste#update', as: :taste
+		post 'taste/:resource/:id/:taste', to: 'taste#update', as: :taste
 	end
 
 	get '/feed', to: 'feeds#index'

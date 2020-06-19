@@ -9,6 +9,13 @@ class Movie < ApplicationRecord
 	include MovieDecorators::Streamings
 	include MovieDecorators::Collections
 
+	include Scopes
+	include MovieQueries::Scopes
+
 	friendly_id :details_title, use: :slugged
+
+	def url
+		movie_path(self)
+	end
 
 end

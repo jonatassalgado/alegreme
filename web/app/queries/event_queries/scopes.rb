@@ -43,15 +43,6 @@ module EventQueries
 
 			}
 
-			scope 'not_in_saved', lambda { |user, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
-				if opts[:turn_on] && user
-					where.not(id: user.taste_events_saved)
-				else
-					all
-				end
-			}
-
 			scope 'not_in_disliked', lambda { |user, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
 				if opts[:turn_on] && user
@@ -84,17 +75,6 @@ module EventQueries
 
 				if opts[:turn_on] && user
 					user.events_from_following_topics
-				else
-					all
-				end
-
-			}
-
-			scope 'saved_by_user', lambda { |user, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
-
-				if opts[:turn_on] && user
-					where(id: user.taste_events_saved)
 				else
 					all
 				end
@@ -218,7 +198,6 @@ module EventQueries
 				else
 					all
 				end
-
 			}
 
 

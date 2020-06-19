@@ -26,7 +26,6 @@ export default class SavesController extends Controller {
 
 		this.pubsub.savesUpdated = PubSubModule.on(`saves.updated`, (data) => {
 			LazyloadModule.lazyloadFeed();
-
 			const flipPromise = new Promise((resolve, reject) => {
 				this.flipping.flip();
 
@@ -115,58 +114,56 @@ export default class SavesController extends Controller {
 	}
 
 	updateScrollButtonsStatus() {
-		if (!this.hasListTarget) {
-			return false;
+		if (this.hasListTarget) {
+			requestAnimationFrame(() => {
+				var containerSize      = this.listTarget.offsetParent.offsetWidth;
+				var scrollSizeOverflow = this.listTarget.scrollWidth;
+				var scrolled           = this.listTarget.scrollLeft;
+
+				const scrollUntilX         = () => containerSize + scrolled;
+				const scrolledUntilEnd     = () => scrollUntilX() === scrollSizeOverflow;
+				const hasToScroll          = () => containerSize < scrollSizeOverflow;
+				const hasToScrollYet       = () => scrollUntilX() < scrollSizeOverflow;
+				const scrollInZeroPosition = () => scrolled === 0;
+
+				const switchLeftButton = (turnOn = true) => {
+					if (turnOn) {
+						this.scrollLeftTarget.classList.remove('me-icon--off');
+						this.listTarget.classList.remove('me-saves__list--at-end');
+						this.listTarget.classList.add('me-saves__list--at-initital');
+					} else {
+						this.scrollLeftTarget.classList.add('me-icon--off');
+						this.listTarget.classList.remove('me-saves__list--at-initital');
+					}
+				};
+
+				const switchRightButton = (turnOn = true) => {
+					if (turnOn) {
+						this.scrollRightTarget.classList.remove('me-icon--off');
+						this.listTarget.classList.add('me-saves__list--at-end');
+						this.listTarget.classList.remove('me-saves__list--at-initital');
+					} else {
+						this.scrollRightTarget.classList.add('me-icon--off');
+						this.listTarget.classList.remove('me-saves__list--at-end');
+					}
+
+				};
+
+				if (scrollInZeroPosition() && scrolledUntilEnd()) {
+					switchLeftButton(false);
+					switchRightButton(false)
+				} else if (scrolledUntilEnd() && hasToScroll()) {
+					switchLeftButton();
+					switchRightButton(false)
+				} else if (scrollInZeroPosition() && hasToScrollYet()) {
+					switchRightButton();
+					switchLeftButton(false)
+				} else if (hasToScrollYet() && !scrolledUntilEnd() && !scrollInZeroPosition()) {
+					switchLeftButton();
+					switchRightButton()
+				}
+			});
 		}
-
-		requestAnimationFrame(() => {
-			var containerSize      = this.listTarget.offsetParent.offsetWidth;
-			var scrollSizeOverflow = this.listTarget.scrollWidth;
-			var scrolled           = this.listTarget.scrollLeft;
-
-			const scrollUntilX         = () => containerSize + scrolled;
-			const scrolledUntilEnd     = () => scrollUntilX() === scrollSizeOverflow;
-			const hasToScroll          = () => containerSize < scrollSizeOverflow;
-			const hasToScrollYet       = () => scrollUntilX() < scrollSizeOverflow;
-			const scrollInZeroPosition = () => scrolled === 0;
-
-			const switchLeftButton = (turnOn = true) => {
-				if (turnOn) {
-					this.scrollLeftTarget.classList.remove('me-icon--off');
-					this.listTarget.classList.remove('me-saves__list--at-end');
-					this.listTarget.classList.add('me-saves__list--at-initital');
-				} else {
-					this.scrollLeftTarget.classList.add('me-icon--off');
-					this.listTarget.classList.remove('me-saves__list--at-initital');
-				}
-			};
-
-			const switchRightButton = (turnOn = true) => {
-				if (turnOn) {
-					this.scrollRightTarget.classList.remove('me-icon--off');
-					this.listTarget.classList.add('me-saves__list--at-end');
-					this.listTarget.classList.remove('me-saves__list--at-initital');
-				} else {
-					this.scrollRightTarget.classList.add('me-icon--off');
-					this.listTarget.classList.remove('me-saves__list--at-end');
-				}
-
-			};
-
-			if (scrollInZeroPosition() && scrolledUntilEnd()) {
-				switchLeftButton(false);
-				switchRightButton(false)
-			} else if (scrolledUntilEnd() && hasToScroll()) {
-				switchLeftButton();
-				switchRightButton(false)
-			} else if (scrollInZeroPosition() && hasToScrollYet()) {
-				switchRightButton();
-				switchLeftButton(false)
-			} else if (hasToScrollYet() && !scrolledUntilEnd() && !scrollInZeroPosition()) {
-				switchLeftButton();
-				switchRightButton()
-			}
-		});
 	}
 
 
@@ -174,13 +171,15 @@ export default class SavesController extends Controller {
 		if (this.hasListTarget) {
 			requestIdleCallback(() => {
 				const dates = document.querySelectorAll('.me-saves .me-card__date');
-				var lastDay = dates[0].innerText;
-				for (var i = 0; i < dates.length - 1; i++) {
-					if (lastDay !== dates[i + 1].innerText) {
-						lastDay = dates[i].innerText;
-					}
-					if (lastDay === dates[i + 1].innerText) {
-						dates[i + 1].innerHTML = '';
+				if (dates.length > 0) {
+					var lastDay = dates[0].innerText;
+					for (var i = 0; i < dates.length - 1; i++) {
+						if (lastDay !== dates[i + 1].innerText) {
+							lastDay = dates[i].innerText;
+						}
+						if (lastDay === dates[i + 1].innerText) {
+							dates[i + 1].innerHTML = '';
+						}
 					}
 				}
 			}, {timeout: 250});
