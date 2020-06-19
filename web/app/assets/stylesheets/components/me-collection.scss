@@ -55,7 +55,7 @@
   }
 
   & h2 {
-    margin: 6px 0 12px 0;
+    margin: 6px 0 2px 0;
     font-weight: 500;
     //max-width: 90%;
     line-height: 1.4em;
@@ -84,8 +84,7 @@
   }
 
   &__head {
-    // margin-bottom: 24px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     [data-section-disposition="vertical"] & {
       @include mobile-only {
         // border-bottom: 1px solid $border-color;
@@ -132,12 +131,12 @@
     display: block;
     font-weight: 500;
     font-family: $font-secondary-family;
-    color: $font-secondary-color;
+    color: $font-tertiary-color;
     line-height: 1.4em;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     @include mobile-only {
       padding: 0 $section-padding-phone;
-      font-size: 8px;
+      font-size: 10px;
     }
 
     .me-collection--empty & {
