@@ -18,7 +18,7 @@ const AnimateModule = (function () {
 
 			if (page) {
 				page.style.opacity   = 0;
-				page.style.transform = "translate(0, 10vh) scale(0.95)"
+				page.style.transform = "translate(0, 24px)"
 
 				requestAnimationFrame(() => {
 						page.style.opacity   = 1;
@@ -28,7 +28,7 @@ const AnimateModule = (function () {
 			document.addEventListener("turbolinks:before-cache", () => {
 				if (page) {
 					page.style.opacity   = 0;
-					page.style.transform = "translate(0, 10vh) scale(0.95)"
+					page.style.transform = "translate(0, 24px)"
 				}
 			}, false);
 		}
@@ -61,7 +61,7 @@ const AnimateModule = (function () {
 			if (page) {
 				requestAnimationFrame(() => {
 						page.style.opacity = 0;
-						page.style.transform = "translate(0, 10vh) scale(0.95)"
+						page.style.transform = "translate(0, 24px)"
 				});
 			}
 		}
