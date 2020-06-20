@@ -197,7 +197,7 @@ module PopulateEventsRake
 					latlon:       @geocode.try(:coordinates),
 					neighborhood: @geocode.try {|geo| geo.address_components_of_type(:sublocality)[0]["long_name"]},
 					city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
-					cep:          Alegreme::Geographic.get_cep_from_address(item['address'])
+					cep:          Geographic.get_cep_from_address(item['address'])
 			)
 
 			event.ml_data.deep_merge!(
@@ -250,7 +250,7 @@ module PopulateEventsRake
 					latlon:       @geocode.try(:coordinates),
 					neighborhood: @geocode.try {|geo| geo.address_components_of_type(:sublocality)[0]["long_name"]},
 					city: item['address'] ? item['address'][/Porto Alegre/] : nil,
-					cep:  Alegreme::Geographic.get_cep_from_address(item['address'])
+					cep:  Geographic.get_cep_from_address(item['address'])
 			)
 
 			[event, ml_data]

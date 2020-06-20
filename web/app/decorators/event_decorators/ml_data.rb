@@ -1,5 +1,5 @@
 module EventDecorators
-	module MLData
+	module MlData
 		def self.included base
 			base.send :include, InstanceMethods
 			base.extend ClassMethods

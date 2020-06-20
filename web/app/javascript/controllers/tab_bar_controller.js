@@ -40,7 +40,9 @@ export default class TabBarController extends Controller {
 					return tab.root_.attributes['data-section'].value == value;
 				})[0]
 
-				currentTab.activate()
+				if (currentTab) {
+					currentTab.activate()
+				}
 		}
 	}
 

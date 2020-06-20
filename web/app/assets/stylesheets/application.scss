@@ -20,13 +20,11 @@
 $mdc-typography-font-family: $font-secondary-family;
 $mdc-theme-primary: $brand-color;
 
-// @import "@material/typography/mdc-typography";
 @import "@material/card/mdc-card";
 @import "@material/button/mdc-button";
 @import "@material/layout-grid/mdc-layout-grid";
 @import "@material/top-app-bar/mdc-top-app-bar";
 @import "@material/icon-button/mdc-icon-button";
-// @import "@material/drawer/mdc-drawer";
 @import "@material/textfield/mdc-text-field";
 @import "@material/select/mdc-select";
 @import "@material/form-field/mdc-form-field";
@@ -36,7 +34,6 @@ $mdc-theme-primary: $brand-color;
 @import "@material/menu/mdc-menu";
 @import "@material/chips/mdc-chips";
 @import "@material/fab/mdc-fab";
-// @import "@material/elevation/mdc-elevation";
 @import "@material/snackbar/mdc-snackbar";
 @import "@material/dialog/mdc-dialog";
 @import "@material/switch/mdc-switch";

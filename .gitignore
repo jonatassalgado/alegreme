@@ -1,4 +1,6 @@
 .idea/
+.idea/alegreme.iml
+.idea/workspace.xml
 web/.generators
 web/.rakeTasks
 web/package-lock.json
@@ -35,7 +37,6 @@ web/db/test.sqlite3
 web/db/development.sqlite3
 web/.idea/
 web/db/backups/
-.idea/
 wip.py
 .scrapy/
 ml/__pycache__
@@ -63,7 +64,6 @@ web/log/
 web/log/development.log
 web/.rake_tasks~
 web/vendor/cache/
-web/.rake_tasks~
 web/public/assets/.sprockets*.json
 web/public/assets/application-*
 web/public/uploads/

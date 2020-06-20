@@ -21,6 +21,7 @@ Rails.application.configure do
 	# Run rails dev:cache to toggle caching.
 	if Rails.root.join("tmp", "caching-dev.txt").exist?
 		config.action_controller.perform_caching = true
+		config.action_controller.enable_fragment_cache_logging = true
 		# config.cache_store = :dalli_store, 'memcached', { :pool_size => 2 }
 
 		config.cache_store = :memory_store

@@ -19,7 +19,7 @@ module GeocoderEventsRake
 				latlon:       @geocode.try(:coordinates),
 				neighborhood: @geocode.try {|geo| geo.address_components_of_type(:sublocality).try {|comp| comp[0].try {|names| names["long_name"]}}},
 				city:         event.geographic_address ? event.geographic_address[/Porto Alegre/] : nil,
-				cep:          Alegreme::Geographic.get_cep_from_address(event.geographic_address) || @geocode.try(:postal_code)
+				cep:          Geographic.get_cep_from_address(event.geographic_address) || @geocode.try(:postal_code)
 		)
 
 		if event.save

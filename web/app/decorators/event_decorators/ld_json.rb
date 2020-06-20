@@ -1,5 +1,5 @@
 module EventDecorators
-	module LDJson
+	module LdJson
 		LDJsonStruct = Struct.new(:start_date, :end_date, :price, :low_price, :high_price, :availability, :valid_from)
 
 		def self.included base

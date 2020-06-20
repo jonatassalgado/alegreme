@@ -10,13 +10,13 @@ class SetGeolocationJob < ApplicationJob
 	def perform(place_id)
 		place   = Place.find place_id
 		address = place.geographic['address']
-		geocode = Geocoder.search(Alegreme::Geographic.get_cep_from_address(address)).first
+		geocode = Geocoder.search(Geographic.get_cep_from_address(address)).first
 
 		place.geographic.deep_merge!({
 				                             latlon:       geocode.try(:coordinates),
 				                             neighborhood: geocode.try(:suburb),
 				                             city:         address ? address[/Porto Alegre/] : nil,
-				                             cep:          Alegreme::Geographic.get_cep_from_address(address),
+				                             cep:          Geographic.get_cep_from_address(address),
 		                             })
 
 		place.save!

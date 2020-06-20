@@ -19,8 +19,8 @@ class Event < ApplicationRecord
 	include EventDecorators::Categories
 	include EventDecorators::Tags
 	include EventDecorators::Kinds
-	include EventDecorators::MLData
-	include EventDecorators::LDJson
+	include EventDecorators::MlData
+	include EventDecorators::LdJson
 
 	include Scopes
 	include EventQueries::Scopes

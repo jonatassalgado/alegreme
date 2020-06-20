@@ -10,7 +10,7 @@ Bundler.require(*Rails.groups)
 module App
 	class Application < Rails::Application
 		# Initialize configuration defaults for originally generated Rails version.
-		config.load_defaults 5.2
+		config.load_defaults 6.0
 		config.i18n.default_locale = 'pt-BR'
 		config.encoding            = 'utf-8'
 		config.time_zone           = 'Brasilia'

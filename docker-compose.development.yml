@@ -25,11 +25,11 @@ services:
     volumes:
       - bundle_cache:/bundle
       # - ./scrapy/data:/var/www/scrapy/data
-      - ./web/app:/var/www/alegreme/app:ro
-      - ./web/config:/var/www/alegreme/config:ro
-      - ./web/lib:/var/www/alegreme/lib:ro
-      - ./web/db/backups:/var/www/alegreme/db/backups:ro
-      - ./web/db/migrate:/var/www/alegreme/db/migrate:ro
+      - ./web/app:/var/www/alegreme/app
+      - ./web/config:/var/www/alegreme/config
+      - ./web/lib:/var/www/alegreme/lib
+      - ./web/db/backups:/var/www/alegreme/db/backups
+      - ./web/db/migrate:/var/www/alegreme/db/migrate
       - ./web/public/service-worker.js:/var/www/alegreme/public/service-worker.js
       - ./web/yarn.lock:/var/www/alegreme/yarn.lock
       - ./web/package.json:/var/www/alegreme/package.json

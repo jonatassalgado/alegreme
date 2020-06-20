@@ -1,4 +1,4 @@
-# class RetrainEventJob < ApplicationJob
+class RetrainEventJob < ApplicationJob
 # 	queue_as :default
 #
 # 	rescue_from(Exception) do |exception|
@@ -13,4 +13,4 @@
 # 	private
 #
 #
-# end
+end

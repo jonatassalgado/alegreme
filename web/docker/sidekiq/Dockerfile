@@ -16,7 +16,9 @@ RUN echo $TZ > /etc/timezone && \
   apt-get clean
 
 
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev
+
+RUN apt-get update && curl --silent --location https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -50,10 +52,9 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 COPY . $SIDEKIQ_ROOT
 
+RUN yarn install
 RUN rake assets:clobber
 RUN rake webpacker:clobber
-
-RUN yarn install
 RUN rake assets:precompile
 RUN rake webpacker:compile
 

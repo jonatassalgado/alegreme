@@ -42,7 +42,7 @@ ENV RACK_ENV production
 RUN rm -fr /usr/local/bin/bundle
 RUN gem install --no-document bundler
 
-RUN apt-get update && curl --silent --location https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && curl --silent --location https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 # RUN apt-get update && apt-get install -y libsqlite3-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -86,10 +86,9 @@ ADD . $RAILS_ROOT
 
 RUN bash -c "cat /proc/sys/fs/inotify/max_user_watches"
 
+RUN yarn install
 RUN rake assets:clobber
 RUN rake webpacker:clobber
-
-RUN yarn install
 RUN rake assets:precompile
 RUN rake webpacker:compile
 
