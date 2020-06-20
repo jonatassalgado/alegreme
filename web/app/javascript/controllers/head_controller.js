@@ -15,10 +15,20 @@ export default class HeadController extends Controller {
 			this.animateHeadOnScroll = () => {
 				var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
+				if (window.scrollY > 5) {
+					requestAnimationFrame(() => {
+						this.headTarget.classList.add('me-head--with-shadow');
+					});
+				} else {
+					requestAnimationFrame(() => {
+						this.headTarget.classList.remove('me-head--with-shadow');
+					});
+				}
+
 				if (window.scrollY > 250) {
 					if (currentScrollTop > this.lastScrollTop){
 						requestAnimationFrame(() => {
-							this.headTarget.style.transform = 'translateY(-56px)'
+							this.headTarget.style.transform = 'translateY(-56px)';
 						});
 					} else {
 						requestAnimationFrame(() => {

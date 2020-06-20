@@ -3,6 +3,11 @@
   top: 0;
   z-index: 6;
   width: 100%;
-  will-change: transform;
-  transition: transform 250ms ease;
+  will-change: transform, box-shadow;
+  transition: transform 250ms ease, 250ms box-shadow ease;
+  box-shadow: 0px 0px 1px 0px #0a0a0a99;
+
+  &--with-shadow {
+    box-shadow: 0px 1px 6px 1px #00000030;
+  }
 }

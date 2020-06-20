@@ -50,8 +50,8 @@ $border-color: #e0e0e0;
   [data-controller="feeds"][data-action="suggestions"] &,
   [data-controller="users"] & {
     @include mobile-only {
-      position: fixed;
-      box-shadow: 0 0 6px 0 #00000030;
+      // position: fixed;
+      // box-shadow: 0 0 6px 0 #00000030;
     }
   }
 

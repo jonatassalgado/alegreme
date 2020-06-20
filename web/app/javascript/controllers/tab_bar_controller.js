@@ -9,7 +9,7 @@ export default class TabBarController extends Controller {
 		this.setScrollLeft         = this.data.get('turbolinksPersistScroll');
 		this.MDCTabBar             = new MDCTabBar(this.tabBarTarget);
 		this.setActiveTab          = this.currentAction;
-		this.activeAnimateOnScroll = true;
+		// this.activeAnimateOnScroll = true;
 
 		this.destroy = () => {
 			this.setTurbolinksPersistScroll = this.scrollerTarget.scrollLeft;
@@ -44,30 +44,30 @@ export default class TabBarController extends Controller {
 		}
 	}
 
-	set activeAnimateOnScroll(value) {
-		if (value && this.hasTabBarTarget) {
-			this.lastScrollTop = 0;
-
-			this.animateTabBarOnScroll = () => {
-				var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-				if (window.scrollY > 0) {
-					if (currentScrollTop > this.lastScrollTop){
-						requestAnimationFrame(() => {
-							this.tabBarTarget.classList.add('me-tab-bar--with-shadow')
-						});
-					}
-				} else {
-					requestAnimationFrame(() => {
-						this.tabBarTarget.classList.remove('me-tab-bar--with-shadow')
-					});
-				}
-				this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-			}
-
-			window.addEventListener('scroll', this.animateTabBarOnScroll, {capture: false, passive: true});
-		}
-	}
+	// set activeAnimateOnScroll(value) {
+	// 	if (value && this.hasTabBarTarget) {
+	// 		this.lastScrollTop = 0;
+	//
+	// 		this.animateTabBarOnScroll = () => {
+	// 			var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+	//
+	// 			if (window.scrollY > 0) {
+	// 				if (currentScrollTop > this.lastScrollTop){
+	// 					requestAnimationFrame(() => {
+	// 						this.tabBarTarget.classList.add('me-tab-bar--with-shadow')
+	// 					});
+	// 				}
+	// 			} else {
+	// 				requestAnimationFrame(() => {
+	// 					this.tabBarTarget.classList.remove('me-tab-bar--with-shadow')
+	// 				});
+	// 			}
+	// 			this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+	// 		}
+	//
+	// 		window.addEventListener('scroll', this.animateTabBarOnScroll, {capture: false, passive: true});
+	// 	}
+	// }
 
 	set setTurbolinksPersistScroll(value) {
 		this.data.set('turbolinksPersistScroll', value);

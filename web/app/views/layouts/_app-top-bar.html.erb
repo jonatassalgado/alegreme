@@ -7,7 +7,7 @@
      section_middle: (['feeds'].include?(params[:controller]) && !mobile_device?) ||
      ['search'].include?(params[:controller]),
      share_button:   content_for?(:share_button_url) && params[:action] == 'show' && mobile_device?,
-     user_menu:      ['feeds'].include?(params[:controller]) && current_user,
+     user_menu:      ['feeds', 'movies'].include?(params[:controller]) && params[:action] != 'show' && current_user,
      sign_up:        !current_user
    }
  }.deep_merge!(props || {})
