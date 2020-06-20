@@ -1,3 +1,6 @@
+.idea/
+web/.generators
+web/.rakeTasks
 web/package-lock.json
 ml/api/log/
 hint-report/
