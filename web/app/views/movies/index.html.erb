@@ -1,55 +1,56 @@
 <section class="me-page is-animated">
 
-  <%= notice %>
+	<%= notice %>
 
-  <% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
+	<% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
-  <% if current_user %>
-    <section class="me-section me-section--condensed">
-      <div class="me-section__inner">
-        <%= render partial: 'feeds/saves',
-                   locals:  {
-                       identifier:   'movies_saved',
-                       saved_resources: @movies[:saved]
-                   } %>
-      </div>
-    </section>
-  <% end %>
+	<% if current_user %>
+		<section class="me-section me-section--condensed">
+			<div class="me-section__inner">
+				<%= render partial: 'feeds/saves',
+									 locals:  {
+											 identifier:      'movies_saved',
+											 saved_resources: @movies[:saved],
+											 empty_message:   "Salve filmes com ❤ para vê - los aqui"
+									 } %>
+			</div>
+		</section>
+	<% end %>
 
-  <% if @movies[:new_release] %>
-    <section class="me-section me-section--condensed">
-      <section class="me-section__inner">
-        <%= render(partial: 'components/collection/movies/collection', locals: {
-                                                                        data: {
-                                                                          collection: {
-                                                                            movies: @movies[:new_release]
-                                                                          },
-                                                                          title: {
-                                                                            principal: "Adicionados nos últimos 30 dias",
-                                                                            tertiary:  "Populares nos serviços de streaming"
-                                                                          }
-                                                                        }
-                                                                      }) %>
-      </section>
-    </section>
-  <% end %>
+	<% if @movies[:new_release] %>
+		<section class="me-section me-section--condensed">
+			<section class="me-section__inner">
+				<%= render(partial: 'components/collection/movies/collection', locals: {
+						data: {
+								collection: {
+										movies: @movies[:new_release]
+								},
+								title:      {
+										principal: "Adicionados nos últimos 30 dias",
+										tertiary:  "Populares nos serviços de streaming"
+								}
+						}
+				}) %>
+			</section>
+		</section>
+	<% end %>
 
-  <% if @movies[:editors_choice] %>
-    <section class="me-section me-section--condensed">
-      <section class="me-section__inner">
-        <%= render(partial: 'components/collection/movies/collection', locals: {
-                                                                        data: {
-                                                                          collection: {
-                                                                            movies: @movies[:editors_choice]
-                                                                          },
-                                                                          title: {
-                                                                            principal: "Escolha dos editores",
-                                                                            tertiary:  "Disponíveis nos serviços de streaming"
-                                                                          }
-                                                                        }
-                                                                      }) %>
-      </section>
-    </section>
-  <% end %>
+	<% if @movies[:editors_choice] %>
+		<section class="me-section me-section--condensed">
+			<section class="me-section__inner">
+				<%= render(partial: 'components/collection/movies/collection', locals: {
+						data: {
+								collection: {
+										movies: @movies[:editors_choice]
+								},
+								title:      {
+										principal: "Escolha dos editores",
+										tertiary:  "Disponíveis nos serviços de streaming"
+								}
+						}
+				}) %>
+			</section>
+		</section>
+	<% end %>
 
 </section>

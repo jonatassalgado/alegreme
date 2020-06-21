@@ -4,17 +4,17 @@ module Api
 
 		def update
 
-			return unless ["save", "like",	"view", "dislike", "unsave", "unlike",	"unview", "undislike"].include?(taste_params[:taste])
+			return unless ["save", "like", "view", "dislike", "unsave", "unlike", "unview", "undislike"].include?(taste_params[:taste])
 
 			entity = taste_params[:resource].classify.constantize.find taste_params[:id].to_i
 
 			if entity
 				if taste_params[:swipable]
 					current_user.swipable.deep_merge!({
-							'events' => {
-			          'last_view_at' => DateTime.now
-							}
-					})
+							                                  'events' => {
+									                                  'last_view_at' => DateTime.now
+							                                  }
+					                                  })
 				end
 
 				current_user.public_send("taste_#{taste_params[:resource]}_#{taste_params[:taste]}", entity.id)
@@ -22,13 +22,14 @@ module Api
 				render json: {taste_params[:taste] => :success} and return unless ["save", "unsave"].include?(taste_params[:taste])
 
 				@data = {
-					identifier:                 "#{taste_params[:resource]}_saved",
-					resource_identifier:        "#{params[:resource]}_#{taste_params[:id].to_i}",
-					resource_id:                taste_params[:id].to_i,
-					user:                       current_user,
-					current_resource_favorited: taste_params[:taste] == "save" ? true : false,
-					saved_resources:            current_user.public_send("saved_#{params[:resource]}"),
-					json_request:               true
+						identifier:                 "#{taste_params[:resource]}_saved",
+						resource_identifier:        "#{params[:resource]}_#{taste_params[:id].to_i}",
+						resource_id:                taste_params[:id].to_i,
+						user:                       current_user,
+						current_resource_favorited: taste_params[:taste] == "save" ? true : false,
+						saved_resources:            current_user.public_send("saved_#{params[:resource]}"),
+						empty_message:              "Salve #{taste_params[:resource] == 'events' ? 'eventos' : 'filmes'} com ❤ para vê-los aqui",
+						json_request:               true
 				}
 
 				respond_to do |format|
