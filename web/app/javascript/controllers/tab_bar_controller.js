@@ -1,14 +1,13 @@
-import {Controller}        from 'stimulus';
-import {MDCTabBar}         from '@material/tab-bar';
-import {ProgressBarModule} from '../modules/progressbar-module';
+import ApplicationController from './application_controller'
+import {MDCTabBar}           from '@material/tab-bar';
 
-export default class TabBarController extends Controller {
+export default class TabBarController extends ApplicationController {
 	static targets = ['tabBar', 'scroller'];
 
 	connect() {
-		this.setScrollLeft         = this.data.get('turbolinksPersistScroll');
-		this.MDCTabBar             = new MDCTabBar(this.tabBarTarget);
-		this.setActiveTab          = this.currentAction;
+		this.setScrollLeft = this.data.get('turbolinksPersistScroll');
+		this.MDCTabBar     = new MDCTabBar(this.tabBarTarget);
+		this.setActiveTab  = this.currentAction;
 		// this.activeAnimateOnScroll = true;
 
 		this.destroy = () => {
@@ -36,13 +35,13 @@ export default class TabBarController extends Controller {
 
 	set setActiveTab(value) {
 		if (value) {
-				const currentTab = this.MDCTabBar.tabList_.filter((tab) => {
-					return tab.root_.attributes['data-section'].value == value;
-				})[0]
+			const currentTab = this.MDCTabBar.tabList_.filter((tab) => {
+				return tab.root_.attributes['data-section'].value == value;
+			})[0]
 
-				if (currentTab) {
-					currentTab.activate()
-				}
+			if (currentTab) {
+				currentTab.activate()
+			}
 		}
 	}
 
@@ -86,7 +85,7 @@ export default class TabBarController extends Controller {
 	}
 
 	get isPreview() {
-    return document.documentElement.hasAttribute('data-turbolinks-preview');
-  }
+		return document.documentElement.hasAttribute('data-turbolinks-preview');
+	}
 
 }

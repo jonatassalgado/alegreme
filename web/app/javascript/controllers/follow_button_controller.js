@@ -1,7 +1,7 @@
-import {Controller} from "stimulus";
-import {MDCRipple}  from '@material/ripple';
+import ApplicationController from './application_controller'
+import {MDCRipple}           from '@material/ripple';
 
-export default class FollowButtonController extends Controller {
+export default class FollowButtonController extends ApplicationController {
 	static targets = ['button', 'text'];
 
 	initialize() {
@@ -29,8 +29,8 @@ export default class FollowButtonController extends Controller {
 
 			const data = {
 				followable: this.data.get('followable'),
-				type      : this.data.get('type'),
-				action    : this.isFollowed,
+				type:       this.data.get('type'),
+				action:     this.isFollowed,
 			};
 
 			if (Object.values(data).map((value) => {
@@ -44,12 +44,12 @@ export default class FollowButtonController extends Controller {
 
 		followPromise.then((data) => {
 			fetch(`/${data.type}/${data.followable}/${data.action}`, {
-				method     : 'post',
-				headers    : {
+				method:      'post',
+				headers:     {
 					'X-Requested-With': 'XMLHttpRequest',
-					'Content-type'    : 'application/json; charset=UTF-8',
-					'Accept'          : 'application/json',
-					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+					'Content-type':     'application/json; charset=UTF-8',
+					'Accept':           'application/json',
+					'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 				},
 				credentials: 'same-origin'
 			})

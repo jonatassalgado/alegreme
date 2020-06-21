@@ -1,6 +1,6 @@
-import {Controller}     from "stimulus"
+import ApplicationController from './application_controller'
 
-export default class SearchController extends Controller {
+export default class SearchController extends ApplicationController {
 	static targets = ['search', 'input', 'submit'];
 
 	initialize() {
@@ -16,14 +16,14 @@ export default class SearchController extends Controller {
 		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
 	}
 
-  searching() {
-    this.inputTarget.attr('readonly', 'readonly');
-    this.inputTarget.attr('disabled', 'true');
-    setTimeout(function() {
-        this.inputTarget.blur();
-        this.inputTarget.removeAttr('readonly');
-        this.inputTarget.removeAttr('disabled');
-    }, 100);
-  }
+	searching() {
+		this.inputTarget.attr('readonly', 'readonly');
+		this.inputTarget.attr('disabled', 'true');
+		setTimeout(function () {
+			this.inputTarget.blur();
+			this.inputTarget.removeAttr('readonly');
+			this.inputTarget.removeAttr('disabled');
+		}, 100);
+	}
 
 }

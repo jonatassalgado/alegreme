@@ -1,8 +1,8 @@
-import {Controller}     from "stimulus";
-import {MDCSwitch}      from '@material/switch';
-import {SnackBarModule} from "../modules/snackbar-module";
+import ApplicationController from './application_controller'
+import {MDCSwitch}           from '@material/switch';
+import {SnackBarModule}      from "../modules/snackbar-module";
 
-export default class NotificationController extends Controller {
+export default class NotificationController extends ApplicationController {
 	static targets = ["switch", "label", "input"];
 
 	initialize() {
@@ -32,25 +32,25 @@ export default class NotificationController extends Controller {
 			const params = {
 				user: {
 					notifications_devices: deviceToken,
-					notifications_topics : {
+					notifications_topics:  {
 						all: {
 							requested: true,
-							active   : status
+							active:    status
 						}
 					}
 				}
 			};
 
 			fetch(`${location.origin}/users/${gon.user_id}`, {
-				method     : 'PATCH',
-				headers    : {
-					'Content-type'    : 'application/json; charset=UTF-8',
-					'Accept'          : 'application/json',
+				method:      'PATCH',
+				headers:     {
+					'Content-type':     'application/json; charset=UTF-8',
+					'Accept':           'application/json',
 					'X-Requested-With': 'XMLHttpRequest',
-					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+					'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 				},
 				credentials: 'same-origin',
-				body       : JSON.stringify(params)
+				body:        JSON.stringify(params)
 			})
 				.then(
 					response => {

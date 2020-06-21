@@ -1,4 +1,4 @@
-import {Controller}          from "stimulus";
+import ApplicationController from './application_controller'
 import {MDCMenu}             from "@material/menu";
 import {MDCRipple}           from "@material/ripple";
 import {MDCIconButtonToggle} from "@material/icon-button";
@@ -6,7 +6,7 @@ import * as MobileDetect     from "mobile-detect";
 import {ProgressBarModule}   from "../modules/progressbar-module";
 import {AnimateModule}       from "../modules/animate-module";
 
-export default class EventController extends Controller {
+export default class EventController extends ApplicationController {
 	static targets = [
 		"event",
 		"overlay",
@@ -38,7 +38,7 @@ export default class EventController extends Controller {
 						if (eventEl === null) return;
 
 						document.documentElement.style.scrollBehavior = "smooth";
-						if(this.md.mobile()) {
+						if (this.md.mobile()) {
 							window.scrollTo(0, eventEl.offsetTop - 150);
 						} else {
 							window.scrollTo(0, eventEl.offsetTop - 225);
@@ -90,12 +90,12 @@ export default class EventController extends Controller {
 		ProgressBarModule.show();
 
 		PubSubModule.emit(`${this.sectionIdentifier}.create`,
-			{
-				similar     : this.identifier,
-				insert_after: this.insertAfter,
-				limit       : this.sectionController.actualEventsInCollection,
-				id          : this.eventTarget.id
-			}
+		                  {
+			                  similar:      this.identifier,
+			                  insert_after: this.insertAfter,
+			                  limit:        this.sectionController.actualEventsInCollection,
+			                  id:           this.eventTarget.id
+		                  }
 		);
 	};
 

@@ -1,10 +1,10 @@
-import {Controller}   from "stimulus";
-import {MDCDialog}    from "@material/dialog";
-import {MDCTextField} from "@material/textfield";
-import {stringify}    from "query-string";
+import ApplicationController from './application_controller'
+import {MDCDialog}           from "@material/dialog";
+import {MDCTextField}        from "@material/textfield";
+import {stringify}           from "query-string";
 
 
-export default class KindsController extends Controller {
+export default class KindsController extends ApplicationController {
 	static targets = ["dialog", "chipsKinds"];
 
 	initialize() {
@@ -25,7 +25,10 @@ export default class KindsController extends Controller {
 			const selectedKindsValues = new Promise((resolve, reject) => {
 				const result = self.chipController.MDCChipSet.selectedChipIds.map(function (chipId) {
 					const chipElement = self.chipController.chipsetTarget.querySelector(`#${chipId}`);
-					return {name: chipElement.innerText.toLowerCase(), score: 1};
+					return {
+						name:  chipElement.innerText.toLowerCase(),
+						score: 1
+					};
 				});
 
 				resolve(result);
@@ -34,17 +37,17 @@ export default class KindsController extends Controller {
 			selectedKindsValues
 				.then(function (result) {
 					const urlWithFilters = stringify({
-						kinds   : JSON.stringify(result),
-						feature : 'kinds',
-						event_id: self.data.get('identifier')
-					}, {arrayFormat: 'bracket'});
+						                                 kinds:    JSON.stringify(result),
+						                                 feature:  'kinds',
+						                                 event_id: self.data.get('identifier')
+					                                 }, {arrayFormat: 'bracket'});
 
 					fetch(`/retrain?${urlWithFilters}`, {
-						method     : 'get',
-						headers    : {
+						method:      'get',
+						headers:     {
 							'X-Requested-With': 'XMLHttpRequest',
-							'Content-type'    : 'text/javascript; charset=UTF-8',
-							'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+							'Content-type':     'text/javascript; charset=UTF-8',
+							'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 						},
 						credentials: 'same-origin'
 					})

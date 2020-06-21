@@ -1,10 +1,10 @@
-import {Controller}   from "stimulus";
+import ApplicationController from './application_controller'
 
-export default class ChipSetController extends Controller {
+export default class ChipSetController extends ApplicationController {
 	static targets = ["wrapper", "chipSet"];
 
 	connect() {
-		
+
 		if (this.hasChipSetTarget && this.data.get("selected") != "") {
 			this.chipSetTarget.querySelector(`[data-chip-set-slug="${this.data.get("selected")}"]`).classList.add("mdc-chip--selected");
 		}
@@ -29,8 +29,8 @@ export default class ChipSetController extends Controller {
 	}
 
 	select(event) {
-		const categoryEl   = event.currentTarget;
-		const chipSetUrl  = categoryEl.dataset.chipSetUrl;
+		const categoryEl = event.currentTarget;
+		const chipSetUrl = categoryEl.dataset.chipSetUrl;
 
 		this.scrollOffset = {
 			position: categoryEl.offsetLeft,

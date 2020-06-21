@@ -1,8 +1,8 @@
-import {Controller} from "stimulus";
-import {MDCChipSet} from '@material/chips';
+import ApplicationController from './application_controller'
+import {MDCChipSet}          from '@material/chips';
 
 
-export default class FollowChipSetController extends Controller {
+export default class FollowChipSetController extends ApplicationController {
 	static targets = ['chipSet', "chip"];
 
 	initialize() {
@@ -31,15 +31,15 @@ export default class FollowChipSetController extends Controller {
 			const chipEl = event.target.closest('[data-target="follow-chip-set.chip"]');
 
 			const data = {
-				chipIconElem   : event.target,
-				chipElem       : chipEl,
-				eventElem      : document.getElementById('event'),
-				followable     : chipEl.dataset.followable,
-				type           : chipEl.dataset.type,
-				action         : chipEl.dataset.followed === 'true' ? 'unfollow' : 'follow',
+				chipIconElem:    event.target,
+				chipElem:        chipEl,
+				eventElem:       document.getElementById('event'),
+				followable:      chipEl.dataset.followable,
+				type:            chipEl.dataset.type,
+				action:          chipEl.dataset.followed === 'true' ? 'unfollow' : 'follow',
 				expandToSimilar: this.expandToSimilar,
-				eventId        : this.eventId,
-				identifier     : this.identifier
+				eventId:         this.eventId,
+				identifier:      this.identifier
 			};
 
 			if (Object.values(data).map((value) => {
@@ -53,19 +53,19 @@ export default class FollowChipSetController extends Controller {
 
 		followPromise.then((data) => {
 			fetch(`/${data.type}/${data.followable}/${data.action}`, {
-				method     : 'post',
-				headers    : {
+				method:      'post',
+				headers:     {
 					'X-Requested-With': 'XMLHttpRequest',
-					'Content-type'    : 'application/json',
-					'Accept'          : 'text/javascript',
-					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+					'Content-type':     'application/json',
+					'Accept':           'text/javascript',
+					'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 				},
 				credentials: 'same-origin',
-				body       : JSON.stringify({
-					expand_to_similar: data.expandToSimilar,
-					event_id         : data.eventId,
-					identifier       : data.identifier
-				})
+				body:        JSON.stringify({
+					                            expand_to_similar: data.expandToSimilar,
+					                            event_id:          data.eventId,
+					                            identifier:        data.identifier
+				                            })
 			})
 				.then(
 					response => {

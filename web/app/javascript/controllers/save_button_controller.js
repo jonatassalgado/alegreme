@@ -1,7 +1,7 @@
-import {Controller}      from 'stimulus';
-import * as MobileDetect from "mobile-detect";
+import ApplicationController from './application_controller'
+import * as MobileDetect     from "mobile-detect";
 
-export default class SaveButtonController extends Controller {
+export default class SaveButtonController extends ApplicationController {
 	static targets = ['saveButton'];
 
 	connect() {
@@ -33,11 +33,11 @@ export default class SaveButtonController extends Controller {
 		PubSubModule.emit('event.like');
 
 		fetch(`/api/taste/${this.resourceName}/${this.resourceId}/${this.isSaved}`, {
-			method     : 'post',
-			headers    : {
+			method:      'post',
+			headers:     {
 				'X-Requested-With': 'XMLHttpRequest',
-				'Content-type'    : 'text/javascript; charset=UTF-8',
-				'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+				'Content-type':     'text/javascript; charset=UTF-8',
+				'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 			},
 			credentials: 'same-origin'
 		})
@@ -73,7 +73,7 @@ export default class SaveButtonController extends Controller {
 	};
 
 	set adjustForDevice(isMobile) {
-		const isSaved = this.saveStatus === false;
+		const isSaved  = this.saveStatus === false;
 		const isSingle = this.data.get("modifier") === "single";
 
 		if (isMobile) {
@@ -109,7 +109,7 @@ export default class SaveButtonController extends Controller {
 	}
 
 	get isPreview() {
-    return document.documentElement.hasAttribute('data-turbolinks-preview');
-  }
+		return document.documentElement.hasAttribute('data-turbolinks-preview');
+	}
 
 }

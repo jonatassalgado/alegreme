@@ -33,6 +33,16 @@
 		</div>
 	<% end %>
 
+	<div counter>
+		<a href="#"
+			 data-reflex="click->CounterReflex#increment"
+			 data-reflex-root="[counter]"
+			 data-step="1"
+			 data-count="<%= @count.to_i %>"
+		>Increment <%= @count.to_i %>
+		</a>
+	</div>
+
 	<% if current_user && @new_events_today.size > 0 %>
 		<div class="me-section me-section--condensed">
 			<div class="me-section__inner">

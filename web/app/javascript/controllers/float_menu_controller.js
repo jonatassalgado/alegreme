@@ -1,7 +1,7 @@
-import {Controller}      from "stimulus";
-import * as MobileDetect from "mobile-detect";
+import ApplicationController from './application_controller'
+import * as MobileDetect     from "mobile-detect";
 
-export default class FloatMenuController extends Controller {
+export default class FloatMenuController extends ApplicationController {
 	static targets = [
 		"menu",
 		"item"
@@ -15,26 +15,26 @@ export default class FloatMenuController extends Controller {
 			const threshold = this.md.mobile() ? 0.6 : 0.1;
 
 			this.observer = new IntersectionObserver((entries, observer) => {
-					entries.forEach((entry) => {
-						const collectionEl = document.querySelector(`[data-collection-identifier="${entry.target.id}"]`);
+				                                         entries.forEach((entry) => {
+					                                         const collectionEl = document.querySelector(`[data-collection-identifier="${entry.target.id}"]`);
 
-						if (collectionEl) {
-							if (entry.isIntersecting) {
-								requestAnimationFrame(() => {
-									collectionEl.classList.add('is-active')
-								});
-							} else {
-								requestAnimationFrame(() => {
-									collectionEl.classList.remove('is-active')
-								});
-							}
-						}
-					})
-				},
-				{
-					threshold : threshold,
-					rootMargin: '0px'
-				}
+					                                         if (collectionEl) {
+						                                         if (entry.isIntersecting) {
+							                                         requestAnimationFrame(() => {
+								                                         collectionEl.classList.add('is-active')
+							                                         });
+						                                         } else {
+							                                         requestAnimationFrame(() => {
+								                                         collectionEl.classList.remove('is-active')
+							                                         });
+						                                         }
+					                                         }
+				                                         })
+			                                         },
+			                                         {
+				                                         threshold:  threshold,
+				                                         rootMargin: '0px'
+			                                         }
 			);
 
 			observableSectionEls.forEach((section) => {

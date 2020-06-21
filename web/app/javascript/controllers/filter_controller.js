@@ -1,8 +1,8 @@
-import {Controller}   from "stimulus";
-import {MDCChipSet}   from "@material/chips";
-import {html, render} from "lit-html";
+import ApplicationController from './application_controller'
+import {MDCChipSet}          from "@material/chips";
+import {html, render}        from "lit-html";
 
-export default class FilterController extends Controller {
+export default class FilterController extends ApplicationController {
 	static targets = ["chipset", "container", "chip", "input", "inputContainer"];
 
 	initialize() {
@@ -11,7 +11,7 @@ export default class FilterController extends Controller {
 
 		this.pubsub.sectionUpdated = PubSubModule.on(`${this.sectionIdentifier}.updated`, (data) => {
 			requestIdleCallback(() => {
-				if(this.hasChipsetTarget) {
+				if (this.hasChipsetTarget) {
 					this.MDCChipSet = new MDCChipSet(this.chipsetTarget);
 				}
 			}, {timeout: 250})
@@ -73,7 +73,7 @@ export default class FilterController extends Controller {
 	}
 
 	setSelected(chipEl) {
-		const chipTemplate = (text) => html`
+		const chipTemplate          = (text) => html`
 		      <div class="mdc-chip__checkmark">
 		        <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
 		          <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59" />

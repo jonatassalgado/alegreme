@@ -1,12 +1,12 @@
-import {Controller} from 'stimulus';
-import {MDCRipple}  from '@material/ripple';
+import ApplicationController from './application_controller'
+import {MDCRipple}           from '@material/ripple';
 
-export default class HeadController extends Controller {
+export default class HeadController extends ApplicationController {
 	static targets = ['head', 'backButton', 'backButtonRipple'];
 
 	initialize() {
 		if (this.hasHeadTarget) {
-			this.lastScrollTop    = 0;
+			this.lastScrollTop = 0;
 
 			if (this.hasBackButtonRippleTarget) {
 				this.backButtonRipple = new MDCRipple(this.backButtonRippleTarget);
@@ -26,7 +26,7 @@ export default class HeadController extends Controller {
 				}
 
 				if (window.scrollY > 250) {
-					if (currentScrollTop > this.lastScrollTop){
+					if (currentScrollTop > this.lastScrollTop) {
 						requestAnimationFrame(() => {
 							this.headTarget.style.transform = 'translateY(-56px)';
 						});
@@ -43,7 +43,10 @@ export default class HeadController extends Controller {
 				this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
 			}
 
-			window.addEventListener('scroll', this.animateHeadOnScroll, {capture: false, passive: true});
+			window.addEventListener('scroll', this.animateHeadOnScroll, {
+				capture: false,
+				passive: true
+			});
 		}
 	}
 

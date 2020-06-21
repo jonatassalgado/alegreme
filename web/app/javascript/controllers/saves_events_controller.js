@@ -1,8 +1,8 @@
-import {Controller}    from "stimulus"
-import {MDCRipple}     from '@material/ripple';
-import {AnimateModule} from "../modules/animate-module";
+import ApplicationController from './application_controller'
+import {MDCRipple}           from '@material/ripple';
+import {AnimateModule}       from "../modules/animate-module";
 
-export default class SavesEventsController extends Controller {
+export default class SavesEventsController extends ApplicationController {
 	static targets = ["event", "overlay", "title", "date", "remove"];
 
 	initialize() {
@@ -25,11 +25,11 @@ export default class SavesEventsController extends Controller {
 
 	remove() {
 		fetch(`/api/taste/events/${this.identifier}/unsave`, {
-			method     : 'post',
-			headers    : {
+			method:      'post',
+			headers:     {
 				'X-Requested-With': 'XMLHttpRequest',
-				'Content-type'    : 'text/javascript; charset=UTF-8',
-				'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+				'Content-type':     'text/javascript; charset=UTF-8',
+				'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 			},
 			credentials: 'same-origin'
 		})

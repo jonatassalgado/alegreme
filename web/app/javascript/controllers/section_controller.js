@@ -1,13 +1,14 @@
-import {Controller}        from "stimulus";
-import {LazyloadModule}    from "modules/lazyload-module";
-import {MDCRipple}         from "@material/ripple";
-import * as MobileDetect   from "mobile-detect";
-import Flipping            from "flipping";
-import {ProgressBarModule} from "../modules/progressbar-module";
-import {AnimateModule}     from "modules/animate-module"
+import ApplicationController from './application_controller'
+import {LazyloadModule}      from "modules/lazyload-module";
+import {MDCRipple}           from "@material/ripple";
+import * as MobileDetect     from "mobile-detect";
+import Flipping              from "flipping";
+import {ProgressBarModule}   from "../modules/progressbar-module";
+import {AnimateModule}       from "modules/animate-module"
 
-export default class SectionController extends Controller {
-	static targets = ['section', 'filter', 'scrollContainer', 'loadMoreButton', 'seeAll', 'personas', 'categories', 'ocurrences', 'kinds'];
+export default class SectionController extends ApplicationController {
+	static targets = ['section', 'filter', 'scrollContainer', 'loadMoreButton', 'seeAll', 'personas', 'categories',
+	                  'ocurrences', 'kinds'];
 
 	initialize() {
 		this.scrollLeft = this.data.get('turbolinksPersistScroll');
@@ -15,9 +16,9 @@ export default class SectionController extends Controller {
 		this.pubsub     = {};
 		this.ripples    = [];
 		this.rootMargin = this.md.mobile() ? '1000px' : '500px';
-		this.flipping = new Flipping({
-			attribute: `data-collection-${this.identifier}-flip-key`
-		});
+		this.flipping   = new Flipping({
+			                               attribute: `data-collection-${this.identifier}-flip-key`
+		                               });
 
 		this.loadMoreButtonTargets.forEach((button) => {
 			this.ripples.push(new MDCRipple(button));
@@ -25,23 +26,23 @@ export default class SectionController extends Controller {
 
 		if (this.data.get('infiniteScroll') === 'true') {
 			this.observer = new IntersectionObserver((entries, observer) => {
-					entries.forEach((entry) => {
+				                                         entries.forEach((entry) => {
 
-						if (this.hasLoadMoreButtonTarget) {
-							if (entry.isIntersecting) {
-								entry.target.disabled                                     = true;
-								entry.target.innerText = 'Carregando...';
-								this.loadMore();
-							} else {
+					                                         if (this.hasLoadMoreButtonTarget) {
+						                                         if (entry.isIntersecting) {
+							                                         entry.target.disabled  = true;
+							                                         entry.target.innerText = 'Carregando...';
+							                                         this.loadMore();
+						                                         } else {
 
-							}
-						}
-					})
-				},
-				{
-					threshold : 0.1,
-					rootMargin: this.rootMargin
-				}
+						                                         }
+					                                         }
+				                                         })
+			                                         },
+			                                         {
+				                                         threshold:  0.1,
+				                                         rootMargin: this.rootMargin
+			                                         }
 			);
 
 			this.loadMoreButtonTargets.forEach((loadMoreButton) => {
@@ -124,14 +125,14 @@ export default class SectionController extends Controller {
 
 
 		// if (!this.md.mobile()) {
-		// 	this.sectionTarget.parentElement.style.minHeight = `${this.sectionTarget.getBoundingClientRect().height}px`;
-		// }
+		// 	this.sectionTarget.parentElement.style.minHeight =
+		// `${this.sectionTarget.getBoundingClientRect().height}px`; }
 
 		this.destroy = () => {
 			this.pubsub.sectionUpdated();
 			this.pubsub.sectionCreate();
 			this.pubsub.categoriesUpdate();
-			this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+			this.turbolinksPersistScroll     = this.scrollContainerTarget.scrollLeft;
 			this.sectionTarget.style.opacity = 1;
 			this.ripples.forEach((ripple) => {
 				ripple.destroy();
@@ -163,7 +164,7 @@ export default class SectionController extends Controller {
 		// 	this.loadMoreButtonTarget.dataset.continueToPath !== undefined) {
 		// 	location.assign(this.loadMoreButtonTarget.dataset.continueToPath);
 		// } else {
-			this.filter()
+		this.filter()
 		// }
 	}
 
@@ -213,37 +214,37 @@ export default class SectionController extends Controller {
 				Promise.all(promises)
 				       .then((resultsArray) => {
 					       const params = {
-						       data : {
-							       personas            : resultsArray[0],
-							       categories          : resultsArray[1],
-							       ocurrences          : resultsArray[2],
-							       kinds               : resultsArray[3],
-							       identifier          : this.identifier,
-							       title               : this.title,
-							       defaults            : this.defaultValue,
+						       data:  {
+							       personas:             resultsArray[0],
+							       categories:           resultsArray[1],
+							       ocurrences:           resultsArray[2],
+							       kinds:                resultsArray[3],
+							       identifier:           this.identifier,
+							       title:                this.title,
+							       defaults:             this.defaultValue,
 							       init_filters_applyed: this.initFiltersApplyed,
-							       origin              : this.origin,
-							       continue_to_path    : this.continueToPath,
-							       similar             : opts.similar,
-							       insert_after        : opts.insert_after,
-							       limit               : parseInt(this.actualEventsInCollection) + 16
+							       origin:               this.origin,
+							       continue_to_path:     this.continueToPath,
+							       similar:              opts.similar,
+							       insert_after:         opts.insert_after,
+							       limit:                parseInt(this.actualEventsInCollection) + 16
 						       },
 						       props: {
-							       disposition    : this.data.get('disposition'),
+							       disposition:     this.data.get('disposition'),
 							       infinite_scroll: this.data.get('infiniteScroll')
 						       }
 					       };
 
 					       fetch(`/api/collections`, {
-						       method     : 'POST',
-						       headers    : {
-							       'Content-type'    : 'application/json; charset=UTF-8',
-							       'Accept'          : 'text/javascript',
+						       method:      'POST',
+						       headers:     {
+							       'Content-type':     'application/json; charset=UTF-8',
+							       'Accept':           'text/javascript',
 							       'X-Requested-With': 'XMLHttpRequest',
-							       'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+							       'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 						       },
 						       credentials: 'same-origin',
-						       body       : JSON.stringify(params)
+						       body:        JSON.stringify(params)
 					       })
 						       .then(
 							       (response) => {
@@ -339,9 +340,9 @@ export default class SectionController extends Controller {
 	get defaultValue() {
 		const defaults = {
 			categories: this.hasCategoriesTarget ? JSON.parse(this.categoriesController.data.get('defaultValue')) : [],
-			personas  : this.hasPersonasTarget ? JSON.parse(this.personasController.data.get('defaultValue')) : [],
+			personas:   this.hasPersonasTarget ? JSON.parse(this.personasController.data.get('defaultValue')) : [],
 			ocurrences: this.hasOcurrencesTarget ? JSON.parse(this.ocurrencesController.data.get('defaultValue')) : [],
-			kinds     : this.hasKindsTarget ? JSON.parse(this.kindsController.data.get('defaultValue')) : []
+			kinds:      this.hasKindsTarget ? JSON.parse(this.kindsController.data.get('defaultValue')) : []
 		};
 
 		return JSON.stringify(defaults)

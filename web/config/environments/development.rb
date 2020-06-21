@@ -9,9 +9,9 @@ Rails.application.configure do
 	# since you don't have to restart the web server when you make code changes.
 	config.cache_classes = false
 
-  config.web_console.whitelisted_ips = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16', '172.16.0.0/12']
+	config.web_console.whitelisted_ips = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16', '172.16.0.0/12']
 
-  # Do not eager load code on boot.
+	# Do not eager load code on boot.
 	config.eager_load = false
 
 	# Show full error reports.
@@ -20,10 +20,9 @@ Rails.application.configure do
 	# Enable/disable caching. By default caching is disabled.
 	# Run rails dev:cache to toggle caching.
 	if Rails.root.join("tmp", "caching-dev.txt").exist?
-		config.action_controller.perform_caching = true
+		config.action_controller.perform_caching               = true
 		config.action_controller.enable_fragment_cache_logging = true
 		# config.cache_store = :dalli_store, 'memcached', { :pool_size => 2 }
-
 		config.cache_store = :memory_store
 		# config.public_file_server.enabled = true
 		# config.public_file_server.headers = {
@@ -31,12 +30,12 @@ Rails.application.configure do
 		# }
 	else
 		config.action_controller.perform_caching = false
-
-		config.cache_store = :null_store
+		config.cache_store                       = :null_store
 	end
 
-	# config.active_job.queue_adapter = :sidekiq
+	config.session_store :cache_store
 
+	# config.active_job.queue_adapter = :sidekiq
 
 	# Store uploaded files on the local file system (see config/storage.yml for options)
 	config.active_storage.service = :local
@@ -47,14 +46,17 @@ Rails.application.configure do
 	config.action_mailer.perform_caching = false
 
 	config.action_mailer.default_url_options = {host: "localhost", port: 3000}
-	config.action_mailer.delivery_method = :smtp
-	config.action_mailer.perform_deliveries = false
+	config.action_mailer.delivery_method     = :smtp
+	config.action_mailer.perform_deliveries  = false
 
 
 	config.webpacker.check_yarn_integrity = false
 
 	# Print deprecation notices to the Rails logger.
 	config.active_support.deprecation = :log
+
+	# :debug, :info, :warn, :error, :fatal, :unknown
+	config.log_level = :warn
 
 	# Raise an error on page load if there are pending migrations.
 	config.active_record.migration_error = :page_load

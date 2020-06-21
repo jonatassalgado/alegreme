@@ -20,7 +20,8 @@ import "morphdom";
 
 import {Application}            from "stimulus"
 import {definitionsFromContext} from "stimulus/webpack-helpers"
-
+import StimulusReflex           from 'stimulus_reflex'
+import consumer                 from '../channels/consumer'
 
 import {CacheModule}    from "../modules/cache-module";
 import {AnimateModule}  from "../modules/animate-module";
@@ -34,9 +35,10 @@ AnimateModule.init();
 LazyloadModule.init();
 
 const application = Application.start();
-const context     = require.context("controllers", true, /controller\.js$/);
+const context = require.context("controllers", true, /controller\.js$/);
 
 application.load(definitionsFromContext(context));
+StimulusReflex.initialize(application, { consumer })
 
 window.addEventListener('beforeinstallprompt', (e) => {
 	e.preventDefault();

@@ -108,8 +108,6 @@ gem 'pagy', '~> 3.5'
 
 gem 'active_record_extended'
 
-# gem 'serviceworker-rails'
-
 gem 'rack-attack'
 
 group :production do

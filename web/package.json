@@ -7,6 +7,7 @@
     "@material/icon-button": "^4.0.0",
     "@material/tab-bar": "^4.0.0",
     "@material/tab-scroller": "^4.0.0",
+    "@rails/actioncable": "^6.0.3-2",
     "@rails/activestorage": "^6.0.3-2",
     "@rails/ujs": "^6.0.3-2",
     "@rails/webpacker": "https://github.com/rails/webpacker",
@@ -25,6 +26,7 @@
     "pwa-install-prompt": "^1.1.0",
     "query-string": "^6.4.2",
     "stimulus": "^1.1.1",
+    "stimulus_reflex": "^3.2.3",
     "turbolinks": "^5.2.0",
     "unpoly": "^0.60.3"
   },

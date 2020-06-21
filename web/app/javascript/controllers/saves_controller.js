@@ -1,15 +1,15 @@
-import {Controller}     from "stimulus"
-import Flipping         from "flipping"
-import {LazyloadModule} from "modules/lazyload-module";
+import ApplicationController from './application_controller'
+import Flipping              from "flipping"
+import {LazyloadModule}      from "modules/lazyload-module";
 
-export default class SavesController extends Controller {
+export default class SavesController extends ApplicationController {
 	static targets = ["saves", "list", "title", "date", "remove", "scrollLeft", "scrollRight", "header"];
 
 	initialize() {
 		this.flipping = new Flipping({
-			attribute: 'data-saves-flip-key'
-		});
-		this.pubsub = {};
+			                             attribute: 'data-saves-flip-key'
+		                             });
+		this.pubsub   = {};
 
 		if (this.hasListTarget) {
 			this.scrollLeftEvent  = new CustomEvent('scrolledLeft', {'detail': {'controller': this}});
@@ -20,8 +20,8 @@ export default class SavesController extends Controller {
 		}
 
 		this.pubsub.eventLike = PubSubModule.on(`event.like`, (data) => {
-				this.flipping.read();
-			}
+			                                        this.flipping.read();
+		                                        }
 		);
 
 		this.pubsub.savesUpdated = PubSubModule.on(`saves.updated`, (data) => {

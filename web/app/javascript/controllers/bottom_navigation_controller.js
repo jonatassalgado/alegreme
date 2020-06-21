@@ -1,8 +1,8 @@
-import {Controller}        from "stimulus";
-import {MDCRipple}         from '@material/ripple';
-import {AnimateModule}     from "../modules/animate-module";
+import ApplicationController from './application_controller'
+import {MDCRipple}           from '@material/ripple';
+import {AnimateModule}       from "../modules/animate-module";
 
-export default class BottomNavigationController extends Controller {
+export default class BottomNavigationController extends ApplicationController {
 	static targets = ['navigation', 'item', 'events', 'search', 'cinema'];
 
 	connect() {
@@ -18,7 +18,7 @@ export default class BottomNavigationController extends Controller {
 			this.animateNavigationOnScroll = () => {
 				var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 				if (window.scrollY > 250) {
-					if (currentScrollTop > this.lastScrollTop){
+					if (currentScrollTop > this.lastScrollTop) {
 						requestAnimationFrame(() => {
 							this.navigationTarget.style.transform = 'translateY(60px)'
 						});
@@ -35,14 +35,17 @@ export default class BottomNavigationController extends Controller {
 				this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
 			}
 
-			window.addEventListener('scroll', this.animateNavigationOnScroll, {capture: false, passive: true});
+			window.addEventListener('scroll', this.animateNavigationOnScroll, {
+				capture: false,
+				passive: true
+			});
 		}
 
 
 		if (/(\/feed|\/porto-alegre\/eventos)/.test(document.location.href)) {
 			this.eventsTarget.classList.add('active');
 		} else if ((/(\/porto-alegre\/filmes)/.test(document.location.href)) ||
-		(/(\/porto-alegre\/streamings)/.test(document.location.href))) {
+			(/(\/porto-alegre\/streamings)/.test(document.location.href))) {
 			this.cinemaTarget.classList.add('active');
 		} else if ((/(\/busca)/.test(document.location.href))) {
 			this.searchTarget.classList.add('active');

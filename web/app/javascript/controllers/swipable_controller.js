@@ -1,10 +1,10 @@
-import {Controller}        from "stimulus";
-import {UILandingBot}      from "../modules/bot-module";
-import * as MobileDetect   from "mobile-detect";
-import {ProgressBarModule} from "../modules/progressbar-module";
+import ApplicationController from './application_controller'
+import {UILandingBot}        from "../modules/bot-module";
+import * as MobileDetect     from "mobile-detect";
+import {ProgressBarModule}   from "../modules/progressbar-module";
 
 
-export default class SwipableController extends Controller {
+export default class SwipableController extends ApplicationController {
 	static targets = ["swipable", "onboarding", "items", "skip"];
 
 	initialize() {
@@ -13,100 +13,100 @@ export default class SwipableController extends Controller {
 
 		if (gon.user_sign_in_count <= 1 && gon.user_taste_events_saved < 1) {
 			this.uilb
-				.message({
-					content: `Olá ${gon.user_first_name} 👋`,
-					delay  : 150
-				})
-				.then(ok =>
-					this.uilb.message({
-						cssClass: "no-icon",
-						content :
-							"Vamos aproveitar a cidade de Porto Alegre juntos!",
-						delay   : 2000
-					})
-				)
-				.then(ok =>
-					this.uilb.message({
-						cssClass: "no-icon",
-						content :
-							"Inicialmente vamos te sugerir eventos, mas logo também iremos sugerir filmes no cinema, serviços, promoções e experiências",
-						delay   : 1500
-					}))
-				.then(ok =>
-					this.uilb.message({
-						cssClass: "no-icon",
-						content :
-							"Chega de papo, vamos começar!",
-						delay   : 4000
-					})
-				)
-				.then(ok =>
-					this.uilb.message({
-						cssClass: "no-icon",
-						content :
-							"Para sugerir eventos que tem a ver com você, primeiro me diga o que você gosta e não gosta",
-						delay   : 1000
-					})
-				)
-				.then(ok =>
-					this.uilb.message({
-						cssClass: "no-icon",
-						content : "Vamos lá?",
-						delay   : 4000
-					})
-				)
-				.then(ok =>
-					this.uilb.action({
-						type : "button",
-						delay: 500,
-						items: [
-							{
-								text : "Vamos",
-								value: "Vamos!"
-							}
-						]
-					})
-				)
-				.then(ok =>
-					this.uilb.message({
-						delay  : 250,
-						human  : true,
-						content: ok
-					})
-				)
-				.then(ok => {
-					this.uilb.message({
-						content: "Carregando opções...",
-						delay  : 1500
-					})
-				})
-				.then(ok => {
-					setTimeout(() => {
-						requestAnimationFrame(() => {
+			    .message({
+				             content: `Olá ${gon.user_first_name} 👋`,
+				             delay:   150
+			             })
+			    .then(ok =>
+				          this.uilb.message({
+					                            cssClass: "no-icon",
+					                            content:
+					                                      "Vamos aproveitar a cidade de Porto Alegre juntos!",
+					                            delay:    2000
+				                            })
+			    )
+			    .then(ok =>
+				          this.uilb.message({
+					                            cssClass: "no-icon",
+					                            content:
+					                                      "Inicialmente vamos te sugerir eventos, mas logo também iremos sugerir filmes no cinema, serviços, promoções e experiências",
+					                            delay:    1500
+				                            }))
+			    .then(ok =>
+				          this.uilb.message({
+					                            cssClass: "no-icon",
+					                            content:
+					                                      "Chega de papo, vamos começar!",
+					                            delay:    4000
+				                            })
+			    )
+			    .then(ok =>
+				          this.uilb.message({
+					                            cssClass: "no-icon",
+					                            content:
+					                                      "Para sugerir eventos que tem a ver com você, primeiro me diga o que você gosta e não gosta",
+					                            delay:    1000
+				                            })
+			    )
+			    .then(ok =>
+				          this.uilb.message({
+					                            cssClass: "no-icon",
+					                            content:  "Vamos lá?",
+					                            delay:    4000
+				                            })
+			    )
+			    .then(ok =>
+				          this.uilb.action({
+					                           type:  "button",
+					                           delay: 500,
+					                           items: [
+						                           {
+							                           text:  "Vamos",
+							                           value: "Vamos!"
+						                           }
+					                           ]
+				                           })
+			    )
+			    .then(ok =>
+				          this.uilb.message({
+					                            delay:   250,
+					                            human:   true,
+					                            content: ok
+				                            })
+			    )
+			    .then(ok => {
+				    this.uilb.message({
+					                      content: "Carregando opções...",
+					                      delay:   1500
+				                      })
+			    })
+			    .then(ok => {
+				    setTimeout(() => {
+					    requestAnimationFrame(() => {
 
-							this.onboardingTarget.style.opacity = 0;
+						    this.onboardingTarget.style.opacity = 0;
 
-							setTimeout(() => {
-								if (this.hasSwipableTarget) {
-									this.data.set('chat-on', false);
-									this.onboardingTarget.style.display = 'none';
-									this.itemsTarget.style.opacity = 1;
-									this.stackedCards();
-									this.itemsTarget.style.display = 'block';
-								}
-							}, 450)
+						    setTimeout(() => {
+							    if (this.hasSwipableTarget) {
+								    this.data.set('chat-on', false);
+								    this.onboardingTarget.style.display = 'none';
+								    this.itemsTarget.style.opacity      = 1;
+								    this.stackedCards();
+								    this.itemsTarget.style.display = 'block';
+							    }
+						    }, 450)
 
-						});
-					}, 4000);
-				})
-				.catch(error => console.log('error', error));
+					    });
+				    }, 4000);
+			    })
+			    .catch(error => console.log('error', error));
 
 		} else {
 			setTimeout(() => {
 				if (this.hasSwipableTarget) {
 					this.data.set('chat-on', false);
 					this.onboardingTarget.style.display = 'none';
-					this.itemsTarget.style.opacity = 1;
+					this.itemsTarget.style.opacity      = 1;
 					this.stackedCards();
 					this.itemsTarget.style.display = 'block';
 				}
@@ -121,11 +121,14 @@ export default class SwipableController extends Controller {
 
 
 	stackedCards() {
-		const HOST                    = gon.env == "development" ? `http://localhost:5000` : `https://${document.location.host}/ml`;
+		const HOST                    = gon.env == "development" ?
+			`http://localhost:5000` :
+			`https://${document.location.host}/ml`;
 		const stackedOptions          = 'Top'; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
 		const rotate                  = true; //Activate the elements' rotation for each move on stacked cards.
 		let items                     = 3; //Number of visible elements when the stacked options are bottom or top.
-		const elementsMargin          = 12; //Define the distance of each element when the stacked options are bottom or top.
+		const elementsMargin          = 12; //Define the distance of each element when the stacked options are bottom
+		                                    // or top.
 		const useOverlays             = true; //Enable or disable the overlays for swipe elements.
 		let maxElements; //Total of stacked cards on DOM.
 		let currentPosition           = 0; //Keep the position of active stacked card.
@@ -198,8 +201,16 @@ export default class SwipableController extends Controller {
 		for (let i = items; i < maxElements; i++) {
 			listElNodesObj[i].style.zIndex          = 0;
 			listElNodesObj[i].style.opacity         = 0;
-			listElNodesObj[i].style.webkitTransform = 'scale(' + (1 - (items * 0.04)) + ') translateX(0) translateY(' + elTrans + 'px) translateZ(0)';
-			listElNodesObj[i].style.transform       = 'scale(' + (1 - (items * 0.04)) + ') translateX(0) translateY(' + elTrans + 'px) translateZ(0)';
+			listElNodesObj[i].style.webkitTransform = 'scale(' +
+				(1 - (items * 0.04)) +
+				') translateX(0) translateY(' +
+				elTrans +
+				'px) translateZ(0)';
+			listElNodesObj[i].style.transform       = 'scale(' +
+				(1 - (items * 0.04)) +
+				') translateX(0) translateY(' +
+				elTrans +
+				'px) translateZ(0)';
 		}
 
 		if (listElNodesObj[currentPosition]) {
@@ -207,11 +218,19 @@ export default class SwipableController extends Controller {
 		}
 
 		if (useOverlays) {
-			leftObj.style.transform       = 'translateX(0px) translateY(' + elTrans + 'px) translateZ(0px) rotate(0deg)';
-			leftObj.style.webkitTransform = 'translateX(0px) translateY(' + elTrans + 'px) translateZ(0px) rotate(0deg)';
+			leftObj.style.transform       = 'translateX(0px) translateY(' +
+				elTrans +
+				'px) translateZ(0px) rotate(0deg)';
+			leftObj.style.webkitTransform = 'translateX(0px) translateY(' +
+				elTrans +
+				'px) translateZ(0px) rotate(0deg)';
 
-			rightObj.style.transform       = 'translateX(0px) translateY(' + elTrans + 'px) translateZ(0px) rotate(0deg)';
-			rightObj.style.webkitTransform = 'translateX(0px) translateY(' + elTrans + 'px) translateZ(0px) rotate(0deg)';
+			rightObj.style.transform       = 'translateX(0px) translateY(' +
+				elTrans +
+				'px) translateZ(0px) rotate(0deg)';
+			rightObj.style.webkitTransform = 'translateX(0px) translateY(' +
+				elTrans +
+				'px) translateZ(0px) rotate(0deg)';
 
 			topObj.style.transform       = 'translateX(0px) translateY(' + elTrans + 'px) translateZ(0px) rotate(0deg)';
 			topObj.style.webkitTransform = 'translateX(0px) translateY(' + elTrans + 'px) translateZ(0px) rotate(0deg)';
@@ -279,64 +298,64 @@ export default class SwipableController extends Controller {
 				// 	.then(response => {
 				// 			response.json().then(data => {
 
-								// const params = {
-								// 	'user': {
-								// 		'personas_primary_name'          : data.classification.personas.primary.name,
-								// 		'personas_secondary_name'        : data.classification.personas.secondary.name,
-								// 		'personas_tertiary_name'         : data.classification.personas.tertiary.name,
-								// 		'personas_quartenary_name'       : data.classification.personas.quartenary.name,
-								// 		'personas_primary_score'         : data.classification.personas.primary.score,
-								// 		'personas_secondary_score'       : data.classification.personas.secondary.score,
-								// 		'personas_tertiary_score'        : data.classification.personas.tertiary.score,
-								// 		'personas_quartenary_score'      : data.classification.personas.quartenary.score,
-								// 		'personas_assortment_finished'   : true,
-								// 		'personas_assortment_finished_at': new Date().toJSON()
-								//
-								// 	}
-								// };
+				// const params = {
+				// 	'user': {
+				// 		'personas_primary_name'          : data.classification.personas.primary.name,
+				// 		'personas_secondary_name'        : data.classification.personas.secondary.name,
+				// 		'personas_tertiary_name'         : data.classification.personas.tertiary.name,
+				// 		'personas_quartenary_name'       : data.classification.personas.quartenary.name,
+				// 		'personas_primary_score'         : data.classification.personas.primary.score,
+				// 		'personas_secondary_score'       : data.classification.personas.secondary.score,
+				// 		'personas_tertiary_score'        : data.classification.personas.tertiary.score,
+				// 		'personas_quartenary_score'      : data.classification.personas.quartenary.score,
+				// 		'personas_assortment_finished'   : true,
+				// 		'personas_assortment_finished_at': new Date().toJSON()
+				//
+				// 	}
+				// };
 
-								// fetch(`${location.origin}/users/${gon.user_id}`, {
-								// 	method     : 'PATCH',
-								// 	headers    : {
-								// 		'Content-type'    : 'application/json; charset=UTF-8',
-								// 		'Accept'          : 'application/json',
-								// 		'X-Requested-With': 'XMLHttpRequest',
-								// 		'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
-								// 	},
-								// 	credentials: 'same-origin',
-								// 	body       : JSON.stringify(params)
-								// })
-								// 	.then(
-								// 		response => {
-								// 			response.text().then(data => {
-												// document.documentElement.style.overflow = '';
-												// document.querySelector('.stackedcards').classList.add('hidden');
-												// document.querySelector('.global-actions').classList.add('hidden');
-												// document.querySelector('.me-swipable__question').classList.add('hidden');
-												document.querySelector('.me-swipable__items').style.opacity = 0;
-												setTimeout(() => {
-													document.querySelector('.me-swipable__items').style.display = 'none';
+				// fetch(`${location.origin}/users/${gon.user_id}`, {
+				// 	method     : 'PATCH',
+				// 	headers    : {
+				// 		'Content-type'    : 'application/json; charset=UTF-8',
+				// 		'Accept'          : 'application/json',
+				// 		'X-Requested-With': 'XMLHttpRequest',
+				// 		'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+				// 	},
+				// 	credentials: 'same-origin',
+				// 	body       : JSON.stringify(params)
+				// })
+				// 	.then(
+				// 		response => {
+				// 			response.text().then(data => {
+				// document.documentElement.style.overflow = '';
+				// document.querySelector('.stackedcards').classList.add('hidden');
+				// document.querySelector('.global-actions').classList.add('hidden');
+				// document.querySelector('.me-swipable__question').classList.add('hidden');
+				document.querySelector('.me-swipable__items').style.opacity = 0;
+				setTimeout(() => {
+					document.querySelector('.me-swipable__items').style.display = 'none';
 
-													document.querySelector('.final-state').style.display = 'flex';
-													document.querySelector('.final-state').style.opacity = 1;
+					document.querySelector('.final-state').style.display = 'flex';
+					document.querySelector('.final-state').style.opacity = 1;
 
-													ProgressBarModule.show();
-													setTimeout(() => {
-														location.assign("/feed");
-													}, 500)
-												}, 1000);
-									// 		});
-									// 	}
-									// )
-									// .catch(err => {
-									// 	console.log('Fetch Error :-S', err);
-									// });
-							// });
-					// 	}
-					// )
-					// .catch(err => {
-					// 	console.log('Fetch Error :-S', err);
-					// });
+					ProgressBarModule.show();
+					setTimeout(() => {
+						location.assign("/feed");
+					}, 500)
+				}, 1000);
+				// 		});
+				// 	}
+				// )
+				// .catch(err => {
+				// 	console.log('Fetch Error :-S', err);
+				// });
+				// });
+				// 	}
+				// )
+				// .catch(err => {
+				// 	console.log('Fetch Error :-S', err);
+				// });
 			}
 		}
 
@@ -398,11 +417,11 @@ export default class SwipableController extends Controller {
 			answers.push('-1');
 
 			fetch(`/api/taste/events/${currentElementObj.id}/dislike?swipable=true`, {
-				method     : "post",
-				headers    : {
+				method:      "post",
+				headers:     {
 					'X-Requested-With': 'XMLHttpRequest',
-					'Content-type'    : 'text/javascript; charset=UTF-8',
-					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+					'Content-type':     'text/javascript; charset=UTF-8',
+					'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 				},
 				credentials: 'same-origin'
 			})
@@ -438,11 +457,11 @@ export default class SwipableController extends Controller {
 			PubSubModule.emit('event.like');
 
 			fetch(`/api/taste/events/${currentElementObj.id}/save?swipable=true`, {
-				method     : "post",
-				headers    : {
+				method:      "post",
+				headers:     {
 					'X-Requested-With': 'XMLHttpRequest',
-					'Content-type'    : 'text/javascript; charset=UTF-8',
-					'X-CSRF-Token'    : document.querySelector('meta[name=csrf-token]').content
+					'Content-type':     'text/javascript; charset=UTF-8',
+					'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
 				},
 				credentials: 'same-origin'
 			})
@@ -579,8 +598,12 @@ export default class SwipableController extends Controller {
 
 						requestAnimationFrame(function () {
 
-							rightObj.style.transform       = "translateX(0) translateY(" + elTrans + "px) translateZ(0)";
-							rightObj.style.webkitTransform = "translateX(0) translateY(" + elTrans + "px) translateZ(0)";
+							rightObj.style.transform       = "translateX(0) translateY(" +
+								elTrans +
+								"px) translateZ(0)";
+							rightObj.style.webkitTransform = "translateX(0) translateY(" +
+								elTrans +
+								"px) translateZ(0)";
 							rightObj.style.opacity         = '0';
 
 							topObj.style.transform       = "translateX(0) translateY(" + elTrans + "px) translateZ(0)";
@@ -626,8 +649,12 @@ export default class SwipableController extends Controller {
 							leftObj.style.webkitTransform = "translateX(0) translateY(" + elTrans + "px) translateZ(0)";
 							leftObj.style.opacity         = '0';
 
-							rightObj.style.transform       = "translateX(0) translateY(" + elTrans + "px) translateZ(0)";
-							rightObj.style.webkitTransform = "translateX(0) translateY(" + elTrans + "px) translateZ(0)";
+							rightObj.style.transform       = "translateX(0) translateY(" +
+								elTrans +
+								"px) translateZ(0)";
+							rightObj.style.webkitTransform = "translateX(0) translateY(" +
+								elTrans +
+								"px) translateZ(0)";
 							rightObj.style.opacity         = '0';
 
 							topObj.style.transform       = "translateX(0) translateY(" + elTrans + "px) translateZ(0)";
@@ -658,8 +685,10 @@ export default class SwipableController extends Controller {
 			}
 		}
 
-// Remove element from the DOM after swipe. To use this method you need to call this function in onSwipeLeft, onSwipeRight and onSwipeTop and put the method just above the variable 'currentPosition = currentPosition + 1'.
-//On the actions onSwipeLeft, onSwipeRight and onSwipeTop you need to remove the currentPosition variable (currentPosition = currentPosition + 1) and the function setActiveHidden
+// Remove element from the DOM after swipe. To use this method you need to call this function in onSwipeLeft,
+// onSwipeRight and onSwipeTop and put the method just above the variable 'currentPosition = currentPosition + 1'. On
+// the actions onSwipeLeft, onSwipeRight and onSwipeTop you need to remove the currentPosition variable
+// (currentPosition = currentPosition + 1) and the function setActiveHidden
 
 		function removeElement() {
 			currentElementObj.remove();
@@ -695,15 +724,39 @@ export default class SwipableController extends Controller {
 				if (stackedOptions === "Top") {
 					elTrans = elementsMargin * (items - 1);
 					if (element) {
-						element.style.webkitTransform = "translateX(" + moveX + "px) translateY(" + (moveY + elTrans) + "px) translateZ(0) rotate(" + rotateElement + "deg)";
-						element.style.transform       = "translateX(" + moveX + "px) translateY(" + (moveY + elTrans) + "px) translateZ(0) rotate(" + rotateElement + "deg)";
+						element.style.webkitTransform = "translateX(" +
+							moveX +
+							"px) translateY(" +
+							(moveY + elTrans) +
+							"px) translateZ(0) rotate(" +
+							rotateElement +
+							"deg)";
+						element.style.transform       = "translateX(" +
+							moveX +
+							"px) translateY(" +
+							(moveY + elTrans) +
+							"px) translateZ(0) rotate(" +
+							rotateElement +
+							"deg)";
 						element.style.opacity         = opacity;
 					}
 				} else if (stackedOptions === "Bottom" || stackedOptions === "None") {
 
 					if (element) {
-						element.style.webkitTransform = "translateX(" + moveX + "px) translateY(" + (moveY) + "px) translateZ(0) rotate(" + rotateElement + "deg)";
-						element.style.transform       = "translateX(" + moveX + "px) translateY(" + (moveY) + "px) translateZ(0) rotate(" + rotateElement + "deg)";
+						element.style.webkitTransform = "translateX(" +
+							moveX +
+							"px) translateY(" +
+							(moveY) +
+							"px) translateZ(0) rotate(" +
+							rotateElement +
+							"deg)";
+						element.style.transform       = "translateX(" +
+							moveX +
+							"px) translateY(" +
+							(moveY) +
+							"px) translateZ(0) rotate(" +
+							rotateElement +
+							"deg)";
 						element.style.opacity         = opacity;
 					}
 
@@ -754,8 +807,16 @@ export default class SwipableController extends Controller {
 
 						}
 
-						listElNodesObj[i].style.transform       = 'scale(' + elScale + ') translateX(0) translateY(' + (elTrans - elTransInc) + 'px) translateZ(0)';
-						listElNodesObj[i].style.webkitTransform = 'scale(' + elScale + ') translateX(0) translateY(' + (elTrans - elTransInc) + 'px) translateZ(0)';
+						listElNodesObj[i].style.transform       = 'scale(' +
+							elScale +
+							') translateX(0) translateY(' +
+							(elTrans - elTransInc) +
+							'px) translateZ(0)';
+						listElNodesObj[i].style.webkitTransform = 'scale(' +
+							elScale +
+							') translateX(0) translateY(' +
+							(elTrans - elTransInc) +
+							'px) translateZ(0)';
 						listElNodesObj[i].style.opacity         = elOpac;
 						listElNodesObj[i].style.zIndex          = elZindex;
 
@@ -890,7 +951,12 @@ export default class SwipableController extends Controller {
 			touchingElement = false;
 
 			if (!(currentPosition >= maxElements)) {
-				if (translateY < (elementHeight * -1) && translateX > ((listElNodesWidth / 2) * -1) && translateX < (listElNodesWidth / 2)) {  //is Top?
+				if (translateY <
+					(elementHeight * -1) &&
+					translateX >
+					((listElNodesWidth / 2) * -1) &&
+					translateX <
+					(listElNodesWidth / 2)) {  //is Top?
 
 					if (translateY < (elementHeight * -1) || (Math.abs(translateY) / timeTaken > velocity)) { // Did It Move To Top?
 						onSwipeTop();
@@ -901,7 +967,9 @@ export default class SwipableController extends Controller {
 				} else {
 
 					if (translateX < 0) {
-						if (translateX < ((listElNodesWidth / 2) * -1) || (Math.abs(translateX) / timeTaken > velocity)) { // Did It Move To Left?
+						if (translateX <
+							((listElNodesWidth / 2) * -1) ||
+							(Math.abs(translateX) / timeTaken > velocity)) { // Did It Move To Left?
 							onSwipeLeft();
 						} else {
 							backToMiddle();

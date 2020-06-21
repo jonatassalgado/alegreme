@@ -1,7 +1,6 @@
-import {Controller}        from "stimulus";
-import {MDCRipple}         from "@material/ripple";
+import ApplicationController from './application_controller'
 
-export default class MovieCollectionController extends Controller {
+export default class MovieCollectionController extends ApplicationController {
 	static targets = ['collection', 'scrollContainer'];
 
 	initialize() {
