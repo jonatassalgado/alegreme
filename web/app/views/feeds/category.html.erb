@@ -1,56 +1,57 @@
 <section class="me-page  is-animated">
-  <% content_for :canonical_url, category_events_url %>
-  <% content_for :amp_url, category_events_url(format: :amp) %>
+	<% content_for :canonical_url, category_events_url %>
+	<% content_for :amp_url, category_events_url(format: :amp) %>
 
-  <%= notice %>
+	<%= notice %>
 
-  <% content_for :meta_title, params[:category] ? "Eventos de #{params[:category].capitalize} em Porto Alegre - RS" : "Eventos de todas as categorias em Porto Alegre - RS" %>
-  <% content_for :meta_description, params[:category] ? "Descubra eventos de #{params[:category]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" : "Descubra eventos de todas as categorias que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
+	<% content_for :meta_title, params[:category] ? "Eventos de #{params[:category].capitalize} em Porto Alegre - RS" : "Eventos de todas as categorias em Porto Alegre - RS" %>
+	<% content_for :meta_description, params[:category] ? "Descubra eventos de #{params[:category]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" : "Descubra eventos de todas as categorias que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
 
-  <script type="application/ld+json">
+	<script type="application/ld+json">
   [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
 
 
-  </script>
+
+	</script>
 
 
-  <section class="me-section me-section--condensed">
-    <div data-controller="chip-set" data-target="chip-set.wrapper" data-chip-set-selected="<%= params[:category] %>" class="me-collection__title-custom me-chip-set__wrapper">
-      <div data-target="chip-set.chipSet" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
-        <% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
-          <div data-action="click->chip-set#select"
-            data-chip-set-url="<%= category_events_path category %>"
-            data-chip-set-slug="<%= category %>"
-            class="me-chip mdc-chip">
-            <div class="mdc-chip__ripple"></div>
-            <span class="mdc-chip__text"><%= category %></span>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </section>
+	<section class="me-section me-section--condensed">
+		<div data-controller="chip-set" data-target="chip-set.wrapper" data-chip-set-selected="<%= params[:category] %>" class="me-collection__title-custom me-chip-set__wrapper">
+			<div data-target="chip-set.chipSet" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
+				<% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
+					<div data-action="click->chip-set#select"
+							 data-chip-set-url="<%= category_events_path category %>"
+							 data-chip-set-slug="<%= category %>"
+							 class="me-chip mdc-chip">
+						<div class="mdc-chip__ripple"></div>
+						<span class="mdc-chip__text"><%= category %></span>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</section>
 
-  <% if params[:category] %>
-    <section class="me-section me-section--without-padding">
-      <section class="me-section__inner">
-        <%= render partial: "components/collection/events/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
-      </section>
-    </section>
-  <% else %>
-    <div class="me-section me-section--full-height">
-      <div class="me-section__inner">
-        <div class="me-info">
-          <div class="me-info__content">
-            Selecione uma categoria acima para ver os eventos aqui
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
+	<% if params[:category] %>
+		<section class="me-section me-section--without-padding">
+			<section class="me-section__inner">
+				<%= render partial: "components/collection/events/collection", locals: {collection: @collection, props: {infinite_scroll: true}} %>
+			</section>
+		</section>
+	<% else %>
+		<div class="me-section me-section--full-height">
+			<div class="me-section__inner">
+				<div class="me-info">
+					<div class="me-info__content">
+						Selecione uma categoria acima para ver os eventos aqui
+					</div>
+				</div>
+			</div>
+		</div>
+	<% end %>
 
-  <% unless current_user %>
-    <%= link_to root_path, style: "display: flex" do %>
-      <img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">
-    <% end %>
-  <% end %>
+	<% unless current_user %>
+		<%= link_to root_path, style: "display: flex" do %>
+			<img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">
+		<% end %>
+	<% end %>
 </section>

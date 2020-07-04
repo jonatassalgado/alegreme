@@ -1,7 +1,6 @@
 module EventServices
 	class EventFetcher
 
-
 		def initialize(relation, opts)
 			@opts     = opts
 			@relation = get_event_active_record(relation)

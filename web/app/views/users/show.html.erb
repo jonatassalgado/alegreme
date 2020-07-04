@@ -1,87 +1,87 @@
 <section class="me-page is-animated">
 
-  <%= notice %>
+	<%= notice %>
 
-  <% content_for :meta_title, "#{@user.first_name} | Alegreme.com" %>
+	<% content_for :meta_title, "#{@user.first_name} | Alegreme.com" %>
 
-  <div class="me-user-profile me-section">
-    <% if @user.picture %>
-      <img class="me-user-profile__picture" src="<%= @user.picture %>" alt="">
-    <% end %>
-    <h1 class="me-user-profile__name">
-      <%= @user.first_name %>
-    </h1>
-    <% if current_user == @user || current_user.admin? %>
-      <%= link_to "Editar", edit_user_path(@user) %>
-      <%= link_to "Sair", destroy_user_session_path, method: :delete if current_user.admin? %>
-    <% end %>
-    <% if current_user != @user %>
-      <div class="me-user-profile__follow-button">
-        <%= render partial: 'components/follow/follow_button', locals: {
-            user:       current_user,
-            followable: @user
-        } %>
-      </div>
-    <% end %>
-  </div>
+	<div class="me-user-profile me-section">
+		<% if @user.picture %>
+			<img class="me-user-profile__picture" src="<%= @user.picture %>" alt="">
+		<% end %>
+		<h1 class="me-user-profile__name">
+			<%= @user.first_name %>
+		</h1>
+		<% if current_user == @user || current_user.admin? %>
+			<%= link_to "Editar", edit_user_path(@user) %>
+			<%= link_to "Sair", destroy_user_session_path, method: :delete if current_user.admin? %>
+		<% end %>
+		<% if current_user != @user %>
+			<div class="me-user-profile__follow-button">
+				<%= render partial: 'components/follow/follow_button', locals: {
+						user:       current_user,
+						followable: @user
+				} %>
+			</div>
+		<% end %>
+	</div>
 
 
-  <% if @user.followers['users_total_followers'] > 0 %>
-    <div class="me-section">
-      <div class="me-section__inner">
-        <div class="me-section__title me-user-profile__follow-counter">
-          <%= @user.followers['users_total_followers'] > 1 ? "#{@user.followers['users_total_followers']} seguidores" : "#{@user.followers['users_total_followers']} seguidor" %>
-        </div>
+	<% if @user.followers['users_total_followers'] > 0 %>
+		<div class="me-section">
+			<div class="me-section__inner">
+				<div class="me-section__title me-user-profile__follow-counter">
+					<%= @user.followers['users_total_followers'] > 1 ? "#{@user.followers['users_total_followers']} seguidores" : "#{@user.followers['users_total_followers']} seguidor" %>
+				</div>
 
-        <% if current_user == @user  %>
-        <div class="me-user-profile__followers">
-          <div class="me-user-suggestions">
-            <div class="me-user-suggestions__inner">
-              <% User.where("id IN (?)", @user.followers['users']).order("last_sign_in_at DESC").limit(10).each do |user| %>
-              <%= link_to user_path user do %>
-              <div class="me-user-suggestions__user">
-                <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture :small %>')">
-                </div>
-                <div class="me-user-suggestions__name">
-                  <%= user.first_name %>
-                </div>
-              </div>
-              <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+				<% if current_user == @user %>
+					<div class="me-user-profile__followers">
+						<div class="me-user-suggestions">
+							<div class="me-user-suggestions__inner">
+								<% User.where("id IN (?)", @user.followers['users']).order("last_sign_in_at DESC").limit(10).each do |user| %>
+									<%= link_to user_path user do %>
+										<div class="me-user-suggestions__user">
+											<div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture :small %>')">
+											</div>
+											<div class="me-user-suggestions__name">
+												<%= user.first_name %>
+											</div>
+										</div>
+									<% end %>
+								<% end %>
+							</div>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
 
-  <section class="me-section">
-    <div class="me-section__inner">
-      <h2 class="me-section__title">Tópicos que <%= current_user == @user ? 'você' : @user.first_name %> segue</h2>
-      <% if @user.following_topics.present? %>
-        <div class="me-chip-set__wrapper">
-          <div class="me-chip-set mdc-chip-set">
-            <% @user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
-              <a href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| @user.last_sign_in_at < event.created_at } %>">
-                <%= topic.details_name.titleize %>
-                <i class="me-chip__counter"><%= topic.events.active.size %></i>
-              </a>
-            <% end %>
-          </div>
-        </div>
-      <% else %>
-      <div class="me-section__description">
-        <%= current_user == @user ? 'Você' : @user.first_name %> não segue nenhum tópico ainda
-      </div>
-      <% end %>
-    </div>
-  </section>
+	<section class="me-section">
+		<div class="me-section__inner">
+			<h2 class="me-section__title">Tópicos que <%= current_user == @user ? 'você' : @user.first_name %> segue</h2>
+			<% if @user.following_topics.present? %>
+				<div class="me-chip-set__wrapper">
+					<div class="me-chip-set mdc-chip-set">
+						<% @user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
+							<a href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| @user.last_sign_in_at < event.created_at } %>">
+								<%= topic.details_name.titleize %>
+								<i class="me-chip__counter"><%= topic.events.active.size %></i>
+							</a>
+						<% end %>
+					</div>
+				</div>
+			<% else %>
+				<div class="me-section__description">
+					<%= current_user == @user ? 'Você' : @user.first_name %> não segue nenhum tópico ainda
+				</div>
+			<% end %>
+		</div>
+	</section>
 
-  <section class="me-section">
-    <div class="me-section__inner">
-      <%= render partial: "components/collection/events/collection", locals: {data: @data} %>
-    </div>
-  </section>
+	<section class="me-section">
+		<div class="me-section__inner">
+			<%= render partial: "components/collection/events/collection", locals: {collection: @collection} %>
+		</div>
+	</section>
 
 </section>

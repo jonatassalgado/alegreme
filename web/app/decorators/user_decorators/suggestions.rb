@@ -12,7 +12,7 @@ module UserDecorators
 			end
 
 			def has_events_suggestions?
-				suggestions['events'].size > 0
+				suggestions['events'].size
 			end
 		end
 

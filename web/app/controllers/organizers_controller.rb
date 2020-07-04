@@ -11,32 +11,27 @@ class OrganizersController < ApplicationController
 	# GET /organizers/1
 	# GET /organizers/1.json
 	def show
-		events      = @organizer.events
-		@collection = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                              identifier: 'organizers',
-				                                                                              events:     events
-		                                                                              }, {
-				                                                                              in_organizers:   [params[:id]],
-				                                                                              with_high_score: false,
-				                                                                              in_user_personas: false,
-																																											not_in_saved:     false,
-				                                                                              order_by_persona: false,
-				                                                                              order_by_date:    true,
-				                                                                              limit:           24
-		                                                                              })
 
-		@data = {
-				identifier: @organizer.details['name'].parameterize,
-				collection: @collection,
-				title:      {
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
+
+		@events ||= @organizer.events
+
+		@collection = {
+				identifier:       @organizer.details['name'].parameterize,
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: @organizer.details['name']
 				},
-				followable: @organizer,
-				filters:    {
-						ocurrences: true,
-						kinds:      false,
-						categories: false
-				}
+				followable:       @place,
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
 
 		render 'show'

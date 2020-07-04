@@ -1,19 +1,21 @@
 <section class="me-page is-animated">
-  <% content_for :canonical_url, place_url(@place, format: :html) %>
+	<% content_for :canonical_url, place_url(@place, format: :html) %>
 
-  <%= notice %>
+	<%= notice %>
 
-  <% content_for :meta_title, "Eventos em #{@place.details_name} Porto Alegre | Alegreme.com" %>
+	<% content_for :meta_title, "Eventos em #{@place.details_name} Porto Alegre | Alegreme.com" %>
 
-  <script type="application/ld+json">
+	<script type="application/ld+json">
   [
     <%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>
   ]
+	</script>
 
-  </script>
-  <section class="me-section">
-    <section class="me-section__inner">
-      <%= render partial: "components/collection/events/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
-    </section>
-  </section>
+	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
+			collection: @collection,
+			props:      {
+					infinite_scroll: true
+			}
+	} %>
+
 </section>

@@ -11,7 +11,7 @@ module UserDecorators
 
 			module InstanceMethods
 			  def has_following_resources?
-				  following_topics.size > 0
+				  following_topics.size
 			  end
 			end
 	end

@@ -78,5 +78,6 @@ Rails.application.routes.draw do
 
 	get 'job/submit/:who/:message', to: 'job#submit'
 
+	mount ActionCable.server => '/cable'
 
 end

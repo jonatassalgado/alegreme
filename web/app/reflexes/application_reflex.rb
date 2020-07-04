@@ -2,6 +2,7 @@
 
 class ApplicationReflex < StimulusReflex::Reflex
   # Put application wide Reflex behavior in this file.
+  delegate :current_user, to: :connection
   #
   # Example:
   #
@@ -9,4 +10,5 @@ class ApplicationReflex < StimulusReflex::Reflex
   #   delegate :current_user, to: :connection
   #
   # Learn more at: https://docs.stimulusreflex.com
+  #
 end

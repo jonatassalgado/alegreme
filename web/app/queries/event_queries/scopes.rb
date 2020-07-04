@@ -150,24 +150,25 @@ module EventQueries
       scope 'in_days', lambda { |ocurrences, opts = {}|
         opts = {'turn_on': true}.merge(opts)
 
-        if opts[:turn_on] && !ocurrences.blank?
+        if opts[:turn_on] && ocurrences.present?
 
-          ocurrences_to_query = []
+          # ocurrences_to_query = []
           # contains_range = ocurrences.any? { |ocurr| ocurr[0] == '[' }
 
           # if contains_range
-          ocurrences.map do |ocurr|
-            is_array = ocurr[0] == '['
+          # ocurrences.map do |ocurr|
+            # ocurrences_to_query << ocurrences.map(&:yday)
+            # is_array = ocurr[0] == '['
 
-            if is_array
-              ocurr = JSON.parse ocurr
-              ocurrences_to_query << (ocurr[0].to_date..ocurr[1].to_date).to_a.map(&:yday)
-            else
-              ocurrences_to_query << ocurr.to_date.yday
-            end
-          end
+            # if ocurr
+            #   ocurr = JSON.parse ocurr
+            #   ocurrences_to_query << (ocurr[0].to_date..ocurr[1].to_date).to_a.map(&:yday)
+            # else
+            #   ocurrences_to_query << ocurr.to_date.yday
+            # end
+          # end
 
-          where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences_to_query.flatten)
+          where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences)
         else
           all
         end

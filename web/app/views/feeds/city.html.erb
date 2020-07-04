@@ -1,26 +1,27 @@
 <section class="me-page is-animated">
 
-  <% content_for :canonical_url, city_events_url %>
-  <%# content_for :amp_url, week_events_url(format: :amp) %>
+	<% content_for :canonical_url, city_events_url %>
+	<%# content_for :amp_url, week_events_url(format: :amp) %>
 
-  <%= notice %>
+	<%= notice %>
 
-  <% content_for :meta_title, "Eventos em Porto Alegre - RS" %>
-  <% content_for :meta_description, "Descubra as festas, shows, feiras, teatros, palestras, festivais, exposições e filmes que acontecem em 2019 até 2020." %>
+	<% content_for :meta_title, "Eventos em Porto Alegre - RS" %>
+	<% content_for :meta_description, "Descubra as festas, shows, feiras, teatros, palestras, festivais, exposições e filmes que acontecem em 2019 até 2020." %>
 
-  <script type="application/ld+json">
+	<script type="application/ld+json">
   [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
-  </script>
 
-  <section class="me-section">
-    <section class="me-section__inner">
-      <%= render partial: "components/collection/events/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
-    </section>
-  </section>
+	</script>
 
-  <% unless current_user %>
-    <%= link_to root_path, style: "display: flex" do %>
-      <img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">
-    <% end %>
-  <% end %>
+	<section class="me-section">
+		<section class="me-section__inner">
+			<%= render partial: "components/collection/events/collection", locals: {collection: @collection} %>
+		</section>
+	</section>
+
+	<% unless current_user %>
+		<%= link_to root_path, style: "display: flex" do %>
+			<img class="me-banner" data-gtm="banner-request-invite-footer" loading="lazy" src="<%= image_url 'banners/get-invite-banner' %>" alt="Pegue um convite">
+		<% end %>
+	<% end %>
 </section>

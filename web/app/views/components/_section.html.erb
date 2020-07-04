@@ -1,0 +1,19 @@
+<%
+
+	return ArgumentError unless collection
+
+	collection = {
+			events:           [],
+			if_greater_than:  0,
+			display_if_empty: false
+	}.deep_merge!(collection)
+
+%>
+
+<% if collection[:display_if_empty] || (collection[:events] && collection[:events].size > collection[:if_greater_than]) %>
+	<section id="<%= collection[:identifier] %>" class="me-section">
+		<div class="me-section__inner">
+			<%= yield %>
+		</div>
+	</section>
+<% end %>

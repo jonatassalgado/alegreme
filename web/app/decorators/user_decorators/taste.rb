@@ -141,7 +141,7 @@ module UserDecorators
 			RESOURCES.each do |resource|
 				["save", "like",	"view", "dislike"].each do |taste_type|
 					define_method "taste_#{resource}_#{TASTE_TYPES[taste_type][:past]}" do
-						taste[resource][TASTE_TYPES[taste_type][:past]]
+						taste.dig(resource, TASTE_TYPES[taste_type][:past])
 					end
 				end
 			end

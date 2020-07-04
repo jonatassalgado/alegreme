@@ -30,33 +30,19 @@ class UsersController < ApplicationController
 	# GET /users/1
 	# GET /users/1.json
 	def show
-		events      = @user.saved_events(as_model: true)
-		@topics     = @user.following_topics
-		@collection = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                              identifier: 'current_user.slug',
-				                                                                              events:     events
-		                                                                              }, {
-				                                                                              with_high_score:  false,
-				                                                                              in_user_personas: false,
-				                                                                              order_by_persona: false,
-				                                                                              order_by_date:    true,
-				                                                                              not_in_saved:     false,
-				                                                                              only_in:          events.map(&:id),
-				                                                                              limit:            24
-		                                                                              })
+		@events = @user.saved_events.present? ? @user.saved_events(as_model: true).active.order_by_date : Event.none
+		@topics = @user.following_topics
 
-		@data = {
-				identifier: "user-saved-events",
-				collection: @collection,
-				title:      {
+
+		@collection = {
+				identifier:       'user-saved-events',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Eventos salvos por #{current_user == @user ? 'você' : @user.first_name}"
 				},
-				empty_message: "#{current_user == @user ? 'Você' : @user.first_name} não possuí nenhum evento salvo ainda",
-				filters:    {
-						ocurrences: false,
-						kinds:      false,
-						categories: false
-				}
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
 
 	end
@@ -90,7 +76,7 @@ class UsersController < ApplicationController
 	# PATCH/PUT /users/1.json
 	def update
 		@user.slug = nil
-		
+
 		respond_to do |format|
 			if @user.update(user_params)
 				format.html { redirect_to feed_path, notice: 'User was successfully updated.' }
@@ -127,24 +113,24 @@ class UsersController < ApplicationController
 	def user_params
 		if current_user.admin?
 			params.require(:user).permit(:name,
-				:id,
-				:personas_primary_name,
-				:personas_primary_score,
-				:personas_secondary_name,
-				:personas_secondary_score,
-				:personas_tertiary_name,
-				:personas_tertiary_score,
-				:personas_quartenary_name,
-				:personas_quartenary_score,
-				:personas_assortment_finished,
-				:personas_assortment_finished_at,
-				:notifications_devices,
-				:notifications_topics => {
-					:all => [
-						:requested,
-						:active
-					]
-					})
+			                             :id,
+			                             :personas_primary_name,
+			                             :personas_primary_score,
+			                             :personas_secondary_name,
+			                             :personas_secondary_score,
+			                             :personas_tertiary_name,
+			                             :personas_tertiary_score,
+			                             :personas_quartenary_name,
+			                             :personas_quartenary_score,
+			                             :personas_assortment_finished,
+			                             :personas_assortment_finished_at,
+			                             :notifications_devices,
+			                             :notifications_topics => {
+					                             :all => [
+							                             :requested,
+							                             :active
+					                             ]
+			                             })
 		else
 			params.require(:user).permit(:name, :image)
 		end

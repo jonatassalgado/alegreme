@@ -18,7 +18,7 @@ services:
       - db
       - api
       - scrapy
-      - memcached
+      - redis
       - search
     volumes:
       - bundle_cache:/bundle
@@ -40,6 +40,7 @@ services:
       WEB_CONCURRENCY: 4
       RAILS_MAX_THREADS: 6
       JOB_WORKER_URL: redis://redis:6379/0
+      REDIS_URL: redis://:password@redis:6379/0
       ELASTICSEARCH_URL: http://search:9200
     restart: always
     ports:
@@ -169,17 +170,17 @@ services:
     mem_reservation: 256m
     cpus: 3
     command: --maxrss 3500
-  memcached:
-    image: memcached
-    command: memcached -m 64
-    ports:
-      - 11211:11211
-    restart: always
-    mem_limit: 3gb
-    memswap_limit: 3gb
-    mem_reservation: 256m
-    cpus: 2
-    restart: always
+#  memcached:
+#    image: memcached
+#    command: memcached -m 64
+#    ports:
+#      - 11211:11211
+#    restart: always
+#    mem_limit: 3gb
+#    memswap_limit: 3gb
+#    mem_reservation: 256m
+#    cpus: 2
+#    restart: always
   redis:
     image: redis
     environment:

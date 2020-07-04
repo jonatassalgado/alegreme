@@ -6,7 +6,7 @@
 
   <section class="me-section">
     <section class="me-section__inner">
-      <%= render partial: "components/collection/events/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
+      <%= render partial: "components/collection/events/collection", locals: { collection: @collection, props: {infinite_scroll: true} } %>
     </section>
   </section>
 

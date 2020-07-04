@@ -1,67 +1,34 @@
 <%
 
-  raise ArgumentError unless data
+	raise ArgumentError unless data
+	raise ArgumentError unless data[:event]
 
-  data = {
-      identifier:       'similar',
-      events:           [],
-      similar:          false,
-      insert_after:     4,
-      user:             current_user,
-      units_to_display: mobile_device? ? 8 : 6,
-      json_request:     false
-  }.deep_merge!(data)
+	data = {
+			identifier:       'similar',
+			event:            nil,
+			user:             current_user,
+			units_to_display: mobile_device? ? 8 : 6,
+	}.deep_merge!(data)
 
-
-  if data[:similar]
-    event              = data[:events].detect { |event| event.id == data[:similar].to_i } || Event.find(data[:similar])
-    similar_events_ids = event.similar_data[0...data[:units_to_display]]
-    similar_events     = Event.where(id: similar_events_ids).order_by_ids(similar_events_ids).active.not_in_saved(data[:user])
-  end
+	similar_events_ids = data[:event].similar_data[0...data[:units_to_display]]
+	similar_events = Event.where(id: similar_events_ids).order_by_ids(similar_events_ids).active.not_in_saved(data[:user])
 
 %>
-<% if data[:similar] %>
-  <div id="similar-to-<%= data[:similar] %>"
-       class="me-similar"
-       style="order: <%= data[:insert_after] %>">
-    <h3>
-      Similares a <%= link_to(limit_name_size(event.details['name'], 60), event_path(event)) %>
-    </h3>
 
-    <div class="me-similar__events">
-      <%= render partial:    'components/collection/event',
-                 collection: similar_events,
-                 as:         :event,
-                 locals:     {
-                     display_similar: false,
-                     display_place:   false,
-                     identifier:      data[:identifier],
-                     type:            'similar',
-                     json_request:    data[:json_request]
-                 } %>
+<div class="me-similar <%= "similar-to-#{dom_id data[:event]}" %>">
+	<h3>
+		Similares a <%= link_to(limit_name_size(data[:event].details['name'], 60), event_path(data[:event])) %>
+	</h3>
 
-      <%# if similar_events.length < data[:units_to_display] %>
-        <!-- <div class="me-similar__empty">
-          <span>Estes são todos os eventos similares que encontrei.</span>
-        </div> -->
-      <%# end %>
-    </div>
-
-    <h3 class="me-similar__topics">
-      Tópicos parecidos com os do <%= link_to(limit_name_size(event.details['name'], 60), event_path(event)) %>
-    </h3>
-
-<!--    <div class="me-similar__organizers">-->
-      <%#= render partial: 'components/follow/follow', locals: {
-          data: {
-              chips:             similar_events.map { |similar| similar.organizers[0..3] }.flatten.uniq[0..6].sort,
-              user:              current_user,
-              event_id:          event.id,
-              type:              'organizers',
-              expand_to_similar: true
-          }
-      } %>
-<!--    </div>-->
-
-  </div>
-<% end %>
+	<div class="me-similar__events">
+		<%= render partial:    'components/collection/event',
+							 collection: similar_events,
+							 as:         :event,
+							 locals:     {
+									 display_similar: false,
+									 display_place:   false,
+									 identifier:      "similar-to-#{dom_id data[:event]}",
+									 type:            'similar'
+							 } %>
+	</div>
+</div>

@@ -1,13 +1,13 @@
 <section class="me-page  is-animated">
 
-  <%= notice %>
+	<%= notice %>
 
-  <% content_for :meta_title, "Eventos de tópicos que você segue" %>
+	<% content_for :meta_title, "Eventos de tópicos que você segue" %>
 
-  <section class="me-section">
-    <section class="me-section__inner">
-      <%= render partial: "components/collection/events/collection", locals: { data: @data, props: {infinite_scroll: true} } %>
-    </section>
-  </section>
+	<section class="me-section">
+		<section class="me-section__inner">
+			<%= render partial: "components/collection/events/collection", locals: {collection: @collection, props: {infinite_scroll: true}} %>
+		</section>
+	</section>
 
 </section>

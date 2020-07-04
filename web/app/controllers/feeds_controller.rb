@@ -11,409 +11,338 @@ class FeedsController < ApplicationController
 				         :env                     => Rails.env,
 				         :user_id                 => current_user.try(:id),
 				         :user_first_name         => current_user.try(:first_name),
-								 :user_sign_in_count      => current_user&.sign_in_count,
-								 :user_taste_events_saved => current_user&.taste_events_saved&.size
+				         :user_sign_in_count      => current_user&.sign_in_count,
+				         :user_taste_events_saved => current_user&.taste_events_saved&.size
 		         })
 
-		@collections ||= EventServices::CollectionCreator.new(current_user, params)
-
-		@new_events_today             = Event.where("created_at > ?", DateTime.now - 24.hours)
-		@events_this_week             = Event.in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s))
-		@events_in_user_suggestions   = Event.in_user_suggestions(current_user)
-		@events_from_following_topics = current_user.try(:events_from_following_topics)
-		@favorited_events             = current_user.try(:saved_events)
-		@following_users              = User.following_users(current_user)
-		@events_from_followed_users   = Event.from_followed_users(current_user)
-		@events_in_my_neighborhood    = Event.in_neighborhoods(["Cidade Baixa"])
-		@swipable_items               = get_swipable_items
-
-		if current_user&.sign_in_count.try { |counter| counter >= 2 } && @new_events_today.size > 3
-			@collection_new_today = @collections.call(
-					{
-							identifier: 'new-today',
-							events:     @new_events_today
-					},
-					{
-							only_in:           @new_events_today.map(&:id),
-							order_by_persona:  false,
-							order_by_date:     true,
-							in_user_personas:  true,
-							not_in_categories: ['curso']
-					})
-		else
-			@collection_new_today = {}
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 8
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
 		end
 
+		@saved_events                 ||= current_user&.saved_events&.active
+		@new_events_today             ||= Event.active.with_high_score.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place).limit(session[:limit])
+		@events_this_week             ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + session[:limit]))).includes(:place).order_by_date.limit(session[:limit])
+		@events_in_user_suggestions   ||= current_user ? Event.active.not_in_saved(current_user).not_in(@events_this_week.map(&:id)).in_user_suggestions(current_user).includes(:place).order_by_date.limit(session[:limit]) : []
+		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.active&.includes(:place)&.order_by_date&.limit(session[:limit]) : []
+		@events_from_followed_users   ||= current_user ? Event.active.from_followed_users(current_user).includes(:place).order_by_date.limit(session[:limit]) : []
+		@events_in_my_neighborhood    ||= current_user ? Event.active.with_high_score.in_neighborhoods(["Cidade Baixa"]).includes(:place).order_by_date.limit(session[:limit]) : []
 
-		if current_user&.has_events_suggestions?
-			@collection_suggestions = @collections.call(
-					{
-							identifier: 'user-suggestions',
-							events:     @events_in_user_suggestions
-					},
-					{
-							only_in:          @events_in_user_suggestions.map(&:id),
-							in_user_personas: false,
-							order_by_persona: false,
-							order_by_date:    true,
-							with_high_score:  true
-					}
-			)
-		else
-			@collection_suggestions = {}
-		end
+		@following_users ||= User.following_users(current_user)
+		@swipable_items  ||= get_swipable_items
 
 
-		if current_user&.has_following_resources?
-			@collection_follow = @collections.call(
-					{
-							identifier: 'follow',
-							events:     @events_from_following_topics
-					},
-					{
-							only_in:          @events_from_following_topics.map(&:id),
-							not_in:           (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
-							in_user_personas: false,
-							with_high_score:  false,
-							not_in_saved:     false,
-							order_by_persona: false,
-							order_by_date:    true
-					})
-		else
-			@collection_follow = {}
-		end
+		@collection_new_today = {}
 
-
-		if @events_from_followed_users.size > 0
-			@collection_following_users = @collections.call(
-					{
-							identifier: 'following-users',
-							events:     @events_from_followed_users
-					},
-					{
-							only_in:          @events_from_followed_users.map(&:id),
-							in_user_personas: false,
-							order_by_persona: false,
-							order_by_date:    true,
-							with_high_score:  false,
-							not_in_saved:     false
-					})
-		else
-			@collection_following_users = {}
-		end
-
-
-		if @events_this_week.size >= 2
-			@collection_week = @collections.call(
-					{
-							identifier: 'this-week',
-							events:     @events_this_week
-					},
-					{
-							only_in:           @events_this_week.map(&:id),
-							not_in:            (@collection_suggestions.dig(:detail, :init_filters_applyed, :current_events_ids) || []) | (@collection_follow.dig(:detail, :init_filters_applyed, :current_events_ids) || []),
-							in_user_personas:  false,
-							order_by_persona:  false,
-							order_by_date:     true,
-							not_in_categories: ['brecho', 'curso']
-					})
-		else
-			@collection_week = {}
-		end
-
-		if @events_in_my_neighborhood.size >= 0
-			@collection_neighborhood = @collections.call(
-					{
-							identifier: 'neighborhood',
-							events:     @events_in_my_neighborhood
-					},
-					{
-							only_in:           @events_in_my_neighborhood.map(&:id),
-							in_user_personas:  false,
-							order_by_persona:  false,
-							order_by_date:     true
-					})
-		else
-			@collection_neighborhood = {}
-		end
-
-
-		@items = {
-				new_today:        @collection_new_today,
-				week:             @collection_week,
-				follow:           @collection_follow,
-				following_users:  @collection_following_users,
-				user_suggestions: @collection_suggestions,
-				neighborhood:     @collection_neighborhood
+		@collection_suggestions = {
+				identifier:       'user-suggestions',
+				events:           @events_in_user_suggestions,
+				title:            {
+						principal: "Escolhidos a dedo para #{current_user&.first_name || 'você'}",
+						tertiary:  (current_user ? "Com base nos eventos salvos" : "Crie uma conta para ver os eventos abaixo")
+				},
+				infinite_scroll:  true,
+				show_similar_to:  session[:show_similar_to],
+				continue_to:      "/#{current_user&.slug}/sugestoes",
+				display_if_empty: true,
+				disposition:      :horizontal
 		}
+
+		@collection_follow = {
+				identifier:       'follow',
+				events:           @events_from_following_topics,
+				title:            {
+						principal: "Tópicos que você segue",
+						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
+				},
+				continue_to:      "/#{current_user&.slug}/seguindo",
+				show_similar_to:  session[:show_similar_to],
+				display_if_empty: true,
+				disposition:      :horizontal
+		}
+
+		@collection_following_users = {
+				identifier:       'following-users',
+				events:           @events_from_followed_users,
+				title:            {
+						principal: "Pessoas que você segue",
+						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
+				},
+				show_similar_to:  session[:show_similar_to],
+				display_if_empty: true,
+				disposition:      :horizontal
+		}
+
+
+		@collection_week = {
+				identifier:       'this-week',
+				events:           @events_this_week,
+				title:            {
+						principal: "Acontecendo esta semana",
+						tertiary:  (current_user ? "Com base no seu perfil" : "Crie uma conta para ver os eventos abaixo")
+				},
+				infinite_scroll:  true,
+				show_similar_to:  session[:show_similar_to],
+				continue_to:      '/porto-alegre/eventos/semana',
+				disposition:      :horizontal,
+				display_if_empty: true,
+				if_greater_than:  2
+		}
+
+		@collection_neighborhood = {
+				identifier:       'my-neighborhood',
+				events:           @events_in_my_neighborhood,
+				title:            {
+						principal: "Nos bairros da sua cidade",
+						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
+				},
+				infinite_scroll:  true,
+				show_similar_to:  session[:show_similar_to],
+				display_if_empty: true,
+				disposition:      :horizontal
+		}
+
 	end
 
 	def recent
-		@new_events_today = Event.where("created_at > ?", DateTime.now - 24.hours)
-		@collection       = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                                    identifier: 'new-today',
-				                                                                                    events:     @new_events_today
-		                                                                                    },
-		                                                                                    {
-				                                                                                    only_in:          @new_events_today.map(&:id),
-				                                                                                    order_by_persona: true,
-				                                                                                    in_user_personas: true,
-				                                                                                    with_high_score:  false
-		                                                                                    })
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
 
-		@data = {
-				identifier: 'new-today',
-				collection: @collection,
-				title:      {
+		@events ||= Event.active.where("created_at > ?", DateTime.now - 24.hours)
+
+		@collection = {
+				identifier:       'new-today',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Adicionados recentemente",
 						secondary: "Foram adicionados #{@collection.dig(:detail, :total_events_in_collection)} eventos nas últimas 16 horas que podem te interessar"
 				},
-				filters:    {
-						ocurrences: true,
-						kinds:      true,
-						categories: true
-				}
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
+
 	end
 
 	def suggestions
-		@events_in_user_suggestions = Event.in_user_suggestions(current_user)
-		@collection                 = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                                              identifier: 'user-suggestions',
-				                                                                                              events:     @events_in_user_suggestions
-		                                                                                              },
-		                                                                                              {
-				                                                                                              only_in:          @events_in_user_suggestions.map(&:id),
-				                                                                                              order_by_persona: false,
-				                                                                                              order_by_date:    true,
-				                                                                                              in_user_personas: false,
-				                                                                                              with_high_score:  false,
-				                                                                                              limit:            16
-		                                                                                              })
 
-		@data = {
-				identifier: 'user-suggestions',
-				collection: @collection,
-				title:      {
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
+
+		@events ||= Event.active.in_user_suggestions(current_user).order_by_date
+
+		@collection = {
+				identifier:       'user-suggestions',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Indicados para #{current_user.first_name}",
 						secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
 				},
-				filters:    {
-						ocurrences: true,
-						kinds:      true,
-						categories: true
-				}
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
+
 	end
 
 	def follow
-		@events_from_following_topics = current_user.try(:events_from_following_topics)
-		@collection                   = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                                                identifier: 'follow',
-				                                                                                                events:     @events_from_following_topics
-		                                                                                                },
-		                                                                                                {
-				                                                                                                only_in:          @events_from_following_topics.map(&:id),
-				                                                                                                order_by_persona: false,
-				                                                                                                order_by_date:    true,
-				                                                                                                with_high_score:  false,
-				                                                                                                in_user_personas: false,
-				                                                                                                limit:            16
-		                                                                                                })
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
 
-		@data = {
-				identifier: 'follow',
-				collection: @collection,
-				title:      {
+		@events ||= current_user.try(:events_from_following_topics)&.active.order_by_date
+
+		@collection = {
+				identifier:       'follow',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Tópicos que você segue",
 						secondary: "Explore os eventos de organizadores, locais e tags que você segue."
 				},
-				opts:       {
-						filters: {
-								ocurrences: true,
-								kinds:      true,
-								categories: true
-						}
-				}
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
+
 	end
 
 	def today
-		@collection = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                              identifier: 'today-and-tomorrow',
-				                                                                              events:     Event.all
-		                                                                              }, {
-				                                                                              in_days:          [DateTime.now.beginning_of_day.to_s, (DateTime.now + 1).end_of_day.to_s],
-				                                                                              in_user_personas: false,
-				                                                                              order_by_persona: false,
-				                                                                              order_by_date:    true,
-				                                                                              with_high_score:  true,
-				                                                                              limit:            16
-		                                                                              })
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
 
-		@data = {
-				identifier: 'today-and-tomorrow',
-				collection: @collection,
-				title:      {
+		@events ||= Event.active.with_high_score.not_in_saved(current_user).in_days([DateTime.now.beginning_of_day.yday, (DateTime.now + 1).end_of_day.yday])
+
+		@collection = {
+				identifier:       'today-and-tomorrow',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Eventos em Porto Alegre Hoje e Amanhã",
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
 				},
-				filters:    {
-						ocurrences: true,
-						kinds:      true,
-						categories: true
-				}
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
+
 	end
 
 	def week
-		@events_this_week = Event.all
-		@collection       = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                                    identifier: 'this-week',
-				                                                                                    events:     @events_this_week
-		                                                                                    }, {
-				                                                                                    only_in:          @events_this_week.map(&:id),
-				                                                                                    in_user_personas: false,
-				                                                                                    order_by_persona: false,
-				                                                                                    order_by_date:    true,
-				                                                                                    with_high_score:  true,
-				                                                                                    in_days:          (DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8)).map(&:to_s),
-				                                                                                    limit:            16
-		                                                                                    })
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
 
-		@props = {
+		@events ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).order_by_date
 
-		}
-
-		@data = {
-				identifier: 'this-week',
-				collection: @collection,
-				title:      {
+		@collection = {
+				identifier:       'this-week',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: current_user ? "Acontecendo esta semana" : "Eventos acontecendo esta semana em Porto Alegre",
-						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 6, format: :week)} (#{I18n.l(Date.today + 6, format: :short)}) em Porto Alegre - RS"
+						secondary: "Explore os #{@events.size} eventos que ocorrem hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 6, format: :week)} (#{I18n.l(Date.today + 6, format: :short)}) em Porto Alegre - RS"
 				},
-				filters:    {
-						ocurrences: true,
-						kinds:      true,
-						categories: true
-				}
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
 	end
 
 	def category
-		@categories = Event::CATEGORIES.dup
-		@collection = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                              identifier: 'category',
-				                                                                              events:     Event.all
-		                                                                              }, {
-				                                                                              in_categories:    [params[:category]],
-				                                                                              in_user_personas: false,
-				                                                                              not_in_saved:     false,
-				                                                                              order_by_persona: true,
-				                                                                              order_by_date:    false,
-				                                                                              with_high_score:  false,
-				                                                                              limit:            16
-		                                                                              })
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
 
-		@data = {
-				identifier: 'category',
-				collection: @collection,
-				title:      {
+		@categories ||= Event::CATEGORIES.dup
+		@events     ||= Event.active.in_days(session[:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories).limit(session[:limit])
+
+		@collection = {
+				identifier:       'category',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Eventos na categoria #{params[:category].try(:capitalize)} em Porto Alegre",
-						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos de #{params[:category]} em Porto Alegre - RS"
+						secondary: "Explore os #{@events.size} eventos de #{params[:category]} em Porto Alegre - RS"
 				},
-				filters:    {
-						ocurrences: true,
-						kinds:      false,
-						categories: false
-				}
+				ocurrences:       Event.day_of_week(@events, active_range: true).sort_by_date.compact_range.uniq.values,
+				filters:          {
+						ocurrences: true
+				},
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
+
 	end
 
 	def neighborhood
-		@neighborhoods = Event::NEIGHBORHOODS.dup
-		@collection    = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                              identifier: 'neighborhood',
-				                                                                              events:     Event.all
-		                                                                              }, {
-				                                                                              in_neighborhoods: [params[:neighborhood].titleize],
-				                                                                              in_user_personas: false,
-				                                                                              not_in_saved:     false,
-				                                                                              order_by_persona: false,
-																																											with_high_score:  false,
-				                                                                              order_by_date:    true,
-				                                                                              limit:            100
-		                                                                              })
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
 
-		@data = {
-				identifier: 'neighborhood',
-				collection: @collection,
-				title:      {
+		@neighborhoods ||= Event::NEIGHBORHOODS.dup
+		@events        ||= Event.active.in_neighborhoods([params[:neighborhood].titleize]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
+
+		@collection = {
+				identifier:       'neighborhood',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Eventos no bairro #{params[:neighborhood].titleize}",
-						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos do bairro #{params[:neighborhood].titleize} em Porto Alegre - RS"
+						secondary: "Explore os #{@events.size} eventos do bairro #{params[:neighborhood].titleize} em Porto Alegre - RS"
 				},
-				filters:    {
-						ocurrences: false,
-						kinds:      false,
-						categories: false
-				}
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
 	end
 
 	def city
-		@collection = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                              identifier: 'city',
-				                                                                              events:     Event.all
-		                                                                              }, {
-				                                                                              limit:            16,
-				                                                                              in_user_personas: false,
-				                                                                              order_by_persona: false,
-				                                                                              order_by_date:    true,
-				                                                                              with_high_score:  false
-		                                                                              })
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
 
-		@data = {
-				identifier: 'city',
-				collection: @collection,
-				title:      {
+		@events ||= Event.active.in_days(session[:days]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
+
+		@collection = {
+				identifier:       'city',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Eventos em Porto Alegre",
 						secondary: current_user ? "Explore todos os eventos ordenados por dia sem filtro de perfil" : "Explore todos os eventos que ocorrem em Porto Alegre - RS"
 				},
-				filters:    {
-						ocurrences: true,
-						kinds:      false,
-						categories: false
-				}
+				categories:       @events.map { |event| event.categories_primary_name }.flatten.uniq,
+				ocurrences:       Event.day_of_week(@events, active_range: true).sort_by_date.compact_range.uniq.values,
+				filters:          {
+						categories: false,
+						ocurrences: true
+				},
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
 	end
 
 	def day
-		@day                = Date.parse params[:day]
-		@events_in_this_day = Event.in_days([@day.beginning_of_day.to_s])
-		@collection         = EventServices::CollectionCreator.new(current_user, params).call({
-				                                                                                      identifier: 'day',
-				                                                                                      events:     @events_in_this_day
-		                                                                                      }, {
-				                                                                                      only_in:          @events_in_this_day.map(&:id),
-				                                                                                      in_user_personas: false,
-				                                                                                      order_by_persona: true,
-				                                                                                      order_by_date:    false,
-				                                                                                      with_high_score:  false,
-				                                                                                      limit:            16
-		                                                                                      })
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 16
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
 
-		@data = {
-				identifier: 'day',
-				collection: @collection,
-				title:      {
+		@day    ||= Date.parse params[:day]
+		@events ||= Event.active.in_days([@day.yday]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
+
+		@collection = {
+				identifier:       'day',
+				events:           @events.limit(session[:limit]),
+				title:            {
 						principal: "Eventos em Porto Alegre que ocorren dia #{I18n.l(@day, format: :long)}",
-						secondary: "Acontecem #{@collection[:detail][:total_events_in_collection]} eventos neste dia"
+						secondary: "Acontecem #{@events.size} eventos neste dia"
 				},
-				filters:    {
-						ocurrences: true,
-						kinds:      true,
-						categories: true
-				}
+				categories:       @events.map { |event| event.categories_primary_name }.flatten.uniq,
+				filters:          {
+						categories: false
+				},
+				infinite_scroll:  true,
+				display_if_empty: true,
+				show_similar_to:  session[:show_similar_to]
 		}
 	end
 
@@ -435,7 +364,7 @@ class FeedsController < ApplicationController
 	end
 
 	def get_swipable_items
-		events = Event.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories([], {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(24)
+		events = Event.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories([], {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).includes(:place).order_by_score.limit(24)
 
 		events.map do |event|
 			{

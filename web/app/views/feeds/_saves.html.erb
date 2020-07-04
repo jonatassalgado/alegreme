@@ -1,84 +1,88 @@
 <%
 
-  json_request = local_assigns.fetch(:json_request, false)
+	json_request = local_assigns.fetch(:json_request, false)
 
 %>
 
 <% if current_user and saved_resources.present? %>
-  <div id="<%= identifier %>" class="me-saves" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
-    <h2 data-target="saves.header" class="me-saves__title">
-      Favoritos
-      <%= link_to user_path current_user do %>
+	<div id="<%= identifier %>" class="me-saves" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
+		<h2 data-target="saves.header" class="me-saves__title">
+			Favoritos
+			<%= link_to user_path current_user do %>
       <span class="me-see-all is-hoverable">
           Ver tudo
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
       </span>
-      <% end %>
-    </h2>
-    <div class="me-icon__group">
-      <div data-target="saves.scrollLeft" data-action="click->saves#scrollLeft"
-           class="me-icon me-icon--scroll-left me-icon--off">
-        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon"
-             style="pointer-events: none; display: block; width: 100%; height: 100%;">
-          <g class="style-scope iron-icon">
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" class="style-scope iron-icon"></path>
-          </g>
-        </svg>
-      </div>
-      <div class="me-icon me-icon--scroll-right me-icon--off"
-           data-action="click->saves#scrollRight"
-           data-target="saves.scrollRight">
-        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon"
-             style="pointer-events: none; display: block; width: 100%; height: 100%;">
-          <g class="style-scope iron-icon">
-            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" class="style-scope iron-icon"></path>
-          </g>
-        </svg>
-      </div>
-    </div>
-    <div class="me-saves__list mdc-layout-grid"
-         data-target="saves.list">
-      <div class="mdc-layout-grid__inner">
-        <% if identifier == 'movies_saved' %>
-          <%= render(partial: 'components/collection/movie',
-                    collection: saved_resources,
-                    as:         :movie,
-                    cached:     true) %>
-        <% else %>
-        <%= render(partial: 'components/collection/event',
-                  collection: saved_resources,
-                  as:         :event,
-                  locals:     {
-                    display_name:    false,
-                    display_place:   false,
-                    display_similar: false
-                  },
-                  cached:     true) %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+			<% end %>
+		</h2>
+		<div class="me-icon__group">
+			<div data-target="saves.scrollLeft" data-action="click->saves#scrollLeft"
+					 class="me-icon me-icon--scroll-left me-icon--off">
+				<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon"
+						 style="pointer-events: none; display: block; width: 100%; height: 100%;">
+					<g class="style-scope iron-icon">
+						<path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" class="style-scope iron-icon"></path>
+					</g>
+				</svg>
+			</div>
+			<div class="me-icon me-icon--scroll-right me-icon--off"
+					 data-action="click->saves#scrollRight"
+					 data-target="saves.scrollRight">
+				<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon"
+						 style="pointer-events: none; display: block; width: 100%; height: 100%;">
+					<g class="style-scope iron-icon">
+						<path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" class="style-scope iron-icon"></path>
+					</g>
+				</svg>
+			</div>
+		</div>
+		<div class="me-saves__list mdc-layout-grid"
+				 data-target="saves.list">
+			<div class="mdc-layout-grid__inner">
+				<% if identifier == 'movies_saved' %>
+					<%= render(partial:    'components/collection/movie',
+										 collection: saved_resources,
+										 as:         :movie,
+										 locals:     {
+												 identifier: identifier,
+										 },
+										 cached:     false) %>
+				<% else %>
+					<%= render(partial:    'components/collection/event',
+										 collection: saved_resources,
+										 as:         :event,
+										 locals:     {
+												 identifier:      identifier,
+												 display_name:    false,
+												 display_place:   false,
+												 display_similar: false
+										 },
+										 cached:     false) %>
+				<% end %>
+			</div>
+		</div>
+	</div>
 <% else %>
-  <div id="<%= identifier %>" class="me-saves me-saves--empty">
-    <h2 class="me-saves__title">
-      <%= empty_message %>
-    </h2>
-    <div class="me-saves__list mdc-layout-grid"
-         data-target="saves.list">
-      <div class="mdc-layout-grid__inner">
-        <% 8.times do %>
-          <div class="mdc-layout-grid__cell">
-            <div class="me-card mdc-card me-card--saves">
-              <div class="mdc-card__media mdc-card__media--16-9" style="">
-                <div class="me-card__overlay"></div>
-              </div>
-              <div class="me-card__date">
-                <span class="me-card__date-distance-in-words">Iniciou há 1 hora</span>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+	<div id="<%= identifier %>" class="me-saves me-saves--empty">
+		<h2 class="me-saves__title">
+			<%= empty_message %>
+		</h2>
+		<div class="me-saves__list mdc-layout-grid"
+				 data-target="saves.list">
+			<div class="mdc-layout-grid__inner">
+				<% 8.times do %>
+					<div class="mdc-layout-grid__cell">
+						<div class="me-card mdc-card me-card--saves">
+							<div class="mdc-card__media mdc-card__media--16-9" style="">
+								<div class="me-card__overlay"></div>
+							</div>
+							<div class="me-card__date">
+								<span class="me-card__date-distance-in-words">Iniciou há 1 hora</span>
+							</div>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
 <% end %>

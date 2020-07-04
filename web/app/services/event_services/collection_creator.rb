@@ -17,7 +17,7 @@ module EventServices
 		def call(collection, opts = {})
 			raise ArgumentError, "Coleção precisa ser um Hash com eventos e identificador" unless collection.is_a? Hash
 
-			Rails.cache.fetch("#{collection[:identifier]}/#{@params}", expires_in: 5.minutes) do
+			# Rails.cache.fetch("#{collection[:identifier]}/#{@params}", expires_in: 5.minutes) do
 				if collection.key?(:events)
 					@identifier = collection[:identifier]
 					@events     = collection[:events]
@@ -31,7 +31,7 @@ module EventServices
 				@all_events      = EventFetcher.new(@events, @dynamic_filters).call
 
 				mount_response
-			end
+			# end
 		end
 
 

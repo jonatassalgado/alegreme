@@ -6,7 +6,7 @@ class SearchController < ApplicationController
 		if params[:q]
 			query = params[:q].downcase.split.delete_if { |word| Event::STOPWORDS.include?(word) }.join(' ')
 
-			@events_found = Event.search(query, {
+			@events = Event.search(query, {
 					fields:       ["name^2", "organizers", "description", "category"],
 					suggest:      true,
 					limit:        150,
@@ -15,31 +15,15 @@ class SearchController < ApplicationController
 					body_options: {min_score: 10}
 			})
 
-			@collection = EventServices::CollectionCreator.new(current_user, params).call({
-					                                                                              identifier: 'search',
-					                                                                              ids:        @events_found.map(&:id)
-			                                                                              },
-			                                                                              {
-					                                                                              only_in:          @events_found.map(&:id),
-					                                                                              in_user_personas: false,
-					                                                                              order_by_persona: false,
-					                                                                              with_high_score:  false,
-					                                                                              order_by_ids:     @events_found.map(&:id),
-					                                                                              group_by:         false
-			                                                                              })
-
-
-			@data = {
-					identifier: "search",
-					collection: @collection,
-					title:      {
-							principal: "#{@collection.dig(:detail, :total_events_in_collection)} eventos encontrados para \"#{params[:q]}\""
+			@collection = {
+					identifier:       'search',
+					events:           @events.limit(session[:limit]),
+					title:            {
+							principal: "#{@events.size} eventos encontrados para \"#{params[:q]}\""
 					},
-					filters:    {
-							ocurrences: true,
-							kinds:      true,
-							categories: true
-					}
+					infinite_scroll:  true,
+					display_if_empty: true,
+					show_similar_to:  session[:show_similar_to]
 			}
 		else
 			@categories = Event::CATEGORIES.dup.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }
