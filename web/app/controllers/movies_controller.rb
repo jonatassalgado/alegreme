@@ -3,9 +3,9 @@ class MoviesController < ApplicationController
 
 	def index
 		@movies = {
-			saved:          current_user.try(:saved_movies),
-			new_release:    Movie.where("created_at > :time AND collections::jsonb ? 'new release' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30).not_in_saved(current_user),
-			editors_choice: Movie.where("created_at > :time AND collections::jsonb ? 'editors choice' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30).not_in_saved(current_user)
+				saved:          current_user.try(:saved_movies),
+				new_release:    Movie.where("created_at > :time AND collections::jsonb ? 'new release' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30).not_in_saved(current_user).order('created_at DESC'),
+				editors_choice: Movie.where("created_at > :time AND collections::jsonb ? 'editors choice' AND jsonb_array_length(streamings::jsonb) > 0", time: DateTime.now - 30).not_in_saved(current_user).order('created_at DESC')
 		}
 	end
 
@@ -69,8 +69,8 @@ class MoviesController < ApplicationController
 	# DELETE /movies/1
 	# DELETE /movies/1.json
 	def destroy
-		model       = get_model(params[:type])
-		@movie      = model.friendly.find(params[:id])
+		model  = get_model(params[:type])
+		@movie = model.friendly.find(params[:id])
 
 		@movie.destroy
 		respond_to do |format|
@@ -89,25 +89,25 @@ class MoviesController < ApplicationController
 		else
 			Movie
 		end
-  end
+	end
 
 	def model_params
 		model = params[:type] ? params[:type].underscore.to_sym : :movie
 
 		params.require(model).permit(
-			:image,
-			:details_original_title,
-			:details_title,
-			:details_genres,
-			:details_description,
-			:details_cover,
-			:details_trailler,
-			:details_popularity,
-			:details_vote_average,
-			:details_adult,
-			:details_tmdb_id,
-			:type,
-		  streamings_attributes: [:display_name, :url],
-		  collections_attributes: [])
-		end
+				:image,
+				:details_original_title,
+				:details_title,
+				:details_genres,
+				:details_description,
+				:details_cover,
+				:details_trailler,
+				:details_popularity,
+				:details_vote_average,
+				:details_adult,
+				:details_tmdb_id,
+				:type,
+				streamings_attributes:  [:display_name, :url],
+				collections_attributes: [])
+	end
 end

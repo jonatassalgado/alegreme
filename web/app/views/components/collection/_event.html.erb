@@ -123,7 +123,7 @@
 		</div>
 	</div>
 </div>
-<% if show_similar_to.last == event.id &&
+<% if show_similar_to&.last == event.id &&
 		session[:in_this_section] == section_identifier &&
 		(disposition == :vertical || !mobile_device?) %>
 

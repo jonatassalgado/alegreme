@@ -1,6 +1,10 @@
 module ApplicationHelper
 	include Pagy::Frontend
 
+	def class_string(css_map)
+		css_map.find_all(&:last).map(&:first).join(" ")
+	end
+
 	def link_to_topic topic
 		if topic.class.name == 'Place'
 			place_path(topic)

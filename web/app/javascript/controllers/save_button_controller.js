@@ -34,9 +34,9 @@ export default class SaveButtonController extends ApplicationController {
     }
 
     like(event) {
-        this.updateButtonStyle(this.resourceId, !this.saveStatus);
+        this.updateButtonStyle(!this.saveStatus);
 
-        this.stimulate("Event#save", event.target, {
+        this.stimulate("Taste#save", event.target, {
             id:       this.resourceId,
             action:   this.isSaved,
             resource: this.resourceName
@@ -131,16 +131,13 @@ export default class SaveButtonController extends ApplicationController {
         // 	});
     }
 
-    updateButtonStyle(resourceId, saveStatus) {
+    updateButtonStyle(saveStatus) {
         if (this.hasButtonTarget) {
             if (saveStatus === true) {
                 this.buttonTarget.style.display = "inline";
                 this.buttonTarget.classList.add("mdc-icon-button--on")
             } else {
                 this.buttonTarget.classList.remove("mdc-icon-button--on");
-                if (resourceId != this.resourceId) {
-                    this.buttonTarget.style.display = "none";
-                }
             }
         }
     };

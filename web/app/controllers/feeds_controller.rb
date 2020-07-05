@@ -2,8 +2,8 @@ include Pagy::Backend
 
 class FeedsController < ApplicationController
 	before_action :authorize_user, except: [:index, :today, :category, :week, :city, :day, :neighborhood]
-	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 	before_action :authorize_current_user, only: %i[suggestions follow news]
+	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 
 
 	def index
@@ -15,13 +15,7 @@ class FeedsController < ApplicationController
 				         :user_taste_events_saved => current_user&.taste_events_saved&.size
 		         })
 
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 8
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@saved_events                 ||= current_user&.saved_events&.active
 		@new_events_today             ||= Event.active.with_high_score.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place).limit(session[:limit])
@@ -30,9 +24,8 @@ class FeedsController < ApplicationController
 		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.active&.includes(:place)&.order_by_date&.limit(session[:limit]) : []
 		@events_from_followed_users   ||= current_user ? Event.active.from_followed_users(current_user).includes(:place).order_by_date.limit(session[:limit]) : []
 		@events_in_my_neighborhood    ||= current_user ? Event.active.with_high_score.in_neighborhoods(["Cidade Baixa"]).includes(:place).order_by_date.limit(session[:limit]) : []
-
-		@following_users ||= User.following_users(current_user)
-		@swipable_items  ||= get_swipable_items
+		@following_users              ||= User.following_users(current_user)
+		@swipable_items               ||= get_swipable_items
 
 
 		@collection_new_today = {}
@@ -76,7 +69,6 @@ class FeedsController < ApplicationController
 				disposition:      :horizontal
 		}
 
-
 		@collection_week = {
 				identifier:       'this-week',
 				events:           @events_this_week,
@@ -108,13 +100,7 @@ class FeedsController < ApplicationController
 	end
 
 	def recent
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@events ||= Event.active.where("created_at > ?", DateTime.now - 24.hours)
 
@@ -134,13 +120,7 @@ class FeedsController < ApplicationController
 
 	def suggestions
 
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@events ||= Event.active.in_user_suggestions(current_user).order_by_date
 
@@ -159,13 +139,7 @@ class FeedsController < ApplicationController
 	end
 
 	def follow
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@events ||= current_user.try(:events_from_following_topics)&.active.order_by_date
 
@@ -184,13 +158,7 @@ class FeedsController < ApplicationController
 	end
 
 	def today
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@events ||= Event.active.with_high_score.not_in_saved(current_user).in_days([DateTime.now.beginning_of_day.yday, (DateTime.now + 1).end_of_day.yday])
 
@@ -209,13 +177,7 @@ class FeedsController < ApplicationController
 	end
 
 	def week
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@events ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).order_by_date
 
@@ -233,13 +195,7 @@ class FeedsController < ApplicationController
 	end
 
 	def category
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@categories ||= Event::CATEGORIES.dup
 		@events     ||= Event.active.in_days(session[:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories).limit(session[:limit])
@@ -263,13 +219,7 @@ class FeedsController < ApplicationController
 	end
 
 	def neighborhood
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@neighborhoods ||= Event::NEIGHBORHOODS.dup
 		@events        ||= Event.active.in_neighborhoods([params[:neighborhood].titleize]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
@@ -288,13 +238,7 @@ class FeedsController < ApplicationController
 	end
 
 	def city
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@events ||= Event.active.in_days(session[:days]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
 
@@ -318,13 +262,7 @@ class FeedsController < ApplicationController
 	end
 
 	def day
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
+		default_reflex_values
 
 		@day    ||= Date.parse params[:day]
 		@events ||= Event.active.in_days([@day.yday]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
@@ -348,6 +286,16 @@ class FeedsController < ApplicationController
 
 
 	private
+
+	def default_reflex_values
+		unless @stimulus_reflex
+			session[:days]            = []
+			session[:categories]      = []
+			session[:limit]           = 8
+			session[:show_similar_to] = []
+			session[:in_this_section] = []
+		end
+	end
 
 	def get_events_not_trained_yet
 		order = params[:desc] ? "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC" : "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC"

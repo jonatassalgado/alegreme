@@ -14,7 +14,7 @@
               data-save-button-resource-id="<%= movie.id %>"
               data-save-button-saved="<%= current_user.taste_movies_saved? movie.id %>"
               class="me-card__like-button">
-              <button data-target="save-button.saveButton"
+              <button data-target="save-button.button"
                       id="add-to-favorites"
                       class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_movies_saved?(movie.id) %>"
                       aria-label="Add to favorites"

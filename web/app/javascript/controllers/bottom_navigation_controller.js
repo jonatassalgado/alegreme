@@ -42,15 +42,15 @@ export default class BottomNavigationController extends ApplicationController {
 		}
 
 
-		if (/(\/feed|\/porto-alegre\/eventos)/.test(document.location.href)) {
-			this.eventsTarget.classList.add('active');
-		} else if ((/(\/porto-alegre\/filmes)/.test(document.location.href)) ||
-			(/(\/porto-alegre\/streamings)/.test(document.location.href))) {
-			this.cinemaTarget.classList.add('active');
-		} else if ((/(\/busca)/.test(document.location.href))) {
-			this.searchTarget.classList.add('active');
-			document.querySelector('.mdc-text-field__input').focus();
-		}
+		// if (/(\/feed|\/porto-alegre\/eventos)/.test(document.location.href)) {
+		// 	this.eventsTarget.classList.add('active');
+		// } else if ((/(\/porto-alegre\/filmes)/.test(document.location.href)) ||
+		// 	(/(\/porto-alegre\/streamings)/.test(document.location.href))) {
+		// 	this.cinemaTarget.classList.add('active');
+		// } else if ((/(\/busca)/.test(document.location.href))) {
+		// 	this.searchTarget.classList.add('active');
+		// 	document.querySelector('.mdc-text-field__input').focus();
+		// }
 
 
 	}
