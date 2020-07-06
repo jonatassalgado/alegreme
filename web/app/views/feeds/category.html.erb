@@ -34,7 +34,7 @@
 	<% if params[:category] %>
 		<section class="me-section me-section--without-padding">
 			<section class="me-section__inner">
-				<%= render partial: "components/collection/events/collection", locals: {collection: @collection, props: {infinite_scroll: true}} %>
+				<%= render partial: "components/collection/events/collection", locals: {collection: @collection} %>
 			</section>
 		</section>
 	<% else %>
