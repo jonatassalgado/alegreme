@@ -99,7 +99,7 @@
 
 <!-- <div class="me-top-app-bar__fake-size"></div> -->
 
-<div class="me-head" data-controller="head" data-target="head.head">
+<div data-reflex-permanent class="me-head" data-controller="head" data-target="head.head">
   <%= render partial: 'layouts/app-top-bar' %>
   <%= render partial: 'components/tab-bar', locals: {props: {active: "#{controller_name}##{action_name}"}} %>
 </div>
