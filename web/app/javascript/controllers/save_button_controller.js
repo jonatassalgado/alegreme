@@ -75,11 +75,7 @@ export default class SaveButtonController extends ApplicationController {
                 // state.element.style.transform  = ""; state.element.style.opacity    = 1; } delay = delay + 0.035;
                 // });  });  resolve(states) });  flipPromise.then((states) => { console.log(states) });
 
-                // CacheModule.clearCache(["feed-page", "events-page"], {
-                //     event: {
-                //         identifier: this.resourceId
-                //     }
-                // });
+                CacheModule.clearCache();
             })
             .catch(payload => {
 

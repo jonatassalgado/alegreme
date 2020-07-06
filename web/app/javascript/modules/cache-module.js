@@ -52,42 +52,42 @@ const CacheModule = (function () {
 	};
 
 	module.clearCache = (cacheNames, attrs) => {
-		if (navigator.serviceWorker && !cacheNames || cacheNames.includes("feed-page")) {
-			caches.open("v1:sw-cache-feed-page")
-			      .then(cache => {
-				      cache
-					      .delete("/feed")
-					      .then(response => {
-						      if (response) {
-							      console.log("Cache v1:sw-cache-feed-page deleted: ", response);
-						      }
-						      cache.add('/feed').then(() => {
-                                console.log("Cache v1:sw-cache-feed-page updated: ");
-						      })
-					      });
-			      })
-			      .catch(reason => {
-				      console.log(reason);
-			      });
-		}
-
-		if (navigator.serviceWorker && cacheNames && cacheNames.includes("events-page")) {
-			caches
-				.open("v1:sw-cache-events-page")
-				.then(cache => {
-					cache
-						.delete(`/porto-alegre/eventos/${attrs.event.identifier}`)
-						.then(response => {
-							if (response) {
-								console.log("v1:sw-cache-events-page deleted: ", response);
-								// cache.add(`/events/${attrs.event.identifier}`);
-							}
-						});
-				})
-				.catch(reason => {
-					console.log(reason);
-				});
-		}
+		// if (navigator.serviceWorker && !cacheNames || cacheNames.includes("feed-page")) {
+		// 	caches.open("v1:sw-cache-feed-page")
+		// 	      .then(cache => {
+		// 		      cache
+		// 			      .delete("/feed")
+		// 			      .then(response => {
+		// 				      if (response) {
+		// 					      console.log("Cache v1:sw-cache-feed-page deleted: ", response);
+		// 				      }
+		// 				      // cache.add('/feed').then(() => {
+        //                       //   console.log("Cache v1:sw-cache-feed-page updated: ");
+		// 				      // })
+		// 			      });
+		// 	      })
+		// 	      .catch(reason => {
+		// 		      console.log(reason);
+		// 	      });
+		// }
+		//
+		// if (navigator.serviceWorker && cacheNames && cacheNames.includes("events-page")) {
+		// 	caches
+		// 		.open("v1:sw-cache-events-page")
+		// 		.then(cache => {
+		// 			cache
+		// 				.delete(`/porto-alegre/eventos/${attrs.event.identifier}`)
+		// 				.then(response => {
+		// 					if (response) {
+		// 						console.log("v1:sw-cache-events-page deleted: ", response);
+		// 						// cache.add(`/events/${attrs.event.identifier}`);
+		// 					}
+		// 				});
+		// 		})
+		// 		.catch(reason => {
+		// 			console.log(reason);
+		// 		});
+		// }
 
 		if (status.turbolinksStarted) {
 			Turbolinks.clearCache();
