@@ -17,9 +17,9 @@ class SearchController < ApplicationController
 
 			@collection = {
 					identifier:       'search',
-					events:           @events.limit(session[:limit]),
+					events:           @events,
 					title:            {
-							principal: "#{@events.size} eventos encontrados para \"#{params[:q]}\""
+							principal: "Eventos encontrados para \"#{params[:q]}\""
 					},
 					infinite_scroll:  true,
 					display_if_empty: true,
