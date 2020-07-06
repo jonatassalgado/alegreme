@@ -23,8 +23,21 @@ class EventPipeline(object):
         settings = get_project_settings()
         timestr = time.strftime("%Y%m%d-%H%M%S")
         pwd = settings.get('PWD')
-        self.file = open(pwd + '/scraped/events-' + timestr + '.jsonl', 'wb')
+        file_path = pwd + '/scraped/events-' + timestr + '.jsonl'
 #         self.file = open('/var/www/scrapy/data/scraped/events-' + timestr + '.json', 'wb')
+
+        try:
+            if os.path.isdir(pwd + '/scraped'):
+                print("The directory /scraped already exists")
+            else:
+                os.makedirs(pwd + '/scraped')
+        except IOError as exception:
+            raise IOError('%s: %s' % (path, exception.strerror))
+
+        try:
+            self.file = open(file_path, 'wb')
+        except IOError:
+            self.file = open(file_path, 'w+')
 
         self.exporter = JsonLinesItemExporter(self.file)
         self.exporter.start_exporting()
