@@ -127,7 +127,7 @@
 											 show_similar_to: session[:show_similar_to]
 									 },
 									 cached:     false) %>
-				<% if collection[:display_load_more] %>
+				<% if collection[:infinite_scroll] || collection[:display_load_more] %>
 					<div data-action="click->section#loadMoreHere"
 							 data-target="section.loadMoreButton"
 							 data-continue-to-path="<%= collection[:continue_to] %>"
@@ -205,7 +205,7 @@
 								 },
 								 cached:  false %>
 		<% end %>
-		<% if collection[:display_load_more] %>
+		<% if collection[:infinite_scroll] || collection[:display_load_more] %>
 			<div class="me-collection__load-more me-collection__load-more--vertical is-hoverable"
 					 data-action="click->section#loadMoreHere"
 					 data-target="section.loadMoreButton">

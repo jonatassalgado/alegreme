@@ -18,7 +18,7 @@ class FeedsController < ApplicationController
 		default_reflex_values
 
 		@saved_events                 ||= current_user&.saved_events&.active
-		@new_events_today             ||= Event.active.with_high_score.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place).limit(session[:limit])
+		@new_events_today             ||= Event.active.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place).limit(session[:limit])
 		@events_this_week             ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + session[:limit]))).includes(:place).order_by_date.limit(session[:limit])
 		@events_in_user_suggestions   ||= current_user ? Event.active.not_in_saved(current_user).not_in(@events_this_week.map(&:id)).in_user_suggestions(current_user).includes(:place).order_by_date.limit(session[:limit]) : []
 		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.active&.includes(:place)&.order_by_date&.limit(session[:limit]) : []
@@ -37,7 +37,6 @@ class FeedsController < ApplicationController
 						principal: "Escolhidos a dedo para #{current_user&.first_name || 'você'}",
 						tertiary:  (current_user ? "Com base nos eventos salvos" : "Crie uma conta para ver os eventos abaixo")
 				},
-				infinite_scroll:  true,
 				show_similar_to:  session[:show_similar_to],
 				continue_to:      "/#{current_user&.slug}/sugestoes",
 				display_if_empty: true,
@@ -76,7 +75,6 @@ class FeedsController < ApplicationController
 						principal: "Acontecendo esta semana",
 						tertiary:  (current_user ? "Com base no seu perfil" : "Crie uma conta para ver os eventos abaixo")
 				},
-				infinite_scroll:  true,
 				show_similar_to:  session[:show_similar_to],
 				continue_to:      '/porto-alegre/eventos/semana',
 				disposition:      :horizontal,
@@ -91,7 +89,6 @@ class FeedsController < ApplicationController
 						principal: "Nos bairros da sua cidade",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
 				},
-				infinite_scroll:  true,
 				show_similar_to:  session[:show_similar_to],
 				display_if_empty: true,
 				disposition:      :horizontal
@@ -109,7 +106,7 @@ class FeedsController < ApplicationController
 				events:           @events.limit(session[:limit]),
 				title:            {
 						principal: "Adicionados recentemente",
-						secondary: "Foram adicionados #{@collection.dig(:detail, :total_events_in_collection)} eventos nas últimas 16 horas que podem te interessar"
+						secondary: "Foram adicionados #{@events.size} eventos nas últimas 16 horas que podem te interessar"
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
