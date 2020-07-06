@@ -1,79 +1,79 @@
 <%
 
-  props = {
-      active:         nil,
-      movies_count:   Movie.all.size,
-      mobile_visible: mobile_device? &&
-                     (controller_name == 'feeds') &&
-                     ['index', 'category', 'city'].include?(params[:action])
-  }.deep_merge!(props || {})
+	props = {
+			active:         nil,
+			movies_count:   Movie.all.size,
+			mobile_visible: mobile_device? &&
+													(controller_name == 'feeds') &&
+													['index', 'category', 'city'].include?(params[:action])
+	}.deep_merge!(props || {})
 
 %>
 
 <% if props[:mobile_visible] %>
-  <div data-turbolinks-permanent data-controller="tab-bar" data-target="tab-bar.tabBar" data-tab-bar-selected-tab="<%= "#{controller_name}##{action_name}" %>" data-tab-bar-turbolinks-persist-scroll="0" id="tab-bar" class="me-tab-bar mdc-tab-bar" role="tablist">
-    <div class="mdc-tab-scroller">
-      <div data-target="tab-bar.scroller" class="mdc-tab-scroller__scroll-area">
-        <div class="mdc-tab-scroller__scroll-content">
-          <button data-action="click->tab-bar#open" data-section="feeds#index" data-tab-path="/feed" class="mdc-tab">
+	<div data-reflex-permanent data-controller="tab-bar" data-target="tab-bar.tabBar" data-tab-bar-selected-tab="<%= "#{controller_name}##{action_name}" %>" data-tab-bar-turbolinks-persist-scroll="0" id="tab-bar" class="me-tab-bar mdc-tab-bar" role="tablist">
+		<div class="mdc-tab-scroller">
+			<div data-target="tab-bar.scroller" class="mdc-tab-scroller__scroll-area">
+				<div class="mdc-tab-scroller__scroll-content">
+					<button data-action="click->tab-bar#open" data-section="feeds#index" data-tab-path="/feed" class="mdc-tab <%= class_string('mdc-tab--active': controller_name == 'feeds' && action_name == 'index') %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Para você</span>
             </span>
-            <span class="me-tab-indicator mdc-tab-indicator">
+						<span class="me-tab-indicator mdc-tab-indicator <%= class_string('mdc-tab-indicator--active': controller_name == 'feeds' && action_name == 'index') %> %>">
               <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
             </span>
-            <span class="mdc-tab__ripple"></span>
-          </button>
-          <button data-action="click->tab-bar#open" data-section="feeds#category" data-tab-path="/porto-alegre/eventos/categoria" class="mdc-tab">
+						<span class="mdc-tab__ripple"></span>
+					</button>
+					<button data-action="click->tab-bar#open" data-section="feeds#category" data-tab-path="/porto-alegre/eventos/categoria" class="mdc-tab <%= class_string('mdc-tab--active': action_name == 'category') %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Categorias</span>
             </span>
-            <span class="me-tab-indicator mdc-tab-indicator">
+						<span class="me-tab-indicator mdc-tab-indicator <%= class_string('mdc-tab-indicator--active': action_name == 'category') %>">
               <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
             </span>
-            <span class="mdc-tab__ripple"></span>
-          </button>
-          <button data-action="click->tab-bar#open" data-section="feeds#city" data-tab-path="/porto-alegre/eventos" class="mdc-tab">
+						<span class="mdc-tab__ripple"></span>
+					</button>
+					<button data-action="click->tab-bar#open" data-section="feeds#city" data-tab-path="/porto-alegre/eventos" class="mdc-tab <%= class_string('mdc-tab--active': action_name == 'city') %>">
             <span class="mdc-tab__content">
               <span class="mdc-tab__text-label">Explorar tudo</span>
             </span>
-            <span class="me-tab-indicator mdc-tab-indicator">
+						<span class="me-tab-indicator mdc-tab-indicator <%= class_string('mdc-tab-indicator--active': action_name == 'city') %>">
               <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
             </span>
-            <span class="mdc-tab__ripple"></span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+						<span class="mdc-tab__ripple"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 <% end %>
 
 <% if !mobile_device? &&
-      (controller_name == 'feeds' || controller_name == 'movies') %>
-      <div data-turbolinks-permanent data-controller="tab-bar" data-target="tab-bar.tabBar" data-tab-bar-selected-tab="<%= "#{controller_name}##{action_name}" %>" data-tab-bar-turbolinks-persist-scroll="0" id="tab-bar" class="me-tab-bar mdc-tab-bar" role="tablist">
-        <div class="mdc-tab-scroller">
-          <div data-target="tab-bar.scroller" class="mdc-tab-scroller__scroll-area is-horizontal-scrollable">
-            <div class="mdc-tab-scroller__scroll-content">
-              <button data-action="click->tab-bar#open" data-section="feeds#index" data-tab-path="<%= url_for feed_path %>" class="mdc-tab">
+		(controller_name == 'feeds' || controller_name == 'movies') %>
+	<div data-turbolinks-permanent data-controller="tab-bar" data-target="tab-bar.tabBar" data-tab-bar-selected-tab="<%= "#{controller_name}##{action_name}" %>" data-tab-bar-turbolinks-persist-scroll="0" id="tab-bar" class="me-tab-bar mdc-tab-bar" role="tablist">
+		<div class="mdc-tab-scroller">
+			<div data-target="tab-bar.scroller" class="mdc-tab-scroller__scroll-area is-horizontal-scrollable">
+				<div class="mdc-tab-scroller__scroll-content">
+					<button data-action="click->tab-bar#open" data-section="feeds#index" data-tab-path="<%= url_for feed_path %>" class="mdc-tab">
                 <span class="mdc-tab__content">
                   <span class="mdc-tab__text-label">Eventos</span>
                 </span>
-                <span class="me-tab-indicator mdc-tab-indicator">
+						<span class="me-tab-indicator mdc-tab-indicator">
                   <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
                 </span>
-                <span class="mdc-tab__ripple"></span>
-              </button>
-              <button data-action="click->tab-bar#open" data-section="movies#index" data-tab-path="<%= url_for movies_path %>" class="mdc-tab">
+						<span class="mdc-tab__ripple"></span>
+					</button>
+					<button data-action="click->tab-bar#open" data-section="movies#index" data-tab-path="<%= url_for movies_path %>" class="mdc-tab">
                 <span class="mdc-tab__content">
                   <span class="mdc-tab__text-label">Filmes</span>
                 </span>
-                <span class="me-tab-indicator mdc-tab-indicator">
+						<span class="me-tab-indicator mdc-tab-indicator">
                   <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
                 </span>
-                <span class="mdc-tab__ripple"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+						<span class="mdc-tab__ripple"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 <% end %>

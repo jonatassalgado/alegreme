@@ -5,7 +5,6 @@ import {MDCIconButtonToggle} from "@material/icon-button";
 import * as MobileDetect     from "mobile-detect";
 import {ProgressBarModule}   from "../modules/progressbar-module";
 import {AnimateModule}       from "../modules/animate-module";
-import Flipping              from "flipping";
 
 export default class EventController extends ApplicationController {
     static targets = [
@@ -27,26 +26,10 @@ export default class EventController extends ApplicationController {
 
         this.md                 = new MobileDetect(window.navigator.userAgent);
         this.activeInteractions = true;
-
-        this.flipping = new Flipping({
-                                         attribute: `data-collection-${this.sectionIdentifier}-flip-key`
-                                     });
-
-        this.handleAfterReflex = () => {
-            this.activeInteractions = true;
-        }
-
-        this.handleBeforeReflex = () => {
-            this.activeInteractions = false;
-        };
-
-        document.addEventListener("stimulus-reflex:after", this.handleAfterReflex, false);
-        document.addEventListener("stimulus-reflex:before", this.handleBeforeReflex, false);
     }
 
     disconnect() {
-        document.removeEventListener("stimulus-reflex:after", this.handleAfterReflex, false);
-        document.removeEventListener("stimulus-reflex:before", this.handleBeforeReflex, false);
+        this.activeInteractions = false;
     }
 
     handleEventClick() {
