@@ -2,7 +2,7 @@
 
 	<%= notice %>
 
-	<% unless @collection[:events]&.suggestions.blank? %>
+	<% unless @collection&.dig(:events)&.suggestions.blank? %>
 		<section class="me-section me-section--condensed" style="margin: 0 auto 25px auto;">
 			<div class="me-section__inner">
 				<div class="me-section-head">
@@ -10,7 +10,7 @@
 				</div>
 				<div class="me-chip-set__wrapper">
 					<div class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
-						<% @collection[:events]&.suggestions&.each do |suggestion| %>
+						<% @collection&.dig(:events)&.suggestions&.each do |suggestion| %>
 							<a href="<%= search_index_path({q: suggestion}) %>" class="me-chip mdc-chip">
 								<span class="mdc-chip__text"><%= suggestion %></span>
 							</a>
@@ -21,7 +21,7 @@
 		</section>
 	<% end %>
 
-	<% if @collection[:events].size > 0 %>
+	<% if @collection&.dig(:events).try { |events| events.size > 0 } %>
 		<section class="me-section me-section--condensed">
 			<div class="me-section__inner">
 				<%= render partial: "components/collection/events/collection", locals: {
@@ -32,7 +32,7 @@
 				} %>
 			</div>
 		</section>
-	<% elsif @collection[:events].size == 0 %>
+	<% elsif @collection&.dig(:events).try { |events| events.size == 0 } %>
 		<section class="me-section me-section--condensed" style="margin: 0 auto 25px auto;">
 			<h2 class="me-section__title">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
 		</section>
