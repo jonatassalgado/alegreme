@@ -6,7 +6,7 @@ class SearchController < ApplicationController
 		if params[:q]
 			query = params[:q].downcase.split.delete_if { |word| Event::STOPWORDS.include?(word) }.join(' ')
 
-			@events = Event.search(query, {
+			events = Event.search(query, {
 					fields:       ["name^2", "organizers", "description", "category"],
 					suggest:      true,
 					limit:        150,
@@ -17,7 +17,7 @@ class SearchController < ApplicationController
 
 			@collection = {
 					identifier:       'search',
-					events:           @events,
+					events:           events,
 					title:            {
 							principal: "Eventos encontrados para \"#{params[:q]}\""
 					},
