@@ -371,7 +371,8 @@ $description-color: $font-secondary-color;
     }
 
     .me-card[data-event-similar-open="true"] &, .me-card[data-event-similar-open="true"]:hover & {
-      color: $brand-color;
+      color: $chip-color-active;
+      background: $chip-background-active;
     }
 
     & .mdc-button::before, .mdc-button::after {

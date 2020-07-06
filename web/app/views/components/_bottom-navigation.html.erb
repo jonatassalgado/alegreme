@@ -7,7 +7,7 @@
 %>
 
 
-<div data-turbolinks-permanent data-controller="bottom-navigation" class="me-bottom-navigation" data-target="bottom-navigation.navigation">
+<div data-reflex-permanent data-controller="bottom-navigation" class="me-bottom-navigation" data-target="bottom-navigation.navigation">
 	<div class="me-bottom-navigation__items">
 		<div data-target="bottom-navigation.item bottom-navigation.events" data-action="click->bottom-navigation#goto" data-path="/feed" class="me-bottom-navigation__item mdc-ripple-surface <%= class_string({active: ['feeds', 'events'].include?(controller_name)}) %>">
 			<i class="icon">

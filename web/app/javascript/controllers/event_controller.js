@@ -15,9 +15,6 @@ export default class EventController extends ApplicationController {
         "date",
         "like",
         "likeButton",
-        "likeCount",
-        "moreButton",
-        "menu",
         "similar"
     ];
 
@@ -56,14 +53,16 @@ export default class EventController extends ApplicationController {
     };
 
     showSimilar() {
-        this.isSimilarLoading = true;
+        this.similarLoading = true;
         this.stimulate("Event#show_similar", this.eventTarget, {
             show_similar_to: this.identifier,
             in_this_section: this.sectionIdentifier
         })
             .then(payload => {
-                this.activeInteractions       = true
-                this.isSimilarLoading         = false;
+                this.activeInteractions       = true;
+                this.similarLoading           = false;
+                this.similarOpen              = true;
+                this.scrollToSimilarContainer = true;
                 this.scrollToSimilarContainer = true;
             })
             .catch(payload => {
@@ -85,15 +84,15 @@ export default class EventController extends ApplicationController {
         return this.data.get("limit");
     }
 
-    get isSimilarOpen() {
+    get similarOpen() {
         return this.data.get("similarOpen");
     }
 
-    set isSimilarOpen(value) {
+    set similarOpen(value) {
         this.data.set("similar-open", value);
     }
 
-    set isSimilarLoading(value) {
+    set similarLoading(value) {
         this.data.set("similar-loading", value);
     }
 
@@ -131,7 +130,17 @@ export default class EventController extends ApplicationController {
 
     set scrollToSimilarContainer(value) {
         if (value) {
-
+            requestAnimationFrame(() => {
+                const similarEl = this.eventTarget.closest(".me-section")
+                                      .querySelector(".me-similar")
+                if (similarEl) {
+                    const offsetTop = similarEl.offsetTop - 150
+                    window.scrollTo({
+                                        top:      offsetTop,
+                                        behavior: "smooth"
+                                    })
+                }
+            })
         }
     }
 

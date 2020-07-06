@@ -76,11 +76,9 @@ $chip-filter-border-color-active: $brand-color;
 $chip-filter-background-active: rgba(0, 173, 84, 0.15);
 $chip-filter-radius: 1px;
 
-$chip-font-color: $brand-color-high-contrast; // darken($brand-color, 25%);
-$chip-background-color: $brand-color; // transparentize($brand-color, 0.65);
-$chip-border-color: $brand-color-high-contrast; //transparentize($brand-color, 0.45);
+$chip-color-active: darken($brand-color, 10%);
+$chip-background-active: rgba(0, 173, 84, 0.15);
 $chip-border-size: 1px;
-$chip-transition: background 0.5s cubic-bezier(.29, .01, .4, .99), border 0.5s cubic-bezier(.29, .01, .4, .99);
 
 $link-color: $brand-color;
 
