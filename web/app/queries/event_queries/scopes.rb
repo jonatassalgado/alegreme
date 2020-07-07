@@ -317,6 +317,14 @@ module EventQueries
         end
       }
 
+      scope 'historic', lambda { |turn_on = true|
+        if turn_on
+          where("(ocurrences -> 'dates' ->> 0)::timestamptz <= ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", (DateTime.now - 6.hours))
+        else
+          all
+        end
+      }
+
       scope 'with_low_score', lambda {
         where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.7 AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.7")
       }

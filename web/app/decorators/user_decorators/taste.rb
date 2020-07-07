@@ -45,11 +45,7 @@ module UserDecorators
 			RESOURCES.each do |resource|
 				define_method "saved_#{resource}" do |opts = {}|
 					if self && self.public_send("taste_#{resource}_saved").present?
-						if resource == 'events'
-							Event.saved_by_user(self).where("(ocurrences -> 'dates' ->> 0)::timestamptz > ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", DateTime.now - 8.hours).order_by_date
-						elsif resource == 'movies'
-							Movie.saved_by_user(self)
-						end
+						resource.classify.constantize.saved_by_user(self)
 					else
 						resource.classify.constantize.none
 					end

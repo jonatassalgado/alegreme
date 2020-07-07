@@ -24,7 +24,7 @@ module EventDecorators
 					# if opts[:active_range]
 					# 	return add_to_response('próximos 30 dias', range: true, order: 8)
 					# else
-						return add_to_response("#{I18n.l(@current_date, format: :week)} · #{I18n.l(@current_date, format: :short)}", order: 8)
+					return add_to_response("#{I18n.l(@current_date, format: :week)} · #{I18n.l(@current_date, format: :short)}", order: 8)
 					# end
 				when 14..90
 					if opts[:active_range]
@@ -56,7 +56,7 @@ module EventDecorators
 
 			['date', 'decorator', 'order'].each do |type|
 				define_method :"sort_by_#{type}" do
-					@datetimes = @datetimes.sort_by { |day| day[type] || 10}
+					@datetimes = @datetimes.sort_by { |day| day[type] || 10 }
 					self
 				end
 
@@ -72,15 +72,15 @@ module EventDecorators
 			end
 
 			def compact_range
-				ranges          = {}
-				name_to_insert  = {}
-				response        = []
+				ranges         = {}
+				name_to_insert = {}
+				response       = []
 
 
 				@datetimes.each { |days_obj|
 
 					if days_obj && days_obj['is_range']
-						decorator = days_obj['decorator']
+						decorator         = days_obj['decorator']
 						ranges[decorator] ||= []
 						ranges[decorator] << days_obj
 
@@ -92,11 +92,11 @@ module EventDecorators
 
 				name_to_insert.keys.each do |decorator|
 					to = {
-							'date'      => ranges[decorator].map { |a| a['date'] }.minmax,
-							'string'    => ranges[decorator].map { |a| a['string'] }.minmax,
-							'decorator' => name_to_insert[decorator],
-							'range'     => name_to_insert[decorator],
-							'is_range'  => true
+							:date      => ranges[decorator].map { |a| a['date'] }.minmax,
+							:string    => ranges[decorator].map { |a| a['string'] }.minmax,
+							:decorator => name_to_insert[decorator],
+							:range     => name_to_insert[decorator],
+							:is_range  => true
 					}
 
 

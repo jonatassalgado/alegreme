@@ -30,18 +30,33 @@ class UsersController < ApplicationController
 	# GET /users/1
 	# GET /users/1.json
 	def show
-		@events = @user.saved_events.present? ? @user.saved_events(as_model: true).active.order_by_date : Event.none
-		@topics = @user.following_topics
+		@upcoming_events = @user&.saved_events(as_model: true)&.active&.order_by_date
+		@historic_events = @user&.saved_events(as_model: true)&.historic&.order("updated_at DESC")
+		@topics          = @user&.following_topics
 
-
-		@collection = {
+		@collection_upcoming = {
 				identifier:       'user-saved-events',
-				events:           @events.limit(session[:limit]),
+				events:           @upcoming_events,
 				title:            {
-						principal: "Eventos salvos por #{current_user == @user ? 'você' : @user.first_name}"
+						principal: "Próximos eventos",
+						tertiary:  "Eventos salvos por #{current_user == @user ? 'você' : @user.first_name}"
 				},
-				infinite_scroll:  true,
+				infinite_scroll:  false,
 				display_if_empty: true,
+				disposition:      :horizontal,
+				show_similar_to:  session[:show_similar_to]
+		}
+
+		@collection_historic = {
+				identifier:       'user-historic-events',
+				events:           @historic_events,
+				title:            {
+						principal: "Histórico de eventos salvos",
+						tertiary:  "Remova eventos salvos para atualizar as recomendações"
+				},
+				infinite_scroll:  false,
+				display_if_empty: false,
+				disposition:      :horizontal,
 				show_similar_to:  session[:show_similar_to]
 		}
 

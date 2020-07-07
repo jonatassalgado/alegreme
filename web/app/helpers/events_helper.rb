@@ -1,4 +1,15 @@
 module EventsHelper
+
+	def time_until event
+		if event.first_day_time.to_datetime.iso8601 > DateTime.now.iso8601
+			"Daqui #{distance_of_time_in_words event.first_day_time, DateTime.now}"
+		elsif event.first_day_time.to_datetime.iso8601 > (DateTime.now - 6.hours).iso8601
+			"Iniciou há #{distance_of_time_in_words event.first_day_time, DateTime.now}"
+		else
+			"Aconteceu há #{distance_of_time_in_words event.first_day_time, DateTime.now}"
+		end
+	end
+
 	def limit_name_size(name, limit = 60)
 		name.titleize.truncate(limit, separator: " ") if name
 	end
