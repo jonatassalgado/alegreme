@@ -2,8 +2,11 @@
 @import "@material/top-app-bar/_mixins";
 
 .me-chip {
-  font-weight: 300;
   background: whitesmoke;
+  font-weight: 400;
+  padding: 20px 13px;
+  border-radius: 24px;
+  overflow: hidden;
 
   .me-section-title-custom & {
     color: $font-tertiary-color;
@@ -118,13 +121,6 @@
   }
 
   .me-filter & {
-    font-family: $font-secondary-family;
-    border-radius: 6px;
-    background: none;
-    border: $chip-border-size solid $border-color;
-    text-transform: capitalize;
-    font-size: 11px;
-    font-weight: 300;
     @include mobile-only {
       // padding: 8px 20px;
       // font-size: 11px;
