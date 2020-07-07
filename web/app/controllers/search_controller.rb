@@ -7,12 +7,13 @@ class SearchController < ApplicationController
 			query = params[:q].downcase.split.delete_if { |word| Event::STOPWORDS.include?(word) }.join(' ')
 
 			events = Event.search(query, {
-					fields:       ["name^2", "organizers", "description", "category"],
-					suggest:      true,
-					limit:        150,
-					includes:     [:place],
-					operator:     "or",
-					body_options: {min_score: 10}
+					fields:        ["name^2", "organizers", "description", "category"],
+					suggest:       true,
+					limit:         150,
+					includes:      [:place],
+					operator:      "or",
+					body_options:  {min_score: 10},
+					scope_results: ->(r) { r.active }
 			})
 
 			@collection = {

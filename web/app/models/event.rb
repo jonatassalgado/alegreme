@@ -67,6 +67,12 @@ class Event < ApplicationRecord
 	           highlight:   %i[name],
 	           batch_size:  100)
 
+	scope :search_import, -> { where(active: true) }
+
+	def should_index?
+		active
+	end
+
 	def search_data
 		{
 				name:        details_name,
@@ -85,6 +91,9 @@ class Event < ApplicationRecord
 		nouns.union(verbs, adjs)
 	end
 
+	def active
+		ocurrences['dates'][0].to_date >= DateTime.now - 6.hours if ocurrences['dates'].present?
+	end
 
 	def cover_url(type = :list)
 		image[type].url if image && image[type].exists?
