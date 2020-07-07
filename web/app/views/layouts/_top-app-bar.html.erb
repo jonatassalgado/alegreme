@@ -2,13 +2,13 @@
 
 	props = {
 			visible: {
-					backbutton:     ['show', 'neighborhood', 'follow', 'week', 'suggestions'].include?(params[:action]) &&
-															mobile_device?,
-					section_middle: (['feeds'].include?(params[:controller]) && !mobile_device?) ||
-															['search'].include?(params[:controller]),
-					share_button:   content_for?(:share_button_url) && params[:action] == 'show' && mobile_device?,
-					user_menu:      ['feeds', 'movies'].include?(params[:controller]) && params[:action] != 'show' && current_user,
-					sign_up:        !current_user
+					backbutton:   ['show', 'neighborhood', 'follow', 'week', 'suggestions'].include?(params[:action]) &&
+														mobile_device?,
+					search:       (['feeds'].include?(params[:controller]) && !mobile_device?) ||
+														['search'].include?(params[:controller]),
+					share_button: content_for?(:share_button_url) && params[:action] == 'show' && mobile_device?,
+					user_menu:    ['feeds', 'movies'].include?(params[:controller]) && params[:action] != 'show' && current_user,
+					sign_up:      !current_user
 			}
 	}.deep_merge!(props || {})
 
@@ -44,7 +44,7 @@
 		</section>
 
 		<!-- Section MIDDLE -->
-		<% if props[:visible][:section_middle] %>
+		<% if props[:visible][:search] %>
 			<section class="me-top-app-bar__section me-top-app-bar__section--middle mdc-top-app-bar__section">
 				<!-- Search input -->
 				<div class="me-search-field me-search-field mdc-text-field mdc-text-field--with-leading"
@@ -102,7 +102,7 @@
 						<div class="me-top-app-bar__picture is-hoverable" style="background-image: url('<%= current_user.picture :small %>')"></div>
 					<% end %>
 				<% end %>
-				<div  style="flex-direction: row">
+				<div style="flex-direction: row">
 					<%= link_to current_user.first_name, user_path(current_user), class: "me-top-app-bar__name" %> <br>
 					<%= link_to "Sair", destroy_user_session_path, method: :delete, class: "me-top-app-bar__logout" %>
 				</div>
