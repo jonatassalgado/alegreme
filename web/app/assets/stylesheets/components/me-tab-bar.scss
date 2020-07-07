@@ -8,15 +8,13 @@
   background: $surface-color;
   display: block;
   width: auto;
+  max-width: calc(#{$page-width} - 20px);
   position: sticky;
   top: 0;
   z-index: 5;
-  // will-change: box-shadow;
-  // transition: 250ms box-shadow ease;
-  // @include mdc-tab-states-color(#ffffff);
+  margin: auto;
   @include desktop-only {
     z-index: 3;
-    padding: 0 0 0 73px;
     top: 64px;
   }
   @include mobile-only {

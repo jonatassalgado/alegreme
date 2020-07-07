@@ -70,7 +70,9 @@
 
   &--feed {
     @include desktop-only {
-      margin: 0 0 0 73px;
+      margin: auto;
+      width: auto;
+      max-width: $page-width;
     }
   }
 
