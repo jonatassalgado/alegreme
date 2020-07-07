@@ -9,7 +9,7 @@ module EventQueries
 
         return Event.none unless neighborhoods
         if opts[:turn_on]
-          where("(geographic ->> 'neighborhood') IN (:neighborhoods)", neighborhoods: neighborhoods)
+          where("(events.geographic ->> 'neighborhood') IN (:neighborhoods)", neighborhoods: neighborhoods)
         else
           all
         end

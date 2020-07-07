@@ -2,34 +2,34 @@ module UserDecorators
 	module Taste
 
 		TASTE_TYPES = {
-			"save" => {
-				past: "saved",
-				plural: "saves"
-			},
-			"unsave" => {
-				past: "saved",
-				plural: "saves"
-			},
-			"like" => {
-				past: "liked",
-				plural: "likes"
-			},
-			"unlike" => {
-				past: "liked",
-				plural: "likes"
-			},
-			"view" => {
-				past: "viewed",
-				plural: "views"
-			},
-			"dislike" => {
-				past: "disliked",
-				plural: "dislikes"
-			},
-			"undislike" => {
-				past: "disliked",
-				plural: "dislikes"
-			}
+				"save"      => {
+						past:   "saved",
+						plural: "saves"
+				},
+				"unsave"    => {
+						past:   "saved",
+						plural: "saves"
+				},
+				"like"      => {
+						past:   "liked",
+						plural: "likes"
+				},
+				"unlike"    => {
+						past:   "liked",
+						plural: "likes"
+				},
+				"view"      => {
+						past:   "viewed",
+						plural: "views"
+				},
+				"dislike"   => {
+						past:   "disliked",
+						plural: "dislikes"
+				},
+				"undislike" => {
+						past:   "disliked",
+						plural: "dislikes"
+				}
 		}
 
 		RESOURCES = ['events', 'movies']
@@ -51,7 +51,7 @@ module UserDecorators
 							Movie.saved_by_user(self)
 						end
 					else
-						[]
+						resource.classify.constantize.none
 					end
 				end
 			end
@@ -65,25 +65,25 @@ module UserDecorators
 							Movie.saved_by_user(self).order_by_date.uniq.pluck(:id)
 						end
 					else
-						[]
+						resource.classify.constantize.none
 					end
 				end
 			end
 
 			RESOURCES.each do |resource|
-				["save", "like",	"view", "dislike"].each do |taste_type|
+				["save", "like", "view", "dislike"].each do |taste_type|
 					define_method "taste_#{resource}_#{taste_type}" do |resource_id|
 						begin
 							instance = resource.classify.constantize.find resource_id.to_i
 
 							ActiveRecord::Base.transaction do
-								instance.entries["#{TASTE_TYPES[taste_type][:past]}_by"] |= [id]
+								instance.entries["#{TASTE_TYPES[taste_type][:past]}_by"]      |= [id]
 								instance.entries["total_#{TASTE_TYPES[taste_type][:plural]}"] += 1
 
 								validate_taste_existence resource
-								taste[resource][TASTE_TYPES[taste_type][:past]] |= [resource_id.to_i]
+								taste[resource][TASTE_TYPES[taste_type][:past]]              |= [resource_id.to_i]
 								taste[resource]["total_#{TASTE_TYPES[taste_type][:plural]}"] += 1
-								taste[resource]['updated_at'] = DateTime.now
+								taste[resource]['updated_at']                                = DateTime.now
 
 								instance.save && save
 							end
@@ -99,7 +99,7 @@ module UserDecorators
 			end
 
 			RESOURCES.each do |resource|
-				["unsave", "unlike",	"unview", "undislike"].each do |taste_type|
+				["unsave", "unlike", "unview", "undislike"].each do |taste_type|
 					define_method "taste_#{resource}_#{taste_type}" do |resource_id|
 						begin
 							instance = resource.classify.constantize.find resource_id.to_i
@@ -111,7 +111,7 @@ module UserDecorators
 								validate_taste_existence resource
 								taste[resource][TASTE_TYPES[taste_type][:past]].delete resource_id.to_i
 								taste[resource]["total_#{TASTE_TYPES[taste_type][:plural]}"] -= 1
-								taste[resource]['updated_at'] = DateTime.now
+								taste[resource]['updated_at']                                = DateTime.now
 
 								instance.save && save
 							end
@@ -127,7 +127,7 @@ module UserDecorators
 			end
 
 			RESOURCES.each do |resource|
-				["save", "like",	"view", "dislike"].each do |taste_type|
+				["save", "like", "view", "dislike"].each do |taste_type|
 					define_method "taste_#{resource}_#{TASTE_TYPES[taste_type][:past]}?" do |resource_id|
 						if taste[resource]
 							taste[resource][TASTE_TYPES[taste_type][:past]].include? resource_id.to_i
@@ -139,7 +139,7 @@ module UserDecorators
 			end
 
 			RESOURCES.each do |resource|
-				["save", "like",	"view", "dislike"].each do |taste_type|
+				["save", "like", "view", "dislike"].each do |taste_type|
 					define_method "taste_#{resource}_#{TASTE_TYPES[taste_type][:past]}" do
 						taste.dig(resource, TASTE_TYPES[taste_type][:past])
 					end
