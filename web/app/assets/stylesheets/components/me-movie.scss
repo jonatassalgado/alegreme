@@ -60,13 +60,13 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-    height: 270px;
+    height: auto;
     border-radius: $media-border-radius;
     box-shadow: $media-box-shadow-small;
     @include mobile-only {
-      min-height: 220px;
-      height: auto;
+      height: 220px;
     }
+
     & img {
       width: 100%;
       max-width: 200px;
@@ -84,7 +84,10 @@
     }
 
     .me-saves & {
-      min-height: 170px;
+      height: 200px;
+      @include mobile-only {
+        height: 170px;
+      }
     }
   }
 
@@ -103,6 +106,7 @@
     color: $font-primary-color;
     margin: 6px 0 3px 0;
     text-align: center;
+
     .me-movie--single & {
       padding: 0;
       margin: 25px 0 3px 0;
@@ -153,6 +157,7 @@
     color: $font-secondary-color;
     padding: 6px 0 12px 0;
     line-height: 1.6em;
+
     .me-movie--single & {
       font-size: 14px;
       color: $font-primary-color;
@@ -190,6 +195,7 @@
   &__place-name {
     font-weight: 800;
     font-size: 15px;
+
     & a {
       color: $font-secondary-color;
     }

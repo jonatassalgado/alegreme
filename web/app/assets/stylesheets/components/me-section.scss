@@ -10,7 +10,6 @@
   background: $surface-color;
   @include desktop-only {
     display: flex;
-    justify-content: center;
     margin: 2px 0;
   }
   @include mobile-only {
