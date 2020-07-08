@@ -39,6 +39,10 @@ module ApplicationHelper
 		end
 	end
 
+	def pwa?
+		params[:pwa]
+	end
+
 	def responsive_image_tag(image, opts = {})
 		opts = {only: {'1.5x' => true, '2x' => true}}.merge(opts)
 

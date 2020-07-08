@@ -51,9 +51,9 @@
   }
 
   &__inner {
-    @include desktop-only {
-      width: $main-content-width;
-    }
+    //@include desktop-only {
+    //  width: $main-content-width;
+    //}
 
     [data-controller="events"][data-action="show"] & {
       @include desktop-only {

@@ -1,6 +1,6 @@
 <% content_for :canonical_url, root_url, format: :html %>
 
-<div class="template__container <%= 'is-pwa' if params[:pwa] %>">
+<div class="template__container <%= 'is-pwa' if pwa? %>">
 
   <div class="hero__wrapper">
     <section class="hero">
@@ -23,7 +23,7 @@
           <h2>Aprendemos o que você gosta e não gosta para te sugerir eventos, atividades, promoções e serviços que vão de lazer a educação. Assim, você descobre coisas novas e não perde o que já conhece.</h2>
         </section>
 
-        <%# if params[:pwa] %>
+        <%# if pwa? %>
 <!--        <div class="login-button" title="Entrar" onclick="location.assign('<%#= new_user_session_path %>')">-->
 <!--          Entrar-->
 <!--          <span>-->
@@ -250,7 +250,7 @@
     </div>
   </section>
 
-  <%# unless params[:pwa] %>
+  <%# unless pwa? %>
   <section class="invite-float">
     <%= render partial: "welcome/invite" %>
   </section>

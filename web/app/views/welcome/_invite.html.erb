@@ -1,4 +1,4 @@
-<section class="invite <%= 'is-pwa' if params[:pwa] %>">
+<section class="invite <%= 'is-pwa' if pwa? %>">
   <div class="invite__status">
     <div class="people">
       <% @last_people.each do |person| %>
@@ -70,7 +70,7 @@
       </div>
     <% end %>
   </div>
-  <% unless params[:pwa] %>
+  <% unless pwa? %>
     <div class="invite__cta-group">
       <div class="invite__playstore-link">
         ou
