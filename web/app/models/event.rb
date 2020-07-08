@@ -67,10 +67,14 @@ class Event < ApplicationRecord
 	           highlight:   %i[name],
 	           batch_size:  100)
 
-	scope :search_import, -> { where(active: true) }
+	scope :search_import, -> { active }
 
 	def should_index?
 		active
+	end
+
+	def active
+		ocurrences['dates'][0].to_date >= DateTime.now - 6.hours if ocurrences['dates'].present?
 	end
 
 	def search_data
@@ -89,10 +93,6 @@ class Event < ApplicationRecord
 		adjs  = ml_data['adjs']
 
 		nouns.union(verbs, adjs)
-	end
-
-	def active
-		ocurrences['dates'][0].to_date >= DateTime.now - 6.hours if ocurrences['dates'].present?
 	end
 
 	def cover_url(type = :list)
