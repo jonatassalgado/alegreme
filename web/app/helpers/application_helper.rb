@@ -17,11 +17,25 @@ module ApplicationHelper
 		"##{sentence.gsub(/ /, '')}"
 	end
 
+	def browser
+		Browser.new(request.user_agent)
+	end
+
+	def modern_browser?
+		[
+				browser.chrome?(">= 65"),
+				browser.safari?(">= 10"),
+				browser.firefox?(">= 52"),
+				browser.edge?(">= 15"),
+				browser.opera?(">= 50")
+		].any?
+	end
+
 	def mobile_device?
 		if session[:mobile_param]
 			session[:mobile_param] == "1"
 		else
-			request.user_agent =~ /Mobile|webOS/
+			browser.device.mobile?
 		end
 	end
 

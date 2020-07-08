@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-	<script crossorigin="anonymous" rel="preload" src="https://polyfill.io/v3/polyfill.min.js?flags=gated&rum=true&features=Element.prototype.closest%2CIntersectionObserverEntry%2CIntersectionObserver%2CMutationObserver%2Cfetch%2CrequestAnimationFrame%2CrequestIdleCallback%2CArray.prototype.forEach"></script>
+	<% unless modern_browser? %>
+		<script crossorigin="anonymous" rel="preload" src="https://polyfill.io/v3/polyfill.min.js?flags=gated&rum=true&features=Element.prototype.closest%2CIntersectionObserverEntry%2CIntersectionObserver%2CMutationObserver%2Cfetch%2CrequestAnimationFrame%2CrequestIdleCallback%2CArray.prototype.forEach"></script>
+	<% end %>
 
 	<%= render 'layouts/google_analytics' %>
 

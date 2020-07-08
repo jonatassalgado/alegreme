@@ -48,6 +48,8 @@ gem 'picture_tag'
 # Webpacker
 gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
 
+gem "browser", require: "browser/browser"
+
 
 # Use CoffeeScript for .coffee assets and views
 # gem 'coffee-rails', '~> 5.0.0'
@@ -56,8 +58,7 @@ gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-gem "redis", ">= 4.0", :require => ["redis", "redis/connection/hiredis"]
-gem "hiredis"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -120,6 +121,9 @@ group :production do
 	# Cache
 	# gem 'dalli'
 	gem 'connection_pool'
+
+	gem "redis", ">= 4.0", :require => ["redis", "redis/connection/hiredis"]
+	gem "hiredis"
 
 	# Sidekiq
 	gem 'sidekiq'
