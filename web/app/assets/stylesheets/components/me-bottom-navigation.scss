@@ -5,7 +5,7 @@
   bottom: 0;
   z-index: 5;
   background: darken($surface-color, 1%);
-  box-shadow: 0 -1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.2);
   will-change: transform;
   transition: transform 250ms ease;
   @include desktop-only {
@@ -53,5 +53,10 @@
       pointer-events: none;
       font-weight: 500;
     }
+  }
+
+  [data-controller="sessions"] &,
+  [data-controller="registrations"] & {
+    display: none;
   }
 }

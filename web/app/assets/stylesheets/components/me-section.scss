@@ -54,27 +54,37 @@
     @include desktop-only {
       width: $main-content-width;
     }
+
     [data-controller="events"][data-action="show"] & {
       @include desktop-only {
         width: calc(100% - 48px);
       }
     }
+
     .me-section--full & {
       @include desktop-only {
         width: 100% !important;
       }
     }
+
     .me-section--with-padding & {
       padding: 0 $section-padding-phone;
     }
+
     .me-section--centralized & {
       max-width: 700px;
       margin: 0 auto;
     }
+
     .me-section--centralized-small & {
       max-width: 350px;
       margin: 0 auto;
     }
+  }
+
+  &--align-center {
+    display: flex;
+    align-items: center;
   }
 
   &--full {
