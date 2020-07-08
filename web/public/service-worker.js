@@ -68,7 +68,7 @@ workbox.routing.registerRoute(
 			}),
 			new workbox.expiration.Plugin({
 				maxAgeSeconds: 60 * 60 * 24 * 365,
-				maxEntries   : 30
+				maxEntries   : 10
 			})
 		]
 	})
@@ -84,7 +84,7 @@ workbox.routing.registerRoute(
 			}),
 			new workbox.expiration.Plugin({
 				maxAgeSeconds: 60 * 60 * 24 * 365,
-				maxEntries   : 30
+				maxEntries   : 10
 			})
 		]
 	})
@@ -113,7 +113,7 @@ workbox.routing.registerRoute(
 			}),
 			new workbox.expiration.Plugin({
 				// Cache only 20 images.
-				maxEntries   : 100,
+				maxEntries   : 30,
 				// Cache for a maximum of a week.
 				maxAgeSeconds: 7 * 24 * 60 * 60
 			})
@@ -127,7 +127,7 @@ workbox.routing.registerRoute(
 		cacheName: CACHE_NAME + "events-page",
 		plugins  : [
 			new workbox.expiration.Plugin({
-				maxEntries   : 10,
+				maxEntries   : 30,
 				maxAgeSeconds: 7 * 24 * 60 * 60
 			})
 		]

@@ -1,6 +1,6 @@
 //= require mobile-detect/mobile-detect.js
 //= require lazysizes/lazysizes.min.js
-//= require serviceworker-companion.js
+//= require packs/serviceworker-companion.js
 
 lazySizes.cfg.expand = 10;
 
