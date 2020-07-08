@@ -9,7 +9,7 @@
 
 %>
 
-<% if props[:feed] || props[:movies] %>
+<% if props[:feed] && !props[:movies] %>
 	<div data-reflex-permanent data-controller="tab-bar" data-target="tab-bar.tabBar" data-tab-bar-selected-tab="<%= "#{controller_name}##{action_name}" %>" data-tab-bar-turbolinks-persist-scroll="0" id="tab-bar" class="me-tab-bar mdc-tab-bar" role="tablist">
 		<div class="mdc-tab-scroller">
 			<div data-target="tab-bar.scroller" class="mdc-tab-scroller__scroll-area">

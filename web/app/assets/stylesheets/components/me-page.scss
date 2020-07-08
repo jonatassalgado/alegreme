@@ -1,7 +1,7 @@
 .me-page {
   @include is-show-in-animated;
   color: $font-primary-color;
-  padding-top: 56px;
+  padding-top: 100px;
   @include desktop-only {
     margin: auto;
     width: auto;
@@ -12,10 +12,9 @@
     overflow: hidden;
   }
 
-  [data-controller="feeds"] &,
-  [data-controller="movies"] & {
+  [data-controller="events"][data-action="show"] & {
     @include desktop-only {
-      padding-top: 100px;
+      padding-top: 56px;
     }
   }
 
