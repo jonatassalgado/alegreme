@@ -242,6 +242,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'city',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre",
 						secondary: current_user ? "Explore todos os eventos ordenados por dia sem filtro de perfil" : "Explore todos os eventos que ocorrem em Porto Alegre - RS"

@@ -16,40 +16,33 @@ export default class SectionController extends ApplicationController {
         this.md         = new MobileDetect(window.navigator.userAgent);
         this.pubsub     = {};
         this.ripples    = [];
-        this.rootMargin = this.md.mobile() ? "1000px" : "500px";
+        this.observer   = new IntersectionObserver((entries, observer) => {
+                                                       entries.forEach((entry) => {
+
+                                                           if (this.hasLoadMoreButtonTarget) {
+                                                               if (entry.isIntersecting) {
+                                                                   entry.target.disabled  = true;
+                                                                   entry.target.innerText = "Carregando...";
+                                                                   this.loadMoreHere();
+                                                               } else {
+
+                                                               }
+                                                           }
+                                                       })
+                                                   },
+                                                   {
+                                                       threshold:  0.1,
+                                                       rootMargin: this.rootMargin
+                                                   }
+        );
+
+        this.activeLoadMoreButton();
+
+        document.addEventListener("cable-ready:after-morph", this.activeLoadMoreButton.bind(this))
+
         // this.flipping   = new Flipping({
         // 	                               attribute: `data-collection-${this.identifier}-flip-key`
         //                                });
-
-        this.loadMoreButtonTargets.forEach((button) => {
-            this.ripples.push(new MDCRipple(button));
-        });
-
-        if (this.data.get("infiniteScroll") === "true") {
-            this.observer = new IntersectionObserver((entries, observer) => {
-                                                         entries.forEach((entry) => {
-
-                                                             if (this.hasLoadMoreButtonTarget) {
-                                                                 if (entry.isIntersecting) {
-                                                                     entry.target.disabled  = true;
-                                                                     entry.target.innerText = "Carregando...";
-                                                                     this.loadMoreHere();
-                                                                 } else {
-
-                                                                 }
-                                                             }
-                                                         })
-                                                     },
-                                                     {
-                                                         threshold:  0.1,
-                                                         rootMargin: this.rootMargin
-                                                     }
-            );
-
-            this.loadMoreButtonTargets.forEach((loadMoreButton) => {
-                this.observer.observe(loadMoreButton);
-            });
-        }
 
         // this.pubsub.sectionUpdated = PubSubModule.on(`${this.identifier}.updated`, (data) => {
         //     if (!this.md.mobile()) {
@@ -85,20 +78,22 @@ export default class SectionController extends ApplicationController {
         // ProgressBarModule.hide(); }); } else { ProgressBarModule.hide(); } LazyloadModule.lazyloadFeed();
         // this.hasMoreEventsToLoad(); this.data.set("load-more-loading", false); this.scrollLeft = 0; });
 
-        this.destroy = () => {
-            this.turbolinksPersistScroll     = this.scrollContainerTarget.scrollLeft;
-            this.sectionTarget.style.opacity = 1;
-            this.ripples.forEach((ripple) => {
-                ripple.destroy();
-            });
-        };
-
-        document.addEventListener("turbolinks:before-cache", this.destroy, false);
+        // this.destroy = () => {
+        //
+        // };
+        //
+        // document.addEventListener("turbolinks:before-cache", this.destroy, false);
     }
 
-
     disconnect() {
-        document.removeEventListener("turbolinks:before-cache", this.destroy, false);
+        this.turbolinksPersistScroll     = this.scrollContainerTarget.scrollLeft;
+        this.sectionTarget.style.opacity = 1;
+        this.observer.disconnect();
+        this.ripples.forEach((ripple) => {
+            ripple.destroy();
+        });
+        document.removeEventListener("cable-ready:after-morph", this.activeLoadMoreButton.bind(this))
+        // document.removeEventListener("turbolinks:before-cache", this.destroy, false);
     }
 
     seeMoreInNewPage() {
@@ -124,6 +119,20 @@ export default class SectionController extends ApplicationController {
                 .catch(payload => {
 
                 })
+        }
+    }
+
+    activeLoadMoreButton() {
+        this.rootMargin = this.md.mobile() ? "500px" : "250px";
+
+        this.loadMoreButtonTargets.forEach((button) => {
+            this.ripples.push(new MDCRipple(button));
+        });
+
+        if (this.data.get("infiniteScroll") === "true") {
+            this.loadMoreButtonTargets.forEach((loadMoreButton) => {
+                this.observer.observe(loadMoreButton);
+            });
         }
     }
 

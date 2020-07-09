@@ -21,9 +21,10 @@ export default class FilterController extends ApplicationController {
                 type:  this.data.get("type"),
                 value: event.detail.selected ? [event.target.dataset.filterValue] : []
             }
-        }).then(() => {
-            ProgressBarModule.hide();
         })
+            .then(() => {
+                ProgressBarModule.hide();
+            })
     }
 
 }

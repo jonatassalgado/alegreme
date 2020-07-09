@@ -38,7 +38,7 @@ class EventReflex < ApplicationReflex
 			session[:categories] = filter_value.any? ? filter_value : []
 		end
 
-		if limit.blank? && filter_value.empty?
+		if limit.blank?
 			session[:limit] = 16
 		else
 			session[:limit] = limit
