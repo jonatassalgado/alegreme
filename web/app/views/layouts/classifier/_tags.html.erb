@@ -17,7 +17,7 @@
 					<div data-controller="filter" data-target="tags.tags">
 						<div data-filter-type="tags" data-target="filter.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
 							<% tags_to_select.each do |tag| %>
-								<div data-target="filter.chip" data-action="click->filter#select"
+								<div data-target="filter.chip" data-action="MDCChip:selection->filter#select"
 									class="me-chip mdc-chip <%= event.tags_of_type(type).include?(tag) ? 'mdc-chip--selected' : nil %>"
 									data-filter-tag-type="things" data-turbolinks-scroll="false">
 									<div class="mdc-chip__checkmark">

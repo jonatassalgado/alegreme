@@ -1,24 +1,24 @@
 <div data-controller='kinds' data-kinds-identifier="<%= event.id %>">
 	<span data-target="kinds.dialogButton" data-action="click->kinds#openDialog">
-		<%= event.kinds_name.blank? ? 'EDITAR' : event.kinds_name.join(' ')  %>
+		<%= event.kinds_name.blank? ? 'EDITAR' : event.kinds_name.join(' ') %>
 	</span>
 	<div data-target="kinds.dialog" class="mdc-dialog" role="alertdialog" aria-modal="true"
-		aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
+			 aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
 		<div class="mdc-dialog__container">
 			<div class="mdc-dialog__surface">
 				<h2 class="mdc-dialog__title" id="my-dialog-title">Tipo (kind)</h2>
 				<div class="mdc-dialog__content" id="my-dialog-content">
 					<div data-controller="filter" data-target="kinds.chipsKinds">
 						<div data-filter-type="kinds" data-target="filter.chipset"
-							class="me-chip-set mdc-chip-set mdc-chip-set--filter mdc-chip-set--input">
+								 class="me-chip-set mdc-chip-set mdc-chip-set--filter mdc-chip-set--input">
 							<% Artifact.kinds_whitelist.sort.each do |kind| %>
-								<div data-target="filter.chip" data-action="click->filter#select"
-									class="me-chip mdc-chip <%= event.kinds_name.include?(kind) ? 'mdc-chip--selected' : nil %>"
-									data-turbolinks-scroll="false">
+								<div data-target="filter.chip" data-action="MDCChip:selection->filter#select"
+										 class="me-chip mdc-chip <%= event.kinds_name.include?(kind) ? 'mdc-chip--selected' : nil %>"
+										 data-turbolinks-scroll="false">
 									<div class="mdc-chip__checkmark">
 										<svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
 											<path class="mdc-chip__checkmark-path" fill="none" stroke="black"
-												d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+														d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
 										</svg>
 									</div>
 									<div class="mdc-chip__text">
@@ -35,7 +35,7 @@
 						<span class="mdc-button__label">Fechar</span>
 					</button>
 					<button data-action="click->kinds#saveKindsSelected" type="button" class="mdc-button mdc-dialog__button"
-						data-mdc-dialog-action="accept">
+									data-mdc-dialog-action="accept">
 						<span class="mdc-button__label">Salvar</span>
 					</button>
 				</footer>

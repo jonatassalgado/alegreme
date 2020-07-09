@@ -15,10 +15,10 @@
 				 data-target="filter.chipset"
 				 data-filter-type="<%= data[:type] %>"
 				 class="me-chip-set mdc-chip-set mdc-chip-set--choice">
-			<% Array(data[:filters]).each do |filter| %>
-				<% if data[:type] == 'days' %>
+			<% if data[:type] == 'days' %>
+				<% data[:filters].reject { |filter| filter['string'].blank? }.each do |filter| %>
 					<div class="me-chip mdc-chip"
-							 data-action="click->filter#select"
+							 data-action="MDCChip:selection->filter#select"
 							 data-filter-value="<%= filter['string'] %>"
 							 data-target="filter.chip"
 							 data-turbolinks-scroll="false">
@@ -26,9 +26,11 @@
 							<%= filter['decorator'] %>
 						</div>
 					</div>
-				<% else %>
+				<% end %>
+			<% else %>
+				<% data[:filters].reject(&:blank?).each do |filter| %>
 					<div class="me-chip mdc-chip"
-							 data-action="click->filter#select"
+							 data-action="MDCChip:selection->filter#select"
 							 data-filter-value="<%= filter %>"
 							 data-target="filter.chip"
 							 data-turbolinks-scroll="false">
