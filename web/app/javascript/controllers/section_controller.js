@@ -107,6 +107,7 @@ export default class SectionController extends ApplicationController {
 
     loadMoreHere() {
         if (this.isActionCableConnectionOpen()) {
+            ProgressBarModule.show();
             this.data.set("loadMoreLoading", true);
             this.data.set("limit", parseInt(this.data.get("limit")) + 16);
 
@@ -114,6 +115,7 @@ export default class SectionController extends ApplicationController {
                 limit: this.data.get("limit")
             })
                 .then(payload => {
+                    ProgressBarModule.hide();
                     this.data.set("loadMoreLoading", false);
                 })
                 .catch(payload => {
