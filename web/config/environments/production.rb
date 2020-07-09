@@ -46,7 +46,7 @@ Rails.application.configure do
 
 	# Mount Action Cable outside main process or domain
 	# config.action_cable.mount_path = nil
-	config.action_cable.url = 'wss://www.alegreme.com/cable'
+	config.action_cable.url                     = 'wss://www.alegreme.com/cable'
 	config.action_cable.allowed_request_origins = [/(http|https):\/\/.*alegreme.*/]
 	# config.action_cable.disable_request_forgery_protection = true # only if necessary
 
@@ -62,7 +62,17 @@ Rails.application.configure do
 
 	# Use a different cache store in production.
 	# config.cache_store = :dalli_store, 'memcached', {:pool_size => 5}
-	config.cache_store = :redis_cache_store, {url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/0" }}
+	config.cache_store = :redis_cache_store, {url:             ENV.fetch("REDIS_URL") { "redis://localhost:6379/0" },
+	                                          reconnect_attempts: 1, # Defaults to 0
+	                                          error_handler: -> (method:, returning:, exception:) {
+		                                          Raven.capture_exception exception,
+		                                                                  level: 'warning',
+		                                                                  tags:  {
+				                                                                  method:    method,
+				                                                                  returning: returning
+		                                                                  }
+	                                          }
+	}
 	config.session_store :cache_store,
 	                     key:          "_session",
 	                     compress:     true,
