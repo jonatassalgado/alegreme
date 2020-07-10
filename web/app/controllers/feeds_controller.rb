@@ -26,72 +26,77 @@ class FeedsController < ApplicationController
 		@swipable_items               ||= get_swipable_items
 
 		@collection_suggestions = {
-				identifier:       'user-suggestions',
-				events:           @events_in_user_suggestions.limit(session[:stimulus][:limit]),
-				total_count:      @events_in_user_suggestions.size,
-				title:            {
+				identifier:        'user-suggestions',
+				events:            @events_in_user_suggestions.limit(session[:stimulus][:limit]),
+				total_count:       @events_in_user_suggestions.size,
+				title:             {
 						principal: "Escolhidos a dedo para #{current_user&.first_name || 'você'}",
 						tertiary:  (current_user ? "Com base nos eventos salvos" : "Crie uma conta para ver os eventos abaixo")
 				},
-				show_similar_to:  session[:stimulus][:show_similar_to],
-				continue_to:      "/#{current_user&.slug}/sugestoes",
-				display_if_empty: true,
-				disposition:      :horizontal
+				show_similar_to:   session[:stimulus][:show_similar_to],
+				continue_to:       "/#{current_user&.slug}/sugestoes",
+				display_if_empty:  true,
+				display_load_more: true,
+				disposition:       :horizontal
 		}
 
 		@collection_follow = {
-				identifier:       'follow',
-				events:           @events_from_following_topics.limit(session[:stimulus][:limit]),
-				total_count:      @events_from_following_topics.size,
-				title:            {
+				identifier:        'follow',
+				events:            @events_from_following_topics.limit(session[:stimulus][:limit]),
+				total_count:       @events_from_following_topics.size,
+				title:             {
 						principal: "Tópicos que você segue",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
 				},
-				continue_to:      "/#{current_user&.slug}/seguindo",
-				show_similar_to:  session[:stimulus][:show_similar_to],
-				display_if_empty: true,
-				disposition:      :horizontal
+				continue_to:       "/#{current_user&.slug}/seguindo",
+				show_similar_to:   session[:stimulus][:show_similar_to],
+				display_if_empty:  true,
+				display_load_more: true,
+				disposition:       :horizontal
 		}
 
 		@collection_following_users = {
-				identifier:       'following-users',
-				events:           @events_from_followed_users.limit(session[:stimulus][:limit]),
-				total_count:      @events_from_followed_users.size,
-				title:            {
+				identifier:        'following-users',
+				events:            @events_from_followed_users.limit(session[:stimulus][:limit]),
+				total_count:       @events_from_followed_users.size,
+				title:             {
 						principal: "Pessoas que você segue",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
 				},
-				show_similar_to:  session[:stimulus][:show_similar_to],
-				display_if_empty: true,
-				disposition:      :horizontal
+				show_similar_to:   session[:stimulus][:show_similar_to],
+				display_if_empty:  true,
+				display_load_more: true,
+				disposition:       :horizontal
 		}
 
 		@collection_week = {
-				identifier:       'this-week',
-				events:           @events_this_week.limit(session[:stimulus][:limit]),
-				total_count:      @events_this_week.size,
-				title:            {
+				identifier:        'this-week',
+				events:            @events_this_week.limit(session[:stimulus][:limit]),
+				total_count:       @events_this_week.size,
+				title:             {
 						principal: "Acontecendo esta semana",
 						tertiary:  (current_user ? "Com base no seu perfil" : "Crie uma conta para ver os eventos abaixo")
 				},
-				show_similar_to:  session[:stimulus][:show_similar_to],
-				continue_to:      '/porto-alegre/eventos/semana',
-				disposition:      :horizontal,
-				display_if_empty: true,
-				if_greater_than:  2
+				show_similar_to:   session[:stimulus][:show_similar_to],
+				continue_to:       '/porto-alegre/eventos/semana',
+				disposition:       :horizontal,
+				display_if_empty:  true,
+				display_load_more: true,
+				if_greater_than:   2
 		}
 
 		@collection_neighborhood = {
-				identifier:       'my-neighborhood',
-				events:           @events_in_my_neighborhood.limit(session[:stimulus][:limit]),
-				total_count:      @events_in_my_neighborhood.size,
-				title:            {
+				identifier:        'my-neighborhood',
+				events:            @events_in_my_neighborhood.limit(session[:stimulus][:limit]),
+				total_count:       @events_in_my_neighborhood.size,
+				title:             {
 						principal: "Nos bairros da sua cidade",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
 				},
-				show_similar_to:  session[:stimulus][:show_similar_to],
-				display_if_empty: true,
-				disposition:      :horizontal
+				show_similar_to:   session[:stimulus][:show_similar_to],
+				display_if_empty:  true,
+				display_load_more: true,
+				disposition:       :horizontal
 		}
 
 	end
