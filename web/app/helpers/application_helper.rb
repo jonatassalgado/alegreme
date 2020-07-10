@@ -114,7 +114,7 @@ module ApplicationHelper
 			end
 		else
 			if opts[:active_range]
-				nil
+				return "#{I18n.l(@current_date, format: :short)} · #{I18n.l(@current_date, format: :week)}"
 			else
 				return I18n.l(@current_date, format: :short)
 			end

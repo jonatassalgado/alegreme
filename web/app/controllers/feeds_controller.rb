@@ -18,12 +18,12 @@ class FeedsController < ApplicationController
 		default_reflex_values
 
 		@saved_events                 ||= current_user&.saved_events&.active
-		@new_events_today             ||= Event.active.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place).limit(session[:limit])
-		@events_this_week             ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + session[:limit]))).includes(:place).order_by_date.limit(session[:limit])
-		@events_in_user_suggestions   ||= current_user ? Event.active.not_in_saved(current_user).not_in(@events_this_week.map(&:id)).in_user_suggestions(current_user).includes(:place).order_by_date.limit(session[:limit]) : []
-		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.active&.includes(:place)&.order_by_date&.limit(session[:limit]) : []
-		@events_from_followed_users   ||= current_user ? Event.active.from_followed_users(current_user).includes(:place).order_by_date.limit(session[:limit]) : []
-		@events_in_my_neighborhood    ||= current_user ? Event.active.with_high_score.in_neighborhoods(["Cidade Baixa"]).includes(:place).order_by_date.limit(session[:limit]) : []
+		@new_events_today             ||= Event.active.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
+		@events_this_week             ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).includes(:place).order_by_date
+		@events_in_user_suggestions   ||= current_user ? Event.active.not_in_saved(current_user).not_in(@events_this_week.map(&:id)).in_user_suggestions(current_user).includes(:place).order_by_date : []
+		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.active&.includes(:place)&.order_by_date : []
+		@events_from_followed_users   ||= current_user ? Event.active.from_followed_users(current_user).includes(:place).order_by_date : []
+		@events_in_my_neighborhood    ||= current_user ? Event.active.with_high_score.in_neighborhoods(["Cidade Baixa"]).includes(:place).order_by_date : []
 		@following_users              ||= User.following_users(current_user)
 		@swipable_items               ||= get_swipable_items
 
@@ -32,7 +32,8 @@ class FeedsController < ApplicationController
 
 		@collection_suggestions = {
 				identifier:       'user-suggestions',
-				events:           @events_in_user_suggestions,
+				events:           @events_in_user_suggestions.limit(session[:limit]),
+				total_count:      @events_in_user_suggestions.size,
 				title:            {
 						principal: "Escolhidos a dedo para #{current_user&.first_name || 'você'}",
 						tertiary:  (current_user ? "Com base nos eventos salvos" : "Crie uma conta para ver os eventos abaixo")
@@ -45,7 +46,8 @@ class FeedsController < ApplicationController
 
 		@collection_follow = {
 				identifier:       'follow',
-				events:           @events_from_following_topics,
+				events:           @events_from_following_topics.limit(session[:limit]),
+				total_count:      @events_from_following_topics.size,
 				title:            {
 						principal: "Tópicos que você segue",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
@@ -58,7 +60,8 @@ class FeedsController < ApplicationController
 
 		@collection_following_users = {
 				identifier:       'following-users',
-				events:           @events_from_followed_users,
+				events:           @events_from_followed_users.limit(session[:limit]),
+				total_count:      @events_from_followed_users.size,
 				title:            {
 						principal: "Pessoas que você segue",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
@@ -70,7 +73,8 @@ class FeedsController < ApplicationController
 
 		@collection_week = {
 				identifier:       'this-week',
-				events:           @events_this_week,
+				events:           @events_this_week.limit(session[:limit]),
+				total_count:      @events_this_week.size,
 				title:            {
 						principal: "Acontecendo esta semana",
 						tertiary:  (current_user ? "Com base no seu perfil" : "Crie uma conta para ver os eventos abaixo")
@@ -84,7 +88,8 @@ class FeedsController < ApplicationController
 
 		@collection_neighborhood = {
 				identifier:       'my-neighborhood',
-				events:           @events_in_my_neighborhood,
+				events:           @events_in_my_neighborhood.limit(session[:limit]),
+				total_count:      @events_in_my_neighborhood.size,
 				title:            {
 						principal: "Nos bairros da sua cidade",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
@@ -104,6 +109,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'new-today',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: "Adicionados recentemente",
 						secondary: "Foram adicionados #{@events.size} eventos nas últimas 16 horas que podem te interessar"
@@ -124,6 +130,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'user-suggestions',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: "Indicados para #{current_user.first_name}",
 						secondary: "Explore os eventos que indicamos com base no seu gosto pessoal"
@@ -143,6 +150,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'follow',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: "Tópicos que você segue",
 						secondary: "Explore os eventos de organizadores, locais e tags que você segue."
@@ -162,6 +170,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'today-and-tomorrow',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre Hoje e Amanhã",
 						secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
@@ -181,6 +190,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'this-week',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: current_user ? "Acontecendo esta semana" : "Eventos acontecendo esta semana em Porto Alegre",
 						secondary: "Explore os #{@events.size} eventos que ocorrem hoje (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 6, format: :week)} (#{I18n.l(Date.today + 6, format: :short)}) em Porto Alegre - RS"
@@ -195,11 +205,12 @@ class FeedsController < ApplicationController
 		default_reflex_values
 
 		@categories ||= Event::CATEGORIES.dup
-		@events     ||= Event.active.in_days(session[:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories).limit(session[:limit])
+		@events     ||= Event.active.in_days(session[:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'category',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: "Eventos na categoria #{params[:category].try(:capitalize)} em Porto Alegre",
 						secondary: "Explore os #{@events.size} eventos de #{params[:category]} em Porto Alegre - RS"
@@ -224,6 +235,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'neighborhood',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: "Eventos no bairro #{params[:neighborhood].titleize}",
 						secondary: "Explore os #{@events.size} eventos do bairro #{params[:neighborhood].titleize} em Porto Alegre - RS"
@@ -268,6 +280,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'day',
 				events:           @events.limit(session[:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre que ocorren dia #{I18n.l(@day, format: :long)}",
 						secondary: "Acontecem #{@events.size} eventos neste dia"

@@ -16,15 +16,26 @@ export default class FilterController extends ApplicationController {
 
     select(event) {
         ProgressBarModule.show();
-        this.stimulate("Event#update_collection", event.target, {
-            filter: {
-                type:  this.data.get("type"),
-                value: event.detail.selected ? [event.target.dataset.filterValue] : []
-            }
-        })
-            .then(() => {
-                ProgressBarModule.hide();
+
+        event.target.addEventListener("MDCChip:selection", (selectionEvent) => {
+            let selected    = selectionEvent.detail.selected;
+            let filterValue = selectionEvent.target.dataset.filterValue;
+            let value       = selected ? [filterValue] : [];
+            let type        = this.type;
+
+            this.stimulate("Event#update_collection", selectionEvent.target, {
+                filter: {
+                    type:  type,
+                    value: value
+                }
             })
+                .then(() => {
+                    ProgressBarModule.hide();
+                })
+        }, {once: true})
     }
 
+    get type() {
+        return this.data.get("type")
+    }
 }

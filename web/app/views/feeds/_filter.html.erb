@@ -16,9 +16,9 @@
 				 data-filter-type="<%= data[:type] %>"
 				 class="me-chip-set mdc-chip-set mdc-chip-set--choice">
 			<% if data[:type] == 'days' %>
-				<% data[:filters].reject { |filter| filter['string'].blank? }.each do |filter| %>
+				<% data[:filters].reject { |filter| filter['decorator'].blank? }.each do |filter| %>
 					<div class="me-chip mdc-chip"
-							 data-action="MDCChip:selection->filter#select"
+							 data-action="MDCChip:interaction->filter#select"
 							 data-filter-value="<%= filter['string'] %>"
 							 data-target="filter.chip"
 							 data-turbolinks-scroll="false">
@@ -30,7 +30,7 @@
 			<% else %>
 				<% data[:filters].reject(&:blank?).each do |filter| %>
 					<div class="me-chip mdc-chip"
-							 data-action="MDCChip:selection->filter#select"
+							 data-action="MDCChip:interaction->filter#select"
 							 data-filter-value="<%= filter %>"
 							 data-target="filter.chip"
 							 data-turbolinks-scroll="false">

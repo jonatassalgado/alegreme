@@ -12,6 +12,7 @@
 
 
 
+
 	</script>
 
 
@@ -22,7 +23,7 @@
 					<div data-action="click->chip-set#select"
 							 data-chip-set-url="<%= category_events_path category %>"
 							 data-chip-set-slug="<%= category %>"
-							 class="me-chip mdc-chip">
+							 class="me-chip mdc-chip <%= class_string 'mdc-chip--selected': params[:category] == category %>">
 						<div class="mdc-chip__ripple"></div>
 						<span class="mdc-chip__text"><%= category %></span>
 					</div>

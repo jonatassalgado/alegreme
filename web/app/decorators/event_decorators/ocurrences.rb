@@ -21,16 +21,16 @@ module EventDecorators
 				when 2..6
 					return add_to_response convert_to_literal, order: @difference
 				when 7..14
-					# if opts[:active_range]
-					# 	return add_to_response('próximos 30 dias', range: true, order: 8)
-					# else
-					return add_to_response("#{I18n.l(@current_date, format: :week)} · #{I18n.l(@current_date, format: :short)}", order: 8)
-					# end
-				when 14..90
 					if opts[:active_range]
-						return add_to_response('próximos 90 dias', range: true, order: 9)
+						return add_to_response('próxima semana', range: true, order: 7)
 					else
-						return add_to_response("#{I18n.l(@current_date, format: :short)} · #{I18n.l(@current_date, format: :week)}", order: 9)
+						return add_to_response("#{I18n.l(@current_date, format: :week)} · #{I18n.l(@current_date, format: :short)}", order: 8)
+					end
+				when 15..90
+					if opts[:active_range]
+						return add_to_response('próximos 90 dias', range: true, order: 15)
+					else
+						return add_to_response("#{I18n.l(@current_date, format: :short)} · #{I18n.l(@current_date, format: :week)}", order: 15)
 					end
 				else
 					if opts[:active_range]
@@ -56,7 +56,7 @@ module EventDecorators
 
 			['date', 'decorator', 'order'].each do |type|
 				define_method :"sort_by_#{type}" do
-					@datetimes = @datetimes.sort_by { |day| day[type] || 10 }
+					@datetimes = @datetimes.sort_by { |day| day[type] }
 					self
 				end
 
@@ -92,11 +92,11 @@ module EventDecorators
 
 				name_to_insert.keys.each do |decorator|
 					to = {
-							:date      => ranges[decorator].map { |a| a['date'] }.minmax,
-							:string    => ranges[decorator].map { |a| a['string'] }.minmax,
-							:decorator => name_to_insert[decorator],
-							:range     => name_to_insert[decorator],
-							:is_range  => true
+							'date'      => ranges[decorator].map { |a| a['date'] }.minmax,
+							'string'    => ranges[decorator].map { |a| a['string'] }.minmax,
+							'decorator' => name_to_insert[decorator],
+							'range'     => name_to_insert[decorator],
+							'is_range'  => true
 					}
 
 
