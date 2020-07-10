@@ -40,6 +40,7 @@
 				 data-section-disposition="<%= collection[:disposition] %>"
 				 data-section-identifier="<%= collection[:identifier] %>"
 				 data-section-continue-to-path="<%= collection[:continue_to] %>"
+				 data-section-stimulus-session="<%= session[:stimulus].to_param %>"
 				 id="<%= collection[:identifier] %>">
 	<div class="me-collection__head">
 		<h2>
@@ -126,9 +127,9 @@
 											 identifier:      collection[:identifier],
 											 display_similar: collection[:display_similar],
 											 disposition:     collection[:disposition],
-											 show_similar_to: session[:show_similar_to]
+											 show_similar_to: session[:stimulus][:show_similar_to]
 									 },
-									 cached:     false) %>
+									 cached: false) %>
 				<% if (collection[:infinite_scroll] || collection[:display_load_more]) && collection[:total_count] > collection[:events].size %>
 					<div data-action="click->section#loadMoreHere"
 							 data-target="section.loadMoreButton"
@@ -196,7 +197,7 @@
 			<% end %>
 		</div>
 		<% if (collection[:disposition] == :horizontal && mobile_device?) &&
-				session[:in_this_section] == collection[:identifier] &&
+				session[:stimulus][:in_this_section] == collection[:identifier] &&
 				collection[:show_similar_to].present? %>
 			<%= render partial: 'components/collection/similar',
 								 locals:  {

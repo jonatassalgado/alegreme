@@ -1,9 +1,3 @@
-<%
-
-	json_request = local_assigns.fetch(:json_request, false)
-
-%>
-
 <% if current_user and saved_resources.present? %>
 	<div id="<%= identifier %>" class="me-saves" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
 		<h2 data-target="saves.header" class="me-saves__title">

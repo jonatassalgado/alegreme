@@ -11,27 +11,18 @@ class OrganizersController < ApplicationController
 	# GET /organizers/1
 	# GET /organizers/1.json
 	def show
-
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
-
 		@events ||= @organizer.events
 
 		@collection = {
 				identifier:       @organizer.details['name'].parameterize,
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				title:            {
 						principal: @organizer.details['name']
 				},
 				followable:       @place,
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 		render 'show'

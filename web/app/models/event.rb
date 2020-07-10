@@ -45,9 +45,9 @@ class Event < ApplicationRecord
 	# after_save :reindex, if: proc { |event| event.details_changed? }
 	# after_destroy :reindex, :destroy_entries
 
-	belongs_to :place
-	has_and_belongs_to_many :organizers
-	has_and_belongs_to_many :categories
+	belongs_to :place, touch: true
+	has_and_belongs_to_many :organizers, touch: true
+	has_and_belongs_to_many :categories, touch: true
 	# has_and_belongs_to_many :kinds
 
 	accepts_nested_attributes_for :place, :organizers

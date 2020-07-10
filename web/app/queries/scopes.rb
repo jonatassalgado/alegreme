@@ -5,6 +5,8 @@ module Scopes
 	included do
 
 	scope 'saved_by_user', lambda { |user, opts = {}|
+		return Event.none unless user
+
 		opts = {'turn_on': true}.merge(opts)
 
 		if opts[:turn_on] && user
@@ -15,7 +17,9 @@ module Scopes
 	}
 
   scope 'not_in_saved', lambda { |user, opts = {}|
-    opts = {'turn_on': true}.merge(opts)
+	  return Event.none unless user
+
+	  opts = {'turn_on': true}.merge(opts)
     if opts[:turn_on] && user
       where.not(id: user.public_send("taste_#{self.table_name}_saved"))
     else

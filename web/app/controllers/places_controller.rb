@@ -11,20 +11,11 @@ class PlacesController < ApplicationController
 	# GET /places/1
 	# GET /places/1.json
 	def show
-
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 16
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
-
 		@events ||= @place.events.active.order_by_date
 
 		@collection = {
 				identifier:       'new-today',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				title:            {
 						principal: @place.details_name,
 						secondary: @place.geographic_address
@@ -32,7 +23,7 @@ class PlacesController < ApplicationController
 				followable:       @place,
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 		render 'show'

@@ -22,12 +22,14 @@
     </div> -->
 	<%# end %>
 
-	<% if current_user && @swipable_items.size > 0 && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try { |last_view_at| last_view_at < (DateTime.now - 8.hours) }) %>
-		<div class="me-section <%= 'me-section--without-padding' if current_user&.swipable.dig('events', 'last_view_at').blank? %>">
-			<div class="me-section__inner">
-				<%= render partial: 'components/swipable/swipable' %>
+	<% cache([current_user, 'swipable-events']) do %>
+		<% if current_user && @swipable_items.size > 0 && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try { |last_view_at| last_view_at < (DateTime.now - 8.hours) }) %>
+			<div class="me-section <%= 'me-section--without-padding' if current_user&.swipable.dig('events', 'last_view_at').blank? %>">
+				<div class="me-section__inner">
+					<%= render partial: 'components/swipable/swipable' %>
+				</div>
 			</div>
-		</div>
+		<% end %>
 	<% end %>
 
 	<% if current_user && @new_events_today.size > 0 %>
@@ -46,17 +48,19 @@
 		</div>
 	<% end %>
 
-	<% if current_user %>
-		<section class="me-section me-section--condensed">
-			<div class="me-section__inner">
-				<%= render partial: 'saves',
-									 locals:  {
-											 identifier:      'events_saved',
-											 saved_resources: @saved_events,
-											 empty_message:   "Salve eventos com ❤ para vê - los aqui"
-									 } %>
-			</div>
-		</section>
+	<% cache([current_user, 'events_saved', @saved_events.map(&:id), @saved_events.maximum(:updated_at)]) do %>
+		<% if current_user %>
+			<section class="me-section me-section--condensed">
+				<div class="me-section__inner">
+					<%= render partial: 'saves',
+										 locals:  {
+												 identifier:      'events_saved',
+												 saved_resources: @saved_events,
+												 empty_message:   "Salve eventos com ❤ para vê - los aqui"
+										 } %>
+				</div>
+			</section>
+		<% end %>
 	<% end %>
 
 	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
@@ -64,14 +68,8 @@
 	} %>
 
 	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
-			collection: @collection_new_today
+			collection: @collection_suggestions
 	} %>
-
-	<%= render partial: "components/collection/events/collection",
-						 layout:  "components/section",
-						 locals:  {
-								 collection: @collection_suggestions
-						 } %>
 
 	<% custom_title = capture do %>
 		<% if current_user %>

@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
 	include AuthorizationHelper
 
+	before_action :stimulus_session
+	before_action :default_reflex_values
+
 	etag { current_user.try :id }
 
 	# Sentry
@@ -31,6 +34,20 @@ class ApplicationController < ActionController::Base
 
 
 	private
+
+	def stimulus_session
+		session[:stimulus] ||= {}
+	end
+
+	def default_reflex_values
+		unless @stimulus_reflex
+			session[:stimulus][:days]            = []
+			session[:stimulus][:categories]      = []
+			session[:stimulus][:limit]           = 8
+			session[:stimulus][:show_similar_to] = []
+			session[:stimulus][:in_this_section] = []
+		end
+	end
 
 	# Sentry
 	def set_raven_context

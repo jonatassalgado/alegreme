@@ -15,8 +15,6 @@ class FeedsController < ApplicationController
 				         :user_taste_events_saved => current_user&.taste_events_saved&.size
 		         })
 
-		default_reflex_values
-
 		@saved_events                 ||= current_user&.saved_events&.active&.order_by_date
 		@new_events_today             ||= Event.active.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
 		@events_this_week             ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).includes(:place).order_by_date
@@ -27,18 +25,15 @@ class FeedsController < ApplicationController
 		@following_users              ||= User.following_users(current_user)
 		@swipable_items               ||= get_swipable_items
 
-
-		@collection_new_today = {}
-
 		@collection_suggestions = {
 				identifier:       'user-suggestions',
-				events:           @events_in_user_suggestions.limit(session[:limit]),
+				events:           @events_in_user_suggestions.limit(session[:stimulus][:limit]),
 				total_count:      @events_in_user_suggestions.size,
 				title:            {
 						principal: "Escolhidos a dedo para #{current_user&.first_name || 'você'}",
 						tertiary:  (current_user ? "Com base nos eventos salvos" : "Crie uma conta para ver os eventos abaixo")
 				},
-				show_similar_to:  session[:show_similar_to],
+				show_similar_to:  session[:stimulus][:show_similar_to],
 				continue_to:      "/#{current_user&.slug}/sugestoes",
 				display_if_empty: true,
 				disposition:      :horizontal
@@ -46,40 +41,40 @@ class FeedsController < ApplicationController
 
 		@collection_follow = {
 				identifier:       'follow',
-				events:           @events_from_following_topics.limit(session[:limit]),
+				events:           @events_from_following_topics.limit(session[:stimulus][:limit]),
 				total_count:      @events_from_following_topics.size,
 				title:            {
 						principal: "Tópicos que você segue",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
 				},
 				continue_to:      "/#{current_user&.slug}/seguindo",
-				show_similar_to:  session[:show_similar_to],
+				show_similar_to:  session[:stimulus][:show_similar_to],
 				display_if_empty: true,
 				disposition:      :horizontal
 		}
 
 		@collection_following_users = {
 				identifier:       'following-users',
-				events:           @events_from_followed_users.limit(session[:limit]),
+				events:           @events_from_followed_users.limit(session[:stimulus][:limit]),
 				total_count:      @events_from_followed_users.size,
 				title:            {
 						principal: "Pessoas que você segue",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
 				},
-				show_similar_to:  session[:show_similar_to],
+				show_similar_to:  session[:stimulus][:show_similar_to],
 				display_if_empty: true,
 				disposition:      :horizontal
 		}
 
 		@collection_week = {
 				identifier:       'this-week',
-				events:           @events_this_week.limit(session[:limit]),
+				events:           @events_this_week.limit(session[:stimulus][:limit]),
 				total_count:      @events_this_week.size,
 				title:            {
 						principal: "Acontecendo esta semana",
 						tertiary:  (current_user ? "Com base no seu perfil" : "Crie uma conta para ver os eventos abaixo")
 				},
-				show_similar_to:  session[:show_similar_to],
+				show_similar_to:  session[:stimulus][:show_similar_to],
 				continue_to:      '/porto-alegre/eventos/semana',
 				disposition:      :horizontal,
 				display_if_empty: true,
@@ -88,13 +83,13 @@ class FeedsController < ApplicationController
 
 		@collection_neighborhood = {
 				identifier:       'my-neighborhood',
-				events:           @events_in_my_neighborhood.limit(session[:limit]),
+				events:           @events_in_my_neighborhood.limit(session[:stimulus][:limit]),
 				total_count:      @events_in_my_neighborhood.size,
 				title:            {
 						principal: "Nos bairros da sua cidade",
 						tertiary:  (current_user ? nil : "Crie uma conta para ver os eventos abaixo"),
 				},
-				show_similar_to:  session[:show_similar_to],
+				show_similar_to:  session[:stimulus][:show_similar_to],
 				display_if_empty: true,
 				disposition:      :horizontal
 		}
@@ -102,13 +97,11 @@ class FeedsController < ApplicationController
 	end
 
 	def recent
-		default_reflex_values
-
 		@events ||= Event.active.where("created_at > ?", DateTime.now - 24.hours)
 
 		@collection = {
 				identifier:       'new-today',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Adicionados recentemente",
@@ -116,20 +109,17 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 	end
 
 	def suggestions
-
-		default_reflex_values
-
 		@events ||= Event.active.in_user_suggestions(current_user).order_by_date
 
 		@collection = {
 				identifier:       'user-suggestions',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Indicados para #{current_user.first_name}",
@@ -137,19 +127,17 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 	end
 
 	def follow
-		default_reflex_values
-
 		@events ||= current_user.try(:events_from_following_topics)&.active.order_by_date
 
 		@collection = {
 				identifier:       'follow',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Tópicos que você segue",
@@ -157,19 +145,17 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 	end
 
 	def today
-		default_reflex_values
-
 		@events ||= Event.active.with_high_score.not_in_saved(current_user).in_days([DateTime.now.beginning_of_day.yday, (DateTime.now + 1).end_of_day.yday])
 
 		@collection = {
 				identifier:       'today-and-tomorrow',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre Hoje e Amanhã",
@@ -177,19 +163,17 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 	end
 
 	def week
-		default_reflex_values
-
 		@events ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).order_by_date
 
 		@collection = {
 				identifier:       'this-week',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: current_user ? "Acontecendo esta semana" : "Eventos acontecendo esta semana em Porto Alegre",
@@ -197,19 +181,17 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 	end
 
 	def category
-		default_reflex_values
-
 		@categories ||= Event::CATEGORIES.dup
-		@events     ||= Event.active.in_days(session[:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories)
+		@events     ||= Event.active.in_days(session[:stimulus][:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'category',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos na categoria #{params[:category].try(:capitalize)} em Porto Alegre",
@@ -221,20 +203,18 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 	end
 
 	def neighborhood
-		default_reflex_values
-
 		@neighborhoods ||= Event::NEIGHBORHOODS.dup
-		@events        ||= Event.active.in_neighborhoods([params[:neighborhood].titleize]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
+		@events        ||= Event.active.in_neighborhoods([params[:neighborhood].titleize]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'neighborhood',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos no bairro #{params[:neighborhood].titleize}",
@@ -242,18 +222,16 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 	end
 
 	def city
-		default_reflex_values
-
-		@events ||= Event.active.in_days(session[:days]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
+		@events ||= Event.active.in_days(session[:stimulus][:days]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'city',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre",
@@ -267,19 +245,17 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 	end
 
 	def day
-		default_reflex_values
-
 		@day    ||= Date.parse params[:day]
-		@events ||= Event.active.in_days([@day.yday]).in_categories(session[:categories]).order_by_date.includes(:place, :categories)
+		@events ||= Event.active.in_days([@day.yday]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'day',
-				events:           @events.limit(session[:limit]),
+				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre que ocorren dia #{I18n.l(@day, format: :long)}",
@@ -291,22 +267,12 @@ class FeedsController < ApplicationController
 				},
 				infinite_scroll:  true,
 				display_if_empty: true,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 	end
 
 
 	private
-
-	def default_reflex_values
-		unless @stimulus_reflex
-			session[:days]            = []
-			session[:categories]      = []
-			session[:limit]           = 8
-			session[:show_similar_to] = []
-			session[:in_this_section] = []
-		end
-	end
 
 	def get_events_not_trained_yet
 		order = params[:desc] ? "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC" : "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC"
@@ -323,16 +289,18 @@ class FeedsController < ApplicationController
 	end
 
 	def get_swipable_items
-		events = Event.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories([], {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).includes(:place).order_by_score.limit(24)
+		Rails.cache.fetch([current_user, 'swipable_items'], expires_in: 1.hour) do
+			events = Event.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories([], {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).includes(:place).order_by_score.limit(24)
 
-		events.map do |event|
-			{
-					id:             event.id,
-					name:           event.details_name,
-					image_url:      event.image[:feed].url(public: true),
-					description:    helpers.strip_tags(event.details_description).truncate(160),
-					dominant_color: helpers.get_image_dominant_color(event)
-			}
+			events.map do |event|
+				{
+						id:             event.id,
+						name:           event.details_name,
+						image_url:      event.image[:feed].url(public: true),
+						description:    helpers.strip_tags(event.details_description).truncate(160),
+						dominant_color: helpers.get_image_dominant_color(event)
+				}
+			end
 		end
 	end
 

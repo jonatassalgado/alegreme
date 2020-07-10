@@ -24,7 +24,7 @@ class SearchController < ApplicationController
 					},
 					infinite_scroll:  true,
 					display_if_empty: true,
-					show_similar_to:  session[:show_similar_to]
+					show_similar_to:  session[:stimulus][:show_similar_to]
 			}
 		else
 			@categories = Event::CATEGORIES.dup.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }

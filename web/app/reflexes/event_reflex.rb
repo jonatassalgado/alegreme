@@ -33,20 +33,20 @@ class EventReflex < ApplicationReflex
 
 		case filter_type
 		when 'days'
-			session[:days] = filter_value.any? ? filter_value.map { |day| day.to_date.yday } : []
+			session[:stimulus][:days] = filter_value.any? ? filter_value.map { |day| day.to_date.yday } : []
 		when 'categories'
-			session[:categories] = filter_value.any? ? filter_value : []
+			session[:stimulus][:categories] = filter_value.any? ? filter_value : []
 		end
 
 		if limit.blank?
-			session[:limit] = 16
+			session[:stimulus][:limit] = 16
 		else
-			session[:limit] = limit
+			session[:stimulus][:limit] = limit
 		end
 	end
 
 	def show_similar(args = {})
-		session[:show_similar_to] |= [args[:show_similar_to].to_i]
-		session[:in_this_section] = args[:in_this_section]
+		session[:stimulus][:show_similar_to] |= [args[:show_similar_to].to_i]
+		session[:stimulus][:in_this_section] = args[:in_this_section]
 	end
 end

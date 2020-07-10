@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 				infinite_scroll:  false,
 				display_if_empty: true,
 				disposition:      :horizontal,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 		@collection_historic = {
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
 				infinite_scroll:  false,
 				display_if_empty: false,
 				disposition:      :horizontal,
-				show_similar_to:  session[:show_similar_to]
+				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
 
 	end
