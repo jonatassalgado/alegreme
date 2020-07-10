@@ -1,6 +1,8 @@
 module UserDecorators
 	module Omniauth
 
+		require 'down'
+
 		def self.included base
 			base.send :include, InstanceMethods
 			base.extend ClassMethods
