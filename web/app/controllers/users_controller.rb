@@ -48,16 +48,18 @@ class UsersController < ApplicationController
 		}
 
 		@collection_historic = {
-				identifier:       'user-historic-events',
-				events:           @historic_events,
-				title:            {
+				identifier:        'user-historic-events',
+				events:            @historic_events.limit(session[:stimulus][:limit]),
+				total_count:       @historic_events.size,
+				title:             {
 						principal: "Histórico de eventos salvos",
 						tertiary:  "Remova eventos salvos para atualizar as recomendações"
 				},
-				infinite_scroll:  false,
-				display_if_empty: false,
-				disposition:      :horizontal,
-				show_similar_to:  session[:stimulus][:show_similar_to]
+				infinite_scroll:   false,
+				display_if_empty:  false,
+				display_load_more: true,
+				disposition:       :horizontal,
+				show_similar_to:   session[:stimulus][:show_similar_to]
 		}
 
 	end
