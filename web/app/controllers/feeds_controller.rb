@@ -15,7 +15,7 @@ class FeedsController < ApplicationController
 				         :user_taste_events_saved => current_user&.taste_events_saved&.size
 		         })
 
-		@saved_events                 ||= current_user&.saved_events&.active&.order_by_date
+		@saved_events                 ||= current_user ? current_user&.saved_events&.active&.order_by_date : Event.none
 		@new_events_today             ||= Event.active.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
 		@events_this_week             ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).includes(:place).order_by_date
 		@events_in_user_suggestions   ||= current_user ? Event.active.not_in_saved(current_user).not_in(@events_this_week.map(&:id)).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
