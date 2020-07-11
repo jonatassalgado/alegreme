@@ -20,17 +20,15 @@ export default class SaveButtonController extends ApplicationController {
         PubSubModule.emit("save-button.clicked");
         this.updateButtonStyle(!this.saveStatus);
 
-        setTimeout(() => {
-            FeedChannel.send({
-                                 sent_by: gon.user_id,
-                                 body:    {
-                                     id:       this.resourceId,
-                                     selector: this.resourceSelector,
-                                     action:   this.isSaved,
-                                     resource: this.resourceName
-                                 }
-                             })
-        }, 250)
+        FeedChannel.send({
+                             sent_by: gon.user_id,
+                             body:    {
+                                 id:       this.resourceId,
+                                 selector: this.resourceSelector,
+                                 action:   this.isSaved,
+                                 resource: this.resourceName
+                             }
+                         })
     }
 
     updateButtonStyle(saveStatus) {

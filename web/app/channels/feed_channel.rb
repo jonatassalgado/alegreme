@@ -16,6 +16,7 @@ class FeedChannel < ApplicationCable::Channel
 		cable_ready["feed_channel"].remove(
 				selector: "##{data['body']['selector']}"
 		)
+
 		cable_ready["feed_channel"].morph(
 				selector:      "##{data['body']['resource']}_saved",
 				html:          ApplicationController.render(partial: 'feeds/saves',
