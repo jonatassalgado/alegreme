@@ -48,7 +48,7 @@
 		</div>
 	<% end %>
 
-	<% cache([current_user, 'events_saved', @saved_events.map(&:id), @saved_events.maximum(:updated_at)]) do %>
+	<% cache([current_user, 'events_saved', @saved_events.pluck(:id), @saved_events.maximum(:updated_at)]) do %>
 		<% if current_user %>
 			<section class="me-section me-section--condensed">
 				<div class="me-section__inner">
