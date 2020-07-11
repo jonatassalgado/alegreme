@@ -15,6 +15,7 @@ class OrganizersController < ApplicationController
 
 		@collection = {
 				identifier:       @organizer.details['name'].parameterize,
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				title:            {
 						principal: @organizer.details['name']

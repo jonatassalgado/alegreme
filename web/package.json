@@ -11,6 +11,7 @@
     "@rails/activestorage": "^6.0.3-2",
     "@rails/ujs": "^6.0.3-2",
     "@rails/webpacker": "https://github.com/rails/webpacker",
+    "cable_ready": "^4.3.0",
     "channels": "^0.0.4",
     "chart.js": "^2.8.0",
     "chartkick": "^3.1.1",

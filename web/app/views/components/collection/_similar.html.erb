@@ -2,11 +2,12 @@
 
 	raise ArgumentError unless data
 	raise ArgumentError unless data[:event]
+	raise ArgumentError unless data[:user]
 
 	data = {
 			identifier:       'similar',
 			event:            nil,
-			user:             current_user,
+			user:             nil,
 			units_to_display: mobile_device? ? 8 : 6,
 	}.deep_merge!(data)
 
@@ -25,6 +26,7 @@
 							 collection: similar_events,
 							 as:         :event,
 							 locals:     {
+									 user:            data[:user],
 									 display_similar: false,
 									 display_place:   false,
 									 identifier:      "similar-to-#{dom_id data[:event]}",

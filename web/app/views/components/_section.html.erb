@@ -3,6 +3,7 @@
 	return ArgumentError unless collection
 
 	collection = {
+			user:             nil,
 			events:           [],
 			if_greater_than:  0,
 			display_if_empty: false
@@ -10,7 +11,7 @@
 
 %>
 
-<% cache([current_user, collection[:identifier], session[:stimulus].to_param, collection[:events].map(&:id), collection[:events].maximum(:updated_at)]) do %>
+<% cache([collection[:user], collection[:identifier], session[:stimulus].to_param, collection[:events].map(&:id), collection[:events].maximum(:updated_at)]) do %>
 	<% if collection[:display_if_empty] || (collection[:events] && collection[:events].size > collection[:if_greater_than]) %>
 		<section id="<%= collection[:identifier] %>" class="me-section">
 			<div class="me-section__inner">

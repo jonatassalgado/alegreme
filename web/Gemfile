@@ -154,7 +154,8 @@ group :development do
 	gem 'meta_request'
 	gem 'niceql'
 	gem 'rack-mini-profiler'
-	# gem 'bullet'
+	# gem 'active_record_doctor'
+		# gem 'bullet'
 end
 
 group :test do

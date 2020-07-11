@@ -52,8 +52,9 @@
 		<% if current_user %>
 			<section class="me-section me-section--condensed">
 				<div class="me-section__inner">
-					<%= render partial: 'saves',
+					<%= render partial: 'feeds/saves',
 										 locals:  {
+												 user:            current_user,
 												 identifier:      'events_saved',
 												 saved_resources: @saved_events,
 												 empty_message:   "Salve eventos com ❤ para vê - los aqui"

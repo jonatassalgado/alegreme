@@ -18,6 +18,7 @@ class SearchController < ApplicationController
 
 			@collection = {
 					identifier:       'search',
+					user:             current_user,
 					events:           events,
 					title:            {
 							principal: "Eventos encontrados para \"#{params[:q]}\""

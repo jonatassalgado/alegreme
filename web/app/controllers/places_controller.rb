@@ -16,6 +16,7 @@ class PlacesController < ApplicationController
 		@collection = {
 				identifier:       'new-today',
 				events:           @events.limit(session[:stimulus][:limit]),
+				user:             current_user,
 				title:            {
 						principal: @place.details_name,
 						secondary: @place.geographic_address

@@ -27,6 +27,7 @@ class FeedsController < ApplicationController
 
 		@collection_suggestions = {
 				identifier:        'user-suggestions',
+				user:              current_user,
 				events:            @events_in_user_suggestions.limit(session[:stimulus][:limit]),
 				total_count:       @events_in_user_suggestions.size,
 				title:             {
@@ -42,6 +43,7 @@ class FeedsController < ApplicationController
 
 		@collection_follow = {
 				identifier:        'follow',
+				user:              current_user,
 				events:            @events_from_following_topics.limit(session[:stimulus][:limit]),
 				total_count:       @events_from_following_topics.size,
 				title:             {
@@ -57,6 +59,7 @@ class FeedsController < ApplicationController
 
 		@collection_following_users = {
 				identifier:        'following-users',
+				user:              current_user,
 				events:            @events_from_followed_users.limit(session[:stimulus][:limit]),
 				total_count:       @events_from_followed_users.size,
 				title:             {
@@ -71,6 +74,7 @@ class FeedsController < ApplicationController
 
 		@collection_week = {
 				identifier:        'this-week',
+				user:              current_user,
 				events:            @events_this_week.limit(session[:stimulus][:limit]),
 				total_count:       @events_this_week.size,
 				title:             {
@@ -87,6 +91,7 @@ class FeedsController < ApplicationController
 
 		@collection_neighborhood = {
 				identifier:        'my-neighborhood',
+				user:              current_user,
 				events:            @events_in_my_neighborhood.limit(session[:stimulus][:limit]),
 				total_count:       @events_in_my_neighborhood.size,
 				title:             {
@@ -106,6 +111,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'new-today',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
@@ -124,6 +130,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'user-suggestions',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
@@ -142,6 +149,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'follow',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
@@ -160,6 +168,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'today-and-tomorrow',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
@@ -178,6 +187,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'this-week',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
@@ -196,6 +206,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'category',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
@@ -219,6 +230,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'neighborhood',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
@@ -236,6 +248,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'city',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
@@ -260,6 +273,7 @@ class FeedsController < ApplicationController
 
 		@collection = {
 				identifier:       'day',
+				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {

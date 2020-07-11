@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationReflex < StimulusReflex::Reflex
+	require 'raven'
 	# Put application wide Reflex behavior in this file.
 	delegate :current_user, to: :connection
 

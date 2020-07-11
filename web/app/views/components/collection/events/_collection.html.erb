@@ -5,7 +5,7 @@
 	collection = {
 			identifier:        nil,
 			events:            [],
-			user:              current_user,
+			user:              nil,
 			title:             {
 					principal: nil,
 					secondary: nil
@@ -45,7 +45,7 @@
 	<div class="me-collection__head">
 		<h2>
 			<%= collection[:title][:principal] %>
-			<% if collection[:continue_to].present? && current_user %>
+			<% if collection[:continue_to].present? && collection[:user] %>
           <span class="me-see-all is-hoverable"
 								data-fixed="true"
 								data-action="click->section#seeMoreInNewPage">
@@ -124,12 +124,13 @@
 									 collection: collection[:events],
 									 as:         :event,
 									 locals:     {
+											 user:            collection[:user],
 											 identifier:      collection[:identifier],
 											 display_similar: collection[:display_similar],
 											 disposition:     collection[:disposition],
 											 show_similar_to: session[:stimulus][:show_similar_to]
 									 },
-									 cached: false) %>
+									 cached:     false) %>
 				<% if (collection[:infinite_scroll] || collection[:display_load_more]) && collection[:total_count] > collection[:events].size %>
 					<div data-action="click->section#loadMoreHere"
 							 data-target="section.loadMoreButton"
@@ -202,7 +203,7 @@
 			<%= render partial: 'components/collection/similar',
 								 locals:  {
 										 data: {
-												 user:  current_user,
+												 user:  collection[:user],
 												 event: Event.find(collection[:show_similar_to].last)
 										 }
 								 },

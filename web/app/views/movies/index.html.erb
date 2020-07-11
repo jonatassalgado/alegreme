@@ -9,6 +9,7 @@
 			<div class="me-section__inner">
 				<%= render partial: 'feeds/saves',
 									 locals:  {
+											 user:            current_user,
 											 identifier:      'movies_saved',
 											 saved_resources: @movies[:saved],
 											 empty_message:   "Salve filmes com ❤ para vê - los aqui"
@@ -22,6 +23,7 @@
 			<section class="me-section__inner">
 				<%= render(partial: 'components/collection/movies/collection', locals: {
 						data: {
+								user:       current_user,
 								collection: {
 										movies: @movies[:new_release]
 								},
@@ -40,6 +42,7 @@
 			<section class="me-section__inner">
 				<%= render(partial: 'components/collection/movies/collection', locals: {
 						data: {
+								user:       current_user,
 								collection: {
 										movies: @movies[:editors_choice]
 								},
