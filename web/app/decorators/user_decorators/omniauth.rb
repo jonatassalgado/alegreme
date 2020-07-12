@@ -10,12 +10,13 @@ module UserDecorators
 
 		module InstanceMethods
 
-
 		end
 
+		#noinspection ALL
 		module ClassMethods
 
 			def from_omniauth(auth, guest_user, params)
+
 				case auth.provider
 				when 'google_oauth2'
 					googleId = auth.uid
@@ -36,44 +37,57 @@ module UserDecorators
 				if user
 					user
 				else
-					user = User.new(email:    email,
-					                password: Devise.friendly_token[0, 20])
-
-					user.features.deep_merge!({
-							                          'demographic' => {
-									                          'name'    => name,
-									                          'picture' => picture,
-									                          'beta'    => {
-											                          'requested' => true,
-											                          'activated' => true
-									                          },
-									                          'social'  => {
-											                          'fbId'     => fbId,
-											                          'googleId' => googleId
-									                          },
-							                          }
-					                          })
-
-					if picture
-						begin
-							user_picture = Down.download(picture)
-						rescue Down::Error => e
-							puts "#{name} - Erro no download da imagem (#{picture}) - #{e}"
-						else
-							puts "#{name} - Download da imagem (#{picture}) - Sucesso"
-						end
-
-						begin
-							event.image = user_picture
-						rescue
-							puts "#{name} - Atribuição da imagem (#{picture}) - Erro"
-						end
-					end
-
-					user.save
-
-					user
+					create_user({
+							            email:    email,
+							            fbId:     fbId,
+							            googleId: googleId,
+							            name:     name,
+							            picture:  picture
+					            })
 				end
+			end
+
+			private
+
+			def create_user(args = {
+					    email:    nil,
+					    fbId:     nil,
+					    googleId: nil,
+					    name:     nil,
+					    picture:  nil
+			    })
+
+				user = User.new(email:    args[:email],
+				                password: Devise.friendly_token[0, 20])
+
+				user.features.deep_merge!({
+						                          'demographic' => {
+								                          'name'    => args[:name],
+								                          'picture' => args[:picture],
+								                          'beta'    => {
+										                          'requested' => true,
+										                          'activated' => true
+								                          },
+								                          'social'  => {
+										                          'fbId'     => args[:fbId],
+										                          'googleId' => args[:googleId]
+								                          },
+						                          }
+				                          })
+
+				if args[:picture]
+					begin
+						user_picture = Down.download(args[:picture])
+					rescue Down::Error => e
+						puts "#{args[:name]} - Erro no download da imagem (#{args[:picture]}) - #{e}"
+					else
+						user.image = user_picture
+						puts "#{args[:name]} - Download da imagem (#{args[:picture]}) - Sucesso"
+					end
+				end
+
+				user.save
+				user
 			end
 		end
 	end
