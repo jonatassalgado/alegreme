@@ -11,12 +11,15 @@ class OrganizersController < ApplicationController
 	# GET /organizers/1
 	# GET /organizers/1.json
 	def show
-		@events ||= @organizer.events
+		default_reflex_values(limit: 12)
+
+		@events ||= @organizer.events.active
 
 		@collection = {
 				identifier:       @organizer.details['name'].parameterize,
 				user:             current_user,
 				events:           @events.limit(session[:stimulus][:limit]),
+				total_count:      @events.size,
 				title:            {
 						principal: @organizer.details['name']
 				},

@@ -39,14 +39,15 @@ class ApplicationController < ActionController::Base
 		session[:stimulus] ||= {}
 	end
 
-	def default_reflex_values
+	def default_reflex_values(args = {})
 		unless @stimulus_reflex
-			session[:stimulus]                   ||= {}
-			session[:stimulus][:days]            = []
-			session[:stimulus][:categories]      = []
-			session[:stimulus][:limit]           = 8
-			session[:stimulus][:show_similar_to] = []
-			session[:stimulus][:in_this_section] = []
+			session[:stimulus] = {
+					days:            [],
+					categories:      [],
+					limit:           8,
+					show_similar_to: [],
+					in_this_section: []
+			}.merge!(args)
 		end
 	end
 

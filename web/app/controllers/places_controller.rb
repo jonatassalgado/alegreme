@@ -11,12 +11,15 @@ class PlacesController < ApplicationController
 	# GET /places/1
 	# GET /places/1.json
 	def show
+		default_reflex_values(limit: 12)
+
 		@events ||= @place.events.active.order_by_date
 
 		@collection = {
 				identifier:       'new-today',
 				events:           @events.limit(session[:stimulus][:limit]),
 				user:             current_user,
+				total_count:      @events.size,
 				title:            {
 						principal: @place.details_name,
 						secondary: @place.geographic_address
