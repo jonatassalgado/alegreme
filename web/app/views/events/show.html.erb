@@ -197,7 +197,7 @@
 							</i>
 							<div>
 								<div class="me-event-single__place-title me-chip mdc-chip">
-									<%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", I18n.l(@event.day_of_week['date'], format: :long)) %>
+									<%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y')) %>
 								</div>
 								<div>
 									<%= @event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>

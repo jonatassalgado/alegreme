@@ -15,13 +15,13 @@ class FeedsController < ApplicationController
 				         :user_taste_events_saved => current_user&.taste_events_saved&.size
 		         })
 
-		@saved_events                 ||= current_user ? current_user&.saved_events&.active&.order_by_date : Event.none
-		@new_events_today             ||= Event.active.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
-		@events_this_week             ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).includes(:place).order_by_date
-		@events_in_user_suggestions   ||= current_user ? Event.active.not_in_saved(current_user).not_in(@events_this_week.pluck(:id)).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
-		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.active&.includes(:place)&.order_by_date : Event.none
-		@events_from_followed_users   ||= current_user ? Event.active.from_followed_users(current_user).includes(:place).order_by_date : Event.none
-		@events_in_my_neighborhood    ||= current_user ? Event.active.with_high_score.in_neighborhoods(["Cidade Baixa"]).includes(:place).order_by_date : Event.none
+		@saved_events                 ||= current_user ? current_user&.saved_events&.not_ml_data&.active&.order_by_date : Event.none
+		@new_events_today             ||= Event.not_ml_data.active.not_in_saved(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
+		@events_this_week             ||= Event.not_ml_data.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).includes(:place).order_by_date
+		@events_in_user_suggestions   ||= current_user ? Event.not_ml_data.active.not_in_saved(current_user).not_in(@events_this_week.pluck(:id)).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
+		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.not_ml_data&.active&.includes(:place)&.order_by_date : Event.none
+		@events_from_followed_users   ||= current_user ? Event.not_ml_data.active.from_followed_users(current_user).includes(:place).order_by_date : Event.none
+		@events_in_my_neighborhood    ||= current_user ? Event.not_ml_data.active.with_high_score.in_neighborhoods(["Cidade Baixa"]).includes(:place).order_by_date : Event.none
 		@following_users              ||= User.following_users(current_user)
 		@swipable_items               ||= get_swipable_items
 
@@ -107,7 +107,7 @@ class FeedsController < ApplicationController
 	end
 
 	def recent
-		@events ||= Event.active.where("created_at > ?", DateTime.now - 24.hours)
+		@events ||= Event.not_ml_data.active.where("created_at > ?", DateTime.now - 24.hours)
 
 		@collection = {
 				identifier:       'new-today',
@@ -126,7 +126,7 @@ class FeedsController < ApplicationController
 	end
 
 	def suggestions
-		@events ||= Event.active.in_user_suggestions(current_user).order_by_date
+		@events ||= Event.not_ml_data.active.in_user_suggestions(current_user).order_by_date
 
 		@collection = {
 				identifier:       'user-suggestions',
@@ -145,7 +145,7 @@ class FeedsController < ApplicationController
 	end
 
 	def follow
-		@events ||= current_user.try(:events_from_following_topics)&.active.order_by_date
+		@events ||= current_user.try(:events_from_following_topics)&.not_ml_data&.active.order_by_date
 
 		@collection = {
 				identifier:       'follow',
@@ -164,7 +164,7 @@ class FeedsController < ApplicationController
 	end
 
 	def today
-		@events ||= Event.active.with_high_score.not_in_saved(current_user).in_days([DateTime.now.beginning_of_day.yday, (DateTime.now + 1).end_of_day.yday])
+		@events ||= Event.not_ml_data.active.with_high_score.not_in_saved(current_user).in_days([DateTime.now.beginning_of_day.yday, (DateTime.now + 1).end_of_day.yday])
 
 		@collection = {
 				identifier:       'today-and-tomorrow',
@@ -183,7 +183,7 @@ class FeedsController < ApplicationController
 	end
 
 	def week
-		@events ||= Event.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).order_by_date
+		@events ||= Event.not_ml_data.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day.yday..(DateTime.now.beginning_of_day.yday + 8))).order_by_date
 
 		@collection = {
 				identifier:       'this-week',
@@ -202,7 +202,7 @@ class FeedsController < ApplicationController
 
 	def category
 		@categories ||= Event::CATEGORIES.dup
-		@events     ||= Event.active.in_days(session[:stimulus][:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories)
+		@events     ||= Event.not_ml_data.active.in_days(session[:stimulus][:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'category',
@@ -214,9 +214,6 @@ class FeedsController < ApplicationController
 						secondary: "Explore os #{@events.size} eventos de #{params[:category]} em Porto Alegre - RS"
 				},
 				ocurrences:       Event.day_of_week(@events, active_range: true).sort_by_date.compact_range.uniq.values,
-				filters:          {
-						ocurrences: true
-				},
 				infinite_scroll:  true,
 				display_if_empty: true,
 				show_similar_to:  session[:stimulus][:show_similar_to]
@@ -226,7 +223,7 @@ class FeedsController < ApplicationController
 
 	def neighborhood
 		@neighborhoods ||= Event::NEIGHBORHOODS.dup
-		@events        ||= Event.active.in_neighborhoods([params[:neighborhood].titleize]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
+		@events        ||= Event.not_ml_data.active.in_neighborhoods([params[:neighborhood].titleize]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'neighborhood',
@@ -244,7 +241,7 @@ class FeedsController < ApplicationController
 	end
 
 	def city
-		@events ||= Event.active.in_days(session[:stimulus][:days]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
+		@events ||= Event.not_ml_data.active.in_days(session[:stimulus][:days]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'city',
@@ -253,14 +250,10 @@ class FeedsController < ApplicationController
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre",
-						secondary: current_user ? "Explore todos os eventos ordenados por dia sem filtro de perfil" : "Explore todos os eventos que ocorrem em Porto Alegre - RS"
+						secondary: "Explore todos os eventos que ocorrem em Porto Alegre - RS"
 				},
 				categories:       @events.map { |event| event.categories_primary_name }.flatten.uniq,
 				ocurrences:       Event.day_of_week(@events, active_range: true).sort_by_date.compact_range.uniq.values,
-				filters:          {
-						categories: false,
-						ocurrences: true
-				},
 				infinite_scroll:  true,
 				display_if_empty: true,
 				show_similar_to:  session[:stimulus][:show_similar_to]
@@ -269,7 +262,7 @@ class FeedsController < ApplicationController
 
 	def day
 		@day    ||= Date.parse params[:day]
-		@events ||= Event.active.in_days([@day.yday]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
+		@events ||= Event.not_ml_data.active.in_days([@day.yday]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 
 		@collection = {
 				identifier:       'day',
@@ -281,9 +274,6 @@ class FeedsController < ApplicationController
 						secondary: "Acontecem #{@events.size} eventos neste dia"
 				},
 				categories:       @events.map { |event| event.categories_primary_name }.flatten.uniq,
-				filters:          {
-						categories: false
-				},
 				infinite_scroll:  true,
 				display_if_empty: true,
 				show_similar_to:  session[:stimulus][:show_similar_to]
@@ -309,7 +299,7 @@ class FeedsController < ApplicationController
 
 	def get_swipable_items
 		Rails.cache.fetch([current_user, 'swipable_items'], expires_in: 1.hour) do
-			events = Event.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories(Event::CATEGORIES, {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(24)
+			events = Event.not_ml_data.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories(Event::CATEGORIES, {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(24)
 
 			events.map do |event|
 				{

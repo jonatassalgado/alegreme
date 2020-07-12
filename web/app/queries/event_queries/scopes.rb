@@ -345,6 +345,11 @@ module EventQueries
 				where("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 1 OR (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 1")
 			}
 
+			scope 'not_ml_data', lambda {
+				select(column_names - ['ml_data'])
+						.select("json_build_object('categories',  ml_data -> 'categories', 'personas', ml_data -> 'personas') as ml_data")
+			}
+
 			scope 'favorited_by', lambda { |user = current_user|
 				where(id: user.taste_events_saved)
 			}

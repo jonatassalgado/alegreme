@@ -13,7 +13,7 @@ class PlacesController < ApplicationController
 	def show
 		default_reflex_values(limit: 12)
 
-		@events ||= @place.events.active.order_by_date
+		@events ||= @place.events.not_ml_data.active.order_by_date
 
 		@collection = {
 				identifier:       'new-today',

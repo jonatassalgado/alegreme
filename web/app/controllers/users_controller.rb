@@ -30,8 +30,8 @@ class UsersController < ApplicationController
 	# GET /users/1
 	# GET /users/1.json
 	def show
-		@upcoming_events = @user&.saved_events(as_model: true)&.active&.order_by_date
-		@historic_events = @user&.saved_events(as_model: true)&.historic&.order("updated_at DESC")
+		@upcoming_events = @user&.saved_events(as_model: true)&.not_ml_data&.active&.order_by_date
+		@historic_events = @user&.saved_events(as_model: true)&.not_ml_data&.historic&.order("updated_at DESC")
 		@topics          = @user&.following_topics
 
 		@collection_upcoming = {

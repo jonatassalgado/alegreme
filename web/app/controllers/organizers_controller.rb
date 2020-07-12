@@ -13,7 +13,7 @@ class OrganizersController < ApplicationController
 	def show
 		default_reflex_values(limit: 12)
 
-		@events ||= @organizer.events.active
+		@events ||= @organizer.events.not_ml_data.active
 
 		@collection = {
 				identifier:       @organizer.details['name'].parameterize,
