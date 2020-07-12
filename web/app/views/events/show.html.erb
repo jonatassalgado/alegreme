@@ -60,6 +60,11 @@
 
 
 
+
+
+
+
+
 </script>
 
 <script type="application/ld+json">
@@ -120,14 +125,11 @@
 					 data-event-modifier="single">
 
 				<% unless mobile_device? %>
-					<div class="me-event-single__breadcrumb">
-						<span class="is-hoverable"><%= link_to "Porto Alegre", city_events_url %></span>
-						<i>></i>
-						<span class="is-hoverable"><%= link_to @event.categories_primary_name, category_events_url(@event.categories_primary_name) %></span>
-						<i>></i>
-						<span class="is-hoverable"><%= link_to I18n.l(@event.day_of_week['date'], format: :long), day_events_url(@event.day_of_week['date'].strftime('%d-%m-%Y')) %></span>
-						<i>></i>
-						<span class="is-hoverable"><%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place) %></span>
+					<div class="me-event-single__breadcrumb me-chip-set mdc-chip-set me-chip-set--small">
+						<%= link_to "Porto Alegre", city_events_url, class: 'me-chip mdc-chip' %>
+						<%= link_to @event.categories_primary_name, category_events_url(@event.categories_primary_name), class: 'me-chip mdc-chip' %>
+						<%= link_to I18n.l(@event.day_of_week['date'], format: :long), day_events_url(@event.day_of_week['date'].strftime('%d-%m-%Y')), class: 'me-chip mdc-chip' %>
+						<%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'me-chip mdc-chip' %>
 					</div>
 				<% end %>
 
@@ -224,12 +226,8 @@
 		<a href="/train">Treinar</a>
 	<% end %>
 
-	<section class="me-section">
-		<div class="me-section__inner">
-			<%= render partial: "components/collection/events/collection", locals: {
-					collection: @similar_collection
-			} %>
-		</div>
-	</section>
+	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
+			collection: @similar_collection
+	} %>
 
 </section>
