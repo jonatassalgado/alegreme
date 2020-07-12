@@ -1,6 +1,10 @@
 module ApplicationHelper
 	include Pagy::Frontend
 
+	def movies_active_count
+		Rails.cache.fetch('movies_active_size', expires_in: 12.hours) { Movie.active.exists? }
+	end
+
 	def class_string(css_map)
 		css_map.find_all(&:last).map(&:first).join(" ")
 	end

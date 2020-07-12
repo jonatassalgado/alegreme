@@ -2,7 +2,7 @@
 
 	props = {
 			active:       nil,
-			movies_count: Movie.all.size,
+			movies_count: movies_active_count,
 			feed:         controller_name == 'feeds' && ['index', 'category', 'city'].include?(action_name),
 			movies:       controller_name == 'movies'
 	}.deep_merge!(props || {})
