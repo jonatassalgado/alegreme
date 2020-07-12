@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
 
 	def default_reflex_values
 		unless @stimulus_reflex
+			session[:stimulus]                   ||= {}
 			session[:stimulus][:days]            = []
 			session[:stimulus][:categories]      = []
 			session[:stimulus][:limit]           = 8
