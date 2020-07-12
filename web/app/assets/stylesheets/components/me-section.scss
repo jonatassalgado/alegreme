@@ -9,8 +9,8 @@
   padding: 24px 0;
   background: $surface-color;
   @include desktop-only {
-    display: flex;
-    margin: 2px 0;
+    //display: flex;
+    //margin: 2px 0;
   }
   @include mobile-only {
     max-width: unset;

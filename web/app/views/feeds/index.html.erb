@@ -22,7 +22,7 @@
     </div> -->
 	<%# end %>
 
-	<% cache([current_user, 'swipable-events']) do %>
+	<% cache([current_user, 'swipable-events', @swipable_items.pluck(:id)]) do %>
 		<% if current_user && @swipable_items.size > 0 && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try { |last_view_at| last_view_at < (DateTime.now - 8.hours) }) %>
 			<div class="me-section <%= 'me-section--without-padding' if current_user&.swipable.dig('events', 'last_view_at').blank? %>">
 				<div class="me-section__inner">

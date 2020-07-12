@@ -309,7 +309,7 @@ class FeedsController < ApplicationController
 
 	def get_swipable_items
 		Rails.cache.fetch([current_user, 'swipable_items'], expires_in: 1.hour) do
-			events = Event.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories([], {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).includes(:place).order_by_score.limit(24)
+			events = Event.active.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories(Event::CATEGORIES, {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(24)
 
 			events.map do |event|
 				{
