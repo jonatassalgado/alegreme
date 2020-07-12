@@ -41,7 +41,7 @@ $field-height: 50px;
   & .mdc-text-field__input {
     caret-color: $font-primary-color;
     font-size: 16px;
-    padding: 0 12px;
+    padding: 8px 12px;
     box-sizing: border-box;
     height: $field-height;
     font-weight: 400;
@@ -52,7 +52,7 @@ $field-height: 50px;
     border-bottom-color: rgba(255, 255, 255, 0) !important;
     align-self: baseline;
     @include mobile-only {
-      padding: 0 6px;
+      padding: 8px 6px;
       font-size: 13px;
       font-weight: 400;
     }

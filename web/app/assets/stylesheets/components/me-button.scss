@@ -82,14 +82,15 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
     @include mdc-button-ink-color($font-secondary-color);
     @include mdc-button-container-fill-color($border-color);
     padding: 3px 6px;
-    &:hover {
-      @include mdc-button-ink-color($brand-color);
-      border: 1px solid $brand-color;
-      // color: $brand-color;
-    }
 
     @include mobile-only {
       padding: 7px 15px;
+    }
+
+    [data-controller="search"] & {
+      @include mdc-button-ink-color($surface-color);
+      @include mdc-button-container-fill-color($brand-color);
+      font-weight: 500;
     }
   }
 }

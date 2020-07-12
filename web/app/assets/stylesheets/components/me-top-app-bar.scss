@@ -168,7 +168,7 @@ $border-color: #e0e0e0;
   }
 
   &__section {
-    // flex: 1 1 0;
+     flex: 1 1 0;
     // padding: 0 12px;
     @include mobile-only {
       padding: 0;
