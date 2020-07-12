@@ -22,6 +22,7 @@ $description-color: $font-secondary-color;
     @include mobile-only {
       min-height: 165px;
     }
+
     &:hover {
       & .me-card__similar {
         opacity: 1;
@@ -129,6 +130,7 @@ $description-color: $font-secondary-color;
     border-radius: $media-border-radius;
     box-shadow: $media-box-shadow-small;
     overflow: hidden;
+
     & img {
       width: 100%;
       height: 100%;
@@ -164,6 +166,7 @@ $description-color: $font-secondary-color;
     @include mdc-states;
     @include mobile-only {
     }
+
     .me-card--empty & {
       box-shadow: none;
     }
@@ -185,6 +188,7 @@ $description-color: $font-secondary-color;
     @include mobile-only {
       font-size: 9px;
     }
+
     .me-card--single & {
       color: $font-primary-color;
       text-transform: none;
@@ -196,10 +200,14 @@ $description-color: $font-secondary-color;
         margin: 24px 0;
       }
     }
+
+    [data-section-identifier="similar"] &,
     .me-similar & {
-      font-size: 10px;
-      font-weight: 500;
+      @include desktop-only {
+        font-size: 9px;
+      }
     }
+
     .me-card--empty & {
       color: $empty-color;
       background-color: $empty-color;
@@ -224,6 +232,7 @@ $description-color: $font-secondary-color;
       font-weight: 600;
       //background: $brand-color;
       color: $brand-color-aa;
+
       & i {
         width: 6px;
         height: 6px;
@@ -269,15 +278,21 @@ $description-color: $font-secondary-color;
     @include mobile-only {
       font-size: 13px;
     }
+
     [data-section-disposition="vertical"] & {
       @include mobile-only {
         font-size: 14px;
         line-height: 1.4em;
       }
     }
+
+    [data-section-identifier="similar"] &,
     .me-similar & {
-      font-size: 12px;
+      @include desktop-only {
+        font-size: 12px;
+      }
     }
+
     .me-card--empty & {
       & a {
         color: $empty-color;
@@ -286,10 +301,14 @@ $description-color: $font-secondary-color;
         display: inline;
       }
     }
+
     & a {
+      display: block;
       color: $font-secondary-color;
+
       .me-similar & {
         color: $font-secondary-color;
+
         &:hover {
           color: $brand-color-aa;
         }
@@ -309,6 +328,7 @@ $description-color: $font-secondary-color;
     @include mobile-only {
       font-size: 8px;
     }
+
     .me-card--empty & {
       color: $empty-color;
       background-color: $empty-color;
@@ -321,6 +341,7 @@ $description-color: $font-secondary-color;
     font-size: 10px;
     font-weight: 300;
     text-transform: lowercase;
+
     .me-card--empty & {
       & a {
         color: $empty-color;
@@ -329,6 +350,7 @@ $description-color: $font-secondary-color;
         display: inline;
       }
     }
+
     & a {
       color: $font-tertiary-color;
     }
@@ -348,6 +370,7 @@ $description-color: $font-secondary-color;
     @include mobile-only {
       opacity: 1;
     }
+
     .me-card--single & {
       opacity: 1;
       padding: 0;
@@ -387,20 +410,6 @@ $description-color: $font-secondary-color;
         fill: $brand-color;
       }
     }
-
-
-    //& .me-card__loading svg {
-    //  opacity: 0;
-    //  display: none;
-    //  animation-name: rotate;
-    //  animation-iteration-count: infinite;
-    //  animation-duration: 1s;
-    //  animation-timing-function: ease;
-    //  padding: 0;
-    //  @include mobile-only {
-    //    //padding: 1px 0 1px 0;
-    //  }
-    //}
 
     & svg {
       fill: $font-secondary-color;

@@ -17,6 +17,7 @@ class EventsController < ApplicationController
 		@similar_collection = {
 				identifier:        'similar',
 				events:            @similar_events,
+				user:              current_user,
 				title:             {
 						principal: "Eventos similares",
 				},

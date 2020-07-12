@@ -179,21 +179,23 @@
 
   &__place, &__date {
     display: flex;
-    & a {
-      @include is-clickable;
-    }
+    font-style: normal;
+    font-size: 12px;
+    //& a {
+      //@include is-clickable;
+    //}
 
     &-title {
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      margin: 0 0 3px 0;
-      line-height: 1em;
-      text-transform: capitalize;
+      //font-style: normal;
+      //font-weight: 400;
+      //font-size: 14px;
+      //margin: 0 0 3px 0;
+      //line-height: 1em;
+      //text-transform: capitalize;
 
-      & a:hover {
-        color: $brand-color;
-      }
+      //& a:hover {
+      //  color: $brand-color;
+      //}
     }
 
     & i {
@@ -201,11 +203,11 @@
       margin: 0 10px 0 0;
     }
 
-    & span {
-      font-style: normal;
-      font-weight: 300;
-      font-size: 12px;
-    }
+    //& span {
+    //  font-style: normal;
+    //  font-weight: 300;
+    //  font-size: 12px;
+    //}
 
     & svg {
       fill: $icon-color;

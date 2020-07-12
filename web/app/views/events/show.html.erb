@@ -56,6 +56,10 @@
  ]
 }
 
+
+
+
+
 </script>
 
 <script type="application/ld+json">
@@ -97,6 +101,10 @@
     "validFrom": "<%= @event.ld_json.valid_from %>"
   }
 }
+
+
+
+
 
 </script>
 
@@ -169,12 +177,14 @@
 									</svg>
 								</i>
 								<div>
-									<div class="me-event-single__date-title">
+									<div class="me-event-single__date-title me-chip mdc-chip">
 										<%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'me-is-clickable' %>
 									</div>
-									<%= link_to google_maps_url(@event.geographic['address']), class: 'me-event-single__address', target: '_blank', rel: 'noreferrer' do %>
-										<%= limit_address_name_size @event.geographic['address'] %>
-									<% end %>
+									<div>
+										<%= link_to google_maps_url(@event.geographic['address']), class: 'me-event-single__address', target: '_blank', rel: 'noreferrer' do %>
+											<%= limit_address_name_size @event.geographic['address'] %>
+										<% end %>
+									</div>
 								</div>
 							<% end %>
 						</div>
@@ -186,12 +196,12 @@
 								</svg>
 							</i>
 							<div>
-								<div class="me-event-single__place-title">
+								<div class="me-event-single__place-title me-chip mdc-chip">
 									<%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", I18n.l(@event.day_of_week['date'], format: :long)) %>
 								</div>
-								<span>
-              <%= @event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>
-          </span>
+								<div>
+									<%= @event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>
+								</div>
 							</div>
 						</div>
 					</div>

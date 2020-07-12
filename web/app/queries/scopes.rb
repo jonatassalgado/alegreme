@@ -5,7 +5,7 @@ module Scopes
 	included do
 
 	scope 'saved_by_user', lambda { |user, opts = {}|
-		return Event.none unless user
+		return Event.all unless user
 
 		opts = {'turn_on': true}.merge(opts)
 
@@ -17,7 +17,7 @@ module Scopes
 	}
 
   scope 'not_in_saved', lambda { |user, opts = {}|
-	  return Event.none unless user
+	  return Event.all unless user
 
 	  opts = {'turn_on': true}.merge(opts)
     if opts[:turn_on] && user
