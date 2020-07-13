@@ -22,6 +22,10 @@ $background-color: #f3f5f7;
 body {
   letter-spacing: -0.5px;
   font-family: $font-primary-family;
+  @include mobile-only {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-touch-callout: none;
+  }
 }
 
 a {
@@ -66,6 +70,10 @@ section {
   & a {
     color: $brand-color;
     padding: 0 10px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .is-pwa & {
@@ -205,6 +213,9 @@ section {
     & a {
       font-weight: 800;
       color: $font-secondary-color;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
@@ -237,11 +248,6 @@ section {
       opacity: 1 !important;
     }
 
-    //.shareBtn--invite {
-    //  opacity: 1;
-    //  display: flex;
-    //}
-
     .invite__email {
       opacity: 0 !important;
       display: none !important;
@@ -249,7 +255,6 @@ section {
 
     .invite__loginButtons {
       opacity: 0 !important;
-      // display: none !important;
     }
   }
 
@@ -308,7 +313,7 @@ section {
     border-radius: 60px;
     margin: 0 12px 0 0;
     cursor: pointer;
-    transition: box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+    transition: box-shadow 250ms ease, transform 250ms ease, opacity 250ms ease;
     will-change: transform;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     -webkit-user-select: none;
@@ -321,14 +326,9 @@ section {
       .invite-float & {
         width: calc(100vw - 48px);
       }
-      //.is-pwa & {
-      //  width: calc(100% - 48px);
-      //  margin: 0 auto 0 auto;
-      //}
     }
 
     &:hover {
-      //box-shadow: 0 0 45px rgba(0, 0, 0, 0.35);
       transform: scale(1.03);
       background: lighten($brand-color, 3%);
 
@@ -337,14 +337,9 @@ section {
       }
     }
 
-    & span {
-      // position: relative;
-      // top: 0px;
-      // right: -20px;
-      // transition: transform 0.4s ease;
-      // @include mobile-only {
-      //   display: none;
-      // }
+    &:active {
+      transform: scale(0.95);
+      background: darken($brand-color, 3%);
     }
 
     &--signin {
@@ -352,11 +347,15 @@ section {
       color: $font-secondary-color;
       width: 130px;
       margin: 0 0 0 0;
-      box-shadow: 0px 0px 30px rgba(0,0,0,0.16);
+      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.16);
 
       &:hover {
         color: $font-secondary-color;
         background: $surface-color;
+      }
+
+      &:active {
+        background: darken($surface-color, 3%);
       }
 
       .invite-float & {
