@@ -1,8 +1,8 @@
-class FeedChannel < ApplicationCable::Channel
+class UserChannel < ApplicationCable::Channel
 	include CableReady::Broadcaster
 
 	def subscribed
-		stream_from "feed_channel"
+		stream_for current_user
 	end
 
 	def unsubscribed
@@ -14,11 +14,11 @@ class FeedChannel < ApplicationCable::Channel
 		saved_events = current_user.public_send("saved_#{data['body']['resource']}").active.order_by_date
 
 		if data['body']['selector'].present?
-			cable_ready["feed_channel"].remove(
+			cable_ready[UserChannel].remove(
 					selector: "##{data['body']['selector']}"
 			)
 
-			cable_ready["feed_channel"].morph(
+			cable_ready[UserChannel].morph(
 					selector:      "##{data['body']['resource']}_saved",
 					html:          ApplicationController.render(partial: 'feeds/saves',
 					                                            locals:  {
@@ -30,9 +30,9 @@ class FeedChannel < ApplicationCable::Channel
 					children_only: false
 			)
 
-			cable_ready.broadcast
+			cable_ready.broadcast_to(current_user, UserChannel)
 		else
-			transmit({status: save_status})
+			broadcast_to(current_user, {status: save_status})
 		end
 
 	end

@@ -1,7 +1,7 @@
 import ApplicationController from "./application_controller"
-import * as MobileDetect     from "mobile-detect";
-import {FeedChannel}         from "../channels/feed_channel";
-import {SnackBarModule}      from "../modules/snackbar-module";
+import * as MobileDetect from "mobile-detect";
+import {UserChannel}     from "../channels/user_channel";
+import {SnackBarModule}  from "../modules/snackbar-module";
 
 export default class SaveButtonController extends ApplicationController {
     static targets = ["button"];
@@ -21,7 +21,7 @@ export default class SaveButtonController extends ApplicationController {
         PubSubModule.emit("save-button.clicked");
         this.updateButtonStyle(!this.saveStatus);
 
-        const send = FeedChannel.send({
+        const send = UserChannel.send({
                                           sent_by: gon.user_id,
                                           body:    {
                                               id:       this.resourceId,

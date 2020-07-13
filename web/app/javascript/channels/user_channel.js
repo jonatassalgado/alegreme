@@ -1,7 +1,7 @@
 import consumer   from "./consumer"
 import CableReady from "cable_ready"
 
-const FeedChannel = consumer.subscriptions.create("FeedChannel", {
+const UserChannel = consumer.subscriptions.create("UserChannel", {
     connected() {
         // Called when the subscription is ready for use on the server
     },
@@ -16,4 +16,4 @@ const FeedChannel = consumer.subscriptions.create("FeedChannel", {
     }
 });
 
-export {FeedChannel}
+export {UserChannel}
