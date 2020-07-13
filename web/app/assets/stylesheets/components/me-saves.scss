@@ -100,7 +100,7 @@ $gutter: 6px;
     display: grid;
     grid-gap: 12px;
     grid-template-columns: inherit;
-    grid-template-rows: minmax(110px, 1fr);
+    grid-template-rows: minmax(90px, 1fr);
     grid-auto-flow: column;
     grid-auto-columns: 54px;
     padding-bottom: calc(0.75 * #{$gutter});

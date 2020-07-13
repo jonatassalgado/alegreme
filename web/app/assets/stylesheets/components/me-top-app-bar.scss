@@ -195,8 +195,7 @@ $border-color: #e0e0e0;
 
     &--middle {
       display: flex;
-      width: 700px;
-      flex: none;
+      flex: auto;
 
       @include mobile-only {
         display: none;
