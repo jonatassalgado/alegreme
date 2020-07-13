@@ -5,7 +5,8 @@ export default class SavesController extends ApplicationController {
     static targets = ["saves", "list", "title", "date", "remove", "scrollLeft", "scrollRight", "header"];
 
     connect() {
-        this.pubsub = {};
+        this.pubsub  = {};
+        this.flipper = FlipperModule(`data-collection-${this.id}-flip-key`);
 
         this.activeFlip();
 
@@ -21,8 +22,6 @@ export default class SavesController extends ApplicationController {
             this.listTarget.addEventListener("scrolledLeft", SavesController.scrolledToLeft);
             this.listTarget.addEventListener("scrolledRight", SavesController.scrolledToRight);
         }
-
-        document.addEventListener("cable-ready:after-morph", this.activeFlip.bind(this));
     }
 
     disconnect() {
@@ -34,7 +33,6 @@ export default class SavesController extends ApplicationController {
     }
 
     activeFlip() {
-        this.flipper            = FlipperModule(`data-collection-${this.id}-flip-key`);
         this.pubsub.savesUpdate = PubSubModule.on("save-button.clicked", (data) => {
             this.flipper.read()
             document.addEventListener("cable-ready:after-morph", this.flipper.flip, {once: true});
