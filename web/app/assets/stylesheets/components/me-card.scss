@@ -475,11 +475,13 @@ $description-color: $font-secondary-color;
       }
 
       &--on {
-        //background: $brand-color;
-
         & svg {
           fill: #EA4335;
         }
+      }
+
+      [data-action="show"] & {
+        display: block;
       }
     }
   }

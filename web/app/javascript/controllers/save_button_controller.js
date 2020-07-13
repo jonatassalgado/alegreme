@@ -1,6 +1,7 @@
 import ApplicationController from "./application_controller"
 import * as MobileDetect     from "mobile-detect";
 import {FeedChannel}         from "../channels/feed_channel";
+import {SnackBarModule}      from "../modules/snackbar-module";
 
 export default class SaveButtonController extends ApplicationController {
     static targets = ["button"];
@@ -20,15 +21,22 @@ export default class SaveButtonController extends ApplicationController {
         PubSubModule.emit("save-button.clicked");
         this.updateButtonStyle(!this.saveStatus);
 
-        FeedChannel.send({
-                             sent_by: gon.user_id,
-                             body:    {
-                                 id:       this.resourceId,
-                                 selector: this.resourceSelector,
-                                 action:   this.isSaved,
-                                 resource: this.resourceName
-                             }
-                         })
+        const send = FeedChannel.send({
+                                          sent_by: gon.user_id,
+                                          body:    {
+                                              id:       this.resourceId,
+                                              selector: this.resourceSelector,
+                                              action:   this.isSaved,
+                                              resource: this.resourceName
+                                          }
+                                      })
+
+        if (send) {
+            this.saveStatus = !this.saveStatus;
+        } else {
+            this.updateButtonStyle(this.saveStatus);
+            SnackBarModule.show("Não foi possível realizar esta ação");
+        }
     }
 
     updateButtonStyle(saveStatus) {

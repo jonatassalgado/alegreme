@@ -83,12 +83,14 @@ module UserDecorators
 
 								instance.save && save
 							end
-
+						rescue ActiveRecord::RecordInvalid
+							puts 'Não foi possível salvar sua ação (ERRO 7813)!'
+						else
 							if taste_type == "save" && resource == 'events'
 								UpdateUserEventsSuggestionsJob.perform_later(self.id)
 							end
-						rescue ActiveRecord::RecordInvalid
-							puts 'Não foi possível salvar sua ação (ERRO 7813)!'
+
+							return taste_type
 						end
 					end
 				end
@@ -111,12 +113,15 @@ module UserDecorators
 
 								instance.save && save
 							end
-
+						rescue ActiveRecord::RecordInvalid
+							puts 'Não foi possível salvar sua ação (ERRO 7813)!'
+							return false
+						else
 							if taste_type == "unsave" && resource == 'events'
 								UpdateUserEventsSuggestionsJob.perform_later(self.id)
 							end
-						rescue ActiveRecord::RecordInvalid
-							puts 'Não foi possível salvar sua ação (ERRO 7813)!'
+
+							return taste_type
 						end
 					end
 				end
