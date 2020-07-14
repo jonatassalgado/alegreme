@@ -5,7 +5,7 @@ class MoviesController < ApplicationController
 		@movies = {
 				saved:          current_user.try(:saved_movies),
 				new_release:    Movie.active.where("collections::jsonb ? 'new release' AND jsonb_array_length(streamings::jsonb) > 0").not_in_saved(current_user).order_by_date,
-				editors_choice: Movie.active.where("collections::jsonb ? 'editors choice' AND jsonb_array_length(streamings::jsonb) > 0").not_in_saved(current_user).order_by_date
+				editors_choice: Movie.where("collections::jsonb ? 'editors choice' AND jsonb_array_length(streamings::jsonb) > 0").not_in_saved(current_user).order_by_date
 		}
 	end
 
