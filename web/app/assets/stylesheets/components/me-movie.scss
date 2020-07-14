@@ -64,7 +64,7 @@
     border-radius: $media-border-radius;
     box-shadow: $media-box-shadow-small;
     @include mobile-only {
-      height: 220px;
+      height: 200px;
     }
 
     & img {

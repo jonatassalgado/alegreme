@@ -10,7 +10,7 @@
     & .mdc-layout-grid__inner {
       [data-model="movie"] & {
         @include mobile-only {
-          grid-template-columns: repeat(100, minmax(40vw, 1fr));
+          grid-template-columns: repeat(100, minmax(130px, 1fr));
           padding: 10px 70px 0 $section-padding-phone;
         }
       }
@@ -18,7 +18,7 @@
         grid-gap: var(--mdc-layout-grid-gutter-phone, 16px);
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
-        grid-template-columns: repeat(100, minmax(56vw, 1fr));
+        grid-template-columns: repeat(100, minmax(200px, 1fr));
         padding: 6px 70px 0 $section-padding-phone;
       }
     }
