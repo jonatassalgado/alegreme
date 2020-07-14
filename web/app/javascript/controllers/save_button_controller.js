@@ -1,14 +1,12 @@
 import ApplicationController from "./application_controller"
-import * as MobileDetect from "mobile-detect";
-import {UserChannel}     from "../channels/user_channel";
-import {SnackBarModule}  from "../modules/snackbar-module";
+import {UserChannel}         from "../channels/user_channel";
+import {SnackBarModule}      from "../modules/snackbar-module";
 
 export default class SaveButtonController extends ApplicationController {
     static targets = ["button"];
 
     connect() {
         super.connect();
-        this.md = new MobileDetect(window.navigator.userAgent);
 
         this.updateButtonStyle(this.saveStatus);
     }
@@ -19,6 +17,7 @@ export default class SaveButtonController extends ApplicationController {
 
     like(event) {
         PubSubModule.emit("save-button.clicked");
+
         this.updateButtonStyle(!this.saveStatus);
 
         const send = UserChannel.send({

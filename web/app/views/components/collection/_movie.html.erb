@@ -1,5 +1,8 @@
 <% if movie.image.try { |image| image[:medium] } %>
-	<div id="<%= dom_id movie %>" data-controller="movie" data-target="movie.movie" class="me-movie mdc-layout-grid__cell">
+	<div class="me-movie mdc-layout-grid__cell"
+			 data-controller="movie"
+			 data-target="movie.movie"
+			 id="<%= dom_id movie %>">
 		<div class="me-movie__vote">
 			<%= movie.details_vote_average %> ⭐
 		</div>

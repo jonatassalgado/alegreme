@@ -1,5 +1,5 @@
 <% if user and saved_resources.present? %>
-	<div id="<%= identifier %>" class="me-saves" data-controller="saves" data-target="saves.saves" data-observable="float-menu.section">
+	<div class="me-saves">
 		<h2 data-target="saves.header" class="me-saves__title">
 			Favoritos
 			<%= link_to user_path user do %>

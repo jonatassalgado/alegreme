@@ -1,0 +1,7 @@
+<%
+	raise ArgumentError unless [identifier, html[:data]].all?(&:present?)
+%>
+
+<%= content_tag :div, {id: identifier, data: html[:data], class: html[:class]} do %>
+	<%= yield %>
+<% end %>

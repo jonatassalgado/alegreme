@@ -1,20 +1,21 @@
 import Flipping from "flipping";
 
 const FlipperModule = (flipKey) => {
+    const debug    = false;
     const module   = {};
     const flipping = new Flipping({
                                       attribute: flipKey
                                   });
 
-    console.log("[FLIP]: initied");
+    if (debug) console.log("[FLIP]: initied ", flipKey);
 
     module.read = () => {
-        console.log("[FLIP]: read");
+        if (debug) console.log("[FLIP]: read", flipKey);
         flipping.read()
     };
 
     module.flip = () => {
-        console.log("[FLIP]: flipping");
+        if (debug) console.log("[FLIP]: flipping", flipKey);
         flipping.flip();
 
         let delay   = 0.035;
@@ -57,7 +58,7 @@ const FlipperModule = (flipKey) => {
             });
         });
 
-        console.log("[FLIP]: flipped");
+        if (debug) console.log("[FLIP]: flipped", flipKey);
     };
 
     return module;

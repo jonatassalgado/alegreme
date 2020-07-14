@@ -52,12 +52,18 @@
 		<% if current_user %>
 			<section class="me-section me-section--condensed">
 				<div class="me-section__inner">
-					<%= render partial: 'feeds/saves',
+					<%= render partial: 'feeds/saves', layout: 'components/stimulus_container',
 										 locals:  {
 												 user:            current_user,
 												 identifier:      'events_saved',
+												 html:            {
+														 data: {
+																 controller: 'saves',
+																 target:     'saves.saves'
+														 }
+												 },
 												 saved_resources: @saved_events,
-												 empty_message:   "Salve eventos com ❤ para vê - los aqui"
+												 empty_message:   'Salve eventos com ❤ para vê - los aqui'
 										 } %>
 				</div>
 			</section>

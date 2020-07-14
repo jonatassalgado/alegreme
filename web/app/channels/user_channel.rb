@@ -27,7 +27,7 @@ class UserChannel < ApplicationCable::Channel
 							                                            saved_resources: saved_events,
 							                                            empty_message:   "Salve com ❤ para vê - los aqui"
 					                                            }),
-					children_only: false
+					children_only: true
 			)
 
 			cable_ready.broadcast_to(current_user, UserChannel)
