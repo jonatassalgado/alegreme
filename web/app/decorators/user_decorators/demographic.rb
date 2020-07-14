@@ -20,8 +20,10 @@ module UserDecorators
 			end
 
 			def picture(size = :medium)
-				if image.try {|img| img[size] }
+				if image.try { |img| img[size] }
 					image[size].url(public: true)
+				elsif features['demographic']['picture'].present?
+					features['demographic']['picture']
 				else
 					animal = ['cat', 'dog', 'lion', 'coala', 'rabbit', 'tiger', 'fox'].sample
 					if size == :small

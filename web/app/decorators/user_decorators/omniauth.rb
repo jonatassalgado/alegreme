@@ -20,14 +20,14 @@ module UserDecorators
 				case auth.provider
 				when 'google_oauth2'
 					googleId = auth.uid
-					email    = auth.extra.id_info.email
-					name     = auth.extra.id_info.name
-					picture  = auth.extra.id_info.picture
+					email    = auth.info.email
+					name     = auth.info.name
+					picture  = auth.info.image
 				when 'facebook'
 					fbId    = auth.uid
 					email   = auth.info.email
 					name    = auth.info.name
-					picture = auth.info.picture
+					picture = auth.info.image
 				else
 					return false
 				end
