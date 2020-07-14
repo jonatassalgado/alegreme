@@ -420,7 +420,8 @@ export default class SwipableController extends ApplicationController {
                 method:      "post",
                 headers:     {
                     "X-Requested-With": "XMLHttpRequest",
-                    "Content-type":     "text/javascript; charset=UTF-8",
+                    "Content-type":     "application/json; charset=UTF-8",
+                    "Accept":           "application/json",
                     "X-CSRF-Token":     document.querySelector("meta[name=csrf-token]").content
                 },
                 credentials: "same-origin"
@@ -455,13 +456,12 @@ export default class SwipableController extends ApplicationController {
         function onSwipeRight() {
             answers.push("1");
 
-            PubSubModule.emit("event.like");
-
             fetch(`/api/taste/events/${currentElementObj.id}/save?swipable=true`, {
                 method:      "post",
                 headers:     {
                     "X-Requested-With": "XMLHttpRequest",
-                    "Content-type":     "text/javascript; charset=UTF-8",
+                    "Content-type":     "application/json; charset=UTF-8",
+                    "Accept":           "application/json",
                     "X-CSRF-Token":     document.querySelector("meta[name=csrf-token]").content
                 },
                 credentials: "same-origin"
@@ -470,12 +470,7 @@ export default class SwipableController extends ApplicationController {
                     response => {
                         response.text()
                                 .then(data => {
-                                    eval(data);
-                                    CacheModule.clearCache(["feed-page", "events-page"], {
-                                        event: {
-                                            identifier: currentElementObj.id
-                                        }
-                                    });
+                                    CacheModule.clearCache();
                                 });
                     }
                 )

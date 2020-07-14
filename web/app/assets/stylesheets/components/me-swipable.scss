@@ -140,7 +140,7 @@
       font-weight: 300;
       padding: 0 15px;
       max-width: 80%;
-      font-family: $font-primary-family;
+      font-family: $font-secondary-family;
       @include mobile-only {
         font-size: 20px;
         padding: 0 12px;
@@ -148,7 +148,6 @@
     }
 
     &-description {
-      display: none;
       font-size: 14px;
       line-height: 1.1em;
       font-weight: 400;
@@ -156,7 +155,7 @@
       font-family: $font-primary-family;
       @include mobile-only {
         font-size: 12px;
-        padding: 3px 12px 12px;
+        padding: 3px 12px 0;
       }
     }
 

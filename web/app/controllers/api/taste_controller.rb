@@ -19,25 +19,21 @@ module Api
 
 				current_user.public_send("taste_#{taste_params[:resource]}_#{taste_params[:taste]}", entity.id)
 
-				render json: {taste_params[:taste] => :success} and return unless ["save", "unsave"].include?(taste_params[:taste])
-
-				@data = {
-						identifier:                 "#{taste_params[:resource]}_saved",
-						resource_identifier:        "#{params[:resource]}_#{taste_params[:id].to_i}",
-						resource_id:                taste_params[:id].to_i,
-						user:                       current_user,
-						current_resource_favorited: taste_params[:taste] == "save" ? true : false,
-						saved_resources:            current_user.public_send("saved_#{params[:resource]}"),
-						empty_message:              "Salve #{taste_params[:resource] == 'events' ? 'eventos' : 'filmes'} com ❤ para vê-los aqui",
-						json_request:               true
-				}
-
 				respond_to do |format|
 					format.js { render 'favorites/favorites' }
+					format.json {
+						render json: {
+								taste_params[:taste] => :success
+						}
+					}
 				end
 			else
 				respond_to do |format|
-					format.json { head :no_content }
+					format.json {
+						render json: {
+								taste_params[:taste] => :fail
+						}
+					}
 				end
 			end
 		end
