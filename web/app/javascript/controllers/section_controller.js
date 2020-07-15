@@ -43,17 +43,22 @@ export default class SectionController extends ApplicationController {
             document.addEventListener("cable-ready:after-morph", this.flipper.flip, {once: true});
         });
 
+        document.addEventListener("turbolinks:before-cache", this.beforeCache.bind(this))
         document.addEventListener("cable-ready:after-morph", this.activeLoadMoreButton.bind(this))
     }
 
+    beforeCache() {
+        this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+    }
+
     disconnect() {
-        this.turbolinksPersistScroll     = this.scrollContainerTarget.scrollLeft;
         this.sectionTarget.style.opacity = 1;
         this.pubsub.savesUpdate();
         this.observer.disconnect();
         this.ripples.forEach((ripple) => {
             ripple.destroy();
         });
+        document.removeEventListener("turbolinks:before-cache", this.beforeCache.bind(this))
         document.removeEventListener("cable-ready:after-morph", this.activeLoadMoreButton.bind(this))
     }
 
