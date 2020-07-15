@@ -59,7 +59,9 @@
     }
 
     &-title {
-      padding: 0 $section-padding-phone;
+      @include mobile-only {
+        padding: 0 $section-padding-phone;
+      }
 
       & h2 {
         font-size: 20px;

@@ -5,113 +5,121 @@
 
 <section class="me-page is-animated">
 
-  <%= notice %>
+	<%= notice %>
 
-  <div class="me-section">
-    <div class="me-section__inner">
-      <div class="me-movie me-movie--single">
-        <div class="me-movie__cover">
-          <% if current_user %>
-            <div data-controller="save-button"
-                data-action="click->save-button#like"
-                data-save-button-resource-name="<%= @movie.class.base_class.name.tableize %>"
-                data-save-button-resource-id="<%= @movie.id %>"
-                data-save-button-saved="<%= current_user.taste_movies_saved? @movie.id %>"
-                class="me-card__like-button">
-                <button data-target="save-button.button"
-                        id="add-to-favorites"
-                        class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_movies_saved?(@movie.id) %>"
-                        aria-label="Add to favorites"
-                        aria-hidden="true"
-                        aria-pressed="false"
-                        style="<%= 'display: inline' if current_user.taste_movies_saved?(@movie.id) %>">
-                  <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">
-                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"/>
-                    </svg>
-                  </i>
-                  <i class="material-icons-sharp mdc-icon-button__icon">
-                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"/>
-                    </svg>
-                  </i>
-                </button>
-            </div>
-          <% end %>
-          <%= image_tag(@movie.image[:medium].url(public: true), style: "background: #{JSON.parse(@movie.image_data).dig('medium', 'metadata', 'dominant_color')}") if @movie.image %>
-        </div>
-        <div class="me-movie__inner">
-          <h3 class="me-movie__title">
-            <%= @movie.details_title %> (<%= @movie.details_vote_average %>⭐)
-          </h3>
-          <div class="me-movie__genre">
-            <%= @movie.details_genres.join(", ") %>
-          </div>
-          <% if @movie.details_trailler %>
-          <a href="<%= @movie.details_trailler %>">
-            <div class="me-movie__trailler me-chip mdc-chip">
-              <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg></i>
-              Ver trailler
-            </div>
-          </a>
-          <% end %>
-          <% @movie.streamings.each do |streaming| %>
-          <a href="<%= streaming.url %>">
-            <div class="me-movie__trailler me-chip mdc-chip">
-              <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg></i>
-              <%= streaming.display_name %>
-            </div>
-          </a>
-          <% end %>
-          <div class="me-movie__description">
-            <%= @movie.details_description %>
-          </div>
-          <% if @movie.dates.any? {|date| date['date']} %>
-          <div class="me-movie__dates">
-            <% @movie.dates.select{|date| date['date'].to_date >= Date.today}.each do |date| %>
-            <div class="me-movie__date">
-              <div class="me-movie__date-name">
-                <%= "#{day_of_week(date['date']).upcase} - #{I18n.l(date['date'].to_date, format: :long)}" %>
-              </div>
-              <% if date['places'] %>
-              <div class="me-movie__places">
-                <% date['places'].each do |place| %>
-                <div class="me-movie__place">
-                  <div class="me-movie__place-name">
-                    <%= link_to place['name'], place['address'] %>
-                  </div>
-                  <% if place['languages'] %>
-                  <div class="me-movie__languages">
-                    <% place['languages'].each do |language| %>
-                    <div class="me-movie__language">
-                      <div class="me-movie__language-name"><%= language['name'] %></div>
-                      <div class="me-movie__times">
-                        <% if language['times'] %>
-                        <% language['times'].each do |time| %>
-                        <span class="me-movie__time">
-                          <%= time %>
-                        </span>
-                        <% end %>
-                        <% end %>
-                      </div>
-                    </div>
-                    <% end %>
-                  </div>
-                  <% end %>
-                </div>
-                <% end %>
-              </div>
-              <% end %>
-            </div>
-            <% end %>
-          </div>
-        </div>
-        <% end %>
-      </div>
-      <% if current_user&.admin? %>
-      <%= link_to "Editar", edit_movie_path(@movie) %>
-      <% end %>
-    </div>
-  </div>
+	<div class="me-section">
+		<div class="me-section__inner">
+			<div class="me-movie me-movie--single">
+				<div class="me-movie__cover">
+					<% if current_user %>
+						<div data-controller="save-button"
+								 data-action="click->save-button#like"
+								 data-save-button-resource-name="<%= @movie.class.base_class.name.tableize %>"
+								 data-save-button-resource-id="<%= @movie.id %>"
+								 data-save-button-saved="<%= current_user.taste_movies_saved? @movie.id %>"
+								 class="me-card__like-button">
+							<button data-target="save-button.button"
+											id="add-to-favorites"
+											class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if current_user.taste_movies_saved?(@movie.id) %>"
+											aria-label="Add to favorites"
+											aria-hidden="true"
+											aria-pressed="false"
+											style="<%= 'display: inline' if current_user.taste_movies_saved?(@movie.id) %>">
+								<i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">
+									<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"/>
+									</svg>
+								</i>
+								<i class="material-icons-sharp mdc-icon-button__icon">
+									<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"/>
+									</svg>
+								</i>
+							</button>
+						</div>
+					<% end %>
+					<%= image_tag(@movie.image[:medium].url(public: true), style: "background: #{JSON.parse(@movie.image_data).dig('medium', 'metadata', 'dominant_color')}") if @movie.image %>
+				</div>
+				<div class="me-movie__inner">
+					<h3 class="me-movie__title">
+						<%= @movie.details_title %> (<%= @movie.details_vote_average %>⭐)
+					</h3>
+					<div class="me-movie__genre">
+						<%= @movie.details_genres.join(", ") %>
+					</div>
+					<% if @movie.details_trailler %>
+						<a href="<%= @movie.details_trailler %>">
+							<div class="me-movie__trailler me-chip mdc-chip">
+								<i class="material-icons mdc-chip__icon mdc-chip__icon--leading">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+										<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/>
+									</svg>
+								</i>
+								Ver trailler
+							</div>
+						</a>
+					<% end %>
+					<% @movie.streamings.each do |streaming| %>
+						<a href="<%= streaming.url %>">
+							<div class="me-movie__trailler me-chip mdc-chip">
+								<i class="material-icons mdc-chip__icon mdc-chip__icon--leading">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+										<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/>
+									</svg>
+								</i>
+								<%= streaming.display_name %>
+							</div>
+						</a>
+					<% end %>
+					<div class="me-movie__description">
+						<%= @movie.details_description %>
+						<% if current_user&.admin? %>
+							<%= link_to "Editar", edit_movie_path(@movie) %>
+						<% end %>
+					</div>
+					<% if @movie.dates.any? { |date| date['date'] } %>
+						<div class="me-movie__dates">
+							<% @movie.dates.select { |date| date['date'].to_date >= Date.today }.each do |date| %>
+								<div class="me-movie__date">
+									<div class="me-movie__date-name">
+										<%= "#{day_of_week(date['date']).upcase} - #{I18n.l(date['date'].to_date, format: :long)}" %>
+									</div>
+									<% if date['places'] %>
+										<div class="me-movie__places">
+											<% date['places'].each do |place| %>
+												<div class="me-movie__place">
+													<div class="me-movie__place-name">
+														<%= link_to place['name'], place['address'] %>
+													</div>
+													<% if place['languages'] %>
+														<div class="me-movie__languages">
+															<% place['languages'].each do |language| %>
+																<div class="me-movie__language">
+																	<div class="me-movie__language-name"><%= language['name'] %></div>
+																	<div class="me-movie__times">
+																		<% if language['times'] %>
+																			<% language['times'].each do |time| %>
+																				<span class="me-movie__time">
+																					<%= time %>
+																				</span>
+																			<% end %>
+																		<% end %>
+																	</div>
+																</div>
+															<% end %>
+														</div>
+													<% end %>
+												</div>
+											<% end %>
+										</div>
+									<% end %>
+								</div>
+							<% end %>
+						</div>
+						</div>
+					<% end %>
+					</div>
+		</div>
+	</div>
 
 </section>
