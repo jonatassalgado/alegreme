@@ -134,8 +134,15 @@ module MovieDecorators
 					streamings = self.streamings.dup
 					streamings |= [attributes]
 					write_attribute(:streamings, streamings)
+				elsif attributes.is_a? Hash
+					streamings = []
+					attributes.each do |index, attrs|
+						next if attrs["_destroy"]
+						streamings << attrs
+					end
+					write_attribute(:streamings, streamings)
 				else
-					raise Exception, "#{attributes}:#{attributes.class} -> precisa ser uma string ou array"
+					raise Exception, "#{attributes}:#{attributes.class} -> precisa ser uma string, array ou hash"
 				end
 			end
 
