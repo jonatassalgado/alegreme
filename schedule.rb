@@ -17,7 +17,7 @@ end
 #   command "cd /root/alegreme && sudo docker exec alegreme_app_1 rake populate:movies"
 # end
 
-every 1.week do
+every 2.weeks do
   command "cd /root/alegreme && sudo docker exec alegreme_app_1 rake populate:movies:new_release"
 end
 
