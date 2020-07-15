@@ -1,17 +1,17 @@
 <p id="notice">
-  <%= notice %>
+	<%= notice %>
 </p>
 
-<section class="with-section-constraints">
-  <h1>Dashboard</h1>
+<section class="me-page__section">
+	<h2>Dashboard</h2>
 
-  <section>
-    <h2>Convites solicitados</h2>
-    <%= line_chart(User.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
-  </section>
+	<section>
+		<h3>Convites solicitados</h3>
+		<%= line_chart(User.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
+	</section>
 
-  <section>
-    <h2>Eventos criados</h2>
-    <%= line_chart(Event.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
-  </section>
+	<section>
+		<h3>Eventos criados</h3>
+		<%= line_chart(Event.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
+	</section>
 </section>
