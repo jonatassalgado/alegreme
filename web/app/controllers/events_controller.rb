@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 		@similar_events     = Event.includes(:place).not_ml_data.active.where(id: @event.similar_data).order_by_ids(@event.similar_data).not_in_saved(current_user).limit(8)
 		@similar_collection = {
 				identifier:        'similar',
-				events:            @similar_events,
+				items:             @similar_events,
 				user:              current_user,
 				title:             {
 						principal: "Eventos similares",

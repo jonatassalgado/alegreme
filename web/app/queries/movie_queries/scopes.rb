@@ -7,11 +7,20 @@ module MovieQueries
 		included do
 
 			scope 'active', lambda {
-				where("created_at > :time AND collections::jsonb ? 'new release'", time: DateTime.now - 30)
+				where("created_at > :time", time: DateTime.now - 60)
+			}
+
+			scope 'with_streaming', lambda {
+				where("jsonb_array_length(streamings::jsonb) > 0")
 			}
 
 			scope 'order_by_date', lambda {
 				order("created_at DESC")
+			}
+
+			scope 'in_genres', lambda { |categories = []|
+				raise ArgumentError unless categories.is_a? Array
+				where("? @> ANY (select jsonb_array_elements(details -> 'genres'))", categories.to_json)
 			}
 
 		end

@@ -11,8 +11,9 @@ $brand-color-high-contrast: #0C0F0A;
 
 $border-color: #E1E1E1;
 
-$font-primary-family: 'Roboto', sans-serif; // 'M PLUS Rounded 1c', sans-serif
+$font-primary-family: 'Roboto', sans-serif;
 $font-secondary-family: 'Roboto', sans-serif;
+$font-title-family: 'Montserrat', sans-serif;
 
 $section-padding-phone: 24px;
 
@@ -38,7 +39,8 @@ $tab-bar-shadow: 0px 1px 6px 1px #00000030;
 $page-width: 900px;
 
 $background-color: white; // #EDEFF1
-$background-secondary-color: darken($background-color, 5%);;
+$background-secondary-color: darken($background-color, 5%);
+;
 
 $surface-z10-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
 $surface-color: #ffffff;
@@ -117,6 +119,7 @@ $maybe-color: $font-tertiary-color;
 
   &:hover, & a:hover {
     color: $brand-color;
+
     & svg {
       fill: $brand-color;
     }
@@ -130,7 +133,7 @@ $maybe-color: $font-tertiary-color;
 .is-horizontal-scrollable {
   @include add-horizontal-scroll-wrapper;
   @include no-scroll-bar
- }
+}
 
 @mixin is-empty {
   font-weight: 600;

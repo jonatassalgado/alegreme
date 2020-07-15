@@ -1,22 +1,21 @@
 <%
 
-	return ArgumentError unless collection
+	raise ArgumentError unless [collection, collection[:identifier]].all?(&:present?)
 
+	html = local_assigns.fetch(:html, {})
 	collection = {
-			user:             nil,
-			events:           [],
-			if_greater_than:  0,
-			display_if_empty: false
-	}.deep_merge!(collection)
+			items:           [],
+			if_greater_than: 0
+	}.merge(local_assigns[:collection])
 
 %>
 
-<% cache([collection[:user], collection[:identifier], session[:stimulus].to_param, collection[:events].pluck(:id), collection[:events].maximum(:updated_at)]) do %>
-	<% if collection[:display_if_empty] || (collection[:events] && collection[:events].size > collection[:if_greater_than]) %>
-		<section id="<%= collection[:identifier] %>" class="me-section">
+<% cache([collection[:user], collection[:identifier], session[:stimulus].to_param, collection.dig(:item)&.pluck(:id), collection.dig(:items)&.try(:maximum, :updated_at)]) do %>
+	<% if collection[:display_if_empty] || (collection[:items] && collection[:items].size > collection[:if_greater_than]) %>
+		<%= content_tag :section, id: collection[:identifier], class: "me-section #{html[:class]}" do %>
 			<div class="me-section__inner">
 				<%= yield %>
 			</div>
-		</section>
+		<% end %>
 	<% end %>
 <% end %>

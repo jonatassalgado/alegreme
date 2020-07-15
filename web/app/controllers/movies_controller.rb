@@ -2,11 +2,24 @@ class MoviesController < ApplicationController
 	before_action :authorize_admin, only: [:new, :edit, :create, :update, :destroy]
 
 	def index
-		@movies = {
-				saved:          current_user.try(:saved_movies),
-				new_release:    Movie.active.where("collections::jsonb ? 'new release' AND jsonb_array_length(streamings::jsonb) > 0").not_in_saved(current_user).order_by_date,
-				editors_choice: Movie.where("collections::jsonb ? 'editors choice' AND jsonb_array_length(streamings::jsonb) > 0").not_in_saved(current_user).order_by_date
-		}
+
+		@movies       = Movie.active.with_streaming
+		@saved_movies = current_user.try(:saved_movies)
+		@movies_group = [
+				{
+						:identifier => 'editors-choice',
+						:title      => "Escolha dos editores",
+						:items      => @movies.filter { |movie| movie.collections.include? "editors choice" }
+				}
+		]
+
+		Movie::GENRES.each_with_index do |genre, index|
+			@movies_group << {
+					:identifier => genre.parameterize,
+					:title      => genre,
+					:items      => @movies.filter { |movie| movie.details["genres"].include? genre }.sort.slice(0..24)
+			}
+		end
 	end
 
 	def show

@@ -17,7 +17,7 @@ class PlacesController < ApplicationController
 
 		@collection = {
 				identifier:       'new-today',
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				user:             current_user,
 				total_count:      @events.size,
 				title:            {

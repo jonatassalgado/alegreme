@@ -4,7 +4,7 @@
 			visible: {
 					backbutton:   (['sessions', 'registrations'].include?(controller_name) || ['show', 'neighborhood', 'follow', 'week', 'suggestions'].include?(action_name)) &&
 														mobile_device?,
-					search:       (['feeds', 'events', 'organizers', 'places'].include?(controller_name) && !mobile_device?) ||
+					search:       (['feeds', 'events', 'organizers', 'places', 'movies'].include?(controller_name) && !mobile_device?) ||
 														['search'].include?(controller_name),
 					share_button: content_for?(:share_button_url) && action_name == 'show' && mobile_device?,
 					user_menu:    ['feeds', 'movies'].include?(controller_name) && action_name != 'show' && current_user,

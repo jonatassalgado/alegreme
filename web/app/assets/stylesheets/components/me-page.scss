@@ -60,6 +60,13 @@
 
     &-title {
       padding: 0 $section-padding-phone;
+
+      & h2 {
+        font-size: 20px;
+        font-weight: 600;
+        font-family: $font-title-family;
+        max-width: 80%;
+      }
     }
   }
 

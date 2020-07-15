@@ -28,7 +28,7 @@ class FeedsController < ApplicationController
 		@collection_suggestions = {
 				identifier:        'user-suggestions',
 				user:              current_user,
-				events:            @events_in_user_suggestions.limit(session[:stimulus][:limit]),
+				items:             @events_in_user_suggestions.limit(session[:stimulus][:limit]),
 				total_count:       @events_in_user_suggestions.size,
 				title:             {
 						principal: "Escolhidos a dedo para #{current_user&.first_name || 'você'}",
@@ -44,7 +44,7 @@ class FeedsController < ApplicationController
 		@collection_follow = {
 				identifier:        'follow',
 				user:              current_user,
-				events:            @events_from_following_topics.limit(session[:stimulus][:limit]),
+				items:             @events_from_following_topics.limit(session[:stimulus][:limit]),
 				total_count:       @events_from_following_topics.size,
 				title:             {
 						principal: "Tópicos que você segue",
@@ -60,7 +60,7 @@ class FeedsController < ApplicationController
 		@collection_following_users = {
 				identifier:        'following-users',
 				user:              current_user,
-				events:            @events_from_followed_users.limit(session[:stimulus][:limit]),
+				items:             @events_from_followed_users.limit(session[:stimulus][:limit]),
 				total_count:       @events_from_followed_users.size,
 				title:             {
 						principal: "Pessoas que você segue",
@@ -75,7 +75,7 @@ class FeedsController < ApplicationController
 		@collection_week = {
 				identifier:        'this-week',
 				user:              current_user,
-				events:            @events_this_week.limit(session[:stimulus][:limit]),
+				items:             @events_this_week.limit(session[:stimulus][:limit]),
 				total_count:       @events_this_week.size,
 				title:             {
 						principal: "Acontecendo esta semana",
@@ -92,7 +92,7 @@ class FeedsController < ApplicationController
 		@collection_neighborhood = {
 				identifier:        'my-neighborhood',
 				user:              current_user,
-				events:            @events_in_my_neighborhood.limit(session[:stimulus][:limit]),
+				items:             @events_in_my_neighborhood.limit(session[:stimulus][:limit]),
 				total_count:       @events_in_my_neighborhood.size,
 				title:             {
 						principal: "Nos bairros da sua cidade",
@@ -112,7 +112,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'new-today',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Adicionados recentemente",
@@ -131,7 +131,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'user-suggestions',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Indicados para #{current_user.first_name}",
@@ -150,7 +150,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'follow',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Tópicos que você segue",
@@ -169,7 +169,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'today-and-tomorrow',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre Hoje e Amanhã",
@@ -188,7 +188,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'this-week',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: current_user ? "Acontecendo esta semana" : "Eventos acontecendo esta semana em Porto Alegre",
@@ -207,7 +207,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'category',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos na categoria #{params[:category].try(:capitalize)} em Porto Alegre",
@@ -228,7 +228,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'neighborhood',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos no bairro #{params[:neighborhood].titleize}",
@@ -246,7 +246,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'city',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre",
@@ -267,7 +267,7 @@ class FeedsController < ApplicationController
 		@collection = {
 				identifier:       'day',
 				user:             current_user,
-				events:           @events.limit(session[:stimulus][:limit]),
+				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
 				title:            {
 						principal: "Eventos em Porto Alegre que ocorren dia #{I18n.l(@day, format: :long)}",

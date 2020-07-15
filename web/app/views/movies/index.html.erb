@@ -4,6 +4,12 @@
 
 	<% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
+	<div class="me-page__section">
+		<div class="me-page__section-title">
+			<h2>Filmes populares nos últimos 30 dias</h2>
+		</div>
+	</div>
+
 	<% if current_user %>
 		<section class="me-section me-section--condensed">
 			<div class="me-section__inner">
@@ -17,49 +23,23 @@
 															 target:     'saves.saves'
 													 }
 											 },
-											 saved_resources: @movies[:saved],
+											 saved_resources: @saved_movies,
 											 empty_message:   'Salve filmes com ❤ para vê - los aqui'
 									 } %>
 			</div>
 		</section>
 	<% end %>
 
-	<% if @movies[:new_release] %>
-		<section class="me-section me-section--condensed">
-			<section class="me-section__inner">
-				<%= render(partial: 'components/collection/movies/collection', locals: {
-						data: {
-								user:       current_user,
-								collection: {
-										movies: @movies[:new_release]
-								},
-								title:      {
-										principal: "Adicionados nos últimos 30 dias",
-										tertiary:  "Populares nos serviços de streaming"
-								}
-						}
-				}) %>
-			</section>
-		</section>
-	<% end %>
+	<%= render(partial:    'components/collection/movies/collection',
+						 layout:     'components/section',
+						 collection: @movies_group,
+						 as:         :collection,
+						 locals:     {
+								 html: {
+										 css: 'me-section--condensed'
+								 },
+								 user: current_user
+						 }) %>
 
-	<% if @movies[:editors_choice] %>
-		<section class="me-section me-section--condensed">
-			<section class="me-section__inner">
-				<%= render(partial: 'components/collection/movies/collection', locals: {
-						data: {
-								user:       current_user,
-								collection: {
-										movies: @movies[:editors_choice]
-								},
-								title:      {
-										principal: "Escolha dos editores",
-										tertiary:  "Disponíveis nos serviços de streaming"
-								}
-						}
-				}) %>
-			</section>
-		</section>
-	<% end %>
 
 </section>

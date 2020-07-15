@@ -11,10 +11,7 @@
   justify-content: center;
   flex-direction: column;
   @include mobile-only {
-    // min-height: 350px;
-    //margin: 0 0 15px 0;
-    //height: -webkit-fill-available;
-    //padding: 150px 0 0 0;
+    min-height: 295px;
   }
 
   &[data-swipable-chat-on="true"] {

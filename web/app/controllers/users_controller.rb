@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
 		@collection_upcoming = {
 				identifier:       'user-saved-events',
-				events:           @upcoming_events,
+				items:            @upcoming_events,
 				user:             @user,
 				title:            {
 						principal: "Próximos eventos",
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 		@collection_historic = {
 				identifier:       'user-historic-events',
 				user:             @user,
-				events:           @historic_events.limit(session[:stimulus][:limit]),
+				items:            @historic_events.limit(session[:stimulus][:limit]),
 				total_count:      @historic_events.size,
 				title:            {
 						principal: "Histórico de eventos salvos",

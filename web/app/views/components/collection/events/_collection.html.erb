@@ -4,7 +4,7 @@
 
 	collection = {
 			identifier:        nil,
-			events:            [],
+			items:             [],
 			user:              nil,
 			title:             {
 					principal: nil,
@@ -34,7 +34,7 @@
 				 data-controller="section"
 				 data-target="section.section"
 				 data-section-load-more-loading="false"
-				 data-section-limit="<%= collection[:events].size %>"
+				 data-section-limit="<%= collection[:items].size %>"
 				 data-section-total-count="<%= collection[:total_count] %>"
 				 data-section-infinite-scroll="<%= collection[:infinite_scroll] %>"
 				 data-section-disposition="<%= collection[:disposition] %>"
@@ -119,9 +119,9 @@
 		<div class="mdc-layout-grid__inner"
 				 data-section-turbolinks-persist-scroll="0"
 				 data-target="section.scrollContainer">
-			<% if collection[:events].present? %>
+			<% if collection[:items].present? %>
 				<%= render(partial:    'components/collection/event',
-									 collection: collection[:events],
+									 collection: collection[:items],
 									 as:         :event,
 									 locals:     {
 											 user:            collection[:user],
@@ -131,7 +131,7 @@
 											 show_similar_to: session[:stimulus][:show_similar_to]
 									 },
 									 cached:     false) %>
-				<% if (collection[:infinite_scroll] || collection[:display_load_more]) && collection[:total_count] > collection[:events].size %>
+				<% if (collection[:infinite_scroll] || collection[:display_load_more]) && collection[:total_count] > collection[:items].size %>
 					<div data-action="click->section#loadMoreHere"
 							 data-target="section.loadMoreButton"
 							 data-continue-to-path="<%= collection[:continue_to] %>"
@@ -209,7 +209,7 @@
 								 },
 								 cached:  false %>
 		<% end %>
-		<% if (collection[:infinite_scroll] || collection[:display_load_more]) && collection[:total_count] > collection[:events].size %>
+		<% if (collection[:infinite_scroll] || collection[:display_load_more]) && collection[:total_count] > collection[:items].size %>
 			<div class="me-collection__load-more me-collection__load-more--vertical is-hoverable"
 					 data-action="click->section#loadMoreHere"
 					 data-target="section.loadMoreButton">

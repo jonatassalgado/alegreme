@@ -1,25 +1,14 @@
 <%
 
-	raise ArgumentError unless data
-
-	data = {
-			user:       nil,
-			collection: {
-					movies: []
-			},
-			title:      {}
-	}.deep_merge!(data)
+	raise ArgumentError unless [collection, user].all?(&:present?)
 
 %>
 
 <div data-controller="movie-collection" class="me-collection" data-model="movie">
 	<div class="me-collection__head">
 		<h2>
-			<%= data[:title][:principal] %>
+			<%= collection[:title] %>
 		</h2>
-		<div class="me-collection__title-tertiary">
-			<%= data[:title][:tertiary] %>
-		</div>
 	</div>
 	<div class="me-collection" data-section-disposition="horizontal">
 		<div class="mdc-layout-grid">
@@ -27,10 +16,10 @@
 					 data-movie-collection-turbolinks-persist-scroll="0"
 					 data-target="movie-collection.scrollContainer">
 				<%= render(partial:    'components/collection/movie',
-									 collection: data[:collection][:movies],
+									 collection: collection[:items].shuffle,
 									 as:         :movie,
 									 locals:     {
-											 user: data[:user]
+											 user: user
 									 },
 									 cached:     true) %>
 			</div>

@@ -32,6 +32,7 @@ export default class SaveButtonController extends ApplicationController {
 
         if (send) {
             this.saveStatus = !this.saveStatus;
+            CacheModule.clearCache();
         } else {
             this.updateButtonStyle(this.saveStatus);
             SnackBarModule.show("Não foi possível realizar esta ação");
