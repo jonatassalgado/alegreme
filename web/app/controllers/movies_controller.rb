@@ -34,7 +34,7 @@ class MoviesController < ApplicationController
 	def new
 		model  = get_model(params[:type])
 		@movie = model.new
-		@movie.build_streaming
+		@movie.build_streamings
 		@movie.build_collections
 	end
 

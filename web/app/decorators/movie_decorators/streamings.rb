@@ -90,12 +90,24 @@ module MovieDecorators
 				read_attribute(:streamings).map { |values| Streaming.new(values) }
 			end
 
+			def streamings=(attributes)
+				if attributes.is_a? Array
+					write_attribute(:streamings, attributes)
+				elsif attributes.is_a? String
+					streamings = self.streamings.dup
+					streamings |= [attributes]
+					write_attribute(:streamings, streamings)
+				else
+					raise Exception, "#{attributes}:#{attributes.class} -> precisa ser uma string ou array"
+				end
+			end
+
 			class Streaming
 				attr_accessor :display_name, :url
 
 				def initialize(hash)
 					@display_name = hash['display_name']
-					@url = hash['url']
+					@url          = hash['url']
 				end
 
 				def persisted?()
@@ -116,18 +128,21 @@ module MovieDecorators
 			end
 
 			def streamings_attributes=(attributes)
-				streamings = []
-				attributes.each do |index, attrs|
-					next if attrs["_destroy"]
-					streamings << attrs
+				if attributes.is_a? Array
+					write_attribute(:streamings, attributes)
+				elsif attributes.is_a? String
+					streamings = self.streamings.dup
+					streamings |= [attributes]
+					write_attribute(:streamings, streamings)
+				else
+					raise Exception, "#{attributes}:#{attributes.class} -> precisa ser uma string ou array"
 				end
-				write_attribute(:streamings, streamings)
 			end
 
-			def build_streaming
+			def build_streamings
 				values = self.streamings.dup
 				values << Streaming.new({display_name: '',
-				                         url: ''})
+				                         url:          ''})
 				self.streamings = values
 			end
 		end

@@ -15,25 +15,25 @@ module PopulateMoviesNewReleaseRake
 	def create_movie(item)
 
 		genres = {
-			'28' => 'Ação',
-    	'12' => 'Aventura',
-    	'16' => 'Animação',
-    	'35' => 'Comédia',
-    	'80' => 'Crime',
-    	'99' => 'Documentário',
-    	'18' => 'Drama',
-    	'10751' => 'Família',
-    	'14' => 'Fantasia',
-    	'36' => 'História',
-    	'27' => 'Terror',
-    	'10402' => 'Música',
-    	'9648' => 'Mistério',
-    	'10749' => 'Romance',
-    	'878' => 'Ficção científica',
-    	'10770' => 'Cinema TV' ,
-    	'53' => 'Thriller',
-    	'10752' => 'Guerra',
-    	'37' => 'Faroeste'
+				'28'    => 'Ação',
+				'12'    => 'Aventura',
+				'16'    => 'Animação',
+				'35'    => 'Comédia',
+				'80'    => 'Crime',
+				'99'    => 'Documentário',
+				'18'    => 'Drama',
+				'10751' => 'Família',
+				'14'    => 'Fantasia',
+				'36'    => 'História',
+				'27'    => 'Terror',
+				'10402' => 'Música',
+				'9648'  => 'Mistério',
+				'10749' => 'Romance',
+				'878'   => 'Ficção científica',
+				'10770' => 'Cinema TV',
+				'53'    => 'Thriller',
+				'10752' => 'Guerra',
+				'37'    => 'Faroeste'
 		}
 
 		movie = Streaming.where.contains(details: {title: item['title']}).first
@@ -41,30 +41,30 @@ module PopulateMoviesNewReleaseRake
 		if movie
 			puts "#{@movies_create_counter}: #{item['name']} - Filme já existe (atualizado)".white
 			movie.details.deep_merge!(
-				original_title: item['original_title'],
-				title:          item['title'],
-				genres:         item['genre_ids'].map {|genre| genres[genre.to_s]},
-				description:    item['overview'],
-				cover:          item['poster_path'],
-				popularity:     item['popularity'],
-				vote_average:   item['vote_average'],
-				adult:          item['adult'],
-				tmdb_id:        item['id']
+					original_title: item['original_title'],
+					title:          item['title'],
+					genres:         item['genre_ids'].map { |genre| genres[genre.to_s] },
+					description:    item['overview'],
+					cover:          item['poster_path'],
+					popularity:     item['popularity'],
+					vote_average:   item['vote_average'],
+					adult:          item['adult'],
+					tmdb_id:        item['id']
 			)
 
 			[movie, :updated]
 		else
 			movie = Streaming.new
 			movie.details.deep_merge!(
-				original_title: item['original_title'],
-				title:          item['title'],
-				genres:         item['genre_ids'].map {|genre| genres[genre.to_s]},
-				description:    item['overview'],
-				cover:          item['poster_path'],
-				popularity:     item['popularity'],
-				vote_average:   item['vote_average'],
-				adult:          item['adult'],
-				tmdb_id:        item['id']
+					original_title: item['original_title'],
+					title:          item['title'],
+					genres:         item['genre_ids'].map { |genre| genres[genre.to_s] },
+					description:    item['overview'],
+					cover:          item['poster_path'],
+					popularity:     item['popularity'],
+					vote_average:   item['vote_average'],
+					adult:          item['adult'],
+					tmdb_id:        item['id']
 			)
 
 			movie.collections = ['new release']
@@ -121,21 +121,21 @@ module PopulateMoviesNewReleaseRake
 	end
 
 	def set_trailler(item, movie)
-	  google_api_key = Rails.application.credentials[Rails.env.to_sym][:google][:alegreme_api]
+		google_api_key = Rails.application.credentials[Rails.env.to_sym][:google][:alegreme_api]
 
-	  movie_query    = item['title']
-	  max_result     = 1
+		movie_query = item['title']
+		max_result  = 1
 
-	  url            = URI("https://www.googleapis.com/youtube/v3/search?part=id&regionCode=BR&maxResults=#{max_result}&q=#{ERB::Util.url_encode(movie_query)}%20filme%20trailler&fields=items(id(videoId))&key=#{google_api_key}")
+		url = URI("https://www.googleapis.com/youtube/v3/search?part=id&regionCode=BR&maxResults=#{max_result}&q=#{ERB::Util.url_encode(movie_query)}%20filme%20trailler&fields=items(id(videoId))&key=#{google_api_key}")
 
-	  http = Net::HTTP.new(url.host, url.port)
-	  http.use_ssl = true
-	  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+		http             = Net::HTTP.new(url.host, url.port)
+		http.use_ssl     = true
+		http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-	  request           = Net::HTTP::Get.new(url)
-	  request['Accept'] = 'application/json'
+		request           = Net::HTTP::Get.new(url)
+		request['Accept'] = 'application/json'
 
-	  response = http.request(request)
+		response = http.request(request)
 
 		begin
 			parsed_response = JSON.parse(response.read_body)
@@ -178,7 +178,7 @@ module PopulateMoviesNewReleaseRake
 		request['Accept']          = 'application/json'
 
 		response  = http.request(request)
-		locations = JSON.parse(response.read_body).dig('collection', 'locations')
+		locations = JSON.parse(response.read_body).dig('collection', 'locations').try(:filter) { |location| location.dig('country', 0) == 'br' }
 
 		if locations.present?
 			puts "#{item['title']} - Video com #{locations.size} streamings localizados".blue
@@ -199,13 +199,13 @@ module PopulateMoviesNewReleaseRake
 		min_vote_average = 4
 		url              = URI("https://api.themoviedb.org/3/discover/movie?api_key=#{tmdb_api}&language=pt-BR&sort_by=popularity.desc&include_adult=false&include_video=true&page=#{page}&vote_count.gte=#{min_votes}&vote_average.gte=#{min_vote_average}&release_date.gte=#{(today - in_last_days).strftime('%Y-%m-%d')}&release_date.lte=#{today.strftime('%Y-%m-%d')}")
 
-		http = Net::HTTP.new(url.host, url.port)
-		http.use_ssl = true
+		http             = Net::HTTP.new(url.host, url.port)
+		http.use_ssl     = true
 		http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 		request = Net::HTTP::Get.new(url)
 
-		response = http.request(request)
+		response        = http.request(request)
 		@data_from_tmdb = JSON.parse(response.read_body)
 	end
 
