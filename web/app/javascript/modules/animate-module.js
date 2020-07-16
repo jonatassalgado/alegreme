@@ -1,79 +1,81 @@
-import * as MobileDetect from "mobile-detect";
+import {MobileDetector} from "./mobile-detector-module";
 
 const AnimateModule = (function () {
-	const module = {};
-	const md     =  new MobileDetect(window.navigator.userAgent);
-	const isPwa  = (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone) || document.referrer.includes('android-app://');
+    const module = {};
+    const isPwa  = (window.matchMedia("(display-mode: standalone)").matches) ||
+        (window.navigator.standalone) ||
+        document.referrer.includes("android-app://");
 
-	module.init = () => {
-		document.addEventListener("turbolinks:load", module.animateOpenPage);
-		console.log("[ANIMATE]: started");
-	};
+    module.init = () => {
+        document.addEventListener("turbolinks:load", module.animateOpenPage);
+        console.log("[ANIMATE]: started");
+    };
 
-	module.animateOpenPage = () => {
-		const page = document.querySelector(".me-page.is-animated");
+    module.animateOpenPage = () => {
+        const page = document.querySelector(".me-page.is-animated");
 
-		if (md.mobile()) {
-			console.log("[ANIMATE]: animate page");
+        if (MobileDetector.mobile()) {
+            console.log("[ANIMATE]: animate page");
 
-			if (page) {
-				page.style.opacity   = 0;
-				page.style.transform = "translate(0, 24px)"
+            if (page) {
+                page.style.opacity   = 0;
+                page.style.transform = "translate(0, 24px)"
 
-				requestAnimationFrame(() => {
-						page.style.opacity   = 1;
-						page.style.transform = ""
-				});
-			}
-			document.addEventListener("turbolinks:before-cache", () => {
-				if (page) {
-					page.style.opacity   = 0;
-					page.style.transform = "translate(0, 24px)"
-				}
-			}, false);
-		}
-	};
+                requestAnimationFrame(() => {
+                    page.style.opacity   = 1;
+                    page.style.transform = ""
+                });
+            }
+            document.addEventListener("turbolinks:before-cache", () => {
+                const page = document.querySelector(".me-page.is-animated");
+                if (page) {
+                    page.style.opacity   = 0;
+                    page.style.transform = "translate(0, 24px)"
+                }
+            });
+        }
+    };
 
-	module.animatePageHide = () => {
-		const page = document.querySelector(".me-page.is-animated");
+    module.animatePageHide = () => {
+        const page = document.querySelector(".me-page.is-animated");
 
-		if (md.mobile()) {
-			console.log("[ANIMATE]: page hide");
+        if (MobileDetector.mobile()) {
+            console.log("[ANIMATE]: page hide");
 
-			if (page) {
-				page.style.opacity   = 1;
-				// page.style.transform = ""
+            if (page) {
+                page.style.opacity = 1;
+                // page.style.transform = ""
 
-				requestAnimationFrame(() => {
-					page.style.opacity   = 0;
-					// page.style.transform = "scale(0.95)"
-				});
-			}
-		}
-	};
+                requestAnimationFrame(() => {
+                    page.style.opacity = 0;
+                    // page.style.transform = "scale(0.95)"
+                });
+            }
+        }
+    };
 
-	module.animateBackbutton = () => {
-		const page = document.querySelector(".me-page.is-animated");
+    module.animateBackbutton = () => {
+        const page = document.querySelector(".me-page.is-animated");
 
-		if (md.mobile()) {
-			console.log("[ANIMATE]: backbutton");
+        if (MobileDetector.mobile()) {
+            console.log("[ANIMATE]: backbutton");
 
-			if (page) {
-				requestAnimationFrame(() => {
-						page.style.opacity = 0;
-						page.style.transform = "translate(0, 24px)"
-				});
-			}
-		}
+            if (page) {
+                requestAnimationFrame(() => {
+                    page.style.opacity   = 0;
+                    page.style.transform = "translate(0, 24px)"
+                });
+            }
+        }
 
-		setTimeout(() => {
-			window.history.back();
-		}, 25)
-	};
+        setTimeout(() => {
+            window.history.back();
+        }, 25)
+    };
 
-	window.AnimateModule = module;
+    window.AnimateModule = module;
 
-	return module;
+    return module;
 })();
 
 export {AnimateModule};

@@ -1,10 +1,8 @@
 import ApplicationController from "./application_controller"
-import {MDCMenu}             from "@material/menu";
 import {MDCRipple}           from "@material/ripple";
 import {MDCIconButtonToggle} from "@material/icon-button";
-import * as MobileDetect     from "mobile-detect";
-import {ProgressBarModule}   from "../modules/progressbar-module";
 import {AnimateModule}       from "../modules/animate-module";
+import {MobileDetector}      from "../modules/mobile-detector-module";
 
 export default class EventController extends ApplicationController {
     static targets = [
@@ -21,12 +19,18 @@ export default class EventController extends ApplicationController {
     connect() {
         super.connect();
 
-        this.md                 = new MobileDetect(window.navigator.userAgent);
         this.activeInteractions = true;
+
+        document.addEventListener("turbolinks:before-cache", this.beforeCache.bind(this))
+    }
+
+    beforeCache() {
+        this.activeInteractions = false;
     }
 
     disconnect() {
         this.activeInteractions = false;
+        document.removeEventListener("turbolinks:before-cache", this.beforeCache.bind(this))
     }
 
     handleEventClick() {
@@ -38,7 +42,7 @@ export default class EventController extends ApplicationController {
     }
 
     showEventDetails() {
-        if (this.md.mobile()) {
+        if (MobileDetector.mobile()) {
         } else {
             if (this.data.get("favorited") === "false" && this.hasLikeButtonTarget) {
                 this.likeButtonTarget.style.display = "inline";
@@ -69,12 +73,6 @@ export default class EventController extends ApplicationController {
 
             })
     };
-
-    openMenu() {
-        const mdcMenu = new MDCMenu(this.menuTarget);
-        mdcMenu.open  = !mdcMenu.open;
-    };
-
 
     readMore() {
         this.data.set("description-open", true);

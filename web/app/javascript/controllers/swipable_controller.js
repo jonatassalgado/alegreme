@@ -1,14 +1,13 @@
 import ApplicationController from "./application_controller"
 import {UILandingBot}        from "../modules/bot-module";
-import * as MobileDetect     from "mobile-detect";
 import {ProgressBarModule}   from "../modules/progressbar-module";
+import {MobileDetector}      from "../modules/mobile-detector-module";
 
 
 export default class SwipableController extends ApplicationController {
     static targets = ["swipable", "onboarding", "items", "skip"];
 
     initialize() {
-        this.md   = new MobileDetect(window.navigator.userAgent);
         this.uilb = new UILandingBot(this.onboardingTarget);
 
         if (gon.user_sign_in_count <= 1 && gon.user_taste_events_saved < 1) {
@@ -134,7 +133,7 @@ export default class SwipableController extends ApplicationController {
         let currentPosition           = 0; //Keep the position of active stacked card.
         let counter                   = 0;
         const velocity                = 0.5; //Minimum velocity allowed to trigger a swipe.
-        const pixelsToMoveCardOnSwipe = this.md.mobile() ? 600 : 800;
+        const pixelsToMoveCardOnSwipe = MobileDetector.mobile() ? 600 : 800;
         let answers                   = [];
         let isFirstTime               = true;
         let topObj; //Keep the swipe top properties.

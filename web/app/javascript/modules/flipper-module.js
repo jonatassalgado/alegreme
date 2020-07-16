@@ -1,11 +1,11 @@
 import Flipping from "flipping";
 
 const FlipperModule = (flipKey) => {
-    const debug    = false;
-    const module   = {};
-    const flipping = new Flipping({
-                                      attribute: flipKey
-                                  });
+    let debug    = false;
+    let module   = {};
+    let flipping = new Flipping({
+                                    attribute: flipKey
+                                });
 
     if (debug) console.log("[FLIP]: initied ", flipKey);
 
@@ -60,6 +60,10 @@ const FlipperModule = (flipKey) => {
 
         if (debug) console.log("[FLIP]: flipped", flipKey);
     };
+
+    module.destroy = () => {
+        flipping = null
+    }
 
     return module;
 };

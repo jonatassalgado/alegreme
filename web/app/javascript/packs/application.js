@@ -5,7 +5,7 @@
 
 require("@rails/ujs").start()
 require("turbolinks").start()
-require("@rails/activestorage").start()
+// require("@rails/activestorage").start()
 require("channels")
 
 
@@ -27,13 +27,10 @@ import consumer                 from "../channels/consumer"
 import {CacheModule}    from "../modules/cache-module";
 import {AnimateModule}  from "../modules/animate-module";
 import {PubSubModule}   from "../modules/pubsub-module";
-import {LazyloadModule} from "../modules/lazyload-module";
-import {SnackBarModule} from "../modules/snackbar-module";
 
 PubSubModule.init();
 CacheModule.activateTurbolinks();
 AnimateModule.init();
-LazyloadModule.init();
 
 const application = Application.start();
 const context     = require.context("controllers", true, /controller\.js$/);

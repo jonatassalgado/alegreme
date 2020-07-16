@@ -1,9 +1,9 @@
 import ApplicationController from "./application_controller"
-import * as MobileDetect     from "mobile-detect";
 import {MDCRipple}           from "@material/ripple";
 import {ProgressBarModule}   from "../modules/progressbar-module";
 import {AnimateModule}       from "../modules/animate-module"
 import {FlipperModule}       from "../modules/flipper-module";
+import {MobileDetector}      from "../modules/mobile-detector-module";
 
 export default class SectionController extends ApplicationController {
     static targets = ["section", "filter", "scrollContainer", "loadMoreButton", "seeAll", "personas", "categories",
@@ -12,7 +12,6 @@ export default class SectionController extends ApplicationController {
     connect() {
         super.connect();
         this.scrollLeft = this.data.get("turbolinksPersistScroll");
-        this.md         = new MobileDetect(window.navigator.userAgent);
         this.flipper    = FlipperModule(`data-collection-${this.identifier}-flip-key`);
         this.pubsub     = {};
         this.ripples    = [];
@@ -54,6 +53,7 @@ export default class SectionController extends ApplicationController {
     disconnect() {
         this.sectionTarget.style.opacity = 1;
         this.pubsub.savesUpdate();
+        this.flipper.destroy();
         this.observer.disconnect();
         this.ripples.forEach((ripple) => {
             ripple.destroy();
@@ -91,7 +91,7 @@ export default class SectionController extends ApplicationController {
     }
 
     activeLoadMoreButton() {
-        this.rootMargin = this.md.mobile() ? "500px" : "250px";
+        this.rootMargin = MobileDetector.mobile() ? "500px" : "250px";
 
         this.loadMoreButtonTargets.forEach((button) => {
             this.ripples.push(new MDCRipple(button));

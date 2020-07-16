@@ -26,6 +26,7 @@ export default class SavesController extends ApplicationController {
 
     disconnect() {
         this.pubsub.savesUpdate();
+        this.flipper.destroy();
         if (this.hasListTarget) {
             delete this.scrollLeftEvent;
             delete this.scrollRightEvent;
