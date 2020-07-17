@@ -132,10 +132,10 @@ const SwipableModule = (() => {
             topObj.classList.add("stackedcards-overlay-hidden");
         }
 
-//Remove class init
-        setTimeout(function () {
+
+//         setTimeout(function () {
             obj.classList.remove("init");
-        }, 500);
+        // }, 500);
 
 
         function backToMiddle() {

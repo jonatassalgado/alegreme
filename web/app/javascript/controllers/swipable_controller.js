@@ -41,6 +41,9 @@ export default class SwipableController extends ApplicationController {
 
     showBot() {
         this.bot.init(this.onboardingTarget)
+
+        this.hidden = false;
+
         this.bot
             .message({
                          content: `Olá ${this.userName} 👋`,
@@ -127,6 +130,7 @@ export default class SwipableController extends ApplicationController {
 
     showSwipe() {
         this.botOn                          = false;
+        this.hidden                         = false;
         this.onboardingTarget.style.display = "none";
         this.itemsTarget.style.opacity      = 1;
         this.swipable.init();
@@ -151,5 +155,19 @@ export default class SwipableController extends ApplicationController {
 
     set botOn(value) {
         this.data.set("botOn", value);
+    }
+
+    get hidden() {
+        return JSON.parse(this.data.get("hidden"))
+    }
+
+    set hidden(value) {
+        setTimeout(() => {
+            requestIdleCallback(() => {
+                requestAnimationFrame(() => {
+                    this.data.set("hidden", value);
+                })
+            })
+        }, 500)
     }
 }

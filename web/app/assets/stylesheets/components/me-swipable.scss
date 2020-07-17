@@ -3,21 +3,27 @@
   max-width: 420px;
   margin: 0 auto 0 auto;
   position: relative;
-  //padding: 0 $section-padding-phone;
   width: auto;
-  //height: -webkit-fill-available;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  transition: opacity $animation-time-large ease-out, transform $animation-time-large ease-out;
+  will-change: opacity, transform;
   @include mobile-only {
     min-height: 295px;
+  }
+
+  &[data-swipable-hidden="true"] {
+    @include mobile-only {
+      opacity: 0;
+      transform: translateY(50px);
+    }
   }
 
   &[data-swipable-bot-on="true"] {
     @include mobile-only {
       padding: 0;
-      // box-shadow: inset 0px 0px 12px #00000026;
     }
   }
 
@@ -198,8 +204,8 @@
   }
 
   & .stackedcards--animatable {
-    transition: all 400ms ease;
-    will-change: opacity, transform;
+    //transition: all 400ms ease;
+    //will-change: opacity, transform;
     min-height: 200px;
   }
 
