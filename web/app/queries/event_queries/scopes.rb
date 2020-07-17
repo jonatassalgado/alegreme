@@ -334,7 +334,7 @@ module EventQueries
 
 				if opts[:turn_on]
 					persona_score  = 0.35
-					category_score = 0.6
+					category_score = 0.35
 					where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= :persona_score AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric >= :category_score", persona_score: persona_score, category_score: category_score)
 				else
 					all
