@@ -4,7 +4,7 @@
   z-index: 6;
   width: 100%;
   will-change: transform, box-shadow;
-  transition: transform 250ms ease, 250ms box-shadow ease;
+  transition: transform $animation-time-medium ease, $animation-time-medium box-shadow ease;
   box-shadow: 0px 0px 1px 0px #0a0a0a99;
   background: $background-color;
 

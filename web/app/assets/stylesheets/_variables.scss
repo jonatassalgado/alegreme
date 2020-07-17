@@ -3,6 +3,10 @@
 
 $main-content-width: calc(100% - 73px); // 1040px;
 
+$animation-time-large: 250ms;
+$animation-time-medium: 150ms;
+$animation-time-small: 100ms;
+
 $brand-color: #03994C;
 $brand-color-aa: darken(#03994C, 5%);
 $brand-color-aaa: darken(#03994C, 10%);
