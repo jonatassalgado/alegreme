@@ -1,6 +1,7 @@
 import ApplicationController from "./application_controller"
 import {MDCRipple}           from "@material/ripple";
 import {AnimateModule}       from "../modules/animate-module";
+import {debounce}            from "../utilities";
 
 export default class BottomNavigationController extends ApplicationController {
     static targets = ["navigation", "item", "events", "search", "cinema"];
@@ -30,7 +31,7 @@ export default class BottomNavigationController extends ApplicationController {
         if (this.hasNavigationTarget) {
             this.lastScrollTop = 0;
 
-            window.addEventListener("scroll", this.animateNavigationOnScroll.bind(this), {
+            window.addEventListener("scroll", debounce(this.animateNavigationOnScroll.bind(this)), {
                 capture: false,
                 passive: true
             });
@@ -60,22 +61,24 @@ export default class BottomNavigationController extends ApplicationController {
 
     animateNavigationOnScroll() {
         var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (window.scrollY > 250) {
-            if (currentScrollTop > this.lastScrollTop) {
-                requestAnimationFrame(() => {
-                    this.navigationTarget.style.transform = "translateY(60px)"
-                });
+        requestIdleCallback(() => {
+            if (window.scrollY > 250) {
+                if (currentScrollTop > this.lastScrollTop) {
+                    requestAnimationFrame(() => {
+                        this.navigationTarget.style.transform = "translateY(60px)"
+                    });
+                } else {
+                    requestAnimationFrame(() => {
+                        this.navigationTarget.style.transform = "translateY(0)"
+                    });
+                }
             } else {
                 requestAnimationFrame(() => {
                     this.navigationTarget.style.transform = "translateY(0)"
                 });
             }
-        } else {
-            requestAnimationFrame(() => {
-                this.navigationTarget.style.transform = "translateY(0)"
-            });
-        }
-        this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+            this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+        })
     }
 
     goto(event) {
