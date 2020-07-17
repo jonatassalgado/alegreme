@@ -7,10 +7,23 @@ export default class FilterController extends ApplicationController {
 
     connect() {
         super.connect();
-        this.MDCChipSet = new MDCChipSet(this.chipsetTarget)
+        this.setup();
+    }
+
+    beforeCache() {
+        super.beforeCache();
+        this.teardown();
     }
 
     disconnect() {
+        this.teardown();
+    }
+
+    setup() {
+        this.MDCChipSet = new MDCChipSet(this.chipsetTarget)
+    }
+
+    teardown() {
         this.MDCChipSet.destroy();
     }
 

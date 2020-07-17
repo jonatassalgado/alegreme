@@ -7,11 +7,18 @@ export default class SaveButtonController extends ApplicationController {
 
     connect() {
         super.connect();
-
-        this.updateButtonStyle(this.saveStatus);
+        this.setup();
     }
 
     disconnect() {
+        super.disconnect()
+    }
+
+    setup() {
+        this.updateButtonStyle(this.saveStatus);
+    }
+
+    teardown() {
 
     }
 
@@ -50,18 +57,6 @@ export default class SaveButtonController extends ApplicationController {
         }
     }
 
-    set adjustForDevice(isMobile) {
-        const isSaved  = this.saveStatus === false;
-        const isSingle = this.data.get("modifier") === "single";
-
-        if (isMobile) {
-        } else {
-            if (isSaved && !isSingle) {
-                this.buttonTarget.style.display = "none";
-            }
-        }
-    }
-
     get isSaved() {
         if (this.saveStatus === true) {
             return "unsave";
@@ -92,14 +87,6 @@ export default class SaveButtonController extends ApplicationController {
 
     get isPreview() {
         return document.documentElement.hasAttribute("data-turbolinks-preview");
-    }
-
-    get sectionIdentifier() {
-        const section = this.buttonTarget.closest("[data-controller=\"section\"]");
-
-        if (this.hasButtonTarget && section) {
-            return section.dataset.sectionIdentifier;
-        }
     }
 
 }

@@ -6,39 +6,32 @@ export default class TabBarController extends ApplicationController {
 
     connect() {
         super.connect();
-        // this.setScrollLeft = this.data.get("turbolinksPersistScroll");
+        this.setup();
+    }
 
-        // if (!this.isPreview){
-        this.MDCTabBar    = new MDCTabBar(this.tabBarTarget);
-        // }
-        this.setActiveTab = this.currentAction;
-        // this.activeAnimateOnScroll = true;
-
-        // this.destroy = () => {
-        //     if (this.MDCTabBar) {
-        //         // this.setTurbolinksPersistScroll = this.scrollerTarget.scrollLeft;
-        //         this.MDCTabBar.tabList_.forEach((tab) => {
-        //             tab.deactivate();
-        //         })
-        //         this.MDCTabBar.destroy();
-        //     }
-        // }
-
-        // document.addEventListener("turbolinks:before-cache", this.destroy, false);
+    beforeCache() {
+        super.beforeCache();
+        this.teardown();
     }
 
     disconnect() {
         super.disconnect();
+        this.teardown();
+    }
+
+    setup() {
+        this.MDCTabBar    = new MDCTabBar(this.tabBarTarget);
+        this.setActiveTab = this.currentAction;
+    }
+
+    teardown() {
         this.MDCTabBar.tabList_.forEach((tab) => {
             tab.deactivate();
         })
         this.MDCTabBar.destroy();
-        window.removeEventListener("scroll", this.animateTabBarOnScroll, false);
-        // document.removeEventListener("turbolinks:before-cache", this.destroy, false);
     }
 
     open(event) {
-        // PubSubModule.emit("tabBar.update", {})
         setTimeout(() => {
             Turbolinks.visit(event.target.parentElement.dataset.tabPath);
         }, 150)
@@ -53,41 +46,6 @@ export default class TabBarController extends ApplicationController {
             if (currentTab) {
                 currentTab.activate()
             }
-        }
-    }
-
-    // set activeAnimateOnScroll(value) {
-    // 	if (value && this.hasTabBarTarget) {
-    // 		this.lastScrollTop = 0;
-    //
-    // 		this.animateTabBarOnScroll = () => {
-    // 			var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    //
-    // 			if (window.scrollY > 0) {
-    // 				if (currentScrollTop > this.lastScrollTop){
-    // 					requestAnimationFrame(() => {
-    // 						this.tabBarTarget.classList.add('me-tab-bar--with-shadow')
-    // 					});
-    // 				}
-    // 			} else {
-    // 				requestAnimationFrame(() => {
-    // 					this.tabBarTarget.classList.remove('me-tab-bar--with-shadow')
-    // 				});
-    // 			}
-    // 			this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-    // 		}
-    //
-    // 		window.addEventListener('scroll', this.animateTabBarOnScroll, {capture: false, passive: true});
-    // 	}
-    // }
-
-    set setTurbolinksPersistScroll(value) {
-        this.data.set("turbolinksPersistScroll", value);
-    }
-
-    set setScrollLeft(value) {
-        if (value >= 0) {
-            this.scrollerTarget.scrollLeft = value;
         }
     }
 

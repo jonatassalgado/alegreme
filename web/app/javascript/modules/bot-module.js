@@ -1,96 +1,125 @@
-const UILandingBot = class UILandingBot {
-	constructor(node) {
-		this.domNode = node;
-		this.domNode.classList.add('.is-bot');
-	}
+const BotModule = (() => {
+    const debug = false;
 
-	createContainer({human, cssClass, delay, resolve}) {
-		var container = document.createElement('div');
+    const module = {};
+    const timers = [];
 
-		container.className       = `me-bot__container ${
-			human ? 'is-human' : 'is-bot'
-		} ${cssClass}`;
-		container.style.opacity   = 0;
-		container.style.transform = `translateX(${human ? "" : "-"}8%)`;
+    const createContainer = ({human, cssClass, delay, resolve}) => {
+        const container = document.createElement("div");
 
-		setTimeout(() => {
-			this.domNode.appendChild(container);
-		}, 50);
+        container.className       = `me-bot__container ${
+            human ? "is-human" : "is-bot"
+        } ${cssClass}`;
+        container.style.opacity   = 0;
+        container.style.transform = `translateX(${human ? "" : "-"}8%)`;
 
-		setTimeout(() => {
-			requestAnimationFrame(() => {
-				container.style.opacity   = 1;
-				container.style.transform = 'translateX(0)';
-				if (resolve) {
-					resolve(container);
-				}
-			});
-		}, delay || 100);
+        timers.push(
+            setTimeout(() => {
+                if (!module.domNode) return
+                module.domNode.appendChild(container);
+            }, 50)
+        )
 
-		return container;
-	}
+        timers.push(
+            setTimeout(() => {
+                requestAnimationFrame(() => {
+                    if (!module.domNode) return
+                    container.style.opacity   = 1;
+                    container.style.transform = "translateX(0)";
+                    if (resolve) {
+                        resolve(container);
+                    }
+                });
+            }, delay || 100)
+        )
 
-	message({content, cssClass, delay, human}) {
-		return new Promise((resolve, reject) => {
-			var container = this.createContainer({human, cssClass, delay, resolve});
+        return container;
+    }
 
-			var message       = document.createElement('div');
-			message.className = `me-bot__message ${
-				human ? 'is-human' : 'is-bot'
-			} ${cssClass}`;
+    const scrollToEnd = () => {
+        timers.push(
+            setTimeout(() => {
+                if (!module.domNode) return
+                const onboardingEl = document.querySelector(".me-swipable__onboarding");
+                if (onboardingEl) onboardingEl.scrollTo({
+                                                            top:      onboardingEl.scrollHeight,
+                                                            behavior: "smooth"
+                                                        })
+            }, 300)
+        )
+    }
 
-			requestAnimationFrame(() => {
-				message.innerHTML = content;
-				container.appendChild(message);
+    module.init = (wrapper) => {
+        if (debug) console.log("[BOT INITIED]")
+        module.domNode = wrapper;
+        module.domNode.classList.add("is-bot");
+    }
 
-				this.scrollToEnd();
-			});
-		});
-	}
+    module.action = (obj) => {
+        return module[`${obj.type}Action`](obj);
+    }
 
-	scrollToEnd() {
-		setTimeout(() => {
-			const onboardingEl = document.querySelector('.me-swipable__onboarding');
-			// document.querySelector(".me-swipable").style.scrollBehavior = 'smooth';
-			onboardingEl.scrollTo(0, onboardingEl.scrollHeight);
-			// document.querySelector(".me-swipable").style.scrollBehavior = '';
-		}, 300);
-	}
+    module.buttonAction = ({items, delay, human, cssClass}) => {
+        return new Promise((resolve, reject) => {
+            var container = createContainer({
+                                                human,
+                                                delay,
+                                                cssClass: "no-icon"
+                                            });
 
-	action(obj) {
-		return this[`${obj.type}Action`](obj);
-	}
+            items.forEach(item => {
+                const button     = document.createElement("button");
+                button.className = `me-bot__button ${item.cssClass} me-button me-button--small mdc-button`;
+                button.type      = "button";
+                button.innerHTML = item.text;
+                button.addEventListener("click", () => {
+                    resolve(item.value);
+                    container.style.opacity = 0;
+                    timers.push(setTimeout(() => module.domNode.removeChild(container), 300))
+                }, {once: true});
+                container.appendChild(button);
+                scrollToEnd();
+            });
 
-	buttonAction({items, delay, human, cssClass}) {
-		return new Promise((resolve, reject) => {
-			var container = this.createContainer({
-				human,
-				delay,
-				cssClass: "no-icon"
-			});
-			// container.style.position = 'absolute';
+        });
+    }
 
-			// var form       = document.createElement("form");
-			// form.className = `me-bot__action ${human ? "human" : "bot"} ${cssClass}`;
-			// form.addEventListener('submit', e => e.preventDefault);
+    module.message = ({content, cssClass, delay, human}) => {
+        return new Promise((resolve, reject) => {
+            let container = createContainer({
+                                                human,
+                                                cssClass,
+                                                delay,
+                                                resolve
+                                            });
 
-			items.forEach(item => {
-				var button       = document.createElement("button");
-				button.className = `me-bot__button ${item.cssClass} me-button mdc-button`;
-				button.type      = 'button';
-				button.innerHTML = item.text;
-				button.addEventListener("click", () => {
-					resolve(item.value);
-					container.style.opacity = 0;
-					setTimeout(() => this.domNode.removeChild(container), 300);
-				});
-				container.appendChild(button);
-				this.scrollToEnd();
-			});
+            let message       = document.createElement("div");
+            message.className = `me-bot__message ${
+                human ? "is-human" : "is-bot"
+            } ${cssClass}`;
 
-			// container.appendChild(form);
-		});
-	}
-};
+            requestAnimationFrame(() => {
+                message.innerHTML = content;
+                container.appendChild(message);
 
-export {UILandingBot};
+                scrollToEnd();
+            });
+        });
+    }
+
+    module.destroy = () => {
+        if (module.domNode) {
+            module.domNode.innerHTML = "";
+            module.domNode           = null;
+        }
+        if (timers.length > 0) {
+            timers.forEach((timer) => {
+                clearTimeout(timer)
+            })
+        }
+    }
+
+    return module;
+})();
+
+export {BotModule};

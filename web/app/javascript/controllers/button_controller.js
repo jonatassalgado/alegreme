@@ -1,25 +1,33 @@
-import ApplicationController from './application_controller'
-import {MDCRipple}           from '@material/ripple';
+import ApplicationController from "./application_controller"
+import {MDCRipple}           from "@material/ripple";
 
 export default class BottonController extends ApplicationController {
-	static targets = ['button'];
+    static targets = ["button"];
 
-	initialize() {
+    connect() {
+        super.connect();
+        this.setup();
+    }
 
-		if (this.hasButtonTarget) {
-			this.buttonRipple = new MDCRipple(this.buttonTarget);
-		}
+    beforeCache() {
+        super.beforeCache();
+        this.teardown();
+    }
 
-		this.destroy = () => {
-			if (this.hasButtonTarget) {
-				this.buttonRipple.destroy();
-			}
-		};
+    disconnect() {
+        super.disconnect();
+        this.teardown();
+    }
 
-	}
+    setup() {
+        if (this.hasButtonTarget) {
+            this.buttonRipple = new MDCRipple(this.buttonTarget);
+        }
+    }
 
-	disconnect() {
-		this.destroy;
-	}
-
+    teardown() {
+        if (this.hasButtonTarget) {
+            this.buttonRipple.destroy();
+        }
+    }
 }

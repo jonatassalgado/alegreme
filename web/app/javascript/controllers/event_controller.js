@@ -18,19 +18,37 @@ export default class EventController extends ApplicationController {
 
     connect() {
         super.connect();
-
-        this.activeInteractions = true;
-
-        document.addEventListener("turbolinks:before-cache", this.beforeCache.bind(this))
+        this.setup();
     }
 
     beforeCache() {
-        this.activeInteractions = false;
+        super.beforeCache();
+        this.teardown();
     }
 
     disconnect() {
-        this.activeInteractions = false;
-        document.removeEventListener("turbolinks:before-cache", this.beforeCache.bind(this))
+        super.disconnect();
+        this.teardown();
+    }
+
+    setup() {
+        if (this.hasOverlayTarget) {
+            this.overlayRipple = new MDCRipple(this.overlayTarget);
+        }
+        if (this.hasLikeButtonTarget) {
+            this.toggleLikeButton = new MDCIconButtonToggle(
+                this.likeButtonTarget
+            );
+        }
+    }
+
+    teardown() {
+        if (this.overlayRipple) {
+            this.overlayRipple.destroy();
+        }
+        if (this.toggleLikeButton) {
+            this.toggleLikeButton.destroy();
+        }
     }
 
     handleEventClick() {
@@ -63,10 +81,9 @@ export default class EventController extends ApplicationController {
             in_this_section: this.sectionIdentifier
         })
             .then(payload => {
-                this.activeInteractions       = true;
+                this.setup();
                 this.similarLoading           = false;
                 this.similarOpen              = true;
-                this.scrollToSimilarContainer = true;
                 this.scrollToSimilarContainer = true;
             })
             .catch(payload => {
@@ -103,26 +120,6 @@ export default class EventController extends ApplicationController {
 
         if (this.hasEventTarget && section) {
             return section.id;
-        }
-    }
-
-    set activeInteractions(value) {
-        if (value) {
-            if (this.hasOverlayTarget) {
-                this.overlayRipple = new MDCRipple(this.overlayTarget);
-            }
-            if (this.hasLikeButtonTarget) {
-                this.toggleLikeButton = new MDCIconButtonToggle(
-                    this.likeButtonTarget
-                );
-            }
-        } else {
-            if (this.overlayRipple) {
-                this.overlayRipple.destroy();
-            }
-            if (this.toggleLikeButton) {
-                this.toggleLikeButton.destroy();
-            }
         }
     }
 

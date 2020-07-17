@@ -11,6 +11,21 @@ export default class SectionController extends ApplicationController {
 
     connect() {
         super.connect();
+        this.setup();
+    }
+
+    beforeCache() {
+        super.beforeCache();
+        this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+        this.teardown();
+    }
+
+    disconnect() {
+        super.disconnect();
+        this.teardown();
+    }
+
+    setup() {
         this.scrollLeft = this.data.get("turbolinksPersistScroll");
         this.flipper    = FlipperModule(`data-collection-${this.identifier}-flip-key`);
         this.pubsub     = {};
@@ -42,15 +57,10 @@ export default class SectionController extends ApplicationController {
             document.addEventListener("cable-ready:after-morph", this.flipper.flip, {once: true});
         });
 
-        document.addEventListener("turbolinks:before-cache", this.beforeCache.bind(this))
-        document.addEventListener("cable-ready:after-morph", this.activeLoadMoreButton.bind(this))
+        document.addEventListener("cable-ready:after-morph", this.activeLoadMoreButton.bind(this), {once: true})
     }
 
-    beforeCache() {
-        this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
-    }
-
-    disconnect() {
+    teardown() {
         this.sectionTarget.style.opacity = 1;
         this.pubsub.savesUpdate();
         this.flipper.destroy();
@@ -58,8 +68,6 @@ export default class SectionController extends ApplicationController {
         this.ripples.forEach((ripple) => {
             ripple.destroy();
         });
-        document.removeEventListener("turbolinks:before-cache", this.beforeCache.bind(this))
-        document.removeEventListener("cable-ready:after-morph", this.activeLoadMoreButton.bind(this))
     }
 
     seeMoreInNewPage() {

@@ -5,6 +5,21 @@ export default class SavesController extends ApplicationController {
     static targets = ["saves", "list", "title", "date", "remove", "scrollLeft", "scrollRight", "header"];
 
     connect() {
+        super.connect();
+        this.setup();
+    }
+
+    beforeCache() {
+        super.beforeCache();
+        this.teardown();
+    }
+
+    disconnect() {
+        super.disconnect();
+        this.teardown();
+    }
+
+    setup() {
         this.pubsub  = {};
         this.flipper = FlipperModule(`data-collection-${this.id}-flip-key`);
 
@@ -24,7 +39,7 @@ export default class SavesController extends ApplicationController {
         }
     }
 
-    disconnect() {
+    teardown() {
         this.pubsub.savesUpdate();
         this.flipper.destroy();
         if (this.hasListTarget) {
@@ -142,4 +157,7 @@ export default class SavesController extends ApplicationController {
         return this.savesTarget.id
     }
 
+    get isPreview() {
+        return document.documentElement.hasAttribute("data-turbolinks-preview");
+    }
 }

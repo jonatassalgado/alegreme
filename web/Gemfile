@@ -153,7 +153,7 @@ group :development do
 	gem 'awesome_print', require: 'ap'
 	gem 'meta_request'
 	gem 'niceql'
-	gem 'rack-mini-profiler'
+	# gem 'rack-mini-profiler'
 	# gem 'active_record_doctor'
 		# gem 'bullet'
 end

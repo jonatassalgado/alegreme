@@ -14,14 +14,14 @@
     min-height: 295px;
   }
 
-  &[data-swipable-chat-on="true"] {
+  &[data-swipable-bot-on="true"] {
     @include mobile-only {
       padding: 0;
       // box-shadow: inset 0px 0px 12px #00000026;
     }
   }
 
-  &[data-swipable-chat-on="false"] {
+  &[data-swipable-bot-on="false"] {
     @include mobile-only {
       padding: 24px 0;
       min-height: 295px;
@@ -37,18 +37,15 @@
     transition: opacity 400ms linear;
     will-change: opacity;
     @include mobile-only {
-      width: calc(100vw - 64px);
-      padding: 12px 24px 74px 24px;
-      max-height: 275px;
+      box-shadow: 0 0 6px #0000003b;
+      border-radius: 10px;
+      width: calc(100% - 92px);
+      padding: 12px 24px 74px;
+      height: 275px;
       overflow-y: scroll;
       scroll-behavior: smooth;
     }
 
-    & button {
-      @include mdc-button-container-fill-color($brand-color);
-      font-weight: 300;
-      font-family: $font-primary-family;
-    }
   }
 
   &__items {
@@ -395,6 +392,7 @@
     @include mobile-only {
       width: 100%;
     }
+
     & h2 {
       font-family: $font-secondary-family;
       padding: 0 15px;

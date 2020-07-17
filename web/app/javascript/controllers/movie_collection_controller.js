@@ -1,32 +1,39 @@
-import ApplicationController from './application_controller'
+import ApplicationController from "./application_controller"
 
 export default class MovieCollectionController extends ApplicationController {
-	static targets = ['collection', 'scrollContainer'];
+    static targets = ["collection", "scrollContainer"];
 
-	initialize() {
-		this.scrollLeft = this.data.get('turbolinksPersistScroll');
+    connect() {
+        super.connect();
+        this.setup()
+    }
 
+    beforeCache() {
+        super.beforeCache();
+        this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+        this.teardown();
+    }
 
-		this.destroy = () => {
-			this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
-		};
+    disconnect() {
+        super.disconnect();
+    }
 
-		document.addEventListener('turbolinks:before-cache', this.destroy, false);
-	}
+    setup() {
+        this.scrollLeft = this.data.get("turbolinksPersistScroll");
+    }
 
+    teardown() {
 
-	disconnect() {
-		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
-	}
+    }
 
-	set turbolinksPersistScroll(value) {
-		this.data.set('turbolinksPersistScroll', value);
-	}
+    set turbolinksPersistScroll(value) {
+        this.data.set("turbolinksPersistScroll", value);
+    }
 
-	set scrollLeft(value) {
-		if (value >= 0) {
-			this.scrollContainerTarget.scrollLeft = value;
-		}
-	}
+    set scrollLeft(value) {
+        if (value >= 0) {
+            this.scrollContainerTarget.scrollLeft = value;
+        }
+    }
 
 }

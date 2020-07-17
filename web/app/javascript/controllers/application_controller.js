@@ -15,10 +15,16 @@ import StimulusReflex from "stimulus_reflex"
 export default class extends Controller {
     connect() {
         StimulusReflex.register(this)
+        document.addEventListener("turbolinks:before-cache", this.beforeCache.bind(this), {once: true})
+        // console.log('connect', this.context.controller.identifier)
+    }
+
+    beforeCache() {
+        // console.log('before-cache', this.context.controller.identifier)
     }
 
     disconnect() {
-
+        // console.log('disconnect', this.context.controller.identifier)
     }
 
     /* Application wide lifecycle methods.

@@ -4,16 +4,23 @@ export default class ChipSetController extends ApplicationController {
 	static targets = ["wrapper", "chipSet"];
 
 	connect() {
+		super.connect();
+		this.setup();
+	}
 
+	beforeCache() {
+		super.beforeCache();
+		this.teardown();
+	}
+
+	disconnect() {
+		super.disconnect();
+	}
+
+	setup() {
 		if (this.hasChipSetTarget && this.data.get("selected") != "") {
 			this.chipSetTarget.querySelector(`[data-chip-set-slug="${this.data.get("selected")}"]`).classList.add("mdc-chip--selected");
 		}
-
-		this.destroy = () => {
-
-		}
-
-		document.addEventListener('turbolinks:before-cache', this.destroy, false);
 
 		if (this.chipSetTarget.querySelector(".mdc-chip--selected")) {
 			this.scrollOffset = {
@@ -21,11 +28,10 @@ export default class ChipSetController extends ApplicationController {
 				smooth:   false
 			};
 		}
-
 	}
 
-	disconnect() {
-		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
+	teardown() {
+
 	}
 
 	select(event) {

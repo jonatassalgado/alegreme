@@ -1,21 +1,19 @@
 import {MobileDetector} from "./mobile-detector-module";
 
 const AnimateModule = (function () {
+    const debug  = false;
     const module = {};
-    const isPwa  = (window.matchMedia("(display-mode: standalone)").matches) ||
-        (window.navigator.standalone) ||
-        document.referrer.includes("android-app://");
 
     module.init = () => {
         document.addEventListener("turbolinks:load", module.animateOpenPage);
-        console.log("[ANIMATE]: started");
+        if (debug) console.log("[ANIMATE]: started");
     };
 
     module.animateOpenPage = () => {
         const page = document.querySelector(".me-page.is-animated");
 
         if (MobileDetector.mobile()) {
-            console.log("[ANIMATE]: animate page");
+            if (debug) console.log("[ANIMATE]: animate page");
 
             if (page) {
                 page.style.opacity   = 0;
@@ -32,7 +30,9 @@ const AnimateModule = (function () {
                     page.style.opacity   = 0;
                     page.style.transform = "translate(0, 24px)"
                 }
-            });
+            }, {
+                                          once: true
+                                      });
         }
     };
 
@@ -40,7 +40,7 @@ const AnimateModule = (function () {
         const page = document.querySelector(".me-page.is-animated");
 
         if (MobileDetector.mobile()) {
-            console.log("[ANIMATE]: page hide");
+            if (debug) console.log("[ANIMATE]: page hide");
 
             if (page) {
                 page.style.opacity = 1;
@@ -58,7 +58,7 @@ const AnimateModule = (function () {
         const page = document.querySelector(".me-page.is-animated");
 
         if (MobileDetector.mobile()) {
-            console.log("[ANIMATE]: backbutton");
+            if (debug) console.log("[ANIMATE]: backbutton");
 
             if (page) {
                 requestAnimationFrame(() => {

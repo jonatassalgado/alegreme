@@ -8,11 +8,9 @@ class FeedsController < ApplicationController
 
 	def index
 		gon.push({
-				         :env                     => Rails.env,
-				         :user_id                 => current_user.try(:id),
-				         :user_first_name         => current_user.try(:first_name),
-				         :user_sign_in_count      => current_user&.sign_in_count,
-				         :user_taste_events_saved => current_user&.taste_events_saved&.size
+				         :env             => Rails.env,
+				         :user_id         => current_user.try(:id),
+				         :user_first_name => current_user.try(:first_name)
 		         })
 
 		@saved_events                 ||= current_user ? current_user&.saved_events&.not_ml_data&.active&.order_by_date : Event.none

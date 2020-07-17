@@ -1,88 +1,101 @@
-import ApplicationController from './application_controller'
-import {MDCRipple}           from '@material/ripple';
+import ApplicationController from "./application_controller"
+import {MDCRipple}           from "@material/ripple";
 import {AnimateModule}       from "../modules/animate-module";
 
 export default class BottomNavigationController extends ApplicationController {
-	static targets = ['navigation', 'item', 'events', 'search', 'cinema'];
+    static targets = ["navigation", "item", "events", "search", "cinema"];
 
-	connect() {
-		this.ripples = [];
+    connect() {
+        super.connect();
+        this.setup();
+    }
 
-		this.itemTargets.forEach((item) => {
-			this.ripples.push(new MDCRipple(item));
-		});
+    beforeCache() {
+        super.beforeCache();
+        this.teardown();
+    }
 
-		if (this.hasNavigationTarget) {
-			this.lastScrollTop = 0;
+    disconnect() {
+        super.disconnect();
+        this.teardown();
+    }
 
-			this.animateNavigationOnScroll = () => {
-				var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-				if (window.scrollY > 250) {
-					if (currentScrollTop > this.lastScrollTop) {
-						requestAnimationFrame(() => {
-							this.navigationTarget.style.transform = 'translateY(60px)'
-						});
-					} else {
-						requestAnimationFrame(() => {
-							this.navigationTarget.style.transform = 'translateY(0)'
-						});
-					}
-				} else {
-					requestAnimationFrame(() => {
-						this.navigationTarget.style.transform = 'translateY(0)'
-					});
-				}
-				this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-			}
+    setup() {
+        this.ripples = [];
 
-			window.addEventListener('scroll', this.animateNavigationOnScroll, {
-				capture: false,
-				passive: true
-			});
-		}
+        this.itemTargets.forEach((item) => {
+            this.ripples.push(new MDCRipple(item));
+        });
 
+        if (this.hasNavigationTarget) {
+            this.lastScrollTop = 0;
 
-		if (/(\/feed|\/porto-alegre\/eventos)/.test(document.location.href)) {
-			this.eventsTarget.classList.add('active');
-		} else if ((/(\/porto-alegre\/filmes)/.test(document.location.href)) ||
-			(/(\/porto-alegre\/streamings)/.test(document.location.href))) {
-			this.cinemaTarget.classList.add('active');
-		} else if ((/(\/busca)/.test(document.location.href))) {
-			this.searchTarget.classList.add('active');
-			document.querySelector('.mdc-text-field__input').focus();
-		}
+            window.addEventListener("scroll", this.animateNavigationOnScroll.bind(this), {
+                capture: false,
+                passive: true
+            });
+        }
 
+        if (/(\/feed|\/porto-alegre\/eventos)/.test(document.location.href)) {
+            this.eventsTarget.classList.add("active");
+        } else if ((/(\/porto-alegre\/filmes)/.test(document.location.href)) ||
+            (/(\/porto-alegre\/streamings)/.test(document.location.href))) {
+            this.cinemaTarget.classList.add("active");
+        } else if ((/(\/busca)/.test(document.location.href))) {
+            this.searchTarget.classList.add("active");
+            document.querySelector(".mdc-text-field__input")
+                    .focus();
+        }
+    }
 
-	}
+    teardown() {
+        window.removeEventListener("scroll", this.animateNavigationOnScroll.bind(this));
+        this.ripples.forEach((ripple) => {
+            ripple.destroy();
+        });
+        this.itemTargets.forEach((item, i) => {
+            item.classList.remove("active");
+        });
+    }
 
-	disconnect() {
-		window.removeEventListener('scroll', this.animateNavigationOnScroll, false);
-		this.ripples.forEach((ripple) => {
-			ripple.destroy();
-		});
-		this.itemTargets.forEach((item, i) => {
-			item.classList.remove('active');
-		});
-	}
+    animateNavigationOnScroll() {
+        var currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (window.scrollY > 250) {
+            if (currentScrollTop > this.lastScrollTop) {
+                requestAnimationFrame(() => {
+                    this.navigationTarget.style.transform = "translateY(60px)"
+                });
+            } else {
+                requestAnimationFrame(() => {
+                    this.navigationTarget.style.transform = "translateY(0)"
+                });
+            }
+        } else {
+            requestAnimationFrame(() => {
+                this.navigationTarget.style.transform = "translateY(0)"
+            });
+        }
+        this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+    }
 
-	goto(event) {
-		AnimateModule.animatePageHide();
+    goto(event) {
+        AnimateModule.animatePageHide();
 
-		const unactiveItemsPromise = new Promise((resolve, reject) => {
-			this.itemTargets.forEach((item, i) => {
-				item.classList.remove('active');
-			});
-			resolve();
-		})
+        const unactiveItemsPromise = new Promise((resolve, reject) => {
+            this.itemTargets.forEach((item, i) => {
+                item.classList.remove("active");
+            });
+            resolve();
+        })
 
-		unactiveItemsPromise.then(() => {
-			event.target.classList.add('active');
-		})
+        unactiveItemsPromise.then(() => {
+            event.target.classList.add("active");
+        })
 
-		const path = event.target.dataset.path;
-		setTimeout(() => {
-			Turbolinks.visit(path)
-		}, 250)
-	}
+        const path = event.target.dataset.path;
+        setTimeout(() => {
+            Turbolinks.visit(path)
+        }, 250)
+    }
 
 }

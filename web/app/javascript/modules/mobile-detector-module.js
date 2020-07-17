@@ -1,13 +1,16 @@
-import * as MobileDetect from "mobile-detect";
-
 const MobileDetector = (() => {
     const module = {};
-    const md     = new MobileDetect(window.navigator.userAgent);
 
     console.log("[MOBILE DETECTOR]: initied");
 
     module.mobile = () => {
-        md.mobile()
+        return /Mobi/i.test(window.navigator.userAgent)
+    };
+
+    module.pwa = () => {
+        return (window.matchMedia("(display-mode: standalone)").matches) ||
+            (window.navigator.standalone) ||
+            document.referrer.includes("android-app://")
     };
 
     return module;
