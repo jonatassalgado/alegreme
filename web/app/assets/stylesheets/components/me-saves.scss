@@ -89,8 +89,8 @@ $gutter: 6px;
   & .mdc-layout-grid {
     --mdc-layout-grid-margin-desktop: 0;
     --mdc-layout-grid-gutter-desktop: 8px;
-    @include add-horizontal-scroll-wrapper();
-    @include no-scroll-bar();
+    @include me-add-horizontal-scroll-wrapper();
+    @include me-no-scroll-bar();
     @include mobile-only {
       padding: 6px 0 0 0;
     }

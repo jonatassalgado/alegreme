@@ -97,8 +97,8 @@
     animation-duration: 1s;
     width: 100%;
     @include mobile-only {
-      @include add-horizontal-scroll-wrapper;
-      @include no-scroll-bar;
+      @include me-add-horizontal-scroll-wrapper;
+      @include me-no-scroll-bar;
       padding: 6px 0;
     }
 

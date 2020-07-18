@@ -1,4 +1,4 @@
-@mixin is-show-in-animated() {
+@mixin me-is-show-in-animated() {
   transition: opacity 250ms ease, transform 250ms ease;
   will-change: opacity, transform;
   &.is-animated {
@@ -9,51 +9,24 @@
   }
 }
 
-@mixin is-open-up-animated() {
+@mixin me-is-open-up-animated() {
   transition: opacity 200ms ease, transform 250ms ease;
   will-change: opacity, transform;
-  &.is-animated {
-    // opacity: 0;
-    // transform: translate(0, 85px);
-    @include mobile-only {
-      // transform: translate(0, 10vh) scale(0.95);
-    }
-  }
 }
 
-@mixin add-horizontal-scroll-wrapper() {
+@mixin me-add-horizontal-scroll-wrapper() {
   overflow-x: scroll;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  //scroll-snap-type: x proximity;
-  //scroll-behavior: smooth;
 }
 
-@mixin add-horizontal-scroll-items() {
+@mixin me-add-horizontal-scroll-items() {
   width: max-content;
 }
 
-@mixin no-scroll-bar() {
-
+@mixin me-no-scroll-bar() {
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-@mixin custom-scroll-bar() {
-
-  &::-webkit-scrollbar {
-    border-radius: 10px;
-    height: 10px;
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #999;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
-  }
-}

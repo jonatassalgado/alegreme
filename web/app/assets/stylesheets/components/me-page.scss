@@ -1,5 +1,5 @@
 .me-page {
-  @include is-show-in-animated;
+  @include me-is-show-in-animated;
   color: $font-primary-color;
   padding-top: 100px;
   @include desktop-only {
@@ -141,7 +141,7 @@
   &--single {
     max-width: 700px;
     margin: auto;
-    @include is-open-up-animated;
+    @include me-is-open-up-animated;
     @include mobile-only {
       //padding: 24px;
     }
@@ -150,7 +150,7 @@
   &--centralized {
     max-width: 700px;
     margin: 24px auto;
-    @include is-open-up-animated;
+    @include me-is-open-up-animated;
     @include mobile-only {
       margin: 12px auto;
     }
@@ -159,7 +159,7 @@
   &--profile {
     padding: 24px 0 0 0;
     min-height: 45vh;
-    @include is-open-up-animated;
+    @include me-is-open-up-animated;
     @include mobile-only {
       padding: 0 0 0 0;
     }

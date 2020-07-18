@@ -7,7 +7,7 @@
   }
 
   @include mobile-only {
-    @include add-horizontal-scroll-items;
+    @include me-add-horizontal-scroll-items;
   }
 
   & .mdc-chip {

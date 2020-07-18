@@ -135,8 +135,8 @@ $maybe-color: $font-tertiary-color;
 }
 
 .is-horizontal-scrollable {
-  @include add-horizontal-scroll-wrapper;
-  @include no-scroll-bar
+  @include me-add-horizontal-scroll-wrapper;
+  @include me-no-scroll-bar
 }
 
 @mixin is-empty {
