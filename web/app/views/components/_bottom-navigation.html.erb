@@ -1,11 +1,4 @@
-<%
-
-	props = {
-			movies_count: Movie.all.size
-	}.deep_merge!(props || {})
-
-%>
-
+<% return unless ['feeds', 'movies', 'events', 'search'].include?(controller_name) && ['index'].include?(action_name) %>
 
 <div data-reflex-permanent data-controller="bottom-navigation" class="me-bottom-navigation" data-target="bottom-navigation.navigation">
 	<div class="me-bottom-navigation__items">
@@ -20,7 +13,7 @@
       Eventos
     </span>
 		</div>
-		<% if props[:movies_count] > 0 %>
+		<% if movies_active_count %>
 			<div data-target="bottom-navigation.item bottom-navigation.cinema" data-action="click->bottom-navigation#goto" data-path="<%= movies_path %>" class="me-bottom-navigation__item mdc-ripple-surface <%= class_string({active: 'movies' == controller_name}) %>">
 				<i class="icon">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
