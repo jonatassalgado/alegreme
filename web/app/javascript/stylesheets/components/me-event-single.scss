@@ -165,7 +165,7 @@
     & .me-icon-button.mdc-icon-button {
       background: $surface-color;
       transition: 0.2s all ease 0s;
-      @include mdc-icon-button-icon-size($width: 28px, $height: 28px, $padding: 12px);
+      //@include mdc-icon-button-icon-size($width: 28px, $height: 28px, $padding: 12px);
 
       & svg {
         fill: lighten($font-tertiary-color, 30%);
@@ -306,7 +306,7 @@
       right: 4px;
 
       & .me-icon-button.mdc-icon-button {
-        @include mdc-icon-button-icon-size($width: 16px, $height: 16px, $padding: 8px);
+        //@include mdc-icon-button-icon-size($width: 16px, $height: 16px, $padding: 8px);
       }
     }
 

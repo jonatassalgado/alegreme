@@ -1,3 +1,10 @@
 tmp
-**/node_modules
+Gemfile.lock
+node_modules
 **/docker
+storage
+log
+public/packs
+public/packs-test
+test
+db/backups

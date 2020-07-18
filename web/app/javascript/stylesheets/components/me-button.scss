@@ -1,8 +1,8 @@
 $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
 .me-button {
-  @include mdc-button-container-fill-color($brand-color);
-  @include mdc-button-ink-color($surface-color);
+  //@include mdc-button-container-fill-color($brand-color);
+  //@include mdc-button-ink-color($surface-color);
   font-family: $font-primary-family;
   font-weight: 600;
   text-transform: none;
@@ -32,8 +32,8 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
 
   &--floating {
-    @include mdc-button-container-fill-color($surface-color);
-    @include mdc-button-ink-color($font-primary-color);
+    //@include mdc-button-container-fill-color($surface-color);
+    //@include mdc-button-ink-color($font-primary-color);
     box-shadow: $box-shadow;
     z-index: 2;
 
@@ -43,11 +43,11 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
   }
 
   &--transparent {
-    @include mdc-button-container-fill-color($surface-color);
-    @include mdc-button-ink-color($font-primary-color);
+    //@include mdc-button-container-fill-color($surface-color);
+    //@include mdc-button-ink-color($font-primary-color);
 
     &.me-button--secondary {
-      @include mdc-button-ink-color($font-secondary-color);
+      //@include mdc-button-ink-color($font-secondary-color);
     }
 
     & svg {
@@ -76,8 +76,8 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
   .me-search-field & {
     font-size: 12px;
     font-weight: 400;
-    @include mdc-button-ink-color($font-secondary-color);
-    @include mdc-button-container-fill-color($border-color);
+    //@include mdc-button-ink-color($font-secondary-color);
+    //@include mdc-button-container-fill-color($border-color);
     padding: 3px 6px;
 
     @include mobile-only {
@@ -85,8 +85,8 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
     }
 
     [data-controller="search"] & {
-      @include mdc-button-ink-color($surface-color);
-      @include mdc-button-container-fill-color($brand-color);
+      //@include mdc-button-ink-color($surface-color);
+      //@include mdc-button-container-fill-color($brand-color);
       font-weight: 500;
     }
   }

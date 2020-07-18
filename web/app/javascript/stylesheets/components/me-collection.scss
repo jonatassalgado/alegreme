@@ -273,13 +273,13 @@
   }
 
   & .mdc-layout-grid__inner {
-    @include mdc-layout-grid-media-query_("desktop") {
-      @include mdc-layout-grid-inner(
-              $size: "desktop",
-              $margin: 0,
-              $gutter: 15px
-      );
-    }
+    //@include mdc-layout-grid-media-query_("desktop") {
+    //  @include mdc-layout-grid-inner(
+    //          $size: "desktop",
+    //          $margin: 0,
+    //          $gutter: 15px
+    //  );
+    //}
 
     &::-webkit-scrollbar {
       @include mobile-only {
@@ -289,19 +289,19 @@
   }
 
   & .mdc-layout-grid__cell {
-    @include mdc-layout-grid-media-query_("desktop") {
-      @include mdc-layout-grid-cell(
-              $size: "desktop",
-              $default-span: 3,
-              $gutter: 24px
-      );
-    }
+    //@include mdc-layout-grid-media-query_("desktop") {
+    //  @include mdc-layout-grid-cell(
+    //          $size: "desktop",
+    //          $default-span: 3,
+    //          $gutter: 24px
+    //  );
+    //}
     @include mobile-only {
-      @include mdc-layout-grid-cell(
-              $size: "phone",
-              $default-span: 1,
-              $gutter: 16px
-      );
+      //@include mdc-layout-grid-cell(
+      //        $size: "phone",
+      //        $default-span: 1,
+      //        $gutter: 16px
+      //);
     }
 
     &:last-child {

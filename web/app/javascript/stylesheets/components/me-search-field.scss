@@ -1,5 +1,5 @@
 
-@import "@material/textfield/_mixins";
+//@import "@material/textfield/_mixins";
 
 $icon-color: #616161;
 $border-color: #e0e0e0;
@@ -34,8 +34,8 @@ $field-height: 50px;
   }
 
   &.mdc-text-field--focused {
-    @include mdc-text-field-label-color($color: $font-primary-color);
-    @include mdc-text-field-caret-color($color: $font-primary-color);
+    //@include mdc-text-field-label-color($color: $font-primary-color);
+    //@include mdc-text-field-caret-color($color: $font-primary-color);
   }
 
   & .mdc-text-field__input {

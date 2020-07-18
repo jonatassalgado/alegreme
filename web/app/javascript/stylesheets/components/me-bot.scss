@@ -90,7 +90,7 @@
 .me-bot__button {
   right: 0;
   position: absolute;
-  @include mdc-button-container-fill-color($brand-color);
-  @include mdc-button-ink-color($surface-color);
+  //@include mdc-button-container-fill-color($brand-color);
+  //@include mdc-button-ink-color($surface-color);
   font-family: $font-primary-family;
 }

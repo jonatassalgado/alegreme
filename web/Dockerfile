@@ -87,10 +87,11 @@ ADD . $RAILS_ROOT
 RUN bash -c "cat /proc/sys/fs/inotify/max_user_watches"
 
 RUN yarn install
-RUN rake assets:clobber
-RUN rake webpacker:clobber
-RUN rake assets:precompile
-RUN rake webpacker:compile
+
+RUN bundle exec rake assets:clobber
+RUN bundle exec rake webpacker:clobber
+RUN bundle exec rake assets:precompile
+RUN bundle exec rake webpacker:compile
 
 EXPOSE 3000
 

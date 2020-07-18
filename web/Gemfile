@@ -46,7 +46,7 @@ gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'picture_tag'
 
 # Webpacker
-gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
+gem 'webpacker', github: 'rails/webpacker', branch: 'master'
 
 gem "browser", require: "browser/browser"
 
@@ -155,7 +155,7 @@ group :development do
 	gem 'niceql'
 	# gem 'rack-mini-profiler'
 	# gem 'active_record_doctor'
-		# gem 'bullet'
+	# gem 'bullet'
 end
 
 group :test do

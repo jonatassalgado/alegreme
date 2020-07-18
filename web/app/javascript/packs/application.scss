@@ -13,33 +13,36 @@
 *
 */
 
-@import 'variables';
-@import 'mixins';
-@import 'template';
-@import 'utils';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
+@import '../stylesheets/variables';
+@import '../stylesheets/mixins';
+@import '../stylesheets/template';
+@import '../stylesheets/utils';
 
 $mdc-typography-font-family: $font-secondary-family;
 $mdc-theme-primary: $brand-color;
 
-@import "@material/card/mdc-card";
-@import "@material/button/mdc-button";
-@import "@material/layout-grid/mdc-layout-grid";
-@import "@material/top-app-bar/mdc-top-app-bar";
-@import "@material/icon-button/mdc-icon-button";
-@import "@material/textfield/mdc-text-field";
-@import "@material/select/mdc-select";
-@import "@material/form-field/mdc-form-field";
-@import "@material/checkbox/mdc-checkbox";
-@import "@material/list/mdc-list";
-@import "@material/menu-surface/mdc-menu-surface";
-@import "@material/menu/mdc-menu";
-@import "@material/chips/mdc-chips";
-@import "@material/fab/mdc-fab";
-@import "@material/snackbar/mdc-snackbar";
-@import "@material/dialog/mdc-dialog";
-@import "@material/switch/mdc-switch";
-@import "components/me-components";
+//@use "@material/card";
+//@import "@material/button/mdc-button";
+//@import "@material/layout-grid/mdc-layout-grid";
+//@import "@material/top-app-bar/mdc-top-app-bar";
+//@import "@material/icon-button/mdc-icon-button";
+//@import "@material/textfield/mdc-text-field";
+//@import "@material/select/mdc-select";
+//@import "@material/form-field/mdc-form-field";
+//@import "@material/checkbox/mdc-checkbox";
+//@import "@material/list/mdc-list";
+//@import "@material/menu-surface/mdc-menu-surface";
+//@import "@material/menu/mdc-menu";
+//@import "@material/chips/mdc-chips";
+//@import "@material/fab/mdc-fab";
+//@import "@material/snackbar/mdc-snackbar";
+//@import "@material/dialog/mdc-dialog";
+//@import "@material/switch/mdc-switch";
+@import "../stylesheets/components/me-components";
 
 html {
   //scroll-behavior: smooth;

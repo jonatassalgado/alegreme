@@ -69,22 +69,22 @@
       // right: 4px;
 
       & .me-icon-button.mdc-icon-button {
-        @include mdc-icon-button-icon-size($width: 16px, $height: 16px, $padding: 8px);
+        //@include mdc-icon-button-icon-size($width: 16px, $height: 16px, $padding: 8px);
       }
     }
 
     .me-collection & .mdc-layout-grid__cell {
-      @include mdc-layout-grid-cell(
-              $size: "desktop",
-              $default-span: 2,
-              $gutter: 16px
-      );
+      //@include mdc-layout-grid-cell(
+      //        $size: "desktop",
+      //        $default-span: 2,
+      //        $gutter: 16px
+      //);
       @include mobile-only {
-        @include mdc-layout-grid-cell(
-                $size: "phone",
-                $default-span: 2,
-                $gutter: 12px
-        );
+        //@include mdc-layout-grid-cell(
+        //        $size: "phone",
+        //        $default-span: 2,
+        //        $gutter: 12px
+        //);
       }
     }
   }

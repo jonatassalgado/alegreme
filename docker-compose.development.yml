@@ -25,15 +25,15 @@ services:
     volumes:
       - bundle_cache:/bundle
       # - ./scrapy/data:/var/www/scrapy/data
-      - ./web/app:/var/www/alegreme/app
-      - ./web/config:/var/www/alegreme/config
-      - ./web/lib:/var/www/alegreme/lib
-      - ./web/db/backups:/var/www/alegreme/db/backups
-      - ./web/db/migrate:/var/www/alegreme/db/migrate
-      - ./web/public/service-worker.js:/var/www/alegreme/public/service-worker.js
-      - ./web/yarn.lock:/var/www/alegreme/yarn.lock
-      - ./web/package.json:/var/www/alegreme/package.json
-      - ./web/Gemfile:/var/www/alegreme/Gemfile
+      - ./web:/var/www/alegreme
+#      - ./web/config:/var/www/alegreme/config
+#      - ./web/lib:/var/www/alegreme/lib
+#      - ./web/db/backups:/var/www/alegreme/db/backups
+#      - ./web/db/migrate:/var/www/alegreme/db/migrate
+#      - ./web/public/service-worker.js:/var/www/alegreme/public/service-worker.js
+#      - ./web/yarn.lock:/var/www/alegreme/yarn.lock
+#      - ./web/package.json:/var/www/alegreme/package.json
+#      - ./web/Gemfile:/var/www/alegreme/Gemfile
       # - ./storage:/var/www/alegreme/storage
       # - ./logs/app:/var/www/alegreme/log:delegated
     environment:

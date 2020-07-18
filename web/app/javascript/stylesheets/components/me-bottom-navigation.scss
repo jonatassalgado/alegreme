@@ -21,9 +21,9 @@
   }
 
   &__item {
-    @include mdc-ripple-surface;
-    @include mdc-ripple-radius-bounded;
-    @include mdc-states;
+    //@include mdc-ripple-surface;
+    //@include mdc-ripple-radius-bounded;
+    //@include mdc-states;
     flex-direction: column;
     display: flex;
     align-items: center;

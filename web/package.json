@@ -28,6 +28,7 @@
     "query-string": "^6.4.2",
     "stimulus": "^1.1.1",
     "stimulus_reflex": "^3.2.3",
+    "tailwindcss": "^1.5.1",
     "turbolinks": "^5.2.0",
     "unpoly": "^0.60.3"
   },
