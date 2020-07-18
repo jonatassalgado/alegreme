@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
 			@movies_group << {
 					:identifier => genre.parameterize,
 					:title      => genre,
-					:items      => @movies.filter { |movie| movie.details["genres"].include? genre }.sort.slice(0..24)
+					:items      => @movies.filter { |movie| movie.details["genres"].include? genre }.sort.slice(0..16)
 			}
 		end
 	end

@@ -23,7 +23,6 @@ module EventsHelper
 	end
 
 	def limit_address_name_size(address_name, limit = 80)
-
 		address_name.truncate(limit, separator: " ")
 	end
 

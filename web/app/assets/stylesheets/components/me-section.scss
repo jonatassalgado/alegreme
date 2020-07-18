@@ -86,14 +86,12 @@
     align-items: center;
   }
 
-  &--full {
-    @include mobile-only {
-      padding: 0;
-      border-top-left-radius: 16px;
-      border-top-right-radius: 16px;
-      overflow: hidden;
-    }
-  }
+  //&--full {
+  //  @include mobile-only {
+  //    padding: 0;
+  //
+  //  }
+  //}
 
   &--condensed {
     @include mobile-only {

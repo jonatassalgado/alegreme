@@ -1,16 +1,16 @@
 <section class="me-page">
-  <section class="me-section me-section--full-height">
-    <div class="me-section__inner">
-      <div class="me-section__description">
-        <h2>
-          Editar conta
-        </h2>
-        <%# if current_user.admin? %>
-          <%#= render 'users/admin/form', user: @user %>
-        <%# else %>
-          <%= render 'form', user: @user %>
-        <%# end %>
-      </div>
-    </section>
-    </div>
+	<section class="me-section me-section--full-height">
+		<div class="me-section__inner">
+			<div class="me-section__description">
+				<h2>
+					Editar conta
+				</h2>
+				<%# if current_user.admin? %>
+				<%#= render 'users/admin/form', user: @user %>
+				<%# else %>
+				<%= render 'form', user: @user %>
+				<%# end %>
+			</div>
+		</div>
+	</section>
 </section>
