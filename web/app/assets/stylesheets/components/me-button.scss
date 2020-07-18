@@ -1,5 +1,3 @@
-
-
 $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
 
 .me-button {
@@ -36,9 +34,8 @@ $box-shadow: 0 0 45px rgba(0, 0, 0, 0.20);
   &--floating {
     @include mdc-button-container-fill-color($surface-color);
     @include mdc-button-ink-color($font-primary-color);
-    // background: $surface-color;
-    // color: $font-primary-color;
     box-shadow: $box-shadow;
+    z-index: 2;
 
     & svg {
       fill: $font-secondary-color
