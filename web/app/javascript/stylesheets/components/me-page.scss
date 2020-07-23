@@ -1,190 +1,190 @@
-.me-page {
-  @include me-is-show-in-animated;
-  color: $font-primary-color;
-  padding-top: 100px;
-  @include desktop-only {
-    margin: auto;
-    width: auto;
-    max-width: $page-width;
-  }
-  @include mobile-only {
-    max-width: 100vw;
-    overflow: hidden;
-  }
-
-  [data-controller="events"][data-action="show"] & {
-    @include desktop-only {
-      padding-top: 56px;
-    }
-  }
-
-  [data-controller="events"][data-action="show"] &,
-  [data-controller="movies"] &,
-  [data-controller="places"][data-action="show"] &,
-  [data-controller="organizers"][data-action="show"] &,
-  [data-controller="feeds"][data-action="neighborhood"] &,
-  [data-controller="feeds"][data-action="follow"] &,
-  [data-controller="feeds"][data-action="week"] &,
-  [data-controller="feeds"][data-action="suggestions"] &,
-  [data-controller="users"] &,
-  [data-controller="registrations"] &,
-  [data-controller="sessions"] & {
-    @include mobile-only {
-      padding-top: 56px;
-    }
-  }
-
-  [data-controller="search"] & {
-    @include mobile-only {
-      padding-top: 80px;
-    }
-  }
-
-  &__section {
-    padding: 24px 0;
-    // background: $background-z1-color;
-    @include mobile-only {
-      padding: 6px 0;
-    }
-
-    &:last-child {
-      @include mobile-only {
-        border-bottom: none;
-      }
-    }
-
-    &--z0 {
-      //background: $background-z0-color;
-      //border-bottom: 1px solid #efefef;
-    }
-
-    &-title {
-      @include mobile-only {
-        padding: 0 $section-padding-phone;
-      }
-
-      & h2 {
-        font-size: 20px;
-        font-weight: 600;
-        font-family: $font-title-family;
-        max-width: 80%;
-      }
-    }
-  }
-
-  &__inner {
-    @include mobile-only {
-      padding: 0 24px;
-    }
-  }
-
-  &--justify-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 60vh;
-    @include mobile-only {
-      padding: 0 24px;
-    }
-  }
-
-  &--feed {
-    @include desktop-only {
-      margin: auto;
-      width: auto;
-      max-width: $page-width;
-    }
-  }
-
-  &--search {
-    padding: 24px 0 0 0;
-    min-height: 45vh;
-    // @include is-open-up-animated;
-    @include mobile-only {
-      padding: 0 0 0 0;
-    }
-
-    & .mdc-layout-grid {
-      padding: 0;
-    }
-
-    @include mobile-only {
-      & .mdc-layout-grid {
-        //padding: 0 24px;
-      }
-
-      & .mdc-layout-grid__cell {
-        //grid-column-end: span 8;
-      }
-
-      & .me-section {
-        //padding: 0;
-      }
-
-      & .me-card--feed {
-        margin: 0 0 34px 0;
-      }
-
-    }
-  }
-
-  &--train-section {
-    max-width: 95vw;
-    margin: auto;
-    // padding-top: 35px;
-
-    @include mobile-only {
-      // padding-top: 45px;
-    }
-  }
-
-  &--single {
-    max-width: 700px;
-    margin: auto;
-    @include me-is-open-up-animated;
-    @include mobile-only {
-      //padding: 24px;
-    }
-  }
-
-  &--centralized {
-    max-width: 700px;
-    margin: 24px auto;
-    @include me-is-open-up-animated;
-    @include mobile-only {
-      margin: 12px auto;
-    }
-  }
-
-  &--profile {
-    padding: 24px 0 0 0;
-    min-height: 45vh;
-    @include me-is-open-up-animated;
-    @include mobile-only {
-      padding: 0 0 0 0;
-    }
-
-    & .mdc-layout-grid {
-      padding: 0;
-    }
-
-    @include mobile-only {
-      //& .mdc-layout-grid {
-      //  padding: 0 24px;
-      //}
-      //
-      //& .mdc-layout-grid__cell {
-      //  grid-column-end: span 8;
-      //}
-      //
-      //& .me-section {
-      //  //padding: 0;
-      //}
-
-      & .me-card--feed {
-        margin: 0 0 34px 0;
-      }
-
-    }
-  }
-}
+//.me-page {
+//  @include me-is-show-in-animated;
+//  color: $font-primary-color;
+//  padding-top: 100px;
+//  @include desktop-only {
+//    margin: auto;
+//    width: auto;
+//    max-width: $page-width;
+//  }
+//  @include mobile-only {
+//    max-width: 100vw;
+//    overflow: hidden;
+//  }
+//
+//  [data-controller="events"][data-action="show"] & {
+//    @include desktop-only {
+//      padding-top: 56px;
+//    }
+//  }
+//
+//  [data-controller="events"][data-action="show"] &,
+//  [data-controller="movies"] &,
+//  [data-controller="places"][data-action="show"] &,
+//  [data-controller="organizers"][data-action="show"] &,
+//  [data-controller="feeds"][data-action="neighborhood"] &,
+//  [data-controller="feeds"][data-action="follow"] &,
+//  [data-controller="feeds"][data-action="week"] &,
+//  [data-controller="feeds"][data-action="suggestions"] &,
+//  [data-controller="users"] &,
+//  [data-controller="registrations"] &,
+//  [data-controller="sessions"] & {
+//    @include mobile-only {
+//      padding-top: 56px;
+//    }
+//  }
+//
+//  [data-controller="search"] & {
+//    @include mobile-only {
+//      padding-top: 80px;
+//    }
+//  }
+//
+//  &__section {
+//    padding: 24px 0;
+//    // background: $background-z1-color;
+//    @include mobile-only {
+//      padding: 6px 0;
+//    }
+//
+//    &:last-child {
+//      @include mobile-only {
+//        border-bottom: none;
+//      }
+//    }
+//
+//    &--z0 {
+//      //background: $background-z0-color;
+//      //border-bottom: 1px solid #efefef;
+//    }
+//
+//    &-title {
+//      @include mobile-only {
+//        padding: 0 $section-padding-phone;
+//      }
+//
+//      & h2 {
+//        font-size: 20px;
+//        font-weight: 600;
+//        font-family: $font-title-family;
+//        max-width: 80%;
+//      }
+//    }
+//  }
+//
+//  &__inner {
+//    @include mobile-only {
+//      padding: 0 24px;
+//    }
+//  }
+//
+//  &--justify-center {
+//    display: flex;
+//    justify-content: center;
+//    align-items: center;
+//    min-height: 60vh;
+//    @include mobile-only {
+//      padding: 0 24px;
+//    }
+//  }
+//
+//  &--feed {
+//    @include desktop-only {
+//      margin: auto;
+//      width: auto;
+//      max-width: $page-width;
+//    }
+//  }
+//
+//  &--search {
+//    padding: 24px 0 0 0;
+//    min-height: 45vh;
+//    // @include is-open-up-animated;
+//    @include mobile-only {
+//      padding: 0 0 0 0;
+//    }
+//
+//    & .mdc-layout-grid {
+//      padding: 0;
+//    }
+//
+//    @include mobile-only {
+//      & .mdc-layout-grid {
+//        //padding: 0 24px;
+//      }
+//
+//      & .mdc-layout-grid__cell {
+//        //grid-column-end: span 8;
+//      }
+//
+//      & .me-section {
+//        //padding: 0;
+//      }
+//
+//      & .me-card--feed {
+//        margin: 0 0 34px 0;
+//      }
+//
+//    }
+//  }
+//
+//  &--train-section {
+//    max-width: 95vw;
+//    margin: auto;
+//    // padding-top: 35px;
+//
+//    @include mobile-only {
+//      // padding-top: 45px;
+//    }
+//  }
+//
+//  &--single {
+//    max-width: 700px;
+//    margin: auto;
+//    @include me-is-open-up-animated;
+//    @include mobile-only {
+//      //padding: 24px;
+//    }
+//  }
+//
+//  &--centralized {
+//    max-width: 700px;
+//    margin: 24px auto;
+//    @include me-is-open-up-animated;
+//    @include mobile-only {
+//      margin: 12px auto;
+//    }
+//  }
+//
+//  &--profile {
+//    padding: 24px 0 0 0;
+//    min-height: 45vh;
+//    @include me-is-open-up-animated;
+//    @include mobile-only {
+//      padding: 0 0 0 0;
+//    }
+//
+//    & .mdc-layout-grid {
+//      padding: 0;
+//    }
+//
+//    @include mobile-only {
+//      //& .mdc-layout-grid {
+//      //  padding: 0 24px;
+//      //}
+//      //
+//      //& .mdc-layout-grid__cell {
+//      //  grid-column-end: span 8;
+//      //}
+//      //
+//      //& .me-section {
+//      //  //padding: 0;
+//      //}
+//
+//      & .me-card--feed {
+//        margin: 0 0 34px 0;
+//      }
+//
+//    }
+//  }
+//}

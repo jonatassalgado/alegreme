@@ -1,7 +1,13 @@
 <%
-	raise ArgumentError unless [identifier, html[:data]].all?(&:present?)
+	raise ArgumentError unless [identifier].all?(&:present?)
+
+	html = local_assigns.fetch(:html, {})
+	cached = local_assigns.fetch(:cached, false)
+	cache_key = local_assigns.fetch(:cache_key, nil)
 %>
 
-<%= content_tag :div, {id: identifier, data: html[:data], class: html[:class]} do %>
-	<%= yield %>
+<% cache_if(cached, cache_key) do %>
+	<%= content_tag :div, {id: html.dig(:layout, :id), data: html.dig(:layout, :data), class: html.dig(:layout, :class)} do %>
+		<%= yield %>
+	<% end %>
 <% end %>

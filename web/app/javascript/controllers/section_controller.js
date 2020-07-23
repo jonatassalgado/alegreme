@@ -1,13 +1,12 @@
 import ApplicationController from "./application_controller"
-import {MDCRipple}           from "@material/ripple";
 import {ProgressBarModule}   from "../modules/progressbar-module";
 import {AnimateModule}       from "../modules/animate-module"
-import {FlipperModule}       from "../modules/flipper-module";
 import {MobileDetector}      from "../modules/mobile-detector-module";
+import {PubSubModule}        from "../modules/pubsub-module";
 
 export default class SectionController extends ApplicationController {
-    static targets = ["section", "filter", "scrollContainer", "loadMoreButton", "seeAll", "personas", "categories",
-                      "grid", "ocurrences", "kinds"];
+    static targets = ["section", "filter", "scrollContainer", "loadMoreHorizontal", "loadMoreVertical", "seeAll",
+                      "grid"];
 
     connect() {
         super.connect();
@@ -16,7 +15,6 @@ export default class SectionController extends ApplicationController {
 
     beforeCache() {
         super.beforeCache();
-        this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
         this.teardown();
     }
 
@@ -27,47 +25,45 @@ export default class SectionController extends ApplicationController {
 
     setup() {
         this.scrollLeft = this.data.get("turbolinksPersistScroll");
-        this.flipper    = FlipperModule(`data-collection-${this.identifier}-flip-key`);
         this.pubsub     = {};
-        this.ripples    = [];
         this.observer   = new IntersectionObserver((entries, observer) => {
                                                        entries.forEach((entry) => {
-
-                                                           if (this.hasLoadMoreButtonTarget) {
-                                                               if (entry.isIntersecting) {
-                                                                   entry.target.disabled  = true;
-                                                                   entry.target.innerText = "Carregando...";
-                                                                   this.loadMoreHere();
-                                                               } else {
-
-                                                               }
+                                                           if (entry.isIntersecting) {
+                                                               entry.target.disabled = true;
+                                                               this.loadMoreHere();
                                                            }
                                                        })
                                                    },
                                                    {
                                                        threshold:  0.1,
                                                        rootMargin: this.rootMargin
-                                                   }
-        );
+                                                   });
 
         this.activeLoadMoreButton();
 
-        this.pubsub.savesUpdate = PubSubModule.on("save-button.clicked", (data) => {
-            this.flipper.read()
-            document.addEventListener("cable-ready:after-morph", this.flipper.flip, {once: true});
-        });
+        this.pubsub.filterSelectStarted = PubSubModule.on("filter#select->started", data => {
+            if (this.hasFilterTarget) {
+                this.filterTarget.classList.add("pointer-events-none");
+                this.gridTarget.classList.add("opacity-50");
+            }
+        })
+
+        this.pubsub.filterSelectFinished = PubSubModule.on("filter#select->finished", data => {
+            if (this.hasFilterTarget) {
+                this.filterTarget.classList.remove("pointer-events-none");
+                this.gridTarget.classList.remove("opacity-50");
+            }
+        })
 
         document.addEventListener("cable-ready:after-morph", this.activeLoadMoreButton.bind(this), {once: true})
     }
 
     teardown() {
-        this.sectionTarget.style.opacity = 1;
-        this.pubsub.savesUpdate();
-        this.flipper.destroy();
+        if (this.hasScrollContainerTarget) {
+            this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+        }
+        PubSubModule.destroy(this.pubsub);
         this.observer.disconnect();
-        this.ripples.forEach((ripple) => {
-            ripple.destroy();
-        });
     }
 
     seeMoreInNewPage() {
@@ -82,31 +78,31 @@ export default class SectionController extends ApplicationController {
     loadMoreHere() {
         if (this.isActionCableConnectionOpen()) {
             ProgressBarModule.show();
-            this.data.set("loadMoreLoading", true);
+            PubSubModule.emit("section#loadMoreHere->started")
             this.data.set("limit", parseInt(this.data.get("limit")) + 16);
 
             this.stimulate("Event#update_collection", this.gridTarget, {
                 limit: this.data.get("limit")
-            })
-                .then(payload => {
-                    ProgressBarModule.hide();
-                    this.data.set("loadMoreLoading", false);
-                })
-                .catch(payload => {
+            }).then(payload => {
+                PubSubModule.emit("section#loadMoreHere->finished")
+                ProgressBarModule.hide();
+            }).catch(payload => {
 
-                })
+            })
         }
     }
 
     activeLoadMoreButton() {
         this.rootMargin = MobileDetector.mobile() ? "500px" : "250px";
 
-        this.loadMoreButtonTargets.forEach((button) => {
-            this.ripples.push(new MDCRipple(button));
-        });
+        if (this.data.get("infiniteScrollHorizontal") === "true") {
+            this.loadMoreHorizontalTargets.forEach((loadMoreButton) => {
+                this.observer.observe(loadMoreButton);
+            });
+        }
 
-        if (this.data.get("infiniteScroll") === "true") {
-            this.loadMoreButtonTargets.forEach((loadMoreButton) => {
+        if (this.data.get("infiniteScrollVertical") === "true") {
+            this.loadMoreVerticalTargets.forEach((loadMoreButton) => {
                 this.observer.observe(loadMoreButton);
             });
         }
@@ -117,7 +113,7 @@ export default class SectionController extends ApplicationController {
     }
 
     set scrollLeft(value) {
-        if (value >= 0) {
+        if (this.hasScrollContainerTarget && value >= 0) {
             this.scrollContainerTarget.scrollLeft = value;
         }
     }

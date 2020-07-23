@@ -1,0 +1,55 @@
+<%
+
+	raise ArgumentError unless [resource, taste_type, taste_sentiment, parent_id].all?(&:present?)
+
+	html = {
+
+	}.deep_merge!(local_assigns.fetch(:html, {}))
+
+	opts = {
+			remove_on_action:            false,
+			update_collection_on_action: false,
+			with_text:                   false
+	}.deep_merge!(local_assigns.fetch(:opts, {}))
+
+%>
+
+<% if user %>
+	<div class="<%= class_names html.dig(:container, :css) || 'select-none tap-highlight-none bg-white border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform',
+															{'bg-chateau-green-100': user.tasted?(resource, taste_type) && taste_sentiment.to_sym == :positive,
+															 'bg-red-100':           user.tasted?(resource, taste_type) && taste_sentiment.to_sym == :negative} %>"
+			 data-action="click->cable-ready#perform"
+			 data-controller="cable-ready"
+			 data-cable-ready-perform="taste"
+			 data-cable-ready-html="<%= html.to_json %>"
+			 data-cable-ready-opts="<%= opts.to_json %>"
+			 data-cable-ready-resource-id="<%= resource.id %>"
+			 data-cable-ready-resource-type="<%= resource.class.base_class.name.tableize %>"
+			 data-cable-ready-resource-html-id="<%= parent_id %>"
+			 data-cable-ready-collection-html-id="<%= "#{resource.class.base_class.name.tableize}-#{User.taste_verbs(taste_type, :past)}" %>"
+			 data-cable-ready-taste-type="<%= taste_type %>"
+			 data-cable-ready-taste-sentiment="<%= taste_sentiment %>"
+			 data-cable-ready-action="<%= user.tasted?(resource, taste_type) ? User.taste_action(taste_type, :remove) : User.taste_action(taste_type, :add) %>"
+			 id="<%= "#{parent_id}-#{taste_type}-button-#{taste_type}" %>">
+		<% if opts.dig(:with_text) %>
+				<span class="<%= class_names class_names html.dig(:content, :css) || 'mr-1', {'text-gray-700': user.tasted?(resource, taste_type)} %>">
+					<%= user.tasted?(resource, taste_type) ? User.taste_texts(taste_type, :remove) : User.taste_texts(taste_type, :add) %>
+				</span>
+		<% end %>
+		<% if taste_sentiment.to_sym == :positive %>
+			<svg class="<%= class_names html.dig(:icon, :css) || 'fill-current h-4 hover:scale-150 w-4',
+																	{'text-gray-400':          !user.tasted?(resource, taste_type),
+																	 'text-chateau-green-500': user.tasted?(resource, taste_type)} %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
+				<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
+			</svg>
+		<% elsif taste_sentiment.to_sym == :negative %>
+			<svg class="<%= class_names html.dig(:icon, :css) || 'fill-current h-4 hover:scale-150 w-4',
+																	{'text-gray-400': !user.tasted?(resource, taste_type),
+																	 'text-red-500':  user.tasted?(resource, taste_type)} %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
+				<path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+			</svg>
+		<% end %>
+	</div>
+<% end %>

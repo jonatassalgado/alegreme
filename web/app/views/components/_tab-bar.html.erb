@@ -10,50 +10,55 @@
 %>
 
 <% if props[:feed] || (props[:movies] && !mobile_device?) %>
-	<div data-reflex-permanent data-controller="tab-bar" data-target="tab-bar.tabBar" data-tab-bar-selected-tab="<%= "#{controller_name}##{action_name}" %>" data-tab-bar-turbolinks-persist-scroll="0" id="tab-bar" class="me-tab-bar mdc-tab-bar" role="tablist">
-		<div class="mdc-tab-scroller">
-			<div data-target="tab-bar.scroller" class="mdc-tab-scroller__scroll-area">
-				<div class="mdc-tab-scroller__scroll-content">
-					<button data-action="click->tab-bar#open" data-section="feeds#index" data-tab-path="/feed" class="mdc-tab <%= class_string('mdc-tab--active': controller_name == 'feeds' && action_name == 'index') %>">
-            <span class="mdc-tab__content">
-              <span class="mdc-tab__text-label">Para você</span>
-            </span>
-						<span class="me-tab-indicator mdc-tab-indicator <%= class_string('mdc-tab-indicator--active': controller_name == 'feeds' && action_name == 'index') %> %>">
-              <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-            </span>
-						<span class="mdc-tab__ripple"></span>
-					</button>
-					<button data-action="click->tab-bar#open" data-section="feeds#category" data-tab-path="/porto-alegre/eventos/categoria" class="mdc-tab <%= class_string('mdc-tab--active': action_name == 'category') %>">
-            <span class="mdc-tab__content">
-              <span class="mdc-tab__text-label">Categorias</span>
-            </span>
-						<span class="me-tab-indicator mdc-tab-indicator <%= class_string('mdc-tab-indicator--active': action_name == 'category') %>">
-              <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-            </span>
-						<span class="mdc-tab__ripple"></span>
-					</button>
-					<button data-action="click->tab-bar#open" data-section="feeds#city" data-tab-path="/porto-alegre/eventos" class="mdc-tab <%= class_string('mdc-tab--active': action_name == 'city') %>">
-            <span class="mdc-tab__content">
-              <span class="mdc-tab__text-label">Explorar tudo</span>
-            </span>
-						<span class="me-tab-indicator mdc-tab-indicator <%= class_string('mdc-tab-indicator--active': action_name == 'city') %>">
-              <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-            </span>
-						<span class="mdc-tab__ripple"></span>
-					</button>
-					<% if !mobile_device? %>
-						<button data-action="click->tab-bar#open" data-section="feeds#city" data-tab-path="<%= movies_path %>" class="mdc-tab <%= class_string('mdc-tab--active': controller_name == 'movies') %>">
-            <span class="mdc-tab__content">
-              <span class="mdc-tab__text-label">Filmes</span>
-            </span>
-							<span class="me-tab-indicator mdc-tab-indicator <%= class_string('mdc-tab-indicator--active': controller_name == 'movies') %>">
-              <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-            </span>
-							<span class="mdc-tab__ripple"></span>
-						</button>
-					<% end %>
-				</div>
+	<div class="scrollx lg:w-9/12 md:mt-5 mx-auto"
+			 data-controller="toggle-style go-to"
+			 data-go-to-delay="250"
+			 data-reflex-permanent
+			 data-target="head.tabBar"
+			 data-toggle-style-active-class='["border-b-2","border-green-600","font-bold","text-green-600"]'
+			 data-toggle-style-current-selected="<%= "#{controller_name}-#{action_name}" %>"
+			 data-toggle-style-inactive-class='["text-gray-800"]'
+			 data-toggle-style-init-selected="<%= "#{controller_name}-#{action_name}" %>"
+			 id="tab-bar">
+		<div class="antialiased font-semibold gap-5 grid grid-flow-col md:pl-0 md:text-base pt-3 px-5 text-sm w-content">
+			<div data-action="click->toggle-style#toggle click->go-to#url"
+					 data-target="toggle-style.toggle"
+					 data-toggle-style-identifier="feeds-index"
+					 data-go-to-url="<%= feed_path %>"
+					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 controller_name == 'feeds' && action_name == 'index',
+																	 'text-gray-800':                                                                                                                                        controller_name != 'feeds',
+																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-chateau-green-500': true) %>">
+				Para você
 			</div>
+			<div data-action="click->toggle-style#toggle click->go-to#url"
+					 data-target="toggle-style.toggle"
+					 data-toggle-style-identifier="feeds-category"
+					 data-go-to-url="<%= category_events_path %>"
+					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 action_name == 'category',
+																	 'text-gray-800':                                                                                                                                        action_name != 'category',
+																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-chateau-green-500': true) %>">
+				Categorias
+			</div>
+			<div data-action="click->toggle-style#toggle click->go-to#url"
+					 data-target="toggle-style.toggle"
+					 data-toggle-style-identifier="feeds-city"
+					 data-go-to-url="<%= city_events_path %>"
+					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 action_name == 'city',
+																	 'text-gray-800':                                                                                                                                        action_name != 'city',
+																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-chateau-green-500': true) %>">
+				Explorar tudo
+			</div>
+			<% unless mobile_device? %>
+				<div data-action="click->toggle-style#toggle click->go-to#url"
+						 data-target="toggle-style.toggle"
+						 data-toggle-style-identifier="movies"
+						 data-go-to-url="<%= movies_path %>"
+						 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 controller_name == 'movies',
+																		 'text-gray-800':                                                                                                                                        controller_name != 'movies',
+																		 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-chateau-green-500': true) %>">
+					Filmes
+				</div>
+			<% end %>
 		</div>
 	</div>
 <% end %>

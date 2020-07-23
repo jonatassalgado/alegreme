@@ -1,11 +1,13 @@
-@import '../_variables';
-@import '../_mixins';
-@import '../_template';
+@import '../stylesheets/variables';
+@import '../stylesheets/mixins';
+@import '../stylesheets/template';
 
-@import "normalize";
-@import "media-queries";
+@import "../stylesheets/welcome/normalize";
+@import "../stylesheets/welcome/media-queries";
 
-@import "@material/snackbar/mdc-snackbar";
+@import "fcp";
+
+//@import "@material";
 // @import "pwa-install-prompt/style";
 //@import "smile";
 //@import "@material/fab/mdc-fab";
@@ -70,6 +72,7 @@ $background-color: #f3f5f7;
     background-position: center top;
     background-repeat: no-repeat;
     background-size: auto;
+    object-fit: cover;
     margin:0;
     z-index: 2;
     @include mobile-only {
@@ -274,8 +277,9 @@ $background-color: #f3f5f7;
 
   &__image {
     margin: 50px 0;
+    object-fit: cover;
     @include desktop-only {
-      min-width: 900px;
+      max-width: 90vw;
     }
     @include mobile-only {
       width: 100%;

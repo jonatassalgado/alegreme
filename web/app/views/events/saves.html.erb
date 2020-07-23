@@ -1,0 +1,13 @@
+<%= render partial: 'components/events/saves',
+					 locals:  {
+							 user:            current_user,
+							 identifier:      'events_saved',
+							 html:            {
+									 data: {
+											 controller: 'saves',
+											 target:     'saves.saves'
+									 }
+							 },
+							 saved_resources: @saved_events,
+							 empty_message:   'Salve eventos com ❤ para vê - los aqui'
+					 } %>

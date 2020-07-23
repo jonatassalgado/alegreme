@@ -30,39 +30,9 @@ class UsersController < ApplicationController
 	# GET /users/1
 	# GET /users/1.json
 	def show
-		@upcoming_events = @user&.saved_events(as_model: true)&.not_ml_data&.active&.order_by_date
-		@historic_events = @user&.saved_events(as_model: true)&.not_ml_data&.historic&.order("updated_at DESC")
+		@upcoming_events = @user&.saved_events&.not_ml_data&.active&.order_by_date
+		@historic_events = @user&.saved_events&.not_ml_data&.historic&.order("updated_at DESC")
 		@topics          = @user&.following_topics
-
-		@collection_upcoming = {
-				identifier:       'user-saved-events',
-				items:            @upcoming_events,
-				user:             @user,
-				title:            {
-						principal: "Próximos eventos",
-						tertiary:  "Eventos salvos por #{current_user == @user ? 'você' : @user.first_name}"
-				},
-				infinite_scroll:  false,
-				display_if_empty: true,
-				disposition:      :horizontal,
-				show_similar_to:  session[:stimulus][:show_similar_to]
-		}
-
-		@collection_historic = {
-				identifier:       'user-historic-events',
-				user:             @user,
-				items:            @historic_events.limit(session[:stimulus][:limit]),
-				total_count:      @historic_events.size,
-				title:            {
-						principal: "Histórico de eventos salvos",
-						tertiary:  "Remova eventos salvos para atualizar as recomendações"
-				},
-				infinite_scroll:  false,
-				display_if_empty: false,
-				disposition:      :horizontal,
-				show_similar_to:  session[:stimulus][:show_similar_to]
-		}
-
 	end
 
 	# GET /users/new

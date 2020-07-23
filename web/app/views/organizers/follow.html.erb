@@ -1,0 +1,6 @@
+<%= render partial: 'components/follow/follow_button',
+					 locals:  {
+							 identifier: @association.followable.slug,
+							 user:       @association.user,
+							 followable: @association.followable
+					 } %>

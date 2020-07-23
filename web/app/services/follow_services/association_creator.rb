@@ -7,7 +7,7 @@ module FollowServices
 			followable_class = Object.const_get followable_type.singularize.capitalize
 
 			@user       = user.is_a?(ApplicationRecord) ? user : User.find(user)
-			@followable = followable_class.find followable_id
+			@followable = followable_class.friendly.find followable_id
 		end
 
 		def call(opts = {})

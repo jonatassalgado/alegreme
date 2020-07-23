@@ -1,98 +1,49 @@
-import ApplicationController from './application_controller'
-import {MDCRipple}           from '@material/ripple';
+import ApplicationController from "./application_controller"
+import morphdom              from "morphdom";
 
 export default class FollowButtonController extends ApplicationController {
-	static targets = ['button', 'text'];
+    static targets = [];
 
-	initialize() {
-		this.pubsub       = {};
-		this.buttonRipple = new MDCRipple(this.buttonTarget);
+    initialize() {
 
-		this.pubsub.sectionUpdated = PubSubModule.on(`${this.identifier}.updated`, (data) => {
-			this.buttonRipple = new MDCRipple(this.buttonTarget);
-		});
+    }
 
-		this.destroy = () => {
-			this.buttonRipple.destroy();
-			this.pubsub.sectionUpdated();
-		};
+    disconnect() {
 
-		document.addEventListener('turbolinks:before-cache', this.destroy, false);
-	}
+    }
 
-	disconnect() {
-		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
-	}
+    follow() {
+        fetch(`${location.pathname}/${this.action}`, {
+            method:      "post",
+            headers:     {
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-type":     "application/json; charset=UTF-8",
+                "Accept":           "text/html; charset=utf-8",
+                "X-CSRF-Token":     document.querySelector("meta[name=csrf-token]").content
+            },
+            credentials: "same-origin"
+        }).then(response => {
+                    response.text().then(html => {
+                        const fragment = document.createRange().createContextualFragment(html);
 
-	follow() {
-		const followPromise = new Promise((resolve, reject) => {
+                        morphdom(this.element, fragment)
+                    });
+                }
+        ).catch(err => {
 
-			const data = {
-				followable: this.data.get('followable'),
-				type:       this.data.get('type'),
-				action:     this.isFollowed,
-			};
+        });
+    }
 
-			if (Object.values(data).map((value) => {
-				return value !== undefined
-			})) {
-				resolve(data);
-			} else {
-				reject(Error("It broke"));
-			}
-		});
+    get followable() {
+        return this.data.get("followable");
+    }
 
-		followPromise.then((data) => {
-			fetch(`/${data.type}/${data.followable}/${data.action}`, {
-				method:      'post',
-				headers:     {
-					'X-Requested-With': 'XMLHttpRequest',
-					'Content-type':     'application/json; charset=UTF-8',
-					'Accept':           'application/json',
-					'X-CSRF-Token':     document.querySelector('meta[name=csrf-token]').content
-				},
-				credentials: 'same-origin'
-			})
-				.then(
-					response => {
-						response.json().then(data => {
+    get action() {
+        return this.data.get("followed") === "true" ? "unfollow" : "follow";
+    }
 
-							if (data.following) {
-								this.isFollowed           = true;
-								this.textTarget.innerText = 'Seguindo';
-								this.buttonTarget.classList.add('mdc-chip--selected');
-							} else {
-								this.isFollowed           = false;
-								this.textTarget.innerText = 'Seguir';
-								this.buttonTarget.classList.remove('mdc-chip--selected');
-							}
-
-							CacheModule.clearCache(['feed-page']);
-						});
-					}
-				)
-				.catch(err => {
-					console.log('Fetch Error :-S', err);
-				});
-		});
-
-		document.addEventListener("turbolinks:before-cache", () => {
-
-		});
-
-
-	}
-
-	get isFollowed() {
-		return this.data.get('followed') === 'true' ? 'unfollow' : 'follow';
-	}
-
-	get identifier() {
-		return this.data.get('identifier');
-	}
-
-	set isFollowed(value) {
-		this.data.set('followed', value);
-	}
+    get identifier() {
+        return this.data.get("identifier");
+    }
 
 }

@@ -1,6 +1,8 @@
 import ApplicationController from "./application_controller"
 import {UserChannel}         from "../channels/user_channel";
 import {SnackBarModule}      from "../modules/snackbar-module";
+import {PubSubModule}        from "../modules/pubsub-module";
+import morphdom              from "morphdom";
 
 export default class SaveButtonController extends ApplicationController {
     static targets = ["button"];
@@ -15,7 +17,7 @@ export default class SaveButtonController extends ApplicationController {
     }
 
     setup() {
-        this.updateButtonStyle(this.saveStatus);
+        // this.updateButtonStyle(this.saveStatus);
     }
 
     teardown() {
@@ -23,25 +25,57 @@ export default class SaveButtonController extends ApplicationController {
     }
 
     like(event) {
-        PubSubModule.emit("save-button.clicked");
+        PubSubModule.emit("save-button#like->started");
 
-        this.updateButtonStyle(!this.saveStatus);
+        // this.updateButtonStyle(!this.saveStatus);
 
-        const send = UserChannel.send({
-                                          sent_by: gon.user_id,
-                                          body:    {
-                                              id:       this.resourceId,
-                                              selector: this.resourceSelector,
-                                              action:   this.isSaved,
-                                              resource: this.resourceName
-                                          }
-                                      })
+        // fetch(`${this.resourceRoute}/${this.resourceId}/${this.action}`, {
+        //     method:      "post",
+        //     headers:     {
+        //         "X-Requested-With": "XMLHttpRequest",
+        //         "Content-type":     "application/json; charset=UTF-8",
+        //         "Accept":           "text/html; charset=utf-8",
+        //         "X-CSRF-Token":     document.querySelector("meta[name=csrf-token]").content
+        //     },
+        //     body:        JSON.stringify({elementId: this.resourceElementId}),
+        //     credentials: "same-origin"
+        // }).then(response => {
+        //             response.text().then(html => {
+        //                 const fragment = document.createRange().createContextualFragment(html);
+        //                 const savesEl  = document.getElementById("events_saved");
+        //                 this.status    = !this.status;
+        //
+        //                 morphdom(savesEl, fragment, {
+        //                     childrenOnly: true
+        //                 })
+        //
+        //                 PubSubModule.emit("save-button#like->finished");
+        //                 CacheModule.clearCache();
+        //             });
+        //         }
+        // ).catch(err => {
+        //     SnackBarModule.show("Não foi possível realizar esta ação");
+        // });
+
+        const send = UserChannel.perform("taste", {
+            sent_by: gon.user_id,
+            body: Object.fromEntries(Array.from(this.element.attributes).map((attr) => { return [attr.nodeName, attr.nodeValue] }))
+            // body:    {
+            //     saveButtonHtmlId: this.saveButtonHtmlId,
+            //     resourceHtmlId:   this.resourceHtmlId,
+            //     savesHtmlId:      this.savesId,
+            //     resourceId:       this.resourceId,
+            //     resourceType:     this.resourceType,
+            //     action:           this.action
+            // }
+        })
 
         if (send) {
-            this.saveStatus = !this.saveStatus;
+            this.status = !this.status;
+            PubSubModule.emit("save-button#like->finished");
             CacheModule.clearCache();
         } else {
-            this.updateButtonStyle(this.saveStatus);
+            // this.updateButtonStyle(this.saveStatus);
             SnackBarModule.show("Não foi possível realizar esta ação");
         }
     }
@@ -57,19 +91,19 @@ export default class SaveButtonController extends ApplicationController {
         }
     }
 
-    get isSaved() {
-        if (this.saveStatus === true) {
+    get action() {
+        if (this.status === true) {
             return "unsave";
         } else {
             return "save";
         }
     }
 
-    get saveStatus() {
+    get status() {
         return JSON.parse(this.data.get("saved"))
     }
 
-    set saveStatus(status) {
+    set status(status) {
         this.data.set("saved", status);
     }
 
@@ -77,12 +111,20 @@ export default class SaveButtonController extends ApplicationController {
         return this.data.get("resourceId")
     }
 
-    get resourceSelector() {
-        return this.data.get("resourceSelector")
+    get resourceHtmlId() {
+        return this.data.get("resourceHtmlId")
     }
 
-    get resourceName() {
-        return this.data.get("resourceName")
+    get saveButtonHtmlId() {
+        return this.element.id;
+    }
+
+    get savesId() {
+        return this.data.get('savesHtmlId');
+    }
+
+    get resourceType() {
+        return this.data.get("resourceType")
     }
 
     get isPreview() {

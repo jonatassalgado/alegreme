@@ -8,7 +8,7 @@
 				<section class=menu>
 					<section class="brand">
 						<div class="brand__letter">
-							<%= responsive_image_tag 'welcome/logo-icon', alt: 'logo', title: 'Oie!' %>
+							<%= responsive_image_tag 'media/images/welcome/logo-icon', format: :png, alt: 'logo', title: 'Oie!' %>
 						</div>
 					</section>
 					<nav>
@@ -50,11 +50,11 @@
 				<div class="hero-right">
 					<div class="hero__banner" style="opacity: 0">
 						<a href="https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-							<%= image_tag "welcome/google-play-banner.png" %>
+							<%= image_pack_tag "media/images/welcome/google-play-banner.png", loading: :lazy %>
 						</a>
 					</div>
 					<div class="hero__device">
-						<div class="android" style="transform: translateY(800px)">
+						<div class="android">
 							<div class="android__screen">
 								<video width="100%" height="auto" autoplay muted loop playsinline>
 									<source src="https://alegreme.sfo2.digitaloceanspaces.com/video/hero-device-screen.mp4" type="video/mp4"/>
@@ -77,8 +77,7 @@
 	<section id="como-funciona" class="how-works">
 		<h2 class="h2">Como funciona</h2>
 		<section class="how-works__step how-works__step--left">
-			<div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-1' %>">
-			</div>
+			<%= image_pack_tag 'media/images/welcome/step-1.png', class: "how-works__device", loading: :lazy %>
 			<div class="how-works__description">
 				<div class="how-works__bullet">
 					<span>1</span>
@@ -90,8 +89,7 @@
 		</section>
 
 		<section class="how-works__step how-works__step--right">
-			<div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-2' %>">
-			</div>
+			<%= image_pack_tag 'media/images/welcome/step-2.png', class: "how-works__device", loading: :lazy %>
 			<div class="how-works__description">
 				<div class="how-works__bullet">
 					<span>2</span>
@@ -103,8 +101,7 @@
 		</section>
 
 		<section class="how-works__step how-works__step--left">
-			<div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-3' %>">
-			</div>
+			<%= image_pack_tag 'media/images/welcome/step-3.png', class: "how-works__device", loading: :lazy %>
 			<div class="how-works__description">
 				<div class="how-works__bullet">
 					<span>3</span>
@@ -116,8 +113,7 @@
 		</section>
 
 		<section class="how-works__step how-works__step--right">
-			<div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-4' %>">
-			</div>
+			<%= image_pack_tag 'media/images/welcome/step-4.png', class: "how-works__device", loading: :lazy %>
 			<div class="how-works__description">
 				<div class="how-works__bullet">
 					<span>4</span>
@@ -129,8 +125,7 @@
 		</section>
 
 		<section class="how-works__step how-works__step--left">
-			<div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-5' %>">
-			</div>
+			<%= image_pack_tag 'media/images/welcome/step-5.png', class: "how-works__device", loading: :lazy %>
 			<div class="how-works__description">
 				<div class="how-works__bullet">
 					<span>5</span>
@@ -142,8 +137,7 @@
 		</section>
 
 		<section class="how-works__step how-works__step--right">
-			<div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-6' %>">
-			</div>
+			<%= image_pack_tag 'media/images/welcome/step-6.png', class: "how-works__device", loading: :lazy %>
 			<div class="how-works__description">
 				<div class="how-works__bullet">
 					<span>6</span>
@@ -155,8 +149,7 @@
 		</section>
 
 		<section class="how-works__step how-works__step--left">
-			<div class="how-works__device lazyload" data-bg="<%= image_path 'welcome/step-7' %>">
-			</div>
+			<%= image_pack_tag 'media/images/welcome/step-7.png', class: "how-works__device", loading: :lazy %>
 			<div class="how-works__description">
 				<div class="how-works__bullet">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" width="30" height="30">
@@ -228,12 +221,7 @@
 	</div>
 
 	<section class="footer">
-		<img
-			data-sizes="auto"
-			data-src="<%= image_url 'welcome/porto-alegre' %>"
-			data-srcset="<%= image_url 'welcome/porto-alegre@512w' %> 512w, <%= image_url 'welcome/porto-alegre' %> 1248w"
-			class="footer__image lazyload"/>
-
+			<%= image_pack_tag 'media/images/welcome/porto-alegre.jpg', srcset: { 'media/images/welcome/porto-alegre@512w.jpg' => '512w', 'media/images/welcome/porto-alegre.jpg' => '1248w' }, class: "footer__image", loading: :lazy %>
 		<div class="social__links">
 			<!-- <a href="https://www.instagram.com/portoalegreme">instagram</a> · -->
 			<!-- <a href="https://twitter.com/portoalegreme">twitter</a> · -->

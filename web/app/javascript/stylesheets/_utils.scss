@@ -1,0 +1,77 @@
+@keyframes ripple {
+  from {
+    opacity: 1;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(10);
+  }
+}
+
+.grid-after-margin::after {
+  content: close-quote;
+  width: 12px;
+  position: relative;
+  order: 1000;
+}
+
+
+.scrollx {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  @apply overflow-x-scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tap-highlight-none {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+@responsive {
+  .bg-x-white-to-transparent {
+    background-image: linear-gradient(to right, theme('colors.white'), theme('colors.transparent'));
+  }
+
+  .bg-x-transparent-to-white {
+    background-image: linear-gradient(to left, theme('colors.white'), theme('colors.transparent'));
+  }
+
+  .bg-y-black-to-transparent {
+    background-image: linear-gradient(to top, theme('colors.black'), theme('colors.transparent'));
+  }
+
+  .bg-y-transparent-to-black {
+    background-image: linear-gradient(to top, theme('colors.black'), theme('colors.transparent'));
+  }
+
+  .bg-blend-multiply {
+    background-blend-mode: multiply;
+  }
+
+  .ripple ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -50px;
+
+    animation: ripple 1s;
+    opacity: 0;
+  }
+
+  .grid-max-content {
+    grid-template-columns: max-content;
+  }
+}
+
+.will-change {
+  will-change: transform, opacity;
+}

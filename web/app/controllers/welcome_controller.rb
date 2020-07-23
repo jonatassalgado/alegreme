@@ -31,7 +31,7 @@ class WelcomeController < ApplicationController
 	def verify_permissions
 		if current_user&.has_permission_to_login?
 			current_user.update_tracked_fields!(request)
-			redirect_to feed_path and return
+			redirect_to feed_path
 		end
 	end
 

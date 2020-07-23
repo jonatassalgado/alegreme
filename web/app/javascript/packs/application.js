@@ -8,7 +8,6 @@ require("@rails/ujs").start()
 // require("@rails/activestorage").start()
 require("channels")
 
-
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
@@ -24,14 +23,14 @@ import {definitionsFromContext} from "stimulus/webpack-helpers"
 import StimulusReflex           from "stimulus_reflex"
 import consumer                 from "../channels/consumer"
 
-import {CacheModule}    from "../modules/cache-module";
-import {AnimateModule}  from "../modules/animate-module";
-import {PubSubModule}   from "../modules/pubsub-module";
+import {CacheModule}   from "../modules/cache-module";
+import {AnimateModule} from "../modules/animate-module";
+import {PubSubModule}  from "../modules/pubsub-module";
 
-PubSubModule.init();
 CacheModule.activateTurbolinks();
 AnimateModule.init();
 
+const images      = require.context("../images", true)
 const application = Application.start();
 const context     = require.context("controllers", true, /controller\.js$/);
 

@@ -1,4 +1,4 @@
-<section class="me-page  is-animated">
+<section class="mt-32 md:mt-40 min-h-screen is-animated">
 	<% content_for :canonical_url, today_events_url %>
 	<% content_for :amp_url, today_events_url(format: :amp) %>
 
@@ -8,16 +8,32 @@
 	<% content_for :meta_description, "Descubra as festas, shows, feiras, teatros, palestras, festivais, exposições e filmes que acontecem hoje dia #{I18n.l(Date.today, format: :long)} e amanhã." %>
 
 	<script type="application/ld+json">
-  [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
+  [<%= render partial: 'layouts/json_ld', collection: @events, as: :event %>]
 
 
 	</script>
 
-	<section class="me-section">
-		<section class="me-section__inner">
-			<%= render partial: "components/collection/events/collection", locals: {collection: @collection} %>
-		</section>
-	</section>
+	<div class="md:w-9/12 mx-auto">
+		<%= render partial: "components/collection/events/collection",
+							 locals: {
+									 identifier:       'today-and-tomorrow',
+									 user:             current_user,
+									 items:            @events.limit(session[:stimulus][:limit]),
+									 total_count:      @events.size,
+									 title:            {
+											 principal: "Eventos em Porto Alegre Hoje e Amanhã",
+											 secondary: "Explore os #{@collection[:detail][:total_events_in_collection]} eventos que ocorrem hoje e amanhã (#{I18n.l(Date.today, format: :long)} - #{I18n.l(Date.tomorrow, format: :long)}) em Porto Alegre - RS"
+									 },
+									 infinite_scroll_vertical:  true,
+									 display_if_empty: true,
+									 show_similar_to:  session[:stimulus][:show_similar_to],
+									 html: {
+											 grid: {
+													 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
+											 }
+									 }
+							 } %>
+	</div>
 
 
 

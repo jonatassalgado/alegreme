@@ -15,7 +15,7 @@ build-service:
 	docker-compose -f docker-compose.development.yml up -d --no-deps --build $(APP)
 
 up:
-	docker-compose -f docker-compose.development.yml up
+	docker-compose -f docker-compose.development.yml up -d
 
 up-scrapy:
 	docker-compose -f docker-compose.development.scrapy.yml up
@@ -40,7 +40,7 @@ debug-app:
 	docker attach alegreme_app_1
 
 webpack-watcher:
-	./bin/webpack --watch --colors --progress
+	$(EXEC) bash -c "./bin/webpack --watch --colors --progress"
 
 logs:
 	$(EXEC) bash -c "tail -f log/development.log"

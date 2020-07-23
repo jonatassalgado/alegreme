@@ -168,7 +168,7 @@ module EventQueries
 					# end
 					# end
 
-					where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences)
+					where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences.map { |occur| occur.to_date.yday })
 				else
 					all
 				end

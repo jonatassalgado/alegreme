@@ -1,33 +1,35 @@
-<section class="me-page is-animated">
+<section class="min-h-screen mt-12 md:mt-32 is-animated">
 
 	<%= notice %>
 
 	<% content_for :meta_title, "#{@user.first_name} | Alegreme.com" %>
 
-	<div class="me-user-profile me-section">
-		<% if @user.picture %>
-			<img class="me-user-profile__picture" src="<%= @user.picture %>" alt="">
-		<% end %>
-		<h1 class="me-user-profile__name">
-			<%= @user.first_name %>
-		</h1>
-		<% if current_user == @user || current_user.admin? %>
-			<%= link_to "Editar", edit_user_path(@user) %>
-			<%= link_to "Sair", destroy_user_session_path, method: :delete if current_user.admin? %>
-		<% end %>
-		<% if current_user != @user %>
-			<div class="me-user-profile__follow-button">
-				<%= render partial: 'components/follow/follow_button', locals: {
-						user:       current_user,
-						followable: @user
-				} %>
-			</div>
-		<% end %>
-	</div>
+	<div class="mx-auto space-y-24 is-animated md:w-9/12 sm:container">
+		<div class="py-10 text-center text-gray-800 bg-gray-100 rounded-lg">
+			<% if @user.picture %>
+				<img class="w-24 h-24 mx-auto rounded-full shadow-md" src="<%= @user.picture %>" alt="">
+			<% end %>
+			<h1 class="text-4xl font-semibold">
+				<%= @user.first_name %>
+			</h1>
+			<% if current_user == @user || current_user.admin? %>
+				<div class="space-x-2 text-gray-500">
+					<%= link_to "Editar", edit_user_path(@user) %>
+					<%= link_to "Sair", destroy_user_session_path, method: :delete if current_user.admin? %>
+				</div>
+			<% end %>
+			<% if current_user != @user %>
+				<div class="me-user-profile__follow-button">
+					<%= render partial: 'components/follow/follow_button', locals: {
+							user:       current_user,
+							followable: @user
+					} %>
+				</div>
+			<% end %>
+		</div>
 
-	<% if current_user.admin? %>
-		<div class="me-section">
-			<div class="me-section__inner">
+		<% if current_user.admin? %>
+			<div class="hidden">
 				<div class="me-section__title">
 					Admin
 				</div>
@@ -37,29 +39,53 @@
 					<%= link_to 'Treinar', train_path, class: 'me-chip mdc-chip' %>
 				</div>
 			</div>
-		</div>
-	<% end %>
+		<% end %>
 
-	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
-			collection: @collection_upcoming
-	} %>
 
-	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
-			collection: @collection_historic
-	} if current_user == @user %>
+		<%= render partial: "components/collection/events/collection",
+							 locals:  {
+									 identifier:                 'user-saved-events',
+									 items:                      @upcoming_events,
+									 user:                       @user,
+									 title:                      {
+											 principal: "Próximos eventos",
+											 tertiary:  "Eventos salvos por #{current_user == @user ? 'você' : @user.first_name}"
+									 },
+									 infinite_scroll_horizontal: false,
+									 display_if_empty:           true,
+									 disposition:                :horizontal,
+									 show_similar_to:            session[:stimulus][:show_similar_to]
+							 } %>
 
-	<section class="me-section">
-		<div class="me-section__inner">
-			<h2 class="me-section__title">
+		<%= render partial: "components/collection/events/collection",
+							 locals:  {
+									 identifier:                 'user-historic-events',
+									 user:                       @user,
+									 items:                      @historic_events.limit(session[:stimulus][:limit]),
+									 total_count:                @historic_events.size,
+									 title:                      {
+											 principal: "Histórico de eventos salvos",
+											 tertiary:  "Remova eventos salvos para atualizar as recomendações"
+									 },
+									 infinite_scroll_horizontal: false,
+									 display_if_empty:           false,
+									 disposition:                :horizontal,
+									 show_similar_to:            session[:stimulus][:show_similar_to]
+							 } if current_user == @user %>
+
+		<div class="inline-block pb-16">
+			<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-chateau-green-500 md:leading-normal md:pl-0 md:text-5xl">
 				Tópicos que <%= current_user == @user ? 'você' : @user.first_name %> segue
 			</h2>
 			<% if @user.following_topics.present? %>
-				<div class="me-section__description">
-					<div class="me-chip-set mdc-chip-set">
-						<% @user.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
-							<a href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| @user.last_sign_in_at < event.created_at } %>">
+				<div class="md:w-full scrollx w-screen">
+					<div class="grid grid-flow-col gap-3 pt-1 pl-5 grid-after-margin md:flex md:flex-wrap md:pl-0 md:w-full w-content">
+						<% @user&.following_topics.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
+							<a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_topic topic %>" class="bg-gray-300 cursor-pointer hover:bg-gray-400 px-4 py-3 rounded-full inline-block relative <%= 'new' if topic.events.active.any? { |event| current_user&.last_sign_in_at < event.created_at } %>">
 								<%= topic.details_name.titleize %>
-								<i class="me-chip__counter"><%= topic.events.active.size %></i>
+								<% if topic.events.active.size > 0 %>
+									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-gray-100 rounded-full"><%= topic.events.active.size %></span>
+								<% end %>
 							</a>
 						<% end %>
 					</div>
@@ -70,36 +96,7 @@
 				</div>
 			<% end %>
 		</div>
-	</section>
 
-	<%# if @user.followers['users_total_followers'] > 0 %>
-	<!--		<div class="me-section">-->
-	<!--			<div class="me-section__inner">-->
-	<!--				<div class="me-section__title me-user-profile__follow-counter">-->
-	<%#= @user.followers['users_total_followers'] > 1 ? "#{@user.followers['users_total_followers']} seguidores" : "#{@user.followers['users_total_followers']} seguidor" %>
-	<!--				</div>-->
-
-	<%# if current_user == @user %>
-	<!--					<div class="me-user-profile__followers">-->
-	<!--						<div class="me-user-suggestions">-->
-	<!--							<div class="me-user-suggestions__inner">-->
-	<%# User.where("id IN (?)", @user.followers['users']).order("last_sign_in_at DESC").limit(10).each do |user| %>
-	<%#= link_to user_path user do %>
-	<!--										<div class="me-user-suggestions__user">-->
-	<!--											<div class="me-user-suggestions__picture" style="background-image: url('<%#= user.picture :small %>')">-->
-	<!--											</div>-->
-	<!--											<div class="me-user-suggestions__name">-->
-	<%#= user.first_name %>
-	<!--											</div>-->
-	<!--										</div>-->
-	<%# end %>
-	<%# end %>
-	<!--							</div>-->
-	<!--						</div>-->
-	<!--					</div>-->
-	<%# end %>
-	<!--			</div>-->
-	<!--		</div>-->
-	<%# end %>
+	</div>
 
 </section>

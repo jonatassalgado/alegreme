@@ -35,7 +35,8 @@
 	<link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
 	<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-	<link rel="preload" as="font" href="https://fonts.googleapis.com/icon?family=Roboto:300,400,500,700&display=swap">
+	<link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+	<!--	<link rel="preload" as="font" href="https://fonts.googleapis.com/icon?family=Roboto:300,400,500,700&display=swap">-->
 	<% if content_for? :preload_image %>
 		<link rel="preload" as="image" href="<%= content_for :preload_image %>">
 	<% end %>
@@ -45,22 +46,22 @@
 	<!-- <script src="https://sdk.pushy.me/web/1.0.5/pushy-sdk.js" defer></script> -->
 
 	<%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
-	<script async src="https://cdn.ampproject.org/v0.js" data-turbolinks-track="reload"></script>
-	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+<!--	<script async src="https://cdn.ampproject.org/v0.js" data-turbolinks-track="reload"></script>-->
+<!--	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>-->
 
 </head>
-<body data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
+<body class="antialiased font-inter" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
 <!-- <div class="me-top-app-bar__fake-size"></div> -->
 
-<div data-reflex-permanent class="me-head" data-controller="head" data-target="head.head">
+<div data-reflex-permanent class="fixed top-0 z-50 w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm" data-controller="head" data-target="head.head">
 	<%= render partial: 'layouts/top-app-bar' %>
 	<%= render partial: 'components/tab-bar', locals: {props: {active: "#{controller_name}##{action_name}"}} %>
 </div>
 
 <%= yield %>
 
-<div data-controller="snackbar" class="me-snackbar mdc-snackbar">
+<div data-controller="snackbar" class="hidden">
 	<div class="mdc-snackbar__surface">
 		<div class="mdc-snackbar__label" role="status" aria-live="polite">
 			<%= notice %>

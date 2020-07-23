@@ -4094,6 +4094,11 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
+hex-rgb@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/hex-rgb/-/hex-rgb-4.1.0.tgz#2d5d3a2943bd40e7dc9b0d5b98903d7d17035967"
+  integrity sha512-n7xsIfyBkFChITGPh6FLtxNzAt2HxZLcQIY9hYH4gm2gmMQJHMguMH3E+jnmvUbSTF5QrmFnGab5Ippi+D7e/g==
+
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
@@ -7835,6 +7840,34 @@ tabbable@^4.0.0:
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-4.0.0.tgz#5bff1d1135df1482cf0f0206434f15eadbeb9261"
   integrity sha512-H1XoH1URcBOa/rZZWxLxHCtOdVUEev+9vo5YdYhC9tCY4wnybX+VQrCYuy9ubkg69fCBxCONJOSLGfw0DWMffQ==
 
+tailwindcss-animations@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tailwindcss-animations/-/tailwindcss-animations-2.0.0.tgz#6e12fe9c70f862f8ac228adf7256b26a4f7cd7c3"
+  integrity sha512-YLdhPiQeDtpnqWd0J70rvy08MDbsq+BBLrzMmPR1Pe6MJDFYDuk4CYGI14GVgj7xRBGkByzp/rAfBcUWD7zpng==
+  dependencies:
+    lodash "^4.17.15"
+
+tailwindcss-aspect-ratio@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/tailwindcss-aspect-ratio/-/tailwindcss-aspect-ratio-3.0.0.tgz#4f9fc7ca0f3468373290faaa8b92652157bee6a4"
+  integrity sha512-syVueHOdk0u6S9lFSQQxHwsYS+9AJ0tp1WWBB+vAwmJYzc9g/2OLwq4mHpigYue6t3PUgTSbRi9unQd7WEDjGQ==
+  dependencies:
+    lodash "^4.17.15"
+
+tailwindcss-elevation@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/tailwindcss-elevation/-/tailwindcss-elevation-0.3.4.tgz#686fb50451a68c0f9c2dcbe70ffcb3895addcba8"
+  integrity sha512-xGlQN7ZLF9QEvQsom0/RH7SUm8F6gsDmwgzyKtlQKpj8Ymr0IwjcAMJy0LsPdY9fjAgkaLsa7sLv5pinjX9Y1Q==
+  dependencies:
+    hex-rgb "^4.1.0"
+
+tailwindcss-font-inter@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/tailwindcss-font-inter/-/tailwindcss-font-inter-1.0.8.tgz#132f8bc3c7434abf1651da06114b8f08c66307d6"
+  integrity sha512-/AxArXcZ4GN70AthR/jIES7h9VrY5Xocjs05A46X1CsWLt63m9Bwq8y5gCZ5/CIUpUl1GKFDTIUgmo9W2kNGFQ==
+  dependencies:
+    lodash "^4.17.15"
+
 tailwindcss@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.5.1.tgz#a3eb10024f8e10786b8b6badcf9665b013bd03ee"
@@ -8133,11 +8166,6 @@ unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
-
-unpoly@^0.60.3:
-  version "0.60.3"
-  resolved "https://registry.yarnpkg.com/unpoly/-/unpoly-0.60.3.tgz#8cf063118300250933ea57e358aa6d058741be20"
-  integrity sha512-1zZRilmcTk9k9qz3wrDn8OQ7m2avp+SydYAdJlD7RYWpCjWWxVj9pFvY5pqL1COI8C9RtBHGfhCTHV7jTFbWIg==
 
 unquote@~1.1.1:
   version "1.1.1"

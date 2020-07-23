@@ -1,8 +1,11 @@
 class EventsController < ApplicationController
 	before_action :authorize_admin, only: [:new, :edit, :create, :update, :destroy]
 	before_action :set_event, only: [:show, :edit, :update, :destroy]
+	before_action :authorize_user, only: [:saves]
 	before_action :parse_ocurrences, only: [:update]
 	before_action :parse_personas, only: [:update]
+
+	include CableReady::Broadcaster
 
 	# GET /events
 	# GET /events.json
@@ -14,18 +17,6 @@ class EventsController < ApplicationController
 	# GET /events/1.json
 	def show
 		@similar_events     = Event.includes(:place).not_ml_data.active.where(id: @event.similar_data).order_by_ids(@event.similar_data).not_in_saved(current_user).limit(8)
-		@similar_collection = {
-				identifier:        'similar',
-				items:             @similar_events,
-				user:              current_user,
-				title:             {
-						principal: "Eventos similares",
-				},
-				display_similar:   false,
-				display_load_more: false,
-				disposition:       :horizontal
-		}
-
 
 		respond_to do |format|
 			format.html { render :show }
@@ -79,6 +70,33 @@ class EventsController < ApplicationController
 			format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
 			format.json { head :no_content }
 		end
+	end
+
+	def save
+		current_user.taste_events_save params[:id]
+
+		# if params[:elementId].present?
+		# 	cable_ready[UserChannel].remove(
+		# 			selector: "##{params[:elementId]}"
+		# 	)
+		# 	cable_ready.broadcast_to(current_user, UserChannel)
+		# else
+		# 	broadcast_to(current_user, {status: save_status})
+		# end
+
+		redirect_to action: :saves
+	end
+
+	def unsave
+		current_user.taste_events_unsave params[:id]
+
+		redirect_to action: :saves
+	end
+
+	def saves
+		@saved_events = current_user ? current_user&.saved_events&.not_ml_data&.active&.order_by_date : Event.none
+
+		render layout: false
 	end
 
 	def retrain

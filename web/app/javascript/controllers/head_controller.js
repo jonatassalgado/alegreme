@@ -1,9 +1,8 @@
 import ApplicationController from "./application_controller"
-import {MDCRipple}           from "@material/ripple";
 import {debounce}            from "../utilities";
 
 export default class HeadController extends ApplicationController {
-    static targets = ["head", "backButton", "backButtonRipple"];
+    static targets = ["head", "tabBar", "backButton", "backButtonRipple"];
 
     connect() {
         super.connect();
@@ -24,10 +23,6 @@ export default class HeadController extends ApplicationController {
         if (this.hasHeadTarget) {
             this.lastScrollTop = 0;
 
-            if (this.hasBackButtonRippleTarget) {
-                this.backButtonRipple = new MDCRipple(this.backButtonRippleTarget);
-            }
-
             window.addEventListener("scroll", debounce(this.animateHeadOnScroll.bind(this)), {
                 capture: false,
                 passive: true
@@ -36,29 +31,28 @@ export default class HeadController extends ApplicationController {
     }
 
     teardown() {
-        if (this.hasBackButtonRippleTarget) {
-            this.backButtonRipple.destroy();
-        }
         window.removeEventListener("scroll", this.animateHeadOnScroll.bind(this));
     }
 
     animateHeadOnScroll() {
+        if (!this.hasTabBarTarget) return;
         let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
         requestIdleCallback(() => {
             if (window.scrollY > 5) {
                 requestAnimationFrame(() => {
-                    this.headTarget.classList.add("me-head--with-shadow");
+                    this.headTarget.classList.add("elevation-4");
                 });
             } else {
                 requestAnimationFrame(() => {
-                    this.headTarget.classList.remove("me-head--with-shadow");
+                    this.headTarget.classList.remove("elevation-4");
                 });
             }
 
-            if (window.scrollY > 250) {
+            if (window.scrollY > 50) {
+                const transformY = this.element.offsetHeight - 46;
                 if (currentScrollTop > this.lastScrollTop) {
                     requestAnimationFrame(() => {
-                        this.headTarget.style.transform = "translateY(-56px)";
+                        this.headTarget.style.transform = `translateY(-${transformY}px)`;
                     });
                 } else {
                     requestAnimationFrame(() => {

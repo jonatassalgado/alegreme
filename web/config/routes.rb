@@ -42,9 +42,6 @@ Rails.application.routes.draw do
 	get '/terms', to: 'pages#terms'
 	get '/robots.:format', to: 'pages#robots'
 
-	resources :search, only: [:index], path: 'busca'
-	get 'train', to: 'train#index', as: :train
-
 	resources :users
 	get '/:id/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
 	get '/:id/seguindo', to: 'feeds#follow', as: :follow_events
@@ -54,11 +51,29 @@ Rails.application.routes.draw do
 
 
 	resources :categories
-	resources :organizers, path: 'organizadores'
-	resources :places, path: 'porto-alegre/locais'
+	resources :organizers, path: 'organizadores' do
+		member do
+			post :follow
+			post :unfollow
+		end
+	end
+	resources :places, path: 'porto-alegre/locais' do
+		member do
+			post :follow
+			post :unfollow
+		end
+	end
 	resources :artifacts
 
-	resources :events, path: 'porto-alegre/eventos'
+	resources :events, path: 'porto-alegre/eventos' do
+		member do
+			post :save
+			post :unsave
+		end
+		collection do
+			get :saves
+		end
+	end
 	resources :movies, path: 'porto-alegre/filmes', as: :movies
 	resources :cine_films, controller: 'movies', type: 'CineFilm', path: 'porto-alegre/cinemas', as: :cine_films
 	resources :streamings, controller: 'movies', type: 'Streaming', path: 'porto-alegre/streamings', as: :streamings
@@ -66,18 +81,17 @@ Rails.application.routes.draw do
 	get '/send_request_invite_confirmation/:user_id', to: 'emails#send_request_invite_confirmation', as: :send_request_invite_confirmation
 	get '/send_invite_activation_link/:user_id', to: 'emails#send_invite_activation_link', as: :send_invite_activation_link
 
+	resources :search, only: [:index], path: 'busca'
 
-	post ':type/:resource_id/follow', to: 'follow#follow'
-	post ':type/:resource_id/unfollow', to: 'follow#unfollow'
+	get 'train', to: 'train#index', as: :train
+
 
 	authenticate :user, lambda { |u| u.admin? } do
 		mount Sidekiq::Web => '/sidekiq'
 		get 'admin/users', to: 'users#admin'
 	end
 
-
 	get 'job/submit/:who/:message', to: 'job#submit'
 
 	mount ActionCable.server => '/cable'
-
 end

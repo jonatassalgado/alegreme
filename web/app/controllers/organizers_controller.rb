@@ -1,5 +1,6 @@
 class OrganizersController < ApplicationController
-	before_action :authorize_admin, except: :show
+	before_action :authorize_admin, except: [:show, :follow, :unfollow]
+	before_action :authorize_user, only: [:follow, :unfollow]
 	before_action :set_organizer, only: [:show, :edit, :update, :destroy]
 
 	# GET /organizers
@@ -20,11 +21,8 @@ class OrganizersController < ApplicationController
 				user:             current_user,
 				items:            @events.limit(session[:stimulus][:limit]),
 				total_count:      @events.size,
-				title:            {
-						principal: @organizer.details['name']
-				},
-				followable:       @place,
-				infinite_scroll:  true,
+				followable:       @organizer,
+				infinite_scroll_vertical:  true,
 				display_if_empty: true,
 				show_similar_to:  session[:stimulus][:show_similar_to]
 		}
@@ -80,6 +78,16 @@ class OrganizersController < ApplicationController
 			format.html { redirect_to organizers_url, notice: 'Organizer was successfully destroyed.' }
 			format.json { head :no_content }
 		end
+	end
+
+	def follow
+		@association = FollowServices::AssociationCreator.new(current_user, params[:id], controller_name).call
+		render layout: false
+	end
+
+	def unfollow
+		@association = FollowServices::AssociationCreator.new(current_user, params[:id], controller_name).call(destroy: true)
+		render layout: false
 	end
 
 	private

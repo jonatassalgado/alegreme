@@ -1,7 +1,6 @@
 <%#= render partial: "feeds/float_menu" unless mobile_device? %>
 
-<section data-controller="page" data-target="page.page" class="me-page me-page--feed is-animated">
-
+<section data-controller="page" data-target="page.page" class="is-animated lg:w-9/12 md:mt-40 mt-32 mx-auto sm:container space-y-16">
 	<%# if current_user && current_user.notifications_topics_all_requested == false %>
 	<!-- <div class="me-section">
       <div class="me-section__inner">
@@ -24,7 +23,7 @@
 
 	<% cache([current_user, 'swipable-events', @swipable_items.pluck(:id)]) do %>
 		<% if current_user && @swipable_items.size > 0 && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try { |last_view_at| last_view_at < (DateTime.now - 8.hours) }) %>
-			<div class="me-section <%= 'me-section--without-padding' if current_user&.swipable.dig('events', 'last_view_at').blank? %>">
+			<div class="me-section <%= 'me-section--without-padding' if current_user&.swipable&.dig('events', 'last_view_at').blank? %>">
 				<div class="me-section__inner">
 					<%= render partial: 'components/swipable/swipable' %>
 				</div>
@@ -48,116 +47,258 @@
 		</div>
 	<% end %>
 
-	<% cache([current_user, 'events_saved', @saved_events.pluck(:id), @saved_events.maximum(:updated_at)]) do %>
-		<% if current_user %>
-			<section class="me-section me-section--condensed">
-				<div class="me-section__inner">
-					<%= render partial: 'feeds/saves', layout: 'components/stimulus_container',
-										 locals:  {
-												 user:            current_user,
-												 identifier:      'events_saved',
-												 html:            {
-														 data: {
-																 controller: 'saves',
-																 target:     'saves.saves'
-														 }
-												 },
-												 saved_resources: @saved_events,
-												 empty_message:   'Salve eventos com ❤ para vê - los aqui'
-										 } %>
-				</div>
-			</section>
-		<% end %>
+
+	<% if current_user %>
+		<%= render partial: 'components/events/saves',
+							 layout:  'components/stimulus_container',
+							 locals:  {
+									 user:            current_user,
+									 identifier:      'events-saved',
+									 saved_resources: @saved_events,
+									 html:            {
+											 layout: {
+													 id:   'events-saved',
+													 data: {
+															 controller:               'flip',
+															 'flip-started-listener':  'taste->started',
+															 'flip-finished-listener': 'cable-ready:after-morph',
+															 'flip-identifier':        'data-events-saved-flip-key'
+													 }
+											 }
+									 },
+									 cached:          true,
+									 cache_key:       [current_user, 'events_saved', @saved_events.pluck(:id), @saved_events.maximum(:updated_at)]
+							 } %>
 	<% end %>
 
-	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
-			collection: @collection_week
-	} %>
-
-	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
-			collection: @collection_suggestions
-	} %>
-
-	<% custom_title = capture do %>
-		<% if current_user %>
-			<div class="me-chip-set__wrapper">
-				<div class="me-chip-set mdc-chip-set">
-					<% current_user&.following_topics.filter { |topic| topic.events.active.size > 0 }.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
-						<a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_topic topic %>" class="me-chip mdc-chip <%= 'new' if topic.events.active.any? { |event| current_user&.last_sign_in_at < event.created_at } %>">
-							<div class="mdc-chip__ripple"></div>
-							<%= topic.details_name.titleize %>
-							<% if topic.events.active.size > 0 %>
-								<i class="me-chip__counter"><%= topic.events.active.size %></i>
-							<% end %>
-						</a>
-					<% end %>
-				</div>
-			</div>
-		<% end %>
-	<% end %>
 	<%= render partial: "components/collection/events/collection",
-						 layout:  "components/section",
+						 layout:  'components/stimulus_container',
 						 locals:  {
-								 collection: @collection_follow.deep_merge!(
-										 custom_title: custom_title
-								 )
+								 identifier:        'this-week',
+								 user:              current_user,
+								 items:             @events_this_week.limit(session[:stimulus][:limit]),
+								 total_count:       @events_this_week.size,
+								 title:             {
+										 principal: "Acontecendo esta semana",
+										 tertiary:  (current_user ? "Com base no seu perfil" : nil)
+								 },
+								 show_similar_to:   session[:stimulus][:show_similar_to],
+								 continue_to:       '/porto-alegre/eventos/semana',
+								 disposition:       :horizontal,
+								 display_if_empty:  true,
+								 display_load_more: true,
+								 if_greater_than:   2,
+								 html:              {
+										 layout: {
+												 data: {
+														 controller:               'flip',
+														 'flip-started-listener':  'taste->started',
+														 'flip-finished-listener': 'cable-ready:after-add-css-class',
+														 'flip-identifier':        'data-this-week-flip-key'
+												 }
+										 }
+								 },
+								 opts:              {
+										 save_button: {
+												 remove_on_action:            true,
+												 update_collection_on_action: true
+										 }
+								 },
+								 cached:            true,
+								 cache_key:         [current_user, 'this-week', session[:stimulus].to_param, @events_this_week&.pluck(:id), @events_this_week&.try(:maximum, :updated_at)]
+						 } %>
+
+	<%= render partial: "components/collection/events/collection",
+						 layout:  'components/stimulus_container',
+						 locals:  {
+								 identifier:                 'user-suggestions',
+								 user:                       current_user,
+								 items:                      @events_in_user_suggestions.limit(session[:stimulus][:limit]),
+								 total_count:                @events_in_user_suggestions.size,
+								 title:                      {
+										 principal: "Escolhidos a dedo para #{current_user&.first_name || 'você'}",
+										 tertiary:  (current_user ? "Com base nos eventos salvos" : nil)
+								 },
+								 empty_message:              "Crie uma conta para receber sugestões únicas",
+								 show_similar_to:            session[:stimulus][:show_similar_to],
+								 continue_to:                "/#{current_user&.slug}/sugestoes",
+								 display_if_empty:           true,
+								 display_load_more:          true,
+								 infinite_scroll_horizontal: true,
+								 disposition:                :horizontal,
+								 html:                       {
+										 layout: {
+												 data: {
+														 controller:               'flip',
+														 'flip-started-listener':  'taste->started',
+														 'flip-finished-listener': 'cable-ready:after-add-css-class',
+														 'flip-identifier':        'data-user-suggestions-flip-key'
+												 }
+										 }
+								 },
+								 opts:                       {
+										 save_button: {
+												 remove_on_action:            true,
+												 update_collection_on_action: true
+										 }
+								 },
+								 cached:                     true,
+								 cache_key:                  [current_user, 'user-suggestions', session[:stimulus].to_param, @events_in_user_suggestions&.pluck(:id), @events_in_user_suggestions&.try(:maximum, :updated_at)]
 						 } %>
 
 	<% custom_title = capture do %>
 		<% if current_user %>
-			<div class="me-user-suggestions">
-				<div class="me-user-suggestions__inner">
-					<% User.following_users(current_user).each do |user| %>
-						<%= link_to user_path user do %>
-							<div onclick="window.AnimateModule.animatePageHide()" class="me-user-suggestions__user">
-								<div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture %>')">
-								</div>
-								<div class="me-user-suggestions__name">
-									<%= user.first_name %>
-								</div>
-							</div>
+			<div class="gap-3 grid grid-after-margin grid-flow-col md:pl-0 pl-5 pt-1 w-content">
+				<% current_user&.following_topics.filter { |topic| topic.events.active.size > 0 }.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
+					<a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_topic topic %>" class="border cursor-pointer font-semibold hover:bg-gray-400 inline-block px-4 py-3 relative rounded-full text-gray-700 text-sm <%= 'new' if topic.events.active.any? { |event| current_user&.last_sign_in_at < event.created_at } %>">
+						<%= topic.details_name.titleize %>
+						<% if topic.events.active.size > 0 %>
+							<span class="-mt-4 absolute bg-gray-100 font-bold h-4 inline-flex items-center justify-center mr-2 right-0 rounded-full text-xs w-4"><%= topic.events.active.size %></span>
 						<% end %>
-					<% end %>
-				</div>
+					</a>
+				<% end %>
 			</div>
 		<% end %>
 	<% end %>
 	<%= render partial: "components/collection/events/collection",
-						 layout:  "components/section",
+						 layout:  'components/stimulus_container',
 						 locals:  {
-								 collection: @collection_following_users.deep_merge!(
-										 custom_title: custom_title
-								 )
+								 identifier:        'follow',
+								 user:              current_user,
+								 items:             @events_from_following_topics.limit(session[:stimulus][:limit]),
+								 total_count:       @events_from_following_topics.size,
+								 title:             {
+										 principal: "Tópicos que você segue",
+								 },
+								 empty_message:     "Crie uma conta para seguir tópicos e lugares",
+								 continue_to:       "/#{current_user&.slug}/seguindo",
+								 show_similar_to:   session[:stimulus][:show_similar_to],
+								 display_if_empty:  true,
+								 display_load_more: true,
+								 disposition:       :horizontal,
+								 custom_title:      custom_title,
+								 html:              {
+										 layout: {
+												 data: {
+														 controller:               'flip',
+														 'flip-started-listener':  'taste->started',
+														 'flip-finished-listener': 'cable-ready:after-add-css-class',
+														 'flip-identifier':        'data-follow-flip-key'
+												 }
+										 }
+								 },
+								 opts:              {
+										 save_button: {
+												 remove_on_action:            true,
+												 update_collection_on_action: true
+										 }
+								 },
+								 cached:            true,
+								 cache_key:         [current_user, 'follow', session[:stimulus].to_param, @events_from_following_topics&.pluck(:id), @events_from_following_topics&.try(:maximum, :updated_at)]
 						 } %>
 
 	<% custom_title = capture do %>
 		<% if current_user %>
-			<div class="me-chip-set__wrapper">
-				<div class="me-chip-set mdc-chip-set mdc-chip-set--choice">
-					<% ['Cidade Baixa', 'Centro Histórico', 'Bom Fim', 'Moinhos de Vento'].each do |neighborhood| %>
-						<%= link_to neighborhood_events_path(neighborhood.parameterize), onclick: "window.AnimateModule.animatePageHide()", class: "me-chip mdc-chip #{'mdc-chip--selected' if neighborhood == 'Cidade Baixa'}" do %>
-							<div class="mdc-chip__ripple"></div>
-							<%= neighborhood.titleize %>
-						<% end %>
+			<div class="gap-3 grid grid-after-margin grid-flow-col md:pl-0 pl-5 text-gray-800 text-sm w-content">
+				<% User.following_users(current_user).each do |user| %>
+					<%= link_to user_path(user), {class: ''} do %>
+						<div onclick="window.AnimateModule.animatePageHide()" class="flex flex-col items-center">
+							<%= image_tag user.picture, {class: "mb-1 bg-cover bg-gray-400 h-12 md:h-16 md:w-16 rounded-full w-12", alt: user.name}, onerror: "this.onerror=null;this.src='/assets/avatars/cat-medium.png';" rescue nil %>
+							<%= user.first_name %>
+						</div>
 					<% end %>
-				</div>
+				<% end %>
 			</div>
 		<% end %>
 	<% end %>
 	<%= render partial: "components/collection/events/collection",
-						 layout:  "components/section",
+						 layout:  'components/stimulus_container',
 						 locals:  {
-								 collection: @collection_neighborhood.deep_merge!(
-										 custom_title: custom_title
-								 )
+								 identifier:        'following-users',
+								 user:              current_user,
+								 items:             @events_from_followed_users.limit(session[:stimulus][:limit]),
+								 total_count:       @events_from_followed_users.size,
+								 title:             {
+										 principal: "Pessoas que você segue",
+								 },
+								 empty_message:     "Crie uma conta para seguir pessoas",
+								 show_similar_to:   session[:stimulus][:show_similar_to],
+								 display_if_empty:  true,
+								 display_load_more: true,
+								 disposition:       :horizontal,
+								 custom_title:      custom_title,
+								 html:              {
+										 layout: {
+												 data: {
+														 controller:               'flip',
+														 'flip-started-listener':  'taste->started',
+														 'flip-finished-listener': 'cable-ready:after-add-css-class',
+														 'flip-identifier':        'data-following-users-flip-key'
+												 }
+										 }
+								 },
+								 opts:              {
+										 save_button: {
+												 remove_on_action:            true,
+												 update_collection_on_action: true
+										 }
+								 },
+								 cached:            true,
+								 cache_key:         [current_user, 'following-users', session[:stimulus].to_param, @events_from_followed_users&.pluck(:id), @events_from_followed_users&.try(:maximum, :updated_at)]
+						 } %>
+
+	<% custom_title = capture do %>
+		<% if current_user %>
+			<div class="gap-3 grid grid-after-margin grid-flow-col md:pl-0 pl-5 pt-1 w-content">
+				<% ['Cidade Baixa', 'Centro Histórico', 'Bom Fim', 'Moinhos de Vento'].each do |neighborhood| %>
+					<%= link_to neighborhood_events_path(neighborhood.parameterize), onclick: "window.AnimateModule.animatePageHide()", class: "border cursor-pointer font-semibold hover:bg-gray-400 inline-block px-4 py-3 relative rounded-full text-gray-700 text-sm" do %>
+						<%= neighborhood.titleize %>
+					<% end %>
+				<% end %>
+			</div>
+		<% end %>
+	<% end %>
+	<%= render partial: "components/collection/events/collection",
+						 layout:  'components/stimulus_container',
+						 locals:  {
+								 identifier:        'my-neighborhood',
+								 user:              current_user,
+								 items:             @events_in_my_neighborhood.limit(session[:stimulus][:limit]),
+								 total_count:       @events_in_my_neighborhood.size,
+								 title:             {
+										 principal: "Nos bairros da sua cidade"
+								 },
+								 empty_message:     "Crie uma conta para ver os eventos do seu bairro",
+								 show_similar_to:   session[:stimulus][:show_similar_to],
+								 display_if_empty:  true,
+								 display_load_more: true,
+								 disposition:       :horizontal,
+								 custom_title:      custom_title,
+								 html:              {
+										 layout: {
+												 data: {
+														 controller:               'flip',
+														 'flip-started-listener':  'taste->started',
+														 'flip-finished-listener': 'cable-ready:after-add-css-class',
+														 'flip-identifier':        'data-my-neighborhood-flip-key'
+												 }
+										 }
+								 },
+								 opts:              {
+										 save_button: {
+												 remove_on_action:            true,
+												 update_collection_on_action: true
+										 }
+								 },
+								 cached:            true,
+								 cache_key:         [current_user, 'my-neighborhood', session[:stimulus].to_param, @events_in_my_neighborhood&.pluck(:id), @events_in_my_neighborhood&.try(:maximum, :updated_at)]
 						 } %>
 
 
 
-	<% if mobile_device? %>
-		<div data-controller="button" data-target="button.button" class="me-button mdc-button mdc-button--raised" onclick="location.assign('/porto-alegre/eventos')" style="max-width: 80vw; margin: 36px auto; text-align: center; display: block">
-			<div class="mdc-button__ripple"></div>
-			<span class="mdc-button__label">Explorar todos os eventos</span>
+	<% if mobile_device? && current_user %>
+		<div data-controller="button" data-target="button.button" class="bg-chateau-green-500 mx-auto px-5 py-3 rounded-full shadow-md text-center text-lg text-white w-content" onclick="location.assign('/porto-alegre/eventos')">
+			Explorar todos os eventos
 		</div>
 	<% end %>
 

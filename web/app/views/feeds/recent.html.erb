@@ -1,13 +1,29 @@
-<section class="me-page  is-animated">
+<section class="mt-32 md:mt-40 min-h-screen is-animated">
 
-  <%= notice %>
+	<%= notice %>
 
-  <% content_for :meta_title, "Eventos adicionados nas últimas 24h" %>
+	<% content_for :meta_title, "Eventos adicionados nas últimas 24h" %>
 
-  <section class="me-section">
-    <section class="me-section__inner">
-      <%= render partial: "components/collection/events/collection", locals: { collection: @collection } %>
-    </section>
-  </section>
+	<div class="md:w-9/12 mx-auto">
+		<%= render partial: "components/collection/events/collection",
+							 locals:  {
+									 identifier:       'new-today',
+									 user:             current_user,
+									 items:            @events.limit(session[:stimulus][:limit]),
+									 total_count:      @events.size,
+									 title:            {
+											 principal: "Adicionados recentemente",
+											 secondary: "Foram adicionados #{@events.size} eventos nas últimas 16 horas que podem te interessar"
+									 },
+									 infinite_scroll_vertical:  true,
+									 display_if_empty: true,
+									 show_similar_to:  session[:stimulus][:show_similar_to],
+									 html: {
+											 grid: {
+													 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
+											 }
+									 }
+							 } %>
+	</div>
 
 </section>

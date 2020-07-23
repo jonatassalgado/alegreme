@@ -1,4 +1,4 @@
-<section class="me-page is-animated">
+<section class="is-animated md:mt-40 mt-32">
 
 	<% content_for :canonical_url, city_events_url %>
 	<%# content_for :amp_url, week_events_url(format: :amp) %>
@@ -9,15 +9,37 @@
 	<% content_for :meta_description, "Descubra as festas, shows, feiras, teatros, palestras, festivais, exposições e filmes que acontecem em 2019 até 2020." %>
 
 	<script type="application/ld+json">
-  [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
-
+  [<%= render partial: 'layouts/json_ld',
+							collection: @filtered_events,
+							as: :event %>]
 	</script>
 
-	<section class="me-section">
-		<section class="me-section__inner">
-			<%= render partial: "components/collection/events/collection", locals: {collection: @collection} %>
-		</section>
-	</section>
-
+	<div class="md:w-9/12 mx-auto">
+		<%= render partial: "components/collection/events/collection",
+							 locals: {
+									 identifier:       'city',
+									 user:             current_user,
+									 items:            @filtered_events.limit(session[:stimulus][:limit]),
+									 total_count:      @filtered_events.size,
+									 title:            {
+											 principal: "Eventos em Porto Alegre",
+											 secondary: "Explore todos os eventos que ocorrem em Porto Alegre - RS"
+									 },
+									 selected:         {
+											 days:       @days,
+											 categories: @categories
+									 },
+									 categories:       @all_events.map { |event| event.categories_primary_name }.flatten.uniq,
+									 ocurrences:       Event.day_of_week(@all_events, active_range: true).sort_by_date.compact_range.uniq.values,
+									 infinite_scroll_vertical:  true,
+									 display_if_empty: true,
+									 show_similar_to:  session[:stimulus][:show_similar_to],
+									 html: {
+											 grid: {
+													 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
+											 }
+									 }
+							 } %>
+	</div>
 
 </section>

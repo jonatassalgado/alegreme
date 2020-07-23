@@ -2,9 +2,6 @@
   "name": "app",
   "private": true,
   "dependencies": {
-    "@material/button": "^4.0.0",
-    "@material/card": "^4.0.0",
-    "@material/icon-button": "^4.0.0",
     "@material/tab-bar": "^4.0.0",
     "@material/tab-scroller": "^4.0.0",
     "@rails/actioncable": "^6.0.3-2",
@@ -29,10 +26,13 @@
     "stimulus": "^1.1.1",
     "stimulus_reflex": "^3.2.3",
     "tailwindcss": "^1.5.1",
-    "turbolinks": "^5.2.0",
-    "unpoly": "^0.60.3"
+    "tailwindcss-elevation": "^0.3.4",
+    "turbolinks": "^5.2.0"
   },
   "devDependencies": {
+    "tailwindcss-animations": "^2.0.0",
+    "tailwindcss-aspect-ratio": "^3.0.0",
+    "tailwindcss-font-inter": "^1.0.8",
     "webpack-bundle-analyzer": "^3.4.1",
     "webpack-dev-server": "^3.1.14"
   }

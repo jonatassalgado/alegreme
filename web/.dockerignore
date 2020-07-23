@@ -8,3 +8,4 @@ public/packs
 public/packs-test
 test
 db/backups
+/yarn-error.log

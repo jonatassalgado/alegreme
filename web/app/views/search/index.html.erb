@@ -1,56 +1,42 @@
-<div class="me-page">
+<div class="is-animated md:mt-32 min-h-screen mt-24">
 
 	<%= notice %>
 
 	<% unless @collection&.dig(:items)&.suggestions.blank? %>
-		<section class="me-section me-section--condensed" style="margin: 0 auto 25px auto;">
-			<div class="me-section__inner">
-				<div class="me-section-head">
-					<h2>Você quis dizer?</h2>
-				</div>
-				<div class="me-chip-set__wrapper">
-					<div class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
-						<% @collection&.dig(:items)&.suggestions&.each do |suggestion| %>
-							<a href="<%= search_index_path({q: suggestion}) %>" class="me-chip mdc-chip">
-								<span class="mdc-chip__text"><%= suggestion %></span>
-							</a>
-						<% end %>
-					</div>
-				</div>
+		<div class="mb-10">
+			<h2 class="text-2xl">Você quis dizer?</h2>
+			<div class="">
+				<% @collection&.dig(:items)&.suggestions&.each do |suggestion| %>
+					<a href="<%= search_index_path({q: suggestion}) %>" class="me-chip mdc-chip">
+						<span class="mdc-chip__text"><%= suggestion %></span>
+					</a>
+				<% end %>
 			</div>
-		</section>
+		</div>
 	<% end %>
 
 	<% if @collection&.dig(:items).try { |events| events.size > 0 } %>
-		<section class="me-section me-section--condensed">
-			<div class="me-section__inner">
-				<%= render partial: "components/collection/events/collection", locals: {
-						collection: @collection,
-						props:      {
-								infinite_scroll: true
-						}
-				} %>
-			</div>
-		</section>
+		<div class="md:w-9/12 mx-auto">
+			<%= render partial: "components/collection/events/collection", locals: {
+					collection: @collection,
+					props:      {
+							infinite_scroll_vertical: true
+					}
+			} %>
+		</div>
 	<% elsif @collection&.dig(:items).try { |events| events.size == 0 } %>
-		<section class="me-section me-section--condensed" style="margin: 0 auto 25px auto;">
-			<h2 class="me-section__title">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
-		</section>
+		<h2 class="text-2xl">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
 	<% elsif @categories.present? %>
-		<section class="me-section me-section--without-padding">
-			<div class="me-section__inner">
-				<h2 class="me-section__title">Categorias</h2>
-				<div class="me-chip-set__wrapper">
-					<div class="me-chip-set me-chip-set--categories mdc-chip-set mdc-chip-set--choice">
-						<% @categories.each do |category| %>
-							<a href="<%= category_events_path category %>" class="me-chip mdc-chip <%= 'mdc-chip--selected' if category == params[:category] %>">
-								<span class="mdc-chip__text"><%= category %></span>
-							</a>
-						<% end %>
-					</div>
-				</div>
+		<div class="md:w-9/12 mx-auto">
+			<h2 class="flex-1 font-bold group-hover:text-chateau-green-500 leading-6 md:leading-normal md:pl-0 md:text-5xl pl-5 text-gray-800 text-xl">Categorias</h2>
+			<div class="flex flex-wrap md:px-0 mt-5 px-5">
+				<% @categories.each do |category| %>
+					<a href="<%= category_events_path category %>" class="tap-highlight-none select-none inline-block antialiased bg-gray-100 border mdc-chip me-chip px-4 py-1 rounded-full text-gray-800 mt-2 mr-2 cursor-pointer transform transition-colors duration-200">
+						<%= category %>
+					</a>
+				<% end %>
 			</div>
-		</section>
+		</div>
 	<% else %>
 		<section class="me-section me-section--condensed" style="margin: 0 auto 25px auto;">
 			<h2 class="me-section__title">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>

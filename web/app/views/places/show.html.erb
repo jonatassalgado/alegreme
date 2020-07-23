@@ -1,4 +1,4 @@
-<section class="me-page is-animated">
+<section class="is-animated md:mt-32 min-h-screen mt-10">
 	<% content_for :canonical_url, place_url(@place, format: :html) %>
 
 	<%= notice %>
@@ -7,15 +7,47 @@
 
 	<script type="application/ld+json">
   [
-    <%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>
+    <%= render partial: 'layouts/json_ld', collection: @events, as: :event %>
   ]
 	</script>
 
-	<%= render partial: "components/collection/events/collection", layout: "components/section", locals: {
-			collection: @collection,
-			props:      {
-					infinite_scroll: true
-			}
-	} %>
+	<div class="is-animated md:w-9/12 mx-auto sm:container space-y-16">
+		<% custom_title = capture do %>
+			<div class="bg-gray-100 flex p-5 rounded-lg">
+				<div class="flex-1">
+					<div class="flex-1 font-bold group-hover:text-chateau-green-500 leading-6 md:leading-normal md:pl-0 md:text-5xl text-gray-800 text-xl">
+						<%= @place.details_name %>
+					</div>
+					<div class="leading-tight md:px-0 me-collection__title-secondary pt-1 text-gray-700 text-sm">
+						<%= @place.geographic_address %>
+					</div>
+				</div>
+				<div class="flex flex-no-wrap items-center px-5">
+					<%= render partial: 'components/follow/follow_button', locals: {
+							identifier: 'new-today',
+							user:       current_user,
+							followable: @place
+					} %>
+				</div>
+			</div>
+		<% end %>
+		<%= render partial: "components/collection/events/collection",
+							 locals:  {
+									 identifier:       'new-today',
+									 items:            @events.limit(session[:stimulus][:limit]),
+									 user:             current_user,
+									 total_count:      @events.size,
+									 followable:       @place,
+									 infinite_scroll_vertical:  true,
+									 display_if_empty: true,
+									 show_similar_to:  session[:stimulus][:show_similar_to],
+									 custom_title:     custom_title,
+									 html: {
+											 grid: {
+													 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
+											 }
+									 }
+							 } %>
+	</div>
 
 </section>

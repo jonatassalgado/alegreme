@@ -10,12 +10,10 @@
 
 %>
 
-<% cache([collection[:user], collection[:identifier], session[:stimulus].to_param, collection.dig(:item)&.pluck(:id), collection.dig(:items)&.try(:maximum, :updated_at)]) do %>
-	<% if collection[:display_if_empty] || (collection[:items] && collection[:items].size > collection[:if_greater_than]) %>
-		<%= content_tag :section, id: collection[:identifier], class: "me-section #{html[:class]}" do %>
-			<div class="me-section__inner">
-				<%= yield %>
-			</div>
-		<% end %>
+<%# cache([collection[:user], collection[:identifier], session[:stimulus].to_param, collection.dig(:item)&.pluck(:id), collection.dig(:items)&.try(:maximum, :updated_at)]) do %>
+<% if collection[:display_if_empty] || (collection[:items] && collection[:items].size > collection[:if_greater_than]) %>
+	<%= content_tag :section, id: collection[:identifier], class: "#{html[:class]}" do %>
+		<%= yield %>
 	<% end %>
 <% end %>
+<%# end %>

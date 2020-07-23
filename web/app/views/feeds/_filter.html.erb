@@ -1,42 +1,38 @@
 <%
 
-	raise ArgumentError unless data
-
-	data = {
-			type:    nil,
-			filters: []
-	}.deep_merge!(data)
+	filters = local_assigns.fetch(:filters, [])
+	selected = local_assigns.fetch(:selected, {days: [], categories: []})
 
 %>
 
-<% if data[:filters].present? %>
-	<div class="me-chip-set__wrapper">
-		<div data-controller="filter"
-				 data-target="filter.chipset"
-				 data-filter-type="<%= data[:type] %>"
-				 class="me-chip-set mdc-chip-set mdc-chip-set--choice">
-			<% if data[:type] == 'days' %>
-				<% data[:filters].reject { |filter| filter['decorator'].blank? }.each do |filter| %>
-					<div class="me-chip mdc-chip"
-							 data-action="MDCChip:interaction->filter#select"
-							 data-filter-value="<%= filter['string'] %>"
+<% if filters.present? %>
+	<div class="scrollx">
+		<div data-target="filter.chipset"
+				 class="grid gap-2 grid-after-margin grid-flow-col md:pl-0 pl-5 w-content">
+			<% if type == 'days' %>
+				<% filters.reject { |filter| filter['decorator'].blank? }.each_with_index do |filter, index| %>
+					<div class="tap-highlight-none select-none antialiased bg-gray-100 border px-4 py-1 rounded-full text-gray-800 cursor-pointer transform transition-colors duration-200"
+							 data-action="click->filter#select"
+							 data-chip-type="<%= type %>"
+							 data-chip-value="<%= filter['string'] %>"
+							 data-chip-selected="<%= selected[:days].include?(filter['string']) ? 'true' : 'false' %>"
 							 data-target="filter.chip"
-							 data-turbolinks-scroll="false">
-						<div class="mdc-chip__text">
-							<%= filter['decorator'] %>
-						</div>
+							 data-turbolinks-scroll="false"
+							 id="<%= "#{type}-#{index}" %>">
+						<%= filter['decorator'] %>
 					</div>
 				<% end %>
 			<% else %>
-				<% data[:filters].reject(&:blank?).each do |filter| %>
-					<div class="me-chip mdc-chip"
-							 data-action="MDCChip:interaction->filter#select"
-							 data-filter-value="<%= filter %>"
+				<% filters.reject(&:blank?).each_with_index do |filter, index| %>
+					<div class="tap-highlight-none select-none antialiased bg-gray-100 border mdc-chip me-chip px-4 py-1 rounded-full text-gray-800 cursor-pointer"
+							 data-action="click->filter#select"
+							 data-chip-type="<%= type %>"
+							 data-chip-value="<%= filter %>"
+							 data-chip-selected="<%= selected[:categories].include?(filter) ? 'true' : 'false' %>"
 							 data-target="filter.chip"
-							 data-turbolinks-scroll="false">
-						<div class="mdc-chip__text">
-							<%= filter %>
-						</div>
+							 data-turbolinks-scroll="false"
+							 id="<%= "#{type}-#{index}" %>">
+						<%= filter %>
 					</div>
 				<% end %>
 			<% end %>

@@ -1,137 +1,184 @@
 <%
 
 	section_identifier = local_assigns.fetch(:identifier, 'default')
-	event_type = local_assigns.fetch(:type, 'default')
+	size = local_assigns.fetch(:size, :medium)
 	is_similar_open = params[:similar].to_i == event.id ? true : false
 	display_name = local_assigns.fetch(:display_name, true)
 	display_similar = local_assigns.fetch(:display_similar, true)
 	display_place = local_assigns.fetch(:display_place, true)
 	show_similar_to = local_assigns.fetch(:show_similar_to, [])
-	disposition = local_assigns.fetch(:disposition, [])
+	disposition = local_assigns.fetch(:disposition, :vertical)
+
+	html = {
+			taste_add:    {
+					visible: true
+			},
+			taste_remove: {
+					visible: true
+			}
+	}.deep_merge!(local_assigns.fetch(:html, {}))
+
+	opts = {
+
+	}.deep_merge!(local_assigns.fetch(:opts, {}))
 
 %>
 
-<div class="mdc-layout-grid__cell"
+<div class="<%= html.dig(:container, :css) || class_names('flex flex-col group h-full relative rounded-lg shadow tap-highlight-none',
+																													{'w-full':         disposition == :vertical,
+																													 'w-56 md:w-auto': size == :medium,
+																													 'w-40':           size == :small}) %>"
+		 data-<%= section_identifier %>-flip-key="<%= "#{section_identifier}-#{dom_id event}" %>"
+		 data-controller="event"
+		 data-event-dominant-color="<%= get_image_dominant_color event %>"
+		 data-event-favorited="<%= user.taste_events_saved? event.id if user %>"
+		 data-event-identifier="<%= event.id %>"
+		 data-event-similar-loading="false"
+		 data-event-similar-open="<%= is_similar_open %>"
+		 data-target="event.event"
 		 id="<%= "cell-#{section_identifier}-#{dom_id event}" %>"
-		 style="order: <%= event_counter + 1 %>;">
-	<div class="me-card me-card--feed mdc-card mdc-card--outlined event-<%= event.id %>"
-			 data-action="mouseover->event#showEventDetails"
-			 data-collection-<%= section_identifier %>-flip-key="<%= "#{section_identifier}-#{dom_id event}" %>"
-			 data-controller="event"
-			 data-event-dominant-color="<%= get_image_dominant_color event %>"
-			 data-event-favorited="<%= user.taste_events_saved? event.id if user %>"
-			 data-event-identifier="<%= event.id %>"
-			 data-event-similar-loading="false"
-			 data-event-similar-open="<%= is_similar_open %>"
-			 data-target="event.event"
-			 id="<%= "card-#{section_identifier}-#{dom_id event}" %>">
-		<div class="mdc-card__media mdc-card__media--16-9" style="<%= get_image_style_attr event, preload: false %>">
-			<%= image_tag get_feed_image_url(event), loading: :lazy %>
-			<% if user %>
-				<div data-controller="save-button"
-						 data-action="click->save-button#like"
-						 data-save-button-resource-name="<%= event.class.name.tableize %>"
-						 data-save-button-resource-selector="<%= "cell-#{section_identifier}-#{dom_id event}" %>"
-						 data-save-button-resource-id="<%= event.id %>"
-						 data-save-button-saved="<%= user.taste_events_saved? event.id %>"
-						 class="me-card__like-button">
-					<button class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if user.taste_events_saved?(event.id) %>"
-									data-reflex-permanent
-									data-target="save-button.button event.likeButton"
-									id="add-to-favorites"
-									style="<%= 'display: inline' if user.taste_events_saved?(event.id) %>">
-						<i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">
-							<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"/>
-							</svg>
-						</i>
-						<i class="material-icons-sharp mdc-icon-button__icon">
-							<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"/>
-							</svg>
-						</i>
-					</button>
+		 style="order: <%= event_counter + 1 %>">
+	<div class="relative">
+		<div class="bg-gray-200 rounded-t-lg aspect-ratio-16/9"></div>
+		<div class="<%= html.dig(:calendar, :css) || 'absolute cursor-pointer flex flex-col flex-shrink-0 leading-none left-0 ml-2 mt-2 text-center text-white top-0 uppercase w-10 z-10' %>"
+				 onclick="Turbolinks.visit('<%= day_events_path event.day_of_week['date'].strftime('%d-%m-%Y') %>')">
+			<span class="<%= html.dig(:calendar_month, :css) || 'border-b border-white mb-1 md:mb-2 pb-1 md:pb-2 text-xs' %>"><%= I18n.l(event&.first_day_time&.to_date, format: "%b") %></span>
+			<span class="<%= html.dig(:calendar_date, :css) || 'font-medium md:text-xl text-sm title-font' %>"><%= I18n.l(event&.first_day_time&.to_date, format: "%d") %></span>
+		</div>
+		<%= image_tag get_feed_image_url(event), {
+				loading: :lazy,
+				class:   'absolute cursor-pointer h-32 h-full left-0 object-center object-cover top-0 w-full rounded-t-lg overflow-hidden',
+				onclick: "Turbolinks.visit('#{event_path event}')",
+				onerror: "this.style.opacity='0'"
+		} if event.image[:feed] %>
+	</div>
+	<div class="inline-flex pt-1 px-2 quinta text-gray-600 <%= event.day_of_week['decorator'].parameterize %>"
+			 data-target="event.date">
+		<div class="mt-2 mr-3">
+			<%#= render partial: 'components/taste_buttons',
+								 locals:  {
+										 user:      current_user,
+										 resource:  event,
+										 parent_id: "cell-#{section_identifier}-#{dom_id event}",
+										 tastes:    {
+												 positive: {
+														 type: :save,
+														 html: {},
+														 opts: {
+																 remove_on_action:            opts.dig(:save_button, :remove_on_action),
+																 update_collection_on_action: opts.dig(:save_button, :update_collection_on_action)
+														 }
+												 },
+												 negative: {
+														 type: :dislike,
+														 html: {
+																 container: {
+																		 css: 'select-none tap-highlight-none mt-2 mb-2 w-content mx-auto bg-white border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+																 },
+																 icon:      {
+																		 css: 'fill-current h-3 hover:scale-125 w-3'
+																 }
+														 },
+														 opts: {
+																 remove_on_action:            opts.dig(:save_button, :remove_on_action),
+																 update_collection_on_action: false
+														 }
+												 }
+										 }
+								 } %>
+			<%= render partial: 'components/taste_button',
+								 locals:  {
+										 user:            user,
+										 resource:        event,
+										 taste_type:      :save,
+										 taste_sentiment: :positive,
+										 parent_id:       "cell-#{section_identifier}-#{dom_id event}",
+										 opts:            {
+												 remove_on_action:            opts.dig(:save_button, :remove_on_action),
+												 update_collection_on_action: opts.dig(:save_button, :update_collection_on_action)
+										 }
+								 } if html.dig(:taste_add, :visible) %>
+			<%= render partial: 'components/taste_button',
+								 locals:  {
+										 user:            user,
+										 resource:        event,
+										 taste_type:      :dislike,
+										 taste_sentiment: :negative,
+										 parent_id:       "cell-#{section_identifier}-#{dom_id event}",
+										 html:            {
+												 container: {
+														 css: 'select-none tap-highlight-none mt-2 mb-2 w-content mx-auto bg-white border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+												 },
+												 icon:      {
+														 css: 'fill-current h-3 hover:scale-125 w-3'
+												 }
+										 },
+										 opts:            {
+												 remove_on_action:            opts.dig(:save_button, :remove_on_action),
+												 update_collection_on_action: false
+										 }
+								 } if html.dig(:taste_remove, :visible) %>
+		</div>
+		<div>
+			<% if display_name %>
+				<%= link_to limit_name_size(event.details_name), event_path(event), class: 'font-semibold group-hover:text-chateau-green-500 inline-block mt-1 text-gray-800 text-sm textfont-semibold', data: {target: 'event.name'} %>
+			<% end %>
+			<span class="<%= html.dig(:time_until, :css) || 'text-xs inline-block' %>">
+				<%= "#{I18n.l(event.first_day_time.to_date, format: :week).titlecase} #{format_hour event.first_day_time} · #{time_until event}" %>
+				em <%= limit_place_name_size(event.place_details_name, 20) %>
+			</span>
+			<% if display_place || display_similar %>
+				<div class="flex flex-wrap mt-3 space-x-2 text-gray-600">
+					<% if display_place %>
+						<%#= link_to place_path(event.place) do %>
+						<!--							<div class="flex px-2 py-1 text-xs bg-white rounded-full shadow-xs cursor-pointer hover:bg-gray-200 hover:border-none"-->
+						<!--									 data-target="event.place"-->
+						<!--									 data-action="click->event#handlePlaceClick"-->
+						<!--									 title="<%#= event.place_details_name %>">-->
+						<!--								<svg class="w-3 h-3 my-auto mr-1 fill-current" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+						<!--									<path d="M4 0C1.78857 0 0 1.76836 0 3.9548C0 6.31073 2.52571 9.55932 3.56571 10.7966C3.79429 11.0678 4.21143 11.0678 4.44 10.7966C5.47429 9.55932 8 6.31073 8 3.9548C8 1.76836 6.21143 0 4 0ZM4 5.36723C3.21143 5.36723 2.57143 4.73446 2.57143 3.9548C2.57143 3.17514 3.21143 2.54237 4 2.54237C4.78857 2.54237 5.42857 3.17514 5.42857 3.9548C5.42857 4.73446 4.78857 5.36723 4 5.36723Z"/>-->
+						<!--								</svg>-->
+						<%#= limit_place_name_size(event.place_details_name, 20) %>
+						<!--							</div>-->
+						<%# end %>
+					<% end %>
 				</div>
 			<% end %>
-			<a href="<%= event.url %>">
-				<div data-reflex-permanent
-						 class="me-card__overlay mdc-ripple-surface"
-						 data-target="event.overlay"
-						 data-action="click->event#handleEventClick"></div>
-			</a>
 		</div>
-		<div class="me-card__primary-section">
-			<div class="me-card__date is-hoverable <%= event.day_of_week['decorator'].parameterize %>"
-					 data-target="event.date"
-					 onclick="Turbolinks.visit('<%= day_events_path event.day_of_week['date'].strftime('%d-%m-%Y') %>')">
-        <span>
-          <i></i> <%= event.day_of_week['decorator'] %> <%= format_hour event.first_day_time %>
-        </span>
-				<span class="me-card__date-distance-in-words">
-          · <%= time_until event %>
-        </span>
-			</div>
-		</div>
-		<% if display_name %>
-			<div class="me-card__secondary-section">
-				<div class="me-card__title"
-						 data-target="event.name"
-						 title="<%= event.details_name %>">
-					<%= link_to limit_name_size(event.details_name), event_path(event) %>
-				</div>
-				<%= event.ml_data['personas']['primary'].to_json if Rails.env == 'development' && params[:debug] %>
-				<%= event.ml_data['categories']['primary'].to_json if Rails.env == 'development' && params[:debug] %>
-			</div>
-		<% end %>
-		<% if display_place || display_similar %>
-			<div class="me-card__tertiary-section">
-				<% if display_place %>
-					<%= link_to place_path(event.place) do %>
-						<div class="me-card__place me-chip mdc-chip"
-								 data-target="event.place"
-								 data-action="click->event#handlePlaceClick"
-								 title="<%= event.place_details_name %>">
-							<div class="mdc-chip__ripple"></div>
-							<svg width="8" height="11" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M4 0C1.78857 0 0 1.76836 0 3.9548C0 6.31073 2.52571 9.55932 3.56571 10.7966C3.79429 11.0678 4.21143 11.0678 4.44 10.7966C5.47429 9.55932 8 6.31073 8 3.9548C8 1.76836 6.21143 0 4 0ZM4 5.36723C3.21143 5.36723 2.57143 4.73446 2.57143 3.9548C2.57143 3.17514 3.21143 2.54237 4 2.54237C4.78857 2.54237 5.42857 3.17514 5.42857 3.9548C5.42857 4.73446 4.78857 5.36723 4 5.36723Z"/>
-							</svg>
-							<%= limit_place_name_size(event.place_details_name, 12) %>
-						</div>
-					<% end %>
-				<% end %>
-				<% if display_similar && event.similar_data.present? %>
-					<div class="me-card__similar me-chip mdc-chip"
-							 data-action="click->event#showSimilar"
-							 data-target="event.similar"
-							 title="Mostrar eventos parecidos">
-						<div class="mdc-chip__ripple"></div>
-						Similares
-						<i class="me-card__expand-more material-icons">
-							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-								<path opacity=".87" fill="none" d="M24 24H0V0h24v24z"/>
-								<path d="M15.88 9.29L12 13.17 8.12 9.29c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41-.39-.38-1.03-.39-1.42 0z"/>
-							</svg>
-						</i>
-						<i class="me-card__loading material-icons">
-							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-								<path fill="none" d="M0 0h24v24H0V0z"/>
-								<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
-							</svg>
-						</i>
-
-					</div>
-				<% end %>
-			</div>
-		<% end %>
 	</div>
+	<% if display_similar && event.similar_data.present? %>
+		<div class="w-full mt-auto"
+				 data-controller="toggle-loader"
+				 data-toggle-loader-listener-off="event#showSimilar->finished">
+			<div
+				class="flex justify-center px-2 py-2 text-xs text-gray-700 bg-gray-100 rounded-b-lg cursor-pointer hover:bg-gray-200 hover:border-none"
+				data-action="click->event#showSimilar click->toggle-loader#toggle"
+				data-target="event.similar toggle-loader.off"
+				title="Mostrar eventos parecidos">
+				Similares
+				<svg class="w-3 h-3 my-auto ml-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path opacity=".87" fill="none" d="M24 24H0V0h24v24z"/>
+					<path d="M15.88 9.29L12 13.17 8.12 9.29c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41-.39-.38-1.03-.39-1.42 0z"/>
+				</svg>
+			</div>
+			<div
+				class="flex justify-center hidden px-2 py-2 text-xs text-gray-700 bg-gray-100 rounded-b-lg cursor-pointer hover:bg-gray-200 hover:border-none"
+				data-target="toggle-loader.on">
+				Carregando
+				<svg data-target="toggle-loader.onIcon" class="w-4 h-4 my-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path fill="none" d="M0 0h24v24H0V0z"/>
+					<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+				</svg>
+			</div>
+		</div>
+	<% end %>
 </div>
 <% if show_similar_to&.last == event.id &&
 		session[:stimulus][:in_this_section] == section_identifier &&
 		(disposition == :vertical || !mobile_device?) %>
-
 	<div id="similar-to-<%= dom_id event %>"
-			 class="mdc-layout-grid__cell"
-			 style="order: <%= disposition == :vertical ? (event_counter + 1) : event_counter + (5 - (event_counter % 4)) %>; <%= 'grid-column-end: span 12;' unless mobile_device? %>">
+			 class="relative flex flex-col mt-5 border rounded-lg shadow-lg"
+			 style="order: <%= mobile_device? ? (event_counter + 1) : event_counter + (5 - (event_counter % 4)) %>; <%= 'grid-column-end: span 4;' unless mobile_device? %>">
 		<%= render partial: 'components/collection/similar',
 							 locals:  {
 									 data: {

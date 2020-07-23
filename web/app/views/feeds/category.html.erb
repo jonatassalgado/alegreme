@@ -1,4 +1,4 @@
-<section class="me-page  is-animated">
+<section class="mt-32 md:mt-40 min-h-screen is-animated">
 	<% content_for :canonical_url, category_events_url %>
 	<% content_for :amp_url, category_events_url(format: :amp) %>
 
@@ -8,24 +8,32 @@
 	<% content_for :meta_description, params[:category] ? "Descubra eventos de #{params[:category]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" : "Descubra eventos de todas as categorias que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
 
 	<script type="application/ld+json">
-  [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
-
-
-
-
+  [<%= render partial: 'layouts/json_ld', collection: @events, as: :event %>]
 	</script>
 
-
-	<section class="me-section me-section--condensed">
-		<div data-controller="chip-set" data-target="chip-set.wrapper" data-chip-set-selected="<%= params[:category] %>" class="me-collection__title-custom me-chip-set__wrapper">
-			<div data-target="chip-set.chipSet" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
+	<section class="md:w-9/12 mx-auto">
+		<div class="scrollx"
+				 data-controller="scroll-on-clicked"
+				 data-scroll-on-clicked-init-selected="<%= params[:category] %>"
+				 data-scroll-on-clicked-offset-left="24"
+				 data-target="scroll-on-clicked.scroller">
+			<div data-controller="toggle-style go-to"
+					 data-go-to-delay="250"
+					 data-toggle-style-init-selected="<%= params[:category] %>"
+					 data-toggle-style-current-selected="<%= params[:category] %>"
+					 data-toggle-style-inactive-class='["bg-gray-100","text-gray-800"]'
+					 data-toggle-style-active-class='["bg-chateau-green-200","border-chateau-green-400","text-chateau-green-800"]'
+					 class="flex flex-wrap md:pl-0 md:pr-0 md:w-full pl-5 pr-5 w-content">
 				<% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
-					<div data-action="click->chip-set#select"
-							 data-chip-set-url="<%= category_events_path category %>"
-							 data-chip-set-slug="<%= category %>"
-							 class="me-chip mdc-chip <%= class_string 'mdc-chip--selected': params[:category] == category %>">
-						<div class="mdc-chip__ripple"></div>
-						<span class="mdc-chip__text"><%= category %></span>
+					<div data-action="click->scroll-on-clicked#scroll click->toggle-style#toggle click->go-to#url"
+							 data-target="toggle-style.toggle scroll-on-clicked.item"
+							 data-toggle-style-identifier="<%= category %>"
+							 data-scroll-on-clicked-selected="<%= params[:category] == category %>"
+							 data-go-to-url="<%= category_events_path category %>"
+							 class="<%= class_string 'bg-chateau-green-200 text-chateau-green-800 border-chateau-green-400':                                                                         params[:category]&.include?(category),
+																			 'text-gray-800':                                                                                                                                !params[:category]&.include?(category),
+																			 'tap-highlight-none w-content user select-none antialiased bg-gray-100 border md:mb-3 mr-2 md:mr-3 px-4 py-1 rounded-full cursor-pointer transform transition-colors duration-200': true %>">
+						<%= category %>
 					</div>
 				<% end %>
 			</div>
@@ -33,19 +41,32 @@
 	</section>
 
 	<% if params[:category] %>
-		<section class="me-section me-section--without-padding">
-			<section class="me-section__inner">
-				<%= render partial: "components/collection/events/collection", locals: {collection: @collection} %>
-			</section>
+		<section class="md:w-9/12 mx-auto mt-5">
+			<%= render partial: "components/collection/events/collection",
+								 locals: {
+										 identifier:       'category',
+										 user:             current_user,
+										 items:            @events.limit(session[:stimulus][:limit]),
+										 total_count:      @events.size,
+										 title:            {
+												 principal: "Eventos na categoria #{params[:category].try(:capitalize)} em Porto Alegre",
+												 secondary: "Explore os #{@events.size} eventos de #{params[:category]} em Porto Alegre - RS"
+										 },
+										 ocurrences:       Event.day_of_week(@events, active_range: true).sort_by_date.compact_range.uniq.values,
+										 infinite_scroll_vertical:  true,
+										 display_if_empty: true,
+										 show_similar_to:  session[:stimulus][:show_similar_to],
+										 html: {
+												 grid: {
+														 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
+												 }
+										 }
+								 } %>
 		</section>
 	<% else %>
-		<div class="me-section me-section--full-height">
-			<div class="me-section__inner">
-				<div class="me-info">
-					<div class="me-info__content">
-						Selecione uma categoria acima para ver os eventos aqui
-					</div>
-				</div>
+		<div class="md:w-9/12 mx-auto min-h-screen">
+			<div class="border m-5 md:mx-0 p-3 rounded-lg shadow text-gray-800">
+				Selecione uma categoria acima para ver os eventos aqui
 			</div>
 		</div>
 	<% end %>

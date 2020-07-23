@@ -15,7 +15,9 @@ import StimulusReflex from "stimulus_reflex"
 export default class extends Controller {
     connect() {
         StimulusReflex.register(this)
-        document.addEventListener("turbolinks:before-cache", this.beforeCache.bind(this), {once: true})
+        if (!this.isPreview) {
+            document.addEventListener("turbolinks:before-cache", this.beforeCache.bind(this), {once: true})
+        }
         // console.log('connect', this.context.controller.identifier)
     }
 
@@ -55,5 +57,9 @@ export default class extends Controller {
 
     afterReflex(element, reflex) {
         // document.body.classList.remove('wait')
+    }
+
+    get isPreview() {
+        return document.documentElement.hasAttribute("data-turbolinks-preview");
     }
 }

@@ -23,7 +23,7 @@ class SearchController < ApplicationController
 					title:            {
 							principal: "Eventos encontrados para \"#{params[:q]}\""
 					},
-					infinite_scroll:  true,
+					infinite_scroll_vertical:  true,
 					display_if_empty: true,
 					show_similar_to:  session[:stimulus][:show_similar_to]
 			}

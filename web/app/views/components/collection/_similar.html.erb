@@ -7,7 +7,7 @@
 			identifier:       'similar',
 			event:            nil,
 			user:             nil,
-			units_to_display: mobile_device? ? 8 : 6,
+			units_to_display: 10,
 	}.deep_merge!(data)
 
 	similar_events_ids = data[:event].similar_data[0...data[:units_to_display]]
@@ -15,12 +15,29 @@
 
 %>
 
-<div class="me-similar <%= "similar-to-#{dom_id data[:event]}" %>">
-	<h3>
+<div class="relative flex flex-col rounded-lg md:mx-y"
+		 data-controller="slider"
+		 id="<%= "similar-to-#{dom_id data[:event]}" %>">
+	<div class="hidden md:flex select-none items-center absolute left-0 top-0 bg-x-white-to-transparent rounded-full h-full w-10 z-20">
+		<div data-action="click->slider#left" class="bg-white rounded-full border shadow-md transition-colors duration-200 text-gray-700 hover:text-chateau-green-500 cursor-pointer my-auto -ml-5">
+			<svg class="fill-current h-10 p-2 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black">
+				<path d="M0 0h24v24H0V0z" fill="none"/>
+				<path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/>
+			</svg>
+		</div>
+	</div>
+	<div class="hidden md:flex select-none items-center absolute right-0 top-0 bg-x-transparent-to-white rounded-full h-full w-10 z-20">
+		<div data-action="click->slider#right" class="bg-white rounded-full border shadow-md transition-colors duration-200 text-gray-700 hover:text-chateau-green-500 cursor-pointer my-auto ml-5">
+			<svg class="fill-current h-10 p-2 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black">
+				<path d="M0 0h24v24H0V0z" fill="none"/>
+				<path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/>
+			</svg>
+		</div>
+	</div>
+	<h3 class="select-none font-semibold pt-5 px-5 text-gray-700">
 		Similares a <%= link_to(limit_name_size(data[:event].details['name'], 60), event_path(data[:event])) %>
 	</h3>
-
-	<div class="me-similar__events">
+	<div data-target="slider.scroller" class="gap-4 grid grid-after-margin grid-flow-col pl-5 py-5 scrollx">
 		<%= render partial:    'components/collection/event',
 							 collection: similar_events,
 							 as:         :event,
@@ -29,7 +46,14 @@
 									 display_similar: false,
 									 display_place:   false,
 									 identifier:      "similar-to-#{dom_id data[:event]}",
-									 type:            'similar'
+									 size:            :small,
+									 disposition:     :horizontal,
+									 opts:            {
+											 save_button: {
+													 remove_on_action:            true,
+													 update_collection_on_action: true
+											 }
+									 }
 							 } %>
 	</div>
 </div>

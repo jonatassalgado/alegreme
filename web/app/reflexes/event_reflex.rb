@@ -21,28 +21,14 @@ class EventReflex < ApplicationReflex
 	#   end
 	#
 	# Learn more at: https://docs.stimulusreflex.com
-	def save(args)
-		current_user.public_send("taste_#{args[:resource]}_#{args[:action]}", args[:id].to_i)
+	def save
+		current_user.public_send("taste_#{element['data-save-button-resource-name']}_#{element['data-save-button-action']}", element['data-save-button-resource-id'].to_i)
 	end
 
 	def update_collection(args = {})
-
-		filter_type  = args.dig(:filter, :type)
-		filter_value = args.dig(:filter, :value)
-		limit        = args[:limit]
-
-		case filter_type
-		when 'days'
-			session[:stimulus][:days] = filter_value.any? ? filter_value.map { |day| day.to_date.yday } : []
-		when 'categories'
-			session[:stimulus][:categories] = filter_value.any? ? filter_value : []
-		end
-
-		if limit.blank?
-			session[:stimulus][:limit] = 16
-		else
-			session[:stimulus][:limit] = limit
-		end
+		session[:stimulus][:days]       = args.dig(:filters, :days) || []
+		session[:stimulus][:categories] = args.dig(:filters, :categories) || []
+		session[:stimulus][:limit]      = args.dig(:limit) || 16
 	end
 
 	def show_similar(args = {})

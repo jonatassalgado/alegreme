@@ -47,19 +47,20 @@ class User < ApplicationRecord
 	private
 
 
-	def validate_taste_existence(dictionary = 'events')
-		taste[dictionary] ||= {}
+	def validate_taste_existence(dictionary = :events)
+		_dictionary = dictionary.to_s
+		taste[_dictionary] ||= {}
 
-		if dictionary == 'events'
-			taste[dictionary]['saved']          ||= []
-			taste[dictionary]['liked']          ||= []
-			taste[dictionary]['viewed']         ||= []
-			taste[dictionary]['disliked']       ||= []
-			taste[dictionary]['total_saves']    ||= 0
-			taste[dictionary]['total_likes']    ||= 0
-			taste[dictionary]['total_views']    ||= 0
-			taste[dictionary]['total_dislikes'] ||= 0
-			taste[dictionary]['updated_at']     ||= DateTime.now
+		if _dictionary == :events
+			taste[_dictionary]['saved']          ||= []
+			taste[_dictionary]['liked']          ||= []
+			taste[_dictionary]['viewed']         ||= []
+			taste[_dictionary]['disliked']       ||= []
+			taste[_dictionary]['total_saves']    ||= 0
+			taste[_dictionary]['total_likes']    ||= 0
+			taste[_dictionary]['total_views']    ||= 0
+			taste[_dictionary]['total_dislikes'] ||= 0
+			taste[_dictionary]['updated_at']     ||= DateTime.now
 		end
 	end
 end

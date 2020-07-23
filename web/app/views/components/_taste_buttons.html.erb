@@ -1,0 +1,28 @@
+<%
+
+	raise ArgumentError unless [user, resource, parent_id, tastes].all?(&:present?)
+
+%>
+
+<div id="<%=  %>">
+	<%= render partial: 'components/taste_button',
+						 locals:  {
+								 user:            user,
+								 resource:        resource,
+								 taste_type:      tastes[:positive][:type],
+								 taste_sentiment: :positive,
+								 parent_id:       parent_id,
+								 html:            tastes[:positive][:html],
+								 opts:            tastes[:positive][:opts]
+						 } %>
+	<%= render partial: 'components/taste_button',
+						 locals:  {
+								 user:            user,
+								 resource:        resource,
+								 taste_type:      tastes[:negative][:type],
+								 taste_sentiment: :negative,
+								 parent_id:       parent_id,
+								 html:            tastes[:negative][:html],
+								 opts:            tastes[:negative][:opts]
+						 } %>
+</div>

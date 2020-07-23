@@ -1,4 +1,4 @@
-<section class="me-page  is-animated">
+<section class="mt-32 min-h-screen is-animated">
 	<% content_for :canonical_url, organizer_url(@organizer, format: :html) %>
 
 	<%= notice %>
@@ -9,13 +9,31 @@
   [
     <%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>
   ]
-
-
 	</script>
 
-	<section class="me-section">
-		<section class="me-section__inner">
-			<%= render partial: "components/collection/events/collection", locals: {collection: @collection} %>
-		</section>
-	</section>
+	<div class="is-animated md:w-9/12 mx-auto sm:container space-y-16">
+		<% custom_title = capture do %>
+			<div class="bg-gray-100 flex p-5 rounded-lg">
+				<div class="flex-1">
+					<div class="flex-1 font-bold group-hover:text-chateau-green-500 leading-6 md:leading-normal md:pl-0 md:text-5xl pl-5 text-gray-800 text-xl">
+						<%= @organizer.details_name %>
+					</div>
+				</div>
+				<div class="flex flex-no-wrap items-center px-5">
+					<%= render partial: 'components/follow/follow_button', locals: {
+							identifier: @collection[:identifier],
+							user:       @collection[:user],
+							followable: @collection[:followable]
+					} %>
+				</div>
+			</div>
+		<% end %>
+		<%= render partial: "components/collection/events/collection", layout: "components/section",
+							 locals:  {
+									 collection: @collection.deep_merge!(
+											 custom_title: custom_title
+									 )
+							 } %>
+	</div>
+
 </section>

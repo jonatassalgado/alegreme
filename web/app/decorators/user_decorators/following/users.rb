@@ -9,6 +9,12 @@ module UserDecorators
 			end
 
 			module InstanceMethods
+
+				def is_following? followable
+					self.try { |user| user.public_send("following_#{followable.class.name.parameterize}?", followable) }
+				end
+
+
 				['user', 'organizer', 'place'].each do |entity_name|
 					define_method "follow_#{entity_name}" do |entity_obj|
 						entity_class           = Object.const_get entity_name.capitalize
@@ -16,7 +22,7 @@ module UserDecorators
 						entity_name_pluralized = entity_name.pluralize
 
 						ActiveRecord::Base.transaction do
-							self.following     = validate_schema(:following)
+							self.following = validate_schema(:following)
 
 							unless self.following[entity_name_pluralized].include?(follower.id)
 								follower.followers = validate_schema(:followers)

@@ -35,4 +35,4 @@
           "availability": "<%= event.ld_json.availability %>",
           "validFrom": "<%= event.ld_json.valid_from %>"
         }
-    }<%= "," unless @collection[:events].size == event_counter + 1 %>
+    }<%= "," unless event_iteration.size == event_counter + 1 %>

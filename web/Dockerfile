@@ -78,6 +78,7 @@ ENV BUNDLE_PATH=/bundle \
 ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
 
 RUN bundle install --jobs 20 --retry 5
 RUN bundle update --bundler
@@ -88,9 +89,9 @@ RUN bash -c "cat /proc/sys/fs/inotify/max_user_watches"
 
 RUN yarn install
 
-RUN bundle exec rake assets:clobber
+#RUN bundle exec rake assets:clobber
 RUN bundle exec rake webpacker:clobber
-RUN bundle exec rake assets:precompile
+#RUN bundle exec rake assets:precompile
 RUN bundle exec rake webpacker:compile
 
 EXPOSE 3000

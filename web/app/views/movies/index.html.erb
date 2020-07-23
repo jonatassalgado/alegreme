@@ -1,45 +1,47 @@
-<section class="me-page is-animated">
+<section class="is-animated md:mt-40 md:w-9/12 mt-12 mx-auto">
 
 	<%= notice %>
 
 	<% content_for :meta_title, "Filmes no Cinema em Porto Alegre" %>
 
-	<div class="me-page__section">
-		<div class="me-page__section-title">
-			<h2>Filmes populares nos últimos 30 dias</h2>
-		</div>
-	</div>
+	<h2 class="bg-gray-200 font-semibold leading-tight md:bg-transparent md:mt-24 md:px-0 px-5 py-6 text-2xl text-gray-900">
+		Filmes populares nos últimos 30 dias
+	</h2>
 
 	<% if current_user %>
-		<section class="me-section me-section--condensed">
-			<div class="me-section__inner">
-				<%= render partial: 'feeds/saves', layout: 'components/stimulus_container',
-									 locals:  {
-											 user:            current_user,
-											 identifier:      'movies_saved',
-											 html:            {
-													 data: {
-															 controller: 'saves',
-															 target:     'saves.saves'
-													 }
+		<%= render partial: 'components/movies/saves',
+							 layout:  'components/stimulus_container',
+							 locals:  {
+									 user:            current_user,
+									 identifier:      'movies-saved',
+									 html:            {
+											 layout:      {
+													 id: 'movies-saved'
 											 },
-											 saved_resources: @saved_movies,
-											 empty_message:   'Salve filmes com ❤ para vê - los aqui'
-									 } %>
-			</div>
-		</section>
+											 continue_to: {
+													 hidden: true
+											 },
+											 data:        {
+													 controller: 'saves',
+													 target:     'saves.saves'
+											 }
+									 },
+									 saved_resources: @saved_movies,
+									 empty_message:   'Salve filmes com ❤ para vê - los aqui'
+							 } %>
 	<% end %>
 
-	<%= render(partial:    'components/collection/movies/collection',
-						 layout:     'components/section',
-						 collection: @movies_group,
-						 as:         :collection,
-						 locals:     {
-								 html: {
-										 css: 'me-section--condensed'
-								 },
-								 user: current_user
-						 }) %>
-
+	<div class="space-y-10">
+		<%= render(partial:    'components/collection/movies/collection',
+							 layout:     'components/section',
+							 collection: @movies_group,
+							 as:         :collection,
+							 locals:     {
+									 html: {
+											 css: 'me-section--condensed'
+									 },
+									 user: current_user
+							 }) %>
+	</div>
 
 </section>

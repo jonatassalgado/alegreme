@@ -1,221 +1,204 @@
 <%
 
-	raise ArgumentError unless collection
+	raise ArgumentError unless [identifier].all?(&:present?)
 
-	collection = {
-			identifier:        nil,
-			items:             [],
-			user:              nil,
-			title:             {
-					principal: nil,
-					secondary: nil
-			},
-			custom_title:      nil,
-			filters:           {
-					categories: false,
-					kinds:      false,
-					ocurrences: false
-			},
-			limit:             16,
-			disposition:       :vertical,
-			infinite_scroll:   false,
-			display_similar:   true,
-			display_load_more: false,
-			if_greater_than:   0,
-			display_if_empty:  false,
-			show_similar_to:   [],
-			total_count:       0
-	}.deep_merge!(collection)
+	identifier = local_assigns.fetch(:identifier, nil)
+	items = local_assigns.fetch(:items, [])
+	user = local_assigns.fetch(:user, nil)
+	title = local_assigns.fetch(:title, {
+			principal: nil,
+			secondary: nil
+	})
+	empty_message = local_assigns.fetch(:empty_message, nil)
+	custom_title = local_assigns.fetch(:custom_title, nil)
+	categories = local_assigns.fetch(:categories, false)
+	kinds = local_assigns.fetch(:kinds, false)
+	ocurrences = local_assigns.fetch(:ocurrences, false)
+	selected = local_assigns.fetch(:selected, {
+			categories: [],
+			days:       []
+	})
+	limit = local_assigns.fetch(:limit, 16)
+	disposition = local_assigns.fetch(:disposition, :vertical)
+	infinite_scroll_horizontal = local_assigns.fetch(:infinite_scroll_horizontal, false)
+	infinite_scroll_vertical = local_assigns.fetch(:infinite_scroll_vertical, false)
+	display_similar = local_assigns.fetch(:display_similar, true)
+	display_load_more = local_assigns.fetch(:display_load_more, false)
+	if_greater_than = local_assigns.fetch(:if_greater_than, 0)
+	display_if_empty = local_assigns.fetch(:display_if_empty, false)
+	continue_to = local_assigns.fetch(:continue_to, nil)
+	show_similar_to = local_assigns.fetch(:show_similar_to, [])
+	total_count = local_assigns.fetch(:total_count, 0)
+
+	html = {
+
+	}.deep_merge!(local_assigns.fetch(:html, {}))
+
+	opts = {
+
+	}.deep_merge!(local_assigns.fetch(:opts, {}))
 
 %>
 
-<%# if collection[:display_if_empty] || (collection[:events] && collection[:events].size > collection[:if_greater_than]) %>
-<section class="me-collection <%= collection.size == 0 ? 'me-collection--empty' : '' %>"
-				 data-controller="section"
-				 data-target="section.section"
-				 data-section-load-more-loading="false"
-				 data-section-limit="<%= collection[:items].size %>"
-				 data-section-total-count="<%= collection[:total_count] %>"
-				 data-section-infinite-scroll="<%= collection[:infinite_scroll] %>"
-				 data-section-disposition="<%= collection[:disposition] %>"
-				 data-section-identifier="<%= collection[:identifier] %>"
-				 data-section-continue-to-path="<%= collection[:continue_to] %>"
-				 data-section-stimulus-session="<%= session[:stimulus].to_param %>"
-				 id="<%= collection[:identifier] %>">
-	<div class="me-collection__head">
-		<h2>
-			<%= collection[:title][:principal] %>
-			<% if collection[:continue_to].present? && collection[:user] %>
-          <span class="me-see-all is-hoverable"
-								data-fixed="true"
-								data-action="click->section#seeMoreInNewPage">
-            Ver tudo
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
-          </span>
-			<% end %>
-			<%= render partial: 'components/follow/follow_button', locals: {
-					identifier: collection[:identifier],
-					user:       collection[:user],
-					followable: collection[:followable]
-			} if collection[:followable] %>
+<%# if display_if_empty || (events && events.size > if_greater_than) %>
+<div data-controller="section"
+		 data-target="section.section"
+		 data-section-load-more-loading="false"
+		 data-section-limit="<%= items.size %>"
+		 data-section-total-count="<%= total_count %>"
+		 data-section-infinite-scroll-horizontal="<%= infinite_scroll_horizontal %>"
+		 data-section-infinite-scroll-vertical="<%= infinite_scroll_vertical %>"
+		 data-section-disposition="<%= disposition %>"
+		 data-section-identifier="<%= identifier %>"
+		 data-section-stimulus-session="<%= session[:stimulus].to_param %>"
+		 id="<%= identifier %>">
+	<%= content_tag :div,
+									class:   class_string('cursor-pointer flex justify-between group': continue_to,
+																				'flex justify-between':                      !continue_to),
+									onclick: continue_to ? "Turbolinks.visit('#{continue_to}')" : nil do %>
+		<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-chateau-green-500 md:leading-normal md:pl-0 md:text-5xl">
+			<%= title[:principal] %>
 		</h2>
-		<% if collection[:title][:tertiary] %>
-			<div class="me-collection__title-tertiary">
-				<%= collection[:title][:tertiary] %>
+		<% if continue_to && user %>
+			<div class="inline-flex items-center pr-3 text-xs text-gray-800 group-hover:text-chateau-green-500 md:pr-0"
+					 data-action="click->section#seeMoreInNewPage">
+				<svg class="w-5 h-auto ml-1 fill-current md:hidden md:ml-2 md:w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/>
+				</svg>
 			</div>
 		<% end %>
-		<% if collection[:title][:secondary] %>
-			<div class="me-collection__title-secondary">
-				<%= collection[:title][:secondary] %>
-			</div>
-		<% end %>
-		<% if collection[:custom_title] %>
-			<div class="me-collection__title-custom"
-					 data-fixed="true">
-				<%= collection[:custom_title] %>
-			</div>
-		<% end %>
-		<% unless collection[:title][:custom] %>
-			<div data-reflex-permanent class="me-filter"
-					 data-target="section.filter">
-				<%= render(partial: 'feeds/filter',
-									 locals:  {
-											 data: {
-													 filters:   collection[:categories],
-													 icon_type: 'filter_list',
-													 type:      'categories'
-											 }
-									 },
-									 cached:  false) %>
-				<%= render(partial: 'feeds/filter',
-									 locals:  {
-											 data: {
-													 filters:   collection[:kinds],
-													 icon_type: 'filter_list',
-													 type:      'kinds'
-											 }
-									 },
-									 cached:  false) %>
-				<%= collection[:title][:ocurrences] %>
-				<%= render(partial: 'feeds/filter',
-									 locals:  {
-											 data: {
-													 filters:   collection[:ocurrences],
-													 icon_type: '',
-													 type:      'days'
-											 }
-									 },
-									 cached:  false) %>
-			</div>
-		<% end %>
-	</div>
-	<% if collection.dig(:detail, :total_events_in_collection).try { |counter| counter == 0 } && collection[:empty_message] %>
-		<div class="me-collection__empty-message">
-			<%= collection[:empty_message] %>
+	<% end %>
+	<% if title[:tertiary] %>
+		<div class="inline-block pl-5 mt-1 mb-1 text-sm text-gray-600 md:-mt-1 md:pl-0 md:text-lg">
+			<%= title[:tertiary] %>
 		</div>
 	<% end %>
-	<div data-target="section.grid"
-			 class="mdc-layout-grid">
-		<div class="mdc-layout-grid__inner"
-				 data-section-turbolinks-persist-scroll="0"
-				 data-target="section.scrollContainer">
-			<% if collection[:items].present? %>
+	<% if title[:secondary] %>
+		<div class="px-5 pt-1 text-sm leading-tight text-gray-700 md:px-0 me-collection__title-secondary">
+			<%= title[:secondary] %>
+		</div>
+	<% end %>
+	<% if custom_title %>
+		<div class="mt-3 mb-2 md:mb-6 scrollx"
+				 data-fixed="true">
+			<%= custom_title %>
+		</div>
+	<% end %>
+	<% if categories || ocurrences %>
+		<div data-reflex-permanent class="my-4 space-y-2 md:space-y-3"
+				 data-controller="filter"
+				 data-filter-inactive-class='["bg-gray-100","text-gray-800"]'
+				 data-filter-active-class='["bg-chateau-green-200","border-chateau-green-400","text-chateau-green-800"]'
+				 data-target="section.filter">
+			<%= render(partial: 'feeds/filter',
+								 locals:  {
+										 filters:  categories,
+										 type:     'categories',
+										 selected: selected
+								 },
+								 cached:  false) %>
+			<%= render(partial: 'feeds/filter',
+								 locals:  {
+										 filters:  kinds,
+										 type:     'kinds',
+										 selected: selected
+								 },
+								 cached:  false) %>
+			<%= title[:ocurrences] %>
+			<%= render(partial: 'feeds/filter',
+								 locals:  {
+										 filters:  ocurrences,
+										 type:     'days',
+										 selected: selected
+								 },
+								 cached:  false) %>
+		</div>
+	<% end %>
+	<% if items.present? %>
+		<div data-target="section.grid"
+				 class="md:mt-2">
+			<div class="<%= html.dig(:grid, :css) || class_names('md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 pt-3 pb-2 grid col-gap-6 grid-flow-col pl-5 grid-after-margin scrollx') %>"
+					 data-section-turbolinks-persist-scroll="0"
+					 data-target="section.scrollContainer">
 				<%= render(partial:    'components/collection/event',
-									 collection: collection[:items],
+									 collection: items,
 									 as:         :event,
 									 locals:     {
-											 user:            collection[:user],
-											 identifier:      collection[:identifier],
-											 display_similar: collection[:display_similar],
-											 disposition:     collection[:disposition],
-											 show_similar_to: session[:stimulus][:show_similar_to]
+											 user:            user,
+											 identifier:      identifier,
+											 display_similar: display_similar,
+											 disposition:     disposition,
+											 show_similar_to: session[:stimulus][:show_similar_to],
+											 opts:            {
+													 save_button: opts.dig(:save_button)
+											 }
 									 },
 									 cached:     false) %>
-				<% if (collection[:infinite_scroll] || collection[:display_load_more]) && collection[:total_count] > collection[:items].size %>
-					<div data-action="click->section#loadMoreHere"
-							 data-target="section.loadMoreButton"
-							 data-continue-to-path="<%= collection[:continue_to] %>"
-							 class="me-collection__load-more me-collection__load-more--horizontal">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-							<path fill="none" d="M0 0h24v24H0V0z"/>
-							<path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
-						</svg>
-					</div>
-					<div class="me-collection__load-more me-collection__load-more--horizontal is-loading">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-							<path fill="none" d="M0 0h24v24H0V0z"/>
-							<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-						</svg>
-					</div>
-				<% end %>
-			<% else %>
-				<% 4.times do %>
-					<div class="mdc-layout-grid__cell" id="<%= "empty-events-#{rand 1000}" %>" style="order: 1;">
-						<div class="me-card me-card--feed me-card--empty mdc-card mdc-card--outlined" id="event_6238">
-							<div class="me-card__primary-section">
-								<div class="me-card__date is-hoverable" data-target="event.date">
-									<span>hoje 22:00</span>
-									<span class="me-card__date-distance-in-words"> · Daqui 2 horas  </span>
-								</div>
-							</div>
-							<div data-fixed="true" class="mdc-card__media mdc-card__media--16-9" style="">
-								<div class="me-card__like-button" data-action="click->event#like">
-									<div data-target="event.like">
-										<button data-target="event.likeButton" id="add-to-favorites" class="me-icon-button mdc-icon-button mdc-ripple-upgraded--unbounded mdc-ripple-upgraded" aria-label="Add to favorites" aria-hidden="true" aria-pressed="false" style="display: none; --mdc-ripple-fg-size:0px; --mdc-ripple-fg-scale:NaN; --mdc-ripple-left:0px; --mdc-ripple-top:0px;">
-											<i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">
-												<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"></path>
-												</svg>
-											</i>
-											<i class="material-icons-sharp mdc-icon-button__icon">
-												<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"></path>
-												</svg>
-											</i>
-										</button>
-									</div>
-								</div>
-								<a href="#">
-									<div class="me-card__overlay mdc-ripple-surface mdc-ripple-upgraded" data-target="event.overlay"></div>
-								</a>
-							</div>
-							<div class="me-card__quartenary-section">
-								<div class="me-card__category" data-target="event.category">
-									<a href="#">#Festa</a>
-									<a href="#">#Margot</a>
-								</div>
-							</div>
-							<div class="me-card__secondary-section">
-								<div class="me-card__title" data-target="event.name" title="QNT #12 Merry Christmas :: 26.12 :: @Margot">
-									<a href="#">Qnt #12 Merry Christmas / 26.12 / @Margot</a>
-								</div>
-							</div>
+				<% if disposition == :horizontal && (infinite_scroll_horizontal || display_load_more) && total_count > items.size %>
+					<div class="order-last md:hidden" data-controller="toggle-loader"
+							 data-toggle-loader-listener-on="section#loadMoreHere->started"
+							 data-toggle-loader-listener-off="section#loadMoreHere->finished">
+						<div class="flex items-center px-5 py-2 my-10 mr-10 text-center rounded-full shadow-xl cursor-pointer bg-chateau-green-100 text-chateau-green-800 w-content"
+								 data-action="click->section#loadMoreHere"
+								 data-target="section.loadMoreHorizontal toggle-loader.off">
+							Mostrar mais
+							<svg class="w-4 h-4 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/>
+							</svg>
+						</div>
+						<div class="flex hidden px-5 py-2 my-10 mr-10 text-center rounded-full shadow-xl cursor-pointer bg-chateau-green-100 text-chateau-green-800 w-content"
+								 data-target="toggle-loader.on">
+							Carregando
+							<svg data-target="toggle-loader.onIcon" class="w-5 h-5 my-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<path fill="none" d="M0 0h24v24H0V0z"/>
+								<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+							</svg>
 						</div>
 					</div>
 				<% end %>
 
-
+			</div>
+			<% if (disposition == :horizontal && mobile_device?) &&
+					session[:stimulus][:in_this_section] == identifier &&
+					show_similar_to.present? %>
+				<%= render partial: 'components/collection/similar',
+									 locals:  {
+											 data: {
+													 user:  user,
+													 event: Event.find(show_similar_to.last)
+											 }
+									 },
+									 cached:  false %>
+			<% end %>
+			<% if disposition == :vertical && (infinite_scroll_vertical || display_load_more) && total_count > items.size %>
+				<div data-controller="toggle-loader"
+						 data-toggle-loader-listener-on="section#loadMoreHere->started"
+						 data-toggle-loader-listener-off="section#loadMoreHere->finished">
+					<div class="flex px-5 py-2 mx-auto my-10 text-center rounded-full shadow-xl cursor-pointer bg-chateau-green-100 text-chateau-green-800 w-content"
+							 data-action="click->section#loadMoreHere"
+							 data-target="section.loadMoreVertical toggle-loader.off">
+						Mostrar mais
+					</div>
+					<div class="flex hidden px-5 py-2 mx-auto my-10 text-center rounded-full shadow-xl cursor-pointer bg-chateau-green-100 text-chateau-green-800 w-content"
+							 data-target="toggle-loader.on">
+						Carregando
+						<svg data-target="toggle-loader.onIcon" class="w-5 h-5 my-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path fill="none" d="M0 0h24v24H0V0z"/>
+							<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+						</svg>
+					</div>
+				</div>
+			<% end %>
+	<% else %>
+		<div class="px-5 mb-10">
+			<div class="text-sm text-gray-600"><%= empty_message %></div>
+			<%= link_to new_user_registration_path do %>
+				<div class="px-3 py-2 my-2 text-sm antialiased text-gray-600 border rounded-full border-chateau-green-300 text-chateau-green-500 w-content">Criar
+					conta
+				</div>
 			<% end %>
 		</div>
-		<% if (collection[:disposition] == :horizontal && mobile_device?) &&
-				session[:stimulus][:in_this_section] == collection[:identifier] &&
-				collection[:show_similar_to].present? %>
-			<%= render partial: 'components/collection/similar',
-								 locals:  {
-										 data: {
-												 user:  collection[:user],
-												 event: Event.find(collection[:show_similar_to].last)
-										 }
-								 },
-								 cached:  false %>
-		<% end %>
-		<% if (collection[:infinite_scroll] || collection[:display_load_more]) && collection[:total_count] > collection[:items].size %>
-			<div class="me-collection__load-more me-collection__load-more--vertical is-hoverable"
-					 data-action="click->section#loadMoreHere"
-					 data-target="section.loadMoreButton">
-				Mostrar mais
-			</div>
-		<% end %>
+	<% end %>
 	</div>
-</section>
+</div>
 <%# end %>

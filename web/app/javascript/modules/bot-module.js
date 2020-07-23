@@ -7,7 +7,7 @@ const BotModule = (() => {
     const createContainer = ({human, cssClass, delay, resolve}) => {
         const container = document.createElement("div");
 
-        container.className       = `me-bot__container ${
+        container.className       = `bot__container ${
             human ? "is-human" : "is-bot"
         } ${cssClass}`;
         container.style.opacity   = 0;
@@ -40,7 +40,7 @@ const BotModule = (() => {
         timers.push(
             setTimeout(() => {
                 if (!module.domNode) return
-                const onboardingEl = document.querySelector(".me-swipable__onboarding");
+                const onboardingEl = document.querySelector("[data-swipable-module=\"onboarding\"]");
                 if (onboardingEl) onboardingEl.scrollTo({
                                                             top:      onboardingEl.scrollHeight,
                                                             behavior: "smooth"
@@ -69,7 +69,7 @@ const BotModule = (() => {
 
             items.forEach(item => {
                 const button     = document.createElement("button");
-                button.className = `me-bot__button ${item.cssClass} me-button me-button--small mdc-button`;
+                button.className = `${item.cssClass} float-right bg-chateau-green-500 px-4 py-2 rounded-full text-white antialiased font-semibold text-lg`;
                 button.type      = "button";
                 button.innerHTML = item.text;
                 button.addEventListener("click", () => {
@@ -94,9 +94,7 @@ const BotModule = (() => {
                                             });
 
             let message       = document.createElement("div");
-            message.className = `me-bot__message ${
-                human ? "is-human" : "is-bot"
-            } ${cssClass}`;
+            message.className = `antialiased bg-gray-200 inline-flex is-bot px-4 py-3 rounded-2xl text-gray-800 leading-5 ${human ? "is-human" : "is-bot"}`;
 
             requestAnimationFrame(() => {
                 message.innerHTML = content;

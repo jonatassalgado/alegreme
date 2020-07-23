@@ -1,5 +1,6 @@
 class PlacesController < ApplicationController
-	before_action :authorize_admin, except: :show
+	before_action :authorize_admin, except: [:show, :follow, :unfollow]
+	before_action :authorize_user, only: [:follow, :unfollow]
 	before_action :set_place, only: [:show, :edit, :update, :destroy]
 
 	# GET /places
@@ -14,24 +15,7 @@ class PlacesController < ApplicationController
 		default_reflex_values(limit: 12)
 
 		@events ||= @place.events.not_ml_data.active.order_by_date
-
-		@collection = {
-				identifier:       'new-today',
-				items:            @events.limit(session[:stimulus][:limit]),
-				user:             current_user,
-				total_count:      @events.size,
-				title:            {
-						principal: @place.details_name,
-						secondary: @place.geographic_address
-				},
-				followable:       @place,
-				infinite_scroll:  true,
-				display_if_empty: true,
-				show_similar_to:  session[:stimulus][:show_similar_to]
-		}
-
 		render 'show'
-
 	end
 
 	# GET /places/new
@@ -81,6 +65,16 @@ class PlacesController < ApplicationController
 			format.html { redirect_to places_url, notice: 'Place was successfully destroyed.' }
 			format.json { head :no_content }
 		end
+	end
+
+	def follow
+		@association = FollowServices::AssociationCreator.new(current_user, params[:id], controller_name).call
+		render layout: false
+	end
+
+	def unfollow
+		@association = FollowServices::AssociationCreator.new(current_user, params[:id], controller_name).call(destroy: true)
+		render layout: false
 	end
 
 	private

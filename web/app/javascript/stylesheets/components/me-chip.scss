@@ -1,137 +1,137 @@
-
-//@import "@material/top-app-bar/_mixins";
-
-.me-chip {
-  background: whitesmoke;
-  font-weight: 400;
-  padding: 20px 13px;
-  border-radius: 24px;
-  overflow: hidden;
-
-  .me-section-title-custom & {
-    color: $font-tertiary-color;
-    font-size: 13px;
-
-    &.new {
-      color: $brand-color-aa;
-      font-weight: 600;
-    }
-
-    & svg {
-      fill: $font-tertiary-color;
-      margin: 0 6px 0 0;
-    }
-  }
-
-  .me-collection__title-custom & {
-    font-weight: 400;
-    padding: 20px 13px;
-    border-radius: 24px;
-    overflow: hidden;
-  }
-
-  .me-card__primary-section & {
-    background: $surface-color;
-    color: $font-tertiary-color;
-    box-shadow: 0 1px 5px #0000003b;
-    font-size: 10px;
-    margin: 0 6px 6px 0;
-    font-weight: 500;
-    //padding: 0 10px;
-    height: auto;
-    line-height: 1;
-    padding: 6px 10px;
-
-    &.me-card__date {
-      box-shadow: none;
-    }
-
-    &.hoje {
-      font-weight: 600;
-      //background: $brand-color;
-      color: $brand-color-aa;
-      padding: 4px 10px;
-      font-size: 11px;
-
-      & i {
-        width: 6px;
-        height: 6px;
-        display: inline-block;
-        background: $brand-color;
-        border-radius: 3px;
-        margin: 0 3px 1px 0;
-        box-shadow: 0 0 6px $brand-color;
-      }
-    }
-
-    &.amanha {
-      font-weight: 600;
-      //background: lighten($brand-color, 63%);
-      //color: $brand-color-aa;
-      padding: 4px 10px;
-      font-size: 11px;
-    }
-  }
-
-  .me-similar__events & {
-    font-size: 9px;
-    font-weight: 500;
-  }
-
-  .me-card__tertiary-section & {
-    margin: 0 6px 6px 0;
-    font-size: 11px;
-    height: auto;
-    padding: 3px 10px;
-
-    @include mobile-only {
-      font-size: 10px;
-      background: whitesmoke;
-      font-weight: 300;
-    }
-
-    & a {
-      // color: $font-tertiary-color;
-    }
-
-    & svg {
-      fill: $font-tertiary-color
-    }
-  }
-
-  &__counter {
-    font-style: normal;
-    margin: 0 0 0 6px;
-    background: $surface-color;
-    border-radius: 12px;
-    width: 19px;
-    text-align: center;
-    font-size: 9px;
-
-    //.new & {
-    //  color: $brand-color;
-    //  font-weight: 600;
-    //}
-  }
-
-  .me-chip-set--categories &.mdc-chip--selected {
-    color: $chip-filter-color-active;
-    background-color: $chip-filter-background-active;
-    border-color: $chip-filter-background-active;
-  }
-
-  .me-filter & {
-    @include mobile-only {
-      // padding: 8px 20px;
-      // font-size: 11px;
-      // font-weight: 600;
-    }
-  }
-
-  .me-filter &.mdc-chip--selected {
-    color: $chip-filter-color-active;
-    background-color: $chip-filter-background-active;
-    border-color: $chip-filter-background-active;
-  }
-
-}
+//
+////@import "@material/top-app-bar/_mixins";
+//
+//.me-chip {
+//  background: whitesmoke;
+//  font-weight: 400;
+//  padding: 20px 13px;
+//  border-radius: 24px;
+//  overflow: hidden;
+//
+//  .me-section-title-custom & {
+//    color: $font-tertiary-color;
+//    font-size: 13px;
+//
+//    &.new {
+//      color: $brand-color-aa;
+//      font-weight: 600;
+//    }
+//
+//    & svg {
+//      fill: $font-tertiary-color;
+//      margin: 0 6px 0 0;
+//    }
+//  }
+//
+//  .me-collection__title-custom & {
+//    font-weight: 400;
+//    padding: 20px 13px;
+//    border-radius: 24px;
+//    overflow: hidden;
+//  }
+//
+//  .me-card__primary-section & {
+//    background: $surface-color;
+//    color: $font-tertiary-color;
+//    box-shadow: 0 1px 5px #0000003b;
+//    font-size: 10px;
+//    margin: 0 6px 6px 0;
+//    font-weight: 500;
+//    //padding: 0 10px;
+//    height: auto;
+//    line-height: 1;
+//    padding: 6px 10px;
+//
+//    &.me-card__date {
+//      box-shadow: none;
+//    }
+//
+//    &.hoje {
+//      font-weight: 600;
+//      //background: $brand-color;
+//      color: $brand-color-aa;
+//      padding: 4px 10px;
+//      font-size: 11px;
+//
+//      & i {
+//        width: 6px;
+//        height: 6px;
+//        display: inline-block;
+//        background: $brand-color;
+//        border-radius: 3px;
+//        margin: 0 3px 1px 0;
+//        box-shadow: 0 0 6px $brand-color;
+//      }
+//    }
+//
+//    &.amanha {
+//      font-weight: 600;
+//      //background: lighten($brand-color, 63%);
+//      //color: $brand-color-aa;
+//      padding: 4px 10px;
+//      font-size: 11px;
+//    }
+//  }
+//
+//  .me-similar__events & {
+//    font-size: 9px;
+//    font-weight: 500;
+//  }
+//
+//  .me-card__tertiary-section & {
+//    margin: 0 6px 6px 0;
+//    font-size: 11px;
+//    height: auto;
+//    padding: 3px 10px;
+//
+//    @include mobile-only {
+//      font-size: 10px;
+//      background: whitesmoke;
+//      font-weight: 300;
+//    }
+//
+//    & a {
+//      // color: $font-tertiary-color;
+//    }
+//
+//    & svg {
+//      fill: $font-tertiary-color
+//    }
+//  }
+//
+//  &__counter {
+//    font-style: normal;
+//    margin: 0 0 0 6px;
+//    background: $surface-color;
+//    border-radius: 12px;
+//    width: 19px;
+//    text-align: center;
+//    font-size: 9px;
+//
+//    //.new & {
+//    //  color: $brand-color;
+//    //  font-weight: 600;
+//    //}
+//  }
+//
+//  .me-chip-set--categories &.mdc-chip--selected {
+//    color: $chip-filter-color-active;
+//    background-color: $chip-filter-background-active;
+//    border-color: $chip-filter-background-active;
+//  }
+//
+//  .me-filter & {
+//    @include mobile-only {
+//      // padding: 8px 20px;
+//      // font-size: 11px;
+//      // font-weight: 600;
+//    }
+//  }
+//
+//  .me-filter &.mdc-chip--selected {
+//    color: $chip-filter-color-active;
+//    background-color: $chip-filter-background-active;
+//    border-color: $chip-filter-background-active;
+//  }
+//
+//}

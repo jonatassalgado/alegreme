@@ -1,4 +1,4 @@
-<div class="me-swipable"
+<div class="h-content md:mx-auto md:w-128 px-5"
 		 data-reflex-permanent
 		 data-controller="swipable"
 		 data-target="swipable.swipable"
@@ -7,69 +7,49 @@
 		 data-swipable-user-name="<%= current_user.try(:first_name) %>"
 		 data-swipable-user-signin-count="<%= current_user&.sign_in_count %>"
 		 data-swipable-user-taste-events-saved="<%= current_user&.taste_events_saved&.size %>"
-		 style="">
-
-	<div class="me-swipable__onboarding"
+		 style="min-height: 300px">
+	<div class="hidden pt-2 pb-5 pl-5 pr-2 mx-5 overflow-x-hidden overflow-y-scroll transition-all border rounded-lg shadow-lg h-screen-1/2 is-bot md:h-screen-3/4"
+			 data-swipable-module="onboarding"
 			 data-target="swipable.onboarding"></div>
-
-	<div class="me-swipable__items"
+	<div class="hidden transition-all opacity-0"
+			 data-swipable-module="swipable-items"
 			 data-target="swipable.items">
-		<!-- <div class="me-swipable__question"> -->
-		<!-- <h2>Você iria neste evento?</h2>
-		<span>Indique abaixo os eventos que você iria ou não para já receber sugestões que tem a ver com seu gosto</span> -->
-		<!-- </div> -->
-		<div id="stacked-cards-block" class="stackedcards stackedcards--animatable init">
-			<div class="stackedcards-container">
+		<div data-swipable-module="stacked-cards-block" class="relative">
+			<div data-swipable-module="stackedcards-container" class="relative w-full h-56 mx-auto">
 				<% @swipable_items.each do |item| %>
-					<div id="<%= item[:id] %>" class="card-item">
-						<div class="me-swipable__item" style="background-image: url('<%= image_url item[:image_url] %>')">
-							<div class="me-swipable__item-overlay"></div>
-							<div class="me-swipable__item-title"><%= item[:name] %></div>
-							<div class="me-swipable__item-description"><%= item[:description] %></div>
+					<div id="<%= item[:id] %>" class="absolute top-0 w-full h-full transition-all duration-300 transform bg-white elevation-10 rounded-xl will-change">
+						<div data-swipable-module="item" class="absolute top-0 left-0 flex flex-col justify-end w-full h-full overflow-hidden bg-gray-600 bg-no-repeat bg-cover bg-blend-multiply rounded-xl" style="background-image: url('<%= image_url item[:image_url] %>')">
+							<div class="absolute z-0 w-full h-full opacity-75 bg-y-black-to-transparent"></div>
+							<div class="relative z-10 px-3 text-xl antialiased font-bold leading-6 text-white"><%= item[:name] %></div>
+							<div class="relative z-10 px-3 pb-3 text-sm antialiased font-light leading-tight text-white font-base"><%= item[:description] %></div>
 						</div>
 					</div>
 				<% end %>
 			</div>
-			<div class="stackedcards--animatable stackedcards-overlay left">
-				<!-- <i class="material-icons mdc-button__icon" aria-hidden="true">
-					<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/><path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
-				</i> -->
+			<div data-swipable-module="stackedcards-overlay-left" class="absolute top-0 left-0 z-20 w-full h-full bg-red-700 opacity-0 rounded-xl">
 			</div>
-			<div class="stackedcards--animatable stackedcards-overlay right">
-				<!-- <i class="material-icons mdc-button__icon" aria-hidden="true">
-					<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/><path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/></svg>
-				</i> -->
-			</div>
-			<div class="stackedcards--animatable stackedcards-overlay top">
-				<!-- TALVEZ -->
+			<div data-swipable-module="stackedcards-overlay-right" class="absolute top-0 left-0 z-20 w-full h-full opacity-0 bg-chateau-green-500 rounded-xl">
 			</div>
 		</div>
-		<div class="global-actions">
-			<button class="mdc-button mdc-button__icon left-action">
-				<div class="mdc-button__ripple"></div>
-				<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+		<div class="flex items-center justify-center mt-10 space-x-5">
+			<div data-swipable-module="left-action" class="p-3 text-red-500 bg-red-100 rounded-full cursor-pointer tap-highlight-none h-content w-content">
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
 					<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 					<path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
 				</svg>
-			</button>
-			<!-- <button class="mdc-button mdc-button__icon top-action">
-			 <i class="material-icons mdc-button__icon" aria-hidden="true">star_rate</i>
-				<div class="mdc-button__ripple"></div>
-				<span class="mdc-button__label" style="opacity: 0.6">Talvez</span>
-			</button> -->
-			<button class="mdc-button mdc-button__icon right-action">
-				<div class="mdc-button__ripple"></div>
-				<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+			</div>
+			<div data-swipable-module="right-action" class="p-3 rounded-full cursor-pointer bg-chateau-green-100 tap-highlight-none h-content text-chateau-green-500 w-content">
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
 					<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 					<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
 				</svg>
-			</button>
+			</div>
 		</div>
-		<!-- <div data-target="swipable.skip" class="me-swipable__skip" data-turbolinks="false"> -->
+		<!-- <div data-target="swipable.skip" class="swipable__skip" data-turbolinks="false"> -->
 		<%#= link_to "Pular esta etapa por agora", feed_path(skip_swipable: true) %>
 		<!-- </div> -->
 	</div>
-	<div class="final-state">
-		<h2>Atualizando recomendações...</h2>
+	<div data-swipable-module="final-state" class="flex items-center justify-center hidden opacity-0 text-gray-800 transition-all duration-500 border rounded-lg shadow-lg h-screen-1/2">
+		Atualizando recomendações...
 	</div>
 </div>

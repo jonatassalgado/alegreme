@@ -1,4 +1,4 @@
-<section class="me-page">
+<section class="mt-20 md:mt-40 min-h-screen is-animated">
 	<% content_for :canonical_url, category_events_url %>
 	<% content_for :amp_url, category_events_url(format: :amp) %>
 
@@ -8,44 +8,64 @@
 	<% content_for :meta_description, params[:neighborhood] ? "Descubra eventos do bairro #{params[:neighborhood]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" : "Descubra eventos de todas as categorias que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
 
 	<script type="application/ld+json">
-  [<%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>]
+  [<%= render partial: 'layouts/json_ld', collection: @events, as: :event %>]
 
 
 
 	</script>
 
 
-	<section class="me-section me-section--condensed">
-		<div data-controller="chip-set" data-target="chip-set.wrapper" data-chip-set-selected="<%= params[:neighborhood].parameterize %>" class="me-collection__title-custom me-chip-set__wrapper">
-			<div data-target="chip-set.chipSet" class="me-chip-set mdc-chip-set mdc-chip-set--choice">
+	<section class="md:w-9/12 mx-auto">
+		<div class="scrollx"
+				 data-controller="scroll-on-clicked"
+				 data-scroll-on-clicked-init-selected="<%= params[:neighborhood] %>"
+				 data-scroll-on-clicked-offset-left="24"
+				 data-target="scroll-on-clicked.scroller">
+			<div data-controller="toggle-style go-to"
+					 data-go-to-delay="250"
+					 data-toggle-style-init-selected="<%= params[:neighborhood] %>"
+					 data-toggle-style-current-selected="<%= params[:neighborhood] %>"
+					 data-toggle-style-inactive-class='["bg-gray-100","text-gray-800"]'
+					 data-toggle-style-active-class='["bg-chateau-green-200","border-chateau-green-400","text-chateau-green-800"]'
+					 class="flex flex-wrap md:pl-0 md:pr-0 md:w-full pl-5 pr-5 w-content">
 				<% @neighborhoods.each do |neighborhood| %>
-					<div data-action="click->chip-set#select"
-							 data-chip-set-url="<%= neighborhood_events_path neighborhood.parameterize_with_accents %>"
-							 data-chip-set-slug="<%= neighborhood.parameterize %>"
-							 class="me-chip mdc-chip">
-						<div class="mdc-chip__ripple"></div>
-						<span class="mdc-chip__text"><%= neighborhood %></span>
+					<div data-action="click->scroll-on-clicked#scroll click->toggle-style#toggle click->go-to#url"
+							 data-target="toggle-style.toggle scroll-on-clicked.item"
+							 data-toggle-style-identifier="<%= neighborhood.try(:parameterize_with_accents) %>"
+							 data-scroll-on-clicked-selected="<%= params[:neighborhood] == neighborhood.try(:parameterize_with_accents) %>"
+							 data-go-to-url="<%= neighborhood_events_path neighborhood.try(:parameterize_with_accents) %>"
+							 class="<%= class_names 'tap-highlight-none w-content user select-none antialiased bg-gray-100 border md:mb-3 mr-2 md:mr-3 px-4 py-1 rounded-full cursor-pointer transform transition-colors duration-200',
+																			{'bg-chateau-green-200 text-chateau-green-800 border-chateau-green-400': params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents)),
+																			 'text-gray-800':                                                        !params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents))} %>">
+						<%= neighborhood %>
 					</div>
 				<% end %>
 			</div>
 		</div>
 	</section>
 
+
 	<% if params[:neighborhood] %>
-		<section class="me-section me-section--without-padding">
-			<section class="me-section__inner">
-				<%= render partial: "components/collection/events/collection", locals: {collection: @collection} %>
-			</section>
-		</section>
-	<% else %>
-		<div class="me-section me-section--full-height">
-			<div class="me-section__inner">
-				<div class="me-info">
-					<div class="me-info__content">
-						Selecione uma opção acima para ver os eventos aqui
-					</div>
-				</div>
-			</div>
+		<div class="md:w-9/12 mx-auto mt-5">
+			<%= render partial: "components/collection/events/collection",
+								 locals:  {
+										 identifier:       'neighborhood',
+										 user:             current_user,
+										 items:            @events.limit(session[:stimulus][:limit]),
+										 total_count:      @events.size,
+										 title:            {
+												 principal: "Eventos no bairro #{params[:neighborhood].titleize}",
+												 secondary: "Explore os #{@events.size} eventos do bairro #{params[:neighborhood].titleize} em Porto Alegre - RS"
+										 },
+										 infinite_scroll_vertical:  true,
+										 display_if_empty: true,
+										 show_similar_to:  session[:stimulus][:show_similar_to],
+										 html: {
+												 grid: {
+														 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
+												 }
+										 }
+								 } %>
 		</div>
 	<% end %>
 

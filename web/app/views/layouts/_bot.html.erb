@@ -1,12 +1,12 @@
-<div data-controller="bot" data-target="bot.bot" data-bot-already-open="false" class="me-bot">
-	<div data-target="bot.start" data-action="click->bot#showBot" class="me-bot__start">
+<div data-controller="bot" data-target="bot.bot" data-bot-already-open="false" class="bot">
+	<div data-target="bot.start" data-action="click->bot#showBot" class="bot__start">
 		<span>
 			
-			Vamos descobrir seu perfil para eu começar a te indicar eventos? <b class="me-bot__pre-response">Vamos</b>
+			Vamos descobrir seu perfil para eu começar a te indicar eventos? <b class="bot__pre-response">Vamos</b>
 		</span>
 	</div>
 	<div data-target="bot.conversation" class="wrapper">
-		<div data-action="click->bot#hideBot" class="me-bot__close">Fechar</div>
+		<div data-action="click->bot#hideBot" class="bot__close">Fechar</div>
 		<div id="message_window">
 			<div class="disconnected">
 				Disconnected... reconnecting!

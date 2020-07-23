@@ -1,7 +1,7 @@
 import Flipping from "flipping";
 
 const FlipperModule = (flipKey) => {
-    let debug    = false;
+    let debug    = true;
     let module   = {};
     let flipping = new Flipping({
                                     attribute: flipKey

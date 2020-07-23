@@ -1,54 +1,84 @@
+<%
+
+	html = {
+			taste_add:    {
+					visible: true
+			},
+			taste_remove: {
+					visible: true
+			}
+	}.deep_merge!(local_assigns.fetch(:html, {}))
+
+%>
+
+
 <% if movie.image.try { |image| image[:medium] } %>
-	<div class="me-movie mdc-layout-grid__cell"
+	<div class="md:w-32 relative w-24"
 			 data-controller="movie"
 			 data-target="movie.movie"
-			 id="<%= dom_id movie %>">
-		<div class="me-movie__vote">
+			 id="<%= "#{section_identifier}-#{dom_id(movie)}" %>">
+		<div class="absolute bg-white m-1 me-movie__vote pl-1 pr-2 rounded-full shadow-sm text-gray-800 text-xs z-10">
 			<%= movie.details_vote_average %> ⭐
 		</div>
-		<div class="me-movie__cover">
-			<%= link_to send("#{movie.type.underscore}_path", movie) do %>
-				<div data-target="movie.coverRipple" data-action="click->movie#handleEventClick" class="me-movie__ripple mdc-ripple-surface"></div>
-			<% end %>
-			<% if user %>
-				<div data-controller="save-button"
-						 data-action="click->save-button#like"
-						 data-save-button-resource-name="<%= movie.class.base_class.name.tableize %>"
-						 data-save-button-resource-id="<%= movie.id %>"
-						 data-save-button-resource-selector="<%= dom_id movie %>"
-						 data-save-button-saved="<%= user.taste_movies_saved? movie.id %>"
-						 class="me-card__like-button">
-					<button class="me-icon-button mdc-icon-button <%= 'mdc-icon-button--on' if user.taste_movies_saved?(movie.id) %>"
-									data-target="save-button.button"
-									id="add-to-favorites"
-									style="<%= 'display: inline' if user.taste_movies_saved?(movie.id) %>">
-						<i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">
-							<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"/>
-							</svg>
-						</i>
-						<i class="material-icons-sharp mdc-icon-button__icon">
-							<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M9.99165 15.4562C9.33798 16.0496 8.33168 16.0496 7.67801 15.4476L7.5834 15.3616C3.06793 11.2761 0.117822 8.60127 0.229634 5.26412C0.281239 3.80197 1.02952 2.40003 2.24224 1.57434C4.51288 0.0261801 7.31677 0.748655 8.83053 2.52044C10.3443 0.748655 13.1482 0.0175793 15.4188 1.57434C16.6315 2.40003 17.3798 3.80197 17.4314 5.26412C17.5518 8.60127 14.5931 11.2762 10.0777 15.3788L9.99165 15.4562Z"/>
-							</svg>
-						</i>
-					</button>
-				</div>
-			<% end %>
+		<div class="relative">
+			<div class="aspect-ratio-40/61"></div>
 			<% if movie.details_trailler.present? %>
-				<div class="me-movie__trailler me-chip mdc-chip" onclick="location.assign('<%= movie.details_trailler %>')">
-					<i class="material-icons mdc-chip__icon mdc-chip__icon--leading">
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-							<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/>
-						</svg>
-					</i>
-					Ver trailler
+				<!--				<div class="absolute bg-white bottom-0 flex items-center m-2 pr-2 rounded-full text-gray-800 text-sm shadow-xs" onclick="location.assign('<%= movie.details_trailler %>')">-->
+				<!--					<svg class="w-5 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
+				<!--						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/>-->
+				<!--					</svg>-->
+				<!--					Ver trailler-->
+				<!--				</div>-->
+			<% end %>
+			<%= link_to send("#{movie.type.underscore}_path", movie) do %>
+				<%= image_tag(movie.image[:medium].url(public: true), loading: :lazy, class: 'h-full w-full absolute top-0 left-0 object-cover rounded-lg shadow-xs bg-gray-100 w-32') if movie.image.try { |image| image[:medium] } %>
+			<% end %>
+		</div>
+		<div class="flex flex-col items-center justify-center mt-3">
+			<% if user %>
+				<div class="inline-flex space-x-2 items-center">
+					<%= render partial: 'components/taste_button',
+										 locals:  {
+												 user:            user,
+												 resource:        movie,
+												 parent_id:       "#{section_identifier}-#{dom_id(movie)}",
+												 taste_type:      :save,
+												 taste_sentiment: :positive,
+												 html:            {
+														 container: {
+																 css: 'flex-shrink-0 select-none tap-highlight-none bg-white w-content border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+														 }
+												 },
+												 opts:            {
+														 remove_on_action:            true,
+														 update_collection_on_action: true
+												 }
+										 } %>
+					<%= render partial: 'components/taste_button',
+										 locals:  {
+												 user:            user,
+												 resource:        movie,
+												 taste_type:      :dislike,
+												 taste_sentiment: :negative,
+												 parent_id:       "#{section_identifier}-#{dom_id(movie)}",
+												 html:            {
+														 container: {
+																 css: 'flex-shrink-0 select-none tap-highlight-none w-content h-content bg-white border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+														 },
+														 icon:      {
+																 css: 'fill-current h-3 hover:scale-125 w-3'
+														 }
+												 },
+												 opts:            {
+														 remove_on_action:            true,
+														 update_collection_on_action: false
+												 }
+										 } if html.dig(:taste_remove, :visible) %>
 				</div>
 			<% end %>
-			<%= image_tag(movie.image[:medium].url(public: true), loading: :lazy) if movie.image.try { |image| image[:medium] } %>
+			<h3 class="font-light py-2 text-center text-gray-600 text-xs md:text-sm leading-tight">
+				<%= link_to movie.details_title, send("#{movie.type.underscore}_path", movie) %>
+			</h3>
 		</div>
-		<h3 class="me-movie__title">
-			<%= link_to movie.details_title, send("#{movie.type.underscore}_path", movie) %>
-		</h3>
 	</div>
 <% end %>

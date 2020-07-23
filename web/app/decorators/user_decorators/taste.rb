@@ -1,38 +1,70 @@
 module UserDecorators
 	module Taste
 
-		TASTE_TYPES = {
-				"save"      => {
+		TASTE_TYPES = [:save, :like, :view, :dislike]
+
+		TASTE_ACTIONS = {
+				save:    {
+						add:    :save,
+						remove: :unsave
+				},
+				like:    {
+						add:    :like,
+						remove: :unlike
+				},
+				dislike: {
+						add:    :dislike,
+						remove: :undislike
+				}
+		}
+
+		TASTE_TEXTS = {
+				save:    {
+						add:    "Salvar",
+						remove: "Salvo"
+				},
+				like:    {
+						add:    "Curtir",
+						remove: "Curtido"
+				},
+				dislike: {
+						add:    "Não Gostei",
+						remove: "Desfazer"
+				}
+		}
+
+		TASTE_VERBS = {
+				save:      {
 						past:   "saved",
 						plural: "saves"
 				},
-				"unsave"    => {
+				unsave:    {
 						past:   "saved",
 						plural: "saves"
 				},
-				"like"      => {
+				like:      {
 						past:   "liked",
 						plural: "likes"
 				},
-				"unlike"    => {
+				unlike:    {
 						past:   "liked",
 						plural: "likes"
 				},
-				"view"      => {
+				view:      {
 						past:   "viewed",
 						plural: "views"
 				},
-				"dislike"   => {
+				dislike:   {
 						past:   "disliked",
 						plural: "dislikes"
 				},
-				"undislike" => {
+				undislike: {
 						past:   "disliked",
 						plural: "dislikes"
 				}
 		}
 
-		RESOURCES = ['events', 'movies']
+		RESOURCES = [:events, :movies]
 
 		def self.included base
 			base.send :include, InstanceMethods
@@ -42,51 +74,60 @@ module UserDecorators
 
 		module InstanceMethods
 
-			RESOURCES.each do |resource|
-				define_method "saved_#{resource}" do |opts = {}|
-					if self && self.public_send("taste_#{resource}_saved").present?
-						resource.classify.constantize.saved_by_user(self)
-					else
-						resource.classify.constantize.none
-					end
-				end
+			def tasted?(resource, taste_type)
+				self.public_send("taste_#{resource.class.base_class.name.tableize}_#{TASTE_VERBS[taste_type.to_sym][:past]}?", resource.id)
 			end
 
 			RESOURCES.each do |resource|
-				define_method "saved_#{resource}_ids" do
-					if self && !self.public_send("taste_#{resource}_saved").empty?
-						if resource == 'events'
-							Event.saved_by_user(self).active.order_by_date.uniq.pluck(:id)
-						elsif resource == 'movies'
-							Movie.saved_by_user(self).order_by_date.uniq.pluck(:id)
+				TASTE_TYPES.each do |taste_type|
+					define_method "#{TASTE_VERBS[taste_type][:past]}_#{resource}" do
+						if self && self.public_send("taste_#{resource}_#{TASTE_VERBS[taste_type][:past]}").present?
+							resource.to_s.classify.constantize.public_send("#{TASTE_VERBS[taste_type][:past]}_by_user", self)
+						else
+							resource.to_s.classify.constantize.none
 						end
-					else
-						resource.classify.constantize.none
 					end
 				end
 			end
 
 			RESOURCES.each do |resource|
-				["save", "like", "view", "dislike"].each do |taste_type|
-					define_method "taste_#{resource}_#{taste_type}" do |resource_id|
+				TASTE_TYPES.each do |taste_type|
+					define_method "#{TASTE_VERBS[taste_type][:past]}_#{resource}_ids" do
+						if self && !self.public_send("taste_#{resource}_#{TASTE_VERBS[taste_type][:past]}").empty?
+							if resource == :events
+								Event.public_send("#{TASTE_VERBS[taste_type][:past]}_by_user", self).active.order_by_date.uniq.pluck(:id)
+							elsif resource == :movies
+								Movie.public_send("#{TASTE_VERBS[taste_type][:past]}_by_user", self).order_by_date.uniq.pluck(:id)
+							end
+						else
+							resource.to_s.classify.constantize.none
+						end
+					end
+				end
+			end
+
+			RESOURCES.each do |resource|
+				TASTE_TYPES.each do |taste_type|
+					define_method "taste_#{resource}_#{taste_type}" do |_instance|
 						begin
-							instance = resource.classify.constantize.find resource_id.to_i
+							_resource = resource.to_s
+							instance  = _instance.is_a?(ApplicationRecord) ? _instance : resource.to_s.classify.constantize.find(_instance.to_i)
 
 							ActiveRecord::Base.transaction do
-								instance.entries["#{TASTE_TYPES[taste_type][:past]}_by"]      |= [id]
-								instance.entries["total_#{TASTE_TYPES[taste_type][:plural]}"] += 1
+								instance.entries["#{TASTE_VERBS[taste_type][:past]}_by"]      |= [id]
+								instance.entries["total_#{TASTE_VERBS[taste_type][:plural]}"] += 1
 
 								validate_taste_existence resource
-								taste[resource][TASTE_TYPES[taste_type][:past]]              |= [resource_id.to_i]
-								taste[resource]["total_#{TASTE_TYPES[taste_type][:plural]}"] += 1
-								taste[resource]['updated_at']                                = DateTime.now
+								taste[_resource][TASTE_VERBS[taste_type][:past]]              |= [instance.id]
+								taste[_resource]["total_#{TASTE_VERBS[taste_type][:plural]}"] += 1
+								taste[_resource]['updated_at']                                = DateTime.now
 
 								instance.save && save
 							end
 						rescue ActiveRecord::RecordInvalid
 							puts 'Não foi possível salvar sua ação (ERRO 7813)!'
 						else
-							if taste_type == "save" && resource == 'events'
+							if taste_type == :save && resource == :events
 								UpdateUserEventsSuggestionsJob.perform_later(self.id)
 							end
 
@@ -97,19 +138,20 @@ module UserDecorators
 			end
 
 			RESOURCES.each do |resource|
-				["unsave", "unlike", "unview", "undislike"].each do |taste_type|
-					define_method "taste_#{resource}_#{taste_type}" do |resource_id|
+				TASTE_ACTIONS.map { |key, value| value[:remove] }.each do |taste_type|
+					define_method "taste_#{resource}_#{taste_type}" do |_instance|
 						begin
-							instance = resource.classify.constantize.find resource_id.to_i
+							_resource = resource.to_s
+							instance  = _instance.is_a?(ApplicationRecord) ? _instance : resource.to_s.classify.constantize.find(_instance.to_i)
 
 							ActiveRecord::Base.transaction do
-								instance.entries["#{TASTE_TYPES[taste_type][:past]}_by"].delete id
-								instance.entries["total_#{TASTE_TYPES[taste_type][:plural]}"] -= 1
+								instance.entries["#{TASTE_VERBS[taste_type][:past]}_by"].delete id
+								instance.entries["total_#{TASTE_VERBS[taste_type][:plural]}"] -= 1
 
 								validate_taste_existence resource
-								taste[resource][TASTE_TYPES[taste_type][:past]].delete resource_id.to_i
-								taste[resource]["total_#{TASTE_TYPES[taste_type][:plural]}"] -= 1
-								taste[resource]['updated_at']                                = DateTime.now
+								taste[_resource][TASTE_VERBS[taste_type][:past]].delete instance.id
+								taste[_resource]["total_#{TASTE_VERBS[taste_type][:plural]}"] -= 1
+								taste[_resource]['updated_at']                                = DateTime.now
 
 								instance.save && save
 							end
@@ -117,7 +159,7 @@ module UserDecorators
 							puts 'Não foi possível salvar sua ação (ERRO 7813)!'
 							return false
 						else
-							if taste_type == "unsave" && resource == 'events'
+							if taste_type == :unsave && resource == :events
 								UpdateUserEventsSuggestionsJob.perform_later(self.id)
 							end
 
@@ -128,10 +170,11 @@ module UserDecorators
 			end
 
 			RESOURCES.each do |resource|
-				["save", "like", "view", "dislike"].each do |taste_type|
-					define_method "taste_#{resource}_#{TASTE_TYPES[taste_type][:past]}?" do |resource_id|
-						if taste[resource]
-							taste[resource][TASTE_TYPES[taste_type][:past]].include? resource_id.to_i
+				TASTE_TYPES.each do |taste_type|
+					define_method "taste_#{resource}_#{TASTE_VERBS[taste_type][:past]}?" do |resource_id|
+						_resource = resource.to_s
+						if taste[_resource]
+							taste[_resource][TASTE_VERBS[taste_type][:past]].include? resource_id.to_i
 						else
 							false
 						end
@@ -140,9 +183,10 @@ module UserDecorators
 			end
 
 			RESOURCES.each do |resource|
-				["save", "like", "view", "dislike"].each do |taste_type|
-					define_method "taste_#{resource}_#{TASTE_TYPES[taste_type][:past]}" do
-						taste.dig(resource, TASTE_TYPES[taste_type][:past])
+				TASTE_TYPES.each do |taste_type|
+					define_method "taste_#{resource}_#{TASTE_VERBS[taste_type][:past]}" do
+						_resource = resource.to_s
+						taste.dig(_resource, TASTE_VERBS[taste_type][:past])
 					end
 				end
 			end
@@ -152,6 +196,17 @@ module UserDecorators
 		end
 
 		module ClassMethods
+			def taste_action(taste_type, action = :add)
+				TASTE_ACTIONS[taste_type.to_sym][action]
+			end
+
+			def taste_verbs(taste_type, tense)
+				TASTE_VERBS[taste_type.to_sym][tense]
+			end
+
+			def taste_texts(taste_type, action = :add)
+				TASTE_TEXTS[taste_type.to_sym][action]
+			end
 		end
 
 

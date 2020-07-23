@@ -1,536 +1,536 @@
-$name-color: $font-primary-color;
-$description-color: $font-secondary-color;
-
-.me-card {
-  //@include card.core-styles;
-  background: $surface-color;
-  position: relative;
-  will-change: opacity, transform;
-
-  &--empty {
-    user-select: none;
-    pointer-events: none;
-  }
-
-  &--feed {
-    min-height: 176px;
-    font-size: 14px;
-    border: 0;
-    box-shadow: none;
-    margin: 0 0 0 0;
-    position: relative;
-    //@include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
-    @include mobile-only {
-      min-height: 165px;
-    }
-
-    &:hover {
-      & .me-card__similar {
-        opacity: 1;
-        transform: translate(0px, 0px);
-      }
-
-      & .me-card__place {
-        opacity: 1;
-        transform: translate(0px, 0px);
-      }
-    }
-
-  }
-
-  .me-similar & {
-    background: none;
-    min-height: 150px;
-    border-radius: 2px;
-  }
-
-  .me-saves & {
-    min-height: 130px;
-    cursor: pointer;
-    font-size: 11px;
-    border: 0;
-    box-shadow: none;
-    background-color: inherit;
-    //@include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
-    @include mobile-only {
-      min-height: 90px;
-    }
-
-    &__title {
-      color: $font-primary-color;
-      font-size: 13px;
-      margin: 12px 0 0 0;
-      font-weight: 400;
-      padding-right: 6px;
-    }
-
-    &__date {
-      // color: $font-secondary-color;
-      // text-transform: uppercase;
-      // font-size: 11px;
-      // margin: 8px 0 6px 0;
-      // padding: 0 0 0 5px;
-      // font-weight: 800;
-      // min-height: 1.1em;
-      // display: flex;
-      // flex-direction: column;
-      @include mobile-only {
-        font-size: 9px;
-      }
-    }
-
-    &__remove {
-      // background: transparentize($icon-background-color, 0.4);
-      // position: absolute;
-      // top: 5px;
-      // right: 5px;
-      // width: 16px;
-      // height: 16px;
-      // cursor: pointer;
-      // display: none;
-      // z-index: 1;
-      // border-radius: 100%;
-      // fill: $font-secondary-color;
-      // @include mobile-only {
-      //   display: block;
-      //   padding: 3px;
-      // }
-    }
-
-    & .mdc-card__media {
-      border-radius: $media-border-radius;
-      overflow: hidden;
-      box-shadow: $media-box-shadow-small;
-    }
-  }
-
-  & a:hover {
-    color: $brand-color-aa;
-  }
-
-  & a {
-    display: contents;
-  }
-
-  & .mdc-card__title {
-    color: $name-color;
-    line-height: 18px;
-    margin: 6px 0 0 0;
-    font-weight: 400;
-    padding-right: 20px;
-  }
-
-  & .mdc-card__subtitle {
-    color: $description-color;
-    margin-top: 2px;
-    font-size: 12px;
-    line-height: 14px;
-  }
-
-  & .mdc-card__media {
-    border-radius: $media-border-radius;
-    box-shadow: $media-box-shadow-small;
-    overflow: hidden;
-
-    & img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: absolute;
-      top: 0;
-    }
-  }
-
-  &.me-card--empty .mdc-card__media {
-    background-color: $empty-color;
-    box-shadow: unset;
-  }
-
-  & .mdc-card__actions {
-    position: absolute;
-    top: 93px;
-    right: -10px;
-  }
-
-
-  &__overlay {
-    position: absolute;
-    display: flex;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    background: linear-gradient(to top, #ffffff38, rgba(255, 255, 255, 0));
-    overflow: hidden;
-    border-radius: $media-border-radius;
-    //@include mdc-ripple-surface;
-    //@include mdc-ripple-radius-bounded;
-    //@include mdc-states;
-    @include mobile-only {
-    }
-
-    .me-card--empty & {
-      box-shadow: none;
-    }
-  }
-
-  &__section {
-    padding: 0 0 0 5px;
-  }
-
-  &__primary-section {
-    color: $font-secondary-color;
-    text-transform: uppercase;
-    line-height: 1em;
-    display: flex;
-    flex-wrap: wrap;
-    z-index: 5;
-    margin: 0 0 0 6px;
-    font-size: 10px;
-    @include mobile-only {
-      font-size: 9px;
-    }
-
-    .me-card--single & {
-      color: $font-primary-color;
-      text-transform: none;
-      display: flex;
-      margin: 50px 0;
-      position: relative;
-      @include mobile-only {
-        flex-direction: column;
-        margin: 24px 0;
-      }
-    }
-
-    [data-section-identifier="similar"] &,
-    .me-similar & {
-      @include desktop-only {
-        font-size: 9px;
-      }
-    }
-
-    .me-card--empty & {
-      color: $empty-color;
-      background-color: $empty-color;
-      width: max-content;
-      margin: 0 0 6px 0;
-    }
-  }
-
-  &__date {
-    .me-card--feed & {
-      flex-direction: column;
-      align-items: flex-start;
-      color: lighten($font-tertiary-color, 10%);
-      // font-size: 10px;
-      line-height: 1;
-      padding: 0;
-      margin: 12px 0 0 0;
-      text-transform: uppercase;
-    }
-
-    &.hoje {
-      font-weight: 600;
-      //background: $brand-color;
-      color: $brand-color-aa;
-
-      & i {
-        width: 6px;
-        height: 6px;
-        display: inline-block;
-        background: $brand-color;
-        border-radius: 3px;
-        margin: 0 3px 1px 0;
-        box-shadow: 0 0 6px $brand-color;
-      }
-    }
-
-    &.amanha {
-      font-weight: 600;
-      color: $brand-color-aa;
-    }
-
-    .me-card--empty & {
-      color: $empty-color;
-      background-color: $empty-color;
-      width: max-content;
-    }
-  }
-
-  &__date-distance-in-words {
-    // font-size: 10px;
-    line-height: 1;
-    padding: 2px 0 0 0;
-    @include mobile-only {
-      // font-size: 10px;
-    }
-
-    .me-saves & {
-      font-weight: 300;
-    }
-  }
-
-  &__secondary-section {
-    color: $font-secondary-color;
-    font-size: 14px;
-    line-height: 1.4em;
-    margin: 6px 0 0 0;
-    padding: 0 0 0 6px;
-    font-weight: 400;
-    @include mobile-only {
-      font-size: 13px;
-    }
-
-    [data-section-disposition="vertical"] & {
-      @include mobile-only {
-        font-size: 14px;
-        line-height: 1.4em;
-      }
-    }
-
-    [data-section-identifier="similar"] &,
-    .me-similar & {
-      @include desktop-only {
-        font-size: 12px;
-      }
-    }
-
-    .me-card--empty & {
-      & a {
-        color: $empty-color;
-        background-color: $empty-color;
-        width: max-content;
-        display: inline;
-      }
-    }
-
-    & a {
-      display: block;
-      color: $font-secondary-color;
-
-      .me-similar & {
-        color: $font-secondary-color;
-
-        &:hover {
-          color: $brand-color-aa;
-        }
-      }
-    }
-  }
-
-  &__tertiary-section {
-    color: $font-secondary-color;
-    font-size: 14px;
-    margin: 9px 0 0 0;
-    padding: 0 0 0 6px;
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    @include mobile-only {
-      font-size: 8px;
-    }
-
-    .me-card--empty & {
-      color: $empty-color;
-      background-color: $empty-color;
-      width: max-content;
-    }
-  }
-
-  &__quartenary-section {
-    padding: 8px 0 0 6px;
-    font-size: 10px;
-    font-weight: 300;
-    text-transform: lowercase;
-
-    .me-card--empty & {
-      & a {
-        color: $empty-color;
-        background-color: $empty-color;
-        width: max-content;
-        display: inline;
-      }
-    }
-
-    & a {
-      color: $font-tertiary-color;
-    }
-  }
-
-  &__organizer {
-    a {
-      text-decoration: none;
-      color: $font-tertiary-color;
-    }
-  }
-
-  &__place {
-    opacity: 0;
-    transition: opacity 0.15s ease;
-    user-select: none;
-    @include mobile-only {
-      opacity: 1;
-    }
-
-    .me-card--single & {
-      opacity: 1;
-      padding: 0;
-      margin: 0;
-    }
-
-    & svg {
-      margin: 0 6px 0 0;
-    }
-  }
-
-  &__similar {
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-    user-select: none;
-    z-index: 2;
-    @include mobile-only {
-      margin: 12px 0;
-      opacity: 1;
-    }
-
-    .me-card[data-event-similar-open="true"] &, .me-card[data-event-similar-open="true"]:hover & {
-      color: $chip-color-active;
-      background: $chip-background-active;
-    }
-
-    & .mdc-button::before, .mdc-button::after {
-      background-color: rgba(255, 255, 255, 0);
-    }
-
-    & svg {
-      fill: $font-secondary-color;
-      margin: 0 0 1px 3px;
-
-      .me-card[data-event-similar-open="true"] &, .me-card[data-event-similar-open="true"]:hover & {
-        fill: $brand-color;
-      }
-    }
-
-    & svg {
-      fill: $font-secondary-color;
-    }
-
-    &:hover {
-      color: $brand-color;
-    }
-
-    & .material-icons {
-      font-size: 30px;
-    }
-  }
-
-
-  &__expand-more {
-    .me-card[data-event-similar-loading="true"] & {
-      opacity: 0;
-      display: none;
-    }
-  }
-
-  &__loading svg {
-    opacity: 0;
-    display: none;
-    animation-name: rotate;
-    animation-iteration-count: infinite;
-    animation-duration: 1s;
-    animation-timing-function: ease;
-    padding: 0;
-    @include mobile-only {
-
-    }
-
-    .me-card[data-event-similar-loading="true"] & {
-      opacity: 1;
-      display: block;
-      fill: $brand-color;
-    }
-  }
-
-  &__like-button {
-    position: absolute;
-    z-index: 2;
-    top: 8px;
-    right: 8px;
-    border-radius: 25px;
-    overflow: hidden;
-
-    & .me-icon-button.mdc-icon-button {
-      display: none;
-      background: transparentize($surface-color, 0.05);
-      transition: 0.2s all ease 0s;
-      //@include mdc-icon-button-icon-size($width: 20px, $height: 20px, $padding: 10px);
-
-      @include mobile-only {
-        //@include mdc-icon-button-icon-size($width: 18px, $height: 18px, $padding: 10px);
-        display: block;
-      }
-
-      & svg {
-        fill: lighten($font-tertiary-color, 30%);
-      }
-
-      &--on {
-        & svg {
-          fill: #EA4335;
-        }
-      }
-
-      [data-action="show"] & {
-        display: block;
-      }
-    }
-  }
-
-
-  &--notice {
-    min-height: 30vh;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: auto;
-    @include mobile-only {
-      border: unset;
-      min-height: 15vh;
-      justify-content: center;
-      max-width: 85%;
-    }
-
-    & .me-card__primary-section, .me-card__secondary-section {
-      row-gap: 12px;
-      display: grid;
-    }
-
-    & .me-card__primary-action {
-      color: $brand-color;
-      border-top: 1px solid $border-color;
-      width: 100%;
-      text-align: center;
-      padding: 12px 0;
-      font-weight: 600;
-      cursor: pointer;
-      position: absolute;
-      bottom: 0;
-      font-size: 16px;
-      @include mobile-only {
-        font-size: 14px;
-        border: unset;
-      }
-    }
-
-    & .me-card__secondary-section {
-      color: $font-tertiary-color;
-      font-size: 14px;
-      @include mobile-only {
-        font-size: 11px;
-        font-weight: 100;
-      }
-    }
-  }
-}
+//$name-color: $font-primary-color;
+//$description-color: $font-secondary-color;
+//
+//.me-card {
+//  //@include card.core-styles;
+//  background: $surface-color;
+//  position: relative;
+//  will-change: opacity, transform;
+//
+//  &--empty {
+//    user-select: none;
+//    pointer-events: none;
+//  }
+//
+//  &--feed {
+//    min-height: 176px;
+//    font-size: 14px;
+//    border: 0;
+//    box-shadow: none;
+//    margin: 0 0 0 0;
+//    position: relative;
+//    //@include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
+//    @include mobile-only {
+//      min-height: 165px;
+//    }
+//
+//    &:hover {
+//      & .me-card__similar {
+//        opacity: 1;
+//        transform: translate(0px, 0px);
+//      }
+//
+//      & .me-card__place {
+//        opacity: 1;
+//        transform: translate(0px, 0px);
+//      }
+//    }
+//
+//  }
+//
+//  .me-similar & {
+//    background: none;
+//    min-height: 150px;
+//    border-radius: 2px;
+//  }
+//
+//  .me-saves & {
+//    min-height: 130px;
+//    cursor: pointer;
+//    font-size: 11px;
+//    border: 0;
+//    box-shadow: none;
+//    background-color: inherit;
+//    //@include mdc-card-shape-radius($radius: 0, $rtl-reflexive: false);
+//    @include mobile-only {
+//      min-height: 90px;
+//    }
+//
+//    &__title {
+//      color: $font-primary-color;
+//      font-size: 13px;
+//      margin: 12px 0 0 0;
+//      font-weight: 400;
+//      padding-right: 6px;
+//    }
+//
+//    &__date {
+//      // color: $font-secondary-color;
+//      // text-transform: uppercase;
+//      // font-size: 11px;
+//      // margin: 8px 0 6px 0;
+//      // padding: 0 0 0 5px;
+//      // font-weight: 800;
+//      // min-height: 1.1em;
+//      // display: flex;
+//      // flex-direction: column;
+//      @include mobile-only {
+//        font-size: 9px;
+//      }
+//    }
+//
+//    &__remove {
+//      // background: transparentize($icon-background-color, 0.4);
+//      // position: absolute;
+//      // top: 5px;
+//      // right: 5px;
+//      // width: 16px;
+//      // height: 16px;
+//      // cursor: pointer;
+//      // display: none;
+//      // z-index: 1;
+//      // border-radius: 100%;
+//      // fill: $font-secondary-color;
+//      // @include mobile-only {
+//      //   display: block;
+//      //   padding: 3px;
+//      // }
+//    }
+//
+//    & .mdc-card__media {
+//      border-radius: $media-border-radius;
+//      overflow: hidden;
+//      box-shadow: $media-box-shadow-small;
+//    }
+//  }
+//
+//  & a:hover {
+//    color: $brand-color-aa;
+//  }
+//
+//  & a {
+//    display: contents;
+//  }
+//
+//  & .mdc-card__title {
+//    color: $name-color;
+//    line-height: 18px;
+//    margin: 6px 0 0 0;
+//    font-weight: 400;
+//    padding-right: 20px;
+//  }
+//
+//  & .mdc-card__subtitle {
+//    color: $description-color;
+//    margin-top: 2px;
+//    font-size: 12px;
+//    line-height: 14px;
+//  }
+//
+//  & .mdc-card__media {
+//    border-radius: $media-border-radius;
+//    box-shadow: $media-box-shadow-small;
+//    overflow: hidden;
+//
+//    & img {
+//      width: 100%;
+//      height: 100%;
+//      object-fit: cover;
+//      position: absolute;
+//      top: 0;
+//    }
+//  }
+//
+//  &.me-card--empty .mdc-card__media {
+//    background-color: $empty-color;
+//    box-shadow: unset;
+//  }
+//
+//  & .mdc-card__actions {
+//    position: absolute;
+//    top: 93px;
+//    right: -10px;
+//  }
+//
+//
+//  &__overlay {
+//    position: absolute;
+//    display: flex;
+//    width: 100%;
+//    top: 0;
+//    height: 100%;
+//    background: linear-gradient(to top, #ffffff38, rgba(255, 255, 255, 0));
+//    overflow: hidden;
+//    border-radius: $media-border-radius;
+//    //@include mdc-ripple-surface;
+//    //@include mdc-ripple-radius-bounded;
+//    //@include mdc-states;
+//    @include mobile-only {
+//    }
+//
+//    .me-card--empty & {
+//      box-shadow: none;
+//    }
+//  }
+//
+//  &__section {
+//    padding: 0 0 0 5px;
+//  }
+//
+//  &__primary-section {
+//    color: $font-secondary-color;
+//    text-transform: uppercase;
+//    line-height: 1em;
+//    display: flex;
+//    flex-wrap: wrap;
+//    z-index: 5;
+//    margin: 0 0 0 6px;
+//    font-size: 10px;
+//    @include mobile-only {
+//      font-size: 9px;
+//    }
+//
+//    .me-card--single & {
+//      color: $font-primary-color;
+//      text-transform: none;
+//      display: flex;
+//      margin: 50px 0;
+//      position: relative;
+//      @include mobile-only {
+//        flex-direction: column;
+//        margin: 24px 0;
+//      }
+//    }
+//
+//    [data-section-identifier="similar"] &,
+//    .me-similar & {
+//      @include desktop-only {
+//        font-size: 9px;
+//      }
+//    }
+//
+//    .me-card--empty & {
+//      color: $empty-color;
+//      background-color: $empty-color;
+//      width: max-content;
+//      margin: 0 0 6px 0;
+//    }
+//  }
+//
+//  &__date {
+//    .me-card--feed & {
+//      flex-direction: column;
+//      align-items: flex-start;
+//      color: lighten($font-tertiary-color, 10%);
+//      // font-size: 10px;
+//      line-height: 1;
+//      padding: 0;
+//      margin: 12px 0 0 0;
+//      text-transform: uppercase;
+//    }
+//
+//    &.hoje {
+//      font-weight: 600;
+//      //background: $brand-color;
+//      color: $brand-color-aa;
+//
+//      & i {
+//        width: 6px;
+//        height: 6px;
+//        display: inline-block;
+//        background: $brand-color;
+//        border-radius: 3px;
+//        margin: 0 3px 1px 0;
+//        box-shadow: 0 0 6px $brand-color;
+//      }
+//    }
+//
+//    &.amanha {
+//      font-weight: 600;
+//      color: $brand-color-aa;
+//    }
+//
+//    .me-card--empty & {
+//      color: $empty-color;
+//      background-color: $empty-color;
+//      width: max-content;
+//    }
+//  }
+//
+//  &__date-distance-in-words {
+//    // font-size: 10px;
+//    line-height: 1;
+//    padding: 2px 0 0 0;
+//    @include mobile-only {
+//      // font-size: 10px;
+//    }
+//
+//    .me-saves & {
+//      font-weight: 300;
+//    }
+//  }
+//
+//  &__secondary-section {
+//    color: $font-secondary-color;
+//    font-size: 14px;
+//    line-height: 1.4em;
+//    margin: 6px 0 0 0;
+//    padding: 0 0 0 6px;
+//    font-weight: 400;
+//    @include mobile-only {
+//      font-size: 13px;
+//    }
+//
+//    [data-section-disposition="vertical"] & {
+//      @include mobile-only {
+//        font-size: 14px;
+//        line-height: 1.4em;
+//      }
+//    }
+//
+//    [data-section-identifier="similar"] &,
+//    .me-similar & {
+//      @include desktop-only {
+//        font-size: 12px;
+//      }
+//    }
+//
+//    .me-card--empty & {
+//      & a {
+//        color: $empty-color;
+//        background-color: $empty-color;
+//        width: max-content;
+//        display: inline;
+//      }
+//    }
+//
+//    & a {
+//      display: block;
+//      color: $font-secondary-color;
+//
+//      .me-similar & {
+//        color: $font-secondary-color;
+//
+//        &:hover {
+//          color: $brand-color-aa;
+//        }
+//      }
+//    }
+//  }
+//
+//  &__tertiary-section {
+//    color: $font-secondary-color;
+//    font-size: 14px;
+//    margin: 9px 0 0 0;
+//    padding: 0 0 0 6px;
+//    font-weight: 300;
+//    display: flex;
+//    align-items: center;
+//    flex-wrap: wrap;
+//    @include mobile-only {
+//      font-size: 8px;
+//    }
+//
+//    .me-card--empty & {
+//      color: $empty-color;
+//      background-color: $empty-color;
+//      width: max-content;
+//    }
+//  }
+//
+//  &__quartenary-section {
+//    padding: 8px 0 0 6px;
+//    font-size: 10px;
+//    font-weight: 300;
+//    text-transform: lowercase;
+//
+//    .me-card--empty & {
+//      & a {
+//        color: $empty-color;
+//        background-color: $empty-color;
+//        width: max-content;
+//        display: inline;
+//      }
+//    }
+//
+//    & a {
+//      color: $font-tertiary-color;
+//    }
+//  }
+//
+//  &__organizer {
+//    a {
+//      text-decoration: none;
+//      color: $font-tertiary-color;
+//    }
+//  }
+//
+//  &__place {
+//    opacity: 0;
+//    transition: opacity 0.15s ease;
+//    user-select: none;
+//    @include mobile-only {
+//      opacity: 1;
+//    }
+//
+//    .me-card--single & {
+//      opacity: 1;
+//      padding: 0;
+//      margin: 0;
+//    }
+//
+//    & svg {
+//      margin: 0 6px 0 0;
+//    }
+//  }
+//
+//  &__similar {
+//    cursor: pointer;
+//    opacity: 0;
+//    transition: opacity 0.15s ease;
+//    user-select: none;
+//    z-index: 2;
+//    @include mobile-only {
+//      margin: 12px 0;
+//      opacity: 1;
+//    }
+//
+//    .me-card[data-event-similar-open="true"] &, .me-card[data-event-similar-open="true"]:hover & {
+//      color: $chip-color-active;
+//      background: $chip-background-active;
+//    }
+//
+//    & .mdc-button::before, .mdc-button::after {
+//      background-color: rgba(255, 255, 255, 0);
+//    }
+//
+//    & svg {
+//      fill: $font-secondary-color;
+//      margin: 0 0 1px 3px;
+//
+//      .me-card[data-event-similar-open="true"] &, .me-card[data-event-similar-open="true"]:hover & {
+//        fill: $brand-color;
+//      }
+//    }
+//
+//    & svg {
+//      fill: $font-secondary-color;
+//    }
+//
+//    &:hover {
+//      color: $brand-color;
+//    }
+//
+//    & .material-icons {
+//      font-size: 30px;
+//    }
+//  }
+//
+//
+//  &__expand-more {
+//    .me-card[data-event-similar-loading="true"] & {
+//      opacity: 0;
+//      display: none;
+//    }
+//  }
+//
+//  &__loading svg {
+//    opacity: 0;
+//    display: none;
+//    animation-name: rotate;
+//    animation-iteration-count: infinite;
+//    animation-duration: 1s;
+//    animation-timing-function: ease;
+//    padding: 0;
+//    @include mobile-only {
+//
+//    }
+//
+//    .me-card[data-event-similar-loading="true"] & {
+//      opacity: 1;
+//      display: block;
+//      fill: $brand-color;
+//    }
+//  }
+//
+//  &__like-button {
+//    position: absolute;
+//    z-index: 2;
+//    top: 8px;
+//    right: 8px;
+//    border-radius: 25px;
+//    overflow: hidden;
+//
+//    & .me-icon-button.mdc-icon-button {
+//      display: none;
+//      background: transparentize($surface-color, 0.05);
+//      transition: 0.2s all ease 0s;
+//      //@include mdc-icon-button-icon-size($width: 20px, $height: 20px, $padding: 10px);
+//
+//      @include mobile-only {
+//        //@include mdc-icon-button-icon-size($width: 18px, $height: 18px, $padding: 10px);
+//        display: block;
+//      }
+//
+//      & svg {
+//        fill: lighten($font-tertiary-color, 30%);
+//      }
+//
+//      &--on {
+//        & svg {
+//          fill: #EA4335;
+//        }
+//      }
+//
+//      [data-action="show"] & {
+//        display: block;
+//      }
+//    }
+//  }
+//
+//
+//  &--notice {
+//    min-height: 30vh;
+//    align-items: center;
+//    justify-content: center;
+//    text-align: center;
+//    margin: auto;
+//    @include mobile-only {
+//      border: unset;
+//      min-height: 15vh;
+//      justify-content: center;
+//      max-width: 85%;
+//    }
+//
+//    & .me-card__primary-section, .me-card__secondary-section {
+//      row-gap: 12px;
+//      display: grid;
+//    }
+//
+//    & .me-card__primary-action {
+//      color: $brand-color;
+//      border-top: 1px solid $border-color;
+//      width: 100%;
+//      text-align: center;
+//      padding: 12px 0;
+//      font-weight: 600;
+//      cursor: pointer;
+//      position: absolute;
+//      bottom: 0;
+//      font-size: 16px;
+//      @include mobile-only {
+//        font-size: 14px;
+//        border: unset;
+//      }
+//    }
+//
+//    & .me-card__secondary-section {
+//      color: $font-tertiary-color;
+//      font-size: 14px;
+//      @include mobile-only {
+//        font-size: 11px;
+//        font-weight: 100;
+//      }
+//    }
+//  }
+//}

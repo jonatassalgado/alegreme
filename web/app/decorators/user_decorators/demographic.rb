@@ -27,9 +27,9 @@ module UserDecorators
 				else
 					animal = ['cat', 'dog', 'lion', 'coala', 'rabbit', 'tiger', 'fox'].sample
 					if size == :small
-						ActionController::Base.helpers.image_path("avatars/#{animal}-small")
+						"media/images/avatars/#{animal}-small"
 					else
-						ActionController::Base.helpers.image_path("avatars/#{animal}-medium")
+						"media/images/avatars/#{animal}-medium"
 					end
 				end
 			end

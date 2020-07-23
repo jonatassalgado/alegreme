@@ -1,13 +1,12 @@
-@import '../_variables';
-@import '../_mixins';
-@import '../_template';
+@import '../stylesheets/variables';
+@import '../stylesheets/mixins';
+@import '../stylesheets/template';
 
-@import "@material/layout-grid/mdc-layout-grid";
-@import "@material/textfield/mdc-text-field";
-@import "@material/button/mdc-button";
-@import "components/me-button";
-@import "components/me-text-field";
-@import "media-queries";
+//@import "@material/layout-grid/mdc-layout-grid";
+//@import "@material/button/mdc-button";
+@import "../stylesheets/components/me-button";
+@import "../stylesheets/components/me-text-field";
+@import "../stylesheets/welcome/media-queries";
 
 
 $mdc-typography-font-family: $font-secondary-family;
@@ -38,13 +37,13 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  //background-image: asset_url('welcome/bg-top.jpg');
+  //background-image: url('welcome/bg-top.jpg');
   background-repeat: no-repeat;
   background-position: top center;
   background-size: contain;
   padding: 0 0 150px 0;
   @include mobile-only {
-    //background-image: asset_url('welcome/bg-top-mobile.jpg');
+    //background-image: url('welcome/bg-top-mobile.jpg');
     background-repeat: no-repeat;
     background-position: top center;
     max-width: 100vw;
@@ -471,14 +470,14 @@ section {
     margin: 20px auto 0 auto;
     // width: 406px;
     // height: 35px;
-    // background-image: asset_url("welcome/google-details.png");
+    // background-image: url("welcome/google-details.png");
     // background-repeat: no-repeat;
     // background-position: center;
     transition: opacity 0.4s ease;
     @include mobile-only {
       // width: 220px;
       // height: 51px;
-      // background-image: asset_url("welcome/google-details-mobile.png");
+      // background-image: url("welcome/google-details-mobile.png");
       // background-repeat: no-repeat;
       // background-position: center;
     }
@@ -608,7 +607,7 @@ section {
   &-left {
     background: $surface-color;
     margin: 40px 0 50px 26px;
-    background-image: asset_url("welcome/experiences.jpg");
+    background-image: url("../images/welcome/experiences.jpg");
     background-repeat: no-repeat;
     background-position-y: bottom;
     background-size: contain;
@@ -659,7 +658,7 @@ section {
   $android-height: 790;
   width: unquote($android-width + 'px');
   height: unquote($android-height + 'px');
-  background-image: asset_url("welcome/hero-device.png");
+  background-image: url("../images/welcome/hero-device.png");
   background-position: center top;
   background-repeat: no-repeat;
   background-size: auto;

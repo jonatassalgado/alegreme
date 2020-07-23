@@ -1,13 +1,13 @@
 
 
-.me-bot{
+.bot{
   max-width: 600px;
   margin: auto;
   width: calc(100% - 100px);
   position: relative;
 }
 
-.me-bot__container {
+.bot__container {
   margin: 6px 12px 6px 52px;
   transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
   @include mobile-only {
@@ -15,7 +15,7 @@
   }
 }
 
-.me-bot__message {
+.bot__message {
   border-radius: 25px;
   color: $font-primary-color;
   display: inline-block;
@@ -27,7 +27,7 @@
   }
 }
 
-.me-bot__container:not(.no-icon)::before {
+.bot__container:not(.no-icon)::before {
   //content: "";
   //position: absolute;
   //left: -4px;
@@ -39,10 +39,10 @@
   //transform: rotate(-30deg)
 }
 
-.me-bot__container:not(.no-icon)::after {
+.bot__container:not(.no-icon)::after {
+  @apply bg-gray-200;
   align-items: center;
   justify-content: center;
-  background: whitesmoke;
   border-radius: 50%;
   content: "A";
   display: flex;
@@ -57,37 +57,37 @@
   width: 36px
 }
 
-.me-bot__container.is-human {
+.bot__container.is-human {
   display: flex;
   justify-content: flex-end;
   opacity: .85
 }
 
-.me-bot__container.is-human:not(.no-icon)::before {
+.bot__container.is-human:not(.no-icon)::before {
   left: auto;
   right: 5px
 }
 
-.me-bot__container.is-human:not(.no-icon)::after {
+.bot__container.is-human:not(.no-icon)::after {
   content: "";
   left: 100%;
   top: 0;
   background: rgba(255, 255, 255, 0)
 }
 
-.me-bot__message.fill-img {
+.bot__message.fill-img {
   padding: 0;
   overflow: hidden;
   height: 200px
 }
 
-.me-bot__message.fill-img * {
+.bot__message.fill-img * {
   object-fit: cover;
   height: 100%;
   width: 100%
 }
 
-.me-bot__button {
+.bot__button {
   right: 0;
   position: absolute;
   //@include mdc-button-container-fill-color($brand-color);
