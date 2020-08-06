@@ -31,6 +31,7 @@ module ApplicationHelper
 
 		tag_values.compact.flatten
 	end
+
 	module_function :build_tag_values
 
 	def link_to_topic topic
@@ -71,28 +72,7 @@ module ApplicationHelper
 		params[:pwa]
 	end
 
-	def responsive_image_tag(image, opts = {})
-		opts = {only: {'1.5x' => true, '2x' => true}, format: :jpg}.merge(opts)
 
-		content_tag(:picture, alt: opts[:alt]) do
-			concat content_tag(:source, nil, media: "(max-width: 480px)", srcset: "#{image_pack_tag("#{image}@2x.#{opts[:format]}")} 2x", alt: opts[:alt], title: opts[:title]) if opts.dig(:only, '2x')
-			concat content_tag(:source, nil, media: "(max-width: 480px)", srcset: "#{image_pack_tag("#{image}@1.5x.#{opts[:format]}")} 1.5x", alt: opts[:alt], title: opts[:title]) if opts.dig(:only, '1.5x')
-			concat image_pack_tag "#{image}.#{opts[:format]}", alt: opts[:alt], title: opts[:title], class: opts[:class], loading: 'lazy'
-		end
-	end
-
-	def amp_stylesheet name
-		app = Rails.application
-		if Rails.configuration.assets.compile
-			app.assets.find_asset(name).to_s
-		else
-			controller.view_context.render(file: File.join('public/assets', app.assets_manifest.assets[name]))
-		end
-	end
-
-	def full_image_url url
-		"https://alegreme.com" + url
-	end
 
 
 	def google_maps_url address

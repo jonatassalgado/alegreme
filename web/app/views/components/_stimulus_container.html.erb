@@ -7,7 +7,7 @@
 %>
 
 <% cache_if(cached, cache_key) do %>
-	<%= content_tag :div, {id: html.dig(:layout, :id), data: html.dig(:layout, :data), class: html.dig(:layout, :class)} do %>
+	<%= content_tag :div, {id: html.dig(:layout, :id), data: html.dig(:layout, :data), class: html.dig(:layout, :css)} do %>
 		<%= yield %>
 	<% end %>
 <% end %>

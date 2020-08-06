@@ -26,7 +26,7 @@
 	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-144x144.png', {sizes: "144x144", type: "image/png"} %>
 
 	<style amp-custom>
-		<%= amp_stylesheet('amp/application.css').html_safe %>
+		<%= inline_assets('application-amp.css').html_safe %>
 	</style>
 
 	<style amp-boilerplate>body {
@@ -152,7 +152,7 @@
 		<div class="me-top-app-bar__wrapper">
 			<a href="/">
 				<amp-img height="29"
-								 src="<%= image_url 'logo@3x' %>"
+								 src="<%= asset_pack_url 'media/images/logo@3x.png' %>"
 								 width="124"
 								 alt="Alegreme"></amp-img>
 			</a>

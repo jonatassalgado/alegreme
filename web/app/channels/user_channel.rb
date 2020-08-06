@@ -78,16 +78,27 @@ class UserChannel < ApplicationCable::Channel
 		if @opts[:update_collection_on_action] && @resource_type
 			saved_resources = @user.public_send("saved_#{@resource_type}").active.order_by_date
 
-			cable_ready[UserChannel].morph(
-					selector:      "##{@saves_html_id}",
-					html:          ApplicationController.render(partial: "components/#{@resource_type}/saves",
-					                                            locals:  {
-							                                            user:            @user,
-							                                            identifier:      "#{@saves_html_id}",
-							                                            saved_resources: saved_resources
-					                                            }),
-					children_only: true
-			)
+			if saved_resources.present?
+				cable_ready[UserChannel].remove_css_class(
+						selector: "##{@saves_html_id}",
+						name:     "hidden"
+				)
+				cable_ready[UserChannel].morph(
+						selector:      "##{@saves_html_id}",
+						html:          ApplicationController.render(partial: "components/#{@resource_type}/saves",
+						                                            locals:  {
+								                                            user:            @user,
+								                                            identifier:      "#{@saves_html_id}",
+								                                            saved_resources: saved_resources
+						                                            }),
+						children_only: true
+				)
+			else
+				cable_ready[UserChannel].add_css_class(
+						selector: "##{@saves_html_id}",
+						name:     "hidden"
+				)
+			end
 		end
 	end
 

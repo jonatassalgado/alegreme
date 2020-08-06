@@ -99,15 +99,6 @@
     <%= sanitize @event.details_description, scrubber: AmpScrubber.new %>
   </div>
 
-  <div class="me-banner">
-    <%= link_to root_path do %>
-      <amp-img height="1"
-               layout="responsive"
-               src="<%= image_url 'banners/get-invite-banner' %>"
-               width="1"></amp-img>
-    <% end %>
-  </div>
-
   <div class="me-event__similar">
     <h2>Eventos similares</h2>
     <amp-list reset-on-refresh="always"

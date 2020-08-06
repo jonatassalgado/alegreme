@@ -1,6 +1,6 @@
-@import '../_variables';
-@import '../_mixins';
-@import '../_template';
+@import '../stylesheets/variables';
+@import '../stylesheets/mixins';
+@import '../stylesheets/template';
 
 /* latin */
 @font-face {
@@ -27,7 +27,7 @@
   color: $surface-color;
   fill: $surface-color;
   font-size: 1.4em;
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px -1px rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 1px -1px rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -46,6 +46,7 @@
 .target {
   position: relative;
 }
+
 .target-anchor {
   position: absolute;
   top: -72px;

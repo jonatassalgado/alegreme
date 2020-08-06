@@ -6,32 +6,31 @@
 	<% end %>
 
 
-  <title>Alegreme - Aproveite a cidade de Porto Alegre</title>
+	<title>Alegreme - Aproveite a cidade de Porto Alegre</title>
 
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=5.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Alegreme">
-  <link rel="apple-touch-icon" href="<%= image_url 'icons/launcher-icon-180x180.png' %>">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=5.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="Alegreme">
+	<link rel="apple-touch-icon" href="<%= image_url 'icons/launcher-icon-180x180.png' %>">
 
-  <%= render partial: 'layouts/meta-tags' %>
-  <%= canonical_url %>
+	<%= render partial: 'layouts/meta-tags' %>
+	<%= canonical_url %>
 
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+	<%= csrf_meta_tags %>
+	<%= csp_meta_tag %>
 
-  <%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-48x48.png', {sizes: "48x48", type: "image/png"} %>
-  <%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-96x96.png', {sizes: "96x96", type: "image/png"} %>
-  <%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-144x144.png', {sizes: "144x144", type: "image/png"} %>
+	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-48x48.png', {sizes: "48x48", type: "image/png"} %>
+	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-96x96.png', {sizes: "96x96", type: "image/png"} %>
+	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-144x144.png', {sizes: "144x144", type: "image/png"} %>
 
-  <link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
+	<link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
 
-  <%#= inline_css 'fcp.scss' %>
-  <%#= inline_js 'fcp.js' %>
+	<style>
+		<%= inline_assets 'fcp.css' %>
+	</style>
 
 	<%= stylesheet_pack_tag 'welcome', media: 'all', 'data-turbolinks-track': 'reload' %>
-
-
 
 </head>
 <body>
@@ -45,15 +44,15 @@
 <%= javascript_pack_tag 'welcome.js', defer: true %>
 
 <% if notice %>
-  <div class="mdc-snackbar">
-    <div class="mdc-snackbar__surface">
-      <div class="mdc-snackbar__label"
-           role="status"
-           aria-live="polite">
-        <%= notice %>
-      </div>
-    </div>
-  </div>
+	<div class="mdc-snackbar">
+		<div class="mdc-snackbar__surface">
+			<div class="mdc-snackbar__label"
+					 role="status"
+					 aria-live="polite">
+				<%= notice %>
+			</div>
+		</div>
+	</div>
 <% end %>
 
 </body>
