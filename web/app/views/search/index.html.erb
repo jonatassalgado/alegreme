@@ -2,11 +2,11 @@
 
 	<%= notice %>
 
-	<% unless @collection&.dig(:items)&.suggestions.blank? %>
+	<% unless @events&.suggestions.blank? %>
 		<div class="mb-10">
 			<h2 class="text-2xl">Você quis dizer?</h2>
 			<div class="">
-				<% @collection&.dig(:items)&.suggestions&.each do |suggestion| %>
+				<% @events&.suggestions&.each do |suggestion| %>
 					<a href="<%= search_index_path({q: suggestion}) %>" class="me-chip mdc-chip">
 						<span class="mdc-chip__text"><%= suggestion %></span>
 					</a>
@@ -15,16 +15,22 @@
 		</div>
 	<% end %>
 
-	<% if @collection&.dig(:items).try { |events| events.size > 0 } %>
+	<% if @events.try { |events| events.size > 0 } %>
 		<div class="md:w-9/12 mx-auto">
-			<%= render partial: "components/collection/events/collection", locals: {
-					collection: @collection,
-					props:      {
-							infinite_scroll_vertical: true
-					}
-			} %>
+			<%= render partial: "components/collection/events/collection",
+								 locals:  {
+										 identifier:               'search',
+										 user:                     current_user,
+										 items:                    @events,
+										 title:                    {
+												 principal: "Eventos encontrados para \"#{params[:q]}\""
+										 },
+										 infinite_scroll_vertical: true,
+										 display_if_empty:         true,
+										 show_similar_to:          session[:stimulus][:show_similar_to]
+								 } %>
 		</div>
-	<% elsif @collection&.dig(:items).try { |events| events.size == 0 } %>
+	<% elsif @events.try { |events| events.size == 0 } %>
 		<h2 class="text-2xl">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
 	<% elsif @categories.present? %>
 		<div class="md:w-9/12 mx-auto">
