@@ -1,5 +1,14 @@
 module.exports = {
-    purge:    [],
+    purge:    {
+        enabled: true,
+        content: [
+            "./app/views/**/*.html.erb",
+            "./app/views/**/**/*.html.erb",
+            "./app/helpers/**/*.rb",
+            "./app/javascript/**/*.js",
+            "./app/javascript/**/**/*.js"
+        ],
+    },
     theme:    {
         animations:              { // defaults to {}; the following are examples
             "spin": {

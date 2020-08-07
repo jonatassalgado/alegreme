@@ -2,7 +2,6 @@ import ApplicationController from "./application_controller"
 import {UserChannel}         from "../channels/user_channel";
 import {SnackBarModule}      from "../modules/snackbar-module";
 import {PubSubModule}        from "../modules/pubsub-module";
-import morphdom              from "morphdom";
 
 export default class SaveButtonController extends ApplicationController {
     static targets = ["button"];

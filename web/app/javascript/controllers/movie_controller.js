@@ -1,5 +1,4 @@
 import ApplicationController from "./application_controller"
-import {MDCRipple}           from "@material/ripple";
 import {AnimateModule}       from "../modules/animate-module";
 
 export default class MovieController extends ApplicationController {
@@ -20,7 +19,7 @@ export default class MovieController extends ApplicationController {
     }
 
     setup() {
-        this.coverRiple = new MDCRipple(this.coverRippleTarget);
+
     }
 
     teardown() {
