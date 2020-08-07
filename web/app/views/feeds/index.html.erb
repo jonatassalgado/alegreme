@@ -23,11 +23,7 @@
 
 	<% cache([current_user, 'swipable-events', @swipable_items.pluck(:id)]) do %>
 		<% if current_user && @swipable_items.size > 0 && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try { |last_view_at| last_view_at < (DateTime.now - 8.hours) }) %>
-			<div class="me-section <%= 'me-section--without-padding' if current_user&.swipable&.dig('events', 'last_view_at').blank? %>">
-				<div class="me-section__inner">
-					<%= render partial: 'components/swipable/swipable' %>
-				</div>
-			</div>
+			<%= render partial: 'components/swipable/swipable' %>
 		<% end %>
 	<% end %>
 
@@ -206,7 +202,8 @@
 				<% User.following_users(current_user).each do |user| %>
 					<%= link_to user_path(user), {class: ''} do %>
 						<div onclick="window.AnimateModule.animatePageHide()" class="flex flex-col items-center">
-							<%= image_tag user.picture, {class: "mb-1 bg-cover bg-gray-400 h-12 md:h-16 md:w-16 rounded-full w-12", alt: user.name, onerror: "this.onerror=null;this.src='/assets/avatars/cat-medium.png';"} rescue nil %>
+							<%= image_tag user.picture, {class: "mb-1 bg-cover bg-gray-400 h-12 md:h-16 md:w-16 rounded-full w-12", alt: user.name, onerror: "this.style.opacity='0'"} if user.picture %>
+							<%= tag.div class: "mb-1 bg-cover bg-gray-400 h-12 md:h-16 md:w-16 rounded-full w-12" unless user.picture %>
 							<%= user.first_name %>
 						</div>
 					<% end %>

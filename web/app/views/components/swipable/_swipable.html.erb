@@ -17,7 +17,7 @@
 		<div data-swipable-module="stacked-cards-block" class="relative">
 			<div data-swipable-module="stackedcards-container" class="relative w-full h-56 mx-auto">
 				<% @swipable_items.each do |item| %>
-					<div id="<%= item[:id] %>" class="absolute top-0 w-full h-full transition-all duration-300 transform bg-white elevation-10 rounded-xl will-change">
+					<div id="<%= item[:id] %>" class="absolute top-0 w-full h-full transition-all duration-300 transform bg-white rounded-xl will-change">
 						<div data-swipable-module="item" class="absolute top-0 left-0 flex flex-col justify-end w-full h-full overflow-hidden bg-gray-600 bg-no-repeat bg-cover bg-blend-multiply rounded-xl" style="background-image: url('<%= image_url item[:image_url] %>')">
 							<div class="absolute z-0 w-full h-full opacity-75 bg-y-black-to-transparent"></div>
 							<div class="relative z-10 px-3 text-xl antialiased font-bold leading-6 text-white"><%= item[:name] %></div>

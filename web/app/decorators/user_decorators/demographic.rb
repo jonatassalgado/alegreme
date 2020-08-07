@@ -24,13 +24,13 @@ module UserDecorators
 					image[size].url(public: true)
 				elsif features['demographic']['picture'].present?
 					features['demographic']['picture']
-				else
-					animal = ['cat', 'dog', 'lion', 'coala', 'rabbit', 'tiger', 'fox'].sample
-					if size == :small
-						"media/images/avatars/#{animal}-small"
-					else
-						"media/images/avatars/#{animal}-medium"
-					end
+				# else
+				# 	animal = ['cat', 'dog', 'lion', 'coala', 'rabbit', 'tiger', 'fox'].sample
+				# 	if size == :small
+				# 		"media/images/avatars/#{animal}-small.png"
+				# 	else
+				# 		"media/images/avatars/#{animal}-medium.png"
+				# 	end
 				end
 			end
 

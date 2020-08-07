@@ -70,7 +70,7 @@ const SwipableModule = (() => {
         }
 
         if (listElNodesObj[currentPosition]) {
-            listElNodesObj[currentPosition].classList.add("stackedcards-active");
+            listElNodesObj[currentPosition].classList.add("elevation-10");
         }
 
         if (useOverlays) {
@@ -401,6 +401,10 @@ const SwipableModule = (() => {
                 let elOpac       = 1;
                 let elTransTop   = items;
                 const elTransInc = elementsMargin;
+
+                if (listElNodesObj[currentPosition]) {
+                    listElNodesObj[currentPosition].classList.add("elevation-10");
+                }
 
                 for (let i = currentPosition; i < (currentPosition + items); i++) {
                     if (listElNodesObj[i]) {
