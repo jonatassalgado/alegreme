@@ -16,17 +16,6 @@ class OrganizersController < ApplicationController
 
 		@events ||= @organizer.events.not_ml_data.active
 
-		@collection = {
-				identifier:       @organizer.details['name'].parameterize,
-				user:             current_user,
-				items:            @events.limit(session[:stimulus][:limit]),
-				total_count:      @events.size,
-				followable:       @organizer,
-				infinite_scroll_vertical:  true,
-				display_if_empty: true,
-				show_similar_to:  session[:stimulus][:show_similar_to]
-		}
-
 		render 'show'
 
 	end

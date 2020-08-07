@@ -7,8 +7,11 @@
 
 	<script type="application/ld+json">
   [
-    <%= render partial: 'layouts/json_ld', collection: @collection[:events], as: :event %>
+    <%= render partial: 'layouts/json_ld', collection: @events, as: :event %>
   ]
+
+
+
 	</script>
 
 	<div class="is-animated md:w-9/12 mx-auto sm:container space-y-16">
@@ -21,18 +24,25 @@
 				</div>
 				<div class="flex flex-no-wrap items-center px-5">
 					<%= render partial: 'components/follow/follow_button', locals: {
-							identifier: @collection[:identifier],
-							user:       @collection[:user],
-							followable: @collection[:followable]
+							identifier: @organizer.details['name'].parameterize,
+							user:       current_user,
+							followable: @organizer
 					} %>
 				</div>
 			</div>
 		<% end %>
-		<%= render partial: "components/collection/events/collection", layout: "components/section",
+		<%= render partial: "components/collection/events/collection",
+							 layout: "components/stimulus_container",
 							 locals:  {
-									 collection: @collection.deep_merge!(
-											 custom_title: custom_title
-									 )
+									 identifier:               @organizer.details['name'].parameterize,
+									 user:                     current_user,
+									 items:                    @events.limit(session[:stimulus][:limit]),
+									 total_count:              @events.size,
+									 followable:               @organizer,
+									 infinite_scroll_vertical: true,
+									 display_if_empty:         true,
+									 show_similar_to:          session[:stimulus][:show_similar_to],
+									 custom_title:             custom_title
 							 } %>
 	</div>
 
