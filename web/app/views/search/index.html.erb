@@ -1,22 +1,20 @@
-<div class="is-animated md:mt-32 min-h-screen mt-24">
+<div class="min-h-screen mt-24 is-animated md:mt-32">
 
 	<%= notice %>
 
 	<% unless @events&.suggestions.blank? %>
-		<div class="mb-10">
-			<h2 class="text-2xl">Você quis dizer?</h2>
-			<div class="">
-				<% @events&.suggestions&.each do |suggestion| %>
-					<a href="<%= search_index_path({q: suggestion}) %>" class="me-chip mdc-chip">
-						<span class="mdc-chip__text"><%= suggestion %></span>
-					</a>
-				<% end %>
-			</div>
+		<div class="px-5 mx-auto mb-10 md:px-0 md:w-9/12">
+			<h2 class="font-semibold text-gray-800">Você quis dizer?</h2>
+			<% @events&.suggestions&.each do |suggestion| %>
+				<a href="<%= search_index_path({q: suggestion}) %>" class="me-chip mdc-chip">
+					<span class="inline-block px-4 py-2 mt-2 mr-2 text-gray-800 bg-gray-100 rounded-full hover:bg-gray-200"><%= suggestion %></span>
+				</a>
+			<% end %>
 		</div>
 	<% end %>
 
 	<% if @events.try { |events| events.size > 0 } %>
-		<div class="md:w-9/12 mx-auto">
+		<div class="mx-auto md:w-9/12">
 			<%= render partial: "components/collection/events/collection",
 								 locals:  {
 										 identifier:               'search',
@@ -27,17 +25,22 @@
 										 },
 										 infinite_scroll_vertical: true,
 										 display_if_empty:         true,
-										 show_similar_to:          session[:stimulus][:show_similar_to]
+										 show_similar_to:          session[:stimulus][:show_similar_to],
+										 html: {
+												 grid: {
+														 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
+												 }
+										 }
 								 } %>
 		</div>
 	<% elsif @events.try { |events| events.size == 0 } %>
 		<h2 class="text-2xl">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
 	<% elsif @categories.present? %>
-		<div class="md:w-9/12 mx-auto">
-			<h2 class="flex-1 font-bold group-hover:text-chateau-green-500 leading-6 md:leading-normal md:pl-0 md:text-5xl pl-5 text-gray-800 text-xl">Categorias</h2>
-			<div class="flex flex-wrap md:px-0 mt-5 px-5">
+		<div class="mx-auto md:w-9/12">
+			<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-chateau-green-500 md:leading-normal md:pl-0 md:text-5xl">Categorias</h2>
+			<div class="flex flex-wrap px-5 mt-5 md:px-0">
 				<% @categories.each do |category| %>
-					<a href="<%= category_events_path category %>" class="tap-highlight-none select-none inline-block antialiased bg-gray-100 border mdc-chip me-chip px-4 py-1 rounded-full text-gray-800 mt-2 mr-2 cursor-pointer transform transition-colors duration-200">
+					<a href="<%= category_events_path category %>" class="inline-block px-4 py-1 mt-2 mr-2 antialiased text-gray-800 transition-colors duration-200 transform bg-gray-100 border rounded-full cursor-pointer select-none tap-highlight-none mdc-chip me-chip">
 						<%= category %>
 					</a>
 				<% end %>
