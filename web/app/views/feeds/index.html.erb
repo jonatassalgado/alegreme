@@ -27,21 +27,15 @@
 		<% end %>
 	<% end %>
 
-	<% if current_user && @new_events_today.size > 0 %>
-		<div class="me-section me-section--condensed">
-			<div class="me-section__inner">
-				<div class="me-info">
-					<div class="me-info__content">
-						<% if @new_events_today.size == 1 %>
-							<%= link_to "Foi adicionado um evento nas últimas 24 horas!", recent_events_path(current_user) %>
-						<% else %>
-							<%= link_to "Foram adicionados #{@new_events_today.size} eventos nas últimas 24 horas!", recent_events_path(current_user) %>
-						<% end %>
-					</div>
-				</div>
-			</div>
-		</div>
-	<% end %>
+	<%# if current_user && @new_events_today.size > 0 %>
+	<div data-controller="ripple" class="ripple ripple-black relative overflow-hidden border flex mx-5 px-2 py-3 rounded-lg shadow-md text-gray-600 text-xs">
+		<% if @new_events_today.size == 1 %>
+			<%= link_to "Foi adicionado um evento nas últimas 24 horas!", recent_events_path(current_user) %>
+		<% else %>
+			<%= link_to "Foram adicionados #{@new_events_today.size} eventos nas últimas 24 horas!", recent_events_path(current_user) %>
+		<% end %>
+	</div>
+	<%# end %>
 
 
 	<% if current_user %>
@@ -65,7 +59,7 @@
 													 css: class_names('hidden': @saved_events.blank?)
 											 }
 									 },
-									 cached:          true,
+									 cached:          Rails.env.production?,
 									 cache_key:       [current_user, 'events_saved', @saved_events.pluck(:id), @saved_events.maximum(:updated_at)]
 							 } %>
 	<% end %>
@@ -103,7 +97,7 @@
 												 update_collection_on_action: true
 										 }
 								 },
-								 cached:            true,
+								 cached:            Rails.env.production?,
 								 cache_key:         [current_user, 'this-week', session[:stimulus].to_param, @events_this_week&.pluck(:id), @events_this_week&.try(:maximum, :updated_at)]
 						 } %>
 
@@ -141,7 +135,7 @@
 												 update_collection_on_action: true
 										 }
 								 },
-								 cached:                     true,
+								 cached:                     Rails.env.production?,
 								 cache_key:                  [current_user, 'user-suggestions', session[:stimulus].to_param, @events_in_user_suggestions&.pluck(:id), @events_in_user_suggestions&.try(:maximum, :updated_at)]
 						 } %>
 
@@ -192,7 +186,7 @@
 												 update_collection_on_action: true
 										 }
 								 },
-								 cached:            true,
+								 cached:            Rails.env.production?,
 								 cache_key:         [current_user, 'follow', session[:stimulus].to_param, @events_from_following_topics&.pluck(:id), @events_from_following_topics&.try(:maximum, :updated_at)]
 						 } %>
 
@@ -243,7 +237,7 @@
 												 update_collection_on_action: true
 										 }
 								 },
-								 cached:            false,
+								 cached:            Rails.env.production?,
 								 cache_key:         [current_user, 'following-users', session[:stimulus].to_param, @events_from_followed_users&.pluck(:id), @events_from_followed_users&.try(:maximum, :updated_at)]
 						 } %>
 
@@ -290,14 +284,14 @@
 												 update_collection_on_action: true
 										 }
 								 },
-								 cached:            true,
+								 cached:            Rails.env.production?,
 								 cache_key:         [current_user, 'my-neighborhood', session[:stimulus].to_param, @events_in_my_neighborhood&.pluck(:id), @events_in_my_neighborhood&.try(:maximum, :updated_at)]
 						 } %>
 
 
 
 	<% if mobile_device? && current_user %>
-		<div data-controller="button" data-target="button.button" class="bg-chateau-green-500 mx-auto px-5 py-3 rounded-full shadow-md text-center text-lg text-white w-content" onclick="location.assign('/porto-alegre/eventos')">
+		<div data-controller="button ripple" data-target="button.button" class="bg-chateau-green-500 font-semibold mx-auto overflow-hidden px-6 py-4 relative ripple ripple-white rounded-full shadow-md text-center text-lg text-white w-content" onclick="location.assign('/porto-alegre/eventos')">
 			Explorar todos os eventos
 		</div>
 	<% end %>

@@ -1,6 +1,6 @@
 module.exports = {
     purge:    {
-        enabled: true,
+        enabled: process.env.RAILS_ENV === "production",
         content: [
             "./app/views/**/*.html.erb",
             "./app/views/**/**/*.html.erb",

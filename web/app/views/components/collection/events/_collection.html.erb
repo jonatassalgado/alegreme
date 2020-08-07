@@ -53,8 +53,11 @@
 		 data-section-stimulus-session="<%= session[:stimulus].to_param %>"
 		 id="<%= identifier %>">
 	<%= content_tag :div,
-									class:   class_string('cursor-pointer flex justify-between group': continue_to,
-																				'flex justify-between':                      !continue_to),
+									data:    {
+											controller: 'ripple'
+									},
+									class:   class_string('relative overflow-hidden ripple ripple-black cursor-pointer flex justify-between group': continue_to,
+																				'flex justify-between':                                                                   !continue_to),
 									onclick: continue_to ? "Turbolinks.visit('#{continue_to}')" : nil do %>
 		<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-chateau-green-500 md:leading-normal md:pl-0 md:text-5xl">
 			<%= title[:principal] %>

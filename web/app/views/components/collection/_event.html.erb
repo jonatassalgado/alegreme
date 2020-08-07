@@ -38,13 +38,8 @@
 		 data-target="event.event"
 		 id="<%= "cell-#{section_identifier}-#{dom_id event}" %>"
 		 style="order: <%= event_counter + 1 %>">
-	<div class="relative">
+	<div data-controller="ripple" class="relative overflow-hidden ripple ripple-white">
 		<div class="bg-gray-200 rounded-t-lg aspect-ratio-16/9"></div>
-		<div class="<%= html.dig(:calendar, :css) || 'absolute cursor-pointer flex flex-col flex-shrink-0 leading-none left-0 ml-2 mt-2 text-center text-white top-0 uppercase w-10 z-10' %>"
-				 onclick="Turbolinks.visit('<%= day_events_path event.day_of_week['date'].strftime('%d-%m-%Y') %>')">
-			<span class="<%= html.dig(:calendar_month, :css) || 'border-b border-white mb-1 md:mb-2 pb-1 md:pb-2 text-xs' %>"><%= I18n.l(event&.first_day_time&.to_date, format: "%b") %></span>
-			<span class="<%= html.dig(:calendar_date, :css) || 'font-medium md:text-xl text-sm title-font' %>"><%= I18n.l(event&.first_day_time&.to_date, format: "%d") %></span>
-		</div>
 		<%= image_tag get_feed_image_url(event), {
 				loading: :lazy,
 				class:   'absolute cursor-pointer h-32 h-full left-0 object-center object-cover top-0 w-full rounded-t-lg overflow-hidden',

@@ -1,13 +1,3 @@
-@keyframes ripple {
-  from {
-    opacity: 1;
-    transform: scale(0);
-  }
-  to {
-    opacity: 0;
-    transform: scale(10);
-  }
-}
 
 .grid-after-margin::after {
   content: close-quote;
@@ -53,22 +43,48 @@
     background-blend-mode: multiply;
   }
 
-  .ripple ripple {
-    position: absolute;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.3);
-
-    width: 100px;
-    height: 100px;
-    margin-top: -50px;
-    margin-left: -50px;
-
-    animation: ripple 1s;
-    opacity: 0;
-  }
-
   .grid-max-content {
     grid-template-columns: max-content;
+  }
+}
+
+.ripple {
+  ripple {
+    @apply opacity-0 z-50 absolute rounded-full;
+  }
+}
+
+@keyframes ripple-white {
+  from {
+    opacity: 0.32;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(12);
+  }
+}
+.ripple-white {
+  ripple {
+    @apply bg-white;
+    animation: ripple-white 850ms;
+  }
+}
+
+@keyframes ripple-black {
+  from {
+    opacity: 0.16;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(12);
+  }
+}
+.ripple-black {
+  ripple {
+    @apply bg-black;
+    animation: ripple-black 850ms;
   }
 }
 

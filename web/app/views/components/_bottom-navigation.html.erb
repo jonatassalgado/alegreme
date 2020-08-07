@@ -1,7 +1,7 @@
 <% return unless ['feeds', 'movies', 'events', 'search'].include?(controller_name) && !['show', 'edit'].include?(action_name) %>
 
-<div class="z-50 bg-white bottom-0 duration-100 elevation-8 fixed py-2 transform transition-transform w-full"
-		 data-controller="bottom-navigation toggle-style go-to"
+<div class="ripple ripple-black overflow-hidden z-50 bg-white bottom-0 duration-100 elevation-8 fixed py-2 transform transition-transform w-full"
+		 data-controller="ripple bottom-navigation toggle-style go-to"
 		 data-go-to-delay="100"
 		 data-reflex-permanent
 		 data-toggle-style-active-class='["scale-105", "text-chateau-green-500"]'
