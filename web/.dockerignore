@@ -9,3 +9,7 @@ public/packs-test
 test
 db/backups
 /yarn-error.log
+/.rakeTasks
+/.generators
+/.byebug_history
+/webpack-stats.json

@@ -3,6 +3,7 @@
 .idea/workspace.xml
 web/.generators
 web/.rakeTasks
+web/webpack-stats.json
 web/package-lock.json
 ml/api/log/
 hint-report/

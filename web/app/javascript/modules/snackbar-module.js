@@ -1,4 +1,4 @@
-import {MDCSnackbar}  from '@material/snackbar';
+// import {MDCSnackbar}  from '@material/snackbar';
 
 const SnackBarModule = (() => {
 	const module = {};
@@ -9,13 +9,13 @@ const SnackBarModule = (() => {
 		const snackbarEl = document.querySelector('.mdc-snackbar');
 
 		if (snackbarEl) {
-			const snackbar     = new MDCSnackbar(snackbarEl);
-			snackbar.labelText = text;
-			snackbar.open();
-
-			setTimeout(() => {
-				snackbar.destroy();
-			}, 10000)
+			// const snackbar     = new MDCSnackbar(snackbarEl);
+			// snackbar.labelText = text;
+			// snackbar.open();
+			//
+			// setTimeout(() => {
+			// 	snackbar.destroy();
+			// }, 10000)
 		}
 	};
 

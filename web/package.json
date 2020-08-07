@@ -1,6 +1,11 @@
 {
   "name": "app",
   "private": true,
+  "scripts": {
+    "webpack:analyze": "yarn webpack:build_json && yarn webpack:analyze_json",
+    "webpack:build_json": "RAILS_ENV=${RAILS_ENV:-production} NODE_ENV=${NODE_ENV:-production} bin/webpack --profile --json > webpack-stats.json",
+    "webpack:analyze_json": "webpack-bundle-analyzer webpack-stats.json public/packs"
+  },
   "dependencies": {
     "@material/tab-bar": "^4.0.0",
     "@material/tab-scroller": "^4.0.0",
@@ -17,11 +22,9 @@
     "flipping": "^1.1.0",
     "lazysizes": "^5.1.0",
     "lit-html": "^0.14.0",
-    "material-components-web": "^4.0.0",
     "mobile-detect": "^1.4.3",
     "morphdom": "^2.5.4",
     "nanoevents": "^2.0.0",
-    "pwa-install-prompt": "^1.1.0",
     "query-string": "^6.4.2",
     "stimulus": "^1.1.1",
     "stimulus_reflex": "^3.2.3",
@@ -33,7 +36,7 @@
     "tailwindcss-animations": "^2.0.0",
     "tailwindcss-aspect-ratio": "^3.0.0",
     "tailwindcss-font-inter": "^1.0.8",
-    "webpack-bundle-analyzer": "^3.4.1",
+    "webpack-bundle-analyzer": "^3.8.0",
     "webpack-dev-server": "^3.1.14"
   }
 }
