@@ -19,18 +19,19 @@ export default class RippleController extends ApplicationController {
     }
 
     setup() {
-        this.evt = MobileDetector.mobile() ? "touchstart" : "click";
-        this.element.addEventListener(this.evt, this._showRipple)
+        this.evt = MobileDetector.mobile() ? "touchend" : "click";
+        this.element.addEventListener(this.evt, this._showRipple, false)
     }
 
     teardown() {
         Array.from(document.querySelectorAll("._ripple")).forEach(el => {
             el.remove()
         });
-        this.element.removeEventListener(this.evt, this._showRipple)
+        this.element.removeEventListener(this.evt, this._showRipple, false)
     }
 
     _showRipple(e) {
+        e.stopPropagation();
         const container       = e.currentTarget;
         const ripple          = document.createElement("ripple");
         const containerRect   = container.getBoundingClientRect();
