@@ -29,14 +29,14 @@
 		</div>
 
 		<% if current_user.admin? %>
-			<div class="hidden">
-				<div class="me-section__title">
+			<div class="md:px-0 px-5">
+				<h2 class="flex-1 font-bold group-hover:text-chateau-green-500 leading-6 md:leading-normal md:pl-0 md:text-5xl pb-3 text-gray-800 text-xl">
 					Admin
-				</div>
-				<div class="me-section__description">
-					<%= link_to 'Dashboard', dashboard_path, class: 'me-chip mdc-chip' %>
-					<%= link_to 'Usuários', admin_users_path, class: 'me-chip mdc-chip' %>
-					<%= link_to 'Treinar', train_path, class: 'me-chip mdc-chip' %>
+				</h2>
+				<div class=inline-flex">
+					<%= link_to 'Dashboard', dashboard_path, class: 'bg-gray-200 px-3 py-2 rounded-full text-gray-800 text-sm' %>
+					<%= link_to 'Usuários', admin_users_path, class: 'bg-gray-200 px-3 py-2 rounded-full text-gray-800 text-sm' %>
+					<%= link_to 'Treinar', train_path, class: 'bg-gray-200 px-3 py-2 rounded-full text-gray-800 text-sm' %>
 				</div>
 			</div>
 		<% end %>

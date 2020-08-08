@@ -28,7 +28,7 @@
 	<% end %>
 
 	<%# if current_user && @new_events_today.size > 0 %>
-	<div data-controller="ripple" class="relative flex px-2 py-3 mx-5 -mb-10 overflow-hidden text-xs text-gray-600 border rounded-lg shadow-sm ripple ripple-black">
+	<div data-controller="ripple" class="relative flex px-2 py-3 mx-5 -mb-10 overflow-hidden text-xs text-gray-600 border rounded-lg shadow-sm md:border-0 md:mx-0 md:shadow-none ripple ripple-black">
 		<% if @new_events_today.size == 1 %>
 			<%= link_to "Foi adicionado um evento nas últimas 24 horas!", recent_events_path(current_user) %>
 		<% else %>
@@ -141,9 +141,9 @@
 
 	<% custom_title = capture do %>
 		<% if current_user %>
-			<div class="grid grid-flow-col gap-3 my-1 pl-5 grid-after-margin md:pl-0 w-content">
+			<div class="grid grid-flow-col gap-3 pl-5 my-1 grid-after-margin md:pl-0 w-content">
 				<% current_user&.following_topics.filter { |topic| topic.events.active.size > 0 }.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
-					<a data-controller="ripple" onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_topic topic %>" class="border cursor-pointer font-semibold hover:bg-gray-400 inline-block overflow-hidden px-4 py-3 relative ripple ripple-black rounded-md shadow-sm text-gray-700 text-sm">
+					<a data-controller="ripple" onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_topic topic %>" class="relative inline-block px-4 py-3 overflow-hidden text-sm font-semibold text-gray-700 border rounded-md shadow-sm cursor-pointer hover:bg-gray-400 ripple ripple-black">
 						<%= topic.details_name.titleize %>
 						<% if topic.events.active.size > 0 %>
 							<span class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold bg-gray-100 rounded-full"><%= topic.events.active.size %></span>
@@ -243,9 +243,9 @@
 
 	<% custom_title = capture do %>
 		<% if current_user %>
-			<div class="py-1 grid grid-flow-col gap-3 pt-1 pl-5 grid-after-margin md:pl-0 w-content">
+			<div class="grid grid-flow-col gap-3 py-1 pt-1 pl-5 grid-after-margin md:pl-0 w-content">
 				<% ['Cidade Baixa', 'Centro Histórico', 'Bom Fim', 'Moinhos de Vento'].each do |neighborhood| %>
-					<%= link_to neighborhood_events_path(neighborhood.parameterize), data: {controller: 'ripple'}, onclick: "window.AnimateModule.animatePageHide()", class: "border cursor-pointer font-semibold hover:bg-gray-400 inline-block overflow-hidden px-4 py-3 relative ripple ripple-black rounded-md shadow-sm text-gray-700 text-sm" do %>
+					<%= link_to neighborhood_events_path(neighborhood.parameterize), data: {controller: 'ripple'}, onclick: "window.AnimateModule.animatePageHide()", class: "relative inline-block px-4 py-3 overflow-hidden text-sm font-semibold text-gray-700 border rounded-md shadow-sm cursor-pointer hover:bg-gray-400 ripple ripple-black" do %>
 						<%= neighborhood.titleize %>
 					<% end %>
 				<% end %>

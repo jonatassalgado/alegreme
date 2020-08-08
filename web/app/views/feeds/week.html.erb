@@ -1,4 +1,4 @@
-<section class="mt-32 min-h-screen is-animated">
+<section class="is-animated md:mt-32 min-h-screen mt-20">
 
 	<% content_for :canonical_url, week_events_url %>
 	<% content_for :amp_url, week_events_url(format: :amp) %>
@@ -9,8 +9,7 @@
 	<% content_for :meta_description, "Descubra as festas, shows, feiras, teatros, palestras, festivais, exposições e filmes que acontecem esta semana (#{I18n.l(Date.today, format: :short)}) até #{I18n.l(Date.today + 6, format: :week)} (#{I18n.l(Date.today + 6, format: :short)})." %>
 
 	<script type="application/ld+json">
-  [<%= render partial: 'layouts/json_ld', collection: @events, as: :event %>]
-
+  	[<%= render partial: 'layouts/json_ld', collection: @events, as: :event %>]
 	</script>
 
 	<section class="md:w-9/12 mx-auto">
