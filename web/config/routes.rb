@@ -45,7 +45,6 @@ Rails.application.routes.draw do
 	resources :users
 	get '/:id/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
 	get '/:id/seguindo', to: 'feeds#follow', as: :follow_events
-	get '/:id/novos', to: 'feeds#recent', as: :recent_events
 
 	get '/active-invite', to: 'users#active_invite'
 
@@ -72,6 +71,7 @@ Rails.application.routes.draw do
 		end
 		collection do
 			get :saves
+			get :recent, path: 'novos'
 		end
 	end
 	resources :movies, path: 'porto-alegre/filmes', as: :movies

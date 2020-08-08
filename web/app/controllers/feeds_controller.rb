@@ -14,7 +14,7 @@ class FeedsController < ApplicationController
 		         })
 
 		@saved_events                 ||= current_user ? current_user&.saved_events&.not_ml_data&.active&.order_by_date : Event.none
-		@new_events_today             ||= Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
+		@recent_events                ||= Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
 		@events_this_week             ||= Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).in_categories(Event::CATEGORIES, {not_in: %w(anúncio slam curso protesto outlier)}).with_high_score.in_days((DateTime.now.beginning_of_day...(DateTime.now.beginning_of_day + 8))).includes(:place).order_by_date
 		@events_in_user_suggestions   ||= current_user ? Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).not_in(@events_this_week.pluck(:id)).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
 		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.not_ml_data&.active&.not_in_saved(current_user)&.not_in_disliked(current_user)&.includes(:place)&.order_by_date : Event.none
@@ -23,10 +23,6 @@ class FeedsController < ApplicationController
 		@following_users              ||= User.following_users(current_user)
 		@swipable_items               = get_swipable_items
 
-	end
-
-	def recent
-		@events ||= Event.not_ml_data.active.where("created_at > ?", DateTime.now - 24.hours)
 	end
 
 	def suggestions
@@ -88,7 +84,7 @@ class FeedsController < ApplicationController
 	def get_swipable_items
 		Rails.cache.fetch([current_user, 'swipable_items'], expires_in: 1.hour) do
 			events = Event.not_ml_data.with_high_score.not_in_saved(current_user).not_in_disliked(current_user).in_categories(Event::CATEGORIES, {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(12)
-		# 	events = Event.not_ml_data.order_by_score.limit(10)
+			# 	events = Event.not_ml_data.order_by_score.limit(10)
 
 			events.map do |event|
 				{

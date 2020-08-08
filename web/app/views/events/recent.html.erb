@@ -9,11 +9,11 @@
 							 locals:  {
 									 identifier:       'new-today',
 									 user:             current_user,
-									 items:            @events.limit(session[:stimulus][:limit]),
-									 total_count:      @events.size,
+									 items:            @recent_events.limit(session[:stimulus][:limit]),
+									 total_count:      @recent_events.size,
 									 title:            {
 											 principal: "Adicionados recentemente",
-											 secondary: "Foram adicionados #{@events.size} eventos nas últimas 16 horas que podem te interessar"
+											 secondary: "Foram adicionados #{@recent_events.size} eventos nas últimas 24 horas que podem te interessar"
 									 },
 									 infinite_scroll_vertical:  true,
 									 display_if_empty: true,

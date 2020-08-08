@@ -27,15 +27,11 @@
 		<% end %>
 	<% end %>
 
-	<%# if current_user && @new_events_today.size > 0 %>
-	<div data-controller="ripple" class="relative flex px-2 py-3 mx-5 -mb-10 overflow-hidden text-xs text-gray-600 border rounded-lg shadow-sm md:border-0 md:mx-0 md:shadow-none ripple ripple-black">
-		<% if @new_events_today.size == 1 %>
-			<%= link_to "Foi adicionado um evento nas últimas 24 horas!", recent_events_path(current_user) %>
-		<% else %>
-			<%= link_to "Foram adicionados #{@new_events_today.size} eventos nas últimas 24 horas!", recent_events_path(current_user) %>
-		<% end %>
-	</div>
-	<%# end %>
+	<% if @recent_events.size > 0 %>
+		<div data-controller="ripple" class="relative flex px-2 py-3 mx-5 -mb-10 overflow-hidden text-xs text-gray-600 border rounded-lg shadow-sm md:border-0 md:mx-0 md:shadow-none ripple ripple-black">
+			<%= link_to (@recent_events.size > 1 ? "Foram adicionados #{@recent_events.size} eventos nas últimas 24 horas!" : "Foi adicionado um evento nas últimas 24 horas!"), recent_events_path %>
+		</div>
+	<% end %>
 
 
 	<% if current_user %>
