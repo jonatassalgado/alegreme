@@ -1,44 +1,35 @@
-<%= javascript_pack_tag 'text-field', 'select', 'data-turbolinks-track': 'reload', defer: true %>
-
 <%= notice %>
 
-<%= form_with(model: user, local: true, html: { enctype: "multipart/form-data" }) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <p><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</p>
+<%= form_with(model: user, local: true, html: {enctype: "multipart/form-data"}, class: 'text-gray-800 text-sm space-y-5') do |form| %>
+	<% if user.errors.any? %>
+		<div id="error_explanation">
+			<p><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</p>
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+			<ul>
+				<% user.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
 
-  <% if @user.picture %>
-    <img class="me-user-profile__picture" src="<%= @user.picture %>">
-  <% else %>
-    Você não possui nenhuma foto, envie clicando ao lado.
-  <% end %>
+	<div>
+		<% if @user.picture %>
+			<%= image_tag @user.picture, {class: "mb-1 bg-cover bg-gray-400 h-12 md:h-16 md:w-16 rounded-full w-12", alt: @user.name, onerror: "this.style.opacity='0'"} %>
+		<% else %>
+			Você não possui nenhuma foto, envie clicando abaixo.
+			<%= form.hidden_field :image, value: @user.cached_image_data %>
+			<%= form.file_field :image, class: "" %>
+		<% end %>
+	</div>
 
-  <%= form.hidden_field :image, value: @user.cached_image_data %>
-  <%= form.file_field :image, class: "me-file-button" %>
+	<div>
+		<label>Nome</label>
+		<%= form.text_field :name, class: 'border px-2 py-2 rounded w-full' %>
+	</div>
 
-  <div class="me-text-field__container me-text-field--fullwidth">
-    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
-      <%= form.text_field :name, class: 'mdc-text-field__input' %>
-      <div class="mdc-notched-outline mdc-notched-outline--upgraded">
-        <div class="mdc-notched-outline__leading"></div>
-        <div class="mdc-notched-outline__notch" style="">
-          <label class="mdc-floating-label" for="text-field-outlined" style="">Nome</label>
-        </div>
-        <div class="mdc-notched-outline__trailing"></div>
-      </div>
-    </div>
-  </div>
-
-  <button class="me-button mdc-button">
-    <span class="me-button__label mdc-button__label">Salvar</span>
-  </button>
+	<button class="antialiased bg-chateau-green-500 float-right font-semibold px-5 py-2 rounded-full shadow-lg text-white">
+		Salvar
+	</button>
 
 <% end %>
