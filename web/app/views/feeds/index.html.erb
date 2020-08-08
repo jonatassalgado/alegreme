@@ -1,6 +1,6 @@
 <%#= render partial: "feeds/float_menu" unless mobile_device? %>
 
-<section data-controller="page" data-target="page.page" class="is-animated lg:w-9/12 md:mt-40 mt-32 mx-auto sm:container space-y-16">
+<section data-controller="page" data-target="page.page" class="mx-auto mt-32 space-y-16 is-animated lg:w-9/12 md:mt-40 sm:container">
 	<%# if current_user && current_user.notifications_topics_all_requested == false %>
 	<!-- <div class="me-section">
       <div class="me-section__inner">
@@ -28,7 +28,7 @@
 	<% end %>
 
 	<%# if current_user && @new_events_today.size > 0 %>
-	<div data-controller="ripple" class="ripple ripple-black relative overflow-hidden border flex mx-5 px-2 py-3 rounded-lg shadow-md text-gray-600 text-xs">
+	<div data-controller="ripple" class="relative flex px-2 py-3 mx-5 -mb-10 overflow-hidden text-xs text-gray-600 border rounded-lg shadow-sm ripple ripple-black">
 		<% if @new_events_today.size == 1 %>
 			<%= link_to "Foi adicionado um evento nas últimas 24 horas!", recent_events_path(current_user) %>
 		<% else %>
@@ -141,12 +141,12 @@
 
 	<% custom_title = capture do %>
 		<% if current_user %>
-			<div class="gap-3 grid grid-after-margin grid-flow-col md:pl-0 pl-5 pt-1 w-content">
+			<div class="grid grid-flow-col gap-3 my-1 pl-5 grid-after-margin md:pl-0 w-content">
 				<% current_user&.following_topics.filter { |topic| topic.events.active.size > 0 }.sort_by { |topic| topic.events.active.size }.reverse!.each do |topic| %>
-					<a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_topic topic %>" class="border cursor-pointer font-semibold hover:bg-gray-400 inline-block px-4 py-3 relative rounded-full text-gray-700 text-sm <%= 'new' if topic.events.active.any? { |event| current_user&.last_sign_in_at < event.created_at } %>">
+					<a data-controller="ripple" onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_topic topic %>" class="border cursor-pointer font-semibold hover:bg-gray-400 inline-block overflow-hidden px-4 py-3 relative ripple ripple-black rounded-md shadow-sm text-gray-700 text-sm">
 						<%= topic.details_name.titleize %>
 						<% if topic.events.active.size > 0 %>
-							<span class="-mt-4 absolute bg-gray-100 font-bold h-4 inline-flex items-center justify-center mr-2 right-0 rounded-full text-xs w-4"><%= topic.events.active.size %></span>
+							<span class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold bg-gray-100 rounded-full"><%= topic.events.active.size %></span>
 						<% end %>
 					</a>
 				<% end %>
@@ -192,7 +192,7 @@
 
 	<% custom_title = capture do %>
 		<% if current_user %>
-			<div class="gap-3 grid grid-after-margin grid-flow-col md:pl-0 pl-5 text-gray-800 text-sm w-content">
+			<div class="grid grid-flow-col gap-3 pl-5 text-sm text-gray-800 grid-after-margin md:pl-0 w-content">
 				<% User.following_users(current_user).each do |user| %>
 					<%= link_to user_path(user), {class: ''} do %>
 						<div onclick="window.AnimateModule.animatePageHide()" class="flex flex-col items-center">
@@ -243,9 +243,9 @@
 
 	<% custom_title = capture do %>
 		<% if current_user %>
-			<div class="gap-3 grid grid-after-margin grid-flow-col md:pl-0 pl-5 pt-1 w-content">
+			<div class="py-1 grid grid-flow-col gap-3 pt-1 pl-5 grid-after-margin md:pl-0 w-content">
 				<% ['Cidade Baixa', 'Centro Histórico', 'Bom Fim', 'Moinhos de Vento'].each do |neighborhood| %>
-					<%= link_to neighborhood_events_path(neighborhood.parameterize), onclick: "window.AnimateModule.animatePageHide()", class: "border cursor-pointer font-semibold hover:bg-gray-400 inline-block px-4 py-3 relative rounded-full text-gray-700 text-sm" do %>
+					<%= link_to neighborhood_events_path(neighborhood.parameterize), data: {controller: 'ripple'}, onclick: "window.AnimateModule.animatePageHide()", class: "border cursor-pointer font-semibold hover:bg-gray-400 inline-block overflow-hidden px-4 py-3 relative ripple ripple-black rounded-md shadow-sm text-gray-700 text-sm" do %>
 						<%= neighborhood.titleize %>
 					<% end %>
 				<% end %>
@@ -291,7 +291,7 @@
 
 
 	<% if mobile_device? && current_user %>
-		<div data-controller="button ripple" data-target="button.button" class="bg-chateau-green-500 font-semibold mx-auto overflow-hidden px-6 py-4 relative ripple ripple-white rounded-full shadow-md text-center text-lg text-white w-content" onclick="location.assign('/porto-alegre/eventos')">
+		<div data-controller="button ripple" data-target="button.button" class="relative px-6 py-4 mx-auto overflow-hidden text-lg font-semibold text-center text-white rounded-full shadow-md bg-chateau-green-500 ripple ripple-white w-content" onclick="location.assign('/porto-alegre/eventos')">
 			Explorar todos os eventos
 		</div>
 	<% end %>
