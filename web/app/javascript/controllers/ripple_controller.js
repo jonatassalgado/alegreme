@@ -19,7 +19,7 @@ export default class RippleController extends ApplicationController {
     }
 
     setup() {
-        this.evt = MobileDetector.mobile() ? "touchend" : "click";
+        this.evt = MobileDetector.mobile() ? "touchstart" : "click";
         this.element.addEventListener(this.evt, this._showRipple)
     }
 
@@ -35,7 +35,7 @@ export default class RippleController extends ApplicationController {
         const ripple          = document.createElement("ripple");
         const containerRect   = container.getBoundingClientRect();
         const containerSquare = (container.offsetWidth + container.offsetHeight) / 2;
-        const rippleSize      = (containerSquare / 6);
+        const rippleSize      = (containerSquare / 8);
         const x               = (e.pageX || e.changedTouches[0].clientX) - containerRect.x;
         const y               = (e.pageY || e.changedTouches[0].clientY) - containerRect.y;
 
