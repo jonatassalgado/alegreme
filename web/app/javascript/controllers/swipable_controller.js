@@ -25,8 +25,10 @@ export default class SwipableController extends ApplicationController {
     }
 
     setup() {
-        if ((this.userSigninCount <= 1 && this.userTasteEventsSaved < 1) && this.botOn) {
-            this.showBot();
+        if ((this.userSigninCount <= 1 && this.userTasteEventsSaved < 1)) {
+            setTimeout(() => {
+                this.showBot();
+            }, 500)
         } else {
             if (this.hasSwipableTarget) {
                 this.showSwipe();
@@ -40,10 +42,9 @@ export default class SwipableController extends ApplicationController {
     }
 
     showBot() {
+        this.onboardingTarget.classList.remove("hidden", "opacity-0")
+
         this.bot.init(this.onboardingTarget)
-
-        this.hidden = false;
-
         this.bot.message({
                              content: `Olá ${this.userName} 👋`,
                              delay:   150
@@ -118,10 +119,8 @@ export default class SwipableController extends ApplicationController {
     }
 
     showSwipe() {
-        this.botOn                          = false;
-        this.hidden                         = false;
-        this.onboardingTarget.style.display = "none";
-        this.itemsTarget.style.opacity      = 1;
+        this.onboardingTarget.classList.add("hidden", "opacity-0")
+        this.itemsTarget.style.opacity = 1;
         this.swipable.init();
         this.itemsTarget.style.display = "block";
     }
@@ -146,25 +145,4 @@ export default class SwipableController extends ApplicationController {
         }
     }
 
-    get botOn() {
-        return JSON.parse(this.data.get("botOn"))
-    }
-
-    set botOn(value) {
-        this.data.set("botOn", value);
-    }
-
-    get hidden() {
-        return JSON.parse(this.data.get("hidden"))
-    }
-
-    set hidden(value) {
-        setTimeout(() => {
-            requestIdleCallback(() => {
-                requestAnimationFrame(() => {
-                    this.data.set("hidden", value);
-                })
-            })
-        }, 500)
-    }
 }

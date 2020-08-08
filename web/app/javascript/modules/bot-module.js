@@ -68,9 +68,8 @@ const BotModule = (() => {
                                             });
 
             items.forEach(item => {
-                const button     = document.createElement("button");
-                button.className = `${item.cssClass} float-right bg-chateau-green-500 px-4 py-2 rounded-full text-white antialiased font-semibold text-lg`;
-                button.type      = "button";
+                const button     = document.createElement("div");
+                button.className = `${item.cssClass} tap-highlight-none select-none float-right bg-chateau-green-500 px-4 py-2 rounded-full text-white antialiased font-semibold text-lg`;
                 button.innerHTML = item.text;
                 button.addEventListener("click", () => {
                     resolve(item.value);

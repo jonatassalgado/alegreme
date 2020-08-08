@@ -22,7 +22,7 @@
 	<%# end %>
 
 	<% cache([current_user, 'swipable-events', @swipable_items.pluck(:id)]) do %>
-		<% if current_user && @swipable_items.size > 0 && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try { |last_view_at| last_view_at < (DateTime.now - 8.hours) }) %>
+		<% if current_user && @swipable_items.size > 0 && (current_user&.swipable.dig('events', 'last_view_at').blank? || current_user&.swipable.dig('events', 'last_view_at').try { |last_view_at| last_view_at < (DateTime.now - 6.hours) }) %>
 			<%= render partial: 'components/swipable/swipable' %>
 		<% end %>
 	<% end %>
@@ -241,7 +241,7 @@
 		<% if current_user %>
 			<div class="grid grid-flow-col gap-3 py-1 pt-1 pl-5 grid-after-margin md:pl-0 w-content">
 				<% ['Cidade Baixa', 'Centro Histórico', 'Bom Fim', 'Moinhos de Vento'].each do |neighborhood| %>
-					<%= link_to neighborhood_events_path(neighborhood.parameterize), data: {controller: 'ripple'}, onclick: "window.AnimateModule.animatePageHide()", class: "relative inline-block px-4 py-3 overflow-hidden text-sm font-semibold text-gray-700 border rounded-md shadow-sm cursor-pointer hover:bg-gray-400 ripple ripple-black" do %>
+					<%= link_to neighborhood_events_path(neighborhood.parameterize), data: {controller: 'ripple'}, onclick: "window.AnimateModule.animatePageHide()", class: "relative inline-block px-4 py-3 overflow-hidden text-sm font-semibold text-gray-700 border rounded-md shadow-sm cursor-pointer hover:bg-gray-100 ripple ripple-black" do %>
 						<%= neighborhood.titleize %>
 					<% end %>
 				<% end %>
@@ -287,7 +287,7 @@
 
 
 	<% if mobile_device? && current_user %>
-		<div data-controller="button ripple" data-target="button.button" class="relative px-6 py-4 mx-auto overflow-hidden text-lg font-semibold text-center text-white rounded-full shadow-md bg-chateau-green-500 ripple ripple-white w-content" onclick="location.assign('/porto-alegre/eventos')">
+		<div data-controller="button ripple" data-target="button.button" class="select-none relative px-6 py-4 mx-auto overflow-hidden text-lg font-semibold text-center text-white rounded-full shadow-md bg-chateau-green-500 ripple ripple-white w-content" onclick="location.assign('/porto-alegre/eventos')">
 			Explorar todos os eventos
 		</div>
 	<% end %>

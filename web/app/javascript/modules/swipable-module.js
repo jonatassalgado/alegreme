@@ -17,7 +17,6 @@ const SwipableModule = (() => {
         let counter                   = 0;
         const velocity                = 0.5; //Minimum velocity allowed to trigger a swipe.
         const pixelsToMoveCardOnSwipe = window.innerWidth;
-        let answers                   = [];
         const animationDuration       = 300;
         let isFirstTime               = true;
         let rightObj; //Keep the swipe right properties.
@@ -177,8 +176,6 @@ const SwipableModule = (() => {
 
         //Swipe active card to left.
         function onSwipeLeft() {
-            answers.push("-1");
-
             fetch(`/api/taste/events/${currentElementObj.id}/dislike?swipable=true`, {
                 method:      "post",
                 headers:     {
@@ -213,8 +210,6 @@ const SwipableModule = (() => {
 
         //Swipe active card to right.
         function onSwipeRight() {
-            answers.push("1");
-
             fetch(`/api/taste/events/${currentElementObj.id}/save?swipable=true`, {
                 method:      "post",
                 headers:     {
