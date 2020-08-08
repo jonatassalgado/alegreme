@@ -1,6 +1,8 @@
 <%
 
-	html = local_assigns.fetch(:html, {})
+	html = {
+
+	}.deep_merge!(local_assigns.fetch(:html, {}))
 
 %>
 

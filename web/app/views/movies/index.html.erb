@@ -18,6 +18,9 @@
 											 layout:      {
 													 id: 'movies-saved'
 											 },
+											 container:   {
+													 css: ('hidden mb-12 md:mt-0 mt-8' if @saved_movies.blank?)
+											 },
 											 continue_to: {
 													 hidden: true
 											 },

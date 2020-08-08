@@ -3,7 +3,7 @@ class MoviesController < ApplicationController
 
 	def index
 
-		@movies       = Movie.active.with_streaming
+		@movies       = Movie.active.not_in_saved(current_user).not_in_disliked(current_user).with_streaming
 		@saved_movies = current_user.try(:saved_movies)
 		@movies_group = [
 				{

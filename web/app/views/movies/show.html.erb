@@ -14,7 +14,7 @@
 				</div>
 				<%= image_tag(@movie.image[:medium].url(public: true), class: 'h-auto bg-white object-cover rounded-lg shadow-lg w-32', style: 'min-height: 195px') if @movie.image %>
 			</div>
-			<div class="pb-3">
+			<div class="pb-3 flex-1">
 				<h1 class="inline-block my-3 text-xl font-semibold leading-tight text-gray-900">
 					<%= @movie.details_title %>
 				</h1>
@@ -75,7 +75,7 @@
 			<h2 class="font-medium text-gray-700">
 				Serviços de streaming
 			</h2>
-			<div class="flex my-3 space-x-2">
+			<div class="flex flex-wrap my-3 space-x-2">
 				<% @movie.streamings.each do |streaming| %>
 					<a class="inline-block mb-2" href="<%= streaming.url %>">
 						<div class="flex px-3 py-1 text-gray-600 border rounded-full w-content">
