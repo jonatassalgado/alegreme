@@ -1,4 +1,4 @@
-<section class="mt-32 min-h-screen is-animated">
+<section class="is-animated md:mt-20 min-h-screen mt-10">
 	<% content_for :canonical_url, organizer_url(@organizer, format: :html) %>
 
 	<%= notice %>
@@ -10,15 +10,13 @@
     <%= render partial: 'layouts/json_ld', collection: @events, as: :event %>
   ]
 
-
-
 	</script>
 
 	<div class="is-animated md:w-9/12 mx-auto sm:container space-y-16">
 		<% custom_title = capture do %>
 			<div class="bg-gray-100 flex p-5 rounded-lg">
 				<div class="flex-1">
-					<div class="flex-1 font-bold group-hover:text-chateau-green-500 leading-6 md:leading-normal md:pl-0 md:text-5xl pl-5 text-gray-800 text-xl">
+					<div class="flex-1 font-bold group-hover:text-chateau-green-500 leading-6 md:leading-normal md:pl-0 md:pl-5 md:text-5xl text-gray-800 text-xl">
 						<%= @organizer.details_name %>
 					</div>
 				</div>
