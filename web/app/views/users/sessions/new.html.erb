@@ -11,7 +11,7 @@
 			</div>
 		<% end %>
 
-		<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'me-form'}) do |f| %>
+		<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'me-form'}) do |f| %>
 			<%= devise_error_messages! %>
 
 			<div class="">
@@ -43,7 +43,7 @@
 					</div>
 
 					<div class="text-sm text-gray-600">
-						<%= f.label :password, "Senha (min. 6 caracteres)", {class: ''} %>
+						<%= f.label :password, "Senha", {class: ''} %>
 						<%= f.password_field :password, autocomplete: "current-password", required: true, class: 'border px-2 py-2 rounded w-full' %>
 					</div>
 

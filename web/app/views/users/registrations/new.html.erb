@@ -50,19 +50,17 @@
 
 
 					<div class="text-sm text-gray-600">
-						<%= f.label :password, "Senha (min. 6 caracteres)", {class: 'mdc-floating-label'} %>
+						<%= f.label :password, "Senha (min. 6 caracteres)", {class: ''} %>
 						<%= f.password_field :password, autocomplete: "new-password", required: true, class: 'border px-2 py-2 rounded w-full' %>
 					</div>
 
 					<div class="text-sm text-gray-600">
-						<%= f.label :password_confirmation, "Repita a senha", {class: 'mdc-floating-label'} %>
+						<%= f.label :password_confirmation, "Repita a senha", {class: ''} %>
 						<%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, class: 'border px-2 py-2 rounded w-full' %>
 					</div>
 
-					<% if Rails.env == :production %>
-						<div class="">
-							<%= recaptcha_v3(action: 'sign_up') %>
-						</div>
+					<% if Rails.env.production? %>
+						<%= recaptcha_v3(action: 'sign_up') %>
 					<% end %>
 					<div class="select-none">
 						<%= f.submit "Enviar", {class: 'antialiased bg-chateau-green-500 float-right font-semibold px-5 py-2 rounded-full shadow-lg text-white'} %>
