@@ -5,9 +5,6 @@
 		<script crossorigin="anonymous" rel="preload" src="https://polyfill.io/v3/polyfill.min.js?flags=gated&rum=true&features=Element.prototype.closest%2CIntersectionObserverEntry%2CIntersectionObserver%2CMutationObserver%2Cfetch%2CrequestAnimationFrame%2CrequestIdleCallback%2CArray.prototype.forEach"></script>
 	<% end %>
 
-	<%= render 'layouts/google_analytics' %>
-
-
 	<title><%= meta_title %></title>
 
 	<meta name="theme-color" content="#ffffff"/>
@@ -15,6 +12,7 @@
 				content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 	<%= render partial: 'layouts/meta-tags' %>
+	<%= render partial: 'layouts/google_analytics' %>
 
 	<%= canonical_url %>
 	<%= amp_url %>
@@ -36,23 +34,21 @@
 	<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
 	<link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
-	<!--	<link rel="preload" as="font" href="https://fonts.googleapis.com/icon?family=Roboto:300,400,500,700&display=swap">-->
 	<% if content_for? :preload_image %>
 		<link rel="preload" as="image" href="<%= content_for :preload_image %>">
 	<% end %>
 
 	<%= Gon::Base.render_data %>
 
-	<!-- <script src="https://sdk.pushy.me/web/1.0.5/pushy-sdk.js" defer></script> -->
-
 	<%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
-<!--	<script async src="https://cdn.ampproject.org/v0.js" data-turbolinks-track="reload"></script>-->
-<!--	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>-->
 
 </head>
 <body class="antialiased font-inter tap-highlight-none" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
-<!-- <div class="me-top-app-bar__fake-size"></div> -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WH7RVCR"
+									height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <div data-reflex-permanent class="fixed top-0 z-50 w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm" data-controller="head" data-target="head.head">
 	<%= render partial: 'layouts/top-app-bar' %>

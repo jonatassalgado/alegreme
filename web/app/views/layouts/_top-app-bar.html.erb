@@ -97,7 +97,7 @@
 
 		<% if props[:visible][:sign_up] %>
 			<% if !['registrations', 'sessions'].include? controller_name %>
-				<%= link_to new_user_session_path, class: 'bg-chateau-green-500 cursor-pointer duration-200 font-bold hover:shadow-lg inline-block px-4 py-3 rounded-full text-md text-white transition-shadow' do %>
+				<%= link_to new_user_session_path, class: 'bg-chateau-green-500 cursor-pointer duration-200 font-bold hover:shadow-lg inline-block px-4 py-3 rounded-full text-md text-white transition-shadow', data: {'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Fazer login - Top App Bar'} do %>
 					Entrar
 				<% end %>
 			<% end %>

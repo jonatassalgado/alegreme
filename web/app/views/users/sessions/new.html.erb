@@ -14,7 +14,7 @@
 		<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'me-form'}) do |f| %>
 			<%= devise_error_messages! %>
 
-			<div class="">
+			<div data-gtm-action="view" data-gtm-category="Funil" data-gtm-label="Fazer login">
 				<div class="my-2 space-y-2 select-none">
 					<%= link_to user_google_oauth2_omniauth_authorize_path, data: {controller: 'ripple'}, class: "ripple ripple-black relative overflow-hidden cursor-pointer shadow-sm border font-semibold inline-flex items-center px-5 py-3 rounded-lg w-full text-gray-700" do %>
 						<svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3">

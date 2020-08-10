@@ -1,83 +1,25 @@
 <section class="invite <%= 'is-pwa' if pwa? %>">
-  <div class="invite__status">
-    <div class="people">
-      <% @last_people.each do |person| %>
-        <div class="people__person-face" style="background-image: url('<%= image_path person.demographic['picture'] %>')" title="<%= person.demographic['name'] %>"></div>
-      <% end %>
-    </div>
-    <div class="invite__counter">
-    </div>
-    <div class="invite__details has-helper">
-    </div>
-  </div>
-
-  <div class="invite__email">
-    <div class="me-text-field mdc-text-field mdc-text-field--outlined mdc-text-field--dense">
-      <input type="text" id="tf-outlined" class="mdc-text-field__input name" required>
-      <div class="mdc-notched-outline">
-        <div class="mdc-notched-outline__leading"></div>
-        <div class="mdc-notched-outline__notch">
-          <label for="tf-outlined" class="mdc-floating-label">Nome</label>
-        </div>
-        <div class="mdc-notched-outline__trailing"></div>
-      </div>
-    </div>
-    <div class="me-text-field mdc-text-field mdc-text-field--outlined mdc-text-field--dense">
-      <input type="email" id="tf-outlined" class="mdc-text-field__input email" required>
-      <div class="mdc-notched-outline">
-        <div class="mdc-notched-outline__leading"></div>
-        <div class="mdc-notched-outline__notch">
-          <label for="tf-outlined" class="mdc-floating-label">Email</label>
-        </div>
-        <div class="mdc-notched-outline__trailing"></div>
-      </div>
-    </div>
-    <button class="me-button mdc-button" onclick="loginWithEmail()">
-      <span class="mdc-button__label">Ok</span>
-    </button>
-  </div>
-
-  <div class="invite__loginButtons">
-    <div class="invite__button invite__button-gmail" onclick="loginWithGmail()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3">
-        <path d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z" fill="#4285f4"/>
-        <path d="M272.1 544.3c73.4 0 135.3-24.1 180.4-65.7l-87.7-68c-24.4 16.6-55.9 26-92.6 26-71 0-131.2-47.9-152.8-112.3H28.9v70.1c46.2 91.9 140.3 149.9 243.2 149.9z" fill="#34a853"/>
-        <path d="M119.3 324.3c-11.4-33.8-11.4-70.4 0-104.2V150H28.9c-38.6 76.9-38.6 167.5 0 244.4l90.4-70.1z" fill="#fbbc04"/>
-        <path d="M272.1 107.7c38.8-.6 76.3 14 104.4 40.8l77.7-77.7C405 24.6 339.7-.8 272.1 0 169.2 0 75.1 58 28.9 150l90.4 70.1c21.5-64.5 81.8-112.4 152.8-112.4z" fill="#ea4335"/>
-      </svg>
-      Continuar com gmail
-    </div>
-    <div class="invite__button invite__button-facebook" onclick="loginWithFacebook()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14222 14222" shape-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="nonzero">
-        <path d="M14222 7111C14222 3184 11038 0 7111 0S0 3184 0 7111c0 3549 2600 6491 6000 7025V9167H4194V7111h1806V5544c0-1782 1062-2767 2686-2767 778 0 1592 139 1592 139v1750h-897c-883 0-1159 548-1159 1111v1334h1972l-315 2056H8222v4969c3400-533 6000-3475 6000-7025z" fill="#1977f3"/>
-        <path d="M9879 9167l315-2056H8222V5777c0-562 275-1111 1159-1111h897V2916s-814-139-1592-139c-1624 0-2686 984-2686 2767v1567H4194v2056h1806v4969c362 57 733 86 1111 86s749-30 1111-86V9167h1657z" fill="#fefefe"/>
-      </svg>
-      Continuar com facebook
-    </div>
-    <!--    <div class="invite__button invite__button-instagram">Ou siga nosso-->
-    <!--      <a href="https://www.instagram.com/portoalegreme">instagram</a> e seja avisado por lá.-->
-    <!--    </div>-->
-  </div>
-  <div class="invite__cta-group">
-    <%= link_to new_user_registration_path do %>
-      <div class="invite__cta">
+	<div class="invite__cta-group">
+		<%= link_to new_user_registration_path, data: {'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil'} do %>
+			<div class="invite__cta">
 				<div class="mdc-button__ripple"></div>
 				Criar meu perfil
-      </div>
-    <% end %>
-    <%= link_to new_user_session_path do %>
-      <div class="invite__cta invite__cta--signin">
+			</div>
+		<% end %>
+		<%= link_to new_user_session_path, data: {'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Fazer login'} do %>
+			<div class="invite__cta invite__cta--signin">
 				<div class="mdc-button__ripple"></div>
 				Entrar
-      </div>
-    <% end %>
-  </div>
-  <% unless pwa? %>
-    <div class="invite__cta-group">
-      <div class="invite__playstore-link">
-        ou
-        <a href="https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">baixe o aplicativo</a> para android
-      </div>
-    </div>
-  <% end %>
+			</div>
+		<% end %>
+	</div>
+	<% unless pwa? %>
+		<div class="invite__cta-group">
+			<div class="invite__playstore-link">
+				ou
+				<a data-gtm-action="click" data-gtm-category="Funil" data-gtm-label="Baixa aplicativo" href="https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">baixe
+					o aplicativo</a> para android
+			</div>
+		</div>
+	<% end %>
 </section>

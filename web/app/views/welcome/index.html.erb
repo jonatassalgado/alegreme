@@ -24,16 +24,7 @@
 						de lazer a educação. Assim, você descobre coisas novas e não perde o que já conhece.</h2>
 				</section>
 
-				<%# if pwa? %>
-				<!--        <div class="login-button" title="Entrar" onclick="location.assign('<%#= new_user_session_path %>')">-->
-				<!--          Entrar-->
-				<!--          <span>-->
-				<%#= image_tag "welcome/right-arrow.png", alt: "seta", class: "lazyload" %>
-				<!--        </span>-->
-				<!--        </div>-->
-				<%# end %>
-
-				<%= render partial: "welcome/invite" %>
+				<%= render partial: 'invite' %>
 
 				<button class="shareBtn shareBtn--invite " aria-label="Compartilhar" style="" type="button">
 					<i class="">
@@ -48,7 +39,7 @@
 
 			<% unless mobile_device? %>
 				<div class="hero-right">
-					<div class="hero__banner" style="opacity: 0">
+					<div class="hero__banner" data-gtm-action="click" data-gtm-category="Funil" data-gtm-label="Baixa aplicativo" style="opacity: 0">
 						<a href="https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
 							<%= image_pack_tag "media/images/welcome/google-play-banner.png", loading: :lazy %>
 						</a>
@@ -221,7 +212,7 @@
 	</div>
 
 	<section class="footer">
-			<%= image_pack_tag 'media/images/welcome/porto-alegre.jpg', srcset: { 'media/images/welcome/porto-alegre@512w.jpg' => '512w', 'media/images/welcome/porto-alegre.jpg' => '1248w' }, class: "footer__image", loading: :lazy %>
+		<%= image_pack_tag 'media/images/welcome/porto-alegre.jpg', srcset: {'media/images/welcome/porto-alegre@512w.jpg' => '512w', 'media/images/welcome/porto-alegre.jpg' => '1248w'}, class: "footer__image", loading: :lazy %>
 		<div class="social__links">
 			<!-- <a href="https://www.instagram.com/portoalegreme">instagram</a> · -->
 			<!-- <a href="https://twitter.com/portoalegreme">twitter</a> · -->
