@@ -14,7 +14,8 @@ class PlacesController < ApplicationController
 	def show
 		default_reflex_values(limit: 12)
 
-		@events ||= @place.events.not_ml_data.active.order_by_date
+		@upcoming_events = @place.events.not_ml_data.active.order_by_date
+		@past_events = @place.events.not_ml_data.past.order_by_date(direction: :desc)
 		render 'show'
 	end
 

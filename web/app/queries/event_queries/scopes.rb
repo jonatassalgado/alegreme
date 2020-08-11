@@ -186,18 +186,16 @@ module EventQueries
 				end
 			}
 
-			scope 'order_by_date', lambda { |active = true, opts = {}|
-				opts = {'direction': 'ASC'}.merge(opts)
+			scope 'order_by_date', lambda { |opts = {}|
+				opts = {direction: :asc}.merge(opts)
 
-				if active
-					case opts[:direction]
-					when 'ASC'
-						order("(ocurrences -> 'dates' ->> 0)::timestamptz ASC").order_by_score
-					when 'DESC'
-						order("(ocurrences -> 'dates' ->> 0)::timestamptz DESC").order_by_score
-					end
+				case opts[:direction]
+				when :asc
+					order("(ocurrences -> 'dates' ->> 0)::timestamptz ASC").order_by_score
+				when :desc
+					order("(ocurrences -> 'dates' ->> 0)::timestamptz DESC").order_by_score
 				else
-					all
+					none
 				end
 			}
 
@@ -317,7 +315,7 @@ module EventQueries
 				end
 			}
 
-			scope 'historic', lambda { |turn_on = true|
+			scope 'past', lambda { |turn_on = true|
 				if turn_on
 					where("(ocurrences -> 'dates' ->> 0)::timestamptz <= ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", (DateTime.now - 6.hours))
 				else

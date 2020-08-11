@@ -7,8 +7,10 @@
 
 	<script type="application/ld+json">
   [
-    <%= render partial: 'layouts/json_ld', collection: @events, as: :event %>
+    <%= render partial: 'layouts/json_ld', collection: @upcoming_events, as: :event %>
   ]
+
+
 	</script>
 
 	<div class="is-animated md:w-9/12 mx-auto sm:container space-y-16">
@@ -24,7 +26,7 @@
 				</div>
 				<div class="flex flex-no-wrap items-center px-5">
 					<%= render partial: 'components/follow/follow_button', locals: {
-							identifier: 'new-today',
+							identifier: @place.try(:slug),
 							user:       current_user,
 							followable: @place
 					} %>
@@ -33,21 +35,42 @@
 		<% end %>
 		<%= render partial: "components/collection/events/collection",
 							 locals:  {
-									 identifier:       'new-today',
-									 items:            @events.limit(session[:stimulus][:limit]),
-									 user:             current_user,
-									 total_count:      @events.size,
-									 followable:       @place,
-									 infinite_scroll_vertical:  true,
-									 display_if_empty: true,
-									 show_similar_to:  session[:stimulus][:show_similar_to],
-									 custom_title:     custom_title,
-									 html: {
+									 identifier:               @place.try(:slug),
+									 items:                    @upcoming_events.limit(session[:stimulus][:limit]),
+									 user:                     current_user,
+									 total_count:              @upcoming_events.size,
+									 followable:               @place,
+									 infinite_scroll_vertical: true,
+									 display_if_empty:         true,
+									 show_similar_to:          session[:stimulus][:show_similar_to],
+									 custom_title:             custom_title,
+									 html:                     {
 											 grid: {
 													 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
 											 }
 									 }
 							 } %>
+
+		<%= render partial: "components/collection/events/collection",
+							 locals:  {
+									 identifier:               @place.try(:slug),
+									 items:                    @past_events.limit(session[:stimulus][:limit]),
+									 user:                     current_user,
+									 total_count:              @past_events.size,
+									 followable:               @place,
+									 infinite_scroll_vertical: true,
+									 display_if_empty:         false,
+									 show_similar_to:          session[:stimulus][:show_similar_to],
+									 title:                    {
+											 principal: 'Eventos que já ocorreram'
+									 },
+									 html:                     {
+											 grid: {
+													 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
+											 }
+									 }
+							 } %>
+
 	</div>
 
 </section>

@@ -59,10 +59,10 @@
 
 		<%= render partial: "components/collection/events/collection",
 							 locals:  {
-									 identifier:                 'user-historic-events',
+									 identifier:                 'user-past-events',
 									 user:                       @user,
-									 items:                      @historic_events.limit(session[:stimulus][:limit]),
-									 total_count:                @historic_events.size,
+									 items:                      @past_events.limit(session[:stimulus][:limit]),
+									 total_count:                @past_events.size,
 									 title:                      {
 											 principal: "Histórico de eventos salvos",
 											 tertiary:  "Remova eventos salvos para atualizar as recomendações"
