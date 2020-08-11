@@ -52,6 +52,8 @@ class FeedsController < ApplicationController
 	end
 
 	def city
+		default_reflex_values(limit: 24)
+
 		@days       = @stimulus_reflex ? session[:stimulus][:days] : (JSON.parse(params[:days]) rescue [])
 		@categories = @stimulus_reflex ? session[:stimulus][:categories] : (JSON.parse(params[:categories]) rescue [])
 
