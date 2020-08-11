@@ -120,7 +120,7 @@
 		<div class="relative my-4">
 			<div class="aspect-ratio-16/9"></div>
 			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.details_name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-200 rounded-t-lg md:rounded-lg">
-			<div class="absolute bottom-0 left-0 hidden w-full -mb-5 transition-all duration-150 opacity-0"
+			<div class="absolute top-0 right-0 hidden mt-2 mr-2 transition-all duration-150 opacity-0 w-content"
 					 data-controller="share-button"
 					 data-share-button-text="<%= strip_tags(limit_description_size(@event.details_description, 160)) %>"
 					 data-share-button-title="<%= @event.details_name %>"
@@ -184,7 +184,7 @@
 			<h1 class="px-3 mt-2 mb-5 text-2xl font-black leading-tight text-center md:px-0 md:text-4xl me-event-single__name">
 				<%= @event.details_name %>
 			</h1>
-			<div class="border-b border-gray-200 border-t flex flex-col md:-mx-5 md:flex-row md:space-x-6 md:space-y-0 md:text-xs mx-0 mx-5 px-2 py-5 space-y-6">
+			<div class="flex flex-col px-2 py-5 mx-0 mx-5 space-y-6 border-t border-b border-gray-200 md:-mx-5 md:flex-row md:space-x-6 md:space-y-0 md:text-xs">
 				<div class="inline-flex flex-1 px-5 text-gray-600 md:items-center md:justify-center md:px-0">
 					<svg class="flex-shrink-0 w-10 mr-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>
@@ -192,7 +192,7 @@
 					</svg>
 					<div>
 						<div class="antialiased font-bold text-gray-700">
-							<%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y'), class: 'hover:underline md:text-sm text-chateau-green-500') %>
+							<%= link_to("#{@event.day_of_week['decorator'].try(:capitalize)} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y'), class: 'hover:underline md:text-sm text-chateau-green-500') %>
 						</div>
 						<div>
 							<%= @event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>

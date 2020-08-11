@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-	before_action :verify_permissions, only: %i[index]
+	# before_action :verify_permissions, only: %i[index]
 
 
 	layout 'welcome'
@@ -12,17 +12,17 @@ class WelcomeController < ApplicationController
 	end
 
 	def invite
-		@user = User.find_by_email(params[:email])
-
-		if @user
-			render json: {invitesCount: count_invites, name: @user.features.dig('demographic', 'name'), invitationAlreadyRequested: true}
-		else
-			if create_invite
-				render json: {invitesCount: count_invites, invitationCreated: true, invitationAlreadyRequested: false}
-			else
-				render json: {invitationCreated: false, invitationAlreadyRequested: false}
-			end
-		end
+		# @user = User.find_by_email(params[:email])
+		#
+		# if @user
+		# 	render json: {invitesCount: count_invites, name: @user.features.dig('demographic', 'name'), invitationAlreadyRequested: true}
+		# else
+		# 	if create_invite
+		# 		render json: {invitesCount: count_invites, invitationCreated: true, invitationAlreadyRequested: false}
+		# 	else
+		# 		render json: {invitationCreated: false, invitationAlreadyRequested: false}
+		# 	end
+		# end
 	end
 
 
