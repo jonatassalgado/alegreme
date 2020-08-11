@@ -102,7 +102,7 @@
 </script>
 
 <section class="relative w-full mx-auto mt-16 is-animated md:mt-24 md:w-6/12">
-	<div id="<%= dom_id @event %>" class=""
+	<div id="<%= dom_id @event %>" class="md:border md:p-5 md:rounded md:shadow-md"
 			 data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
 			 data-event-identifier="<%= @event.id %>"
 			 data-event-description-open="false"
@@ -184,7 +184,7 @@
 			<h1 class="px-3 mt-2 mb-5 text-2xl font-black leading-tight text-center md:px-0 md:text-4xl me-event-single__name">
 				<%= @event.details_name %>
 			</h1>
-			<div class="flex flex-col py-5 mx-0 mx-5 space-y-6 border-t border-b md:-mx-20 md:flex-row md:space-y-0 md:space-x-6">
+			<div class="border-b border-gray-200 border-t flex flex-col md:-mx-5 md:flex-row md:space-x-6 md:space-y-0 md:text-xs mx-0 mx-5 px-2 py-5 space-y-6">
 				<div class="inline-flex flex-1 px-5 text-gray-600 md:items-center md:justify-center md:px-0">
 					<svg class="flex-shrink-0 w-10 mr-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>
@@ -192,7 +192,7 @@
 					</svg>
 					<div>
 						<div class="antialiased font-bold text-gray-700">
-							<%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y')) %>
+							<%= link_to("#{@event.day_of_week['decorator']} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y'), class: 'hover:underline md:text-sm text-chateau-green-500') %>
 						</div>
 						<div>
 							<%= @event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>
@@ -207,7 +207,7 @@
 						</svg>
 						<div>
 							<div class="antialiased font-bold text-gray-700">
-								<%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'me-is-clickable' %>
+								<%= link_to limit_place_name_size(@event.place_details_name, 40), place_path(@event.place), class: 'hover:underline md:text-sm text-chateau-green-500' %>
 							</div>
 							<div>
 								<%= link_to google_maps_url(@event.geographic['address']), class: 'me-event-single__address', target: '_blank', rel: 'noreferrer' do %>
