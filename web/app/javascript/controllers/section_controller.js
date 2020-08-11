@@ -15,6 +15,9 @@ export default class SectionController extends ApplicationController {
 
     beforeCache() {
         super.beforeCache();
+        if (this.hasScrollContainerTarget) {
+            this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+        }
         this.teardown();
     }
 
@@ -59,9 +62,6 @@ export default class SectionController extends ApplicationController {
     }
 
     teardown() {
-        if (this.hasScrollContainerTarget) {
-            this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
-        }
         PubSubModule.destroy(this.pubsub);
         this.observer.disconnect();
     }
