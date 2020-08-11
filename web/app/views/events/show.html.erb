@@ -218,12 +218,9 @@
 					<% end %>
 				</div>
 			</div>
-			<div class="px-5 text-lg leading-relaxed text-gray-900 md:px-0">
+			<div class="px-5 text-lg leading-relaxed text-gray-900 md:px-0 text-with-html">
 				<%= @event.details_description.html_safe %>
 			</div>
-			<button data-action="click->event#readMore" class="flex hidden mx-auto">
-				Mostrar mais
-			</button>
 		</div>
 	</div>
 </section>
