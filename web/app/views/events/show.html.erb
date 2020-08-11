@@ -6,9 +6,6 @@
 <% content_for :canonical_url, event_url(@event, format: :html) %>
 <% content_for :amp_url, event_url(@event, format: :amp) %>
 
-<% content_for :share_button_text, @event.details_name %>
-<% content_for :share_button_url, event_path(@event, format: :html) %>
-
 <%= content_for :preload_image, @event.image[:original].try { |image| image.url(public: true) } %>
 
 <script type="application/ld+json">
@@ -56,6 +53,8 @@
  ]
 }
 
+
+
 </script>
 
 <script type="application/ld+json">
@@ -98,9 +97,11 @@
   }
 }
 
+
+
 </script>
 
-<section class="is-animated md:mt-24 md:w-6/12 mt-16 mx-auto relative w-full">
+<section class="relative w-full mx-auto mt-16 is-animated md:mt-24 md:w-6/12">
 	<div id="<%= dom_id @event %>" class=""
 			 data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
 			 data-event-identifier="<%= @event.id %>"
@@ -118,7 +119,21 @@
 
 		<div class="relative my-4">
 			<div class="aspect-ratio-16/9"></div>
-			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.details_name %>" class="absolute bg-gray-200 h-full left-0 md:rounded-lg min-w-full object-center object-cover rounded-t-lg top-0 w-full">
+			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.details_name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-200 rounded-t-lg md:rounded-lg">
+			<div class="absolute bottom-0 left-0 hidden w-full -mb-5 transition-all duration-150 opacity-0"
+					 data-controller="share-button"
+					 data-share-button-text="<%= strip_tags(limit_description_size(@event.details_description, 160)) %>"
+					 data-share-button-title="<%= @event.details_name %>"
+					 data-share-button-url="<%= event_url(@event, format: :html) %>">
+				<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-xs text-gray-700 bg-gray-100 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-chateau-green-500 w-content"
+						 data-action="click->share-button#share"
+						 data-controller="ripple">
+					<span>Compartilhar</span>
+					<svg class="w-4 h-4 ml-1 fill-current" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+						<path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+					</svg>
+				</div>
+			</div>
 		</div>
 		<div class="flex justify-center mb-5">
 			<%= render partial: 'components/taste_button',
@@ -162,16 +177,16 @@
 										 }
 								 } %>
 		</div>
-		<div class="md:space-y-10 space-y-6">
-			<div class="antialiased md:text-sm me-event-single__updated-at text-center text-gray-500 text-xs">
+		<div class="space-y-6 md:space-y-10">
+			<div class="text-xs antialiased text-center text-gray-500 md:text-sm me-event-single__updated-at">
 				<%= "Atualizado em: #{I18n.l(@event.updated_at, format: :long)}" %>
 			</div>
-			<h1 class="font-black leading-tight mb-5 md:px-0 md:text-4xl me-event-single__name mt-2 px-3 text-2xl text-center">
+			<h1 class="px-3 mt-2 mb-5 text-2xl font-black leading-tight text-center md:px-0 md:text-4xl me-event-single__name">
 				<%= @event.details_name %>
 			</h1>
-			<div class="mx-5 border-b border-t flex flex-col md:-mx-20 md:flex-row md:space-y-0 mx-0 py-5 md:space-x-6 space-y-6">
-				<div class="flex-1 inline-flex md:items-center md:justify-center md:px-0 px-5 text-gray-600">
-					<svg class="fill-current flex-shrink-0 mr-5 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+			<div class="flex flex-col py-5 mx-0 mx-5 space-y-6 border-t border-b md:-mx-20 md:flex-row md:space-y-0 md:space-x-6">
+				<div class="inline-flex flex-1 px-5 text-gray-600 md:items-center md:justify-center md:px-0">
+					<svg class="flex-shrink-0 w-10 mr-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>
 						<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
 					</svg>
@@ -184,9 +199,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="flex-1 inline-flex md:items-center md:justify-center md:px-0 px-5 text-gray-600">
+				<div class="inline-flex flex-1 px-5 text-gray-600 md:items-center md:justify-center md:px-0">
 					<% if @event.place %>
-						<svg class="fill-current flex-shrink-0 mr-5 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<svg class="flex-shrink-0 w-10 mr-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 							<path fill="none" d="M0 0h24v24H0V0z"/>
 							<path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.13.48 1.53 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
 						</svg>
@@ -203,17 +218,17 @@
 					<% end %>
 				</div>
 			</div>
-			<div class="leading-relaxed md:px-0 px-5 text-gray-900 text-lg">
+			<div class="px-5 text-lg leading-relaxed text-gray-900 md:px-0">
 				<%= @event.details_description.html_safe %>
 			</div>
-			<button data-action="click->event#readMore" class="flex mx-auto hidden">
+			<button data-action="click->event#readMore" class="flex hidden mx-auto">
 				Mostrar mais
 			</button>
 		</div>
 	</div>
 </section>
 
-<section class="md:w-9/12 mt-12 mx-auto relative w-9/12 w-full">
+<section class="relative w-9/12 w-full mx-auto mt-12 md:w-9/12">
 	<%= render partial: "components/collection/events/collection",
 						 layout:  "components/stimulus_container",
 						 locals:  {

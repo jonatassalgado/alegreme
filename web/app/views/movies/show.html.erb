@@ -1,8 +1,4 @@
 <% content_for :meta_title, "Ver online #{@movie.details_title}" %>
-
-<% content_for :share_button_text, @movie.details_title %>
-<% content_for :share_button_url, movie_path(@movie, format: :html) %>
-
 <%= notice %>
 
 <section id="<%= dom_id @movie %>" class="mx-auto mt-12 is-animated md:mt-40 md:overflow-hidden md:rounded-t-lg md:w-6/12">
