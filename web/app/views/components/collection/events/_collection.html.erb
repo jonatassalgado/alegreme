@@ -40,7 +40,7 @@
 
 %>
 
-<% if display_if_empty %>
+<% if items.present? || display_if_empty %>
 	<div data-controller="section"
 			 data-target="section.section"
 			 data-section-load-more-loading="false"

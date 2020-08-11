@@ -110,10 +110,10 @@
 
 		<% unless mobile_device? %>
 			<div class="space-x-1">
-				<%= link_to "Porto Alegre", city_events_url, class: 'bg-gray-200 px-3 py-2 rounded-full text-gray-600 text-xs uppercase inline-block' %>
-				<%= link_to @event.categories_primary_name, category_events_url(@event.categories_primary_name), class: 'bg-gray-200 px-3 py-2 rounded-full text-gray-600 text-xs uppercase inline-block' %>
-				<%= link_to I18n.l(@event.day_of_week['date'], format: :long), day_events_url(@event.day_of_week['date'].strftime('%d-%m-%Y')), class: 'bg-gray-200 px-3 py-2 rounded-full text-gray-600 text-xs uppercase inline-block' %>
-				<%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'bg-gray-200 px-3 py-2 rounded-full text-gray-600 text-xs uppercase inline-block' %>
+				<%= link_to "Porto Alegre", city_events_url, class: 'border hover:bg-gray-200 hover:border-gray-200 inline-block px-2 py-1 rounded-full text-gray-600 text-xs' %>
+				<%= link_to @event.categories_primary_name.try(:capitalize), category_events_url(@event.categories_primary_name), class: 'border hover:bg-gray-200 hover:border-gray-200 inline-block px-2 py-1 rounded-full text-gray-600 text-xs' %>
+				<%= link_to I18n.l(@event.day_of_week['date'], format: :long), day_events_url(@event.day_of_week['date'].strftime('%d-%m-%Y')), class: 'border hover:bg-gray-200 hover:border-gray-200 inline-block px-2 py-1 rounded-full text-gray-600 text-xs' %>
+				<%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'border hover:bg-gray-200 hover:border-gray-200 inline-block px-2 py-1 rounded-full text-gray-600 text-xs' %>
 			</div>
 		<% end %>
 
