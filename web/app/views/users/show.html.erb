@@ -30,7 +30,7 @@
 
 		<% if current_user.admin? %>
 			<div class="md:px-0 px-5">
-				<h2 class="flex-1 font-bold group-hover:text-chateau-green-500 leading-6 md:leading-normal md:pl-0 md:text-5xl pb-3 text-gray-800 text-xl">
+				<h2 class="flex-1 font-bold group-hover:text-green-500 leading-6 md:leading-normal md:pl-0 md:text-5xl pb-3 text-gray-800 text-xl">
 					Admin
 				</h2>
 				<div class=inline-flex">
@@ -74,7 +74,7 @@
 							 } if current_user == @user %>
 
 		<div class="inline-block pb-16">
-			<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-chateau-green-500 md:leading-normal md:pl-0 md:text-5xl">
+			<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl">
 				Tópicos que <%= current_user == @user ? 'você' : @user.first_name %> segue
 			</h2>
 			<% if @user.following_topics.present? %>

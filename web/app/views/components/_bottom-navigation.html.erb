@@ -4,7 +4,7 @@
 		 data-controller="ripple bottom-navigation toggle-style go-to"
 		 data-go-to-delay="100"
 		 data-reflex-permanent
-		 data-toggle-style-active-class='["scale-105", "text-chateau-green-500"]'
+		 data-toggle-style-active-class='["scale-105", "text-green-500"]'
 		 data-toggle-style-current-selected="<%= "#{controller_name}" %>"
 		 data-toggle-style-inactive-class='["text-gray-700"]'
 		 data-toggle-style-init-selected="<%= "#{controller_name}" %>">
@@ -14,7 +14,7 @@
 				 data-toggle-style-identifier="feeds"
 				 data-go-to-url="<%= feed_path %>"
 				 class="<%= class_names 'antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
-																'scale-105 text-chateau-green-500': ['feeds', 'events'].include?(controller_name),
+																'scale-105 text-green-500': ['feeds', 'events'].include?(controller_name),
 																'text-gray-700':                    !['feeds', 'events'].include?(controller_name) %>">
 			<svg class="fill-current h-auto w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 				<path d="M0 0h24v24H0V0z" fill="none"/>
@@ -28,7 +28,7 @@
 					 data-toggle-style-identifier="movies"
 					 data-go-to-url="<%= movies_path %>"
 					 class="<%= class_names 'antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
-																	'scale-105 text-chateau-green-500': ['movies'].include?(controller_name),
+																	'scale-105 text-green-500': ['movies'].include?(controller_name),
 																	'text-gray-700':                    !['movies'].include?(controller_name) %>">
 				<svg class="fill-current h-auto w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<path d="M0 0h24v24H0V0z" fill="none"/>
@@ -42,7 +42,7 @@
 				 data-toggle-style-identifier="search"
 				 data-go-to-url="<%= search_index_path %>"
 				 class="<%= class_names 'antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
-																'scale-105 text-chateau-green-500': ['search'].include?(controller_name),
+																'scale-105 text-green-500': ['search'].include?(controller_name),
 																'text-gray-700':                    !['search'].include?(controller_name) %>">
 			<svg class="fill-current h-auto w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 				<path fill="none" d="M0 0h24v24H0V0z"/>

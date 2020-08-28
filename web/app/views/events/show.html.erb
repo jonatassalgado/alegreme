@@ -125,7 +125,7 @@
 					 data-share-button-text="<%= strip_tags(limit_description_size(@event.details_description, 160)) %>"
 					 data-share-button-title="<%= @event.details_name %>"
 					 data-share-button-url="<%= event_url(@event, format: :html) %>">
-				<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-xs text-gray-700 bg-gray-100 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-chateau-green-500 w-content"
+				<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-xs text-gray-700 bg-gray-100 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-green-500 w-content"
 						 data-action="click->share-button#share"
 						 data-controller="ripple">
 					<span>Compartilhar</span>
@@ -192,7 +192,7 @@
 					</svg>
 					<div>
 						<div class="antialiased font-bold text-gray-700">
-							<%= link_to("#{@event.day_of_week['decorator'].try(:capitalize)} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y'), class: 'hover:underline md:text-sm text-chateau-green-500') %>
+							<%= link_to("#{@event.day_of_week['decorator'].try(:capitalize)} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y'), class: 'hover:underline md:text-sm text-green-500') %>
 						</div>
 						<div>
 							<%= @event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>
@@ -207,7 +207,7 @@
 						</svg>
 						<div>
 							<div class="antialiased font-bold text-gray-700">
-								<%= link_to limit_place_name_size(@event.place_details_name, 40), place_path(@event.place), class: 'hover:underline md:text-sm text-chateau-green-500' %>
+								<%= link_to limit_place_name_size(@event.place_details_name, 40), place_path(@event.place), class: 'hover:underline md:text-sm text-green-500' %>
 							</div>
 							<div>
 								<%= link_to google_maps_url(@event.geographic['address']), class: 'me-event-single__address', target: '_blank', rel: 'noreferrer' do %>

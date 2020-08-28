@@ -5,7 +5,7 @@
 
 %>
 
-<div class="<%= class_string('bg-chateau-green-100 border-chateau-green-300 text-chateau-green-500':                                                                                                                                           user.is_following?(followable),
+<div class="<%= class_string('bg-green-100 border-green-300 text-green-500':                                                                                                                                           user.is_following?(followable),
 														 'text-gray-700':                                                                                                                                                                                                  !user.is_following?(followable),
 														 'antialiased bg-white border cursor-pointer tap-highlight-none select-none transform transition-transform hover:scale-110 duration-100 font-semibold h-content inline-flex items-center px-5 py-3 rounded-full space-x-1': true) %>"
 		 data-action="click->follow-button#follow"
@@ -16,7 +16,7 @@
 		 data-follow-button-type="<%= followable.class.name.parameterize.pluralize %>"
 		 data-target="follow-button.button"
 		 id="add-to-favorites">
-	<svg class="<%= class_string('text-chateau-green-500': user.is_following?(followable),
+	<svg class="<%= class_string('text-green-500': user.is_following?(followable),
 															 'text-gray-300':          !user.is_following?(followable),
 															 'fill-current h-6 w-6':   true) %>"
 			 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

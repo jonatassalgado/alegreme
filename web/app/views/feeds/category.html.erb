@@ -22,7 +22,7 @@
 					 data-toggle-style-init-selected="<%= params[:category] %>"
 					 data-toggle-style-current-selected="<%= params[:category] %>"
 					 data-toggle-style-inactive-class='["bg-gray-100","text-gray-800"]'
-					 data-toggle-style-active-class='["bg-chateau-green-200","border-chateau-green-400","text-chateau-green-800"]'
+					 data-toggle-style-active-class='["bg-green-200","border-green-400","text-green-800"]'
 					 class="flex flex-wrap md:pl-0 md:pr-0 md:w-full pl-5 pr-5 w-content">
 				<% @categories.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }.each do |category| %>
 					<div data-action="click->scroll-on-clicked#scroll click->toggle-style#toggle click->go-to#url"
@@ -30,7 +30,7 @@
 							 data-toggle-style-identifier="<%= category %>"
 							 data-scroll-on-clicked-selected="<%= params[:category] == category %>"
 							 data-go-to-url="<%= category_events_path category %>"
-							 class="<%= class_string 'bg-chateau-green-200 text-chateau-green-800 border-chateau-green-400':                                                                         params[:category]&.include?(category),
+							 class="<%= class_string 'bg-green-200 text-green-800 border-green-400':                                                                         params[:category]&.include?(category),
 																			 'text-gray-800':                                                                                                                                !params[:category]&.include?(category),
 																			 'tap-highlight-none w-content user select-none antialiased bg-gray-100 border md:mb-3 mr-2 md:mr-3 px-4 py-1 rounded-full cursor-pointer transform transition-colors duration-200': true %>">
 						<%= category %>

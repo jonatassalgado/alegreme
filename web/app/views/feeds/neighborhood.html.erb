@@ -26,7 +26,7 @@
 					 data-toggle-style-init-selected="<%= params[:neighborhood] %>"
 					 data-toggle-style-current-selected="<%= params[:neighborhood] %>"
 					 data-toggle-style-inactive-class='["bg-gray-100","text-gray-800"]'
-					 data-toggle-style-active-class='["bg-chateau-green-200","border-chateau-green-400","text-chateau-green-800"]'
+					 data-toggle-style-active-class='["bg-green-200","border-green-400","text-green-800"]'
 					 class="flex flex-wrap md:pl-0 md:pr-0 md:w-full pl-5 pr-5 w-content">
 				<% @neighborhoods.each do |neighborhood| %>
 					<div data-action="click->scroll-on-clicked#scroll click->toggle-style#toggle click->go-to#url"
@@ -35,7 +35,7 @@
 							 data-scroll-on-clicked-selected="<%= params[:neighborhood] == neighborhood.try(:parameterize_with_accents) %>"
 							 data-go-to-url="<%= neighborhood_events_path neighborhood.try(:parameterize_with_accents) %>"
 							 class="<%= class_names 'tap-highlight-none w-content user select-none antialiased bg-gray-100 border md:mb-3 mr-2 md:mr-3 px-4 py-1 rounded-full cursor-pointer transform transition-colors duration-200',
-																			{'bg-chateau-green-200 text-chateau-green-800 border-chateau-green-400': params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents)),
+																			{'bg-green-200 text-green-800 border-green-400': params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents)),
 																			 'text-gray-800':                                                        !params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents))} %>">
 						<%= neighborhood %>
 					</div>
