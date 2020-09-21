@@ -1,32 +1,47 @@
 import ApplicationController from "./application_controller"
 import morphdom              from "morphdom";
 
-export default class FollowButtonController extends ApplicationController {
+export default class FragmentController extends ApplicationController {
     static targets = [];
 
-    initialize() {
+    connect() {
+        super.connect();
+        this.setup();
+    }
 
+    setup() {
+
+    }
+
+    teardown() {
+        this.element.classList.add("hidden");
+    }
+
+    beforeCache() {
+        super.beforeCache();
     }
 
     disconnect() {
-
+        super.disconnect();
+        this.teardown()
     }
 
-    follow() {
-        fetch(`${location.pathname}/${this.action}`, {
-            method:      "post",
+    load() {
+        fetch(`${location.origin}${this.path}`, {
+            method:      "get",
             headers:     {
                 "X-Requested-With": "XMLHttpRequest",
                 "Content-type":     "application/json; charset=UTF-8",
                 "Accept":           "text/html; charset=utf-8",
                 "X-CSRF-Token":     document.querySelector("meta[name=csrf-token]").content
             },
+            // body:        JSON.stringify({}),
             credentials: "same-origin"
         }).then(response => {
                     response.text().then(html => {
                         const fragment = document.createRange().createContextualFragment(html);
 
-                        morphdom(this.element, fragment)
+                        morphdom(document.querySelector(this.selector), fragment)
                     });
                 }
         ).catch(err => {
@@ -34,16 +49,12 @@ export default class FollowButtonController extends ApplicationController {
         });
     }
 
-    get followable() {
-        return this.data.get("followable");
+    get selector() {
+        return this.data.get("selector");
     }
 
-    get action() {
-        return this.data.get("followed") === "true" ? "unfollow" : "follow";
-    }
-
-    get identifier() {
-        return this.data.get("identifier");
+    get path() {
+        return this.data.get("path");
     }
 
 }

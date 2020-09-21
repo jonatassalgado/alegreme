@@ -29,11 +29,16 @@ import {AnimateModule} from "../modules/animate-module";
 CacheModule.activateTurbolinks();
 AnimateModule.init();
 
-const images      = require.context("../images", true)
-const application = Application.start();
-const context     = require.context("controllers", true, /controller\.js$/);
+const images             = require.context("../images", true)
+const application        = Application.start();
+const context            = require.context("controllers", true, /controller\.js$/);
+const context_components = require.context("../../components", true, /_controller.js$/)
 
-application.load(definitionsFromContext(context));
+
+application.load(definitionsFromContext(context).concat(
+    definitionsFromContext(context_components)
+));
+
 StimulusReflex.initialize(application, {consumer})
 
 window.addEventListener("beforeinstallprompt", (e) => {

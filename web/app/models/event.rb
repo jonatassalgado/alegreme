@@ -29,8 +29,6 @@ class Event < ApplicationRecord
 	# geocoded_by :address, latitude: :latitude, longitude: :longitude
 	# reverse_geocoded_by :latitude, :longitude, address: :address
 
-	acts_as_followable
-
 	def slug_candidates
 		[
 				[:details_name, :categories_primary_name],
@@ -48,6 +46,8 @@ class Event < ApplicationRecord
 	belongs_to :place, touch: true
 	has_and_belongs_to_many :organizers, touch: true
 	has_and_belongs_to_many :categories, touch: true
+	has_many :likes, dependent: :destroy
+	has_many :users, through: :likes
 	# has_and_belongs_to_many :kinds
 
 	accepts_nested_attributes_for :place, :organizers
@@ -107,6 +107,9 @@ class Event < ApplicationRecord
 		ocurrences['dates'].first
 	end
 
+	def start_time
+		ocurrences['dates'].first.to_date
+	end
 
 	def datetimes
 		datetimes = []
@@ -119,7 +122,7 @@ class Event < ApplicationRecord
 	end
 
 	# scope 'similar_events', -> |user|
-	# 	Event.where(id: self.similar_data).order_by_ids(self.similar_data).active.not_in_saved(user)
+	# 	Event.where(id: self.similar_data).order_by_ids(self.similar_data).active.not_liked(user)
 	# end
 
 

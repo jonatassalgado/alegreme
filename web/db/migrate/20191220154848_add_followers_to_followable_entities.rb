@@ -31,5 +31,6 @@ class AddFollowersToFollowableEntities < ActiveRecord::Migration[5.2]
 		add_index :categories, :followers, using: :gin
 		add_index :kinds, :followers, using: :gin
 		add_index :tags, :followers, using: :gin
+
 	end
 end

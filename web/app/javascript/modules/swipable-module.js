@@ -8,8 +8,8 @@ const SwipableModule = (() => {
         if (debug) console.log("[SWIPABLE]: initied");
         const stackedOptions = "Top"; //Change stacked cards view from 'Bottom', 'Top' or 'None'.
         const rotate         = true; //Activate the elements' rotation for each move on stacked cards.
-        let items            = 3; //Number of visible elements when the stacked options are bottom or top.
-        const elementsMargin = 12; //Define the distance of each element when the stacked options are bottom
+        let items            = 2; //Number of visible elements when the stacked options are bottom or top.
+        const elementsMargin = 24; //Define the distance of each element when the stacked options are bottom
                                    // or top.
         const useOverlays             = true; //Enable or disable the overlays for swipe elements.
         let maxElements; //Total of stacked cards on DOM.
@@ -57,19 +57,19 @@ const SwipableModule = (() => {
             listElNodesObj[i].style.zIndex          = 0;
             listElNodesObj[i].style.opacity         = 0;
             listElNodesObj[i].style.webkitTransform = "scale(" +
-                                                      (1 - (items * 0.04)) +
+                                                      (1 - (items * 0.06)) +
                                                       ") translateX(0) translateY(" +
                                                       elTrans +
                                                       "px) translateZ(0)";
             listElNodesObj[i].style.transform       = "scale(" +
-                                                      (1 - (items * 0.04)) +
+                                                      (1 - (items * 0.06)) +
                                                       ") translateX(0) translateY(" +
                                                       elTrans +
                                                       "px) translateZ(0)";
         }
 
         if (listElNodesObj[currentPosition]) {
-            listElNodesObj[currentPosition].classList.add("elevation-10");
+            // listElNodesObj[currentPosition].classList.add("elevation-10");
         }
 
         if (useOverlays) {
@@ -136,7 +136,7 @@ const SwipableModule = (() => {
                         document.querySelector("[data-swipable-module=\"final-state\"]").style.opacity = 1;
                         ProgressBarModule.show();
                         setTimeout(() => {
-                            location.assign("/feed");
+                            location.assign("/porto-alegre");
                         }, 1000)
                     }, 500);
                 })
@@ -398,7 +398,7 @@ const SwipableModule = (() => {
                 const elTransInc = elementsMargin;
 
                 if (listElNodesObj[currentPosition]) {
-                    listElNodesObj[currentPosition].classList.add("elevation-10");
+                    // listElNodesObj[currentPosition].classList.add("elevation-10");
                 }
 
                 for (let i = currentPosition; i < (currentPosition + items); i++) {

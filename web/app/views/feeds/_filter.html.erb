@@ -11,7 +11,7 @@
 				 class="grid gap-2 grid-after-margin grid-flow-col md:pl-0 pl-5 w-content">
 			<% if type == 'days' %>
 				<% filters.reject { |filter| filter['decorator'].blank? }.each_with_index do |filter, index| %>
-					<div class="tap-highlight-none select-none antialiased bg-gray-100 border px-4 py-1 rounded-full text-gray-800 cursor-pointer transform transition-colors duration-200"
+					<div class="tap-highlight-none select-none antialiased bg-gray-50 border px-4 py-1 rounded-full text-gray-800 cursor-pointer transform transition-colors duration-200"
 							 data-action="click->filter#select"
 							 data-chip-type="<%= type %>"
 							 data-chip-value="<%= filter['string'] %>"
@@ -24,7 +24,7 @@
 				<% end %>
 			<% else %>
 				<% filters.reject(&:blank?).each_with_index do |filter, index| %>
-					<div class="tap-highlight-none select-none antialiased bg-gray-100 border mdc-chip me-chip px-4 py-1 rounded-full text-gray-800 cursor-pointer"
+					<div class="tap-highlight-none select-none antialiased bg-gray-50 border mdc-chip me-chip px-4 py-1 rounded-full text-gray-800 cursor-pointer"
 							 data-action="click->filter#select"
 							 data-chip-type="<%= type %>"
 							 data-chip-value="<%= filter %>"

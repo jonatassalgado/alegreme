@@ -11,7 +11,7 @@
 	}.deep_merge!(data)
 
 	similar_events_ids = data[:event].similar_data[0...data[:units_to_display]]
-	similar_events = Event.where(id: similar_events_ids).order_by_ids(similar_events_ids).active.not_in_saved(data[:user])
+	similar_events = Event.where(id: similar_events_ids).order_by_ids(similar_events_ids).active.not_liked(data[:user])
 
 %>
 

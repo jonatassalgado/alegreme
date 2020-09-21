@@ -34,11 +34,11 @@ module ApplicationHelper
 
 	module_function :build_tag_values
 
-	def link_to_topic topic
-		if topic.class.name == 'Place'
-			place_path(topic)
-		elsif topic.class.name == 'Organizer'
-			organizer_path(topic)
+	def link_to_follow followable
+		if followable.class.name == 'Place'
+			place_path(followable)
+		elsif followable.class.name == 'Organizer'
+			organizer_path(followable)
 		end
 	end
 
@@ -71,8 +71,6 @@ module ApplicationHelper
 	def pwa?
 		params[:pwa]
 	end
-
-
 
 
 	def google_maps_url address

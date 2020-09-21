@@ -31,7 +31,7 @@
 				<!--				</div>-->
 			<% end %>
 			<%= link_to send("#{movie.type.underscore}_path", movie) do %>
-				<%= image_tag(movie.image[:medium].url(public: true), loading: :lazy, class: 'h-full w-full absolute top-0 left-0 object-cover rounded-lg shadow-xs bg-gray-100 w-32') if movie.image.try { |image| image[:medium] } %>
+				<%= image_tag(movie.image[:medium].url(public: true), loading: :lazy, class: 'h-full w-full absolute top-0 left-0 object-cover rounded-lg shadow-xs bg-gray-50 w-32') if movie.image.try { |image| image[:medium] } %>
 			<% end %>
 		</div>
 		<div class="flex flex-col items-center justify-center mt-3">
@@ -46,7 +46,7 @@
 												 taste_sentiment: :positive,
 												 html:            {
 														 container: {
-																 css: 'flex-shrink-0 select-none tap-highlight-none bg-white w-content border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+																 css: 'flex-shrink-0 select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
 														 }
 												 },
 												 opts:            {
@@ -63,7 +63,7 @@
 												 parent_id:       "#{section_identifier}-#{dom_id(movie)}",
 												 html:            {
 														 container: {
-																 css: 'flex-shrink-0 select-none tap-highlight-none w-content h-content bg-white border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+																 css: 'flex-shrink-0 select-none tap-highlight-none w-content h-content bg-white border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
 														 },
 														 icon:      {
 																 css: 'fill-current h-3 hover:scale-125 w-3'

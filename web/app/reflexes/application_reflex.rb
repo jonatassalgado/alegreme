@@ -4,6 +4,7 @@ class ApplicationReflex < StimulusReflex::Reflex
 	require 'raven'
 	# Put application wide Reflex behavior in this file.
 	delegate :current_user, to: :connection
+	delegate :render, to: ApplicationController
 
 	rescue_from StandardError do |exception|
 		Raven.capture_exception exception, level: 'warning'

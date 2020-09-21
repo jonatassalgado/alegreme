@@ -4,6 +4,18 @@ module EventQueries
 
 		included do
 
+			scope 'not_liked_or_disliked', lambda { |user|
+				where.not(id: user.liked_or_disliked_event_ids)
+			}
+
+			scope 'not_liked', lambda { |user|
+				where.not(id: user.liked_event_ids)
+			}
+
+			scope 'not_disliked', lambda { |user|
+				where.not(id: user.disliked_event_ids)
+			}
+
 			scope 'in_neighborhoods', lambda { |neighborhoods, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
 
@@ -15,10 +27,10 @@ module EventQueries
 				end
 			}
 
-			scope 'from_followed_users', lambda { |follower|
-				return Event.none unless follower
-				where("? @> ANY (ARRAY(select jsonb_array_elements(entries -> 'saved_by')))", follower.following['users'].to_json)
-			}
+			# scope 'from_followed_users', lambda { |follower|
+			# 	return Event.none unless follower
+			# 	where("? @> ANY (ARRAY(select jsonb_array_elements(entries -> 'saved_by')))", follower.following['users'].to_json)
+			# }
 
 			scope 'in_user_suggestions', lambda { |user, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
@@ -41,15 +53,6 @@ module EventQueries
 					all
 				end
 
-			}
-
-			scope 'not_in_disliked', lambda { |user, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
-				if opts[:turn_on] && user
-					where.not(id: user.taste_events_disliked)
-				else
-					all
-				end
 			}
 
 			scope 'not_in', lambda { |ids, opts = {}|
@@ -169,6 +172,15 @@ module EventQueries
 					# end
 
 					where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences.map { |occur| occur.to_date.yday })
+				else
+					all
+				end
+			}
+
+
+			scope 'between_days', lambda { |low, high|
+				if low.present? && high.present?
+					where("(ocurrences -> 'dates' ->> 0)::timestamptz BETWEEN :low AND :high", low: low.to_date, high: high.to_date)
 				else
 					all
 				end
@@ -349,7 +361,7 @@ module EventQueries
 			}
 
 			scope 'favorited_by', lambda { |user = current_user|
-				where(id: user.taste_events_saved)
+				where(id: user.liked_or_disliked_event_ids)
 			}
 
 			scope 'by_kind_min_score', lambda { |score|

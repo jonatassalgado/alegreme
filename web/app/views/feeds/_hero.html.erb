@@ -1,0 +1,14 @@
+<div id="hero">
+	<% if user&.liked_events.size < 3 %>
+		<%= render partial: 'events/swipable', locals: {
+				user:         user,
+				train_events: train_events
+		} %>
+	<% else %>
+		<%= render partial: 'feeds/tabs', locals: {
+				user:             user,
+				selected_tab:     selected_tab,
+				suggested_events: suggested_events
+		} %>
+	<% end %>
+</div>

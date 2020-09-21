@@ -13,32 +13,29 @@ class FeedsController < ApplicationController
 				         :user_first_name => current_user.try(:first_name)
 		         })
 
-		@saved_events                 ||= current_user ? current_user&.saved_events&.not_ml_data&.active&.order_by_date : Event.none
-		@recent_events                ||= Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
-		@events_this_week             ||= Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).in_categories(Event::CATEGORIES, {not_in: %w(anúncio slam curso protesto outlier)}).with_high_score.in_days((DateTime.now.beginning_of_day...(DateTime.now.beginning_of_day + 8))).includes(:place).order_by_date
-		@events_in_user_suggestions   ||= current_user ? Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).not_in(@events_this_week.pluck(:id)).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
-		@events_from_following_topics ||= current_user ? current_user&.events_from_following_topics&.not_ml_data&.active&.not_in_saved(current_user)&.not_in_disliked(current_user)&.includes(:place)&.order_by_date : Event.none
-		@events_from_followed_users   ||= current_user ? Event.not_ml_data.active.not_in_disliked(current_user).from_followed_users(current_user).includes(:place).order_by_date : Event.none
-		@events_in_my_neighborhood    ||= current_user ? Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).with_high_score.in_neighborhoods(["Cidade Baixa"]).includes(:place).order_by_date : Event.none
-		@following_users              ||= User.following_users(current_user)
-		@swipable_items               = get_swipable_items
+		@selected_tab ||= 'suggestions'
 
+		@liked_events          = current_user ? current_user&.liked_events&.not_ml_data&.active&.order_by_date : Event.none
+		@suggested_events      = current_user ? Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
+		@events_from_following = current_user ? current_user&.following_events&.not_ml_data&.active&.not_liked_or_disliked(current_user)&.not_disliked(current_user)&.includes(:place)&.order_by_date : Event.none
+		@upcoming_events       = Event.active.not_ml_data.order_by_date
+		@train_events          = Event.active.not_liked_or_disliked(current_user).order_by_score.limit(12)
 	end
 
 	def suggestions
-		@events ||= Event.not_ml_data.active.in_user_suggestions(current_user).order_by_date
+		@events = Event.not_ml_data.active.in_user_suggestions(current_user).order_by_date
 	end
 
 	def follow
-		@events ||= current_user.try(:events_from_following_topics)&.not_ml_data&.active.order_by_date
+		@events ||= current_user.try(:events_from_following)&.not_ml_data&.active.order_by_date
 	end
 
 	def today
-		@events ||= Event.not_ml_data.active.with_high_score.not_in_saved(current_user).in_days([DateTime.now.beginning_of_day, (DateTime.now + 1).end_of_day])
+		@events ||= Event.not_ml_data.active.with_high_score.not_liked_or_disliked(current_user).in_days([DateTime.now.beginning_of_day, (DateTime.now + 1).end_of_day])
 	end
 
 	def week
-		@events ||= Event.not_ml_data.active.with_high_score.not_in_saved(current_user).in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8))).order_by_date
+		@events ||= Event.not_ml_data.active.with_high_score.not_liked_or_disliked(current_user).in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8))).order_by_date
 	end
 
 	def category
@@ -84,20 +81,21 @@ class FeedsController < ApplicationController
 	end
 
 	def get_swipable_items
-		Rails.cache.fetch([current_user, 'swipable_items'], expires_in: 1.hour) do
-			events = Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).in_categories(Event::CATEGORIES, {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(12)
-			# 	events = Event.not_ml_data.order_by_score.limit(10)
+		# Rails.cache.fetch([current_user, 'swipable_items'], expires_in: 1.hour) do
+		# events = Event.not_ml_data.active.not_liked_or_disliked(current_user).not_disliked(current_user).in_categories(Event::CATEGORIES, {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(12)
+		events = Event.order_by_score.limit(10)
 
-			events.map do |event|
-				{
-						id:             event.id,
-						name:           event.details_name,
-						image_url:      event.image[:feed].url(public: true),
-						description:    helpers.strip_tags(event.details_description).truncate(160),
-						dominant_color: helpers.get_image_dominant_color(event)
-				}
-			end
+		events.map do |event|
+			{
+					id:             event.id,
+					name:           event.details_name,
+					category:       event.categories_primary_name,
+					image_url:      event.image[:feed].url(public: true),
+					description:    helpers.strip_tags(event.details_description).truncate(160),
+					dominant_color: helpers.get_image_dominant_color(event)
+			}
 		end
+		# end
 	end
 
 

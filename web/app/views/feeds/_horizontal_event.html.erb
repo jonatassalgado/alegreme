@@ -1,0 +1,43 @@
+<div id="<%= dom_id event %>" class="flex justify-between p-5 border-b border-gray-50">
+	<div class="pr-2">
+		<div class="mb-1 text-xs font-light text-gray-600">
+			<%= format_hour event.first_day_time %>h · <%= event.categories_primary_name.titleize %>
+		</div>
+		<div class="mb-1 leading-snug text-gray-700">
+			<%= link_to event.details_name, event_path(event) %>
+		</div>
+		<div class="text-xs font-light text-gray-500">
+			<%= link_to limit_place_name_size(event.place_details_name, 24), place_path(event.place) %>
+		</div>
+		<div class="flex my-1 -ml-2">
+			<%= render partial: 'components/taste_button',
+								 locals:  {
+										 user:            user,
+										 resource:        event,
+										 taste_type:      :save,
+										 taste_sentiment: :positive,
+										 parent_id:       dom_id(event)
+								 } %>
+			<%= render partial: 'components/taste_button',
+								 locals:  {
+										 user:            user,
+										 resource:        event,
+										 taste_type:      :dislike,
+										 taste_sentiment: :negative,
+										 parent_id:       dom_id(event)
+								 } %>
+		</div>
+	</div>
+	<div>
+		<div data-controller="ripple" class="relative w-32 mt-6 overflow-hidden rounded-lg ripple ripple-white">
+			<div class="bg-gray-50 aspect-ratio-16/9"></div>
+			<%= link_to event_path(event) do %>
+				<%= image_tag get_feed_image_url(event), {
+						loading: :lazy,
+						class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
+						onerror: "this.style.opacity='0'"
+				} %>
+			<% end %>
+		</div>
+	</div>
+</div>

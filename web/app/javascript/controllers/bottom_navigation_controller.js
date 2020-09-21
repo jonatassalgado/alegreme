@@ -6,12 +6,12 @@ export default class BottomNavigationController extends ApplicationController {
 
     connect() {
         super.connect();
-        this.setup();
+        // this.setup();
     }
 
     beforeCache() {
-        super.beforeCache();
-        this.teardown();
+        // super.beforeCache();
+        // this.teardown();
     }
 
     disconnect() {

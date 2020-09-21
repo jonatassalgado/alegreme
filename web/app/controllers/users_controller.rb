@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 	before_action :authorize_user, only: [:index, :show]
 	before_action :authorize_admin, only: [:admin, :destroy]
 	before_action :authorize_current_user, only: [:update, :edit]
-	before_action :mount_json, only: [:edit, :update]
 
 	def active_invite
 		@user = User.find_by_reset_password_token params[:reset_password_token]
@@ -30,9 +29,14 @@ class UsersController < ApplicationController
 	# GET /users/1
 	# GET /users/1.json
 	def show
-		@upcoming_events = @user&.saved_events&.not_ml_data&.active&.order_by_date
-		@past_events = @user&.saved_events&.not_ml_data&.past&.order("updated_at DESC")
-		@topics          = @user&.following_topics
+		@upcoming_events = @user&.liked_events&.not_ml_data&.active&.order_by_date
+		@past_events     = @user&.liked_events&.not_ml_data&.past&.order("updated_at DESC")
+		@current_user    = current_user
+
+		@friend ||= nil
+		@sheet  ||= nil
+
+		render layout: false if @stimulus_reflex
 	end
 
 	# GET /users/new
@@ -86,6 +90,11 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def agenda
+		start_date    = params[:start_date] || Date.today
+		@liked_events = current_user ? current_user&.liked_events&.between_days(start_date, start_date.to_date + 365)&.not_ml_data&.active&.order_by_date : Event.none
+	end
+
 	private
 
 	# Use callbacks to share common setup or constraints between actions.
@@ -125,30 +134,4 @@ class UsersController < ApplicationController
 
 	end
 
-	def mount_json
-		if @user.features.empty?
-			@user.features = {
-					psychographic: {
-							personas: {
-									primary:    {
-											name:  nil,
-											score: nil
-									},
-									secondary:  {
-											name:  nil,
-											score: nil
-									},
-									tertiary:   {
-											name:  nil,
-											score: nil
-									},
-									quartenary: {
-											name:  nil,
-											score: nil
-									}
-							}
-					}
-			}
-		end
-	end
 end

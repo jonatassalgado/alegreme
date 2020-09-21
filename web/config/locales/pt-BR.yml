@@ -6,6 +6,9 @@ pt-BR:
     sessions:
       user:
         signed_out: 'Logout feito com sucesso!'
+  simple_calendar:
+    previous: "«"
+    next: "»"
   activerecord:
     errors:
       messages:
@@ -46,7 +49,8 @@ pt-BR:
     - sábado
     formats:
       default: "%d/%m/%Y"
-      long: "%d de %B de %Y"
+      full: "%d de %B de %Y"
+      long: "%d de %B"
       short: "%-d %b"
       week: "%A"
     month_names:

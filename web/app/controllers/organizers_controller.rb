@@ -12,12 +12,7 @@ class OrganizersController < ApplicationController
 	# GET /organizers/1
 	# GET /organizers/1.json
 	def show
-		default_reflex_values(limit: 12)
-
-		@events ||= @organizer.events.not_ml_data.active
-
-		render 'show'
-
+		@upcoming_events = @organizer.events.not_ml_data.active
 	end
 
 	# GET /organizers/new

@@ -14,7 +14,7 @@ module App
 		config.i18n.default_locale = 'pt-BR'
 		config.encoding            = 'utf-8'
 		config.time_zone           = 'Brasilia'
-		config.autoload_paths      += %W(#{config.root}/lib #{config.root}/services #{config.root}/decorators #{config.root}/queries #{config.root}/channels)
+		config.autoload_paths      += %W(#{config.root}/lib #{config.root}/components #{config.root}/services #{config.root}/decorators #{config.root}/queries #{config.root}/channels)
 
 		config.assets.configure do |env|
 			env.register_mime_type('application/manifest+json', extensions: ['.webmanifest'])

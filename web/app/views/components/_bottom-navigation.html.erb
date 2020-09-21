@@ -1,54 +1,51 @@
-<% return unless ['feeds', 'movies', 'events', 'search'].include?(controller_name) && !['show', 'edit'].include?(action_name) %>
+<% return if ['events'].include?(controller_name) && ['show', 'edit'].include?(action_name) %>
 
-<div class="ripple ripple-black overflow-hidden z-50 bg-white bottom-0 duration-100 elevation-8 fixed py-2 transform transition-transform w-full"
+<div class="fixed bottom-0 z-40 w-full pt-3 pb-2 overflow-hidden transition-transform duration-100 transform bg-white ripple ripple-black elevation-8"
 		 data-controller="ripple bottom-navigation toggle-style go-to"
 		 data-go-to-delay="100"
 		 data-reflex-permanent
 		 data-toggle-style-active-class='["scale-105", "text-green-500"]'
-		 data-toggle-style-current-selected="<%= "#{controller_name}" %>"
+		 data-toggle-style-current-selected="<%= "#{controller_name}-#{action_name}" %>"
 		 data-toggle-style-inactive-class='["text-gray-700"]'
-		 data-toggle-style-init-selected="<%= "#{controller_name}" %>">
+		 data-toggle-style-init-selected="<%= "#{controller_name}-#{action_name}" %>">
 	<div class="flex">
 		<div data-target="toggle-style.toggle"
 				 data-action="click->toggle-style#toggle click->go-to#url"
-				 data-toggle-style-identifier="feeds"
+				 data-toggle-style-identifier="feeds-index"
 				 data-go-to-url="<%= feed_path %>"
 				 class="<%= class_names 'antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
 																'scale-105 text-green-500': ['feeds', 'events'].include?(controller_name),
-																'text-gray-700':                    !['feeds', 'events'].include?(controller_name) %>">
-			<svg class="fill-current h-auto w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-				<path d="M0 0h24v24H0V0z" fill="none"/>
-				<path d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM9.07 16L12 14.12 14.93 16l-.89-3.36 2.69-2.2-3.47-.21L12 7l-1.27 3.22-3.47.21 2.69 2.2z"/>
+																'text-gray-600':            !['feeds', 'events'].include?(controller_name) %>">
+			<svg class="h-5 fill-current" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M15.5556 8.88889V0H4.44444V4.44444H0V20H8.88889V15.5556H11.1111V20H20V8.88889H15.5556ZM4.44444 17.7778H2.22222V15.5556H4.44444V17.7778ZM4.44444 13.3333H2.22222V11.1111H4.44444V13.3333ZM4.44444 8.88889H2.22222V6.66667H4.44444V8.88889ZM8.88889 13.3333H6.66667V11.1111H8.88889V13.3333ZM8.88889 8.88889H6.66667V6.66667H8.88889V8.88889ZM8.88889 4.44444H6.66667V2.22222H8.88889V4.44444ZM13.3333 13.3333H11.1111V11.1111H13.3333V13.3333ZM13.3333 8.88889H11.1111V6.66667H13.3333V8.88889ZM13.3333 4.44444H11.1111V2.22222H13.3333V4.44444ZM17.7778 17.7778H15.5556V15.5556H17.7778V17.7778ZM17.7778 13.3333H15.5556V11.1111H17.7778V13.3333Z"/>
 			</svg>
-			Eventos
+			Porto Alegre
 		</div>
-		<% if movies_active_count %>
-			<div data-target="toggle-style.toggle"
-					 data-action="click->toggle-style#toggle click->go-to#url"
-					 data-toggle-style-identifier="movies"
-					 data-go-to-url="<%= movies_path %>"
-					 class="<%= class_names 'antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
-																	'scale-105 text-green-500': ['movies'].include?(controller_name),
-																	'text-gray-700':                    !['movies'].include?(controller_name) %>">
-				<svg class="fill-current h-auto w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-					<path d="M0 0h24v24H0V0z" fill="none"/>
-					<path d="M4 6.47L5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"/>
-				</svg>
-				Filmes
-			</div>
-		<% end %>
 		<div data-target="toggle-style.toggle"
 				 data-action="click->toggle-style#toggle click->go-to#url"
-				 data-toggle-style-identifier="search"
-				 data-go-to-url="<%= search_index_path %>"
+				 data-toggle-style-identifier="users-agenda"
+				 data-go-to-url="<%= my_agenda_path %>"
 				 class="<%= class_names 'antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
-																'scale-105 text-green-500': ['search'].include?(controller_name),
-																'text-gray-700':                    !['search'].include?(controller_name) %>">
-			<svg class="fill-current h-auto w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-				<path fill="none" d="M0 0h24v24H0V0z"/>
-				<path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+																'scale-105 text-green-500': current_page?('/minha-agenda'),
+																'text-gray-600':            !current_page?('/minha-agenda') %>">
+			<svg class="h-5 fill-current" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M16.0993 1.91826H17.0464C18.0881 1.91826 18.9404 2.78148 18.9404 3.83652V10.7046C18.8084 10.4392 18.6379 10.1883 18.4284 9.96057L18.4216 9.95314L18.4147 9.94577C18.0255 9.52995 17.5515 9.24444 17.0464 9.09236V6.71392H1.89404V19.1826H7.11898V20.9544C7.11898 21.0032 7.12002 21.0521 7.12209 21.1009H1.89404C0.852318 21.1009 0 20.2377 0 19.1826V3.83652C0 2.78148 0.852318 1.91826 1.89404 1.91826H2.84106V0H4.7351V1.91826H14.2053V0H16.0993V1.91826Z"/>
+				<path d="M11.5048 20.9544C11.5048 21.004 11.5017 21.0529 11.4958 21.1009C11.4294 21.6404 11.0013 22.06 10.4875 22.06C9.97367 22.06 9.54563 21.6404 9.47916 21.1009C9.47325 21.0529 9.4702 21.004 9.4702 20.9544C9.4702 20.9544 9.4702 20.9544 9.4702 20.9544V16.5318C9.4702 15.9237 9.92799 15.4261 10.4875 15.4261C11.047 15.4261 11.5048 15.9237 11.5048 16.5318V20.9544C11.5048 20.9544 11.5048 20.9544 11.5048 20.9544Z"/>
+				<path d="M12.5221 15.4316C12.5221 15.1386 12.6289 14.8567 12.8171 14.6522L15.635 11.5895C15.9301 11.2633 16.4082 11.2633 16.7083 11.584C16.8914 11.783 16.9677 12.0649 16.9168 12.3414L16.4336 14.8733H19.3075C20.4011 14.8733 21.1386 16.0895 20.7114 17.1841L19.0532 21.3911C18.8904 21.7946 18.5242 22.06 18.1172 22.06H13.5394C13.0256 22.06 12.5975 21.6404 12.5311 21.1009C12.5251 21.0529 12.5221 21.004 12.5221 20.9544C12.5221 20.9544 12.5221 20.9544 12.5221 20.9544V15.4316Z"/>
 			</svg>
-			Busca
+			Minha agenda
 		</div>
+		<% if current_user %>
+			<div data-target="toggle-style.toggle"
+					 data-action="click->toggle-style#toggle click->go-to#url"
+					 data-toggle-style-identifier="users-profile"
+					 data-go-to-url="<%= user_path(current_user) %>"
+					 class="<%= class_names 'antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
+																	'scale-105 text-green-500': current_page?(controller: :users, action: :show, id: current_user),
+																	'text-gray-600':            !current_page?(controller: :users, action: :show, id: current_user) %>">
+				<img src="<%= current_user.picture :small %>" class="h-5 border border-gray-100 rounded-full" alt="<%= current_user&.name %>">
+				Meu perfil
+			</div>
+		<% end %>
 	</div>
 </div>

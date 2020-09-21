@@ -6,7 +6,7 @@ volumes:
   api_data:
   # scrapydo_data:
   # splash_data:
-  #  redis_data:
+  redis_data:
   # scrapy_shared:
   # search_data:
 services:
@@ -20,7 +20,7 @@ services:
       # - scrapy
       # - search
       # - memcached
-      # - redis
+      - redis
       # - bot
     volumes:
       - bundle_cache:/bundle
@@ -49,16 +49,17 @@ services:
       JOB_WORKER_URL: redis://redis:6379/0
       RAILS_MAX_THREADS: 5
       ELASTICSEARCH_URL: http://search:9200
+      REDIS_URL: redis://redis:6379/0
     restart: always
     ports:
       - 3000:3000
     stdin_open: true
     tty: true
     command: bundle exec puma -C config/puma/puma-development.rb
-  #    mem_limit: 6gb
-  #    memswap_limit: 6gb
-  #    mem_reservation: 256m
-  #    cpus: 0.5
+    mem_limit: 2gb
+    memswap_limit: 3gb
+    mem_reservation: 256m
+    cpus: 1
   #  sidekiq:
   #    build:
   #      context: ./web
@@ -163,18 +164,18 @@ services:
   #    mem_reservation: 256m
   #    cpus: 0.3
   #    restart: always
-  #  redis:
-  #    image: redis
-  #    command: redis-server
-  #    volumes:
-  #      - redis_data:/data
-  #    ports:
-  #      - 6379:6379
-  #    mem_limit: 3gb
-  #    memswap_limit: 3gb
-  #    mem_reservation: 256m
-  #    cpus: 0.3
-  #    restart: always
+  redis:
+    image: redis
+    command: redis-server
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    mem_limit: 1gb
+    memswap_limit: 2gb
+    mem_reservation: 256m
+    cpus: 0.3
+    restart: always
   # web:
   #   build:
   #     context: ./web

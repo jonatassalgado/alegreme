@@ -40,7 +40,7 @@
 }
 
 .bot__container:not(.no-icon)::after {
-  @apply bg-gray-200;
+  @apply bg-green-500 text-white;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
@@ -51,8 +51,8 @@
   font-weight: 600;
   line-height: 0;
   position: absolute;
-  right: calc(100% + 15px);
-  top: 6px;
+  right: calc(100% + 12px);
+  top: 0;
   height: 36px;
   width: 36px
 }

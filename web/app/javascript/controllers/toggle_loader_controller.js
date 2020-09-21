@@ -1,5 +1,4 @@
 import ApplicationController from "./application_controller"
-import {PubSubModule}        from "../modules/pubsub-module";
 
 export default class ToggleLoaderController extends ApplicationController {
     static targets = ["on", "off", "onIcon"];
@@ -20,17 +19,17 @@ export default class ToggleLoaderController extends ApplicationController {
     }
 
     setup() {
-        this.pubsub     = {};
-        this.pubsub.on  = PubSubModule.on(this.listenerOn, (data) => {
+        this.element.addEventListener(this.listenerOn, (e) => {
             this._turnOn();
-        });
-        this.pubsub.off = PubSubModule.on(this.listenerOff, (data) => {
+        }, false);
+        this.element.addEventListener(this.listenerOff, (e) => {
             this._turnOff();
-        });
+        }, false);
     }
 
     teardown() {
-        PubSubModule.destroy(this.pubsub);
+        // this.element.removeEventListener(this.listenerOn);
+        // this.element.removeEventListener(this.listenerOff);
     }
 
     toggle(event) {

@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 	# GET /events/1
 	# GET /events/1.json
 	def show
-		@similar_events = Event.includes(:place).not_ml_data.active.not_in_disliked(current_user).where(id: @event.similar_data).order_by_ids(@event.similar_data).not_in_saved(current_user).limit(8)
+		@similar_events = Event.includes(:place).not_ml_data.active.not_disliked(current_user).where(id: @event.similar_data).order_by_ids(@event.similar_data).not_liked(current_user).limit(8)
 
 		respond_to do |format|
 			format.html { render :show }
@@ -72,23 +72,26 @@ class EventsController < ApplicationController
 		end
 	end
 
-	def save
-		current_user.taste_events_save params[:id]
-		redirect_to action: :saves
+	def like
+		@user  = current_user
+		@event = Event.find(params[:event_id])
+		@user.like!(@event)
 	end
 
-	def unsave
-		current_user.taste_events_unsave params[:id]
-		redirect_to action: :saves
+	def unlike
+		@user  = current_user
+		@like  = @user.likes.find_by_event_id(params[:event_id])
+		@event = Event.find(params[:event_id])
+		@like.destroy!
 	end
 
 	def saves
-		@saved_events = current_user ? current_user&.saved_events&.not_ml_data&.active&.order_by_date : Event.none
+		@liked_events = current_user ? current_user&.liked_events&.not_ml_data&.active&.order_by_date : Event.none
 		render layout: false
 	end
 
 	def recent
-		@recent_events ||= Event.not_ml_data.active.not_in_saved(current_user).not_in_disliked(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
+		@recent_events ||= Event.not_ml_data.active.not_liked_or_disliked(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
 	end
 
 	def retrain

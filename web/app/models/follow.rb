@@ -1,14 +1,7 @@
-class Follow < ActiveRecord::Base
+class Follow < ApplicationRecord
+	validates :user_id, uniqueness: {scope: [:following_id, :following_type]}
+	validates :following_type, presence: :true, inclusion: {in: %w(User Place Organizer)}
 
-  extend ActsAsFollower::FollowerLib
-  extend ActsAsFollower::FollowScopes
-
-  # NOTE: Follows belong to the "followable" and "follower" interface
-  belongs_to :followable, polymorphic: true
-  belongs_to :follower,   polymorphic: true
-
-  def block!
-    self.update_attribute(:blocked, true)
-  end
-
+	belongs_to :follower, foreign_key: :user_id, class_name: 'User'
+	belongs_to :following, polymorphic: true
 end

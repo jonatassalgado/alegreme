@@ -36,7 +36,7 @@
 					Beta requisitado: <%= user.beta_requested? ? 'Sim' : 'Não' %> <br>
 					Beta ativado: <%= user.beta_activated? ? 'Sim' : 'Não' %> <br>
 					Persona: <%= user.personas_assortment_finished? ? 'Sim' : 'Não' %> <br>
-					Eventos salvos: <%= user.saved_events.size %> <br>
+					Eventos salvos: <%= user.liked_events.size %> <br>
 					Plataform Id: <%= user.social_plataform_id %>
 				</td>
 				<td>Notificações: <%= user.notifications_topics_all_active %></td>

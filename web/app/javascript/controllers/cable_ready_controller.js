@@ -2,6 +2,7 @@ import ApplicationController from "./application_controller"
 import {UserChannel}         from "../channels/user_channel";
 import {SnackBarModule}      from "../modules/snackbar-module";
 import {PubSubModule}        from "../modules/pubsub-module";
+import {toSnakeCase}         from "../utilities";
 
 export default class CableReadyController extends ApplicationController {
     static targets = [];
@@ -42,6 +43,6 @@ export default class CableReadyController extends ApplicationController {
     }
 
     get performMethod() {
-        return this.data.get("perform")
+        return toSnakeCase(this.data.get("perform"))
     }
 }

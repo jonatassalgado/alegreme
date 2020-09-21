@@ -59,7 +59,7 @@
 										class:   class_string('relative overflow-hidden ripple ripple-black cursor-pointer flex justify-between group': continue_to,
 																					'flex justify-between':                                                                   !continue_to),
 										onclick: continue_to ? "Turbolinks.visit('#{continue_to}')" : nil do %>
-			<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl">
+			<h2 class="<%= data.dig(:title, :css) || class_names('flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl') %>">
 				<%= title[:principal] %>
 			</h2>
 			<% if continue_to && user %>
@@ -90,7 +90,7 @@
 		<% if categories || ocurrences %>
 			<div data-reflex-permanent class="my-4 space-y-2 md:space-y-3"
 					 data-controller="filter"
-					 data-filter-inactive-class='["bg-gray-100","text-gray-800"]'
+					 data-filter-inactive-class='["bg-gray-50","text-gray-800"]'
 					 data-filter-active-class='["bg-green-200","border-green-400","text-green-800"]'
 					 data-target="section.filter">
 				<%= render(partial: 'feeds/filter',

@@ -1,14 +1,12 @@
 import ApplicationController from "./application_controller"
 
 export default class SwipableController extends ApplicationController {
-    static targets = ["swipable", "onboarding", "items", "skip"];
+    static targets = ["onboarding", "items", "skip", "endMessage", "loadingOn", "loadingOff", "loadingIcon"];
 
     async connect() {
-        const {BotModule}      = await import("../modules/bot-module")
-        const {SwipableModule} = await import("../modules/swipable-module")
+        const {BotModule} = await import("../modules/bot-module")
 
-        this.bot      = BotModule;
-        this.swipable = SwipableModule;
+        this.bot = BotModule;
 
         super.connect();
         this.setup();
@@ -25,20 +23,41 @@ export default class SwipableController extends ApplicationController {
     }
 
     setup() {
-        if ((this.userSigninCount <= 1 && this.userTasteEventsSaved < 1)) {
+        if ((this.userSigninCount <= 1 && this.eventsLiked < 1)) {
             setTimeout(() => {
                 this.showBot();
             }, 500)
         } else {
-            if (this.hasSwipableTarget) {
+            if (this.element) {
                 this.showSwipe();
+                this.element.addEventListener("swipable#event->trained", this._onSwipableTrained(), false);
+            }
+        }
+    }
+
+    _onSwipableTrained(e) {
+        return e => {
+            this.eventsToTrain = this.eventsToTrain - 1;
+            this.eventsLiked   = e.detail.eventsLiked;
+            if (this.eventsToTrain === 0) {
+                if (this.eventsLiked > 2) {
+                    this.endMessageTarget.querySelector("#end-message-title").innerText = `Obrigado ${this.userName}! Com base nos ${this.eventsLiked} itens que você curtiu, já consigo te recomendar alguns eventos que você vai gostar.`;
+                } else {
+                    this.endMessageTarget.querySelector("#end-message-title").innerText = `Obrigado ${this.userName}! Como você curtiu poucos eventos tenho mais alguns para você classificar antes de te indicar algo.`;
+                    this.loadingOffTarget.innerText = "Carregar mais eventos";
+                }
+                this.itemsTarget.classList.add("hidden");
+                this.element.classList.add("align-middle", "flex");
+                this.endMessageTarget.classList.remove("hidden", "opacity-0");
             }
         }
     }
 
     teardown() {
         this.bot.destroy();
-        this.swipable.destroy();
+        this.itemsTarget.classList.add("hidden", "opacity-0");
+        this.onboardingTarget.classList.remove("hidden", "opacity-0");
+        this.element.removeEventListener("swipable#event->trained", this._onSwipableTrained(), false);
     }
 
     showBot() {
@@ -106,9 +125,9 @@ export default class SwipableController extends ApplicationController {
         }).then(ok => {
             setTimeout(() => {
                 requestAnimationFrame(() => {
-                    this.onboardingTarget.style.opacity = 0;
+                    this.onboardingTarget.classList.add("opacity-0");
                     setTimeout(() => {
-                        if (this.hasSwipableTarget) {
+                        if (this.element) {
                             this.showSwipe();
                         }
                     }, 450)
@@ -120,9 +139,13 @@ export default class SwipableController extends ApplicationController {
 
     showSwipe() {
         this.onboardingTarget.classList.add("hidden", "opacity-0")
-        this.itemsTarget.style.opacity = 1;
-        this.swipable.init();
-        this.itemsTarget.style.display = "block";
+        this.itemsTarget.classList.remove("hidden", "opacity-0");
+    }
+
+    loadSuggestions() {
+        this.loadingOffTarget.classList.add("hidden");
+        this.loadingOnTarget.classList.remove("hidden");
+        this.loadingIconTarget.classList.add("animation-1s", "animation-linear", "animation-spin");
     }
 
     get userName() {
@@ -131,18 +154,30 @@ export default class SwipableController extends ApplicationController {
 
     get userSigninCount() {
         if (this.data.has("userSigninCount")) {
-            return JSON.parse(this.data.get("userSigninCount"))
+            return parseInt(this.data.get("userSigninCount"))
         } else {
             return 0
         }
     }
 
-    get userTasteEventsSaved() {
-        if (this.data.has("userTasteEventsSaved")) {
-            return JSON.parse(this.data.get("userTasteEventsSaved"))
+    get eventsLiked() {
+        if (this.data.has("eventsLiked")) {
+            return parseInt(this.data.get("eventsLiked"))
         } else {
             return 0
         }
+    }
+
+    set eventsLiked(value) {
+        this.data.set("eventsLiked", value);
+    }
+
+    get eventsToTrain() {
+        return parseInt(this.data.get("eventsToTrain"));
+    }
+
+    set eventsToTrain(value) {
+        this.data.set("eventsToTrain", value);
     }
 
 }

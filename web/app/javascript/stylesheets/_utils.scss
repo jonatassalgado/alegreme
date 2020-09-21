@@ -50,6 +50,14 @@
   .content-visibility-auto {
     content-visibility: auto;
   }
+
+  .contain-intrinsic-size-md {
+    contain-intrinsic-size: 250px;
+  }
+
+  .contain-intrinsic-size-lg {
+    contain-intrinsic-size: 500px;
+  }
 }
 
 .ripple {

@@ -3,6 +3,7 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
+  resources :likes
 	devise_for :users, controllers: {
 			omniauth_callbacks: 'users/omniauth_callbacks',
 			passwords:          'users/passwords',
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
 
 	root to: 'welcome#index'
 
-	namespace 'api' do
+	namespace :api do
 		get 'porto-alegre/eventos/:id/similar', to: 'events#similar', as: :events_similar
 		get 'porto-alegre/eventos/today', to: 'events#today', as: :today_and_tomorrow_events
 		get 'porto-alegre/eventos/week', to: 'events#week', as: :week_events
@@ -21,8 +22,11 @@ Rails.application.routes.draw do
 		post 'taste/:resource/:id/:taste', to: 'taste#update', as: :taste
 	end
 
-	get '/feed', to: 'feeds#index'
+	get '/porto-alegre', to: 'feeds#index', as: :feed
 	get '/onboarding', to: 'bot#onboarding'
+	get '/minha-agenda', to: 'users#agenda', as: :my_agenda
+
+	resources :users, path: 'porto-alegre/u'
 
 	get '/porto-alegre/eventos', to: 'feeds#city', as: :city_events
 	get '/porto-alegre/eventos/:day', to: 'feeds#day', as: :day_events, constraints: {day: /(\d{2})-(\d{2})-(\d{4})/}
@@ -42,12 +46,14 @@ Rails.application.routes.draw do
 	get '/terms', to: 'pages#terms'
 	get '/robots.:format', to: 'pages#robots'
 
-	resources :users
 	get '/:id/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
 	get '/:id/seguindo', to: 'feeds#follow', as: :follow_events
 
 	get '/active-invite', to: 'users#active_invite'
 
+  namespace :sheets do
+	  resource :friendships, only: :edit
+  end
 
 	resources :categories
 	resources :organizers, path: 'organizadores' do
@@ -66,8 +72,8 @@ Rails.application.routes.draw do
 
 	resources :events, path: 'porto-alegre/eventos' do
 		member do
-			post :save
-			post :unsave
+			post :like
+			post :unlike
 		end
 		collection do
 			get :saves

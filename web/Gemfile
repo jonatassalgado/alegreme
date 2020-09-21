@@ -19,6 +19,9 @@ gem 'mini_racer', platforms: :ruby
 
 gem "jsonb_accessor", "~> 1.0.0"
 
+# Calendar
+gem "simple_calendar", "~> 2.0"
+
 # Materialize
 gem 'materialize-sass', '~> 1.0.0'
 
@@ -40,8 +43,6 @@ gem 'jsonl'
 gem 'geocoder'
 
 gem 'gon'
-
-gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 
 gem 'picture_tag'
 
@@ -113,6 +114,9 @@ gem 'active_record_extended'
 gem 'rack-attack'
 
 gem 'stimulus_reflex'
+gem 'view_component', require: 'view_component/engine'
+gem 'view_component_reflex'
+
 
 group :production do
 	gem 'aws-sdk-s3'
@@ -122,8 +126,6 @@ group :production do
 	# gem 'dalli'
 	gem 'connection_pool'
 
-	gem "redis", ">= 4.0", :require => ["redis", "redis/connection/hiredis"]
-	gem "hiredis"
 
 	# Sidekiq
 	gem 'sidekiq'
@@ -133,6 +135,8 @@ group :production do
 end
 
 group :development, :production do
+	gem "redis", ">= 4.0", :require => ["redis", "redis/connection/hiredis"]
+	gem "hiredis"
 	gem 'sendgrid-ruby'
 end
 

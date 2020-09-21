@@ -47,7 +47,7 @@ module Api
 		# 			event_id:                taste_params['event_id'].to_i,
 		# 			user:                    current_user,
 		# 			current_event_favorited: false,
-		# 			saved_events:            current_user.saved_events,
+		# 			liked_events:            current_user.liked_events,
 		# 			json_request:            true
 		# 	}
 		#

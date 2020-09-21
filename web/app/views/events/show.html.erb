@@ -6,6 +6,9 @@
 <% content_for :canonical_url, event_url(@event, format: :html) %>
 <% content_for :amp_url, event_url(@event, format: :amp) %>
 
+<% content_for :back_button, true %>
+<% content_for :top_app_bar_title, truncate(@event.details_name, length: 30) %>
+
 <%= content_for :preload_image, @event.image[:original].try { |image| image.url(public: true) } %>
 
 <script type="application/ld+json">
@@ -53,8 +56,6 @@
  ]
 }
 
-
-
 </script>
 
 <script type="application/ld+json">
@@ -97,153 +98,20 @@
   }
 }
 
-
-
 </script>
 
-<section class="relative w-full mx-auto mt-16 is-animated md:mt-24 md:w-6/12">
-	<div id="<%= dom_id @event %>" class="md:border md:p-5 md:rounded md:shadow-md"
-			 data-event-favorited="<%= current_user and current_user.taste_events_saved?(@event.id) if current_user and current_user %>"
-			 data-event-identifier="<%= @event.id %>"
-			 data-event-description-open="false"
-			 data-event-modifier="single">
+<section class="relative w-full mx-auto is-animated md:mt-24 md:w-6/12">
+	<%= render partial: 'events/large_event', locals: {
+			event: @event,
+			user:  current_user
+	} %>
+</section>
 
-		<% unless mobile_device? %>
-			<div class="space-x-1">
-				<%= link_to "Porto Alegre", city_events_url, class: 'border hover:bg-gray-200 hover:border-gray-200 inline-block px-2 py-1 rounded-full text-gray-600 text-xs' %>
-				<%= link_to @event.categories_primary_name.try(:capitalize), category_events_url(@event.categories_primary_name), class: 'border hover:bg-gray-200 hover:border-gray-200 inline-block px-2 py-1 rounded-full text-gray-600 text-xs' %>
-				<%= link_to I18n.l(@event.day_of_week['date'], format: :long), day_events_url(@event.day_of_week['date'].strftime('%d-%m-%Y')), class: 'border hover:bg-gray-200 hover:border-gray-200 inline-block px-2 py-1 rounded-full text-gray-600 text-xs' %>
-				<%= link_to limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), class: 'border hover:bg-gray-200 hover:border-gray-200 inline-block px-2 py-1 rounded-full text-gray-600 text-xs' %>
-			</div>
-		<% end %>
-
-		<div class="relative my-4">
-			<div class="aspect-ratio-16/9"></div>
-			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.details_name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-200 rounded-t-lg md:rounded-lg">
-			<div class="absolute top-0 right-0 hidden mt-2 mr-2 transition-all duration-150 opacity-0 w-content"
-					 data-controller="share-button"
-					 data-share-button-text="<%= strip_tags(limit_description_size(@event.details_description, 160)) %>"
-					 data-share-button-title="<%= @event.details_name %>"
-					 data-share-button-url="<%= event_url(@event, format: :html) %>">
-				<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-xs text-gray-700 bg-gray-100 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-green-500 w-content"
-						 data-action="click->share-button#share"
-						 data-controller="ripple">
-					<span>Compartilhar</span>
-					<svg class="w-4 h-4 ml-1 fill-current" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-						<path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-					</svg>
-				</div>
-			</div>
-		</div>
-		<div class="flex justify-center mb-5">
-			<%= render partial: 'components/taste_button',
-								 locals:  {
-										 user:            current_user,
-										 resource:        @event,
-										 parent_id:       dom_id(@event),
-										 taste_type:      :save,
-										 taste_sentiment: :positive,
-										 html:            {
-												 container: {
-														 css: 'select-none tap-highlight-none antialiased bg-white border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded mr-2 px-3 hover:px-4 py-3 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
-												 },
-												 icon:      {
-														 css: 'fill-current h-5 hover:scale-150 w-5'
-												 }
-										 },
-										 opts:            {
-												 remove_on_action:            false,
-												 update_collection_on_action: false
-										 }
-								 } %>
-			<%= render partial: 'components/taste_button',
-								 locals:  {
-										 user:            current_user,
-										 resource:        @event,
-										 taste_type:      :dislike,
-										 taste_sentiment: :negative,
-										 parent_id:       dom_id(@event),
-										 html:            {
-												 container: {
-														 css: 'select-none tap-highlight-none antialiased bg-white border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded mr-2 px-3 hover:px-4 py-3 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
-												 },
-												 icon:      {
-														 css: 'fill-current h-5 hover:scale-150 w-5'
-												 }
-										 },
-										 opts:            {
-												 remove_on_action:            false,
-												 update_collection_on_action: false
-										 }
-								 } %>
-		</div>
-		<div class="space-y-6 md:space-y-10">
-			<div class="text-xs antialiased text-center text-gray-500 md:text-sm me-event-single__updated-at">
-				<%= "Atualizado em: #{I18n.l(@event.updated_at, format: :long)}" %>
-			</div>
-			<h1 class="px-3 mt-2 mb-5 text-2xl font-black leading-tight text-center md:px-0 md:text-4xl me-event-single__name">
-				<%= @event.details_name %>
-			</h1>
-			<div class="flex flex-col px-2 py-5 mx-0 mx-5 space-y-6 border-t border-b border-gray-200 md:-mx-5 md:flex-row md:space-x-6 md:space-y-0 md:text-xs">
-				<div class="inline-flex flex-1 px-5 text-gray-600 md:items-center md:justify-center md:px-0">
-					<svg class="flex-shrink-0 w-10 mr-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-						<path d="M0 0h24v24H0z" fill="none"/>
-						<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-					</svg>
-					<div>
-						<div class="antialiased font-bold text-gray-700">
-							<%= link_to("#{@event.day_of_week['decorator'].try(:capitalize)} #{format_hour @event.first_day_time }", @event.day_of_week['date'].strftime('%d-%m-%Y'), class: 'hover:underline md:text-sm text-green-500') %>
-						</div>
-						<div>
-							<%= @event.first_day_time > DateTime.now ? "Daqui #{distance_of_time_in_words @event.first_day_time, DateTime.now}" : "Iniciou há #{distance_of_time_in_words @event.first_day_time, DateTime.now}" %>
-						</div>
-					</div>
-				</div>
-				<div class="inline-flex flex-1 px-5 text-gray-600 md:items-center md:justify-center md:px-0">
-					<% if @event.place %>
-						<svg class="flex-shrink-0 w-10 mr-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-							<path fill="none" d="M0 0h24v24H0V0z"/>
-							<path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.13.48 1.53 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-						</svg>
-						<div>
-							<div class="antialiased font-bold text-gray-700">
-								<%= link_to limit_place_name_size(@event.place_details_name, 40), place_path(@event.place), class: 'hover:underline md:text-sm text-green-500' %>
-							</div>
-							<div>
-								<%= link_to google_maps_url(@event.geographic['address']), class: 'me-event-single__address', target: '_blank', rel: 'noreferrer' do %>
-									<%= limit_address_name_size @event.geographic['address'] %>
-								<% end %>
-							</div>
-						</div>
-					<% end %>
-				</div>
-			</div>
-			<div class="px-5 text-lg leading-relaxed text-gray-900 md:px-0 text-with-html">
-				<%= @event.details_description.html_safe %>
-			</div>
-		</div>
+<section class="relative w-9/12 w-full px-2 mt-12 mb-12 md:w-9/12">
+	<h2 class="px-4 mb-3 font-bold text-gray-700 uppercase">Eventos similares</h2>
+	<div id="horizontal-similar-events" class="bg-white shadow-xs">
+		<%= render partial: 'feeds/horizontal_event', collection: @similar_events, as: :event, locals: {user: current_user} %>
 	</div>
 </section>
 
-<section class="relative w-9/12 w-full mx-auto mt-12 md:w-9/12">
-	<%= render partial: "components/collection/events/collection",
-						 layout:  "components/stimulus_container",
-						 locals:  {
-								 identifier:        'similar',
-								 items:             @similar_events,
-								 user:              current_user,
-								 title:             {
-										 principal: "Eventos similares",
-								 },
-								 display_similar:   false,
-								 display_load_more: false,
-								 disposition:       :horizontal
-						 } %>
-</section>
 
-
-
-<% if current_user&.admin? && params[:debug] %>
-	<a href="<%= @event.url %>/edit">Editar</a>
-	<a href="/train">Treinar</a>
-<% end %>

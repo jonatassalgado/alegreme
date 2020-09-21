@@ -3,7 +3,7 @@
 
 <section id="<%= dom_id @movie %>" class="mx-auto mt-12 is-animated md:mt-40 md:overflow-hidden md:rounded-t-lg md:w-6/12">
 	<div class="flex flex-col min-h-screen">
-		<div class="flex items-end px-5 pt-10 space-x-5 bg-gray-200">
+		<div class="flex items-end px-5 pt-10 space-x-5 bg-gray-50">
 			<div class="relative w-32 -mb-5">
 				<div class="absolute z-10 pl-1 pr-2 m-1 text-xs text-gray-800 bg-white rounded-full shadow-sm me-movie__vote">
 					<%= @movie.details_vote_average %> ⭐
@@ -31,7 +31,7 @@
 		</div>
 		<div class="px-5 mt-10">
 			<% if current_user %>
-				<div class="border-b border-gray-200 flex justify-center mb-5 py-2 space-x-2">
+				<div class="border-b border-gray-100 flex justify-center mb-5 py-2 space-x-2">
 					<%= render partial: 'components/taste_button',
 										 locals:  {
 												 user:            current_user,
@@ -41,7 +41,7 @@
 												 taste_sentiment: :positive,
 												 html:            {
 														 container: {
-																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
 														 }
 												 },
 												 opts:            {
@@ -58,7 +58,7 @@
 												 taste_sentiment: :negative,
 												 html:            {
 														 container: {
-																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-200 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-700 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
 														 }
 												 },
 												 opts:            {

@@ -7,7 +7,7 @@ export default class ScrollOnClickedController extends ApplicationController {
         super.connect();
         if (this.hasItemTarget && this.hasScrollerTarget) {
             const initSelectedEl = this.itemTargets.find(item => {
-                return item.innerText.trim() === this.initSelected
+                return item.dataset.scrollOnClickedSelected === this.initSelected
             })
             this._left(initSelectedEl, "auto")
         }
@@ -26,7 +26,7 @@ export default class ScrollOnClickedController extends ApplicationController {
     teardown() {
         if (this.hasItemTarget && this.hasScrollerTarget) {
             const initSelectedEl = this.itemTargets.find(item => {
-                return item.innerText.trim() === this.initSelected
+                return item.dataset.scrollOnClickedSelected === this.initSelected
             })
             this._left(initSelectedEl, "auto")
         }

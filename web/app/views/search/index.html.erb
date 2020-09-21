@@ -1,4 +1,4 @@
-<div class="min-h-screen mt-24 is-animated md:mt-32">
+<div class="py-1 mt-2 bg-white shadow-sm is-animated mb-20 md:mt-32">
 
 	<%= notice %>
 
@@ -7,48 +7,33 @@
 			<h2 class="font-semibold text-gray-800">Você quis dizer?</h2>
 			<% @events&.suggestions&.each do |suggestion| %>
 				<a href="<%= search_index_path({q: suggestion}) %>" class="me-chip mdc-chip">
-					<span class="inline-block px-4 py-2 mt-2 mr-2 text-gray-800 bg-gray-100 rounded-full hover:bg-gray-200"><%= suggestion %></span>
+					<span class="inline-block px-4 py-2 mt-2 mr-2 text-gray-800 rounded-full bg-gray-50 hover:bg-gray-50"><%= suggestion %></span>
 				</a>
 			<% end %>
 		</div>
 	<% end %>
 
 	<% if @events.try { |events| events.size > 0 } %>
-		<div class="mx-auto md:w-9/12">
-			<%= render partial: "components/collection/events/collection",
-								 locals:  {
-										 identifier:               'search',
-										 user:                     current_user,
-										 items:                    @events,
-										 title:                    {
-												 principal: "Eventos encontrados para \"#{params[:q]}\""
-										 },
-										 infinite_scroll_vertical: true,
-										 display_if_empty:         true,
-										 show_similar_to:          session[:stimulus][:show_similar_to],
-										 html: {
-												 grid: {
-														 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 md:space-y-0 pb-2 px-5 space-y-5'
-												 }
-										 }
-								 } %>
-		</div>
+		<%= render partial: 'events/group_by_day_list', locals: {
+				events: @events,
+				user:   current_user
+		} %>
 	<% elsif @events.try { |events| events.size == 0 } %>
 		<h2 class="text-2xl">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
 	<% elsif @categories.present? %>
 		<div class="mx-auto md:w-9/12">
-			<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl">Categorias</h2>
-			<div class="flex flex-wrap px-5 mt-5 md:px-0">
+<!--			<h2 class="flex-1 pl-5 text-xl font-bold leading-6 text-gray-400 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl">-->
+<!--				Categorias-->
+<!--			</h2>-->
+			<div class="grid grid-cols-2 gap-3 px-5 mt-5 md:px-0">
 				<% @categories.each do |category| %>
-					<a href="<%= category_events_path category %>" class="inline-block px-4 py-1 mt-2 mr-2 antialiased text-gray-800 transition-colors duration-200 transform bg-gray-100 border rounded-full cursor-pointer select-none tap-highlight-none mdc-chip me-chip">
-						<%= category %>
+					<a href="<%= category_events_path category %>" class="antialiased bg-gray-50 cursor-pointer duration-200 flex h-20 inline-block justify-start mdc-chip me-chip px-4 py-1 rounded-lg select-none tap-highlight-none transform transition-colors w-full">
+						<div class="text-lg font-semibold text-gray-400">
+							<%= category %>
+						</div>
 					</a>
 				<% end %>
 			</div>
 		</div>
-	<% else %>
-		<section class="me-section me-section--condensed" style="margin: 0 auto 25px auto;">
-			<h2 class="me-section__title">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
-		</section>
 	<% end %>
 </div>

@@ -13,7 +13,7 @@
 		</div>
 	<% end %>
 
-	<div>
+	<div class="flex justify-center">
 		<% if @user.picture %>
 			<%= image_tag @user.picture, {class: "mb-1 bg-cover bg-gray-400 h-12 md:h-16 md:w-16 rounded-full w-12", alt: @user.name, onerror: "this.style.opacity='0'"} %>
 		<% else %>
@@ -23,12 +23,12 @@
 		<% end %>
 	</div>
 
-	<div>
-		<label>Nome</label>
-		<%= form.text_field :name, class: 'border px-2 py-2 rounded w-full' %>
+	<div class="text-gray-500">
+		<label class="font-medium">Nome</label>
+		<%= form.text_field :name, class: 'border px-2 py-2 rounded w-full mt-1' %>
 	</div>
 
-	<button class="antialiased bg-green-500 float-right font-semibold px-5 py-2 rounded-full shadow-lg text-white">
+	<button class="float-right px-5 py-2 antialiased font-semibold text-white bg-green-500 rounded-full">
 		Salvar
 	</button>
 

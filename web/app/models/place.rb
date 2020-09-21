@@ -4,8 +4,7 @@ class Place < ApplicationRecord
   friendly_id :details_name, use: :slugged
 
   has_many :events
-
-  #acts_as_followable
+  has_many :follows, as: :following
 
   def details_name
     self.details['name']

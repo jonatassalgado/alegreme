@@ -33,7 +33,7 @@
 	<link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
 	<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-	<link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 	<% if content_for? :preload_image %>
 		<link rel="preload" as="image" href="<%= content_for :preload_image %>">
 	<% end %>
@@ -43,7 +43,7 @@
 	<%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
 
 </head>
-<body class="antialiased font-inter tap-highlight-none" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
+<body class="antialiased bg-gray-50 tap-highlight-none" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
 <!-- Google Tag Manager (noscript) -->
 <noscript>
@@ -52,9 +52,11 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div data-reflex-permanent class="fixed top-0 z-50 w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm" data-controller="head" data-target="head.head">
+<div class="w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
+		 data-controller="head"
+		 data-reflex-permanent
+		 data-target="head.head">
 	<%= render partial: 'layouts/top-app-bar' %>
-	<%= render partial: 'components/tab-bar', locals: {props: {active: "#{controller_name}##{action_name}"}} %>
 </div>
 
 <%= yield %>

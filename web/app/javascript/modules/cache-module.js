@@ -18,7 +18,7 @@ const CacheModule = (function () {
         if (navigator.serviceWorker && !caches.has("v1:sw-cache-feed-page")) {
             caches.open("v1:sw-cache-feed-page")
                   .then(cache => {
-                      cache.add("/feed")
+                      cache.add("/porto-alegre")
                            .then(() => {
                                console.log("Cache v1:sw-cache-feed-page updated");
                            })
