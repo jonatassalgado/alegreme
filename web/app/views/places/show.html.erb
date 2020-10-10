@@ -11,9 +11,6 @@
   [
     <%= render partial: 'layouts/json_ld', collection: @upcoming_events, as: :event %>
   ]
-
-
-
 	</script>
 
 	<div class="is-animated md:w-9/12 mx-auto sm:container space-y-3">
@@ -34,25 +31,10 @@
 			</div>
 		</div>
 
-		<% @upcoming_events.limit(session[:stimulus][:limit]).group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
-			<div class="bg-white shadow-xs content-visibility-auto contain-intrinsic-size-md">
-				<div class="<%= class_names 'sticky z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-700 bg-gray-50 border-t border-white md:leading-normal md:pl-0',
-																		{'top-0':  !content_for?(:top_app_bar_title),
-																		 'top-12': content_for?(:top_app_bar_title)} %>">
-					<h2 class="text-xl font-semibold md:text-5xl"><%= day_of_week(group[0].to_date).titlecase %></h2>
-					<% if group[0].to_date == Date.today || group[0].to_date == Date.tomorrow %>
-						<div class="-mt-1 text-xs font-light"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
-					<% elsif group[0].to_date < Date.today + 7 %>
-						<div class="-mt-1 text-xs font-light"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
-					<% else %>
-						<div class="-mt-1 text-xs font-light">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
-					<% end %>
-				</div>
-				<div id="vertical-daily-events">
-					<%= render partial: 'feeds/horizontal_event', collection: group[1][0..session[:stimulus][:limit]], as: :event, locals: {user: current_user} %>
-				</div>
-			</div>
-		<% end %>
+		<%= render partial: 'events/group_by_day_list', locals: {
+				events: @upcoming_events,
+				user:   current_user
+		} %>
 
 	</div>
 
