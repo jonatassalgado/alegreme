@@ -28,12 +28,17 @@ class User < ApplicationRecord
 	has_many :friendships, dependent: :destroy
 	has_many :friendships_requested, -> { where(status: :requested) }, foreign_key: :user_id, class_name: 'Friendship'
 	has_many :friendships_request_received, -> { where(status: :requested) }, foreign_key: :friend_id, class_name: 'Friendship'
-	has_many :friendships_accepted, -> (user) { where(status: :accepted).where("user_id = :user_id OR friend_id = :user_id", user_id: user.id) }, class_name: 'Friendship'
+	# has_many :friendships_accepted, -> (user) { where(status: :accepted).where("user_id = :user_id OR friend_id = :user_id", user_id: user.id) }, class_name: 'Friendship'
 
 	has_many :friends_requested, through: :friendships_requested, source: :friend
 	has_many :friends_requested_received, through: :friendships_request_received, source: :user
 	# has_many :friends_accepted, -> (user) {User.joins("LEFT JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id").where("users.id != :user_id AND friendships.status = 1", user_id: user.id)}
 	# has_many :friends_accepted, through: :friendships_accepted, source: :friend
+
+	def friendships_accepted
+		Friendship.where("user_id = :user_id OR friend_id = :user_id  AND friendships.status = 1", user_id: self.id)
+	end
+
 	def friends_accepted
 		User.joins("LEFT JOIN friendships ON friendships.user_id = users.id OR friendships.friend_id = users.id").where("users.id != :user_id AND friendships.status = 1", user_id: self.id)
 	end

@@ -6,12 +6,16 @@ class Friendship < ApplicationRecord
 	}
 
 	validates :user_id, uniqueness: {scope: :friend_id}
-
 	validates :friend_type, inclusion: {in: %w(Friend)}
-
 	validates :status, presence: :true, inclusion: {in: %w(requested)}, on: :create
 	validates :status, presence: :true, inclusion: {in: %w(accepted refused)}, if: Proc.new { |friendship| friendship.changed? && friendship.status_was == 'requested' }
+	validate :max_number_of_friends
 
+	def max_number_of_friends
+		if user.friendships_accepted.size >= 10 || friend.friendships_accepted.size >= 10
+			errors.add(:user_id, "Você só pode adicionar 10 amigos")
+		end
+	end
 
 	belongs_to :user
 	belongs_to :friend, class_name: 'User'
