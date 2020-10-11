@@ -1,7 +1,7 @@
 import ApplicationController from "./application_controller"
 
 export default class ShareButtonController extends ApplicationController {
-    static targets = [];
+    static targets = ["input"];
 
     connect() {
         this.setup();
@@ -12,7 +12,7 @@ export default class ShareButtonController extends ApplicationController {
     }
 
     setup() {
-        if (navigator.share) {
+        if (this.hide && navigator.share) {
             this.element.classList.remove("hidden", "opacity-0")
         }
     }
@@ -22,14 +22,21 @@ export default class ShareButtonController extends ApplicationController {
     }
 
     share() {
-        navigator.share({
-                            title: this.title,
-                            text:  this.text,
-                            url:   this.url,
-                        }).then(() =>
-                                    console.log("Successful share")
-        ).catch(
-            (error) => console.log("Error sharing", error));
+        if (navigator.share) {
+            navigator.share({
+                                title: this.title,
+                                text:  this.text,
+                                url:   this.url,
+                            }).then(() =>
+                                        console.log("Successful share")
+            ).catch(
+                (error) => console.log("Error sharing", error));
+        } else {
+            this.inputTarget.select();
+            document.execCommand("Copy");
+            alert("Link copiado!");
+        }
+
     }
 
     get title() {
@@ -42,6 +49,10 @@ export default class ShareButtonController extends ApplicationController {
 
     get url() {
         return this.data.get("url");
+    }
+
+    get hide() {
+        return this.data.get("hide");
     }
 
 }

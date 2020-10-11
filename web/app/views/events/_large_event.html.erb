@@ -75,9 +75,7 @@
 		<div class="my-auto text-xs leading-snug text-gray-800">
 			O evento acontecerá
 			<span class="font-semibold">daqui <%= distance_of_time_in_words event.day_of_week['date'], DateTime.now %></span>
-			em uma <span class="font-semibold"><%= I18n.l(event.day_of_week['date'], format: :week) %></span>. Você não tem
-			nada neste
-			dia. <%= link_to('Ver minha agenda neste dia', my_agenda_path(start_date: event.day_of_week['date']), class: 'text-green-500 font-semibold') %>
+			em uma <span class="font-semibold"><%= I18n.l(event.day_of_week['date'], format: :week) %></span>. <%= link_to('Ver minha agenda neste dia', my_agenda_path(start_date: event.day_of_week['date']), class: 'text-green-500 font-semibold') %>
 		</div>
 	</div>
 	<div class="px-5 py-5 border-b border-gray-100">
