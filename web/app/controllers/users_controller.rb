@@ -67,8 +67,6 @@ class UsersController < ApplicationController
 	# PATCH/PUT /users/1
 	# PATCH/PUT /users/1.json
 	def update
-		@user.slug = nil
-
 		respond_to do |format|
 			if @user.update(user_params)
 				format.html { redirect_to feed_path, notice: 'User was successfully updated.' }
@@ -111,6 +109,7 @@ class UsersController < ApplicationController
 		if current_user.admin?
 			params.require(:user).permit(:name,
 			                             :id,
+			                             :slug,
 			                             :personas_primary_name,
 			                             :personas_primary_score,
 			                             :personas_secondary_name,
@@ -129,7 +128,7 @@ class UsersController < ApplicationController
 					                             ]
 			                             })
 		else
-			params.require(:user).permit(:name, :image)
+			params.require(:user).permit(:name, :image, :slug)
 		end
 
 	end

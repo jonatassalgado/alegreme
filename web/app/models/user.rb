@@ -5,6 +5,8 @@ class User < ApplicationRecord
 	devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
 	validates :name, :length => {:in => 3..60}
+	validates :email, uniqueness: true
+	validates :slug, uniqueness: true
 
 	extend FriendlyId
 	friendly_id :name, use: :slugged
