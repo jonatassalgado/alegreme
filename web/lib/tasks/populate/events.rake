@@ -13,18 +13,17 @@ require_relative '../../../app/uploaders/event_image_uploader'
 module PopulateEventsRake
 
 	def create_place(item)
-		place = Place.where.contains(details: {name: item['place']}).first
+		place = Place.find_by("lower(details ->> 'name') = ?", item['place_name'].downcase)
 
-		if !place.blank?
-			puts "#{place.details['name']} - Lugar já existe".white
-
-			place
+		if place
+			puts "Local: #{place.id} #{place.details['name']} - Lugar já existe".blue
+			set_place_image(place, item) unless place.image_data?
 		else
 			@geocode = Geocoder.search(item['address']).first if item['address']
 
 			place = Place.create!({
 					                      details:    {
-							                      name: item['place']
+							                      name: item['place_name']
 					                      },
 					                      geographic: {
 							                      address: item['address']
@@ -32,30 +31,82 @@ module PopulateEventsRake
 			                      })
 
 			SetGeolocationJob.perform_later(place.id)
+			set_place_image(place, item)
+			puts "Local: #{place.id} #{place.details_name} - Lugar criado".blue
+		end
 
-			puts "#{place.details_name} - Lugar criado".blue
+		place
+	end
 
-			place
+	def set_place_image(place, item)
+		return unless item['place_cover_url']
+		return if place.image_data?
+
+		begin
+			place_cover_file = Down.download(item['place_cover_url'])
+		rescue Down::Error => e
+			puts "Local: #{item['place_name']} - Erro no download da imagem (#{item['place_cover_url']}) - #{e}".red
+		else
+			puts "Local: #{item['place_name']} - Download da imagem (#{item['place_cover_url']}) - Sucesso".blue
+			begin
+				place.image = place_cover_file
+				puts "Local: #{item['place_name']} - Upload de imagem".blue
+				place.save!
+			rescue
+				puts "Local: #{item['place_name']} - Erro no upload da image #{e}".red
+			end
 		end
 	end
 
-	def create_organizer(item, event)
-		item['organizers'].try(:each) do |organizer_item|
-			organizer = Organizer.where.contains(details: {name: organizer_item}).first
+	def create_organizers(item)
+		return unless item['organizers']
 
-			if !organizer.blank?
-				puts "#{organizer.details['name']} - Organizador já existe".yellow
-				event.organizers << organizer unless event.organizers.include?(organizer)
+		item['organizers'].map do |organizer_data|
+			organizer = Organizer.find_by("lower(details ->> 'name') = ?", organizer_data['name'].downcase)
+
+			if organizer.present?
+				puts "Organizador: #{organizer.details['name']} - já existe".blue
 			else
 				organizer = Organizer.create!({
 						                              details: {
-								                              name: organizer_item
+								                              name:       organizer_data['name'],
+								                              source_url: organizer_data['source_url']
 						                              }
 				                              })
 
-				puts "#{organizer_item} - Organizador criado".blue
+				puts "Organizador: #{organizer_data['name']} - criado".blue
+			end
 
-				event.organizers << organizer unless event.organizers.include?(organizer)
+			set_organizer_image(organizer, organizer_data) unless organizer.image_data?
+			organizer
+		end
+	end
+
+	def associate_event_organizers(event, organizers)
+		organizers.each do |organizer|
+			unless event.organizers.include?(organizer)
+				event.organizers << organizer
+				puts "Organizador: #{organizer.details_name} - associado".blue
+			end
+		end
+	end
+
+	def set_organizer_image(organizer, organizer_data)
+		return unless organizer_data['cover_url']
+		return if organizer.image_data?
+
+		begin
+			organizer_cover_file = Down.download(organizer_data['cover_url'])
+		rescue Down::Error => e
+			puts "Organizador: #{organizer_data['name']} - Erro no download da imagem (#{organizer_data['cover_url']}) - #{e}".red
+		else
+			puts "Organizador: #{organizer_data['name']} - Download da imagem (#{organizer_data['cover_url']}) - Sucesso".blue
+			begin
+				organizer.image = organizer_cover_file
+				puts "Organizador: #{organizer_data['name']} - Upload de imagem".blue
+				organizer.save!
+			rescue
+				puts "Organizador: #{organizer_data['name']} - Erro no upload da image #{e}".red
 			end
 		end
 	end
@@ -65,8 +116,8 @@ module PopulateEventsRake
 
 		if event.save!
 			@events_create_counter += 1
-			puts "#{event.details['name'][0..60]} criado #{@events_create_counter}".green
-			return true
+			puts "Evento: #{event.details['name'][0..60]} - Salvo!".blue
+			true
 		end
 	end
 
@@ -117,7 +168,7 @@ module PopulateEventsRake
 			end
 
 		else
-			puts "Erro durante a classificação - #{event.details_name}".red
+			puts "Evento: #{event.details_name} - Erro durante a classificação".red
 		end
 	end
 
@@ -127,19 +178,19 @@ module PopulateEventsRake
 		begin
 			event_cover_file = Down.download(item['cover_url'])
 		rescue Down::Error => e
-			puts "#{item['name']} - Erro no download da imagem (#{item['cover_url']}) - #{e}".red
+			puts "Evento: #{item['name']} - Erro no download da imagem (#{item['cover_url']}) - #{e}".red
 			return false
 		else
-			puts "#{item['name']} - Download da imagem (#{item['cover_url']}) - Sucesso".blue
+			puts "Evento: #{item['name']} - Download da imagem (#{item['cover_url']}) - Sucesso".blue
 		end
 
 		return unless event_cover_file
 
 		begin
 			event.image = event_cover_file
-			puts "#{item['name']} - Upload de imagem".blue
+			puts "Evento: #{item['name']} - Upload de imagem".blue
 		rescue
-			puts "#{item['name']} - Erro no upload da image #{e}".red
+			puts "Evento: #{item['name']} - Erro no upload da image #{e}".red
 			return false
 		end
 
@@ -147,11 +198,14 @@ module PopulateEventsRake
 	end
 
 	def associate_event_place(event, place)
-		place.events << event unless place.events.include?(event)
+		unless place.events.include?(event)
+			place.events << event
+			puts "Local: #{place.details_name} - Local associado".blue
+		end
 	end
 
 	def read_file
-		files     = Dir['/var/www/scrapy/data/scraped/*']
+		files              = Dir['/var/www/scrapy/data/scraped/*']
 		@current_file_name = (files.select { |file| file[/events-\d{8}-\d{6}\.jsonl$/] }).max
 
 		puts "Lendo arquivo JSON #{@current_file_name}".blue
@@ -160,18 +214,12 @@ module PopulateEventsRake
 	end
 
 	def create_event(item)
-		event = Event.where.contains(details: {source_url: item['source_url']}).first
-
-		if (event && event.details_description == item['description'])
-			puts "#{@events_create_counter}: #{item['name']} - Evento já existe (sem atualizações)".white
+		if item['datetimes'].empty?
+			puts "Evento: #{item['name']} - Evento sem data raspada".red
 			return [false, false]
 		end
 
-		if item['datetimes'].blank?
-			puts "#{@events_create_counter}: #{item['name']} - Evento sem data raspada".red
-			return [false, false]
-		end
-
+		event                     = Event.where.contains(details: {source_url: item['source_url']}).first
 		query                     = Base64.encode64(item['description'])
 		features_params           = {query: query}
 		features_uri              = URI("#{ENV['API_URL']}:5000/event/features")
@@ -180,6 +228,8 @@ module PopulateEventsRake
 		@features_response_failed = !features_response.is_a?(Net::HTTPSuccess)
 
 		if event
+			puts "#{@events_create_counter}: #{item['name']} - Evento já existe".white
+
 			ml_data = JSON.parse(features_response.try(:body))
 
 			event.details.deep_merge!(
@@ -189,13 +239,13 @@ module PopulateEventsRake
 			)
 
 			event.ocurrences.deep_merge!(
-					dates: item['datetimes']
+					dates: item['datetimes'].map {|datetime| datetime.to_datetime}
 			)
 
 			event.geographic.deep_merge!(
 					address:      item['address'],
 					latlon:       @geocode.try(:coordinates),
-					neighborhood: @geocode.try {|geo| geo.address_components_of_type(:sublocality)[0]["long_name"]},
+					neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality)[0]["long_name"] },
 					city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
 					cep:          Geographic.get_cep_from_address(item['address'])
 			)
@@ -209,21 +259,20 @@ module PopulateEventsRake
 					adjs:     ml_data['adjs']
 			)
 
-			event.slug = nil
-			event.save
+			puts "#{item['name']} - atualizado".blue
 
-			puts "#{@events_create_counter}: #{item['name']} - Evento já existe (atualizado)".white
-
-			return [event, ml_data]
+			[event, ml_data]
 
 		elsif @features_response_failed
-			puts "#{@events_create_counter}: #{item['name']} - Evento falhou durante a criação".red
+			puts "#{@events_create_counter}: #{item['name']} - Evento falhou durante a criação (ML Data)".red
 
 			return [false, false]
 
 		else
 			ml_data = JSON.parse(features_response.try(:body))
 			event   = Event.new
+
+			puts "#{@events_create_counter}: #{item['name']} - Evento criado".white
 
 			event.details.deep_merge!(
 					name:        item['name'],
@@ -246,11 +295,11 @@ module PopulateEventsRake
 			)
 
 			event.geographic.deep_merge!(
-					address: item['address'],
+					address:      item['address'],
 					latlon:       @geocode.try(:coordinates),
-					neighborhood: @geocode.try {|geo| geo.address_components_of_type(:sublocality)[0]["long_name"]},
-					city: item['address'] ? item['address'][/Porto Alegre/] : nil,
-					cep:  Geographic.get_cep_from_address(item['address'])
+					neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality)[0]["long_name"] },
+					city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
+					cep:          Geographic.get_cep_from_address(item['address'])
 			)
 
 			[event, ml_data]
@@ -279,9 +328,9 @@ namespace :populate do
 		puts "Task populate:events iniciada em #{DateTime.now}".white
 
 		last_task_performed = Artifact.where.contains(details: {
-																										name: "populate:events",
-																										type: "task"
-																										}).first
+				name: "populate:events",
+				type: "task"
+		}).first
 
 		# noinspection RubyArgCount
 		@uploader               = EventImageUploader.new(:store)
@@ -290,8 +339,8 @@ namespace :populate do
 
 		read_file
 
-		if last_task_performed.try {|ltp| ltp.data['last_file_used'] == @current_file_name }
-			puts "Task já realizada para o arquivo #{@current_file_name}".yellow
+		if last_task_performed.try { |ltp| ltp.data['last_file_used'] == @current_file_name }
+			puts "Task já realizada para o arquivo #{@current_file_name}".white
 			abort
 		end
 
@@ -307,27 +356,25 @@ namespace :populate do
 		end
 
 		data.each do |item|
-			place          = create_place(item)
 			event, ml_data = create_event(item)
+			place          = create_place(item)
+			organizers     = create_organizers(item)
 
 			unless event
-				puts "#{item['name']} - Próximo (lugar não criado existe)".yellow
+				puts "#{item['name']} - Próximo (evento não criado)".blue
 				next
 			end
 
-			unless ml_data
-				puts "#{item['name']} - Próximo (ML data não retornada)".yellow
-				next
-			end
-
-			unless set_cover(item, event)
-				puts "#{item['name']} - Próximo (cover não atribuido)".yellow
-				next
-			end
-
+			associate_event_organizers(event, organizers)
 			associate_event_place(event, place)
-			create_organizer(item, event)
-			classify_event(event, ml_data)
+
+			unless event.image_data?
+				next unless set_cover(item, event)
+			end
+
+			if event.details_description != item['description']
+				classify_event(event, ml_data)
+			end
 
 			save_event(event)
 		end
@@ -340,7 +387,7 @@ namespace :populate do
 							name: "populate:events",
 							type: "task"
 					},
-					data: {
+					data:    {
 							last_file_used: @current_file_name
 					})
 		end

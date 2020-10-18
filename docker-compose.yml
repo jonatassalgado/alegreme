@@ -162,7 +162,7 @@ services:
     ports:
       - 8050:8050
       - 5023:5023
-    restart: on-failure
+    restart: always
     volumes:
       - splash_data:/var/www/splash/data
     mem_limit: 4gb

@@ -4,11 +4,15 @@ import base64
 import json
 import os
 import random
+import shadow_useragent
 
 from urllib.parse import urljoin
-from alegreme.items import Event
+from alegreme.items import Event, EventOrganizer, EventOrganizerLoader
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
+
+ua = shadow_useragent.ShadowUserAgent()
+ua = ua.firefox
 
 parse_event_script = """
     function main(splash, args)
@@ -18,29 +22,22 @@ parse_event_script = """
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
         splash.resource_timeout = 60
-        splash:set_custom_headers({
-                            ['user-agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/602.1 (KHTML, like Gecko) splash Version/9.0 Safari/602.1',
-                            ['accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                            ['accept-language'] = 'en-US,en;q=0.9,pt;q=0.8'
-                            })
-
+        splash:set_user_agent(tostring(args.ua))
         assert(splash:go(splash.args.url))
-
-        assert(splash:wait(1))
-        splash.scroll_position = {y=500}
+        assert(splash:wait(3))
+        splash.scroll_position = {y=1000}
 
         result, error = splash:wait_for_resume([[
             function main(splash) {
                 var checkExist = setInterval(function() {
-                    if (document.querySelector("._63ew").innerText && document.querySelector("._2ycp._5xhk").innerText) {
+                    if (document.querySelector("._63ew").innerText && document.querySelector("._2ycp._5xhk").innerText && document.querySelector('._2xq3').innerText) {
                         clearInterval(checkExist);
-                                                splash.resume();
+                        splash.resume();
                     }
                 }, 1000);
             }
         ]], 30)
 
-        assert(splash:wait(0.5))
         splash:runjs("window.close()")
         return splash:html()
     end
@@ -54,11 +51,7 @@ parse_page_script = """
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
         splash.resource_timeout = 60
-        splash:set_custom_headers({
-                            ['user-agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/602.1 (KHTML, like Gecko) splash Version/9.0 Safari/602.1',
-                            ['accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                            ['accept-language'] = 'en-US,en;q=0.9,pt;q=0.8'
-                            })
+        splash:set_user_agent(tostring(args.ua))
 
         assert(splash:go(splash.args.url))
 
@@ -158,11 +151,14 @@ class EventSpider(scrapy.Spider):
                   'https://www.facebook.com/pg/zonaexpfm/events',
                   'https://www.facebook.com/pg/gomarec/events',
                   'https://www.facebook.com/pg/darumT/events',
-                  'https://www.facebook.com/pg/basepoa/events']
+                  'https://www.facebook.com/pg/basepoa/events'
+                  ]
 
     random.shuffle(start_urls)
 
     def start_requests(self):
+        self.log("INITIALIZING...")
+        self.log("UA: %s" % ua)
         for url in self.start_urls:
             yield SplashRequest(
                 url=url,
@@ -171,6 +167,7 @@ class EventSpider(scrapy.Spider):
                 args={
                 'timeout': 90,
                 'lua_source': parse_page_script,
+                'ua': ua
                 }
             )
 
@@ -179,7 +176,10 @@ class EventSpider(scrapy.Spider):
 
     def parse_page(self, response):
 
-        events_in_page = response.xpath('//*[contains(@id, "recurring_events_card")]//*[contains(@class, "_2l3f")]/a/@href | //*[@id="upcoming_events_card"]//*[contains(@class, "_4dmk")]/a/@href')
+        events_in_page = response.xpath('//*[contains(@id, "upcoming_events_card")]//*[contains(@class, "_4dmk")]//@href')
+
+        if not events_in_page:
+            self.log("PAGE WITHOUT EVENTS")
 
         for event_link in events_in_page.extract():
             if event_link is not None:
@@ -190,6 +190,7 @@ class EventSpider(scrapy.Spider):
                     args={
                     'timeout': 90,
                     'lua_source': parse_event_script,
+                    'ua': ua
                     }
                 )
                 pass
@@ -205,26 +206,28 @@ class EventSpider(scrapy.Spider):
 
 
     def parse_event(self, response):
+        event_loader = ItemLoader(item=Event(), response=response)
+        event_loader.add_xpath('name', '//title[1]/text()')
+        event_loader.add_xpath('cover_url', '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src')
+        event_loader.add_xpath('address', '//*[@id="event_summary"]//div[@class="_5xhp fsm fwn fcg"][1]/text()')
+        event_loader.add_xpath('datetimes', '//*[@id="event_time_info"]//div[@class="_2ycp _5xhk"][1]/@content')
+        event_loader.add_xpath('place_name', '//*[@id="event_summary"]//a[@class="_5xhk"][1]/text()')
+        event_loader.add_xpath('place_cover_url', '//*[contains(@class, "_2xr0")]/@style')
+        event_loader.add_xpath('ticket_url', '//*[contains(@data-testid, "event_ticket")]/a/@href')
 
+        organizers_els = response.xpath('//*[contains(@class, "_6-i")]/li')
+        if organizers_els:
+            for organizer_el in organizers_els:
+                event_loader.add_value('organizers', self.parse_organizer_meta(response, organizer_el))
 
-        loader = ItemLoader(item=Event(), response=response)
-        loader.add_xpath('name', '//title[1]/text()')
-        loader.add_xpath('cover_url', '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src')
-        loader.add_xpath('address', '//*[@id="event_summary"]//div[@class="_5xhp fsm fwn fcg"][1]/text()')
-        loader.add_xpath('datetimes', '//*[@id="event_time_info"]//div[@class="_2ycp _5xhk"][1]/text()')
-        loader.add_xpath('dates', '//*[@class="_4-u3"]//*[@class="_5x8v _5a4_ _5a5j"]/@title')
-        loader.add_xpath('times', '//*[@class="_4-u3"]//*[@class="_62pa"]/text()')
-        loader.add_xpath('place', '//*[@id="event_summary"]//a[@class="_5xhk"][1]/text()')
-        loader.add_xpath('organizers', '//*[@class="_62hs _4-u3"]//*[@class="_hty"]//a/text()')
-        loader.add_xpath('organizers_fallback_a', '//*[@class="_2xq3"]/text()')
-        loader.add_xpath('description', '//*[@class="_63ew"]//span')
-        loader.add_xpath('prices', '//*[@id="event_summary"]//*[@class="_20zc"]/text()')
-        loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
-        loader.add_value('source_url', response.url)
-        loader.load_item()
+        event_loader.add_xpath('description', '//*[@class="_63ew"]//span')
+        event_loader.add_xpath('prices', '//*[@id="event_summary"]//*[@class="_20zc"]/text()')
+        event_loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
+        event_loader.add_value('source_url', response.url)
+        event_loader.load_item()
 
-        event = loader.item
-        self.log("EVENT CRAWLED: %s" % event)
+        event = event_loader.item
+        self.log("EVENT SCRAPED: %s" % event)
 
         if 'address' in event and "Porto Alegre" in event['address']:
             yield event
@@ -247,3 +250,12 @@ class EventSpider(scrapy.Spider):
                 pass
             else:
                 pass
+
+
+    def parse_organizer_meta(self, response, organizer_el):
+        organizer_loader = EventOrganizerLoader(selector=organizer_el)
+        organizer_loader.add_xpath('name', './/*[contains(@class, "_50f7")]//text()')
+        organizer_loader.add_xpath('cover_url', './/*[contains(@class, "_rw")]/@src')
+        organizer_loader.add_xpath('source_url', './/*[contains(@class, "_ohe")]/@href')
+
+        return dict(organizer_loader.load_item())

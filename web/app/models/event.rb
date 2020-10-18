@@ -26,8 +26,6 @@ class Event < ApplicationRecord
 	include EventQueries::Scopes
 
 	friendly_id :slug_candidates, use: :slugged
-	# geocoded_by :address, latitude: :latitude, longitude: :longitude
-	# reverse_geocoded_by :latitude, :longitude, address: :address
 
 	def slug_candidates
 		[
@@ -37,15 +35,11 @@ class Event < ApplicationRecord
 		]
 	end
 
-	# validate :validate_attrs_that_should_be_a_hash
-	# validate :validate_attrs_that_should_be_a_array
-
-	# after_save :reindex, if: proc { |event| event.details_changed? }
-	# after_destroy :reindex, :destroy_entries
+	validate :uniq_details_name, on: :create
 
 	belongs_to :place, touch: true
-	has_and_belongs_to_many :organizers, touch: true
-	has_and_belongs_to_many :categories, touch: true
+	has_and_belongs_to_many :organizers, -> { distinct }, touch: true
+	has_and_belongs_to_many :categories, -> { distinct }, touch: true
 	has_many :likes, dependent: :destroy
 	has_many :users, through: :likes
 	# has_and_belongs_to_many :kinds
@@ -114,7 +108,7 @@ class Event < ApplicationRecord
 	def datetimes
 		datetimes = []
 
-		ocurrences['dates'].each_with_index do |date, _index|
+		ocurrences['dates'].each do |date|
 			datetimes << DateTime.parse(date).strftime('%Y-%m-%d %H:%M:%S')
 		end
 
@@ -127,6 +121,12 @@ class Event < ApplicationRecord
 
 
 	private
+
+	def uniq_details_name
+		if Event.where("lower(details ->> 'name') = ?", details['name'].downcase).present?
+			errors.add(:details_name, "O nome do evento precisa ser único")
+		end
+	end
 
 	def destroy_entries
 		users = User.where id: saved_by

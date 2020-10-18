@@ -18,7 +18,7 @@ up:
 	docker-compose -f docker-compose.development.yml up -d
 
 up-scrapy:
-	docker-compose -f docker-compose.development.scrapy.yml up
+	docker-compose -f docker-compose.development.scrapy.yml up -d
 
 restart:
 	docker-compose -f docker-compose.development.yml restart
@@ -32,6 +32,9 @@ ps:
 
 console:
 	$(EXEC) bash
+
+console-scrapy:
+	docker exec -it alegreme_scrapy_1 bash
 
 tail:
 	tail -f logs/app/sidekiq.log  logs/app/development.log logs/sidekiq/development.log
@@ -57,14 +60,11 @@ db-create:
 credentials:
 	$(EXEC) bash -c "EDITOR=nano rails credentials:edit"
 
-scrapy-run:
-	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event"
+docker-run-scrapy:
+	docker-compose -f docker-compose.development.scrapy.yml run --rm scrapy bash
 
 scrapy-run-test:
 	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event -s CLOSESPIDER_ITEMCOUNT=10"
-
-scrapy-up:
-	docker exec alegreme_scrapy_1 bash -c "scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf"
 
 scrapy-push-project:
 	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://159.89.84.18:7654 push-project"

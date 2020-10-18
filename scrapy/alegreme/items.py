@@ -10,29 +10,20 @@ import re
 import dateparser
 
 from scrapy.loader import ItemLoader
-from scrapy.loader.processors import Join, MapCompose, TakeFirst, Identity
-from urllib.parse import unquote
+from itemloaders.processors import Join, MapCompose, TakeFirst, Identity
+from urllib.parse import unquote, urljoin, urlparse
+from bs4 import BeautifulSoup
 
 
 
 def get_date(value):
-    dates = re.search('([A-Z].+?:\d{2}.+?\w{2})', value)
+    datetimes = re.findall('\d{4}-\d{2}-\d{2}\w+:\d+:\w+-\w+:\w+', value)
+    parsed_datetimes = []
+    if datetimes:
+        for datetime in datetimes:
+            parsed_datetimes.append(dateparser.parse(datetime, settings={'TIMEZONE': '-0300'}))
 
-    if dates:
-        date = dates.group(0)
-        return date
-    else:
-        return value
-
-
-def get_time(value):
-    times = re.search('(..:\d{2}.+?\w{2})', value)
-
-    if times:
-        start_time = times.group(0)
-        return start_time
-    else:
-        return value
+    return parsed_datetimes
 
 def clean_description(value):
     description = re.sub(r'http(s|):\/\/l.facebook?.+?u=', '', value)
@@ -40,7 +31,23 @@ def clean_description(value):
     description = re.sub(r'target="_blank"', '', description)
     description = re.sub(r'data-lynx-mode="hover"', '', description)
     description = re.sub(r'&amp', '', description)
-    return unquote(description)
+    description = re.sub(r'<(\/|)span>', '', description)
+    description = BeautifulSoup(description, 'html.parser')
+    hashtags = description.select("a[href*=hashtag]")
+    for hashtag in hashtags:
+        hashtag.decompose()
+
+    return str(unquote(description))
+
+
+def remove_url_params(value):
+    return urljoin(value, urlparse(value).path)
+
+
+def clean_facebook_url(value):
+    url = re.sub(r'http(s|):\/\/l.facebook?.+?u=', '', value)
+    url = re.sub(r'&h=\w+', '', url)
+    return unquote(url)
 
 
 def get_prices(value):
@@ -52,6 +59,10 @@ def parse_date(value):
     date = re.sub(r'(seg|ter|qua|qui|sex|sáb|dom)', '', value)
     return dateparser.parse(date).date()
 
+
+def get_image_url_from_style(value):
+    url = re.search('http(s|):\/\/.+?(?=\))', value)
+    return url.group(0)
 
 
 
@@ -68,16 +79,15 @@ class Event(scrapy.Item):
     datetimes = scrapy.Field(
         input_processor=MapCompose(get_date)
     )
-    dates = scrapy.Field(
-        input_processor=MapCompose(get_date)
-    )
-    times = scrapy.Field(
-        input_processor=MapCompose(get_time)
-    )
     source_url = scrapy.Field(
+        input_processor=MapCompose(remove_url_params),
         output_processor=TakeFirst()
     )
-    place = scrapy.Field(
+    place_name = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    place_cover_url = scrapy.Field(
+        input_processor=MapCompose(get_image_url_from_style),
         output_processor=TakeFirst()
     )
     description = scrapy.Field(
@@ -87,10 +97,30 @@ class Event(scrapy.Item):
     prices = scrapy.Field(
         input_processor=MapCompose(get_prices)
     )
+    ticket_url = scrapy.Field(
+        input_processor=MapCompose(clean_facebook_url),
+        output_processor=TakeFirst()
+    )
     categories = scrapy.Field()
-    organizers = scrapy.Field()
-    organizers_fallback_a = scrapy.Field()
-    pass
+    organizers = scrapy.Field(
+        input_processor=Identity()
+    )
+
+
+class EventOrganizer(scrapy.Item):
+    cover_url = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    name = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    source_url = scrapy.Field(
+        input_processor=MapCompose(remove_url_params),
+        output_processor=TakeFirst()
+    )
+
+class EventOrganizerLoader(ItemLoader):
+    default_item_class=EventOrganizer
 
 
 class Movie(scrapy.Item):

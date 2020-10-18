@@ -3,3 +3,4 @@ scrapy-splash
 scrapy-do
 dateparser
 scrapy-useragents
+beautifulsoup4
