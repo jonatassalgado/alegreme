@@ -1,6 +1,11 @@
 module ApplicationHelper
 	include Pagy::Frontend
 
+	def shrine_image_url(entity, size)
+		raise ArgumentError unless entity && size
+		entity.image[size].try { |image| image.url(public: true) } if entity.image
+	end
+
 	def movies_active_count
 		Rails.cache.fetch('movies_active_size', expires_in: 12.hours) { Movie.active.exists? }
 	end

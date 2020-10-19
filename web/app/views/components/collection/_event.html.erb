@@ -40,7 +40,7 @@
 		 style="order: <%= event_counter + 1 %>">
 	<div data-controller="ripple" class="relative overflow-hidden ripple ripple-white">
 		<div class="bg-gray-50 rounded-t-lg aspect-ratio-16/9"></div>
-		<%= image_tag get_feed_image_url(event), {
+		<%= image_tag shrine_image_url(event, :feed), {
 				loading: :lazy,
 				class:   'absolute cursor-pointer h-32 h-full left-0 object-center object-cover top-0 w-full rounded-t-lg overflow-hidden',
 				onclick: "Turbolinks.visit('#{event_path event}')",

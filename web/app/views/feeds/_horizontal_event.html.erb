@@ -32,11 +32,11 @@
 		<div data-controller="ripple" class="relative w-32 mt-6 overflow-hidden rounded-lg ripple ripple-white">
 			<div class="bg-gray-50 aspect-ratio-16/9"></div>
 			<%= link_to event_path(event) do %>
-				<%= image_tag get_feed_image_url(event), {
+				<%= image_tag shrine_image_url(event, :feed), {
 						loading: :lazy,
 						class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
 						onerror: "this.style.opacity='0'"
-				} %>
+				} rescue nil %>
 			<% end %>
 		</div>
 	</div>

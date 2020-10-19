@@ -60,10 +60,6 @@ module EventsHelper
 		event.image[:original].try { |image| image.url(public: true) }
 	end
 
-	def get_feed_image_url(event)
-		event.image[:feed].try { |image| image.url(public: true) }
-	end
-
 	def round_score(score, precision = 6)
 		return 0.0 if score.nil?
 		return score.to_f.round(precision) if score.is_a? String

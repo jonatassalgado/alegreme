@@ -5,26 +5,23 @@ module EventQueries
 		included do
 
 			scope 'not_liked_or_disliked', lambda { |user|
+				return Event.all unless user
 				where.not(id: user.liked_or_disliked_event_ids)
 			}
 
 			scope 'not_liked', lambda { |user|
+				return Event.all unless user
 				where.not(id: user.liked_event_ids)
 			}
 
 			scope 'not_disliked', lambda { |user|
+				return Event.all unless user
 				where.not(id: user.disliked_event_ids)
 			}
 
 			scope 'in_neighborhoods', lambda { |neighborhoods, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
-
 				return Event.none unless neighborhoods
-				if opts[:turn_on]
-					where("(events.geographic ->> 'neighborhood') IN (:neighborhoods)", neighborhoods: neighborhoods)
-				else
-					all
-				end
+				where("(events.geographic ->> 'neighborhood') IN (:neighborhoods)", neighborhoods: neighborhoods)
 			}
 
 			# scope 'from_followed_users', lambda { |follower|
@@ -33,13 +30,8 @@ module EventQueries
 			# }
 
 			scope 'in_user_suggestions', lambda { |user, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
-
-				if opts[:turn_on] && user
-					where(id: user.suggestions['events'])
-				else
-					all
-				end
+				return Event.all unless user
+				where(id: user.suggestions['events'])
 			}
 
 			scope 'in_user_personas', lambda { |user, opts = {}|

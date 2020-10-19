@@ -71,7 +71,7 @@
 								<div data-controller="ripple" class="h-content overflow-hidden relative ripple ripple-white rounded w-full">
 									<div class="bg-gray-50 aspect-ratio-16/9"></div>
 									<%= link_to event_path(event) do %>
-										<%= image_tag get_feed_image_url(event), {
+										<%= image_tag shrine_image_url(event, :feed), {
 												loading: :lazy,
 												class:   'absolute cursor-pointer left-0 object-center object-cover top-0 w-full overflow-hidden',
 												onerror: "this.style.opacity='0'"
@@ -103,7 +103,7 @@
 								<div data-controller="ripple" class="h-content overflow-hidden relative ripple ripple-white rounded w-full">
 									<div class="bg-gray-50 aspect-ratio-16/9"></div>
 									<%= link_to event_path(event) do %>
-										<%= image_tag get_feed_image_url(event), {
+										<%= image_tag shrine_image_url(event, :feed), {
 												loading: :lazy,
 												class:   'absolute cursor-pointer left-0 object-center object-cover top-0 w-full overflow-hidden',
 												onerror: "this.style.opacity='0'"
