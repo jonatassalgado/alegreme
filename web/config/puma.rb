@@ -33,7 +33,41 @@ workers ENV.fetch("WEB_CONCURRENCY") { 4 }
 # before forking the application. This takes advantage of Copy On Write
 # process behavior so workers use less memory.
 #
-# preload_app!
+preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+########## Aditional Configurations ##########
+
+# An internal health check to verify that workers have checked in to the master
+# process within a specific time frame. If this time is exceeded, the worker
+# will automatically be rebooted. Defaults to 60s.
+#
+# Under most situations you will not have to tweak this value, which is why it
+# is coded into the config rather than being an environment variable.
+#
+worker_timeout ENV.fetch('WORKER_TIMEOUT') { 30 }
+
+# The path to the puma binary without any arguments.
+restart_command 'puma'
+
+# If you are preloading your application and using Active Record, it's
+# recommended that you close any connections to the database before workers
+# are forked to prevent connection leakage.
+#
+before_fork do
+  ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
+end
+
+# The code in the `on_worker_boot` will be called if you are using
+# clustered mode by specifying a number of `workers`. After each worker
+# process is booted, this block will be run. If you are using the `preload_app!`
+# option, you will want to use this block to reconnect to any threads
+# or connections that may have been created at application boot, as Ruby
+# cannot share connections between processes.
+# More: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#on-worker-boot
+#
+on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+end

@@ -4,3 +4,4 @@ scrapy-do
 dateparser
 scrapy-useragents
 beautifulsoup4
+shadow_useragent

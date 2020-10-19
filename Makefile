@@ -60,17 +60,11 @@ db-create:
 credentials:
 	$(EXEC) bash -c "EDITOR=nano rails credentials:edit"
 
-docker-run-scrapy:
+run-scrapy:
 	docker-compose -f docker-compose.development.scrapy.yml run --rm scrapy bash
 
-scrapy-run-test:
-	docker exec alegreme_scrapy_1 bash -c "scrapy crawl event -s CLOSESPIDER_ITEMCOUNT=10"
-
-scrapy-push-project:
-	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://159.89.84.18:7654 push-project"
-
-scrapy-schedule-job:
-	docker exec -it alegreme_scrapy_1 bash -c "scrapy-do-cl --username jon --password password --url http://159.89.84.18:7654 schedule-job --project alegreme --spider event --when 'every day at 01:00'"
+restart-docker-service:
+	systemctl restart docker.socket docker.service
 
 test:
 	$(RUN) bash -c "rails test"

@@ -37,8 +37,8 @@ services:
       IS_DOCKER: 'true'
       HTTP_HOST: 'www.alegreme.com'
       NODE_ENV: production
-      WEB_CONCURRENCY: 4
-      RAILS_MAX_THREADS: 6
+      WEB_CONCURRENCY: 2
+      RAILS_MAX_THREADS: 4
       JOB_WORKER_URL: redis://redis:6379/0
       REDIS_URL: redis://:password@redis:6379/0
       ELASTICSEARCH_URL: http://search:9200
@@ -71,7 +71,7 @@ services:
       HTTP_HOST: 'www.alegreme.com'
       NODE_ENV: production
       WEB_CONCURRENCY: 2
-      RAILS_MAX_THREADS: 6
+      RAILS_MAX_THREADS: 4
       JOB_WORKER_URL: redis://redis:6379/0
     command: bundle exec sidekiq -C /var/www/sidekiq/config.yml -r /var/www/alegreme
     restart: always
