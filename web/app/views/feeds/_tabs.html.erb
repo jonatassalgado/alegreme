@@ -11,7 +11,7 @@
 					 data-action="click->cable-ready#perform click->scroll-on-clicked#scroll"
 					 data-target="scroll-on-clicked.item"
 					 data-scroll-on-clicked-selected="suggestions"
-					 class="<%= class_names 'px-4 py-1 rounded-full h-content',
+					 class="<%= class_names 'px-4 py-1 rounded-full h-content cursor-pointer',
 																	{'bg-white':                                              selected_tab != 'suggestions',
 																	 'bg-green-50 text-green-600 border-2 border-green-300': selected_tab == 'suggestions'} %>">
 				<div class="<%= class_names 'font-semibold text-base',
@@ -31,7 +31,7 @@
 					 data-action="click->cable-ready#perform click->scroll-on-clicked#scroll"
 					 data-target="scroll-on-clicked.item"
 					 data-scroll-on-clicked-selected="places"
-					 class="<%= class_names 'px-4 py-1 rounded-full h-content',
+					 class="<%= class_names 'px-4 py-1 rounded-full h-content cursor-pointer',
 																	{'bg-white':                                              selected_tab != 'places',
 																	 'bg-green-50 text-green-600 border-2 border-green-300': selected_tab == 'places'} %>">
 				<div class="<%= class_names 'font-semibold text-base',

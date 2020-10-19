@@ -4,10 +4,10 @@
 			<%= format_hour event.first_day_time %>h · <%= event.categories_primary_name.titleize %>
 		</div>
 		<div class="mb-1 leading-snug text-gray-700">
-			<%= link_to event.details_name, event_path(event) %>
+			<%= link_to event.details_name, event_path(event), class: 'md:hover:underline' %>
 		</div>
 		<div class="text-xs font-light text-gray-500">
-			<%= link_to limit_place_name_size(event.place_details_name, 24), place_path(event.place) %>
+			<%= link_to limit_place_name_size(event.place_details_name, 24), place_path(event.place), class: 'md:hover:underline' %>
 		</div>
 		<div class="flex my-1 -ml-2">
 			<%= render partial: 'components/taste_button',
