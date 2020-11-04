@@ -1,10 +1,14 @@
 @import "../variables";
 
 .simple-calendar {
-  @apply bg-white mx-5 my-5 py-3 rounded-lg text-center shadow;
+  @apply bg-white py-3 rounded-lg text-center shadow;
+
+  @screen md {
+      @apply bg-white py-3 rounded-lg text-center border border-gray-50 shadow-none;
+  }
 
   th {
-    @apply text-gray-600 text-sm font-medium;
+    @apply text-gray-400 text-sm font-medium;
   }
 
   table {
@@ -12,31 +16,30 @@
   }
 
   .calendar-heading {
-    @apply capitalize flex font-medium justify-between mb-3 px-8 text-gray-700 -mt-3 py-2 rounded-t-lg;
+    @apply capitalize flex items-center font-medium justify-between px-2 text-gray-500 -mt-3 py-2 rounded-t-lg;
 
     a {
-      @apply text-green-600 font-bold text-lg;
+      @apply text-green-500 font-bold text-lg;
     }
   }
 
   .day {
-    @apply text-center h-10 w-10;
+    text-align: center;
+    height: 2.2rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
   }
 
   .today {
-    @apply bg-purple-100 rounded-full text-purple-500 font-bold;
+    @apply bg-gray-50 rounded-full text-gray-600;
   }
 
   .past {
     @apply text-gray-200 line-through;
   }
 
-  .current-month.future {
+  .future {
     @apply text-gray-500;
-  }
-
-  .next-month.future {
-    @apply text-gray-400;
   }
 
   .has-events {
@@ -55,7 +58,7 @@
   .wday-6 {}
 
   .start-date {
-    @apply bg-green-100 rounded-full text-green-600 font-bold;
+    @apply bg-green-100 rounded-full text-green-600;
   }
 
   .prev-month {

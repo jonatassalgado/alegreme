@@ -19,17 +19,21 @@ export default class ToggleLoaderController extends ApplicationController {
     }
 
     setup() {
-        this.element.addEventListener(this.listenerOn, (e) => {
+        document.addEventListener(this.listenerOn, (e) => {
             this._turnOn();
         }, false);
-        this.element.addEventListener(this.listenerOff, (e) => {
+        document.addEventListener(this.listenerOff, (e) => {
             this._turnOff();
         }, false);
     }
 
     teardown() {
-        // this.element.removeEventListener(this.listenerOn);
-        // this.element.removeEventListener(this.listenerOff);
+        document.removeEventListener(this.listenerOn, (e) => {
+            this._turnOn();
+        }, false);
+        document.removeEventListener(this.listenerOff, (e) => {
+            this._turnOff();
+        }, false);
     }
 
     toggle(event) {

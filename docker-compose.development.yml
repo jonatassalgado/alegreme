@@ -24,15 +24,16 @@ services:
       # - bot
     volumes:
       - bundle_cache:/bundle
-      - ./scrapy/data:/var/www/scrapy/data
       - ./web:/var/www/alegreme
+      - ./web/gems:/bundle/custom_gems
+#      - ./scrapy/data:/var/www/scrapy/data
+#      - ./web/package.json:/var/www/alegreme/package.json
 #      - ./web/config:/var/www/alegreme/config
 #      - ./web/lib:/var/www/alegreme/lib
 #      - ./web/db/backups:/var/www/alegreme/db/backups
 #      - ./web/db/migrate:/var/www/alegreme/db/migrate
 #      - ./web/public/service-worker.js:/var/www/alegreme/public/service-worker.js
 #      - ./web/yarn.lock:/var/www/alegreme/yarn.lock
-#      - ./web/package.json:/var/www/alegreme/package.json
 #      - ./web/Gemfile:/var/www/alegreme/Gemfile
       # - ./storage:/var/www/alegreme/storage
       # - ./logs/app:/var/www/alegreme/log:delegated
@@ -56,10 +57,10 @@ services:
     stdin_open: true
     tty: true
     command: bundle exec puma -C config/puma/puma-development.rb
-    mem_limit: 2gb
+    mem_limit: 3gb
     memswap_limit: 3gb
     mem_reservation: 256m
-    cpus: 1
+    cpus: 2
   #  sidekiq:
   #    build:
   #      context: ./web
@@ -110,7 +111,7 @@ services:
       - "5000:5000"
     volumes:
       - api_data:/var/www/api/data
-      - ./scrapy/data:/var/www/scrapy/data:delegated
+#      - ./scrapy/data:/var/www/scrapy/data:delegated
       # - ./ml/api:/var/www/ml/api:delegated
       # - ./logs/api:/var/www/ml/api/log:delegated
     environment:
@@ -162,7 +163,7 @@ services:
     mem_limit: 1gb
     memswap_limit: 2gb
     mem_reservation: 256m
-    cpus: 0.5
+    cpus: 1
     restart: always
   # web:
   #   build:

@@ -146,17 +146,20 @@ module.exports = {
                 "128":     "32rem"
             },
             height:       {
-                "content":    "max-content",
-                "screen-1/2": "50vh",
-                "screen-3/4": "75vh",
-                "128":        "32rem"
+                "content":     "max-content",
+                "screen-1/2":  "50vh",
+                "screen-3/4":  "75vh",
+                "screen-8/10": "80vh",
+                "screen-9/10": "90vh",
+                "128":         "32rem"
             },
             borderRadius: {
                 "xl":  "1rem",
                 "2xl": "2rem"
             },
             inset:        {
-                "12": "46px"
+                "12": "46px",
+                "24": "92px"
             },
         },
         aspectRatio:             {
@@ -169,6 +172,7 @@ module.exports = {
     },
     variants: {
         margin:      ["responsive", "first"],
+        borderWidth: ["responsive", "first"],
         aspectRatio: ["responsive"],
         textColor:   ["responsive", "hover", "focus", "group-hover"],
         display:     ["responsive", "group-hover"]

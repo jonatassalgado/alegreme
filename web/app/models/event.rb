@@ -102,7 +102,11 @@ class Event < ApplicationRecord
 	end
 
 	def start_time
-		ocurrences['dates'].first.to_date
+		ocurrences['dates'][0].to_date rescue nil
+	end
+
+	def end_time
+		ocurrences['dates'][1].to_date rescue start_time
 	end
 
 	def datetimes

@@ -1,19 +1,23 @@
 <% events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
 	<div class="bg-white content-visibility-auto contain-intrinsic-size-md">
 		<div class="<%= class_names('sticky bg-white z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-700 md:leading-normal md:px-5',
-																{'top-0':  !content_for?(:top_app_bar_title),
-																 'top-12': content_for?(:top_app_bar_title)}) %>">
+																{'top-0':  mobile_device?,
+																 'top-12': !mobile_device?}) %>">
 			<h2 class="text-xl font-semibold md:text-4xl"><%= day_of_week(group[0].to_date).titlecase %></h2>
 			<% if group[0].to_date == Date.today || group[0].to_date == Date.tomorrow %>
-				<div class="-mt-1 border-b-2 border-green-200 font-light text-xs w-content"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
+				<div class="-mt-1 border-b-2 border-green-500 font-light text-xs w-content"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
 			<% elsif group[0].to_date < Date.today + 7 %>
-				<div class="-mt-1 border-b-2 border-green-200 font-light text-xs w-content"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
+				<div class="-mt-1 border-b-2 border-green-500 font-light text-xs w-content"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
 			<% else %>
-				<div class="-mt-1 border-b-2 border-green-200 font-light text-xs w-content">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
+				<div class="-mt-1 border-b-2 border-green-500 font-light text-xs w-content">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
 			<% end %>
 		</div>
 		<div id="vertical-daily-events">
-			<%= render partial: 'feeds/horizontal_event', collection: group[1][0..session[:stimulus][:limit]], as: :event, locals: {user: user} %>
+			<% if mobile_device? %>
+				<%= render partial: 'feeds/horizontal_event', collection: group[1], as: :event, locals: {user: user} %>
+			<% else %>
+				<%= render partial: 'events/main_sidebar/horizontal_event', collection: group[1], as: :event, locals: {user: user} %>
+			<% end %>
 		</div>
 	</div>
 <% end %>

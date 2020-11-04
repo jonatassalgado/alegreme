@@ -43,7 +43,7 @@
 	<%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
 
 </head>
-<body class="antialiased bg-gray-50 tap-highlight-none" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
+<body class="antialiased bg-gray-50 md:bg-white tap-highlight-none" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
 <!-- Google Tag Manager (noscript) -->
 <noscript>
@@ -52,12 +52,13 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
+<div class="md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm md:shadow-none z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
 		 data-controller="head"
 		 data-reflex-permanent
 		 data-target="head.head">
 	<%= render partial: 'layouts/top-app-bar' %>
 </div>
+
 
 <%= yield %>
 

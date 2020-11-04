@@ -16,7 +16,7 @@ if Rails.env != 'test'
 			region:            'sfo2'
 	}
 
-if Rails.env == 'development' || Rails.env == 'test'
+if Rails.env == 'test'
 	Shrine.storages = {
 			cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
 			store: Shrine::Storage::FileSystem.new("public", prefix: "uploads"),

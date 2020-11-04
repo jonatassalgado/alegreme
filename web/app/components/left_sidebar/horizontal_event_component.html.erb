@@ -1,0 +1,24 @@
+<%= component_controller do %>
+	<div id="<%= dom_id @event %>" class="p-5 group relative">
+		<div class="mb-1 text-xs font-light text-gray-600">
+			<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h
+			· <%= @event.categories_primary_name.titleize %>
+		</div>
+		<div class="mb-1 leading-snug text-gray-700">
+			<%= link_to @event.details_name, event_path(@event), class: 'md:hover:underline' %>
+		</div>
+		<div class="text-xs font-light text-gray-500">
+			<% if @event.start_time == Date.today || @event.start_time == Date.tomorrow %>
+				<%= "#{I18n.l(@event.start_time, format: :week)} · #{I18n.l(@event.start_time, format: :long)}" %>
+			<% elsif @event.start_time < Date.today + 7 %>
+				<%= "#{I18n.l(@event.start_time, format: :long)}" %>
+			<% else %>
+				Daqui <%= helpers.distance_of_time_in_words @event.start_time, DateTime.now %>
+			<% end %>
+			em <%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %>
+		</div>
+		<%= reflex_tag :unlike, :div, class: 'absolute bottom-0 cursor-pointer group-hover:block hidden text-red-500 text-xs underline' do %>
+			Remover
+		<% end %>
+	</div>
+<% end %>

@@ -26,6 +26,8 @@
     "morphdom": "^2.5.4",
     "nanoevents": "^2.0.0",
     "query-string": "^6.4.2",
+    "simple-scrollbar": "^0.4.0",
+    "sticky-sidebar": "^3.3.1",
     "stimulus": "^1.1.1",
     "stimulus_reflex": "^3.3.0",
     "tailwindcss": "^1.5.1",

@@ -163,16 +163,23 @@ module EventQueries
 					# end
 					# end
 
-					where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) IN (?)", ocurrences.map { |occur| occur.to_date.yday })
+					where("(ocurrences -> 'dates' ->> 0)::date IN (?)", ocurrences.map { |occur| occur.to_date })
 				else
 					all
 				end
 			}
 
+			scope 'in_day', lambda { |date|
+				if date.present?
+					where("(ocurrences -> 'dates' ->> 0)::date = :date", date: date.to_date)
+				else
+					all
+				end
+			}
 
 			scope 'between_days', lambda { |low, high|
 				if low.present? && high.present?
-					where("(ocurrences -> 'dates' ->> 0)::timestamptz BETWEEN :low AND :high", low: low.to_date, high: high.to_date)
+					where("(ocurrences -> 'dates' ->> 0)::date BETWEEN :low AND :high", low: low.to_date, high: high.to_date)
 				else
 					all
 				end

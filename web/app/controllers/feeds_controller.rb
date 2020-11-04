@@ -20,6 +20,8 @@ class FeedsController < ApplicationController
 		@events_from_following = current_user ? current_user&.following_events&.not_ml_data&.active&.not_liked_or_disliked(current_user)&.not_disliked(current_user)&.includes(:place)&.order_by_date : Event.none
 		@upcoming_events       = Event.active.not_ml_data.order_by_date
 		@train_events          = Event.active.not_liked_or_disliked(current_user).order_by_score.limit(12)
+
+		render layout: false if @stimulus_reflex
 	end
 
 	def suggestions

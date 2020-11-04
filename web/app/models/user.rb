@@ -91,6 +91,10 @@ class User < ApplicationRecord
 		self.likes.exists?(event_id: event.id)
 	end
 
+	def like_update(event, values)
+		self.likes.find_by(event_id: event.id).update(values)
+	end
+
 	def like?(event)
 		self.likes.exists?(event_id: event.id, sentiment: :positive)
 	end

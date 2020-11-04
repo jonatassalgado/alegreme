@@ -58,6 +58,12 @@
   .contain-intrinsic-size-lg {
     contain-intrinsic-size: 500px;
   }
+
+  .hide-scrollbar {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .ripple {
