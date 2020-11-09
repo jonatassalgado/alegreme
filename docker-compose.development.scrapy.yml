@@ -108,9 +108,9 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "5000:5000"
-    # volumes:
-      # - api_data:/var/www/api/data
-      # - ./scrapy/data:/var/www/scrapy/data:delegated
+    volumes:
+      - ./scrapy/data:/var/www/scrapy/data:delegated
+#      - api_data:/var/www/api/data
       # - ./ml/api:/var/www/ml/api:delegated
       # - ./logs/api:/var/www/ml/api/log:delegated
     environment:

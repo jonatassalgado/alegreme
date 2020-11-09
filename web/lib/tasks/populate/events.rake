@@ -16,7 +16,7 @@ module PopulateEventsRake
 		place = Place.find_by("lower(details ->> 'name') = ?", item['place_name'].downcase)
 
 		if place
-			puts "Local: #{place.id} #{place.details['name']} - Lugar já existe".blue
+			puts "Local: #{place.id} #{place.details['name']} - Lugar já existe".yellow
 			set_place_image(place, item) unless place.image_data?
 		else
 			@geocode = Geocoder.search(item['address']).first if item['address']
@@ -32,7 +32,7 @@ module PopulateEventsRake
 
 			SetGeolocationJob.perform_later(place.id)
 			set_place_image(place, item)
-			puts "Local: #{place.id} #{place.details_name} - Lugar criado".blue
+			puts "Local: #{place.id} #{place.details_name} - Lugar criado".white
 		end
 
 		place
@@ -47,10 +47,10 @@ module PopulateEventsRake
 		rescue Down::Error => e
 			puts "Local: #{item['place_name']} - Erro no download da imagem (#{item['place_cover_url']}) - #{e}".red
 		else
-			puts "Local: #{item['place_name']} - Download da imagem (#{item['place_cover_url']}) - Sucesso".blue
+			puts "Local: #{item['place_name']} - Download da imagem (#{item['place_cover_url']}) - Sucesso".white
 			begin
 				place.image = place_cover_file
-				puts "Local: #{item['place_name']} - Upload de imagem".blue
+				puts "Local: #{item['place_name']} - Upload de imagem".white
 				place.save!
 			rescue
 				puts "Local: #{item['place_name']} - Erro no upload da image #{e}".red
@@ -65,7 +65,7 @@ module PopulateEventsRake
 			organizer = Organizer.find_by("lower(details ->> 'name') = ?", organizer_data['name'].downcase)
 
 			if organizer.present?
-				puts "Organizador: #{organizer.details['name']} - já existe".blue
+				puts "Organizador: #{organizer.details['name']} - já existe".yellow
 			else
 				organizer = Organizer.create!({
 						                              details: {
@@ -74,7 +74,7 @@ module PopulateEventsRake
 						                              }
 				                              })
 
-				puts "Organizador: #{organizer_data['name']} - criado".blue
+				puts "Organizador: #{organizer_data['name']} - criado".white
 			end
 
 			set_organizer_image(organizer, organizer_data) unless organizer.image_data?
@@ -86,7 +86,7 @@ module PopulateEventsRake
 		organizers.each do |organizer|
 			unless event.organizers.include?(organizer)
 				event.organizers << organizer
-				puts "Organizador: #{organizer.details_name} - associado".blue
+				puts "Organizador: #{organizer.details_name} - associado".white
 			end
 		end
 	end
@@ -100,10 +100,10 @@ module PopulateEventsRake
 		rescue Down::Error => e
 			puts "Organizador: #{organizer_data['name']} - Erro no download da imagem (#{organizer_data['cover_url']}) - #{e}".red
 		else
-			puts "Organizador: #{organizer_data['name']} - Download da imagem (#{organizer_data['cover_url']}) - Sucesso".blue
+			puts "Organizador: #{organizer_data['name']} - Download da imagem (#{organizer_data['cover_url']}) - Sucesso".white
 			begin
 				organizer.image = organizer_cover_file
-				puts "Organizador: #{organizer_data['name']} - Upload de imagem".blue
+				puts "Organizador: #{organizer_data['name']} - Upload de imagem".white
 				organizer.save!
 			rescue
 				puts "Organizador: #{organizer_data['name']} - Erro no upload da image #{e}".red
@@ -116,7 +116,7 @@ module PopulateEventsRake
 
 		if event.save!
 			@events_create_counter += 1
-			puts "Evento: #{event.details['name'][0..60]} - Salvo!".blue
+			puts "Evento: #{event.id}, #{event.details['name'][0..60]} - Salvo!".green
 			true
 		end
 	end
@@ -134,7 +134,7 @@ module PopulateEventsRake
 		@label_response_is_success = @label_response.is_a?(Net::HTTPSuccess)
 
 		if @label_response_is_success
-
+			puts "Evento: #{event.details_name} - Adicionando classificação".white
 			event.ml_data.deep_merge!(
 					personas:   {
 							primary:   {
@@ -181,14 +181,14 @@ module PopulateEventsRake
 			puts "Evento: #{item['name']} - Erro no download da imagem (#{item['cover_url']}) - #{e}".red
 			return false
 		else
-			puts "Evento: #{item['name']} - Download da imagem (#{item['cover_url']}) - Sucesso".blue
+			puts "Evento: #{item['name']} - Download da imagem (#{item['cover_url']}) - Sucesso".white
 		end
 
 		return unless event_cover_file
 
 		begin
 			event.image = event_cover_file
-			puts "Evento: #{item['name']} - Upload de imagem".blue
+			puts "Evento: #{item['name']} - Upload de imagem".white
 		rescue
 			puts "Evento: #{item['name']} - Erro no upload da image #{e}".red
 			return false
@@ -200,7 +200,7 @@ module PopulateEventsRake
 	def associate_event_place(event, place)
 		unless place.events.include?(event)
 			place.events << event
-			puts "Local: #{place.details_name} - Local associado".blue
+			puts "Local: #{place.details_name} - Local associado".white
 		end
 	end
 
@@ -208,7 +208,7 @@ module PopulateEventsRake
 		files              = Dir['/var/www/scrapy/data/scraped/*']
 		@current_file_name = (files.select { |file| file[/events-\d{8}-\d{6}\.jsonl$/] }).max
 
-		puts "Lendo arquivo JSON #{@current_file_name}".blue
+		puts "Lendo arquivo JSON #{@current_file_name}".white
 
 		@current_file = File.read(@current_file_name)
 	end
@@ -228,7 +228,7 @@ module PopulateEventsRake
 		@features_response_failed = !features_response.is_a?(Net::HTTPSuccess)
 
 		if event
-			puts "#{@events_create_counter}: #{item['name']} - Evento já existe".white
+			puts "#{@events_create_counter}: #{item['name']} - Evento já existe".yellow
 
 			ml_data = JSON.parse(features_response.try(:body))
 
@@ -259,7 +259,7 @@ module PopulateEventsRake
 					adjs:     ml_data['adjs']
 			)
 
-			puts "#{item['name']} - atualizado".blue
+			puts "#{item['name']} - atualizado".white
 
 			[event, ml_data]
 
@@ -352,7 +352,7 @@ namespace :populate do
 			puts "Erro ao ler arquivo JSON: #{e}".red
 			return
 		else
-			puts "Arquivo JSON parseado".blue
+			puts "Arquivo JSON parseado".white
 		end
 
 		data.each do |item|
@@ -361,7 +361,7 @@ namespace :populate do
 			organizers     = create_organizers(item)
 
 			unless event
-				puts "#{item['name']} - Próximo (evento não criado)".blue
+				puts "#{item['name']} - Próximo (evento não criado)".yellow
 				next
 			end
 
@@ -372,9 +372,9 @@ namespace :populate do
 				next unless set_cover(item, event)
 			end
 
-			if event.details_description != item['description']
+			# if event.details_description != item['description']
 				classify_event(event, ml_data)
-			end
+			# end
 
 			save_event(event)
 		end

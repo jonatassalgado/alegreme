@@ -4,7 +4,7 @@
   @apply bg-white py-3 rounded-lg text-center shadow;
 
   @screen md {
-      @apply bg-white py-3 rounded-lg text-center border border-gray-50 shadow-none;
+      @apply bg-gray-50 m-2 py-3 rounded-lg text-center shadow;
   }
 
   th {
@@ -32,6 +32,10 @@
 
   .today {
     @apply bg-gray-50 rounded-full text-gray-600;
+
+    @screen md {
+      @apply bg-white;
+    }
   }
 
   .past {

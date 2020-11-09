@@ -21,7 +21,7 @@ class Organizer < ApplicationRecord
 	private
 
 	def uniq_details_name
-		if Organizer.where("lower(details ->> 'name') = ?", details['name'].downcase).present?
+		if Organizer.where("lower(details ->> 'name') = ?", details_name&.downcase).present?
 			errors.add(:details_name, "O nome do organizador precisa ser único")
 		end
 	end

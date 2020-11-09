@@ -41,7 +41,7 @@ class LeftSidebar::MyAgendaComponent < ViewComponentReflex::Component
 	def td_classes_for(day)
 		today = Date.current
 
-		td_class = ['day rounded-full cursor-pointer hover:bg-green-100']
+		td_class = ['day rounded-full cursor-pointer hover:bg-green-200']
 		td_class << "wday-#{day.wday.to_s}"
 		td_class << 'today' if today == day
 		td_class << 'past' if today > day

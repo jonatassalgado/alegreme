@@ -25,7 +25,7 @@ class Place < ApplicationRecord
   private
 
   def uniq_details_name
-    if Place.where("lower(details ->> 'name') = ?", details['name'].downcase).present?
+    if Place.where("lower(details ->> 'name') = ?", details_name&.downcase).present?
       errors.add(:details_name, "O nome do local precisa ser único")
     end
   end

@@ -26,7 +26,7 @@ services:
       - bundle_cache:/bundle
       - ./web:/var/www/alegreme
       - ./web/gems:/bundle/custom_gems
-#      - ./scrapy/data:/var/www/scrapy/data
+      - ./scrapy/data:/var/www/scrapy/data
 #      - ./web/package.json:/var/www/alegreme/package.json
 #      - ./web/config:/var/www/alegreme/config
 #      - ./web/lib:/var/www/alegreme/lib
@@ -48,7 +48,7 @@ services:
       HTTP_HOST: 'www.alegreme.com'
       NODE_ENV: development
       JOB_WORKER_URL: redis://redis:6379/0
-      RAILS_MAX_THREADS: 2
+      RAILS_MAX_THREADS: 3
       ELASTICSEARCH_URL: http://search:9200
       REDIS_URL: redis://redis:6379/0
     restart: always
@@ -111,7 +111,7 @@ services:
       - "5000:5000"
     volumes:
       - api_data:/var/www/api/data
-#      - ./scrapy/data:/var/www/scrapy/data:delegated
+      - ./scrapy/data:/var/www/scrapy/data
       # - ./ml/api:/var/www/ml/api:delegated
       # - ./logs/api:/var/www/ml/api/log:delegated
     environment:
