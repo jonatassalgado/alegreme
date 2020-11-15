@@ -1,6 +1,6 @@
 class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 
-	def initialize(event:, user:)
+	def initialize(user:)
 		@user = user
 	end
 
@@ -17,6 +17,7 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 			@user.like! @event
 		end
 		refresh!
+		refresh! '#main-sidebar', '#left-sidebar'
 	end
 
 	def dislike
@@ -28,6 +29,7 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 			@user.dislike! @event
 		end
 		refresh!
+		refresh! '#main-sidebar', '#left-sidebar'
 	end
 
 end

@@ -34,8 +34,18 @@ export default class extends ApplicationController {
         this.teardown()
     }
 
+    // afterLike(anchorElement) {
+    //     const myAgenda = document.querySelector("#my-agenda");
+    //
+    //     this.stimulate("LeftSidebar::MyAgendaComponent#update", myAgenda).then(payload => {
+    //
+    //     }).catch(payload => {
+    //
+    //     })
+    // }
+
     closeEvent(e) {
-        window.history.replaceState({}, "", `/porto-alegre`);
+        // window.history.replaceState({}, "", `/porto-alegre`);
         this.element.innerHTML = null;
         document.querySelector("#user-resources-list").classList.remove("hidden");
     }

@@ -10,7 +10,7 @@ export default class extends ApplicationController {
 
     setup() {
         this.beginEvent = new Event("horizontal-event#open-event:before")
-        this.endEvent   = new Event("horizontal-event#open-event:success");
+        this.endEvent = new Event("horizontal-event#open-event:success");
     }
 
     teardown() {
@@ -27,7 +27,8 @@ export default class extends ApplicationController {
     }
 
     openEvent(event) {
-        event.preventDefault();
+        event.preventDefault()
+        event.stopPropagation()
         const target = this._linkEl(event);
 
         this._userResourceListEl().classList.add("hidden");
@@ -36,7 +37,7 @@ export default class extends ApplicationController {
         this.stimulate("MainSidebar::LargeEventComponent#open", this._mainSidebarLargeEventEl(), {
             event_id: target.dataset.eventId
         }).then(payload => {
-            this._updateUrl(target);
+            // this._updateUrl(target);
             document.dispatchEvent(this.endEvent)
         }).catch(payload => {
             this._userResourceListEl().classList.remove("hidden");

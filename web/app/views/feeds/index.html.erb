@@ -1,7 +1,7 @@
-<div id="main-content" class="grid grid-cols-12 max-w-screen-xl mx-auto">
+<div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
 	<section class="md:col-span-3 md:bg-white md:pt-5 sticky"
 					 data-controller="simple-scrollbar"
-					 id="sidebar-left"
+					 id="left-sidebar"
 					 style="height: calc(100vh - 48px); top: 48px">
 		<%= render LeftSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
 	</section>
@@ -19,14 +19,14 @@
 			</div>
 		</div>
 	</section>
-	<section id="sidebar-right" class="md:bg-white md:h-full md:col-span-4 will-change">
+	<section id="right-sidebar" class="md:bg-white md:h-full md:col-span-4 will-change">
 		<div data-controller="toggle-loader"
 				 data-toggle-loader-listener-on="horizontal-event#open-event:before"
 				 data-toggle-loader-listener-off="horizontal-event#open-event:success"
 		     class="px-5 sticky top-24">
 			<div id="open-event"
 					 data-target="toggle-loader.off">
-				<%= render MainSidebar::LargeEventComponent.new(event: nil, user: current_user) %>
+				<%= render MainSidebar::LargeEventComponent.new(user: current_user) %>
 			</div>
 			<div
 					class="flex items-center justify-center hidden h-16 mt-5 bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl text-md"

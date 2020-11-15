@@ -4,7 +4,14 @@
   @apply bg-white py-3 rounded-lg text-center shadow;
 
   @screen md {
-      @apply bg-gray-50 m-2 py-3 rounded-lg text-center shadow;
+    @apply border border-gray-200 py-3 rounded-lg text-center;
+    max-width: 306px;
+  }
+
+  tr {
+    @screen md {
+      @apply h-10;
+    }
   }
 
   th {
@@ -34,7 +41,7 @@
     @apply bg-gray-50 rounded-full text-gray-600;
 
     @screen md {
-      @apply bg-white;
+      @apply bg-gray-100;
     }
   }
 
@@ -49,7 +56,7 @@
   .has-events {
 
     & .day-of-month {
-      @apply mt-1;
+
     }
   }
 
@@ -62,7 +69,7 @@
   .wday-6 {}
 
   .start-date {
-    @apply bg-green-100 rounded-full text-green-600;
+    @apply bg-green-500 rounded-full text-white font-semibold;
   }
 
   .prev-month {
