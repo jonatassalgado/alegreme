@@ -55,6 +55,9 @@ Rails.application.configure do
 	# Print deprecation notices to the Rails logger.
 	config.active_support.deprecation = :log
 
+  # Logger file size
+	config.logger = ActiveSupport::Logger.new(config.paths['log'].first, 1, 2.megabytes)
+
 	# :debug, :info, :warn, :error, :fatal, :unknown
 	config.log_level = :debug
 
