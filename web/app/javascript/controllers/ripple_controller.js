@@ -36,7 +36,7 @@ export default class RippleController extends ApplicationController {
         const ripple          = document.createElement("ripple");
         const containerRect   = container.getBoundingClientRect();
         const containerSquare = (container.offsetWidth + container.offsetHeight) / 2;
-        const rippleSize      = (containerSquare / 8);
+        const rippleSize      = containerSquare > 50 ? (containerSquare / 8) : container.offsetHeight;
         const x               = (e.clientX || e.changedTouches[0].clientX) - containerRect.x;
         const y               = (e.clientY || e.changedTouches[0].clientY) - containerRect.y;
 

@@ -1,10 +1,10 @@
 @import "../variables";
 
 .simple-calendar {
-  @apply bg-white py-3 rounded-lg text-center shadow;
+  @apply bg-white py-3 rounded-lg text-center shadow mx-3 mb-5;
 
   @screen md {
-    @apply border border-gray-200 py-3 rounded-lg text-center;
+    @apply border border-gray-200 py-3 rounded-lg text-center mx-0 mb-0;
     max-width: 306px;
   }
 
@@ -23,7 +23,11 @@
   }
 
   .calendar-heading {
-    @apply capitalize flex items-center font-medium justify-between px-2 text-gray-500 -mt-3 py-2 rounded-t-lg;
+    @apply capitalize flex items-center font-medium justify-between px-5 text-gray-500 -mt-3 py-2 rounded-t-lg;
+
+    @screen md {
+      @apply px-2;
+    }
 
     a {
       @apply text-green-500 font-bold text-lg;
@@ -31,6 +35,7 @@
   }
 
   .day {
+    @apply w-10;
     text-align: center;
     height: 2.2rem;
     padding-left: 0.25rem;

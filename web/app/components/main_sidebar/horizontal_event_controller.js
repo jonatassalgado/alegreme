@@ -1,4 +1,5 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
+import {MobileDetector}      from "../../javascript/modules/mobile-detector-module";
 
 export default class extends ApplicationController {
     static targets = [];
@@ -8,9 +9,10 @@ export default class extends ApplicationController {
         this.setup();
     }
 
-    setup() {
-        this.beginEvent = new Event("horizontal-event#open-event:before")
-        this.endEvent = new Event("horizontal-event#open-event:success");
+    async setup() {
+        const {MobileDetector} = await import("../../javascript/modules/mobile-detector-module");
+        this.beginEvent        = new Event("horizontal-event#open-event:before")
+        this.endEvent          = new Event("horizontal-event#open-event:success");
     }
 
     teardown() {
@@ -27,31 +29,35 @@ export default class extends ApplicationController {
     }
 
     openEvent(event) {
-        event.preventDefault()
-        event.stopPropagation()
-        const target = this._linkEl(event);
+        if (!MobileDetector.mobile()) {
+            event.preventDefault()
+            event.stopPropagation()
+            const target = this._linkEl(event);
 
-        this._userResourceListEl().classList.add("hidden");
-        document.dispatchEvent(this.beginEvent)
+            this._userResourceListEl().classList.add("hidden");
+            document.dispatchEvent(this.beginEvent)
 
-        this.stimulate("MainSidebar::LargeEventComponent#open", this._mainSidebarLargeEventEl(), {
-            event_id: target.dataset.eventId
-        }).then(payload => {
-            // this._updateUrl(target);
-            document.dispatchEvent(this.endEvent)
-        }).catch(payload => {
-            this._userResourceListEl().classList.remove("hidden");
-        })
+            this.stimulate("MainSidebar::LargeEventComponent#open", this._mainSidebarLargeEventEl(), {
+                event_id: target.dataset.eventId
+            }).then(payload => {
+                // this._updateUrl(target);
+                document.dispatchEvent(this.endEvent)
+            }).catch(payload => {
+                this._userResourceListEl().classList.remove("hidden");
+            })
+        }
     }
 
     afterLike(anchorElement) {
         const myAgenda = document.querySelector("#my-agenda");
 
-        this.stimulate("LeftSidebar::MyAgendaComponent#update", myAgenda).then(payload => {
+        if (myAgenda && anchorElement.classList.contains('text-green-500')) {
+            this.stimulate("LeftSidebar::MyAgendaComponent#update", myAgenda).then(payload => {
 
-        }).catch(payload => {
+            }).catch(payload => {
 
-        })
+            })
+        }
     }
 
     _linkEl(e) {

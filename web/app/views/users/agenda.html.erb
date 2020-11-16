@@ -2,36 +2,5 @@
 <% content_for :back_button, true %>
 
 <section data-controller="page" data-target="page.page" class="pt-2 mx-auto space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
-	<%= month_calendar events: @liked_events do |date, events| %>
-		<a href="<%= my_agenda_path start_date: date %>" class="mx-auto text-xs day-of-month">
-			<%= date.strftime '%e' %>
-		</a>
-
-		<% events.each_with_index do |event, index| %>
-			<% if event && index == 0 %>
-				<div class="w-1 h-1 mx-auto bg-green-500 rounded-full">
-				</div>
-			<% end %>
-		<% end %>
-	<% end %>
+  <%= render MainSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
 </section>
-
-<div>
-	<%= render partial: 'events/group_by_day_list', locals: {
-			events: @liked_events,
-			user:   current_user
-	} %>
-
-	<% if @liked_events.empty? %>
-		<div class="py-6 bg-white">
-			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">
-				Eventos
-			</h2>
-			<div class="px-5 leading-none mt-3 h-screen-1/2">
-  			<span class="pt-5 text-sm text-gray-400">
-  				Você não possuí nenhum evento na agenda ainda. Marque os com "gostei" para vê-los aqui.
-  			</span>
-			</div>
-		</div>
-	<% end %>
-</div>
