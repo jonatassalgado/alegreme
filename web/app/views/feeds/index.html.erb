@@ -19,7 +19,7 @@
 			} %>
 
       <div>
-        <%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user) %>
+        <%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
       </div>
     </div>
   </section>

@@ -15,7 +15,7 @@
           <% end %>
         </div>
         <div id="vertical-daily-events">
-          <%= render MainSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: key) %>
+          <%= render MainSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: key, open_in_sidebar: @open_in_sidebar) %>
         </div>
       </div>
     <% end %>

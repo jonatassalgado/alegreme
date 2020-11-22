@@ -1,11 +1,12 @@
 class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
   with_collection_parameter :event
 
-  def initialize(event:, user:, parent_key: nil)
-    @event      = event
-    @user       = user
-    @parent_key = parent_key
-    @opened     = false
+  def initialize(event:, user:, parent_key: nil, open_in_sidebar: false)
+    @event           = event
+    @user            = user
+    @parent_key      = parent_key
+    @open_in_sidebar = open_in_sidebar
+    @opened          = false
   end
 
   def like

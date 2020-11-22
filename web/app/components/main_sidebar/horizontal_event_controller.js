@@ -29,7 +29,7 @@ export default class extends ApplicationController {
     }
 
     openEvent(event) {
-        if (!MobileDetector.mobile()) {
+        if (!MobileDetector.mobile() && this.openInSidebar) {
             event.preventDefault()
             event.stopPropagation()
             const target = this._linkEl(event);
@@ -74,6 +74,10 @@ export default class extends ApplicationController {
 
     _mainSidebarLargeEventEl() {
         return document.querySelector("[data-controller~='main-sidebar--large-event']");
+    }
+
+    get openInSidebar() {
+        return JSON.parse(this.data.get('openInSidebar'))
     }
 
 }
