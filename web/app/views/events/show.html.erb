@@ -101,19 +101,59 @@
 }
 </script>
 
-<section id="page" class="pb-10">
-	<div class="relative w-full mx-auto is-animated md:mt-12 md:w-4/12">
+<section id="page" class="max-w-screen-lg grid-flow-col pb-10 md:grid md:gap-10 md:mt-10 md:mx-auto">
+	<div class="md:col-span-8">
 		<%= render(LargeEventComponent.new(event: @event, user: current_user)) %>
 	</div>
-
-	<div class="relative w-9/12 w-full px-2 mx-auto mt-12 mb-12 md:px-0 md:w-4/12">
-		<h2 class="px-4 mb-3 font-bold text-gray-700 uppercase">Eventos similares</h2>
-		<div id="horizontal-similar-events" class="overflow-hidden bg-white rounded shadow">
-			<%= render partial: 'feeds/horizontal_event', collection: @similar_events, as: :event, locals: {user: current_user} %>
-		</div>
+	<div class="md:col-span-4 mb-10 md:mb-0 mt-5 md:mt-0">
+    <div class="overflow-hidden bg-white rounded-lg py-4 md:rounded-xl md:shadow-2xl md:border md:border-gray-100">
+      <h2 class="px-5 font-bold text-gray-700 uppercase">Similares</h2>
+      <div class="md:space-y-2">
+        <% @similar_events.each do |similar_event| %>
+          <div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-50">
+            <div class="pr-6">
+              <div class="mb-1 text-xs font-light text-gray-600">
+                <%= I18n.l(similar_event.start_time, format: :long) %>
+                às <%= format_hour similar_event.first_day_time %>h
+                · <%= similar_event.categories_primary_name.titleize %>
+              </div>
+              <%= content_tag :a,
+                              href:  event_path(similar_event),
+                              data:  {
+                                  action:     'click->main-sidebar--horizontal-event#openEvent',
+                                  url:        event_path(similar_event),
+                                  'event-id': similar_event.id
+                              },
+                              class: 'md:hover:underline mb-1 leading-snug text-gray-700' do %>
+                <%= similar_event.details_name %>
+              <% end %>
+              <div class="text-xs font-light text-gray-500">
+                <%= link_to limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline' %>
+              </div>
+            </div>
+            <div>
+              <div data-controller="ripple" class="relative w-24 mt-6 overflow-hidden rounded shadow-xs ripple ripple-white">
+                <%= link_to event_path(similar_event),
+                            data: {
+                                action:     'click->main-sidebar--horizontal-event#openEvent',
+                                'event-id': similar_event.id
+                            } do %>
+                  <div class="bg-gray-50 aspect-ratio-16/9"></div>
+                  <%= image_tag shrine_image_url(similar_event, :feed), {
+                      loading: :lazy,
+                      class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
+                      onerror: "this.style.opacity='0'"
+                  } rescue nil %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
 	</div>
 
-	<div class="fixed bottom-0 flex items-center w-screen px-3 py-2 space-x-2 text-sm font-medium text-gray-400 cursor-pointer bg-gray-50">
+	<div class="fixed bottom-0 flex items-center w-screen px-3 py-2 space-x-2 text-sm font-medium text-gray-400 cursor-pointer md:hidden bg-gray-50">
 		<a href="<%= @event.details_source_url %>" target="_blank" class="flex items-center justify-center flex-1 py-3 space-x-2 bg-white rounded shadow-sm">
 			<div>Abrir no facebook</div>
 			<svg class="h-4 text-gray-300 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">

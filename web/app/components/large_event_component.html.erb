@@ -1,5 +1,5 @@
 <%= component_controller do %>
-	<div id="<%= dom_id @event %>" class="bg-white shadow-sm md:rounded md:shadow"
+	<div id="<%= dom_id @event %>" class="bg-white md:rounded-xl md:shadow-2xl md:border md:border-gray-100 overflow-hidden rounded-lg"
 			 data-event-favorited="<%= @user and @user.like?(@event) if @user and @user %>"
 			 data-event-identifier="<%= @event.id %>"
 			 data-event-description-open="false"
