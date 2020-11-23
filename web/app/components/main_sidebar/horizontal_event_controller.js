@@ -48,18 +48,6 @@ export default class extends ApplicationController {
         }
     }
 
-    afterLike(anchorElement) {
-        const myAgenda = document.querySelector("#my-agenda");
-
-        if (myAgenda && anchorElement.classList.contains('text-green-500')) {
-            this.stimulate("LeftSidebar::MyAgendaComponent#update", myAgenda).then(payload => {
-
-            }).catch(payload => {
-
-            })
-        }
-    }
-
     _linkEl(e) {
         return e.target.closest("[data-action~='click->main-sidebar--horizontal-event#openEvent']");
     }

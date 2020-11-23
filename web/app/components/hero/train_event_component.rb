@@ -1,12 +1,9 @@
-class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
+class Hero::TrainEventComponent < ViewComponentReflex::Component
   with_collection_parameter :event
 
-  def initialize(event:, user:, parent_key: nil, open_in_sidebar: false)
-    @event           = event
-    @user            = user
-    @parent_key      = parent_key
-    @open_in_sidebar = open_in_sidebar
-    @opened          = false
+  def initialize(user:, event:)
+    @user  = user
+    @event = event
   end
 
   def like
@@ -22,7 +19,7 @@ class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
         @user.like! @event
       end
       refresh!
-      refresh! '#my-agenda', '#right-sidebar'
+      refresh! '#main-sidebar__group-by-day-list', '#my-agenda'
     end
   end
 
@@ -39,16 +36,8 @@ class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
         @user.dislike! @event
       end
       refresh!
-      refresh! '#my-agenda', '#right-sidebar'
+      refresh! '#main-sidebar__group-by-day-list', '#my-agenda'
     end
-  end
-
-  def open_event
-    @opened = true
-  end
-
-  def close_event
-    @opened = false
   end
 
   def collection_key

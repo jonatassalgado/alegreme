@@ -89,7 +89,7 @@
 				<div class="w-screen mt-3 md:w-full">
 					<div class="flex flex-wrap px-5 pl-5 space-y-2">
 						<% @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-							<a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_follow resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
+							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
   									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">
@@ -114,7 +114,7 @@
 				<div class="w-screen mt-3">
 					<div class="flex flex-wrap px-5 pl-5 space-y-2">
 						<% @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-							<a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_follow resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
+							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
   									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">
@@ -139,7 +139,7 @@
 				<div class="w-screen mt-3">
 					<div class="flex flex-wrap px-5 pl-5 space-y-2">
 						<% @user&.following_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-							<a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_follow resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
+							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
   									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">

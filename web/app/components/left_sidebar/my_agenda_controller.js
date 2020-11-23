@@ -1,16 +1,24 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
 
 export default class extends ApplicationController {
-    static targets = ['calendar'];
+    static targets = ['calendar', 'scrollContent'];
 
     connect() {
         super.connect();
         this.setup();
     }
 
-    setup() {
+    async setup() {
+        this.SimpleScrollbar = await import("simple-scrollbar")
+        await import("simple-scrollbar/simple-scrollbar.css")
+        this._initSimpleScrollbar()
+
+        this.element.addEventListener("cable-ready:before-morph", event => {
+            this.element.innerHTML = null;
+        })
+
         this.element.addEventListener("cable-ready:after-morph", event => {
-            this.element.querySelector("#calendar").removeAttribute('data-reflex-permanent')
+            this._initSimpleScrollbar()
         })
     }
 
@@ -73,5 +81,9 @@ export default class extends ApplicationController {
                 if (!el.classList.contains('start-date')) resolve(el);
             })
         });
+    }
+
+    _initSimpleScrollbar() {
+        this.SimpleScrollbar.initEl(this.scrollContentTarget);
     }
 }

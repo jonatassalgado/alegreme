@@ -3,22 +3,32 @@
 <div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
   <% unless mobile_device? %>
     <section class="hidden md:inline-block md:col-span-3 md:bg-white md:pt-5 sticky"
-             data-controller="simple-scrollbar"
              id="left-sidebar"
              style="height: calc(100vh - 48px); top: 48px">
       <%= render LeftSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
     </section>
   <% end %>
   <section id="main-sidebar" class="col-span-12 md:col-span-5">
-    <div data-controller="page" data-target="page.page" class="mx-auto mb-24 space-y-2 bg-gray-50 is-animated sm:container">
-      <%#= render partial: 'feeds/hero', locals: {
-					user:             current_user,
-					train_events:     @train_events,
-					selected_tab:     @selected_tab,
-					suggested_events: @suggested_events
-			} %>
+    <div data-controller="page" data-target="page.page" class="mx-auto mb-24 space-y-2 is-animated sm:container">
+      <div id="hero">
+        <%# if !current_user %>
+        <!--          <div class="bg-gray-50 border-gray-200 inline-block leading-snug mt-5 mx-10 p-3 rounded-lg shadow text-gray-600">-->
+        <!--            <div class="inline-block">-->
+        <!--              Crie uma conta para receber sugestões únicas e salvar seu eventos favoritos-->
+        <!--            </div>-->
+        <%#= link_to 'Criar conta', new_user_registration_path, data: {'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil'}, class: 'bg-green-300 float-right px-2 py-1 rounded text-green-700' %>
+        <!--          </div>-->
+        <%# elsif current_user.liked_events.size < 3 %>
+        <%= render Hero::SwipableComponent.new(user:   current_user,
+                                               events: @train_events) %>
+        <%# else %>
+        <%#= render Hero::TabsComponent.new(user:             current_user,
+                                             selected_tab:     @selected_tab,
+                                             suggested_events: @suggested_events) %>
+        <%# end %>
+      </div>
 
-      <div>
+      <div id="main-sidebar__group-by-day-list">
         <%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
       </div>
     </div>
@@ -43,7 +53,7 @@
           </svg>
         </div>
       </div>
-      <div id="user-resources-list" class="px-5 transform">
+      <div id="user-resources-list" class="md:ml-16 md:mt-8 md:text-sm sticky top-12 transform">
         <div id="friends-list" class="py-6 bg-white">
           <h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 text-md">
             Amigos (<%= current_user.friends_accepted.size rescue 0 %>)
@@ -66,7 +76,7 @@
             <div class="w-screen mt-3 md:w-full">
               <div class="flex flex-wrap space-y-2">
                 <% current_user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-                  <a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_follow resource %>" class="relative flex items-center py-1 pl-1 pr-3 mb-2 mr-2 border border-gray-100 rounded-full w-content">
+                  <a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative flex items-center py-1 pl-1 pr-3 mb-2 mr-2 border border-gray-100 rounded-full w-content">
                     <%= resource.details_name.titleize %>
                     <% if resource.events.active.size > 0 %>
   									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">
@@ -91,7 +101,7 @@
             <div class="mt-3">
               <div class="flex flex-wrap space-y-2">
                 <% current_user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-                  <a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_follow resource %>" class="relative flex items-center p-1 text-sm font-medium text-gray-400 border border-gray-100 rounded-full w-content">
+                  <a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative flex items-center p-1 text-sm font-medium text-gray-400 border border-gray-100 rounded-full w-content">
                     <%= resource.details_name.titleize %>
                   </a>
                 <% end %>
@@ -111,7 +121,7 @@
             <div class="mt-3">
               <div class="flex flex-wrap space-y-2">
                 <% current_user&.following_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-                  <a onclick="window.AnimateModule.animatePageHide()" href="<%= link_to_follow resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
+                  <a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
                     <%= resource.details_name.titleize %>
                     <% if resource.events.active.size > 0 %>
   									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">

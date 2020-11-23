@@ -10,6 +10,7 @@ class LeftSidebar::HorizontalEventComponent < ViewComponentReflex::Component
 	def unlike
 		@user.unlike! @event
 		stimulate 'LeftSidebar::MyAgendaComponent#update', {key: @parent_key}
+		prevent_refresh!
 	end
 
 	def collection_key

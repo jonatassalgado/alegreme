@@ -21,7 +21,7 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 				@user.like! @event
 			end
 			refresh!
-			refresh! '#main-sidebar', '#left-sidebar'
+			refresh! '#main-sidebar', '#my-agenda'
 		end
 	end
 
@@ -38,7 +38,7 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 				@user.dislike! @event
 			end
 			refresh!
-			refresh! '#main-sidebar', '#left-sidebar'
+			refresh! '#main-sidebar', '#my-agenda'
 		end
 	end
 

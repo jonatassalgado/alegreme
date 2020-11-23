@@ -1,0 +1,42 @@
+<%= component_controller do %>
+  <div class="md:w-48 md:border md:border-gray-200 bg-white flex flex-col group h-content relative rounded-lg shadow tap-highlight-none w-56"
+       id="<%= dom_id @event %>">
+    <div data-controller="ripple" class="relative overflow-hidden ripple ripple-white">
+      <div class="bg-gray-50 rounded-t-lg aspect-ratio-16/9"></div>
+      <%= image_tag helpers.shrine_image_url(@event, :feed), {
+          loading: :lazy,
+          class:   'absolute cursor-pointer h-32 h-full left-0 object-center object-cover top-0 w-full rounded-t-lg overflow-hidden',
+          onclick: "Turbolinks.visit('#{event_path @event}')",
+          onerror: "this.style.opacity='0'"
+      } if @event.image[:feed] %>
+    </div>
+    <div class="inline-flex pt-1 px-2 quinta text-gray-600 <%= @event.day_of_week['decorator'].parameterize %>"
+         data-target="event.date">
+      <div class="mr-1">
+        <%= reflex_tag :like, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
+          <svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
+                                              {'text-gray-500':  !@user&.like?(@event),
+                                               'text-green-500': @user&.like?(@event)} %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
+            <path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
+          </svg>
+        <% end %>
+        <%= reflex_tag :dislike, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
+          <svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
+                                              {'text-gray-500': !@user&.dislike?(@event),
+                                               'text-red-500':  @user&.dislike?(@event)} %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
+            <path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+          </svg>
+        <% end %>
+      </div>
+      <div>
+        <%= link_to helpers.limit_name_size(@event.details_name), event_path(@event), class: 'font-medium group-hover:text-green-500 inline-block mt-1 text-base text-gray-800', data: {target: 'event.name'} %>
+        <span class="font-light inline-block leading-snug mt-1 text-gray-600 text-xs">
+				<%= "#{I18n.l(@event.first_day_time.to_date, format: :week).titlecase} #{helpers.format_hour @event.first_day_time} · #{helpers.time_until @event}" %>
+          em <%= helpers.limit_place_name_size(@event.place_details_name, 20) %>
+			</span>
+      </div>
+    </div>
+  </div>
+<% end %>

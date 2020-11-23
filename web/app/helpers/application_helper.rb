@@ -39,7 +39,7 @@ module ApplicationHelper
 
 	module_function :build_tag_values
 
-	def link_to_follow followable
+	def organizer_or_place_path followable
 		if followable.class.name == 'Place'
 			place_path(followable)
 		elsif followable.class.name == 'Organizer'
