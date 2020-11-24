@@ -33,7 +33,8 @@
     "stimulus_reflex": "^3.3.0",
     "tailwindcss": "^1.5.1",
     "tailwindcss-elevation": "^0.3.4",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "velocity-animate": "^2.0.6"
   },
   "devDependencies": {
     "tailwindcss-animations": "^2.0.0",
