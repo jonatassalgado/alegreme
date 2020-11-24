@@ -1,7 +1,7 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
 
 export default class extends ApplicationController {
-    static targets = ['calendar', 'scrollContent'];
+    static targets = ['calendar'];
 
     connect() {
         super.connect();
@@ -9,17 +9,7 @@ export default class extends ApplicationController {
     }
 
     async setup() {
-        this.SimpleScrollbar = await import("simple-scrollbar")
-        await import("simple-scrollbar/simple-scrollbar.css")
-        this._initSimpleScrollbar()
 
-        this.element.addEventListener("cable-ready:before-morph", event => {
-            this.element.innerHTML = null;
-        })
-
-        this.element.addEventListener("cable-ready:after-morph", event => {
-            this._initSimpleScrollbar()
-        })
     }
 
     teardown() {

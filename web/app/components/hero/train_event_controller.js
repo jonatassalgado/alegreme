@@ -1,7 +1,7 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
 
 export default class extends ApplicationController {
-    static targets = [""];
+    static targets = [];
 
     connect() {
         super.connect();
@@ -9,7 +9,7 @@ export default class extends ApplicationController {
     }
 
     async setup() {
-
+        const Velocity = await import('velocity-animate');
     }
 
     teardown() {
@@ -26,11 +26,22 @@ export default class extends ApplicationController {
     }
 
     beforeLike() {
-        this.element.classList.add('hidden');
+        this._animateHide(this.element);
     }
 
     beforeDislike() {
-        this.element.classList.add('hidden');
+        this._animateHide(this.element);
+    }
+
+    _animateHide(element) {
+        Velocity(element, {opacity: 0})
+            .then(value => {
+                setTimeout(() => {
+                    element.classList.add('hidden')
+                }, 250)
+            }, reason => {
+
+            })
     }
 
 }

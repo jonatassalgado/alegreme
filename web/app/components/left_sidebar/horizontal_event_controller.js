@@ -8,8 +8,8 @@ export default class extends ApplicationController {
         this.setup();
     }
 
-    setup() {
-
+    async setup() {
+        const Velocity = await import('velocity-animate');
     }
 
     teardown() {
@@ -26,7 +26,18 @@ export default class extends ApplicationController {
     }
 
     beforeUnlike(anchorElement) {
-        this.element.classList.add('hidden');
+        this._animateHide(this.element)
+    }
+
+    _animateHide(element) {
+        Velocity(element, {opacity: 0})
+            .then(value => {
+                setTimeout(() => {
+                    element.classList.add('hidden')
+                }, 250)
+            }, reason => {
+
+            })
     }
 
 }

@@ -4,6 +4,7 @@
   <% unless mobile_device? %>
     <section class="hidden md:inline-block md:col-span-3 md:bg-white md:pt-5 sticky"
              id="left-sidebar"
+             data-controller="simple-scrollbar"
              style="height: calc(100vh - 48px); top: 48px">
       <%= render LeftSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
     </section>
@@ -38,7 +39,7 @@
       <div data-controller="toggle-loader"
            data-toggle-loader-listener-on="horizontal-event#open-event:before"
            data-toggle-loader-listener-off="horizontal-event#open-event:success"
-           class="px-5 sticky top-24">
+           class="px-5 sticky top-24 z-10">
         <div id="open-event"
              data-target="toggle-loader.off">
           <%= render MainSidebar::LargeEventComponent.new(user: current_user) %>
