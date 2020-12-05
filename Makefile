@@ -76,7 +76,7 @@ cloud:
 	ssh root@159.89.84.18
 
 prune:
-	docker image prune
+	docker image prune --filter="dangling=true"
 	docker volume prune
 	docker container prune
 
