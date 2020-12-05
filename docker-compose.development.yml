@@ -1,6 +1,6 @@
 version: '2.3'
 volumes:
-  bundle_cache: {}
+  # bundle_cache:
   app_log:
   db_data:
   db_backup:
@@ -24,9 +24,9 @@ services:
       - redis
       # - bot
     volumes:
-      - bundle_cache:/bundle
+      # - bundle_cache:/bundle
       - ./web:/var/www/alegreme
-      - ./web/gems:/bundle/custom_gems
+      # - ./web/gems:/bundle/custom_gems
       - ./scrapy/data:/var/www/scrapy/data
       - app_log:/var/www/alegreme/log
       # - ./storage:/var/www/alegreme/storage

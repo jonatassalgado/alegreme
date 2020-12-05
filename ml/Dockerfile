@@ -7,6 +7,7 @@ RUN mkdir -p $ML_ROOT
 
 WORKDIR $ML_ROOT
 
+RUN pip install --upgrade pip
 COPY ./requirements.txt ./requirements.txt
 RUN pip install -r $ML_ROOT/requirements.txt
 RUN python -m spacy download pt
