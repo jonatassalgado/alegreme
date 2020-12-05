@@ -69,7 +69,7 @@ const BotModule = (() => {
 
             items.forEach(item => {
                 const button     = document.createElement("div");
-                button.className = `${item.cssClass} tap-highlight-none select-none float-right bg-green-500 px-4 py-2 rounded-full text-white antialiased font-semibold`;
+                button.className = `${item.cssClass} cursor-pointer tap-highlight-none select-none float-right bg-green-500 px-4 py-2 rounded-full text-white antialiased font-semibold`;
                 button.innerHTML = item.text;
                 button.addEventListener("click", () => {
                     resolve(item.value);
@@ -93,7 +93,7 @@ const BotModule = (() => {
                                             });
 
             let message       = document.createElement("div");
-            message.className = `antialiased bg-white inline-flex is-bot px-4 py-3 rounded-xl text-sm text-gray-700 leading-tight ${human ? "is-human" : "is-bot"}`;
+            message.className = `antialiased bg-gray-100 inline-flex is-bot px-4 py-3 rounded-xl text-sm text-gray-600 leading-tight ${human ? "is-human" : "is-bot"}`;
 
             requestAnimationFrame(() => {
                 message.innerHTML = content;

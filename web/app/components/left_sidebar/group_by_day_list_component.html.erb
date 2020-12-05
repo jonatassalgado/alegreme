@@ -1,4 +1,4 @@
-<%= component_controller do %>
+<%= component_controller class: 'pb-10' do %>
 	<% @events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
 		<div class="bg-white">
 			<div id="vertical-daily-events">
