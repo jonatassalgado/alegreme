@@ -10,7 +10,7 @@
         <div class="font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal text-md">
           Que tipos de evento você curte?
         </div>
-        <div class="mt-1 text-sm  leading-tight text-gray-600">Para receber sugestões personalizadas, indique
+        <div class="mt-1 text-sm leading-tight text-gray-600">Para receber sugestões personalizadas, indique
           os
           eventos que você curte ou não.
         </div>
@@ -20,13 +20,13 @@
       </div>
     </div>
   <% elsif @events_liked > 3 %>
-    <div class="flex flex-col items-center justify-center p-5 mx-5 my-5 my-auto space-y-5 text-center text-gray-800 transition-all duration-500 bg-white border rounded-lg shadow-md h-content">
+    <div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 transition-all duration-500 bg-white bg-gray-100 rounded-lg h-content">
       <div id="end-message-title" class="font-light text-gray-700">
         <%= "Obrigado #{@user.first_name}! Com base nos itens que você curtiu, já consigo te recomendar alguns eventos que você vai gostar." %>
       </div>
-      <div class="px-4 py-2 font-semibold text-white bg-green-500 rounded-full">
+      <%= link_to feed_path, class: 'px-4 py-2 font-semibold text-white bg-green-500 rounded-full cursor-pointer' do %>
         Ver recomendações
-      </div>
+      <% end %>
     </div>
   <% else %>
     <div>
