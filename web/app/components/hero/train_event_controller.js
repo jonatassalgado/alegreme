@@ -30,7 +30,7 @@ export default class extends ApplicationController {
     }
 
     afterLike() {
-        this._decreaseSwipable()
+        this._updateSwipable()
     }
 
     beforeDislike() {
@@ -38,14 +38,14 @@ export default class extends ApplicationController {
     }
 
     afterDislike() {
-        this._decreaseSwipable()
+        this._updateSwipable()
     }
 
-    _decreaseSwipable() {
+    _updateSwipable() {
         const swipable = document.querySelector('#swipable')
         if (swipable) {
-            this.stimulate('Hero::SwipableComponent#decrease', swipable, {
-                eventId: this.id
+            this.stimulate('Hero::SwipableComponent#update', swipable, {
+                event_id: this.id
             })
                 .then(payload => {
 

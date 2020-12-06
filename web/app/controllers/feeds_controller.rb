@@ -16,8 +16,6 @@ class FeedsController < ApplicationController
 		@selected_tab ||= 'suggestions'
 
 		@liked_events          = current_user ? current_user&.liked_events&.not_ml_data&.active&.order_by_date : Event.none
-		# @suggested_events      = current_user ? Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
-		@events_from_following = current_user ? current_user&.following_events&.not_ml_data&.active&.not_liked_or_disliked(current_user)&.not_disliked(current_user)&.includes(:place)&.order_by_date : Event.none
 		@upcoming_events       = Event.active.not_ml_data.includes(:place).order_by_date
 		@train_events          = train_events
 

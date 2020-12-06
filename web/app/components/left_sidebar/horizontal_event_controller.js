@@ -30,6 +30,8 @@ export default class extends ApplicationController {
     }
 
     _animateHide(element) {
+        element.dataset.reflexPermanent = ''
+
         Velocity(element, {opacity: 0})
             .then(value => {
                 setTimeout(() => {

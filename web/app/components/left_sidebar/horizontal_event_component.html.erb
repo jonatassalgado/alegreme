@@ -1,5 +1,5 @@
-<%= component_controller do %>
-	<div id="<%= dom_id @event %>" class="p-5 group relative">
+<%= component_controller id: dom_id(@event, :left_sidebar) do %>
+	<div class="p-5 group relative">
 		<div class="mb-1 text-sm  text-gray-600">
 			<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h
 			· <%= @event.categories_primary_name.titleize %>

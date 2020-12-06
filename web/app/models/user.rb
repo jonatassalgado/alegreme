@@ -4,7 +4,7 @@ class User < ApplicationRecord
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
 	devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
-	validates :name, :length => {:in => 3..60}
+	validates :name, :length => { :in => 3..60 }
 	validates :email, uniqueness: true
 	validates :slug, uniqueness: true
 
@@ -24,8 +24,8 @@ class User < ApplicationRecord
 
 	has_many :likes, dependent: :destroy
 	has_many :liked_or_disliked_events, through: :likes, source: :event
-	has_many :liked_events, -> { where(likes: {sentiment: :positive}) }, through: :likes, source: :event
-	has_many :disliked_events, -> { where(likes: {sentiment: :negative}) }, through: :likes, source: :event
+	has_many :liked_events, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :event
+	has_many :disliked_events, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :event
 
 	has_many :friendships, dependent: :destroy
 	has_many :friendships_requested, -> { where(status: :requested) }, foreign_key: :user_id, class_name: 'Friendship'
@@ -52,7 +52,7 @@ class User < ApplicationRecord
 	has_many :following_organizers, through: :following_relationships, source: :following, source_type: 'Organizer'
 	has_many :following_places_events, through: :following_places, source: :events
 	has_many :following_organizers_events, through: :following_organizers, source: :events
-	has_many :following_users_events, -> { where(likes: {sentiment: :positive}) }, through: :likes, source: :event
+	has_many :following_users_events, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :event
 
 	has_many :places_from_liked_events, through: :liked_events, source: :place
 	has_many :organizers_from_liked_events, through: :liked_events, source: :organizers
@@ -184,9 +184,7 @@ class User < ApplicationRecord
 		true
 	end
 
-
 	private
-
 
 	def validate_taste_existence(dictionary = :events)
 		_dictionary        = dictionary.to_s
