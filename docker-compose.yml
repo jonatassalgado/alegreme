@@ -40,7 +40,7 @@ services:
       WEB_CONCURRENCY: 2
       RAILS_MAX_THREADS: 4
       JOB_WORKER_URL: redis://redis:6379/0
-      REDIS_URL: redis://:password@redis:6379/0
+      REDIS_URL: redis://:password@redis:6379/1
       ELASTICSEARCH_URL: http://search:9200
     restart: always
     ports:

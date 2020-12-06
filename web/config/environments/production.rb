@@ -62,7 +62,7 @@ Rails.application.configure do
 
 	# Use a different cache store in production.
 	# config.cache_store = :dalli_store, 'memcached', {:pool_size => 5}
-	config.cache_store = :redis_cache_store, {url:             ENV.fetch("REDIS_URL") { "redis://localhost:6379/0" },
+	config.cache_store = :redis_cache_store, {url:             ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" },
 	                                          reconnect_attempts: 1, # Defaults to 0
 	                                          error_handler: -> (method:, returning:, exception:) {
 		                                          Raven.capture_exception exception,
