@@ -112,7 +112,7 @@
         <% @similar_events.each do |similar_event| %>
           <div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-50">
             <div class="pr-6">
-              <div class="mb-1 text-xs font-light text-gray-600">
+              <div class="mb-1 text-sm  text-gray-600">
                 <%= I18n.l(similar_event.start_time, format: :long) %>
                 às <%= format_hour similar_event.first_day_time %>h
                 · <%= similar_event.categories_primary_name.titleize %>
@@ -127,7 +127,7 @@
                               class: 'md:hover:underline mb-1 leading-snug text-gray-700' do %>
                 <%= similar_event.details_name %>
               <% end %>
-              <div class="text-xs font-light text-gray-500">
+              <div class="text-sm  text-gray-500">
                 <%= link_to limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline' %>
               </div>
             </div>

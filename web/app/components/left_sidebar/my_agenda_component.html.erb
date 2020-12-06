@@ -35,7 +35,7 @@
 					<tr>
 						<% week.each do |day| %>
 							<%= content_tag :td, data: { key: key, action: 'click->left-sidebar--my-agenda#inDay', day: day.strftime }, class: td_classes_for(day) do %>
-								<%= content_tag :div, class: 'mx-auto text-xs day-of-month' do %>
+								<%= content_tag :div, class: 'mx-auto text-sm day-of-month' do %>
 									<%= day.strftime '%e' %>
 								<% end %>
 								<div data-indicator class="<%= helpers.class_names 'w-1 h-1 mx-auto rounded-full',
@@ -61,7 +61,7 @@
 				</svg>
 				<%= start_date.strftime("%d/%m/%Y") %>
 			</div>
-			<%= reflex_tag :clear_filter, :div, id: 'my-agenda__clear-filter', class: helpers.class_names('px-5 text-center cursor-pointer underline text-gray-400 text-xs',
+			<%= reflex_tag :clear_filter, :div, id: 'my-agenda__clear-filter', class: helpers.class_names('px-5 text-center cursor-pointer underline text-gray-400 text-sm',
 																																																		'hidden': !@filter) do %>
 				Remover filtro
 			<% end %>

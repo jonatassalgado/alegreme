@@ -11,7 +11,7 @@
 				 data-action="click->toggle-style#toggle click->go-to#url"
 				 data-toggle-style-identifier="feeds-index"
 				 data-go-to-url="<%= feed_path %>"
-				 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
+				 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-sm duration-100',
 																'text-green-500': ['feeds', 'events'].include?(controller_name),
 																'text-gray-600':  !['feeds', 'events'].include?(controller_name) %>">
 			<svg class="w-6 h-6 fill-current md:mr-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +23,7 @@
 				 data-action="click->toggle-style#toggle click->go-to#url"
 				 data-toggle-style-identifier="users-agenda"
 				 data-go-to-url="<%= my_agenda_path %>"
-				 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
+				 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-sm duration-100',
 																'text-green-500': current_page?('/minha-agenda'),
 																'text-gray-600':  !current_page?('/minha-agenda') %>">
 			<svg class="w-6 h-6 fill-current md:mr-5" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +38,7 @@
 					 data-action="click->toggle-style#toggle click->go-to#url"
 					 data-toggle-style-identifier="users-profile"
 					 data-go-to-url="<%= current_user ? user_path(current_user) : new_user_registration_path %>"
-					 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
+					 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-sm duration-100',
 																	'text-green-500': current_page?(controller: :users, action: :show, id: current_user),
 																	'text-gray-600':  !current_page?(controller: :users, action: :show, id: current_user) %>">
 				<img src="<%= current_user&.picture :small %>" class="w-6 h-6 rounded-full md:mr-5" alt="<%= current_user&.name %>">
@@ -48,7 +48,7 @@
 					 data-action="click->toggle-style#toggle click->go-to#url"
 					 data-toggle-style-identifier="users-profile"
 					 data-go-to-url="<%= new_user_registration_path %>"
-					 class="cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100">
+					 class="cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-sm duration-100">
 				<div class="w-6 h-6 rounded-full md:mr-5 bg-gray-100"></div>
 				<%= current_user ? 'Meu perfil' : 'Criar conta' %>
 			</div>

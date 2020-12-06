@@ -1,7 +1,7 @@
 <%= component_controller id: dom_id(@event, :horizontal_event), data: {'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar} do %>
   <div class="flex justify-between p-5 border-b md:border-0 border-gray-50">
     <div class="pr-6">
-      <div class="mb-1 text-xs font-light text-gray-600">
+      <div class="mb-1 text-sm  text-gray-600">
         <%= helpers.format_hour @event.first_day_time %>h · <%= @event.categories_primary_name.titleize %>
       </div>
       <%= content_tag :a,
@@ -14,7 +14,7 @@
                       class: 'md:hover:underline mb-1 leading-snug text-gray-700' do %>
         <%= @event.details_name %>
       <% end %>
-      <div class="text-xs font-light text-gray-500">
+      <div class="text-sm  text-gray-500">
         <%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %>
       </div>
       <div class="flex my-1 -ml-2">

@@ -5,7 +5,7 @@
 	<div class="flex flex-col min-h-screen">
 		<div class="flex items-end px-5 pt-10 space-x-5 bg-gray-50">
 			<div class="relative w-32 -mb-5">
-				<div class="absolute z-10 pl-1 pr-2 m-1 text-xs text-gray-800 bg-white rounded-full shadow-sm me-movie__vote">
+				<div class="absolute z-10 pl-1 pr-2 m-1 text-sm text-gray-800 bg-white rounded-full shadow-sm me-movie__vote">
 					<%= @movie.details_vote_average %> ⭐
 				</div>
 				<%= image_tag(@movie.image[:medium].url(public: true), class: 'h-auto bg-white object-cover rounded-lg shadow-lg w-32', style: 'min-height: 195px') if @movie.image %>
@@ -14,7 +14,7 @@
 				<h1 class="inline-block my-3 text-xl font-semibold leading-tight text-gray-900">
 					<%= @movie.details_title %>
 				</h1>
-				<div class="mb-3 -mt-3 text-xs antialiased font-light text-gray-600">
+				<div class="mb-3 -mt-3 text-sm antialiased  text-gray-600">
 					<%= @movie.details_genres.join(", ") %>
 				</div>
 				<% if @movie.details_trailler %>
@@ -83,7 +83,7 @@
 			<h2 class="mt-6 font-medium text-gray-700">
 				Sinopse
 			</h2>
-			<div class="my-3 antialiased font-light leading-6 text-gray-700">
+			<div class="my-3 antialiased  leading-6 text-gray-700">
 				<%= @movie.details_description %>
 				<% if current_user&.admin? %>
 					<%= link_to "Editar", edit_movie_path(@movie) %>

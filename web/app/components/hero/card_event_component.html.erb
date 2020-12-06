@@ -32,7 +32,7 @@
       </div>
       <div>
         <%= link_to helpers.limit_name_size(@event.details_name), event_path(@event), class: 'font-medium group-hover:text-green-500 inline-block mt-1 text-base text-gray-800', data: {target: 'event.name'} %>
-        <span class="font-light inline-block leading-snug mt-1 text-gray-600 text-xs">
+        <span class=" inline-block leading-snug mt-1 text-gray-600 text-sm">
 				<%= "#{I18n.l(@event.first_day_time.to_date, format: :week).titlecase} #{helpers.format_hour @event.first_day_time} · #{helpers.time_until @event}" %>
           em <%= helpers.limit_place_name_size(@event.place_details_name, 20) %>
 			</span>

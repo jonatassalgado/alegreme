@@ -17,7 +17,7 @@
 			 data-controller="movie"
 			 data-target="movie.movie"
 			 id="<%= "#{section_identifier}-#{dom_id(movie)}" %>">
-		<div class="absolute bg-white m-1 me-movie__vote pl-1 pr-2 rounded-full shadow-sm text-gray-800 text-xs z-10">
+		<div class="absolute bg-white m-1 me-movie__vote pl-1 pr-2 rounded-full shadow-sm text-gray-800 text-sm z-10">
 			<%= movie.details_vote_average %> ⭐
 		</div>
 		<div class="relative">
@@ -76,7 +76,7 @@
 										 } if html.dig(:taste_remove, :visible) %>
 				</div>
 			<% end %>
-			<h3 class="font-light py-2 text-center text-gray-600 text-xs md:text-sm leading-tight">
+			<h3 class=" py-2 text-center text-gray-600 text-sm md:text-sm leading-tight">
 				<%= link_to movie.details_title, send("#{movie.type.underscore}_path", movie) %>
 			</h3>
 		</div>

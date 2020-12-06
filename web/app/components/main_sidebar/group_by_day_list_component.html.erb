@@ -7,11 +7,11 @@
                                              'top-12': !helpers.mobile_device? || current_page?('/minha-agenda')}) %>">
           <h2 class="text-xl font-semibold md:text-2xl"><%= helpers.day_of_week(group[0].to_date).titlecase %></h2>
           <% if group[0].to_date == Date.today || group[0].to_date == Date.tomorrow %>
-            <div class="-mt-1 border-b-2 border-green-500 font-light text-xs w-content"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
+            <div class="-mt-1 border-b-2 border-green-500  text-sm w-content"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
           <% elsif group[0].to_date < Date.today + 7 %>
-            <div class="-mt-1 border-b-2 border-green-500 font-light text-xs w-content"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
+            <div class="-mt-1 border-b-2 border-green-500  text-sm w-content"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
           <% else %>
-            <div class="-mt-1 border-b-2 border-green-500 font-light text-xs w-content">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
+            <div class="-mt-1 border-b-2 border-green-500  text-sm w-content">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
           <% end %>
         </div>
         <div id="vertical-daily-events">

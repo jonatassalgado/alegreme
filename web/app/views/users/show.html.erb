@@ -20,8 +20,8 @@
 			</h1>
 			<% if current_user == @user %>
 				<div class="space-x-1">
-					<%= link_to "Editar perfil", edit_user_path(@user), class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-500 text-xs' %>
-					<%= link_to "Sair", destroy_user_session_path, class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-500 text-xs', method: :delete if current_user.admin? %>
+					<%= link_to "Editar perfil", edit_user_path(@user), class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-500 text-sm' %>
+					<%= link_to "Sair", destroy_user_session_path, class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-500 text-sm', method: :delete if current_user.admin? %>
 				</div>
 			<% end %>
 			<% if current_user != @user %>
@@ -52,7 +52,7 @@
   			<span class="pt-5 text-sm text-gray-400">
   				Pedidos de amizade que você recebeu.
   			</span>
-					<span class="text-xs font-light text-gray-400">
+					<span class="text-sm  text-gray-400">
   				Você pode ter até 10 amigos e eles podem ver sua agenda, por isso os escolha bem.
   			</span>
 				</div>
@@ -92,7 +92,7 @@
 							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
 								<% end %>
@@ -117,7 +117,7 @@
 							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
 								<% end %>
@@ -142,7 +142,7 @@
 							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
 								<% end %>
@@ -161,7 +161,7 @@
 	<% if current_user.friendship_accepted? @user %>
 		<div class="pt-2 mx-auto space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
 			<%= month_calendar events: @upcoming_events do |date, events| %>
-				<a href="<%= my_agenda_path start_date: date %>" class="mx-auto text-xs day-of-month">
+				<a href="<%= my_agenda_path start_date: date %>" class="mx-auto text-sm day-of-month">
 					<%= date.strftime '%e' %>
 				</a>
 

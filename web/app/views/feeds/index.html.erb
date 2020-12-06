@@ -79,7 +79,7 @@
                   <a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative flex items-center py-1 pl-1 pr-3 mb-2 mr-2 border border-gray-100 rounded-full w-content">
                     <%= resource.details_name.titleize %>
                     <% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
                     <% end %>
@@ -124,7 +124,7 @@
                   <a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
                     <%= resource.details_name.titleize %>
                     <% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-xs font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
                     <% end %>

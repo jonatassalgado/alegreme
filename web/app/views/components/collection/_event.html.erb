@@ -118,7 +118,7 @@
 			<% if display_name %>
 				<%= link_to limit_name_size(event.details_name), event_path(event), class: 'font-semibold group-hover:text-green-500 inline-block mt-1 text-gray-800 text-sm textfont-semibold', data: {target: 'event.name'} %>
 			<% end %>
-			<span class="<%= html.dig(:time_until, :css) || 'text-xs inline-block' %>">
+			<span class="<%= html.dig(:time_until, :css) || 'text-sm inline-block' %>">
 				<%= "#{I18n.l(event.first_day_time.to_date, format: :week).titlecase} #{format_hour event.first_day_time} · #{time_until event}" %>
 				em <%= limit_place_name_size(event.place_details_name, 20) %>
 			</span>
@@ -126,7 +126,7 @@
 				<div class="flex flex-wrap mt-3 space-x-2 text-gray-600">
 					<% if display_place %>
 						<%#= link_to place_path(event.place) do %>
-						<!--							<div class="flex px-2 py-1 text-xs bg-white rounded-full shadow-xs cursor-pointer hover:bg-gray-50 hover:border-none"-->
+						<!--							<div class="flex px-2 py-1 text-sm bg-white rounded-full shadow-xs cursor-pointer hover:bg-gray-50 hover:border-none"-->
 						<!--									 data-target="event.place"-->
 						<!--									 data-action="click->event#handlePlaceClick"-->
 						<!--									 title="<%#= event.place_details_name %>">-->
@@ -146,7 +146,7 @@
 				 data-controller="toggle-loader"
 				 data-toggle-loader-listener-off="event#showSimilar->finished">
 			<div
-				class="flex justify-center px-2 py-2 text-xs text-gray-700 bg-gray-50 rounded-b-lg cursor-pointer hover:bg-gray-50 hover:border-none"
+				class="flex justify-center px-2 py-2 text-sm text-gray-700 bg-gray-50 rounded-b-lg cursor-pointer hover:bg-gray-50 hover:border-none"
 				data-action="click->event#showSimilar click->toggle-loader#toggle"
 				data-target="event.similar toggle-loader.off"
 				title="Mostrar eventos parecidos">
@@ -157,7 +157,7 @@
 				</svg>
 			</div>
 			<div
-				class="flex justify-center hidden px-2 py-2 text-xs text-gray-700 bg-gray-50 rounded-b-lg cursor-pointer hover:bg-gray-50 hover:border-none"
+				class="flex justify-center hidden px-2 py-2 text-sm text-gray-700 bg-gray-50 rounded-b-lg cursor-pointer hover:bg-gray-50 hover:border-none"
 				data-target="toggle-loader.on">
 				Carregando
 				<svg data-target="toggle-loader.onIcon" class="w-4 h-4 my-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
