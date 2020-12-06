@@ -17,7 +17,7 @@ class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
       if @user.like? @event
         @user.unlike! @event
       elsif @user.dislike? @event
-        @user.like_update(@event, sentiment: :positive)
+        @user.like! @event, action: :update
       else
         @user.like! @event
       end
@@ -34,7 +34,7 @@ class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
       if @user.dislike? @event
         @user.unlike! @event
       elsif @user.like? @event
-        @user.like_update(@event, sentiment: :negative)
+        @user.dislike! @event, action: :update
       else
         @user.dislike! @event
       end

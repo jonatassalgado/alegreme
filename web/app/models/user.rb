@@ -73,18 +73,34 @@ class User < ApplicationRecord
 		places_from_liked_events + organizers_from_liked_events
 	end
 
-	def like!(event)
-		self.likes.create!(event_id: event.id, sentiment: :positive)
+	def like!(event, action: :create)
+		if action == :create
+			self.likes.create!(event_id: event.id, sentiment: :positive)
+			self.liked_events.reset
+		elsif action == :update
+			self.like_update(event, sentiment: :positive)
+			self.liked_events.reset
+			self.disliked_events.reset
+		end
 		UpdateUserEventsSuggestionsJob.perform_later(self.id)
 	end
 
 	def unlike!(event)
 		like = self.likes.find_by(event_id: event.id)
 		like.destroy!
+		self.liked_events.reset
+		self.disliked_events.reset
 	end
 
-	def dislike!(event)
-		self.likes.create!(event_id: event.id, sentiment: :negative)
+	def dislike!(event, action: :create)
+		if action == :create
+			self.likes.create!(event_id: event.id, sentiment: :negative)
+			self.disliked_events.reset
+		elsif action == :update
+			self.like_update(event, sentiment: :negative)
+			self.liked_events.reset
+			self.disliked_events.reset
+		end
 	end
 
 	def like_or_dislike?(event)
@@ -96,11 +112,11 @@ class User < ApplicationRecord
 	end
 
 	def like?(event)
-		self.likes.exists?(event_id: event.id, sentiment: :positive)
+		self.liked_event_ids.include?(event.id)
 	end
 
 	def dislike?(event)
-		self.likes.exists?(event_id: event.id, sentiment: :negative)
+		self.disliked_event_ids.include?(event.id)
 	end
 
 	def follow!(following)
