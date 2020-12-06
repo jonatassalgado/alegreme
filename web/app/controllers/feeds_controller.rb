@@ -16,10 +16,10 @@ class FeedsController < ApplicationController
 		@selected_tab ||= 'suggestions'
 
 		@liked_events          = current_user ? current_user&.liked_events&.not_ml_data&.active&.order_by_date : Event.none
-		@suggested_events      = current_user ? Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
+		# @suggested_events      = current_user ? Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
 		@events_from_following = current_user ? current_user&.following_events&.not_ml_data&.active&.not_liked_or_disliked(current_user)&.not_disliked(current_user)&.includes(:place)&.order_by_date : Event.none
 		@upcoming_events       = Event.active.not_ml_data.includes(:place).order_by_date
-		@train_events          = Event.active.not_liked_or_disliked(current_user).order_by_score.limit(12)
+		@train_events          = train_events
 
 		render layout: false if @stimulus_reflex
 	end
@@ -67,6 +67,14 @@ class FeedsController < ApplicationController
 
 
 	private
+
+	def train_events
+		if current_user&.liked_events.size <= 3
+			Event.active.not_liked_or_disliked(current_user).order_by_score.limit(3)
+		else
+			Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date.limit(3)
+		end
+	end
 
 	def get_events_not_trained_yet
 		order = params[:desc] ? "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC" : "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC"

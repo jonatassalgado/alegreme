@@ -18,7 +18,6 @@ class Hero::TrainEventComponent < ViewComponentReflex::Component
       else
         @user.like! @event
       end
-      refresh!
       refresh! '#main-sidebar__group-by-day-list', '#my-agenda'
     end
   end
@@ -35,7 +34,6 @@ class Hero::TrainEventComponent < ViewComponentReflex::Component
       else
         @user.dislike! @event
       end
-      refresh!
       refresh! '#main-sidebar__group-by-day-list', '#my-agenda'
     end
   end

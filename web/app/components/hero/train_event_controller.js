@@ -29,8 +29,31 @@ export default class extends ApplicationController {
         this._animateHide(this.element);
     }
 
+    afterLike() {
+        this._decreaseSwipable()
+    }
+
     beforeDislike() {
         this._animateHide(this.element);
+    }
+
+    afterDislike() {
+        this._decreaseSwipable()
+    }
+
+    _decreaseSwipable() {
+        const swipable = document.querySelector('#swipable')
+        if (swipable) {
+            this.stimulate('Hero::SwipableComponent#decrease', swipable, {
+                eventId: this.id
+            })
+                .then(payload => {
+
+                })
+                .catch(payload => {
+
+                })
+        }
     }
 
     _animateHide(element) {
@@ -42,6 +65,10 @@ export default class extends ApplicationController {
             }, reason => {
 
             })
+    }
+
+    get id() {
+        return this.data.get('id')
     }
 
 }

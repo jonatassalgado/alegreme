@@ -1,6 +1,6 @@
-<%= component_controller do %>
+<%= component_controller data: {'hero--train-event-id': @event.id} do %>
   <div class="relative flex flex-col w-64 bg-white rounded-lg shadow h-content tap-highlight-none md:w-48 md:border md:border-gray-200"
-       id="<%= dom_id @event, :train_event %>">
+       id="<%= dom_id @event, :train %>">
     <div class="relative overflow-hidden">
       <div class="bg-white rounded-t-lg aspect-ratio-16/9"></div>
       <%= image_tag helpers.shrine_image_url(@event, :feed), {
