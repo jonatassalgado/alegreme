@@ -1,19 +1,36 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
+import {debounce}            from "../../javascript/utilities";
 
 export default class extends ApplicationController {
     static targets = ['calendar'];
+
+    initialize() {
+        const self = this;
+
+        [
+            'hero--swipable:liked-or-disliked',
+            'main-sidebar--horizontal-event:liked-or-disliked'
+        ].forEach(e => {
+            document.addEventListener(e, debounce(self.update.bind(self), 750))
+        })
+    }
 
     connect() {
         super.connect();
         this.setup();
     }
 
-    async setup() {
+    setup() {
 
     }
 
     teardown() {
-
+        [
+            'hero--swipable:liked-or-disliked',
+            'main-sidebar--horizontal-event:liked-or-disliked'
+        ].forEach(e => {
+            document.removeEventListener(e, debounce(this.update.bind(this), 750))
+        })
     }
 
     beforeCache() {
@@ -25,9 +42,21 @@ export default class extends ApplicationController {
         this.teardown()
     }
 
+    update() {
+        this.stimulate('LeftSidebar::MyAgendaComponent#update', this.element)
+            .then(payload => {
+
+            }).catch(payload => {
+
+        })
+    }
+
     beforeInDay(anchorElement) {
         const dateGroup = document.querySelector(`#main-sidebar--group-${anchorElement.dataset.day}`);
-        if (dateGroup) dateGroup.scrollIntoView({block: 'start', behavior: 'smooth'})
+        if (dateGroup) dateGroup.scrollIntoView({
+                                                    block:    'start',
+                                                    behavior: 'smooth'
+                                                })
     }
 
     inDay(event) {
@@ -46,31 +75,8 @@ export default class extends ApplicationController {
         }
     }
 
-    afterInDay(anchorElement) {
-        // setTimeout(() => {
-        //     let unselectedDays = this._unselectDays(this.calendarTarget);
-        //
-        //     Promise.all(unselectedDays).then(days => {
-        //         anchorElement.classList.add('start-date');
-        //         anchorElement.querySelector("[data-indicator]").classList.remove('bg-green-500');
-        //         anchorElement.querySelector("[data-indicator]").classList.add('bg-white');
-        //     })
-        // }, 500)
-    }
-
     afterClearFilter(anchorElement) {
         // this._unselectDays(this.calendarTarget);
-    }
-
-    _unselectDays(calendar) {
-        return Array.from(calendar.querySelectorAll('td.start-date')).map(el => {
-            return new Promise((resolve, reject) => {
-                el.classList.remove('start-date')
-                el.querySelector("[data-indicator]").classList.remove('bg-white')
-                el.querySelector("[data-indicator]").classList.add('bg-green-500')
-                if (!el.classList.contains('start-date')) resolve(el);
-            })
-        });
     }
 
     _initSimpleScrollbar() {

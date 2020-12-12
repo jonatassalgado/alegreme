@@ -23,10 +23,10 @@ export default class HeadController extends ApplicationController {
         if (this.hasHeadTarget) {
             this.lastScrollTop = 0;
 
-            window.addEventListener("scroll", debounce(this.animateHeadOnScroll.bind(this)), {
-                capture: false,
-                passive: true
-            });
+            // window.addEventListener("scroll", debounce(this.animateHeadOnScroll.bind(this)), {
+            //     capture: false,
+            //     passive: true
+            // });
         }
     }
 

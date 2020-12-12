@@ -34,23 +34,26 @@ export default class extends ApplicationController {
         this.teardown()
     }
 
-    // afterLike(anchorElement) {
-    //     const myAgenda = document.querySelector("#my-agenda");
-    //
-    //     this.stimulate("LeftSidebar::MyAgendaComponent#update", myAgenda).then(payload => {
-    //
-    //     }).catch(payload => {
-    //
-    //     })
-    // }
-
     closeEvent(e) {
-        // window.history.replaceState({}, "", `/porto-alegre`);
+
         this.element.innerHTML = null;
         document.querySelector("#user-resources-list").classList.remove("hidden");
+        this.stimulate('MainSidebar::LargeEventComponent#close', this.element)
+            .then(payload => {
+
+            })
+            .catch(payload => {
+
+            })
+    }
+
+    afterClose() {
+
     }
 
     _initSimpleScrollbar() {
-        this.SimpleScrollbar.initEl(this.scrollContentTarget);
+        if (this.hasScrollContentTarget) {
+            this.SimpleScrollbar.initEl(this.scrollContentTarget);
+        }
     }
 }

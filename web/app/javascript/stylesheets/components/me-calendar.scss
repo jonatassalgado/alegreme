@@ -4,8 +4,7 @@
   @apply bg-white py-3 rounded-lg text-center shadow mx-3 mb-5;
 
   @screen md {
-    @apply border border-gray-200 py-3 rounded-lg text-center mx-0 mb-2;
-    max-width: 306px;
+    @apply py-3 rounded-lg text-center mx-0 mb-2 shadow-none;
   }
 
   tr {
@@ -19,7 +18,7 @@
   }
 
   table {
-    @apply mx-auto w-11/12;
+    @apply mx-auto;
   }
 
   .calendar-heading {

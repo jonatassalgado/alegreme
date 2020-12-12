@@ -5,19 +5,15 @@ class FeedsController < ApplicationController
 	before_action :authorize_current_user, only: %i[suggestions follow news]
 	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 
-
 	def index
 		gon.push({
-				         :env             => Rails.env,
-				         :user_id         => current_user.try(:id),
-				         :user_first_name => current_user.try(:first_name)
-		         })
+							 :env             => Rails.env,
+							 :user_id         => current_user.try(:id),
+							 :user_first_name => current_user.try(:first_name)
+						 })
 
-		@selected_tab ||= 'suggestions'
-
-		@liked_events          = current_user ? current_user&.liked_events&.not_ml_data&.active&.order_by_date : Event.none
-		@upcoming_events       = Event.active.not_ml_data.includes(:place).order_by_date
-		@train_events          = train_events
+		@liked_events    = current_user ? current_user&.liked_events&.not_ml_data&.active&.order_by_date : Event.none
+		@upcoming_events = Event.active.not_ml_data.includes(:place).order_by_date
 
 		render layout: false if @stimulus_reflex
 	end
@@ -63,12 +59,11 @@ class FeedsController < ApplicationController
 		@events ||= Event.not_ml_data.active.in_days([@day]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 	end
 
-
 	private
 
 	def train_events
 		if current_user&.liked_events.size <= 3
-			Event.active.not_liked_or_disliked(current_user).order_by_score.limit(3)
+			Event.active.not_liked_or_disliked(current_user).order_by_score.limit(2)
 		else
 			Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date.limit(3)
 		end
@@ -78,8 +73,8 @@ class FeedsController < ApplicationController
 		order = params[:desc] ? "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC" : "(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric ASC, (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric ASC"
 
 		Event.where("(theme ->> 'name') IS NULL AND length((details ->> 'description')) > 200")
-				.order(order)
-				.includes(:place)
+				 .order(order)
+				 .includes(:place)
 	end
 
 	def completed_swipable
@@ -95,17 +90,16 @@ class FeedsController < ApplicationController
 
 		events.map do |event|
 			{
-					id:             event.id,
-					name:           event.details_name,
-					category:       event.categories_primary_name,
-					image_url:      event.image[:feed].url(public: true),
-					description:    helpers.strip_tags(event.details_description).truncate(160),
-					dominant_color: helpers.get_image_dominant_color(event)
+				id:             event.id,
+				name:           event.details_name,
+				category:       event.categories_primary_name,
+				image_url:      event.image[:feed].url(public: true),
+				description:    helpers.strip_tags(event.details_description).truncate(160),
+				dominant_color: helpers.get_image_dominant_color(event)
 			}
 		end
 		# end
 	end
-
 
 	protected
 

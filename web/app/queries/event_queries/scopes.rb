@@ -31,7 +31,7 @@ module EventQueries
 
 			scope 'in_user_suggestions', lambda { |user, opts = {}|
 				return Event.all unless user
-				where(id: user.suggestions['events'])
+				where(id: user.suggestions['events']).order("position(id::text in '#{user.suggestions['events'].join(',')}')")
 			}
 
 			scope 'in_user_personas', lambda { |user, opts = {}|

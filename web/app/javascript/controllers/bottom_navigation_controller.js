@@ -22,10 +22,10 @@ export default class BottomNavigationController extends ApplicationController {
     setup() {
         this.lastScrollTop = 0;
 
-        window.addEventListener("scroll", debounce(this.animateNavigationOnScroll.bind(this)), {
-            capture: false,
-            passive: true
-        });
+        // window.addEventListener("scroll", debounce(this.animateNavigationOnScroll.bind(this)), {
+        //     capture: false,
+        //     passive: true
+        // });
     }
 
     teardown() {

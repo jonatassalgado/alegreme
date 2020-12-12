@@ -1,47 +1,62 @@
-<%= component_controller id: 'swipable', class: 'h-content md:mx-auto md:w-128' do %>
-	<% if !@user.swipable['events']['finished_at'] %>
-		<div class="hidden pl-6 pr-5 overflow-x-hidden overflow-y-scroll transition-all duration-500 opacity-0 h-screen-3/4 is-bot md:h-screen-3/4"
-				 data-swipable-module="onboarding"
-				 data-target="swipable.onboarding"></div>
-		<div data-swipable-module="swipable-items"
-				 data-target="swipable.items">
-			<div class="px-5 mt-5 mb-1">
-				<div class="font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal text-md">
-					Que tipos de evento você curte?
-				</div>
-				<div class="mt-1 text-sm leading-tight text-gray-600">Para receber sugestões personalizadas, indique
-					os
-					eventos que você curte ou não.
-				</div>
-			</div>
-			<div id="train-events" class="relative grid w-full grid-flow-col gap-5 px-5 pt-3 pb-8 grid-after-margin scrollx">
-				<%= render Hero::TrainEventComponent.with_collection(@events, user: @user) %>
-			</div>
-		</div>
-	<% else %>
-		<% if @end_train_message && !@user.swipable['events']['finished_at'] %>
-			<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 transition-all duration-500 bg-white bg-gray-100 rounded-lg h-content">
-				<div id="end-message-title" class="font-light text-gray-700">
-					<%= "Obrigado #{@user.first_name}! Com base nos itens que você curtiu, já consigo te recomendar alguns eventos que você vai gostar." %>
-				</div>
-				<%= reflex_tag :hide_end_message, :div, class: 'px-4 py-2 font-semibold text-white bg-green-500 rounded-full cursor-pointer' do %>
-					Ver recomendações
+<%= component_controller do %>
+	<% if @show_swipable %>
+		<div class="h-content md:mx-auto md:px-6">
+			<% if @user.swipable['events']['finished_at'].blank? && @events_to_train.present? %>
+				<% if @end_train_message %>
+					<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 transition-all duration-500 bg-white bg-gray-100 rounded-lg h-content">
+						<div id="end-message-title" class="font-semibold px-5 text-gray-700">
+							<%= "Obrigado #{@user.first_name}! Com base nos itens que você curtiu, já consigo te recomendar alguns eventos que você vai gostar." %>
+						</div>
+						<%= reflex_tag :hide_end_message, :div, class: 'px-4 py-2 font-semibold text-white bg-green-500 rounded-full cursor-pointer' do %>
+							Ver recomendações
+						<% end %>
+					</div>
+				<% else %>
+					<div class="hidden pl-6 pr-5 overflow-x-hidden overflow-y-scroll transition-all duration-500 opacity-0 h-screen-3/4 is-bot md:h-screen-3/4"
+							 data-swipable-module="onboarding"
+							 data-target="swipable.onboarding"></div>
+					<div data-swipable-module="swipable-items"
+							 data-target="swipable.items">
+						<div class="px-5 mt-5 mb-1">
+							<div class="text-xl font-semibold md:text-2xl">
+								Que tipos de evento você curte?
+							</div>
+							<div class="text-sm w-content max-w-sm">
+								Para receber sugestões personalizadas, indique os eventos que você curte ou não.
+							</div>
+						</div>
+						<div id="train-events" class="">
+							<%= render Hero::HorizontalEventComponent.with_collection(@events_to_train, user: @user, open_in_sidebar: true) %>
+						</div>
+					</div>
 				<% end %>
-			</div>
-		<% else %>
-			<div>
-				<div class="px-5 mt-5 mb-1">
-					<div class="font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal text-md">
-						Eventos escolhidos a dedo para você
+			<% end %>
+			<% if @user.swipable['events']['finished_at'] %>
+				<% if @events_suggestions.present? %>
+					<div>
+						<div class="px-5 mt-5 mb-1">
+							<div class="text-xl font-semibold md:text-2xl">
+								Eventos escolhidos a dedo para você
+							</div>
+							<div class="text-sm w-content max-w-sm">
+								Com base nos eventos que você gostou
+							</div>
+						</div>
+						<div id="suggestion-events" class="">
+							<%= render Hero::HorizontalEventComponent.with_collection(@events_suggestions, user: @user, open_in_sidebar: true) %>
+						</div>
 					</div>
-					<div class="mt-1 text-xs font-light leading-tight text-gray-600">
-						Com base nos eventos que você gostou
+				<% else %>
+					<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 transition-all duration-500 bg-white bg-gray-100 rounded-lg h-content">
+						<div id="end-message-title" class="font-semibold px-5 text-gray-700">
+							<%= "Você já viu todas as recomendações que eu tinha para você hoje" %>
+						</div>
+						<%= reflex_tag :hidden_swipable, :div, class: 'px-4 py-2 font-semibold text-white bg-green-500 rounded-full cursor-pointer' do %>
+							Ok
+						<% end %>
 					</div>
-				</div>
-				<div id="suggestion-events" class="relative grid w-full grid-flow-col gap-5 px-5 pt-3 pb-8 grid-after-margin scrollx">
-					<%= render Hero::TrainEventComponent.with_collection(@events, user: @user) %>
-				</div>
-			</div>
-		<% end %>
+				<% end %>
+			<% end %>
+		</div>
 	<% end %>
 <% end %>

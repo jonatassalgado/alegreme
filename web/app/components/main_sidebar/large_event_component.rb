@@ -8,9 +8,13 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 		@event = Event.find(args['event_id'])
 	end
 
+	def close
+		@event = nil
+	end
+
 	def like
 		unless @user
-			stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
+			stimulate('Modal::SignInComponent#open', { key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas" })
 			prevent_refresh!
 		else
 			if @user.like? @event
@@ -27,7 +31,7 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 
 	def dislike
 		unless @user
-			stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
+			stimulate('Modal::SignInComponent#open', { key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas" })
 			prevent_refresh!
 		else
 			if @user.dislike? @event

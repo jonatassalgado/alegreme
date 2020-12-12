@@ -11,8 +11,8 @@
 	<meta name="viewport"
 				content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
-	<%= render partial: 'layouts/meta-tags' %>
-	<%= render partial: 'layouts/google_analytics' %>
+	<%= render partial: 'layouts/meta-tags', cached: -> { [controller_name, action_name] } %>
+	<%= render partial: 'layouts/google_analytics', cached: true %>
 
 	<%= canonical_url %>
 	<%= amp_url %>
@@ -26,9 +26,9 @@
 	<meta name="apple-mobile-web-app-title" content="Alegreme">
 	<link rel="apple-touch-icon" href="<%= image_url 'icons/launcher-icon-180x180.png' %>">
 
-	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-48x48.png', {sizes: "48x48", type: "image/png"} %>
-	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-96x96.png', {sizes: "96x96", type: "image/png"} %>
-	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-144x144.png', {sizes: "144x144", type: "image/png"} %>
+	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-48x48.png', { sizes: "48x48", type: "image/png" } %>
+	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-96x96.png', { sizes: "96x96", type: "image/png" } %>
+	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-144x144.png', { sizes: "144x144", type: "image/png" } %>
 
 	<link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
 	<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -52,7 +52,7 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm md:shadow-none z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
+<div class="md:shadow-lg md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
 		 data-controller="head"
 		 data-reflex-permanent
 		 data-target="head.head">

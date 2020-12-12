@@ -14,7 +14,7 @@
 
 %>
 
-<header class="<%= class_names('h-12 max-w-screen-xl md:border-b md:border-gray-200 md:grid md:grid-cols-12 md:px-0 mx-auto my-auto px-5 select-none tap-highlight-none',
+<header class="<%= class_names('h-12 md:h-16 max-w-screen-xl md:grid md:grid-cols-12 md:px-0 mx-auto my-auto px-5 select-none tap-highlight-none',
                                {'h-12 px-5':      !current_page?('/busca'),
                                 'h-content py-1': current_page?('/busca')}) %>"
         id="top-bar">
@@ -82,7 +82,7 @@
         <!--				</svg>-->
         <input autocomplete="false"
                name="q"
-               class="flex-1 w-full h-8 px-2 py-1 bg-gray-100 rounded-full"
+               class="placeholder-gray-500 border border-gray-100 h-10 md:w-9/12 mx-auto px-2 py-1 rounded-full"
                id="text-field-shape-one"
                placeholder="Busque eventos, locais e organizadores..."
                type="text"

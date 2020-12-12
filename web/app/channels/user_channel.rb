@@ -9,92 +9,92 @@ class UserChannel < ApplicationCable::Channel
 		# Any cleanup needed when channel is unsubscribed
 	end
 
-	def like(data)
-		opts          = JSON.parse(data['body']['data-cable-ready-opts'], {:symbolize_names => true})
-		resource_id   = data['body']['data-cable-ready-resource-id'].to_i
-		resource_type = data['body']['data-cable-ready-resource-type']
-		action        = data['body']['data-cable-ready-action']
-		resource      = resource_type.classify.constantize.find resource_id
-		like          = current_user.likes.find_by_event_id(resource.id)
+	# def like(data)
+	# 	opts          = JSON.parse(data['body']['data-cable-ready-opts'], {:symbolize_names => true})
+	# 	resource_id   = data['body']['data-cable-ready-resource-id'].to_i
+	# 	resource_type = data['body']['data-cable-ready-resource-type']
+	# 	action        = data['body']['data-cable-ready-action']
+	# 	resource      = resource_type.classify.constantize.find resource_id
+	# 	like          = current_user.likes.find_by_event_id(resource.id)
+	#
+	# 	if action == 'like'
+	# 		if like&.sentiment == 'negative'
+	# 			like.update(sentiment: :positive)
+	# 		elsif like&.sentiment == 'positive'
+	# 			current_user.unlike! resource
+	# 		else
+	# 			current_user.like!(resource)
+	# 		end
+	# 	elsif action == 'dislike'
+	# 		if like&.sentiment == 'positive'
+	# 			like.update(sentiment: :negative)
+	# 		elsif like&.sentiment == 'negative'
+	# 			current_user.unlike! resource
+	# 		else
+	# 			current_user.dislike!(resource)
+	# 		end
+	# 	end
+	#
+	# 	if opts[:training]
+	# 		cable_ready[UserChannel].add_css_class(
+	# 				selector: dom_id(resource),
+	# 				name:     "hidden"
+	# 		)
+	# 		cable_ready[UserChannel].dispatch_event(
+	# 				name:     "swipable#event->trained",
+	# 				selector: "#swipable",
+	# 				detail:   {eventsLiked: current_user.liked_events.size}
+	# 		)
+	# 	else
+	# 		cable_ready[UserChannel].morph(
+	# 				selector: dom_id(resource),
+	# 				html:     ApplicationController.render(partial: opts[:partial],
+	# 				                                       locals:  {
+	# 						                                       event: resource,
+	# 						                                       user:  current_user
+	# 				                                       })
+	# 		)
+	# 	end
+	#
+	# 	cable_ready.broadcast_to(current_user, UserChannel)
+	# end
 
-		if action == 'like'
-			if like&.sentiment == 'negative'
-				like.update(sentiment: :positive)
-			elsif like&.sentiment == 'positive'
-				current_user.unlike! resource
-			else
-				current_user.like!(resource)
-			end
-		elsif action == 'dislike'
-			if like&.sentiment == 'positive'
-				like.update(sentiment: :negative)
-			elsif like&.sentiment == 'negative'
-				current_user.unlike! resource
-			else
-				current_user.dislike!(resource)
-			end
-		end
 
-		if opts[:training]
-			cable_ready[UserChannel].add_css_class(
-					selector: dom_id(resource),
-					name:     "hidden"
-			)
-			cable_ready[UserChannel].dispatch_event(
-					name:     "swipable#event->trained",
-					selector: "#swipable",
-					detail:   {eventsLiked: current_user.liked_events.size}
-			)
-		else
-			cable_ready[UserChannel].morph(
-					selector: dom_id(resource),
-					html:     ApplicationController.render(partial: opts[:partial],
-					                                       locals:  {
-							                                       event: resource,
-							                                       user:  current_user
-					                                       })
-			)
-		end
+	# def hero
+	# 	@selected_tab     = 'suggestions'
+	# 	@train_events     = Event.active.not_liked_or_disliked(current_user).order_by_score.limit(12)
+	# 	@suggested_events = current_user ? Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
+	#
+	# 	cable_ready[UserChannel].morph(
+	# 			selector: "#hero",
+	# 			html:     ApplicationController.render(partial: 'feeds/hero',
+	# 			                                       locals:  {
+	# 					                                       user:             current_user,
+	# 					                                       train_events:     @train_events,
+	# 					                                       selected_tab:     @selected_tab,
+	# 					                                       suggested_events: @suggested_events
+	# 			                                       })
+	# 	)
+	#
+	# 	cable_ready.broadcast_to(current_user, UserChannel)
+	# end
 
-		cable_ready.broadcast_to(current_user, UserChannel)
-	end
-
-
-	def hero
-		@selected_tab     = 'suggestions'
-		@train_events     = Event.active.not_liked_or_disliked(current_user).order_by_score.limit(12)
-		@suggested_events = current_user ? Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date : Event.none
-
-		cable_ready[UserChannel].morph(
-				selector: "#hero",
-				html:     ApplicationController.render(partial: 'feeds/hero',
-				                                       locals:  {
-						                                       user:             current_user,
-						                                       train_events:     @train_events,
-						                                       selected_tab:     @selected_tab,
-						                                       suggested_events: @suggested_events
-				                                       })
-		)
-
-		cable_ready.broadcast_to(current_user, UserChannel)
-	end
-
-	def tab(data)
-		@tab              = data['body']['data-cable-ready-current-tab']
-		@suggested_events = Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date
-
-		cable_ready[UserChannel].morph(
-				selector: '#feed-tabs',
-				html:     ApplicationController.render(partial: 'feeds/tabs',
-				                                       locals:  {
-						                                       user:             current_user,
-						                                       selected_tab:     @tab,
-						                                       suggested_events: @suggested_events
-				                                       })
-		)
-
-		cable_ready.broadcast_to(current_user, UserChannel)
-	end
+	# def tab(data)
+	# 	@tab              = data['body']['data-cable-ready-current-tab']
+	# 	@suggested_events = Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date
+	#
+	# 	cable_ready[UserChannel].morph(
+	# 			selector: '#feed-tabs',
+	# 			html:     ApplicationController.render(partial: 'feeds/tabs',
+	# 			                                       locals:  {
+	# 					                                       user:             current_user,
+	# 					                                       selected_tab:     @tab,
+	# 					                                       suggested_events: @suggested_events
+	# 			                                       })
+	# 	)
+	#
+	# 	cable_ready.broadcast_to(current_user, UserChannel)
+	# end
 
 
 	def follow(data)

@@ -1,5 +1,6 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
 import {MobileDetector}      from "../../javascript/modules/mobile-detector-module";
+import Velocity              from "velocity-animate";
 
 export default class extends ApplicationController {
     static targets = [];
@@ -9,10 +10,9 @@ export default class extends ApplicationController {
         this.setup();
     }
 
-    async setup() {
-        const {MobileDetector} = await import("../../javascript/modules/mobile-detector-module");
-        this.beginEvent        = new Event("horizontal-event#open-event:before")
-        this.endEvent          = new Event("horizontal-event#open-event:success");
+    setup() {
+        this.beginEvent = new Event("horizontal-event#open-event:before")
+        this.endEvent   = new Event("horizontal-event#open-event:success");
     }
 
     teardown() {
@@ -34,7 +34,6 @@ export default class extends ApplicationController {
             event.stopPropagation()
             const target = this._linkEl(event);
 
-            this._userResourceListEl().classList.add("hidden");
             document.dispatchEvent(this.beginEvent)
 
             this.stimulate("MainSidebar::LargeEventComponent#open", this._mainSidebarLargeEventEl(), {
@@ -43,42 +42,57 @@ export default class extends ApplicationController {
                 // this._updateUrl(target);
                 document.dispatchEvent(this.endEvent)
             }).catch(payload => {
-                this._userResourceListEl().classList.remove("hidden");
             })
         }
     }
 
+    beforeLike(anchorElement) {
+        this._animateHide(this.element)
+    }
+
+    beforeDislike(anchorElement) {
+        this._animateHide(this.element)
+    }
+
     afterLike(event) {
-        this._updateMyAgenda()
+        this._updateSwipable()
     }
 
     afterDislike(event) {
-        this._updateMyAgenda()
+        this._updateSwipable()
     }
 
-    _updateMyAgenda() {
-        const myAgendaEvent = new Event('main-sidebar--horizontal-event:liked-or-disliked')
-        document.dispatchEvent(myAgendaEvent)
+    _updateSwipable() {
+        const swipableEvent = new Event('hero--swipable:liked-or-disliked')
+        document.dispatchEvent(swipableEvent)
     }
 
     _linkEl(e) {
-        return e.target.closest("[data-action~='click->main-sidebar--horizontal-event#openEvent']");
+        return e.target.closest("[data-action~='click->hero--horizontal-event#openEvent']");
     }
 
     _updateUrl(target) {
         window.history.replaceState({}, "", `${target.href.replace(target.origin, "")}`);
     }
 
-    _userResourceListEl() {
-        return document.querySelector("#user-resources-list");
-    }
-
     _mainSidebarLargeEventEl() {
         return document.querySelector("[data-controller~='main-sidebar--large-event']");
+    }
+
+    _animateHide(element) {
+        // element.dataset.reflexPermanent = ''
+
+        Velocity(element, {opacity: 0})
+            .then(value => {
+                element.classList.add('hidden')
+            }, reason => {
+
+            })
     }
 
     get openInSidebar() {
         return JSON.parse(this.data.get('openInSidebar'))
     }
+
 
 }

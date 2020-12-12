@@ -87,7 +87,7 @@ class User < ApplicationRecord
 
 	def unlike!(event)
 		like = self.likes.find_by(event_id: event.id)
-		like.destroy!
+		like.destroy
 		self.liked_events.reset
 		self.disliked_events.reset
 	end
@@ -108,7 +108,8 @@ class User < ApplicationRecord
 	end
 
 	def like_update(event, values)
-		self.likes.find_by(event_id: event.id).update(values)
+		event_to_update = self.likes.find_by(event_id: event.id)
+		event_to_update.update(values) if event_to_update
 	end
 
 	def like?(event)

@@ -1,56 +1,59 @@
-<%= component_controller id: dom_id(@event, :horizontal_event), data: {'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar} do %>
-  <div class="flex justify-between p-5 border-b md:border-0 border-gray-50">
-    <div class="pr-6">
-      <div class="mb-1 text-sm  text-gray-600">
-        <%= helpers.format_hour @event.first_day_time %>h · <%= @event.categories_primary_name.titleize %>
-      </div>
-      <%= content_tag :a,
-                      href:  event_path(@event),
-                      data:  {
-                          action:     'click->main-sidebar--horizontal-event#openEvent',
-                          url:        event_path(@event),
-                          'event-id': @event.id
-                      },
-                      class: 'md:hover:underline mb-1 leading-snug text-gray-700' do %>
-        <%= @event.details_name %>
-      <% end %>
-      <div class="text-sm  text-gray-500">
-        <%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %>
-      </div>
-      <div class="flex my-1 -ml-2">
-        <%= reflex_tag :like, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
-          <svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
-                                              {'text-gray-500':  !@user&.like?(@event),
-                                               'text-green-500': @user&.like?(@event)} %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
-            <path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
-          </svg>
-        <% end %>
-        <%= reflex_tag :dislike, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
-          <svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
-                                              {'text-gray-500': !@user&.dislike?(@event),
-                                               'text-red-500':  @user&.dislike?(@event)} %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
-            <path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-          </svg>
-        <% end %>
-      </div>
-    </div>
-    <div>
-      <div data-controller="ripple" class="shadow-xs relative w-32 mt-6 overflow-hidden rounded ripple ripple-white">
-        <%= link_to event_path(@event),
-                    data: {
-                        action:     'click->main-sidebar--horizontal-event#openEvent',
-                        'event-id': @event.id
-                    } do %>
-          <div class="bg-gray-50 aspect-ratio-16/9"></div>
-          <%= image_tag helpers.shrine_image_url(@event, :feed), {
-              loading: :lazy,
-              class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
-              onerror: "this.style.opacity='0'"
-          } rescue nil %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+<%= component_controller id: dom_id(@event, :horizontal_event), data: { 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar } do %>
+	<div class="flex justify-between p-5 border-b md:border-0 border-gray-50">
+		<div class="pr-6">
+			<div class="mb-1 text-sm  text-gray-500">
+				<%= helpers.format_hour @event.first_day_time %>h ·
+				<span class="text-gray-400">
+          <%= @event.categories_primary_name.titleize %>
+        </span>
+			</div>
+			<%= content_tag :a,
+											href:  event_path(@event),
+											data:  {
+												action:     'click->main-sidebar--horizontal-event#openEvent',
+												url:        event_path(@event),
+												'event-id': @event.id
+											},
+											class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-700' do %>
+				<%= @event.details_name %>
+			<% end %>
+			<div class="text-sm  text-gray-500">
+				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %>
+			</div>
+			<div class="flex my-1 -ml-2">
+				<%= reflex_tag :like, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
+					<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
+																							{ 'text-gray-200 hover:text-gray-300':  !@user&.like?(@event),
+																								'text-green-500': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
+						<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
+					</svg>
+				<% end %>
+				<%= reflex_tag :dislike, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform' do %>
+					<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
+																							{ 'text-gray-200 hover:text-gray-300': !@user&.dislike?(@event),
+																								'text-red-500':  @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
+						<path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+					</svg>
+				<% end %>
+			</div>
+		</div>
+		<div>
+			<div data-controller="ripple" class="shadow-xs relative w-32 mt-6 overflow-hidden rounded ripple ripple-white">
+				<%= link_to event_path(@event),
+										data: {
+											action:     'click->main-sidebar--horizontal-event#openEvent',
+											'event-id': @event.id
+										} do %>
+					<div class="bg-gray-50 aspect-ratio-16/9"></div>
+					<%= image_tag helpers.shrine_image_url(@event, :feed), {
+						loading: :lazy,
+						class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
+						onerror: "this.style.opacity='0'"
+					} rescue nil %>
+				<% end %>
+			</div>
+		</div>
+	</div>
 <% end %>

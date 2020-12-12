@@ -1,4 +1,4 @@
-class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
+class Hero::HorizontalEventComponent < ViewComponentReflex::Component
   with_collection_parameter :event
 
   def initialize(event:, user:, parent_key: nil, open_in_sidebar: false)
@@ -22,6 +22,7 @@ class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
         @user.like! @event
       end
     end
+    prevent_refresh!
   end
 
   def dislike
@@ -37,6 +38,7 @@ class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
         @user.dislike! @event
       end
     end
+    prevent_refresh!
   end
 
   def open_event
