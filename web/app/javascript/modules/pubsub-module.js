@@ -1,8 +1,10 @@
 import NanoEvents from "nanoevents";
 
 const PubSubModule = (() => {
+    const debug  = false;
+
     const nanoEvents = new NanoEvents();
-    console.log("[PUBSUB]: started");
+    if (debug) console.log("[PUBSUB]: started");
 
     return {
         destroy: (subscriptions) => {

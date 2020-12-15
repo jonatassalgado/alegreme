@@ -1,7 +1,8 @@
 const MobileDetector = (() => {
     const module = {};
+    const debug  = false;
 
-    console.log("[MOBILE DETECTOR]: initied");
+    if (debug) console.log("[MOBILE DETECTOR]: initied");
 
     module.mobile = () => {
         return /Mobi/i.test(window.navigator.userAgent)

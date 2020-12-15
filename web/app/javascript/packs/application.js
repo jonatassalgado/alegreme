@@ -19,7 +19,7 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 import "./serviceworker-companion"
-import "morphdom";
+// import "morphdom";
 
 import {Application}            from "stimulus"
 import {definitionsFromContext} from "stimulus/webpack-helpers"

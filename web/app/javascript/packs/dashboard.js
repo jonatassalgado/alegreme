@@ -5,10 +5,8 @@ import "chart.js"
 import {Application}            from "stimulus"
 import {definitionsFromContext} from "stimulus/webpack-helpers"
 
-
-import {CacheModule}       from "../modules/cache-module";
-import {AnimateModule}     from "../modules/animate-module";
-import {PubSubModule}      from "../modules/pubsub-module";
+import {CacheModule}   from "../modules/cache-module";
+import {AnimateModule} from "../modules/animate-module";
 
 CacheModule.activateTurbolinks();
 AnimateModule.init();

@@ -1,10 +1,12 @@
 import Turbolinks from "turbolinks"
 
 const ProgressBarModule = (() => {
-    const module      = {};
+    const module = {};
+    const debug  = false;
+
     const progressBar = new Turbolinks.ProgressBar();
 
-    console.log("[PROGRESSBAR]: initied");
+    if (debug) console.log("[PROGRESSBAR]: initied");
 
     module.show = () => {
         progressBar.setValue(0);

@@ -2,8 +2,9 @@
 
 const SnackBarModule = (() => {
 	const module = {};
+	const debug  = false;
 
-	console.log("[SNACKBAR]: initied");
+	if (debug) console.log("[SNACKBAR]: initied");
 
 	module.show = (text) => {
 		const snackbarEl = document.querySelector('.mdc-snackbar');
