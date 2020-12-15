@@ -202,9 +202,9 @@ module EventQueries
 
 				case opts[:direction]
 				when :asc
-					order("(ocurrences -> 'dates' ->> 0)::timestamptz ASC").order_by_score
+					order("(ocurrences -> 'dates' ->> 0)::timestamptz ASC")
 				when :desc
-					order("(ocurrences -> 'dates' ->> 0)::timestamptz DESC").order_by_score
+					order("(ocurrences -> 'dates' ->> 0)::timestamptz DESC")
 				else
 					none
 				end

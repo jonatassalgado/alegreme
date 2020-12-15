@@ -34,7 +34,7 @@ export default class extends ApplicationController {
             event.stopPropagation()
             const target = this._linkEl(event);
 
-            this._userResourceListEl().classList.add("hidden");
+            // this._userResourceListEl().classList.add("hidden");
             document.dispatchEvent(this.beginEvent)
 
             this.stimulate("MainSidebar::LargeEventComponent#open", this._mainSidebarLargeEventEl(), {
@@ -43,7 +43,7 @@ export default class extends ApplicationController {
                 // this._updateUrl(target);
                 document.dispatchEvent(this.endEvent)
             }).catch(payload => {
-                this._userResourceListEl().classList.remove("hidden");
+                // this._userResourceListEl().classList.remove("hidden");
             })
         }
     }
@@ -69,9 +69,9 @@ export default class extends ApplicationController {
         window.history.replaceState({}, "", `${target.href.replace(target.origin, "")}`);
     }
 
-    _userResourceListEl() {
-        return document.querySelector("#user-resources-list");
-    }
+    // _userResourceListEl() {
+    //     return document.querySelector("#user-resources-list");
+    // }
 
     _mainSidebarLargeEventEl() {
         return document.querySelector("[data-controller~='main-sidebar--large-event']");

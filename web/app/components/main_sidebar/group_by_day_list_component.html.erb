@@ -1,5 +1,5 @@
 <%= component_controller do %>
-  <div class="bg-white md:px-5">
+  <div class="md:px-5">
     <% @events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
       <div id="<%= "main-sidebar--group-#{group[0]}" %>" class="mb-5 md:mb-12 content-visibility-auto contain-intrinsic-size-md">
         <div class="<%= helpers.class_names('sticky bg-white z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-700 md:leading-normal md:px-5',

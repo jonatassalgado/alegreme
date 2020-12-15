@@ -1,9 +1,12 @@
 class Hero::TrainEventComponent < ViewComponentReflex::Component
   with_collection_parameter :event
 
-  def initialize(user:, event:)
-    @user  = user
-    @event = event
+  def initialize(event:, user:, parent_key: nil, open_in_sidebar: false)
+    @event           = event
+    @user            = user
+    @parent_key      = parent_key
+    @open_in_sidebar = open_in_sidebar
+    @opened          = false
   end
 
   def like
@@ -14,11 +17,10 @@ class Hero::TrainEventComponent < ViewComponentReflex::Component
       if @user.like? @event
         @user.unlike! @event
       elsif @user.dislike? @event
-        @user.like_update(@event, sentiment: :positive)
+        @user.like! @event, action: :update
       else
         @user.like! @event
       end
-      refresh! '#main-sidebar__group-by-day-list', '#my-agenda'
     end
   end
 
@@ -30,12 +32,19 @@ class Hero::TrainEventComponent < ViewComponentReflex::Component
       if @user.dislike? @event
         @user.unlike! @event
       elsif @user.like? @event
-        @user.like_update(@event, sentiment: :negative)
+        @user.dislike! @event, action: :update
       else
         @user.dislike! @event
       end
-      refresh! '#main-sidebar__group-by-day-list', '#my-agenda'
     end
+  end
+
+  def open_event
+    @opened = true
+  end
+
+  def close_event
+    @opened = false
   end
 
   def collection_key

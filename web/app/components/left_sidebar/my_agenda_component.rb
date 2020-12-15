@@ -52,7 +52,7 @@ class LeftSidebar::MyAgendaComponent < ViewComponentReflex::Component
 
   def update
     @events     = liked_events
-    @indicators = @events.map(&:start_time)
+    @indicators = @events&.map(&:start_time)
   end
 
   def td_classes_for(day)

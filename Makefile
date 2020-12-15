@@ -9,7 +9,7 @@ run:
 	$(RUN) $(command)
 
 build:
-	docker-compose -f docker-compose.development.yml up --build
+	docker-compose -f docker-compose.development.yml up -d --build
 
 build-service:
 	docker-compose -f docker-compose.development.yml up -d --no-deps --build $(APP)
@@ -29,6 +29,8 @@ down:
 ps:
 	docker-compose -f docker-compose.development.yml ps
 
+up-clean-entrypoint:
+	docker run -it --entrypoint /bin/bash alegreme_app
 
 console:
 	$(EXEC) bash

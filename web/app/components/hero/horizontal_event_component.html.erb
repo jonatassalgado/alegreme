@@ -1,14 +1,18 @@
 <%= component_controller id: dom_id(@event, :hero), data: { 'hero--horizontal-event-open-in-sidebar': @open_in_sidebar } do %>
 	<div class="flex p-5 border-b md:border-0 border-gray-50">
-		<div class="flex flex-col mr-3 space-y-1">
-			<%= reflex_tag :like, :div, class: 'h-full bg-green-50 hover:bg-green-200 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-green-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-green-500 text-sm transform transition-transform' do %>
-				<svg class="h-5 text-green-500 fill-current hover:scale-150" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<div class="flex my-1 -ml-2">
+			<%= reflex_tag :like, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
+				<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
+																						{ 'text-gray-200 hover:text-gray-300':  !@user&.like?(@event),
+																							'text-green-500': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 					<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
 				</svg>
 			<% end %>
-			<%= reflex_tag :dislike, :div, class: 'h-full bg-red-50 hover:bg-red-200 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-red-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-red-500 text-sm transform transition-transform' do %>
-				<svg class="h-5 text-red-500 fill-current hover:scale-150" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<%= reflex_tag :dislike, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform' do %>
+				<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
+																						{ 'text-gray-200 hover:text-gray-300': !@user&.dislike?(@event),
+																							'text-red-500':  @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 					<path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
 				</svg>

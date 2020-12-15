@@ -1,4 +1,6 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
+import {MobileDetector}      from "../../javascript/modules/mobile-detector-module";
+import Velocity              from "velocity-animate";
 
 export default class extends ApplicationController {
     static targets = [];
@@ -8,8 +10,9 @@ export default class extends ApplicationController {
         this.setup();
     }
 
-    async setup() {
-        const Velocity = await import('velocity-animate');
+    setup() {
+        this.beginEvent = new Event("horizontal-event#open-event:before")
+        this.endEvent   = new Event("horizontal-event#open-event:success");
     }
 
     teardown() {
@@ -25,50 +28,75 @@ export default class extends ApplicationController {
         this.teardown()
     }
 
-    beforeLike() {
-        this._animateHide(this.element);
-    }
+    openEvent(event) {
+        if (!MobileDetector.mobile() && this.openInSidebar) {
+            event.preventDefault()
+            event.stopPropagation()
+            const target = this._linkEl(event);
 
-    afterLike() {
-        this._updateSwipable()
-    }
+            document.dispatchEvent(this.beginEvent)
 
-    beforeDislike() {
-        this._animateHide(this.element);
-    }
-
-    afterDislike() {
-        this._updateSwipable()
-    }
-
-    _updateSwipable() {
-        const swipable = document.querySelector('#swipable')
-        if (swipable) {
-            this.stimulate('Hero::SwipableComponent#update', swipable, {
-                event_id: this.id
+            this.stimulate("MainSidebar::LargeEventComponent#open", this._mainSidebarLargeEventEl(), {
+                event_id: target.dataset.eventId
+            }).then(payload => {
+                // this._updateUrl(target);
+                document.dispatchEvent(this.endEvent)
+            }).catch(payload => {
             })
-                .then(payload => {
-
-                })
-                .catch(payload => {
-
-                })
         }
     }
 
+    beforeLike(anchorElement) {
+        this._animateHide(this.element)
+    }
+
+    beforeDislike(anchorElement) {
+        this._animateHide(this.element)
+    }
+
+    afterLike(event) {
+        this._updateSwipable()
+    }
+
+    afterDislike(event) {
+        this._updateSwipable()
+    }
+
+    finalizeDislike(event) {
+        debugger
+    }
+
+    _updateSwipable() {
+        const swipableEvent = new Event('hero--swipable:liked-or-disliked')
+        document.dispatchEvent(swipableEvent)
+    }
+
+    _linkEl(e) {
+        return e.target.closest("[data-action~='click->hero--train-event#openEvent']");
+    }
+
+    _updateUrl(target) {
+        window.history.replaceState({}, "", `${target.href.replace(target.origin, "")}`);
+    }
+
+    _mainSidebarLargeEventEl() {
+        return document.querySelector("[data-controller~='main-sidebar--large-event']");
+    }
+
     _animateHide(element) {
+        // element.dataset.reflexPermanent = ''
+
         Velocity(element, {opacity: 0})
             .then(value => {
-                setTimeout(() => {
-                    element.classList.add('hidden')
-                }, 250)
+                element.classList.add('hidden')
             }, reason => {
 
             })
     }
 
-    get id() {
-        return this.data.get('id')
+    get openInSidebar() {
+        return JSON.parse(this.data.get('openInSidebar'))
     }
+
 
 }

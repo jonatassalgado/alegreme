@@ -3,6 +3,9 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
+
 require("@rails/ujs").start()
 // require("turbolinks").start()
 // require("@rails/activestorage").start()
@@ -39,7 +42,7 @@ application.load(definitionsFromContext(context).concat(
     definitionsFromContext(context_components)
 ));
 
-StimulusReflex.initialize(application, {consumer})
+StimulusReflex.initialize(application, {consumer, debug: true})
 
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();

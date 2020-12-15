@@ -37,7 +37,7 @@ export default class extends ApplicationController {
     closeEvent(e) {
 
         this.element.innerHTML = null;
-        document.querySelector("#user-resources-list").classList.remove("hidden");
+        // document.querySelector("#user-resources-list").classList.remove("hidden");
         this.stimulate('MainSidebar::LargeEventComponent#close', this.element)
             .then(payload => {
 

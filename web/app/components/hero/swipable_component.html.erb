@@ -25,8 +25,8 @@
 								Para receber sugestões personalizadas, indique os eventos que você curte ou não.
 							</div>
 						</div>
-						<div id="train-events" class="">
-							<%= render Hero::HorizontalEventComponent.with_collection(@events_to_train, user: @user, open_in_sidebar: true) %>
+						<div id="train-events">
+							<%= render Hero::TrainEventComponent.with_collection(@events_to_train, user: @user, open_in_sidebar: true) %>
 						</div>
 					</div>
 				<% end %>

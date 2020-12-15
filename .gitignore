@@ -4,19 +4,19 @@
 web/.generators
 web/.rakeTasks
 web/webpack-stats.json
-web/package-lock.json
 ml/api/log/
 hint-report/
 .DS_Store
 web/yarn-error.log
 web/core
+web/gems
 web/stats.json
 data/
 keystore
 logs/
 sitemap.xml.gz
 scrapy/data
-web/Gemfile.lock
+# web/Gemfile.lock
 web/*.rbc
 web/capybara-*.html
 web/.rspec

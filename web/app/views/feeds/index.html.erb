@@ -1,146 +1,45 @@
 <%= render Modal::SignInComponent.new(key: 'modal-sign-in', text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
 
 <div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
-  <% unless mobile_device? %>
-    <section class="hidden md:inline-block md:col-span-3 md:bg-white md:pt-5 sticky"
-             id="left-sidebar"
-             data-controller="simple-scrollbar"
-             style="height: calc(100vh - 48px); top: 48px">
-      <%= render LeftSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
-    </section>
-  <% end %>
-  <section id="main-sidebar" class="col-span-12 md:col-span-5">
-    <div data-controller="page" data-target="page.page" class="mx-auto mb-24 space-y-2 is-animated sm:container">
-      <div id="hero">
-        <%# if !current_user %>
-        <!--          <div class="bg-gray-50 border-gray-200 inline-block leading-snug mt-5 mx-10 p-3 rounded-lg shadow text-gray-600">-->
-        <!--            <div class="inline-block">-->
-        <!--              Crie uma conta para receber sugestões únicas e salvar seu eventos favoritos-->
-        <!--            </div>-->
-        <%#= link_to 'Criar conta', new_user_registration_path, data: {'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil'}, class: 'bg-green-300 float-right px-2 py-1 rounded text-green-700' %>
-        <!--          </div>-->
-        <%# elsif current_user.liked_events.size < 3 %>
-        <%= render Hero::SwipableComponent.new(user:   current_user) %>
-        <%# else %>
-        <%#= render Hero::TabsComponent.new(user:             current_user,
-                                             selected_tab:     @selected_tab,
-                                             suggested_events: @suggested_events) %>
-        <%# end %>
-      </div>
+	<% unless mobile_device? %>
+		<section class="hidden md:inline-block md:col-span-3 md:bg-white md:pt-5 sticky"
+						 id="left-sidebar"
+						 data-controller="simple-scrollbar"
+						 style="height: calc(100vh - 48px); top: 48px">
+			<%= render LeftSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
+		</section>
+	<% end %>
+	<section id="main-sidebar" class="col-span-12 md:col-span-5">
+		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
+			<%= render Hero::SwipableComponent.new(user: current_user) %>
+			<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
+		</div>
+	</section>
+	<% unless mobile_device? %>
+		<section id="right-sidebar" class="hidden md:inline-block md:bg-white md:h-full md:col-span-4 will-change">
+			<div data-controller="toggle-loader"
+					 data-toggle-loader-listener-on="horizontal-event#open-event:before"
+					 data-toggle-loader-listener-off="horizontal-event#open-event:success"
+					 class="px-5 sticky top-24 z-10">
+				<div id="open-event"
+						 data-target="toggle-loader.off">
+					<%= render MainSidebar::LargeEventComponent.new(user: current_user) %>
+				</div>
+				<div
+					class="flex items-center justify-center hidden h-16 mt-5 bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl text-md"
+					data-target="toggle-loader.on">
+					Carregando
+					<svg data-target="toggle-loader.onIcon" class="w-5 h-5 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path fill="none" d="M0 0h24v24H0V0z"/>
+						<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+					</svg>
+				</div>
+			</div>
+<!--			<div id="user-resources-list" class="md:ml-8 md:mt-8 md:text-sm sticky top-12 transform">-->
 
-      <div id="main-sidebar__group-by-day-list">
-        <%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
-      </div>
-    </div>
-  </section>
-  <% unless mobile_device? %>
-    <section id="right-sidebar" class="hidden md:inline-block md:bg-white md:h-full md:col-span-4 will-change">
-      <div data-controller="toggle-loader"
-           data-toggle-loader-listener-on="horizontal-event#open-event:before"
-           data-toggle-loader-listener-off="horizontal-event#open-event:success"
-           class="px-5 sticky top-24 z-10">
-        <div id="open-event"
-             data-target="toggle-loader.off">
-          <%= render MainSidebar::LargeEventComponent.new(user: current_user) %>
-        </div>
-        <div
-          class="flex items-center justify-center hidden h-16 mt-5 bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl text-md"
-          data-target="toggle-loader.on">
-          Carregando
-          <svg data-target="toggle-loader.onIcon" class="w-5 h-5 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path fill="none" d="M0 0h24v24H0V0z"/>
-            <path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
-          </svg>
-        </div>
-      </div>
-      <div id="user-resources-list" class="md:ml-8 md:mt-8 md:text-sm sticky top-12 transform">
-<!--        <div id="friends-list" class="py-6 bg-white">-->
-<!--          <h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 text-md">-->
-<!--            Amigos (<%#= current_user.friends_accepted.size rescue 0 %>)-->
-<!--          </h2>-->
-          <%# if current_user&.friends_accepted.present? %>
-<!--            <div class="flex flex-wrap mt-3">-->
-              <%#= render(UserChipSmallComponent.with_collection(current_user.friends_accepted, user: current_user)) %>
-<!--            </div>-->
-          <%# else %>
-<!--            <div class="text-sm text-gray-400">-->
-<!--              Você ainda não adicionou nenhum amigo-->
-<!--            </div>-->
-          <%# end %>
-<!--        </div>-->
-<!--        <div class="py-6 bg-white">-->
-<!--          <h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 text-md">-->
-<!--            Pessoas que sigo-->
-<!--          </h2>-->
-          <%# if current_user&.following_users.present? %>
-<!--            <div class="w-screen mt-3 md:w-full">-->
-<!--              <div class="flex flex-wrap space-y-2">-->
-                <%# current_user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-<!--                  <a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative flex items-center py-1 pl-1 pr-3 mb-2 mr-2 border border-gray-100 rounded-full w-content">-->
-                    <%#= resource.details_name.titleize %>
-                    <%# if resource.events.active.size > 0 %>
-<!--  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">-->
-  										<%#= resource.events.active.size %>
-<!--  									</span>-->
-                    <%# end %>
-<!--                  </a>-->
-                <%# end %>
-<!--              </div>-->
-<!--            </div>-->
-          <%# else %>
-<!--            <div class="text-sm text-gray-400">-->
-<!--              Você não segue nenhuma pessoa ainda-->
-<!--            </div>-->
-          <%# end %>
-<!--        </div>-->
-<!--        <div class="py-6 bg-white">-->
-<!--          <h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 text-md">-->
-<!--            Locais que sigo-->
-<!--          </h2>-->
-          <%# if current_user&.following_places.present? %>
-<!--            <div class="mt-3">-->
-<!--              <div class="flex flex-wrap space-y-2">-->
-                <%# current_user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-<!--                  <a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative flex items-center p-1 text-sm font-medium text-gray-400 border border-gray-100 rounded-full w-content">-->
-                    <%#= resource.details_name.titleize %>
-<!--                  </a>-->
-                <%# end %>
-<!--              </div>-->
-<!--            </div>-->
-          <%# else %>
-<!--            <div class="text-sm text-gray-400">-->
-<!--              Você não segue nenhum local ainda-->
-<!--            </div>-->
-          <%# end %>
-<!--        </div>-->
-<!--        <div class="py-6 bg-white">-->
-<!--          <h2 class="flex-1 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 text-md">-->
-<!--            Organizadores que sigo-->
-<!--          </h2>-->
-          <%# if current_user&.following_organizers.present? %>
-<!--            <div class="mt-3">-->
-<!--              <div class="flex flex-wrap space-y-2">-->
-                <%# current_user&.following_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-<!--                  <a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">-->
-                    <%#= resource.details_name.titleize %>
-                    <%# if resource.events.active.size > 0 %>
-<!--  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">-->
-  										<%#= resource.events.active.size %>
-<!--  									</span>-->
-                    <%# end %>
-<!--                  </a>-->
-                <%# end %>
-<!--              </div>-->
-<!--            </div>-->
-          <%# else %>
-<!--            <div class="text-sm text-gray-400">-->
-<!--              Você não segue nenhum organizador ainda-->
-<!--            </div>-->
-          <%# end %>
-<!--        </div>-->
-      </div>
-    </section>
-  <% end %>
+<!--			</div>-->
+		</section>
+	<% end %>
 </div>
 
 
