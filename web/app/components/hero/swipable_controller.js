@@ -2,7 +2,7 @@ import ApplicationController from "../../javascript/controllers/application_cont
 import {debounce}            from "../../javascript/utilities";
 
 export default class extends ApplicationController {
-    static targets = [""];
+    static targets = [];
 
     connect() {
         super.connect();
@@ -10,7 +10,7 @@ export default class extends ApplicationController {
     }
 
     setup() {
-        this.element.style.minHeight = `${this.element.offsetHeight}px`
+        this._setMinHeigth();
         document.addEventListener('hero--swipable:liked-or-disliked', debounce(this.update.bind(this), 250))
     }
 
@@ -29,6 +29,18 @@ export default class extends ApplicationController {
 
     update(event) {
         this.stimulate('Hero::SwipableComponent#update')
+    }
+
+    afterHiddenSwipable() {
+        this._removeMinHeight()
+    }
+
+    _setMinHeigth() {
+        this.element.style.minHeight = `${this.element.offsetHeight}px`
+    }
+
+    _removeMinHeight() {
+        this.element.style.minHeight = ""
     }
 
 }

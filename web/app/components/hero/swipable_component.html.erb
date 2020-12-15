@@ -3,7 +3,7 @@
 		<div class="h-content md:mx-auto md:px-6">
 			<% if @user.swipable['events']['finished_at'].blank? && @events_to_train.present? %>
 				<% if @end_train_message %>
-					<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 transition-all duration-500 bg-white bg-gray-100 rounded-lg h-content">
+					<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 bg-white bg-gray-100 rounded-lg h-content">
 						<div id="end-message-title" class="font-semibold px-5 text-gray-700">
 							<%= "Obrigado #{@user.first_name}! Com base nos itens que você curtiu, já consigo te recomendar alguns eventos que você vai gostar." %>
 						</div>
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				<% else %>
-					<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 transition-all duration-500 bg-white bg-gray-100 rounded-lg h-content">
+					<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 bg-white bg-gray-100 rounded-lg h-content">
 						<div id="end-message-title" class="font-semibold px-5 text-gray-700">
 							<%= "Você já viu todas as recomendações que eu tinha para você hoje" %>
 						</div>

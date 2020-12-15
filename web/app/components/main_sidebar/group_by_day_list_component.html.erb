@@ -1,23 +1,23 @@
 <%= component_controller do %>
-  <div class="md:px-5">
-    <% @events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
-      <div id="<%= "main-sidebar--group-#{group[0]}" %>" class="mb-5 md:mb-12 content-visibility-auto contain-intrinsic-size-md">
-        <div class="<%= helpers.class_names('sticky bg-white z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-700 md:leading-normal md:px-5',
-                                            {'top-0':  helpers.mobile_device?,
-                                             'top-12': !helpers.mobile_device? || current_page?('/minha-agenda')}) %>">
-          <h2 class="text-xl font-semibold md:text-2xl"><%= helpers.day_of_week(group[0].to_date).titlecase %></h2>
-          <% if group[0].to_date == Date.today || group[0].to_date == Date.tomorrow %>
-            <div class="-mt-1 border-b-2 border-green-500  text-sm w-content"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
-          <% elsif group[0].to_date < Date.today + 7 %>
-            <div class="-mt-1 border-b-2 border-green-500  text-sm w-content"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
-          <% else %>
-            <div class="-mt-1 border-b-2 border-green-500  text-sm w-content">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
-          <% end %>
-        </div>
-        <div id="vertical-daily-events">
-          <%= render MainSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: key, open_in_sidebar: @open_in_sidebar) %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+	<div class="md:px-5">
+		<% @events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
+			<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="mb-5 md:mb-12 content-visibility-auto contain-intrinsic-size-md">
+				<div class="<%= helpers.class_names('sticky bg-white z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-700 md:leading-normal md:px-5',
+																						{ 'top-0':  helpers.mobile_device?,
+																							'top-16': !helpers.mobile_device? || current_page?('/minha-agenda') }) %>">
+					<h2 class="text-xl font-semibold md:text-2xl"><%= helpers.day_of_week(group[0].to_date).titlecase %></h2>
+					<% if group[0].to_date == Date.today || group[0].to_date == Date.tomorrow %>
+						<div class="-mt-1 border-b-2 border-green-500  text-sm w-content"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
+					<% elsif group[0].to_date < Date.today + 7 %>
+						<div class="-mt-1 border-b-2 border-green-500  text-sm w-content"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
+					<% else %>
+						<div class="-mt-1 border-b-2 border-green-500  text-sm w-content">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
+					<% end %>
+				</div>
+				<div id="vertical-daily-events">
+					<%= render MainSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: key, open_in_sidebar: @open_in_sidebar) %>
+				</div>
+			</div>
+		<% end %>
+	</div>
 <% end %>

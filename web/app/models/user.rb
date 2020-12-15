@@ -87,7 +87,7 @@ class User < ApplicationRecord
 
 	def unlike!(event)
 		like = self.likes.find_by(event_id: event.id)
-		like.destroy
+		like.destroy if like
 		self.liked_events.reset
 		self.disliked_events.reset
 	end
