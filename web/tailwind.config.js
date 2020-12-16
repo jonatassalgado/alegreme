@@ -4,6 +4,10 @@ module.exports = {
         content: [
             "./app/views/**/*.html.erb",
             "./app/views/**/**/*.html.erb",
+            "./app/components/*.html.erb",
+            "./app/components/**/*.html.erb",
+            "./app/components/*.js",
+            "./app/components/**/*.js",
             "./app/helpers/**/*.rb",
             "./app/javascript/**/*.js",
             "./app/javascript/**/**/*.js"
