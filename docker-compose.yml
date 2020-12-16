@@ -6,8 +6,6 @@ volumes:
   db_backup:
   api_data:
   redis_data:
-  # search_data:
-  scrapydo_data:
   splash_data:
 services:
   app:
@@ -22,7 +20,7 @@ services:
       - search
     volumes:
       - bundle_cache:/bundle
-      - scrapy_data:/var/www/scrapy/data:ro
+      - ./scrapy/data:/var/www/scrapy/data
       - ./web/public/uploads:/var/www/alegreme/public/uploads
       - ./web/db/backups:/var/www/alegreme/db/backups
       - ./logs/app:/var/www/alegreme/log
@@ -147,8 +145,8 @@ services:
     depends_on:
       - splash
     volumes:
-      - scrapy_data:/var/www/scrapy/data
-      - scrapydo_data:/var/www/scrapy/projects
+      - ./scrapy/alegreme:/var/www/scrapy/alegreme
+      - ./scrapy/data:/var/www/scrapy/data
       - ./logs/scrapy:/var/www/scrapy/log
     ports:
       - "7654:7654"
