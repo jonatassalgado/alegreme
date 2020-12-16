@@ -1,3 +1,4 @@
+:environment: production
 :logfile: /var/www/sidekiq/log/sidekiq.log
 :concurrency: 1
 staging:

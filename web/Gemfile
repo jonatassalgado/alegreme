@@ -51,7 +51,6 @@ gem 'webpacker', github: 'rails/webpacker', branch: 'master'
 
 gem "browser", require: "browser/browser"
 
-
 # Use CoffeeScript for .coffee assets and views
 # gem 'coffee-rails', '~> 5.0.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -74,11 +73,9 @@ gem 'searchkick'
 gem 'oj'
 gem 'typhoeus'
 
-
 # Graph
 gem 'chartkick'
 gem 'groupdate'
-
 
 gem 'httparty'
 
@@ -106,7 +103,6 @@ gem 'daemons'
 
 gem 'sitemap_generator'
 
-
 gem 'pagy', '~> 3.5'
 
 gem 'active_record_extended'
@@ -115,8 +111,8 @@ gem 'rack-attack'
 
 gem 'stimulus_reflex'
 gem 'view_component', require: 'view_component/engine'
-gem 'view_component_reflex', path: '/var/www/alegreme/gems/view_component_reflex'
-
+gem 'view_component_reflex', github: 'jonatassalgado/view_component_reflex', branch: 'master'
+# gem 'view_component_reflex', path: '/var/www/alegreme/gems/view_component_reflex', group: :development
 
 group :production do
 	gem 'aws-sdk-s3'
@@ -125,7 +121,6 @@ group :production do
 	# Cache
 	# gem 'dalli'
 	gem 'connection_pool'
-
 
 	# Sidekiq
 	gem 'sidekiq'
