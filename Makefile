@@ -17,6 +17,9 @@ build-service:
 up:
 	docker-compose -f docker-compose.development.yml up -d
 
+up-clean-entrypoint:
+	docker run -it --entrypoint /bin/bash alegreme_app
+
 up-scrapy:
 	docker-compose -f docker-compose.development.scrapy.yml up -d
 
@@ -28,9 +31,6 @@ down:
 
 ps:
 	docker-compose -f docker-compose.development.yml ps
-
-up-clean-entrypoint:
-	docker run -it --entrypoint /bin/bash alegreme_app
 
 console:
 	$(EXEC) bash

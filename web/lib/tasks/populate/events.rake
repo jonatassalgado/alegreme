@@ -219,6 +219,11 @@ module PopulateEventsRake
 			return [false, false]
 		end
 
+		if item['description'].empty?
+			puts "Evento: #{item['name']} - Evento sem descrição raspada".red
+			return [false, false]
+		end
+
 		event                     = Event.where.contains(details: {source_url: item['source_url']}).first
 		query                     = Base64.encode64(item['description'])
 		features_params           = {query: query}

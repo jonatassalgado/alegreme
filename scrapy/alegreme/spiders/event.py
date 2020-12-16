@@ -21,7 +21,7 @@ parse_event_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
-        splash.resource_timeout = 60
+        splash.resource_timeout = 120
         splash:set_user_agent(tostring(args.ua))
         assert(splash:go(splash.args.url))
         assert(splash:wait(3))
@@ -36,7 +36,7 @@ parse_event_script = """
                     }
                 }, 1000);
             }
-        ]], 30)
+        ]], 60)
 
         splash:runjs("window.close()")
         return splash:html()
@@ -188,7 +188,7 @@ class EventSpider(scrapy.Spider):
                     callback=self.parse_event,
                     endpoint='execute',
                     args={
-                    'timeout': 90,
+                    'timeout': 120,
                     'lua_source': parse_event_script,
                     'ua': ua
                     }

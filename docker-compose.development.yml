@@ -6,10 +6,6 @@ volumes:
   db_backup:
   api_data:
   redis_data:
-  # scrapydo_data:
-  # splash_data:
-  # scrapy_shared:
-  # search_data:
 services:
   app:
     build:
@@ -18,18 +14,12 @@ services:
     depends_on:
       - db
       - api
-      # - scrapy
-      # - search
-      # - memcached
       - redis
-      # - bot
     volumes:
       - bundle_cache:/bundle
       - ./web:/var/www/alegreme
-      # - ./web/gems:/bundle/custom_gems
       - ./scrapy/data:/var/www/scrapy/data
       - app_log:/var/www/alegreme/log
-      # - ./storage:/var/www/alegreme/storage
     environment:
       RAILS_ENV: development
       RACK_ENV: development
@@ -185,11 +175,3 @@ services:
   #   ports:
   #     - "9200:9200"
   #   restart: always
-#  ofelia:
-#    image: 'mcuadros/ofelia:latest'
-#    volumes:
-#      - ./ofelia/conf/config.ini:/etc/ofelia/config.ini
-#      - /home/centos/.docker/config.json:/root/.docker/config.json
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - ./logs/ofelia:/tmp/logs
-#    restart: always

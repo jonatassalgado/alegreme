@@ -9,7 +9,7 @@ hint-report/
 .DS_Store
 web/yarn-error.log
 web/core
-web/gems
+web/gems/*
 web/stats.json
 data/
 keystore

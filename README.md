@@ -44,6 +44,22 @@ CUSTOM | TCP | 3000 | RAILS
 CUSTOM | TCP | 3030 | API (FLASK)
 
 
+### SECURE SSH
+
+    apt install fail2ban
+
+    # make a copy of default config (this copy will overload default params according to manual)
+    sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+
+    # restart after edit confs
+    sudo service fail2ban restart
+
+    # list rules
+    sudo iptables -L
+
+    # banned ips
+    sudo zgrep 'Ban' /var/log/fail2ban.log*
+
 
 ### Docker
 

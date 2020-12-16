@@ -160,25 +160,14 @@ services:
     ports:
       - 8050:8050
       - 5023:5023
-    restart: always
+    restart: on-failure
     volumes:
       - splash_data:/var/www/splash/data
     mem_limit: 4gb
     memswap_limit: 5gb
     mem_reservation: 256m
     cpus: 3
-    command: --maxrss 3500
-#  memcached:
-#    image: memcached
-#    command: memcached -m 64
-#    ports:
-#      - 11211:11211
-#    restart: always
-#    mem_limit: 3gb
-#    memswap_limit: 3gb
-#    mem_reservation: 256m
-#    cpus: 2
-#    restart: always
+    command: --maxrss 3500 --max-timeout 600
   redis:
     image: redis
     environment:
@@ -206,15 +195,3 @@ services:
     mem_reservation: 256m
     cpus: 1.5
     restart: always
-  # ofelia:
-  #   image: 'mcuadros/ofelia:latest'
-  #   volumes:
-  #     - ./ofelia/conf/config.ini:/etc/ofelia/config.ini
-  #     - /home/centos/.docker/config.json:/root/.docker/config.json
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - ./logs/ofelia:/tmp/logs
-  #   mem_limit: 2gb
-  #   memswap_limit: 2gb
-  #   mem_reservation: 256m
-  #   cpus: 1
-  #   restart: always
