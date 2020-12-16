@@ -48,7 +48,6 @@ class Event < ApplicationRecord
 
 	# delegate :details_name, to: :place, prefix: true, allow_nil: true
 
-	searchkick settings: {number_of_shards: 1, number_of_replicas: 1}
 	searchkick(word:        [:name, :description, :category, :place, :organizers],
 	           word_start:  [:name, :place, :organizers],
 	           word_end:    [:name, :place, :organizers],
@@ -60,7 +59,11 @@ class Event < ApplicationRecord
 	           callbacks:   false,
 	           language:    'portuguese',
 	           highlight:   %i[name],
-	           batch_size:  100)
+			   batch_size:  100,
+			   settings:    {
+				   number_of_shards: 1, 
+				   number_of_replicas: 1
+				})
 
 	scope :search_import, -> { active }
 
