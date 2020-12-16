@@ -38,7 +38,8 @@ export default class extends ApplicationController {
             document.dispatchEvent(this.beginEvent)
 
             this.stimulate("MainSidebar::LargeEventComponent#open", this.mainSidebarLargeEventEl, {
-                event_id: target.dataset.eventId
+                event_id:    target.dataset.eventId,
+                resolveLate: true
             }).then(payload => {
                 // this._updateUrl(target);
                 document.dispatchEvent(this.endEvent)
