@@ -39,14 +39,6 @@ class MainSidebar::HorizontalEventComponent < ViewComponentReflex::Component
     end
   end
 
-  def open_event
-    @opened = true
-  end
-
-  def close_event
-    @opened = false
-  end
-
   def collection_key
     @event.id
   end

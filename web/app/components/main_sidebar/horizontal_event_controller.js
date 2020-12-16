@@ -9,10 +9,8 @@ export default class extends ApplicationController {
         this.setup();
     }
 
-    async setup() {
-        const {MobileDetector} = await import("../../javascript/modules/mobile-detector-module");
-        this.beginEvent        = new Event("horizontal-event#open-event:before")
-        this.endEvent          = new Event("horizontal-event#open-event:success");
+    setup() {
+
     }
 
     teardown() {
@@ -32,12 +30,14 @@ export default class extends ApplicationController {
         if (!MobileDetector.mobile() && this.openInSidebar) {
             event.preventDefault()
             event.stopPropagation()
-            const target = this._linkEl(event);
 
-            // this._userResourceListEl().classList.add("hidden");
+            const target    = this._linkEl(event);
+            this.beginEvent = new Event("horizontal-event#open-event:before")
+            this.endEvent   = new Event("horizontal-event#open-event:success");
+
             document.dispatchEvent(this.beginEvent)
 
-            this.stimulate("MainSidebar::LargeEventComponent#open", this._mainSidebarLargeEventEl(), {
+            this.stimulate("MainSidebar::LargeEventComponent#open", this.mainSidebarLargeEventEl, {
                 event_id: target.dataset.eventId
             }).then(payload => {
                 // this._updateUrl(target);
@@ -73,7 +73,7 @@ export default class extends ApplicationController {
     //     return document.querySelector("#user-resources-list");
     // }
 
-    _mainSidebarLargeEventEl() {
+    get mainSidebarLargeEventEl() {
         return document.querySelector("[data-controller~='main-sidebar--large-event']");
     }
 

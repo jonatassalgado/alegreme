@@ -100,50 +100,51 @@
             <%= @event.details_description.html_safe %>
           </div>
         </div>
-        <div>
-          <h2 class="px-5 mt-10 font-bold text-gray-700 uppercase">Similares</h2>
-          <% Event.includes(:place).not_ml_data.active.not_disliked(@user).where(id: @event.similar_data).order_by_ids(@event.similar_data).not_liked(@user).limit(6).each do |similar_event| %>
-            <div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-50">
-              <div class="pr-6">
-                <div class="mb-1 text-sm  text-gray-600">
-                  <%= I18n.l(similar_event.start_time, format: :long) %>
-                  às <%= helpers.format_hour similar_event.first_day_time %>h
-                  · <%= similar_event.categories_primary_name.titleize %>
-                </div>
-                <%= content_tag :a,
-                                href:  event_path(similar_event),
-                                data:  {
-                                    action:     'click->main-sidebar--horizontal-event#openEvent',
-                                    url:        event_path(similar_event),
-                                    'event-id': similar_event.id
-                                },
-                                class: 'md:hover:underline mb-1 leading-snug text-gray-700' do %>
-                  <%= similar_event.details_name %>
-                <% end %>
-                <div class="text-sm  text-gray-500">
-                  <%= link_to helpers.limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline' %>
-                </div>
-              </div>
-              <div>
-                <div data-controller="ripple" class="shadow-xs relative w-24 mt-6 overflow-hidden rounded ripple ripple-white">
-                  <%= link_to event_path(similar_event),
-                              data: {
-                                  action:     'click->main-sidebar--horizontal-event#openEvent',
-                                  'event-id': similar_event.id
-                              } do %>
-                    <div class="bg-gray-50 aspect-ratio-16/9"></div>
-                    <%= image_tag helpers.shrine_image_url(similar_event, :feed), {
-                        loading: :lazy,
-                        class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
-                        onerror: "this.style.opacity='0'"
-                    } rescue nil %>
+        <% if @similar_events.present? %>
+          <div class="mt-10 mb-5">
+            <h2 class="px-5 font-bold text-gray-700 uppercase">Similares</h2>
+            <% @similar_events.each do |similar_event| %>
+              <div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-50">
+                <div class="pr-6">
+                  <div class="mb-1 text-sm  text-gray-600">
+                    <%= I18n.l(similar_event.start_time, format: :long) %>
+                    às <%= helpers.format_hour similar_event.first_day_time %>h
+                    · <%= similar_event.categories_primary_name.titleize %>
+                  </div>
+                  <%= content_tag :a,
+                                  href:  event_path(similar_event),
+                                  data:  {
+                                      action:     'click->main-sidebar--horizontal-event#openEvent',
+                                      url:        event_path(similar_event),
+                                      'event-id': similar_event.id
+                                  },
+                                  class: 'md:hover:underline mb-1 leading-snug text-gray-700' do %>
+                    <%= similar_event.details_name %>
                   <% end %>
+                  <div class="text-sm  text-gray-500">
+                    <%= link_to helpers.limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline' %>
+                  </div>
+                </div>
+                <div>
+                  <div data-controller="ripple" class="shadow-xs relative w-24 mt-6 overflow-hidden rounded ripple ripple-white">
+                    <%= link_to event_path(similar_event),
+                                data: {
+                                    action:     'click->main-sidebar--horizontal-event#openEvent',
+                                    'event-id': similar_event.id
+                                } do %>
+                      <div class="bg-gray-50 aspect-ratio-16/9"></div>
+                      <%= image_tag helpers.shrine_image_url(similar_event, :feed), {
+                          loading: :lazy,
+                          class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
+                          onerror: "this.style.opacity='0'"
+                      } rescue nil %>
+                    <% end %>
+                  </div>
                 </div>
               </div>
-            </div>
-          <% end %>
-
-        </div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   <% end %>

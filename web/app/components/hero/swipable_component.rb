@@ -1,10 +1,11 @@
 class Hero::SwipableComponent < ViewComponentReflex::Component
 
 	def initialize(user:)
-		@max_events_to_show  = 3
-		@min_events_to_train = 5
-		@user                = user
-		@end_train_message   = false
+		@max_events_to_show        = 3
+		@min_events_to_train       = 5
+		@suggestion_hours_interval = 24
+		@user                      = user
+		@end_train_message         = false
 		events_to_train_or_suggestions
 		show_swipable?
 	end
@@ -27,7 +28,7 @@ class Hero::SwipableComponent < ViewComponentReflex::Component
 	private
 
 	def show_swipable?
-		@show_swipable = (DateTime.now - 24.hours) > @user.swipable.dig('events', 'hidden_at').to_datetime rescue true
+		@show_swipable = (DateTime.now - 	@suggestion_hours_interval.hours) > @user.swipable.dig('events', 'hidden_at').to_datetime rescue true
 		update_last_view_at if @show_swipable
 	end
 

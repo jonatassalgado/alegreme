@@ -1,4 +1,5 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
+import {MobileDetector}      from "../../javascript/modules/mobile-detector-module";
 
 export default class extends ApplicationController {
     static targets = [];
@@ -25,8 +26,33 @@ export default class extends ApplicationController {
         this.teardown()
     }
 
+    openEvent(event) {
+        if (!MobileDetector.mobile()) {
+            event.preventDefault()
+            event.stopPropagation()
+
+            const target    = this._linkEl(event);
+            this.beginEvent = new Event("horizontal-event#open-event:before")
+            this.endEvent   = new Event("horizontal-event#open-event:success");
+
+            document.dispatchEvent(this.beginEvent)
+
+            this.stimulate("MainSidebar::LargeEventComponent#open", this.mainSidebarLargeEventEl, {
+                event_id: target.dataset.eventId
+            }).then(payload => {
+                document.dispatchEvent(this.endEvent)
+            }).catch(payload => {
+
+            })
+        }
+    }
+
     beforeUnlike(anchorElement) {
         this._animateHide(this.element)
+    }
+
+    _linkEl(e) {
+        return e.target.closest("[data-action~='click->left-sidebar--horizontal-event#openEvent']");
     }
 
     _animateHide(element) {
@@ -40,6 +66,10 @@ export default class extends ApplicationController {
             }, reason => {
 
             })
+    }
+
+    get mainSidebarLargeEventEl() {
+        return document.querySelector("[data-controller~='main-sidebar--large-event']");
     }
 
 }

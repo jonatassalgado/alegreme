@@ -5,7 +5,8 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 	end
 
 	def open(args = {})
-		@event = Event.find(args['event_id'])
+		@event          = Event.find(args['event_id'])
+		@similar_events = Event.includes(:place).not_ml_data.active.not_disliked(@user).where(id: @event.similar_data).order_by_ids(@event.similar_data).not_liked(@user).limit(6)
 	end
 
 	def close
@@ -14,13 +15,13 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 
 	def like
 		unless @user
-			stimulate('Modal::SignInComponent#open', { key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas" })
+			stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
 			prevent_refresh!
 		else
 			if @user.like? @event
 				@user.unlike! @event
 			elsif @user.dislike? @event
-				@user.like_update(@event, sentiment: :positive)
+				@user.like! @event, action: :update
 			else
 				@user.like! @event
 			end
@@ -31,13 +32,13 @@ class MainSidebar::LargeEventComponent < ViewComponentReflex::Component
 
 	def dislike
 		unless @user
-			stimulate('Modal::SignInComponent#open', { key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas" })
+			stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
 			prevent_refresh!
 		else
 			if @user.dislike? @event
 				@user.unlike! @event
 			elsif @user.like? @event
-				@user.like_update(@event, sentiment: :negative)
+				@user.dislike! @event, action: :update
 			else
 				@user.dislike! @event
 			end

@@ -213,7 +213,7 @@ module EventQueries
 
 			scope 'order_by_ids', lambda { |ids = false|
 				if ids.is_a?(Array)
-					order("position(id::text in '#{ids.join(',')}')")
+					order(Arel.sql "position(id::text in '#{ids.join(',')}')")
 				else
 					all
 				end
