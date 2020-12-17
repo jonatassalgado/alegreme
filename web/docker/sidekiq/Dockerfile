@@ -1,6 +1,5 @@
 FROM ruby:2.6.3
 
-
 RUN apt-get update && apt-get install -y locales locales-all
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
 ENV LANG en_US.UTF-8
@@ -41,7 +40,7 @@ COPY ./docker/sidekiq/config.yml config.yml
 COPY Gemfile Gemfile
 
 
-RUN bundle install --jobs 20 --retry 5
+RUN bundle install --jobs 20 --retry 5 --path ${BUNDLE_PATH}
 RUN bundle update --bundler
 
 
@@ -54,10 +53,7 @@ COPY . $SIDEKIQ_ROOT
 
 RUN yarn install
 
-# RUN bundle exec rake assets:clobber
 RUN bundle exec rake webpacker:clobber
-# RUN bundle exec rake assets:precompile
 RUN bundle exec rake webpacker:compile
-
 
 CMD bundle exec sidekiq -C config.yml

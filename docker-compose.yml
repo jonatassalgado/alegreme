@@ -167,7 +167,7 @@ services:
     memswap_limit: 5gb
     mem_reservation: 256m
     cpus: 3
-    command: --maxrss 3500 --max-timeout 600
+    command: --maxrss 3500 --max-timeout 3600
   redis:
     image: redis
     environment:

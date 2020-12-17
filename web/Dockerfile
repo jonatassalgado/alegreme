@@ -14,11 +14,6 @@ RUN echo $TZ > /etc/timezone && \
   dpkg-reconfigure -f noninteractive tzdata && \
   apt-get clean
 
-# ENV RUBY_MAJOR="2.6" \
-#     RUBY_VERSION="2.6.1" \
-#     DB_PACKAGES="libsqlite3-dev" \
-#     RUBY_PACKAGES="ruby2.6.1 ruby2.6.1-dev"
-
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       nano \
       build-essential \
@@ -34,16 +29,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       libpq-dev \
   && rm -rf /var/lib/apt/lists/*
 
-
-ENV RAILS_ENV production
-ENV RACK_ENV production
-#ENV RAILS_LOG_TO_STDOUT true
-
 RUN rm -fr /usr/local/bin/bundle
 RUN gem install --no-document bundler
 
 RUN apt-get update && curl --silent --location https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
-# RUN apt-get update && apt-get install -y libsqlite3-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -55,13 +44,6 @@ RUN apt-get install -y wget \
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
 RUN apt-get update && apt-get install -y postgresql-client-10
-
-
-# RUN echo fs.inotify.max_user_watches=524288 | tee /etc/sysctl.d/40-max-user-watches.conf && sysctl --system
-
-
-# ENV RAILS_VERSION 5.2.1
-# RUN gem install rails --version "$RAILS_VERSION"
 
 ENV RAILS_ROOT /var/www/alegreme
 RUN mkdir -p $RAILS_ROOT
@@ -79,7 +61,7 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 COPY Gemfile Gemfile
 
-RUN bundle install --jobs 20 --retry 5
+RUN bundle install --jobs 20 --retry 5 --path ${BUNDLE_PATH}
 RUN bundle update --bundler
 
 ADD . $RAILS_ROOT
@@ -88,9 +70,7 @@ RUN bash -c "cat /proc/sys/fs/inotify/max_user_watches"
 
 RUN yarn install
 
-#RUN bundle exec rake assets:clobber
 RUN bundle exec rake webpacker:clobber
-#RUN bundle exec rake assets:precompile
 RUN bundle exec rake webpacker:compile
 
 EXPOSE 3000

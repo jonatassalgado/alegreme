@@ -50,7 +50,7 @@ parse_page_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
-        splash.resource_timeout = 60
+        splash.resource_timeout = 120
         splash:set_user_agent(tostring(args.ua))
 
         assert(splash:go(splash.args.url))
@@ -165,7 +165,7 @@ class EventSpider(scrapy.Spider):
                 callback=self.parse_page,
                 endpoint='execute',
                 args={
-                'timeout': 90,
+                'timeout': 120,
                 'lua_source': parse_page_script,
                 'ua': ua
                 }
