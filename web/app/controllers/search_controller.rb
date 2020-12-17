@@ -6,7 +6,7 @@ class SearchController < ApplicationController
 		if params[:q]
 			query = params[:q].downcase.split.delete_if { |word| Event::STOPWORDS.include?(word) }.join(' ')
 
-			@events = Event.search(query, {
+			@search_result = Event.search(query, {
 					fields:        ["name^2", "organizers", "description", "category"],
 					suggest:       true,
 					limit:         150,
@@ -18,6 +18,8 @@ class SearchController < ApplicationController
 		else
 			@categories = Event::CATEGORIES.dup.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }
 		end
+
+		render layout: false if @stimulus_reflex
 	end
 
 
