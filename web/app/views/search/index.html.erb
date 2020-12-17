@@ -6,7 +6,7 @@
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
 						 style="height: calc(100vh - 48px); top: 48px">
-			<%= render LeftSidebar::MyAgendaComponent.new(search_result: @liked_events, user: current_user) %>
+			<%= render LeftSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
 		</section>
 	<% end %>
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
@@ -26,7 +26,7 @@
 				<div class="font-bold mt-5 px-10 text-lg">
 					Eventos encontrados para: <%= params[:q] %>
 				</div>
-				<%= render MainSidebar::GroupByDayListComponent.new(search_result: @search_result, user: current_user, open_in_sidebar: true) %>
+				<%= render MainSidebar::GroupByDayListComponent.new(events: @search_result, user: current_user, open_in_sidebar: true) %>
 			<% else %>
 				<h2 class="text-2xl">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path %>.</h2>
 				<% if @categories.present? %>
