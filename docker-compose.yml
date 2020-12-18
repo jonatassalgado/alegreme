@@ -56,10 +56,12 @@ services:
       - redis
       - db
     volumes:
+      - bundle_cache:/bundle
       - ./web:/var/www/alegreme
       - ./logs/sidekiq:/var/www/alegreme/log
     working_dir: /var/www/alegreme
     environment:
+      BUNDLE_USER_CONFIG : /var/www/alegreme/.bundle_config
       RAILS_ENV: production
       RACK_ENV: production
       PGHOST: db

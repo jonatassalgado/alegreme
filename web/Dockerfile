@@ -54,15 +54,10 @@ COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-ENV BUNDLE_PATH=/bundle \
-    BUNDLE_BIN=/bundle/bin \
-    GEM_HOME=/bundle
-ENV PATH="${BUNDLE_BIN}:${PATH}"
-
 COPY Gemfile Gemfile
 
 RUN gem install bundler
-RUN bundle install --jobs 20 --retry 5 --path ${BUNDLE_PATH} --clean
+RUN bundle install
 
 ADD . $RAILS_ROOT
 

@@ -1,0 +1,5 @@
+BUNDLE_PATH: "/bundle"
+BUNDLE_BIN: "/bundle/bin"
+BUNDLE_RETRY: "5"
+BUNDLE_JOBS: "20"
+BUNDLE_CLEAN: "true"

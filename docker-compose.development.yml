@@ -21,6 +21,7 @@ services:
       - ./scrapy/data:/var/www/scrapy/data
       - app_log:/var/www/alegreme/log
     environment:
+      BUNDLE_USER_CONFIG : /var/www/alegreme/.bundle_config
       RAILS_ENV: development
       RACK_ENV: development
       RAILS_SERVE_STATIC_FILES: 'false'

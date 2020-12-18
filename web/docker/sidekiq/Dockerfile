@@ -28,18 +28,13 @@ ENV RAILS_ROOT /var/www/alegreme
 RUN mkdir -p $SIDEKIQ_ROOT
 WORKDIR $SIDEKIQ_ROOT
 
-ENV BUNDLE_PATH=/bundle \
-    BUNDLE_BIN=/bundle/bin \
-    GEM_HOME=/bundle
-ENV PATH="${BUNDLE_BIN}:${PATH}"
-
 RUN mkdir -p config
 COPY ./docker/sidekiq/config.yml config.yml
 
 RUN gem install bundler
 COPY Gemfile Gemfile
 
-RUN bundle install --jobs 20 --retry 5 --path ${BUNDLE_PATH} --clean
+RUN bundle install
 
 COPY ./docker/sidekiq/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
