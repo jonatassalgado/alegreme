@@ -214,12 +214,12 @@ module PopulateEventsRake
 	end
 
 	def create_event(item)
-		if item['datetimes'].empty?
+		if item['datetimes']&.empty?
 			puts "Evento: #{item['name']} - Evento sem data raspada".red
 			return [false, false]
 		end
 
-		if item['description'].empty?
+		if item['description']&.empty?
 			puts "Evento: #{item['name']} - Evento sem descrição raspada".red
 			return [false, false]
 		end
