@@ -55,6 +55,7 @@ RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
 
 RUN gem install bundler
 RUN bundle install

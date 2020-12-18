@@ -4,6 +4,7 @@ TODO.md
 .idea/workspace.xml
 web/.generators
 web/.rakeTasks
+web/package-lock.json
 web/webpack-stats.json
 ml/api/log/
 hint-report/
