@@ -39,7 +39,7 @@ COPY ./docker/sidekiq/config.yml config.yml
 RUN gem install bundler
 COPY Gemfile Gemfile
 
-RUN bundle install --jobs 20 --retry 5 --path ${BUNDLE_PATH}
+RUN bundle install --jobs 20 --retry 5 --path ${BUNDLE_PATH} --clean
 
 COPY ./docker/sidekiq/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh

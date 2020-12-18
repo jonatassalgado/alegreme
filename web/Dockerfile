@@ -62,7 +62,7 @@ ENV PATH="${BUNDLE_BIN}:${PATH}"
 COPY Gemfile Gemfile
 
 RUN gem install bundler
-RUN bundle install --jobs 20 --retry 5 --path ${BUNDLE_PATH}
+RUN bundle install --jobs 20 --retry 5 --path ${BUNDLE_PATH} --clean
 
 ADD . $RAILS_ROOT
 
