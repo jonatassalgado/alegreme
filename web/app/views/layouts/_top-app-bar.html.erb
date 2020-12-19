@@ -2,7 +2,7 @@
 
 	props = {
 		visible: {
-			logo:         !mobile_device? && !['search'].include?(controller_name),
+			logo:         (!mobile_device? && ['search'].include?(controller_name)) || !['search'].include?(controller_name),
 			back_button:  content_for?(:back_button),
 			search:       (['feeds', 'events', 'organizers', 'places', 'movies'].include?(controller_name) && !mobile_device?) ||
 											['search'].include?(controller_name),
@@ -82,9 +82,9 @@
 				<!--				</svg>-->
 				<input autocomplete="false"
 							 name="q"
-							 class="placeholder-gray-500 border border-gray-100 h-10 md:w-9/12 mx-auto px-2 py-1 rounded-full"
+							 class="border border-gray-100 focus:border-green-500 focus:outline-none h-10 md:w-9/12 mx-auto placeholder-gray-500 px-2 py-1 rounded-full"
 							 id="text-field-shape-one"
-							 placeholder="Busque eventos, locais e organizadores..."
+							 placeholder="Busque por eventos ou tags..."
 							 type="text"
 							 data-target="search.input">
 				<input class="h-10 px-4 my-1 ml-3 text-sm antialiased font-light font-semibold text-gray-700 text-green-600 bg-green-200 rounded cursor-pointer md:hidden"
