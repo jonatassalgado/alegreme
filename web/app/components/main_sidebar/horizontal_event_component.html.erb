@@ -49,6 +49,7 @@
 					<div class="bg-gray-50 aspect-ratio-16/9"></div>
 					<%= image_tag helpers.shrine_image_url(@event, :feed), {
 						loading: :lazy,
+						alt:     "Cartaz do evento #{@event.details_name}",
 						class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
