@@ -1,8 +1,6 @@
 module.exports = {
     purge:    {
-        enabled: true,
-        mode: 'all',
-        preserveHtmlElements: false,
+        enabled: process.env.RAILS_ENV !== "development",
         content: [
             "./app/views/**/*.html.erb",
             "./app/views/**/**/*.html.erb",

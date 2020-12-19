@@ -2,16 +2,18 @@
 	<%= notice %>
 </p>
 
-<section class="me-page__section">
-	<h2>Dashboard</h2>
+<section class="w-full">
+	<h2 class="font-bold text-xl my-6">
+		Dashboard
+	</h2>
 
 	<section>
-		<h3>Convites solicitados</h3>
+		<h3 class="font-semibold text-lg">Convites solicitados</h3>
 		<%= line_chart(User.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
 	</section>
 
 	<section>
-		<h3>Eventos criados</h3>
+		<h3 class="font-semibold text-lg">Eventos criados</h3>
 		<%= line_chart(Event.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
 	</section>
 </section>
