@@ -24,7 +24,6 @@ Rails.application.routes.draw do
 
 	get '/porto-alegre', to: 'feeds#index', as: :feed
 	get '/porto-alegre/eventos', to: 'feeds#index', as: :city_events
-	get '/onboarding', to: 'bot#onboarding'
 	get '/minha-agenda', to: 'users#agenda', as: :my_agenda
 
 	resources :users, path: 'porto-alegre/u'

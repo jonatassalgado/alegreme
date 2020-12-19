@@ -46,7 +46,9 @@ COPY . $SIDEKIQ_ROOT
 
 RUN yarn install
 
+RUN bundle exec rake assets:clobber
 RUN bundle exec rake webpacker:clobber
+RUN bundle exec rake assets:precompile
 RUN bundle exec rake webpacker:compile
 
 CMD bundle exec sidekiq -C config.yml
