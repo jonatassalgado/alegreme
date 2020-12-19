@@ -1,6 +1,8 @@
 module.exports = {
     purge:    {
-        enabled: process.env.RAILS_ENV === "production",
+        enabled: true,
+        mode: 'all',
+        preserveHtmlElements: false,
         content: [
             "./app/views/**/*.html.erb",
             "./app/views/**/**/*.html.erb",
@@ -11,7 +13,7 @@ module.exports = {
             "./app/helpers/**/*.rb",
             "./app/javascript/**/*.js",
             "./app/javascript/**/**/*.js"
-        ],
+        ]
     },
     theme:    {
         animations:              {
