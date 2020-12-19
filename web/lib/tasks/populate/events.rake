@@ -208,7 +208,12 @@ module PopulateEventsRake
 		files              = Dir['/var/www/scrapy/data/scraped/*']
 		@current_file_name = (files.select { |file| file[/events-\d{8}-\d{6}\.jsonl$/] }).max
 
-		puts "Lendo arquivo JSON #{@current_file_name}".white
+		if @current_file_name.nil?
+			puts "Não foi encontrado nenhum arquivo na pasta /scraped".white
+			abort
+		end
+
+		puts "Lendo arquivo JSON #{@current_file_name} da pasta /scraped".white
 
 		@current_file = File.read(@current_file_name)
 	end

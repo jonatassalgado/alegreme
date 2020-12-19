@@ -131,7 +131,7 @@ class Event < ApplicationRecord
 	private
 
 	def uniq_details_name
-		if Event.where("lower(details ->> 'name') = ?", details_name&.downcase).present?
+		if details_name && Event.where("lower(details ->> 'name') = ?", details_name&.downcase).present?
 			errors.add(:details_name, "O nome do evento precisa ser único")
 		end
 	end
