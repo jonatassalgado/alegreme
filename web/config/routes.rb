@@ -3,12 +3,12 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
-  resources :likes
+	resources :likes
 	devise_for :users, controllers: {
-			omniauth_callbacks: 'users/omniauth_callbacks',
-			passwords:          'users/passwords',
-			sessions:           'users/sessions',
-			registrations:      'users/registrations'
+		omniauth_callbacks: 'users/omniauth_callbacks',
+		passwords:          'users/passwords',
+		sessions:           'users/sessions',
+		registrations:      'users/registrations'
 	}
 
 	root to: 'welcome#index'
@@ -23,13 +23,13 @@ Rails.application.routes.draw do
 	end
 
 	get '/porto-alegre', to: 'feeds#index', as: :feed
+	get '/porto-alegre/eventos', to: 'feeds#index', as: :city_events
 	get '/onboarding', to: 'bot#onboarding'
 	get '/minha-agenda', to: 'users#agenda', as: :my_agenda
 
 	resources :users, path: 'porto-alegre/u'
 
-	get '/porto-alegre/eventos', to: 'feeds#city', as: :city_events
-	get '/porto-alegre/eventos/:day', to: 'feeds#day', as: :day_events, constraints: {day: /(\d{2})-(\d{2})-(\d{4})/}
+	get '/porto-alegre/eventos/:day', to: 'feeds#day', as: :day_events, constraints: { day: /(\d{2})-(\d{2})-(\d{4})/ }
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
 	get '/porto-alegre/eventos/semana', to: 'feeds#week', as: :week_events
 	get '/porto-alegre/eventos/categoria(/:category)', to: 'feeds#category', as: :category_events
@@ -51,9 +51,9 @@ Rails.application.routes.draw do
 
 	get '/active-invite', to: 'users#active_invite'
 
-  namespace :sheets do
-	  resource :friendships, only: :edit
-  end
+	namespace :sheets do
+		resource :friendships, only: :edit
+	end
 
 	resources :categories
 	resources :organizers, path: 'organizadores' do
@@ -90,7 +90,6 @@ Rails.application.routes.draw do
 	resources :search, only: [:index], path: 'busca'
 
 	get 'train', to: 'train#index', as: :train
-
 
 	authenticate :user, lambda { |u| u.admin? } do
 		mount Sidekiq::Web => '/sidekiq'
