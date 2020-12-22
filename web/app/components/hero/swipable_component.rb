@@ -28,8 +28,12 @@ class Hero::SwipableComponent < ViewComponentReflex::Component
 	private
 
 	def show_swipable?
-		@show_swipable = (DateTime.now - 	@suggestion_hours_interval.hours) > @user.swipable.dig('events', 'hidden_at').to_datetime rescue true
-		update_last_view_at if @show_swipable
+		if @user
+			@show_swipable = (DateTime.now - @suggestion_hours_interval.hours) > @user.swipable.dig('events', 'hidden_at').to_datetime rescue true
+			update_last_view_at if @show_swipable
+		else
+			@show_swipable = false
+		end
 	end
 
 	def update_finished_at
@@ -60,6 +64,8 @@ class Hero::SwipableComponent < ViewComponentReflex::Component
 	end
 
 	def events_to_train_or_suggestions
+		return unless @user
+
 		@user.liked_or_disliked_events.reset
 		if @user.swipable['events']['finished_at'].blank? && @user.liked_event_ids.size < @min_events_to_train
 			@events_to_train = Event.not_ml_data.active.not_liked_or_disliked(@user).order_by_date.limit(3)
