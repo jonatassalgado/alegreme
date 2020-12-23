@@ -8,9 +8,9 @@
 	<div class="flex px-5 py-10 text-gray-800 bg-white">
 		<div class="relative w-20 mr-3 overflow-hidden bg-gray-100 rounded-full">
 			<div class="w-full aspect-ratio-square"></div>
-			<% begin %>
-				<%= image_tag(@user.picture, {class: "w-full h-full absolute top-0 left-0 mx-auto mr-4 rounded-full", alt: @user.name, onerror: "this.style.opacity='0'"}) %>
-			<% rescue %>
+			<% if @user&.picture %>
+				<%= image_tag(@user.picture, {class: "w-full h-full absolute top-0 left-0 mx-auto mr-4 rounded-full", alt: @user.name, onerror: "this.style.opacity='0'"}) rescue nil %>
+			<% else %>
 				<div class="absolute top-0 left-0 w-full h-full"></div>
 			<% end %>
 		</div>
