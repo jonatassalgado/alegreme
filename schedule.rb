@@ -5,7 +5,7 @@ every 30.hours do
 end
 
 every 23.hours do
-  command "cd /root/alegreme && sudo docker exec alegreme_app_1 rake populate:events similar:events suggestions:users sitemap:refresh search:refresh"
+  command "cd /root/alegreme && sudo docker exec alegreme_app_1 bundle exec rake populate:events similar:events suggestions:users sitemap:refresh search:refresh"
 end
 
 
@@ -14,11 +14,11 @@ end
 # end
 
 # every 23.hours do
-#   command "cd /root/alegreme && sudo docker exec alegreme_app_1 rake populate:movies"
+#   command "cd /root/alegreme && sudo docker exec alegreme_app_1 bundle exec rake populate:movies"
 # end
 
 # every 2.weeks do
-#   command "cd /root/alegreme && sudo docker exec alegreme_app_1 rake populate:movies:new_release"
+#   command "cd /root/alegreme && sudo docker exec alegreme_app_1 bundle exec rake populate:movies:new_release"
 # end
 
 every 2.days do
