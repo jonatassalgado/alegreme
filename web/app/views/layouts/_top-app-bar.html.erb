@@ -43,7 +43,7 @@
 			</div>
 		<% end %>
 		<div class="<%= class_names 'h-full inline-flex items-center flex-auto pr-8 md:pr-0',
-																'hidden': ['search'].include?(controller_name) %>">
+																'hidden': !props[:visible][:logo] %>">
 			<% if mobile_device? && content_for?(:top_app_bar_title) %>
 				<div class="font-semibold text-gray-700">
 					<%= content_for(:top_app_bar_title) %>
