@@ -5,7 +5,7 @@ class LeftSidebar::MyAgendaComponent < ViewComponentReflex::Component
   def initialize(events:, start_date: Date.today, user:)
     @start_date = start_date
     @events     = events
-    @indicators = events.map(&:start_time)
+    @indicators = events&.map(&:start_time)
     @user       = user
     @filter     = false
 
