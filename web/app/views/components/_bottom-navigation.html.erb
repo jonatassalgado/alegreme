@@ -42,6 +42,7 @@
 																	'text-green-500': current_page?(controller: :users, action: :show, id: current_user),
 																	'text-gray-600':  !current_page?(controller: :users, action: :show, id: current_user) %>">
 				<img src="<%= current_user&.picture :small %>" class="w-6 h-6 rounded-full md:mr-5" alt="<%= current_user&.name %>">
+				<%= current_user&.name&.truncate(10, separator: " ") %>
 			</div>
 		<% else %>
 			<div data-target="toggle-style.toggle"
@@ -50,7 +51,7 @@
 					 data-go-to-url="<%= new_user_registration_path %>"
 					 class="cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-sm duration-100">
 				<div class="w-6 h-6 rounded-full md:mr-5 bg-gray-100"></div>
-				<%= current_user ? 'Meu perfil' : 'Criar conta' %>
+				Criar conta
 			</div>
 		<% end %>
 	</div>
