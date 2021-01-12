@@ -31,7 +31,7 @@ export default class extends ApplicationController {
         this.stimulate('Hero::SwipableComponent#update')
     }
 
-    afterHiddenSwipable() {
+    beforeHiddenSwipable() {
         this._removeMinHeight()
     }
 
