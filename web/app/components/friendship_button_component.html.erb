@@ -50,7 +50,7 @@
 	<% end %>
 
 	<% if @editing %>
-		<div id="sheet-content" data-target="sheet.content" class="fixed top-0 left-0 z-50 w-screen h-screen">
+		<div id="sheet-content" data-sheet-target="content" class="fixed top-0 left-0 z-50 w-screen h-screen">
 			<%= reflex_tag :end_edit, :div, nil, class: 'w-full h-full bg-black opacity-50' %>
 			<div class="absolute bottom-0 flex flex-col w-screen p-5 pb-8 space-y-5 bg-white rounded-t-lg h-content">
 				<div class="flex items-center space-x-5 font-medium">

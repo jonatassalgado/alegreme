@@ -15,7 +15,7 @@
 <section class="min-h-screen is-animated">
 	<%= notice %>
 
-	<section data-controller="page" data-target="page.page" class="pt-2 mx-auto mb-24 space-y-2 bg-gray-50 is-animated lg:w-9/12 sm:container">
+	<section data-controller="page" data-page-target="page" class="pt-2 mx-auto mb-24 space-y-2 bg-gray-50 is-animated lg:w-9/12 sm:container">
 		<%= render partial: 'events/group_by_day_list', locals: {
 				events: @events,
 				user:   current_user

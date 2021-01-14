@@ -11,7 +11,7 @@
       } if @event.image[:feed] %>
     </div>
     <div class="inline-flex pt-1 px-2 quinta text-gray-600 <%= @event.day_of_week['decorator'].parameterize %>"
-         data-target="event.date">
+         data-event-target="date">
       <div class="mr-1">
         <%= reflex_tag :like, :div, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
           <svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',

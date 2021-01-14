@@ -14,7 +14,7 @@
 		 data-cable-ready-followable-id="<%= followable.id %>"
 		 data-cable-ready-followable-type="<%= followable.class.name %>"
 		 data-cable-ready-follow-action="<%= user.follow?(followable) ? 'unfollow' : 'follow' %>"
-		 data-target="follow-button.button"
+		 data-follow-button-target="button"
 		 id="<%= dom_id followable %>">
 	<svg class="<%= class_names('fill-current h-4 hover:scale-150 px-1',
 															{'text-green-500': user.follow?(followable),

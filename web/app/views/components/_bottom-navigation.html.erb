@@ -7,7 +7,7 @@
 		 data-toggle-style-inactive-class='["text-gray-700"]'
 		 data-toggle-style-init-selected="<%= "#{controller_name}-#{action_name}" %>">
 	<div class="flex px-5 md:flex-col md:space-y-5">
-		<div data-target="toggle-style.toggle"
+		<div data-toggle-style-target="toggle"
 				 data-action="click->toggle-style#toggle click->go-to#url"
 				 data-toggle-style-identifier="feeds-index"
 				 data-go-to-url="<%= feed_path %>"
@@ -19,7 +19,7 @@
 			</svg>
 			Porto Alegre
 		</div>
-		<div data-target="toggle-style.toggle"
+		<div data-toggle-style-target="toggle"
 				 data-action="click->toggle-style#toggle click->go-to#url"
 				 data-toggle-style-identifier="users-agenda"
 				 data-go-to-url="<%= my_agenda_path %>"
@@ -34,7 +34,7 @@
 			Minha agenda
 		</div>
 		<% if current_user %>
-			<div data-target="toggle-style.toggle"
+			<div data-toggle-style-target="toggle"
 					 data-action="click->toggle-style#toggle click->go-to#url"
 					 data-toggle-style-identifier="users-profile"
 					 data-go-to-url="<%= current_user ? user_path(current_user) : new_user_registration_path %>"
@@ -45,7 +45,7 @@
 				<%= current_user&.name&.truncate(10, separator: " ") %>
 			</div>
 		<% else %>
-			<div data-target="toggle-style.toggle"
+			<div data-toggle-style-target="toggle"
 					 data-action="click->toggle-style#toggle click->go-to#url"
 					 data-toggle-style-identifier="users-profile"
 					 data-go-to-url="<%= new_user_registration_path %>"

@@ -2,7 +2,7 @@
   return unless params['controller'] == 'feeds' && params['action'] == 'index'
 %>
 
-<div data-controller="float-menu" data-target="float-menu.menu" class="me-float-menu">
+<div data-controller="float-menu" data-float-menu-target="menu" class="me-float-menu">
   <div class="me-float-menu__nav">
     <!--    <div class="me-float-menu__item" data-action="click->float-menu#scrollTo" data-collection-identifier="saves">-->
     <!--      <div class="me-float-menu__icon">-->
@@ -25,7 +25,7 @@
 <!--        Salvos-->
 <!--      </div>-->
 <!--    </div>-->
-<div class="me-float-menu__item" data-target="float-menu.item" data-action="click->float-menu#scrollTo" data-collection-identifier="this-week">
+<div class="me-float-menu__item" data-float-menu-target="item" data-action="click->float-menu#scrollTo" data-collection-identifier="this-week">
   <div class="me-float-menu__icon">
     <i class="material-icons">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -38,7 +38,7 @@
     Esta semana
   </div>
 </div>
-    <div class="me-float-menu__item" data-target="float-menu.item" data-action="click->float-menu#scrollTo" data-collection-identifier="new-today">
+    <div class="me-float-menu__item" data-float-menu-target="item" data-action="click->float-menu#scrollTo" data-collection-identifier="new-today">
       <div class="me-float-menu__icon">
         <i class="material-icons">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
@@ -48,7 +48,7 @@
         Eventos novos
       </div>
     </div>
-    <div class="me-float-menu__item" data-target="float-menu.item" data-action="click->float-menu#scrollTo" data-collection-identifier="user-suggestions">
+    <div class="me-float-menu__item" data-float-menu-target="item" data-action="click->float-menu#scrollTo" data-collection-identifier="user-suggestions">
       <div class="me-float-menu__icon">
         <i class="material-icons">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -62,7 +62,7 @@
         Indicados para você
       </div>
     </div>
-    <div class="me-float-menu__item" data-target="float-menu.item" data-action="click->float-menu#scrollTo" data-collection-identifier="follow">
+    <div class="me-float-menu__item" data-float-menu-target="item" data-action="click->float-menu#scrollTo" data-collection-identifier="follow">
       <div class="me-float-menu__icon">
         <i class="material-icons">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@
         Tópicos seguidos
       </div>
     </div>
-    <div onclick="Turbolinks.visit('/porto-alegre/eventos')" class="me-float-menu__item" data-target="float-menu.item" data-action="click->float-menu#scrollTo" data-collection-identifier="explorer" style="display: flex; opacity: 1">
+    <div onclick="Turbolinks.visit('/porto-alegre/eventos')" class="me-float-menu__item" data-float-menu-target="item" data-action="click->float-menu#scrollTo" data-collection-identifier="explorer" style="display: flex; opacity: 1">
       <div class="me-float-menu__icon">
         <i class="material-icons">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -88,7 +88,7 @@
         Explorar tudo
       </div>
     </div>
-    <div class="me-float-menu__item" data-target="float-menu.item" data-action="click->float-menu#scrollTo" data-collection-identifier="history">
+    <div class="me-float-menu__item" data-float-menu-target="item" data-action="click->float-menu#scrollTo" data-collection-identifier="history">
       <div class="me-float-menu__icon">
         <i class="material-icons">history</i>
       </div>

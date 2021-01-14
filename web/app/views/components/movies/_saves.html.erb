@@ -38,7 +38,8 @@
 			</div>
 		</div>
 		<div class="grid grid-flow-col grid-max-content gap-3 pt-5 pl-5 mt-1 grid-after-margin md:flex md:pl-0 w-auto scrollx"
-				 data-target="saves.list slider.scroller">
+				 data-saves-target="list"
+		     data-slider-target="scroller">
 			<%= render(partial:    'components/collection/movie',
 								 collection: saved_resources,
 								 as:         :movie,

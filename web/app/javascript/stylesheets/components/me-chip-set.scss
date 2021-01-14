@@ -60,7 +60,7 @@
       }
     }
 
-    &[data-target="chip.chipset section.ocurrences"] {
+    &[data-chip-target="chipset"] {
       & .mdc-chip {
         @include desktop-only {
           padding: 6px;

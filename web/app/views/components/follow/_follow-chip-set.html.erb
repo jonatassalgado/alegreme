@@ -2,11 +2,11 @@
      data-followed="<%= user.try {|user| user.following?(followable)} %>"
      data-followable="<%= followable.id %>"
      data-type="<%= followable.class.name.underscore.pluralize %>"
-     data-target="follow-chipset.chip">
+     data-follow-chipset-target="chip">
   <% if user %>
     <i class="material-icons mdc-chip__icon mdc-chip__icon--leading"
        data-action="click->follow-chipset#follow"
-       data-target="follow-chipset.trailing"
+       data-follow-chipset-target="trailing"
        role="button"
        tabindex="0"
        title="Siga o tópico '<%= followable.details['name'] %>'">

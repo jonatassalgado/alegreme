@@ -38,7 +38,8 @@
 			</div>
 		</div>
 		<div class="grid grid-flow-col gap-3 pt-5 pb-2 pl-5 mt-1 grid-after-margin md:flex md:pl-0 scrollx"
-				 data-target="saves.list slider.scroller">
+				 data-saves-target="list"
+		     data-slider-target="scroller">
 			<% if identifier == 'movies-saved' %>
 				<%= render(partial:    'components/collection/movie',
 									 collection: saved_resources,

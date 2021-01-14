@@ -1,7 +1,7 @@
 <div id="sheet" data-controller="sheet">
 	<% if sheet && friend %>
-		<div id="sheet-content" data-target="sheet.content" class="fixed top-0 left-0 z-50 w-screen h-screen">
-			<div data-target="sheet.overlay" data-action="click->sheet#close" class="w-full h-full bg-black opacity-50">
+		<div id="sheet-content" data-sheet-target="content" class="fixed top-0 left-0 z-50 w-screen h-screen">
+			<div data-sheet-target="overlay" data-action="click->sheet#close" class="w-full h-full bg-black opacity-50">
 			</div>
 			<div class="absolute bottom-0 flex flex-col w-screen p-5 pb-8 space-y-5 bg-white rounded-t-lg h-content">
 				<div id="<%= dom_id(friend, :sheets_friendships_edit_action) %>" class="flex items-center space-x-5 font-medium">

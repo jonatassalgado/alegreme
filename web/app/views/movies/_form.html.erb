@@ -179,9 +179,9 @@
       <h2>Coleções</h2>
 
       <div data-controller="form-chip-set" data-form-chip-set-model="<%= @movie.model_name.name.downcase %>" data-form-chip-set-column="collections" class="me-form__chip-set">
-        <div data-target="form-chip-set.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter mdc-chip-set--input">
+        <div data-form-chip-set-target="chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter mdc-chip-set--input">
           <% Movie::COLLECTIONS.each_with_index do |collection, index| %>
-          <div data-target="form-chip-set.chip" data-action="MDCChip:selection->form-chip-set#chipSelection" class="me-chip mdc-chip <%= 'mdc-chip--selected' if @movie.collections.include?(collection)%>">
+          <div data-form-chip-set-target="chip" data-action="MDCChip:selection->form-chip-set#chipSelection" class="me-chip mdc-chip <%= 'mdc-chip--selected' if @movie.collections.include?(collection)%>">
             <div class="mdc-chip__checkmark">
               <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
                 <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
@@ -195,7 +195,7 @@
           <% end %>
         </div>
         <div class="me-text-field__container">
-          <div data-target="form-chip-set.inputContainer"
+          <div data-form-chip-set-target="inputContainer"
           class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label mdc-text-field--dense mdc-text-field--with-trailing-icon">
           <%= text_field_tag 'chip', nil, class: 'mdc-text-field__input', :"data-target" => "form-chip-set.input" %>
           <div class="mdc-notched-outline mdc-notched-outline--upgraded">
@@ -210,7 +210,7 @@
       <span data-action="click->form-chip-set#create" class="me-button mdc-button me-button--small me-button--floating">
         <span class="mdc-button__label">Adicionar</span>
       </span>
-      <div data-target="form-chip-set.hiddenInputs"></div>
+      <div data-form-chip-set-target="hiddenInputs"></div>
     </div>
     </div>
 

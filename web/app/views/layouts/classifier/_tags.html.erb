@@ -1,10 +1,10 @@
 <div data-controller="tags" data-tags-type="<%= type %>" data-tags-identifier="<%= event.id %>">
-	<span data-target="tags.dialogButton" data-action="click->tags#openDialog">
+	<span data-tags-target="dialogButton" data-action="click->tags#openDialog">
 		<p>
 			<b><%= type.capitalize %>:</b> <%= event.tags_of_type(type).join(' ') %>
 		</p>
 	</span>
-	<div data-target="tags.dialog"
+	<div data-tags-target="dialog"
 			class="mdc-dialog"
 			role="alertdialog"
 			aria-modal="true"
@@ -14,10 +14,10 @@
 			<div class="mdc-dialog__surface">
 				<h2 class="mdc-dialog__title" id="my-dialog-title"><%= type.capitalize %></h2>
 				<div class="mdc-dialog__content" id="my-dialog-content">
-					<div data-controller="filter" data-target="tags.tags">
-						<div data-filter-type="tags" data-target="filter.chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
+					<div data-controller="filter" data-tags-target="tags">
+						<div data-filter-type="tags" data-filter-target="chipset" class="me-chip-set mdc-chip-set mdc-chip-set--filter">
 							<% tags_to_select.each do |tag| %>
-								<div data-target="filter.chip" data-action="MDCChip:selection->filter#select"
+								<div data-filter-target="chip" data-action="MDCChip:selection->filter#select"
 									class="me-chip mdc-chip <%= event.tags_of_type(type).include?(tag) ? 'mdc-chip--selected' : nil %>"
 									data-filter-tag-type="things" data-turbolinks-scroll="false">
 									<div class="mdc-chip__checkmark">

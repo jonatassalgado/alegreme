@@ -7,7 +7,7 @@
 
 <% if filters.present? %>
 	<div class="scrollx">
-		<div data-target="filter.chipset"
+		<div data-filter-target="chipset"
 				 class="grid gap-2 grid-after-margin grid-flow-col md:pl-0 pl-5 w-content">
 			<% if type == 'days' %>
 				<% filters.reject { |filter| filter['decorator'].blank? }.each_with_index do |filter, index| %>
@@ -16,7 +16,7 @@
 							 data-chip-type="<%= type %>"
 							 data-chip-value="<%= filter['string'] %>"
 							 data-chip-selected="<%= selected[:days].include?(filter['string']) ? 'true' : 'false' %>"
-							 data-target="filter.chip"
+							 data-filter-target="chip"
 							 data-turbolinks-scroll="false"
 							 id="<%= "#{type}-#{index}" %>">
 						<%= filter['decorator'] %>
@@ -29,7 +29,7 @@
 							 data-chip-type="<%= type %>"
 							 data-chip-value="<%= filter %>"
 							 data-chip-selected="<%= selected[:categories].include?(filter) ? 'true' : 'false' %>"
-							 data-target="filter.chip"
+							 data-filter-target="chip"
 							 data-turbolinks-scroll="false"
 							 id="<%= "#{type}-#{index}" %>">
 						<%= filter %>

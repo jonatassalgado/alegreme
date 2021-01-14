@@ -63,7 +63,7 @@ export default class extends ApplicationController {
         const target = event.target.closest('td');
 
         if (target.classList.contains('start-date')) {
-            this.stimulate('LeftSidebar::MyAgendaComponent#clear_filter', target)
+            this.stimulate('LeftSidebar::MyAgendaComponent#clear_filter', target, {resolveLate: true})
                 .then(payload => {
 
                 })

@@ -19,7 +19,6 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 import "./serviceworker-companion"
-// import "morphdom";
 
 import {Application}            from "stimulus"
 import {definitionsFromContext} from "stimulus/webpack-helpers"
@@ -42,7 +41,7 @@ application.load(definitionsFromContext(context).concat(
     definitionsFromContext(context_components)
 ));
 
-StimulusReflex.initialize(application, {consumer, debug: true})
+StimulusReflex.initialize(application, {consumer, debug: true, isolate: true})
 
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();

@@ -14,7 +14,7 @@
 			 data-controller="toggle-style go-to"
 			 data-go-to-delay="250"
 			 data-reflex-permanent
-			 data-target="head.tabBar"
+			 data-head-target="tabBar"
 			 data-toggle-style-active-class='["border-b-2","border-green-600","font-bold","text-green-600"]'
 			 data-toggle-style-current-selected="<%= "#{controller_name}-#{action_name}" %>"
 			 data-toggle-style-inactive-class='["text-gray-800"]'
@@ -22,7 +22,7 @@
 			 id="tab-bar">
 		<div class="antialiased font-semibold gap-5 grid grid-flow-col md:pl-0 md:text-base pt-3 px-5 text-sm w-content">
 			<div data-action="click->toggle-style#toggle click->go-to#url"
-					 data-target="toggle-style.toggle"
+					 data-toggle-style-target="toggle"
 					 data-toggle-style-identifier="feeds-index"
 					 data-go-to-url="<%= feed_path %>"
 					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 controller_name == 'feeds' && action_name == 'index',
@@ -31,7 +31,7 @@
 				Para você
 			</div>
 			<div data-action="click->toggle-style#toggle click->go-to#url"
-					 data-target="toggle-style.toggle"
+					 data-toggle-style-target="toggle"
 					 data-toggle-style-identifier="feeds-category"
 					 data-go-to-url="<%= category_events_path %>"
 					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 action_name == 'category',
@@ -40,7 +40,7 @@
 				Categorias
 			</div>
 			<div data-action="click->toggle-style#toggle click->go-to#url"
-					 data-target="toggle-style.toggle"
+					 data-toggle-style-target="toggle"
 					 data-toggle-style-identifier="feeds-city"
 					 data-go-to-url="<%= city_events_path %>"
 					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 action_name == 'city',
@@ -50,7 +50,7 @@
 			</div>
 			<% unless mobile_device? %>
 				<div data-action="click->toggle-style#toggle click->go-to#url"
-						 data-target="toggle-style.toggle"
+						 data-toggle-style-target="toggle"
 						 data-toggle-style-identifier="movies"
 						 data-go-to-url="<%= movies_path %>"
 						 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 controller_name == 'movies',

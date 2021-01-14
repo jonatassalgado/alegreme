@@ -2,7 +2,7 @@
 <% content_for :top_app_bar_title, truncate(@user.slug, length: 20) %>
 <% content_for :back_button, true %>
 
-<section id="page" data-controller="page" data-target="page.page" class="pt-2 mx-auto mb-24 space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
+<section id="page" data-controller="page" data-page-target="page" class="pt-2 mx-auto mb-24 space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
 	<%= notice %>
 
 	<div class="flex px-5 py-10 text-gray-800 bg-white">

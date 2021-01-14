@@ -3,7 +3,7 @@
        data-controller="scroll-on-clicked"
        data-scroll-on-clicked-init-selected="<%= @selected_tab %>"
        data-scroll-on-clicked-offset-left="24"
-       data-target="scroll-on-clicked.scroller">
+       data-scroll-on-clicked-target="scroller">
     <div class="flex pr-32 md:pr-0 space-x-3 w-content">
       <%= reflex_tag :select, :div, data: {tab: 'suggestions'}, class: (helpers.class_names 'px-4 py-1 rounded-full h-content cursor-pointer',
                                                                                             {'bg-white md:bg-gray-100':                              @selected_tab != 'suggestions',

@@ -37,25 +37,25 @@ export default class extends ApplicationController {
 
             document.dispatchEvent(this.beginEvent)
 
-            this.stimulate("MainSidebar::LargeEventComponent#open", this.mainSidebarLargeEventEl, {
-                event_id:    target.dataset.eventId,
-                resolveLate: true
-            }).then(payload => {
-                // this._updateUrl(target);
+            this.stimulate("MainSidebar::LargeEventComponent#open",
+                           this.mainSidebarLargeEventEl,
+                           {resolveLate: false},
+                           {event_id: this.data.get('id')}
+            ).then(payload => {
                 document.dispatchEvent(this.endEvent)
             }).catch(payload => {
-                // this._userResourceListEl().classList.remove("hidden");
+
             })
         }
     }
 
-    afterLike(event) {
-        this._updateMyAgenda()
-    }
-
-    afterDislike(event) {
-        this._updateMyAgenda()
-    }
+    // afterLike(event) {
+    //     this._updateMyAgenda()
+    // }
+    //
+    // afterDislike(event) {
+    //     this._updateMyAgenda()
+    // }
 
     _updateMyAgenda() {
         const myAgendaEvent = new Event('main-sidebar--horizontal-event:liked-or-disliked')
