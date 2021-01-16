@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 		registrations:      'users/registrations'
 	}
 
-	root to: 'welcome#index'
+	root to: 'feeds#index'
 
 	namespace :api do
 		get 'porto-alegre/eventos/:id/similar', to: 'events#similar', as: :events_similar

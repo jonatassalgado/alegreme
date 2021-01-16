@@ -1,4 +1,4 @@
-<%= component_controller id: dom_id(@event, :left_sidebar) do %>
+<%= content_tag :div, id: dom_id(@event, :left_sidebar), data: { controller: 'left-sidebar--horizontal-event' } do %>
 	<div class="px-5 py-3 group relative">
 		<div class="mb-1 text-sm  text-gray-400">
 			<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h
@@ -8,14 +8,13 @@
 											href:  event_path(@event),
 											data:  {
 												action:     'click->left-sidebar--horizontal-event#openEvent',
-												url:        event_path(@event),
 												'event-id': @event.id
 											},
 											class: 'md:hover:underline' do %>
 				<%= @event.details_name %>
 			<% end %>
 		</div>
-		<%= reflex_tag :unlike, :div, class: 'absolute bottom-0 mt-3 cursor-pointer group-hover:block hidden text-red-500 text-sm underline' do %>
+		<%= content_tag :div, data: { reflex: 'click->Calendar#unlike', 'event-id': @event.id }, class: 'absolute bottom-0 mt-3 cursor-pointer group-hover:block hidden text-red-500 text-sm underline' do %>
 			Remover
 		<% end %>
 	</div>

@@ -32,12 +32,11 @@ export default class extends ApplicationController {
         if (!MobileDetector.mobile() && this.openInSidebar) {
             event.preventDefault()
             event.stopPropagation()
-            const target = this._linkEl(event);
 
             document.dispatchEvent(this.beginEvent)
 
-            this.stimulate("MainSidebar::LargeEventComponent#open", this._mainSidebarLargeEventEl(), {
-                event_id: target.dataset.eventId
+            this.stimulate("Event#open", event.target, {
+                resolveLate: true
             }).then(payload => {
                 // this._updateUrl(target);
                 document.dispatchEvent(this.endEvent)
@@ -54,17 +53,29 @@ export default class extends ApplicationController {
         this._animateHide(this.element)
     }
 
-    afterLike(event) {
-        this._updateSwipable()
+    like(event) {
+        this.stimulate('Swipable#like', event.currentTarget)
+            .then(value => {
+                this._updateCalendar()
+            })
+            .catch(reason => {
+
+            })
     }
 
-    afterDislike(event) {
-        this._updateSwipable()
+    dislike(event) {
+        this.stimulate('Swipable#dislike', event.currentTarget)
+            .then(value => {
+                this._updateCalendar()
+            })
+            .catch(reason => {
+
+            })
     }
 
-    _updateSwipable() {
-        const swipableEvent = new Event('hero--swipable:liked-or-disliked')
-        document.dispatchEvent(swipableEvent)
+    _updateCalendar() {
+        const calendar = document.querySelector('#calendar')
+        this.stimulate('Calendar#update', calendar, {resolveLate: true})
     }
 
     _linkEl(e) {

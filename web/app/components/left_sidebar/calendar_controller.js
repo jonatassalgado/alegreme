@@ -2,17 +2,10 @@ import ApplicationController from "../../javascript/controllers/application_cont
 import {debounce}            from "../../javascript/utilities";
 
 export default class extends ApplicationController {
-    static targets = ['calendar'];
+    static targets = [''];
 
     initialize() {
         const self = this;
-
-        [
-            'hero--swipable:liked-or-disliked',
-            'main-sidebar--horizontal-event:liked-or-disliked'
-        ].forEach(e => {
-            document.addEventListener(e, debounce(self.update.bind(self), 750))
-        })
     }
 
     connect() {
@@ -25,12 +18,7 @@ export default class extends ApplicationController {
     }
 
     teardown() {
-        [
-            'hero--swipable:liked-or-disliked',
-            'main-sidebar--horizontal-event:liked-or-disliked'
-        ].forEach(e => {
-            document.removeEventListener(e, debounce(this.update.bind(this), 750))
-        })
+
     }
 
     beforeCache() {
@@ -40,15 +28,6 @@ export default class extends ApplicationController {
     disconnect() {
         super.disconnect();
         this.teardown()
-    }
-
-    update() {
-        this.stimulate('LeftSidebar::MyAgendaComponent#update', this.element)
-            .then(payload => {
-
-            }).catch(payload => {
-
-        })
     }
 
     beforeInDay(anchorElement) {
@@ -63,7 +42,7 @@ export default class extends ApplicationController {
         const target = event.target.closest('td');
 
         if (target.classList.contains('start-date')) {
-            this.stimulate('LeftSidebar::MyAgendaComponent#clear_filter', target, {resolveLate: true})
+            this.stimulate('Calendar#clear_filter', target, {resolveLate: true})
                 .then(payload => {
 
                 })
@@ -71,7 +50,7 @@ export default class extends ApplicationController {
 
                 })
         } else {
-            this.stimulate('LeftSidebar::MyAgendaComponent#in_day', target)
+            this.stimulate('Calendar#in_day', target, {resolveLate: true})
         }
     }
 
@@ -79,7 +58,4 @@ export default class extends ApplicationController {
         // this._unselectDays(this.calendarTarget);
     }
 
-    _initSimpleScrollbar() {
-        this.SimpleScrollbar.initEl(this.scrollContentTarget);
-    }
 }

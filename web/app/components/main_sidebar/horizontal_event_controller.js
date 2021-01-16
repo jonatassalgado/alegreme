@@ -37,10 +37,9 @@ export default class extends ApplicationController {
 
             document.dispatchEvent(this.beginEvent)
 
-            this.stimulate("MainSidebar::LargeEventComponent#open",
-                           this.mainSidebarLargeEventEl,
-                           {resolveLate: false},
-                           {event_id: this.data.get('id')}
+            this.stimulate("Event#open",
+                           event.target,
+                           {resolveLate: true}
             ).then(payload => {
                 document.dispatchEvent(this.endEvent)
             }).catch(payload => {
@@ -49,17 +48,31 @@ export default class extends ApplicationController {
         }
     }
 
-    // afterLike(event) {
-    //     this._updateMyAgenda()
-    // }
-    //
-    // afterDislike(event) {
-    //     this._updateMyAgenda()
-    // }
+    like(event) {
+        this.stimulate('Event#like', event.currentTarget)
+            .then(value => {
+                this._updateCalendar()
+            })
+            .catch(reason => {
 
-    _updateMyAgenda() {
-        const myAgendaEvent = new Event('main-sidebar--horizontal-event:liked-or-disliked')
-        document.dispatchEvent(myAgendaEvent)
+            })
+    }
+
+    dislike(event) {
+        this.stimulate('Event#dislike', event.currentTarget)
+            .then(value => {
+                this._updateCalendar()
+            })
+            .catch(reason => {
+
+            })
+    }
+
+    _updateCalendar() {
+        const calendar = document.querySelector('#calendar')
+        if (calendar) {
+            this.stimulate('Calendar#update', calendar, {resolveLate: true})
+        }
     }
 
     _linkEl(e) {
@@ -68,14 +81,6 @@ export default class extends ApplicationController {
 
     _updateUrl(target) {
         window.history.replaceState({}, "", `${target.href.replace(target.origin, "")}`);
-    }
-
-    // _userResourceListEl() {
-    //     return document.querySelector("#user-resources-list");
-    // }
-
-    get mainSidebarLargeEventEl() {
-        return document.querySelector("[data-controller~='main-sidebar--large-event']");
     }
 
     get openInSidebar() {

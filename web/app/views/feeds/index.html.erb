@@ -1,4 +1,4 @@
-<%= render Modal::SignInComponent.new(key: 'modal-sign-in', text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
+<%= render Modal::SignInComponent.new( text: nil) %>
 
 <div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
 	<% unless mobile_device? %>
@@ -6,7 +6,7 @@
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
 						 style="height: calc(100vh - 48px); top: 48px">
-			<%= render LeftSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
+			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: @start_date, user: current_user, filter: @filter, indicators: @indicators) %>
 		</section>
 	<% end %>
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
@@ -23,7 +23,7 @@
 					 class="px-5 sticky top-24 z-10">
 				<div id="open-event"
 						 data-toggle-loader-target="off">
-					<%= render MainSidebar::LargeEventComponent.new(user: current_user) %>
+					<%= render MainSidebar::LargeEventComponent.new(user: current_user, event: nil) %>
 				</div>
 				<div
 					class="flex items-center justify-center hidden h-16 mt-5 bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl text-md"

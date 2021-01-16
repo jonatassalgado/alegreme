@@ -103,6 +103,8 @@
 
 </script>
 
+<%= render Modal::SignInComponent.new( text: nil) %>
+
 <section id="page" class="max-w-screen-lg grid-cols-12 pb-10 md:grid md:gap-10 md:mt-10 md:mx-auto">
 	<div class="md:col-span-8">
 		<%= render(LargeEventComponent.new(event: @event, user: current_user)) %>

@@ -8,6 +8,7 @@ export default class extends ApplicationController {
         this.setup();
     }
 
+
     async setup() {
         this.SimpleScrollbar = await import("simple-scrollbar")
         await import("simple-scrollbar/simple-scrollbar.css")
@@ -32,23 +33,6 @@ export default class extends ApplicationController {
     disconnect() {
         super.disconnect();
         this.teardown()
-    }
-
-    closeEvent(e) {
-
-        this.element.innerHTML = null;
-        // document.querySelector("#user-resources-list").classList.remove("hidden");
-        this.stimulate('MainSidebar::LargeEventComponent#close', this.element)
-            .then(payload => {
-
-            })
-            .catch(payload => {
-
-            })
-    }
-
-    afterClose() {
-
     }
 
     _initSimpleScrollbar() {

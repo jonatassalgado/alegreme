@@ -1,13 +1,13 @@
-<%= component_controller id: dom_id(@event, :hero), data: { 'hero--train-event-open-in-sidebar': @open_in_sidebar } do %>
+<%= content_tag :div, id: dom_id(@event, :hero), data: { controller: 'hero--train-event', 'hero--train-event-open-in-sidebar': @open_in_sidebar } do %>
 	<div class="flex p-5 border-b md:border-0 border-gray-50">
 		<div class="flex flex-col mr-3 space-y-1">
-			<%= reflex_tag :like, :div, class: 'h-full bg-green-50 hover:bg-green-200 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-green-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-green-500 text-sm transform transition-transform' do %>
+			<%= content_tag :div, data: { action: 'click->hero--train-event#like', 'event-id': @event.id }, class: 'h-full bg-green-50 hover:bg-green-200 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-green-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-green-500 text-sm transform transition-transform' do %>
 				<svg class="h-5 text-green-500 fill-current hover:scale-150" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 					<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
 				</svg>
 			<% end %>
-			<%= reflex_tag :dislike, :div, class: 'h-full bg-red-50 hover:bg-red-200 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-red-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-red-500 text-sm transform transition-transform' do %>
+			<%= content_tag :div, data: { action: 'click->hero--train-event#dislike', 'event-id': @event.id }, class: 'h-full bg-red-50 hover:bg-red-200 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-red-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-red-500 text-sm transform transition-transform' do %>
 				<svg class="h-5 text-red-500 fill-current hover:scale-150" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 					<path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
@@ -22,14 +22,13 @@
 											href:  event_path(@event),
 											data:  {
 												action:     'click->hero--train-event#openEvent',
-												url:        event_path(@event),
 												'event-id': @event.id
 											},
 											class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-700' do %>
 				<%= @event.details_name %>
 			<% end %>
 			<div class="text-sm  text-gray-500">
-				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %>
+				<%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
 			</div>
 		</div>
 		<div>
@@ -42,6 +41,10 @@
 					<div class="bg-gray-50 aspect-ratio-16/9"></div>
 					<%= image_tag helpers.shrine_image_url(@event, :feed), {
 						loading: :lazy,
+						data:    {
+							action:     'click->hero--train-event#openEvent',
+							'event-id': @event.id
+						},
 						class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>

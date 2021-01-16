@@ -5,7 +5,7 @@ class EventsController < ApplicationController
 	before_action :parse_ocurrences, only: [:update]
 	before_action :parse_personas, only: [:update]
 
-	include CableReady::Broadcaster
+	# include CableReady::Broadcaster
 
 	# GET /events
 	# GET /events.json

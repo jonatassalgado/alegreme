@@ -1,4 +1,4 @@
-class LeftSidebar::HorizontalEventComponent < ViewComponentReflex::Component
+class LeftSidebar::HorizontalEventComponent < ViewComponent::Base
 	with_collection_parameter :event
 
 	def initialize(event:, user:, parent_key: nil)
@@ -7,14 +7,7 @@ class LeftSidebar::HorizontalEventComponent < ViewComponentReflex::Component
 		@user       = user
 	end
 
-	def unlike
-		@user.unlike! @event
-		# stimulate 'LeftSidebar::MyAgendaComponent#update', {key: @parent_key}
-		refresh! '#my-agenda', '#main-sidebar__group-by-day-list', '#right-sidebar'
-	end
-
 	def collection_key
 		@event.id
 	end
-
 end

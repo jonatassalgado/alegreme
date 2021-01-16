@@ -27,10 +27,5 @@ export default class extends ApplicationController {
 
     close(event) {
         this.element.innerHTML = "";
-        // this.stimulate("Modal::SignInComponent#close", event.target).then(payload => {
-        //
-        // }).catch(payload => {
-        //
-        // })
     }
 }

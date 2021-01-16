@@ -1,4 +1,4 @@
-class MainSidebar::GroupByDayListComponent < ViewComponentReflex::Component
+class MainSidebar::GroupByDayListComponent < ViewComponent::Base
 
   def initialize(events:, user:, parent_key: nil, open_in_sidebar: false)
     @events          = events

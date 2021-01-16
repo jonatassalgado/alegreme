@@ -1,18 +1,18 @@
-<%= component_controller data: {key: @key || element['data-key']} do %>
-  <% if @opened %>
-    <div class="fixed h-screen left-0 top-0 w-screen z-50">
-      <div class="absolute flex h-screen items-center w-screen z-20">
-        <div class="bg-white max-w-xs mx-auto p-2 rounded text-center z-20">
-          <div class="leading-snug mx-3 my-4 text-lg">
-            <%= @text || element['data-text'].html_safe %>
-          </div>
-          <div>
-            <%= link_to 'Criar conta', new_user_registration_path, data: {'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil'}, class: 'bg-green-500 flex font-semibold justify-center mt-2 p-2 rounded text-lg text-white w-full' %>
-          </div>
-        </div>
-        <div data-action="click->modal--sign-in#close" data-key="<%= @key || element['data-key'] %>" class="bg-black absolute h-full left-0 opacity-75 top-0 w-full z-10">
-        </div>
-      </div>
-    </div>
-  <% end %>
+<%= content_tag :div, id: 'modal', data: { controller: 'modal--sign-in' } do %>
+	<% if @opened %>
+		<div class="fixed h-screen left-0 top-0 w-screen z-50">
+			<div class="absolute flex h-screen items-center w-screen z-20">
+				<div class="bg-white max-w-xs mx-auto p-2 rounded text-center z-20">
+					<div class="leading-snug mx-3 my-4 text-lg">
+						<%= @text || element['data-text'].html_safe %>
+					</div>
+					<div>
+						<%= link_to 'Criar conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'bg-green-500 flex font-semibold justify-center mt-2 p-2 rounded text-lg text-white w-full' %>
+					</div>
+				</div>
+				<div data-action="click->modal--sign-in#close" class="bg-black absolute h-full left-0 opacity-75 top-0 w-full z-10">
+				</div>
+			</div>
+		</div>
+	<% end %>
 <% end %>

@@ -43,69 +43,69 @@
 	<%# end %>
 
 	<% if current_user == @user %>
-		<div class="py-6 bg-white">
-			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">
-				Notificações
-			</h2>
-			<% if @user.friendships_request_received.present? %>
-				<div class="px-5 leading-none mt-3">
-  			<span class="pt-5 text-sm text-gray-400">
-  				Pedidos de amizade que você recebeu.
-  			</span>
-					<span class="text-sm  text-gray-400">
-  				Você pode ter até 10 amigos e eles podem ver sua agenda, por isso os escolha bem.
-  			</span>
-				</div>
-			<% end %>
-			<% if @user.friendships_request_received.present? %>
-				<div class="w-screen px-5 mt-3 space-y-2">
-					<%= render(FriendshipRequestComponent.with_collection(@user.friends_requested_received, user: @user)) %>
-				</div>
-			<% else %>
-				<div class="px-5 text-sm text-gray-400">
-					Você não possui notificações
-				</div>
-			<% end %>
-		</div>
-		<div id="friends-list" class="py-6 bg-white">
-			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">
-				Amigos (<%= @user.friends_accepted.size rescue 0 %>)
-			</h2>
-			<% if @user.friends_accepted.present? %>
-				<div class="flex flex-wrap mt-3 px-5 w-screen">
-					<%= render(UserChipComponent.with_collection(@user.friends_accepted, user: @user)) %>
-				</div>
-			<% else %>
-				<div class="px-5 text-sm text-gray-400">
-					Você ainda não adicionou nenhum amigo
-				</div>
-			<% end %>
-		</div>
-		<div class="py-6 bg-white">
-			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">
-				Pessoas que sigo
-			</h2>
-			<% if @user.following_users.present? %>
-				<div class="w-screen mt-3 md:w-full">
-					<div class="flex flex-wrap px-5 pl-5 space-y-2">
-						<% @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
-								<%= resource.details_name.titleize %>
-								<% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">
-  										<%= resource.events.active.size %>
-  									</span>
-								<% end %>
-							</a>
-						<% end %>
-					</div>
-				</div>
-			<% else %>
-				<div class="px-5 text-sm text-gray-400">
-					Você não segue nenhuma pessoa ainda
-				</div>
-			<% end %>
-		</div>
+<!--		<div class="py-6 bg-white">-->
+<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+<!--				Notificações-->
+<!--			</h2>-->
+			<%# if @user.friendships_request_received.present? %>
+<!--				<div class="px-5 leading-none mt-3">-->
+<!--  			<span class="pt-5 text-sm text-gray-400">-->
+<!--  				Pedidos de amizade que você recebeu.-->
+<!--  			</span>-->
+<!--					<span class="text-sm  text-gray-400">-->
+<!--  				Você pode ter até 10 amigos e eles podem ver sua agenda, por isso os escolha bem.-->
+<!--  			</span>-->
+<!--				</div>-->
+			<%# end %>
+			<%# if @user.friendships_request_received.present? %>
+<!--				<div class="w-screen px-5 mt-3 space-y-2">-->
+					<%#= render(FriendshipRequestComponent.with_collection(@user.friends_requested_received, user: @user)) %>
+<!--				</div>-->
+			<%# else %>
+<!--				<div class="px-5 text-sm text-gray-400">-->
+<!--					Você não possui notificações-->
+<!--				</div>-->
+			<%# end %>
+<!--		</div>-->
+<!--		<div id="friends-list" class="py-6 bg-white">-->
+<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+<!--				Amigos (<%#= @user.friends_accepted.size rescue 0 %>)-->
+<!--			</h2>-->
+			<%# if @user.friends_accepted.present? %>
+<!--				<div class="flex flex-wrap mt-3 px-5 w-screen">-->
+					<%#= render(UserChipComponent.with_collection(@user.friends_accepted, user: @user)) %>
+<!--				</div>-->
+			<%# else %>
+<!--				<div class="px-5 text-sm text-gray-400">-->
+<!--					Você ainda não adicionou nenhum amigo-->
+<!--				</div>-->
+			<%# end %>
+<!--		</div>-->
+<!--		<div class="py-6 bg-white">-->
+<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+<!--				Pessoas que sigo-->
+<!--			</h2>-->
+			<%# if @user.following_users.present? %>
+<!--				<div class="w-screen mt-3 md:w-full">-->
+<!--					<div class="flex flex-wrap px-5 pl-5 space-y-2">-->
+						<%# @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
+<!--							<a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">-->
+								<%#= resource.details_name.titleize %>
+								<%# if resource.events.active.size > 0 %>
+<!--  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">-->
+  										<%#= resource.events.active.size %>
+<!--  									</span>-->
+								<%# end %>
+<!--							</a>-->
+						<%# end %>
+<!--					</div>-->
+<!--				</div>-->
+			<%# else %>
+<!--				<div class="px-5 text-sm text-gray-400">-->
+<!--					Você não segue nenhuma pessoa ainda-->
+<!--				</div>-->
+			<%# end %>
+<!--		</div>-->
 		<div class="py-6 bg-white">
 			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">
 				Locais que sigo

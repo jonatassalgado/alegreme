@@ -1,4 +1,4 @@
-class LeftSidebar::MyAgendaComponent < ViewComponentReflex::Component
+class MainSidebar::CalendarComponent < ViewComponent::Base
 
   attr_accessor :view_context, :options
 
@@ -16,32 +16,17 @@ class LeftSidebar::MyAgendaComponent < ViewComponentReflex::Component
   end
 
   def prev_month
-    unless @user
-      stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
-      prevent_refresh!
-    else
-      @start_date = date_range.first - 1.day
-    end
+    @start_date = date_range.first - 1.day
   end
 
   def next_month
-    unless @user
-      stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
-      prevent_refresh!
-    else
-      @start_date = date_range.last + 1.day
-    end
+    @start_date = date_range.last + 1.day
   end
 
   def in_day
-    unless @user
-      stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos na sua agenda"})
-      prevent_refresh!
-    else
-      @filter     = true
-      @start_date = element['data-day'].to_date
-      @events     = liked_events.in_day(@start_date)
-    end
+    @filter     = true
+    @start_date = element['data-day'].to_date
+    @events     = liked_events.in_day(@start_date)
   end
 
   def clear_filter

@@ -263,7 +263,7 @@ module PopulateEventsRake
 			event.ml_data.deep_merge!(
 					cleanned: ml_data['cleanned'],
 					stemmed:  ml_data['stemmed'],
-					freq:     ml_data['freq'],
+					# freq:     ml_data['freq'],
 					nouns:    ml_data['nouns'],
 					verbs:    ml_data['verbs'],
 					adjs:     ml_data['adjs']
@@ -294,7 +294,7 @@ module PopulateEventsRake
 			event.ml_data.deep_merge!(
 					cleanned: ml_data['cleanned'],
 					stemmed:  ml_data['stemmed'],
-					freq:     ml_data['freq'],
+					# freq:     ml_data['freq'],
 					nouns:    ml_data['nouns'],
 					verbs:    ml_data['verbs'],
 					adjs:     ml_data['adjs']

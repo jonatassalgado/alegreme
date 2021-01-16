@@ -1,4 +1,4 @@
-class LeftSidebar::GroupByDayListComponent < ViewComponentReflex::Component
+class LeftSidebar::GroupByDayListComponent < ViewComponent::Base
 
 	def initialize(events:, user:, parent_key: nil)
 		@parent_key = parent_key

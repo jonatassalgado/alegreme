@@ -8,7 +8,7 @@ class Hero::CardEventComponent < ViewComponentReflex::Component
 
   def like
     unless @user
-      stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
+      stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
       prevent_refresh!
     else
       if @user.like? @event
@@ -25,7 +25,7 @@ class Hero::CardEventComponent < ViewComponentReflex::Component
 
   def dislike
     unless @user
-      stimulate('Modal::SignInComponent#open', {key: 'modal-sign-in', text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
+      stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
       prevent_refresh!
     else
       if @user.dislike? @event

@@ -1,42 +1,43 @@
-<%= render Modal::SignInComponent.new(key: 'modal-sign-in', text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
+<%= render Modal::SignInComponent.new(text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
 
 <section class="min-h-screen mt-3 mb-24 is-animated md:mt-16">
 
-  <% content_for :canonical_url, organizer_url(@organizer, format: :html) %>
-  <% content_for :meta_title, "Eventos por #{@organizer.details_name} em Porto Alegre | Alegreme.com" %>
-  <% content_for :back_button, true %>
-  <% content_for :top_app_bar_title, truncate(@organizer.details_name, length: 30) %>
+	<% content_for :canonical_url, organizer_url(@organizer, format: :html) %>
+	<% content_for :meta_title, "Eventos por #{@organizer.details_name} em Porto Alegre | Alegreme.com" %>
+	<% content_for :back_button, true %>
+	<% content_for :top_app_bar_title, truncate(@organizer.details_name, length: 30) %>
 
-  <%= notice %>
+	<%= notice %>
 
-  <script type="application/ld+json">
+	<script type="application/ld+json">
   [
     <%= render partial: 'layouts/json_ld', collection: @events, as: :event %>
   ]
-  </script>
 
-  <div class="mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-2xl md:max-w-screen-sm sm:container">
-    <div class="px-8 py-3 mx-3 space-y-3 text-center bg-white rounded-md">
-      <%= image_tag shrine_image_url(@organizer, :sm), {
-          loading: :lazy,
-          class:   'max-w-xs mx-auto rounded-full',
-          onerror: "this.style.opacity='0'"
-      } if @organizer.image_data? %>
-      <div>
-        <div class="flex-1 text-2xl font-bold leading-6 text-gray-700 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-4xl">
-          <%= @organizer.details_name %>
-        </div>
-      </div>
-      <div>
-        <%= render partial: 'components/follow/follow_button', locals: {
-            user:       current_user,
-            followable: @organizer
-        } %>
-      </div>
-    </div>
+	</script>
 
-    <%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user %>
+	<div class="mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-2xl md:max-w-screen-sm sm:container">
+		<div class="px-8 py-3 mx-3 space-y-3 text-center bg-white rounded-md">
+			<%= image_tag shrine_image_url(@organizer, :sm), {
+				loading: :lazy,
+				class:   'max-w-xs mx-auto rounded-full',
+				onerror: "this.style.opacity='0'"
+			} if @organizer.image_data? %>
+			<div>
+				<div class="flex-1 text-2xl font-bold leading-6 text-gray-700 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-4xl">
+					<%= @organizer.details_name %>
+				</div>
+			</div>
+			<div>
+				<%= render(FollowButtonComponent.new(
+					user:       current_user,
+					followable: @organizer
+				)) %>
+			</div>
+		</div>
 
-  </div>
+		<%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user %>
+
+	</div>
 
 </section>

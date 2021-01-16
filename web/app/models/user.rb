@@ -122,11 +122,13 @@ class User < ApplicationRecord
 
 	def follow!(following)
 		self.follows.create!(user_id: self.id, following_id: following.id, following_type: following.class.name)
+		self.follows.reset
 	end
 
 	def unfollow!(following)
 		follow = self.follows.find_by(user_id: self.id, following_id: following.id, following_type: following.class.name)
-		follow.destroy!
+		follow.destroy! if follow
+		self.follows.reset
 	end
 
 	def follow?(following)

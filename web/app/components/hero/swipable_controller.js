@@ -11,11 +11,11 @@ export default class extends ApplicationController {
 
     setup() {
         this._setMinHeigth();
-        document.addEventListener('hero--swipable:liked-or-disliked', debounce(this.update.bind(this), 250))
+        // document.addEventListener('hero--swipable:liked-or-disliked', debounce(this.update.bind(this), 250))
     }
 
     teardown() {
-        document.removeEventListener('hero--swipable:liked-or-disliked', debounce(this.update.bind(this), 250))
+        // document.removeEventListener('hero--swipable:liked-or-disliked', debounce(this.update.bind(this), 250))
     }
 
     beforeCache() {
@@ -32,15 +32,15 @@ export default class extends ApplicationController {
     }
 
     beforeHiddenSwipable() {
-        this._removeMinHeight()
+        this._hiddenSwipable()
     }
 
     _setMinHeigth() {
         this.element.style.minHeight = `${this.element.offsetHeight}px`
     }
 
-    _removeMinHeight() {
-        this.element.style.minHeight = ""
+    _hiddenSwipable() {
+        this.element.style.display = "none"
     }
 
 }

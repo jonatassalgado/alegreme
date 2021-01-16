@@ -105,6 +105,7 @@ class Event(scrapy.Item):
     organizers = scrapy.Field(
         input_processor=Identity()
     )
+    deleted = scrapy.Field()
 
 
 class EventOrganizer(scrapy.Item):

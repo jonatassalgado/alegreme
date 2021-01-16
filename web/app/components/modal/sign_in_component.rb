@@ -1,16 +1,7 @@
-class Modal::SignInComponent < ViewComponentReflex::Component
-  def initialize(key: nil, opened: false, text: nil)
+class Modal::SignInComponent < ViewComponent::Base
+  def initialize(opened: false, text: nil)
     @opened = opened
     @text   = text
-    @key    = key
-  end
-
-  def open
-    @opened = true
-  end
-
-  def close
-    @opened = false
   end
 
 end

@@ -1,4 +1,4 @@
-<%= render Modal::SignInComponent.new(key: 'modal-sign-in', text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
+<%= render Modal::SignInComponent.new( text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
 
 <div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
 	<% unless mobile_device? %>
@@ -6,7 +6,7 @@
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
 						 style="height: calc(100vh - 48px); top: 48px">
-			<%= render LeftSidebar::MyAgendaComponent.new(events: @liked_events, user: current_user) %>
+			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, user: current_user) %>
 		</section>
 	<% end %>
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">

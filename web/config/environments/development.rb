@@ -59,7 +59,7 @@ Rails.application.configure do
 	# config.logger = ActiveSupport::Logger.new(config.paths['log'].first, 1, 2.megabytes)
 
 	# :debug, :info, :warn, :error, :fatal, :unknown
-	config.log_level = :warn
+	config.log_level = :debug
 
 	# Raise an error on page load if there are pending migrations.
 	config.active_record.migration_error = :page_load
