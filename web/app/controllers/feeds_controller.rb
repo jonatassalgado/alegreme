@@ -13,10 +13,7 @@ class FeedsController < ApplicationController
 						 })
 
 		@upcoming_events = Event.active.not_ml_data.includes(:place).order_by_date
-
-		@liked_events = @liked_events || current_user&.liked_events&.not_ml_data&.active&.order_by_date
-		@start_date   = @start_date || Date.today
-		@filter       = @filter || false
+		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
 
 		render layout: false if @stimulus_reflex
 	end

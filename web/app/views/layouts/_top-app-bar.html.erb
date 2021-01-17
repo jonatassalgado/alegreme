@@ -14,7 +14,7 @@
 
 %>
 
-<header class="<%= class_names('h-12 md:h-16 max-w-screen-xl md:grid md:grid-cols-12 md:px-0 mx-auto my-auto px-5 select-none tap-highlight-none',
+<header class="<%= class_names('h-12 md:h-16 max-w-screen-xl md:grid md:grid-cols-12 md:px-0 mx-auto my-auto select-none tap-highlight-none',
 															 { 'h-12 px-5':      !current_page?('/busca'),
 																 'h-content py-1': current_page?('/busca') }) %>"
 				id="top-bar">
@@ -82,12 +82,12 @@
 				<!--				</svg>-->
 				<input autocomplete="false"
 							 name="q"
-							 class="border border-gray-100 focus:border-green-500 focus:outline-none h-10 md:w-9/12 mx-auto placeholder-gray-500 px-2 py-1 rounded-full"
+							 class="w-full border border-gray-100 focus:border-green-500 focus:outline-none h-10 md:w-9/12 mx-auto placeholder-gray-500 px-2 py-1 rounded-full"
 							 id="text-field-shape-one"
 							 placeholder="Busque por eventos ou tags..."
 							 type="text"
 							 data-search-target="input">
-				<input class="h-10 px-4 my-1 ml-3 text-sm antialiased font-light font-semibold text-gray-700 text-green-600 bg-green-200 rounded cursor-pointer md:hidden"
+				<input class="bg-green-500 cursor-pointer font-light font-semibold h-10 md:hidden ml-3 my-1 px-4 rounded text-sm text-white"
 							 type="submit" value="Buscar"
 							 data-search-target="submit"
 							 data-action="click->search#searching"/>

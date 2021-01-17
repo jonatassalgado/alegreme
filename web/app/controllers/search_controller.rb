@@ -15,8 +15,9 @@ class SearchController < ApplicationController
 				body_options:  { min_score: 10 },
 				scope_results: ->(r) { r.active }
 			})
+			# @search_result  = Event.active.not_ml_data.includes(:place).order_by_date
 			@founded_events = Event.where(id: @search_result.map(&:id))
-			@liked_events   = current_user ? current_user&.liked_events&.not_ml_data&.active&.order_by_date : Event.none
+			@liked_events   = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
 		else
 			@categories = Event::CATEGORIES.dup.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }
 		end
