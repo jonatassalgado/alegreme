@@ -120,7 +120,7 @@
 		<% if items.present? %>
 			<div data-section-target="grid"
 					 class="md:mt-2">
-				<div class="<%= html.dig(:grid, :css) || class_names('md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:row-gap-16 pt-3 pb-2 grid col-gap-6 grid-flow-col pl-5 grid-after-margin scrollx') %>"
+				<div class="<%= html.dig(:grid, :css) || class_names('md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:gap-y-16 pt-3 pb-2 grid gap-x-6 grid-flow-col pl-5 grid-after-margin scrollx') %>"
 						 data-section-turbolinks-persist-scroll="0"
 						 data-section-target="scrollContainer">
 					<%= render(partial:    'components/collection/event',
