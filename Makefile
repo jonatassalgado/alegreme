@@ -54,10 +54,10 @@ remove-volumes:
 	docker-compose -f docker-compose.development.yml down -v
 
 db-drop:
-	$(RUN) bash -c "rm /var/www/alegreme/db/schema.rb && rake db:drop"
+	$(RUN) bash -c "rm /var/www/alegreme/db/schema.rb && bundle exec rake db:drop"
 
 db-create:
-	$(RUN) bash -c "rake db:migrate && rake db:seed"
+	$(RUN) bash -c "bundle exec rake db:migrate && bundle exec rake db:seed"
 
 credentials:
 	$(EXEC) bash -c "EDITOR=nano rails credentials:edit"
@@ -72,7 +72,7 @@ test:
 	$(RUN) bash -c "rails test"
 
 restore-backup:
-	$(RUN) bash -c "rake restore:backup"
+	$(RUN) bash -c "bundle exec rake restore:backup"
 
 cloud:
 	ssh root@159.89.84.18
