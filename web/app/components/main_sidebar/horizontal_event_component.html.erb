@@ -53,20 +53,19 @@
 			</div>
 		</div>
 		<div>
-			<div data-controller="ripple" class="shadow-xs relative w-32 mt-6 overflow-hidden rounded ripple ripple-white">
+			<div data-controller="ripple" class="h-24 mt-3 overflow-hidden relative ripple ripple-white rounded-lg shadow w-40">
 				<%= link_to event_path(@event),
 										data: {
 											action:     'click->main-sidebar--horizontal-event#openEvent',
 											'event-id': @event.id
 										} do %>
-					<div class="bg-gray-50 aspect-ratio-16/9"></div>
 					<%= image_tag helpers.shrine_image_url(@event, :feed), {
 						loading: :lazy,
 						alt:     "Cartaz do evento #{@event.details_name}",
 						data:    {
 							'event-id': @event.id
 						},
-						class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
+						class:   'cursor-pointer object-center object-cover h-full w-full',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
 				<% end %>
