@@ -1,12 +1,10 @@
 version: '2.3'
 volumes:
   bundle_cache: {}
-  scrapy_data:
   db_data:
   db_backup:
   api_data:
   redis_data:
-  splash_data:
 services:
   app:
     build:
@@ -15,7 +13,6 @@ services:
     depends_on:
       - db
       - api
-      - scrapy
       - redis
       - search
     volumes:
@@ -134,42 +131,6 @@ services:
     memswap_limit: 4gb
     mem_reservation: 256m
     cpus: 3
-  scrapy:
-    build:
-      context: ./scrapy
-      dockerfile: ./Dockerfile
-    environment:
-      SPLASH_URL: http://splash:8050
-      IS_DOCKER: 'true'
-      ENV: 'production'
-      PRIVATE_IP: '10.136.227.110'
-      PUBLIC_IP: '159.89.84.18'
-    depends_on:
-      - splash
-    volumes:
-      - ./scrapy/alegreme:/var/www/scrapy/alegreme
-      - ./scrapy/data:/var/www/scrapy/data
-      - ./logs/scrapy:/var/www/scrapy/log
-    ports:
-      - "7654:7654"
-    restart: on-failure
-    # command: scrapy-do --nodaemon --pidfile= scrapy-do --config scrapydo.conf
-    mem_limit: 3gb
-    memswap_limit: 4gb
-    cpus: 2
-  splash:
-    image: scrapinghub/splash
-    ports:
-      - 8050:8050
-      - 5023:5023
-    restart: on-failure
-    volumes:
-      - splash_data:/var/www/splash/data
-    mem_limit: 4gb
-    memswap_limit: 5gb
-    mem_reservation: 256m
-    cpus: 3
-    command: --maxrss 3500 --max-timeout 3600
   redis:
     image: redis
     environment:

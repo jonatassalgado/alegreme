@@ -1,0 +1,38 @@
+version: '2.3'
+volumes:
+  scrapy_data:
+  splash_data:
+services:
+  scrapy:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      SPLASH_URL: http://splash:8050
+      IS_DOCKER: 'true'
+      ENV: 'production'
+    depends_on:
+      - splash
+    volumes:
+      - ./alegreme:/var/www/scrapy/alegreme
+      - ./data:/var/www/scrapy/data
+      - ../logs/scrapy:/var/www/scrapy/log
+    ports:
+      - "7654:7654"
+    restart: on-failure
+    mem_limit: 1gb
+    memswap_limit: 1gb
+    cpus: 0.5
+  splash:
+    image: scrapinghub/splash
+    ports:
+      - 8050:8050
+      - 5023:5023
+    restart: on-failure
+    volumes:
+      - splash_data:/var/www/splash/data
+    mem_limit: 1gb
+    memswap_limit: 1gb
+    mem_reservation: 256m
+    cpus: 0.5
+    command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox

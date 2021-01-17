@@ -45,32 +45,6 @@ services:
     memswap_limit: 3gb
     mem_reservation: 256m
     cpus: 2
-  #  sidekiq:
-  #    build:
-  #      context: ./web
-  #      dockerfile: ./docker/sidekiq/Dockerfile
-  #    depends_on:
-  #      - redis
-  #      - db
-  #    volumes:
-  #      - ./web:/var/www/alegreme
-  #      - ./logs/sidekiq:/var/www/alegreme/log
-  #    working_dir: /var/www/alegreme
-  #    environment:
-  #      RAILS_ENV: development
-  #      RACK_ENV: development
-  #      PGHOST: db
-  #      PGUSER: postgres
-  #      API_URL: http://api
-  #      IS_DOCKER: 'true'
-  #      HTTP_HOST: 'www.alegreme.com'
-  #      NODE_ENV: development
-  #      JOB_WORKER_URL: redis://redis:6379/0
-  #    command: bundle exec sidekiq -C /var/www/sidekiq/config.yml -r /var/www/alegreme
-  #    restart: always
-  #    mem_limit: 3gb
-  #    memswap_limit: 3gb
-  #    cpus: 0.5
   db:
     image: postgres
     volumes:
@@ -84,9 +58,6 @@ services:
     ports:
       - 5432:5432
     restart: always
-  #    mem_limit: 2gb
-  #    memswap_limit: 3gb
-  #    cpus: 0.5
   api:
     build:
       context: ./ml
@@ -100,43 +71,6 @@ services:
       # - ./logs/api:/var/www/ml/api/log:delegated
     environment:
       IS_DOCKER: 'true'
-    #    mem_limit: 3gb
-    #    memswap_limit: 4gb
-    #    mem_reservation: 256m
-    #    cpus: 0.7
-  # scrapy:
-  #   build:
-  #     context: ./scrapy
-  #     dockerfile: ./Dockerfile
-  #   environment:
-  #     SPLASH_URL: http://splash:8050
-  #     IS_DOCKER: 'true'
-  #     ENV: 'development'
-  #   depends_on:
-  #     - splash
-  #   volumes:
-  #     - ./scrapy/alegreme:/var/www/scrapy/alegreme
-  #     - ./scrapy/data:/var/www/scrapy/data
-  #     - ./logs/scrapy:/var/www/scrapy/log
-  #   ports:
-  #     - "7654:7654"
-  #   restart: always
-  #   mem_limit: 1gb
-  #   memswap_limit: 1gb
-  #   cpus: 0.5
-  # splash:
-  #   image: scrapinghub/splash
-  #   ports:
-  #     - 8050:8050
-  #     - 5023:5023
-  #   restart: always
-  #   volumes:
-  #     - splash_data:/var/www/splash/data
-  #   mem_limit: 1gb
-  #   memswap_limit: 1gb
-  #   mem_reservation: 256m
-  #   cpus: 0.5
-  #   command: --maxrss 4048 --max-timeout 300 --disable-lua-sandbox
   redis:
     image: redis
     command: redis-server
@@ -149,30 +83,4 @@ services:
     mem_reservation: 256m
     cpus: 1
     restart: always
-  # web:
-  #   build:
-  #     context: ./web
-  #     dockerfile: ./docker/web/Dockerfile
-  #   depends_on:
-  #     - app
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   volumes:
-  #     - ./data/certbot/conf:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
-  #   restart: always
-  # certbot:
-  #   image: certbot/certbot
-  #   volumes:
-  #     - ./data/certbot/conf:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
-  # search:
-  #   build:
-  #     context: ./search
-  #     dockerfile: ./Dockerfile
-  #   environment:
-  #     discovery.type: single-node
-  #   ports:
-  #     - "9200:9200"
-  #   restart: always
+ 
