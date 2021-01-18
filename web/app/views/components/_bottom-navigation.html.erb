@@ -1,58 +1,60 @@
-<div class="fixed bottom-0 z-40 w-full py-2 overflow-hidden transition-transform duration-100 transform bg-white md:hidden md:shadow-none elevation-8 md:sticky md:top-0 ripple ripple-black"
-		 data-controller="ripple bottom-navigation toggle-style go-to"
-		 data-go-to-delay="100"
-		 data-reflex-permanent
-		 data-toggle-style-active-class='["text-green-500"]'
-		 data-toggle-style-current-selected="<%= "#{controller_name}-#{action_name}" %>"
-		 data-toggle-style-inactive-class='["text-gray-500"]'
-		 data-toggle-style-init-selected="<%= "#{controller_name}-#{action_name}" %>">
-	<div class="flex px-5 md:flex-col md:space-y-5">
-		<div data-toggle-style-target="toggle"
-				 data-action="click->toggle-style#toggle click->go-to#url"
-				 data-toggle-style-identifier="feeds-index"
-				 data-go-to-url="<%= feed_path %>"
-				 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
-																'text-green-500': ['feeds', 'events'].include?(controller_name),
-																'text-gray-500':  !['feeds', 'events'].include?(controller_name) %>">
-			<svg class="w-5 h-5 fill-current md:mr-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M15.5556 8.88889V0H4.44444V4.44444H0V20H8.88889V15.5556H11.1111V20H20V8.88889H15.5556ZM4.44444 17.7778H2.22222V15.5556H4.44444V17.7778ZM4.44444 13.3333H2.22222V11.1111H4.44444V13.3333ZM4.44444 8.88889H2.22222V6.66667H4.44444V8.88889ZM8.88889 13.3333H6.66667V11.1111H8.88889V13.3333ZM8.88889 8.88889H6.66667V6.66667H8.88889V8.88889ZM8.88889 4.44444H6.66667V2.22222H8.88889V4.44444ZM13.3333 13.3333H11.1111V11.1111H13.3333V13.3333ZM13.3333 8.88889H11.1111V6.66667H13.3333V8.88889ZM13.3333 4.44444H11.1111V2.22222H13.3333V4.44444ZM17.7778 17.7778H15.5556V15.5556H17.7778V17.7778ZM17.7778 13.3333H15.5556V11.1111H17.7778V13.3333Z"/>
-			</svg>
-			Porto Alegre
-		</div>
-		<div data-toggle-style-target="toggle"
-				 data-action="click->toggle-style#toggle click->go-to#url"
-				 data-toggle-style-identifier="users-agenda"
-				 data-go-to-url="<%= my_agenda_path %>"
-				 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
-																'text-green-500': current_page?('/minha-agenda'),
-																'text-gray-500':  !current_page?('/minha-agenda') %>">
-			<svg class="w-5 h-5 fill-current md:mr-5" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M16.0993 1.91826H17.0464C18.0881 1.91826 18.9404 2.78148 18.9404 3.83652V10.7046C18.8084 10.4392 18.6379 10.1883 18.4284 9.96057L18.4216 9.95314L18.4147 9.94577C18.0255 9.52995 17.5515 9.24444 17.0464 9.09236V6.71392H1.89404V19.1826H7.11898V20.9544C7.11898 21.0032 7.12002 21.0521 7.12209 21.1009H1.89404C0.852318 21.1009 0 20.2377 0 19.1826V3.83652C0 2.78148 0.852318 1.91826 1.89404 1.91826H2.84106V0H4.7351V1.91826H14.2053V0H16.0993V1.91826Z"/>
-				<path d="M11.5048 20.9544C11.5048 21.004 11.5017 21.0529 11.4958 21.1009C11.4294 21.6404 11.0013 22.06 10.4875 22.06C9.97367 22.06 9.54563 21.6404 9.47916 21.1009C9.47325 21.0529 9.4702 21.004 9.4702 20.9544C9.4702 20.9544 9.4702 20.9544 9.4702 20.9544V16.5318C9.4702 15.9237 9.92799 15.4261 10.4875 15.4261C11.047 15.4261 11.5048 15.9237 11.5048 16.5318V20.9544C11.5048 20.9544 11.5048 20.9544 11.5048 20.9544Z"/>
-				<path d="M12.5221 15.4316C12.5221 15.1386 12.6289 14.8567 12.8171 14.6522L15.635 11.5895C15.9301 11.2633 16.4082 11.2633 16.7083 11.584C16.8914 11.783 16.9677 12.0649 16.9168 12.3414L16.4336 14.8733H19.3075C20.4011 14.8733 21.1386 16.0895 20.7114 17.1841L19.0532 21.3911C18.8904 21.7946 18.5242 22.06 18.1172 22.06H13.5394C13.0256 22.06 12.5975 21.6404 12.5311 21.1009C12.5251 21.0529 12.5221 21.004 12.5221 20.9544C12.5221 20.9544 12.5221 20.9544 12.5221 20.9544V15.4316Z"/>
-			</svg>
-			Minha agenda
-		</div>
-		<% if current_user %>
+<% if controller_name != 'events' && action_name != 'show' %>
+	<div class="fixed bottom-0 z-40 w-full py-2 overflow-hidden transition-transform duration-100 transform bg-white md:hidden md:shadow-none elevation-8 md:sticky md:top-0 ripple ripple-black"
+			 data-controller="ripple bottom-navigation toggle-style go-to"
+			 data-go-to-delay="100"
+			 data-reflex-permanent
+			 data-toggle-style-active-class='["text-green-500"]'
+			 data-toggle-style-current-selected="<%= "#{controller_name}-#{action_name}" %>"
+			 data-toggle-style-inactive-class='["text-gray-500"]'
+			 data-toggle-style-init-selected="<%= "#{controller_name}-#{action_name}" %>">
+		<div class="flex px-5 md:flex-col md:space-y-5">
 			<div data-toggle-style-target="toggle"
 					 data-action="click->toggle-style#toggle click->go-to#url"
-					 data-toggle-style-identifier="users-profile"
-					 data-go-to-url="<%= current_user ? user_path(current_user) : new_user_registration_path %>"
+					 data-toggle-style-identifier="feeds-index"
+					 data-go-to-url="<%= feed_path %>"
 					 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
-																	'text-green-500': current_page?(controller: :users, action: :show, id: current_user),
-																	'text-gray-500':  !current_page?(controller: :users, action: :show, id: current_user) %>">
-				<img src="<%= current_user&.picture :small %>" class="w-5 h-5 rounded-full md:mr-5" alt="<%= current_user&.name %>">
-				<%= current_user&.name&.truncate(10, separator: " ") %>
+																	'text-green-500': ['feeds', 'events'].include?(controller_name),
+																	'text-gray-500':  !['feeds', 'events'].include?(controller_name) %>">
+				<svg class="w-5 h-5 fill-current md:mr-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M15.5556 8.88889V0H4.44444V4.44444H0V20H8.88889V15.5556H11.1111V20H20V8.88889H15.5556ZM4.44444 17.7778H2.22222V15.5556H4.44444V17.7778ZM4.44444 13.3333H2.22222V11.1111H4.44444V13.3333ZM4.44444 8.88889H2.22222V6.66667H4.44444V8.88889ZM8.88889 13.3333H6.66667V11.1111H8.88889V13.3333ZM8.88889 8.88889H6.66667V6.66667H8.88889V8.88889ZM8.88889 4.44444H6.66667V2.22222H8.88889V4.44444ZM13.3333 13.3333H11.1111V11.1111H13.3333V13.3333ZM13.3333 8.88889H11.1111V6.66667H13.3333V8.88889ZM13.3333 4.44444H11.1111V2.22222H13.3333V4.44444ZM17.7778 17.7778H15.5556V15.5556H17.7778V17.7778ZM17.7778 13.3333H15.5556V11.1111H17.7778V13.3333Z"/>
+				</svg>
+				Porto Alegre
 			</div>
-		<% else %>
 			<div data-toggle-style-target="toggle"
 					 data-action="click->toggle-style#toggle click->go-to#url"
-					 data-toggle-style-identifier="users-profile"
-					 data-go-to-url="<%= new_user_registration_path %>"
-					 class="cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100">
-				<div class="w-5 h-5 rounded-full md:mr-5 bg-gray-100"></div>
-				Criar conta
+					 data-toggle-style-identifier="users-agenda"
+					 data-go-to-url="<%= my_agenda_path %>"
+					 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
+																	'text-green-500': current_page?('/minha-agenda'),
+																	'text-gray-500':  !current_page?('/minha-agenda') %>">
+				<svg class="w-5 h-5 fill-current md:mr-5" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M16.0993 1.91826H17.0464C18.0881 1.91826 18.9404 2.78148 18.9404 3.83652V10.7046C18.8084 10.4392 18.6379 10.1883 18.4284 9.96057L18.4216 9.95314L18.4147 9.94577C18.0255 9.52995 17.5515 9.24444 17.0464 9.09236V6.71392H1.89404V19.1826H7.11898V20.9544C7.11898 21.0032 7.12002 21.0521 7.12209 21.1009H1.89404C0.852318 21.1009 0 20.2377 0 19.1826V3.83652C0 2.78148 0.852318 1.91826 1.89404 1.91826H2.84106V0H4.7351V1.91826H14.2053V0H16.0993V1.91826Z"/>
+					<path d="M11.5048 20.9544C11.5048 21.004 11.5017 21.0529 11.4958 21.1009C11.4294 21.6404 11.0013 22.06 10.4875 22.06C9.97367 22.06 9.54563 21.6404 9.47916 21.1009C9.47325 21.0529 9.4702 21.004 9.4702 20.9544C9.4702 20.9544 9.4702 20.9544 9.4702 20.9544V16.5318C9.4702 15.9237 9.92799 15.4261 10.4875 15.4261C11.047 15.4261 11.5048 15.9237 11.5048 16.5318V20.9544C11.5048 20.9544 11.5048 20.9544 11.5048 20.9544Z"/>
+					<path d="M12.5221 15.4316C12.5221 15.1386 12.6289 14.8567 12.8171 14.6522L15.635 11.5895C15.9301 11.2633 16.4082 11.2633 16.7083 11.584C16.8914 11.783 16.9677 12.0649 16.9168 12.3414L16.4336 14.8733H19.3075C20.4011 14.8733 21.1386 16.0895 20.7114 17.1841L19.0532 21.3911C18.8904 21.7946 18.5242 22.06 18.1172 22.06H13.5394C13.0256 22.06 12.5975 21.6404 12.5311 21.1009C12.5251 21.0529 12.5221 21.004 12.5221 20.9544C12.5221 20.9544 12.5221 20.9544 12.5221 20.9544V15.4316Z"/>
+				</svg>
+				Minha agenda
 			</div>
-		<% end %>
+			<% if current_user %>
+				<div data-toggle-style-target="toggle"
+						 data-action="click->toggle-style#toggle click->go-to#url"
+						 data-toggle-style-identifier="users-profile"
+						 data-go-to-url="<%= current_user ? user_path(current_user) : new_user_registration_path %>"
+						 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
+																		'text-green-500': current_page?(controller: :users, action: :show, id: current_user),
+																		'text-gray-500':  !current_page?(controller: :users, action: :show, id: current_user) %>">
+					<img src="<%= current_user&.picture :small %>" class="w-5 h-5 rounded-full md:mr-5" alt="<%= current_user&.name %>">
+					<%= current_user&.name&.truncate(10, separator: " ") %>
+				</div>
+			<% else %>
+				<div data-toggle-style-target="toggle"
+						 data-action="click->toggle-style#toggle click->go-to#url"
+						 data-toggle-style-identifier="users-profile"
+						 data-go-to-url="<%= new_user_registration_path %>"
+						 class="cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100">
+					<div class="w-5 h-5 rounded-full md:mr-5 bg-gray-100"></div>
+					Criar conta
+				</div>
+			<% end %>
+		</div>
 	</div>
-</div>
+<% end %>

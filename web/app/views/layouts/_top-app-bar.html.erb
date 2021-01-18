@@ -23,13 +23,14 @@
 		<% if mobile_device? %>
 			<div class="my-auto text-gray-700 md:hidden">
 				<% if props[:visible][:back_button] %>
-					<div data-controller="ripple" class="relative select-none ripple ripple-black tap-highlight-none"
-							 onclick="window.AnimateModule.animateBackbutton()"
-							 aria-label="Voltar">
+					<a data-controller="ripple"
+						 href="<%= feed_path %>"
+						 class="relative select-none ripple ripple-black tap-highlight-none"
+						 aria-label="Voltar">
 						<svg class="h-4 fill-current md:w-auto" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M10.5 17L1.5 9M1.5 9L10.5 1M1.5 9H20" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
-					</div>
+					</a>
 				<% else %>
 					<% if controller_name != 'search' %>
 						<a href="<%= search_index_path %>">
@@ -98,7 +99,7 @@
 		<div class="flex items-center justify-end h-full mr-5">
 			<% unless current_page?('/users/sign_up') || current_page?('/users/sign_in') %>
 				<% if current_user %>
-					<% unless controller_name == 'users' && action_name == 'show'  %>
+					<% unless controller_name == 'users' && action_name == 'show' %>
 						<% if current_user&.picture %>
 							<%= link_to user_path(current_user) do %>
 								<%= image_tag(current_user.picture, { class: "w-8 h-8 rounded-full", alt: current_user&.name, onerror: "this.style.opacity='0'" }) rescue nil %>
