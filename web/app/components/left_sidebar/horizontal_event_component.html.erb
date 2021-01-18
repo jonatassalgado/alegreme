@@ -1,9 +1,9 @@
 <%= content_tag :div, id: dom_id(@event, :left_sidebar), data: { controller: 'left-sidebar--horizontal-event' } do %>
-	<div class="px-5 py-3 group relative">
-		<div class="mb-1 text-sm  text-gray-400">
+	<div class="px-5 py-4 group relative">
+		<div class="mb-1 text-xs text-gray-400">
 			<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h
 		</div>
-		<div class="mb-1 leading-snug text-gray-700 font-semibold">
+		<div class="mb-1 leading-snug text-gray-500 font-semibold">
 			<%= content_tag :a,
 											href:  event_path(@event),
 											data:  {

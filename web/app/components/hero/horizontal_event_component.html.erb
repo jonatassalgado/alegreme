@@ -13,7 +13,7 @@
 											class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-700' do %>
 				<%= @event.details_name %>
 			<% end %>
-			<div class="text-sm">
+			<div class="text-xs mt-2">
 				<span class="text-gray-400">Daqui <%= helpers.distance_of_time_in_words @event.start_time, DateTime.now %> em</span>
 				<span class="text-gray-500"><%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %></span>
 			</div>

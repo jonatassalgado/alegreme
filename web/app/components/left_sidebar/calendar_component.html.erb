@@ -8,7 +8,7 @@
 						<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 					</svg>
 				<% end %>
-				<span class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
+				<span class="font-bold"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
 				<%= content_tag :div, id: 'calendar-next', data: { reflex: 'click->Calendar#next_month', start_date: start_date }, class: 'cursor-pointer text-green-500 hover:bg-green-100 h-8 w-8 rounded-full flex justify-center items-center' do %>
 					<svg class="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>

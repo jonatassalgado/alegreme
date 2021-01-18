@@ -110,7 +110,7 @@
 		<%= render(LargeEventComponent.new(event: @event, user: current_user)) %>
 	</div>
 	<div class="md:col-span-4 mb-10 md:mb-0 mt-5 md:mt-0">
-		<div class="bg-gray-50 cursor-pointer flex font-medium hidden items-center bg-gray-50 md:block bottom-auto mb-5 relative rounded-xl w-auto p-3 space-y-2 text-gray-400 text-sm">
+		<div class="bg-gray-50 cursor-pointer flex font-bold hidden items-center bg-gray-50 md:block bottom-auto mb-5 relative rounded-xl w-auto p-3 space-y-2 text-gray-500 text-sm">
 			<a href="<%= @event.details_source_url %>" target="_blank" class="flex items-center justify-center flex-1 py-3 space-x-2 bg-white rounded shadow-sm">
 				<div>Abrir no facebook</div>
 				<svg class="h-4 text-gray-300 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -132,7 +132,7 @@
 		</div>
 
 		<div class="overflow-hidden bg-white rounded-lg py-4 md:rounded-xl md:shadow-2xl md:border md:border-gray-100">
-			<h2 class="px-5 font-bold text-gray-700 uppercase">Similares</h2>
+			<h2 class="px-5 font-extrabold uppercase">Similares</h2>
 			<div class="md:space-y-2">
 				<% if @similar_events.present? %>
 					<% @similar_events.each do |similar_event| %>

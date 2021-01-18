@@ -15,6 +15,10 @@ module.exports = {
         preserveHtmlElements: false
     },
     theme:    {
+        fontFamily: {
+            display: ['Mulish', 'system-ui', 'sans-serif'],
+            body: ['Mulish', 'system-ui', 'sans-serif'],
+        },
         colors:                  {
             transparent: 'transparent',
             current:     'currentColor',
