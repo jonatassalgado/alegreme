@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
     purge:    {
         enabled:              process.env.RAILS_ENV !== "development",
@@ -15,73 +17,20 @@ module.exports = {
         preserveHtmlElements: false
     },
     theme:    {
-        fontFamily: {
+        fontFamily:              {
             display: ['Mulish', 'system-ui', 'sans-serif'],
-            body: ['Mulish', 'system-ui', 'sans-serif'],
+            body:    ['Mulish', 'system-ui', 'sans-serif'],
         },
         colors:                  {
             transparent: 'transparent',
             current:     'currentColor',
             black:       '#000',
             white:       '#fff',
-            green:       {
-                50:  '#F5FCF6',
-                100: '#ECF8EE',
-                200: '#CEEED4',
-                300: '#B1E3BB',
-                400: '#77CF87',
-                500: '#3CBA54',
-                600: '#36A74C',
-                700: '#247032',
-                800: '#1B5426',
-                900: '#123819',
-            },
-            gray:        {
-                50:  '#F5F5F5',
-                100: '#EAEBEB',
-                200: '#CBCCCE',
-                300: '#ABADB0',
-                400: '#6C7074',
-                500: '#2D3339',
-                600: '#292E33',
-                700: '#1B1F22',
-                800: '#14171A',
-                900: '#0E0F11',
-            },
-            yellow:      {
-                100: '#fffbf0',
-                200: '#ffefc7',
-                300: '#ffe5a3',
-                400: '#ffd97a',
-                500: '#ffcf57',
-                600: '#ffbb0f',
-                700: '#c28b00',
-                800: '#7a5800',
-                900: '#332500'
-            },
-            red:         {
-                50:  '#FDF4F5',
-                100: '#FBE9EC',
-                200: '#F6C9CF',
-                300: '#F0A8B2',
-                400: '#E46778',
-                500: '#D9263E',
-                600: '#C32238',
-                700: '#821725',
-                800: '#62111C',
-                900: '#410B13',
-            },
-            purple:      {
-                100: '#f3f4fc',
-                200: '#d0d1f1',
-                300: '#acafe7',
-                400: '#898ddc',
-                500: '#6167d1',
-                600: '#383ebd',
-                700: '#292d8a',
-                800: '#1b1e5b',
-                900: '#0c0d27'
-            }
+            green:       colors.green,
+            gray:        colors.coolGray,
+            yellow:      colors.amber,
+            red:         colors.red,
+            purple:      colors.purple
         },
         animations:              {
             "spin": {

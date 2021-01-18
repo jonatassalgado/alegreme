@@ -21,7 +21,7 @@
 				 data-share-button-text="<%= strip_tags(limit_description_size(event.details_description, 160)) %>"
 				 data-share-button-title="<%= event.details_name %>"
 				 data-share-button-url="<%= event_url(event, format: :html) %>">
-			<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-sm text-gray-500 bg-gray-50 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-green-500 w-content"
+			<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-sm text-gray-600 bg-gray-50 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-green-500 w-content"
 					 data-action="click->share-button#share"
 					 data-controller="ripple">
 				<span>Compartilhar</span>
@@ -57,7 +57,7 @@
 										 }
 								 } %>
 		</div>
-		<h1 class="px-3 mb-5 text-2xl font-medium leading-tight text-gray-500 md:px-0 md:text-4xl">
+		<h1 class="px-3 mb-5 text-2xl font-medium leading-tight text-gray-600 md:px-0 md:text-4xl">
 			<%= event.details_name %>
 		</h1>
 	</div>
@@ -79,15 +79,15 @@
 		</div>
 	</div>
 	<div class="px-5 py-5 border-b border-gray-100">
-		<h2 class="font-bold text-gray-500 uppercase"><%= limit_place_name_size(event.place_details_name, 40) %></h2>
-		<div class="mt-2 text-sm  leading-tight text-gray-500">
+		<h2 class="font-bold text-gray-600 uppercase"><%= limit_place_name_size(event.place_details_name, 40) %></h2>
+		<div class="mt-2 text-sm  leading-tight text-gray-600">
 			<%= limit_address_name_size event.geographic['address'] %>
 		</div>
 		<div>
 
 			<div class="flex justify-center h-16 mt-3 align-middle bg-cover" style="background-image: url('<%= asset_pack_path('media/images/open-google-maps.png') %>')">
 				<div class="flex px-2 py-2 my-auto rounded shadow h-content" style="background: rgba(255, 255, 255, 0.9);">
-					<svg class="h-5 mr-1 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<svg class="h-5 mr-1 text-gray-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>
 						<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
 					</svg>
@@ -98,8 +98,8 @@
 		</div>
 	</div>
 	<div class="px-5 py-5">
-		<h2 class="font-bold text-gray-500 uppercase">Sobre o evento</h2>
-		<div class="mt-2 text-sm  leading-relaxed text-gray-500 break-words text-with-html">
+		<h2 class="font-bold text-gray-600 uppercase">Sobre o evento</h2>
+		<div class="mt-2 text-sm  leading-relaxed text-gray-600 break-words text-with-html">
 			<%= event.details_description.html_safe %>
 		</div>
 	</div>

@@ -1,7 +1,7 @@
 <%= content_tag :div, id: dom_id(@event, :hero), data: { controller: 'hero--horizontal-event', 'hero--horizontal-event-open-in-sidebar': @open_in_sidebar } do %>
-	<div class="bg-white border-gray-50 flex justify-between md:border md:border-0 md:shadow-none mt-2 mx-2 px-5 py-3 rounded-lg shadow-sm">
+	<div class="bg-white border-gray-100 flex justify-between md:border md:border-0 md:shadow-none mt-2 mx-2 px-5 py-3 rounded-lg shadow-sm">
 		<div class="pr-6 flex-1">
-			<div class="mb-1 text-sm  text-gray-400">
+			<div class="mb-1 text-sm  text-gray-500">
 				<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h · <%= @event.categories_primary_name.titleize %>
 			</div>
 			<%= content_tag :a,
@@ -11,25 +11,25 @@
 												action:     'click->hero--horizontal-event#openEvent',
 												'event-id': @event.id
 											},
-											class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-500' do %>
+											class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-600' do %>
 				<%= @event.details_name %>
 			<% end %>
 			<div class="text-xs mt-2">
-				<span class="text-gray-400">Daqui <%= helpers.distance_of_time_in_words @event.start_time, DateTime.now %> em</span>
-				<span class="text-gray-500"><%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %></span>
+				<span class="text-gray-500">Daqui <%= helpers.distance_of_time_in_words @event.start_time, DateTime.now %> em</span>
+				<span class="text-gray-600"><%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %></span>
 			</div>
 			<div class="flex my-1 -ml-2">
-				<%= content_tag :div, data: {action: 'click->hero--horizontal-event#like', 'event-id': @event.id}, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
+				<%= content_tag :div, data: {action: 'click->hero--horizontal-event#like', 'event-id': @event.id}, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
 					<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
-																							{ 'text-gray-200 hover:text-gray-300':  !@user&.like?(@event),
+																							{ 'text-gray-300 hover:text-gray-400':  !@user&.like?(@event),
 																								'text-green-500': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 						<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
 					</svg>
 				<% end %>
-				<%= content_tag :div, data: {action: 'click->hero--horizontal-event#dislike', 'event-id': @event.id}, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform' do %>
+				<%= content_tag :div, data: {action: 'click->hero--horizontal-event#dislike', 'event-id': @event.id}, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform' do %>
 					<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
-																							{ 'text-gray-200 hover:text-gray-300': !@user&.dislike?(@event),
+																							{ 'text-gray-300 hover:text-gray-400': !@user&.dislike?(@event),
 																								'text-red-500':  @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 						<path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>

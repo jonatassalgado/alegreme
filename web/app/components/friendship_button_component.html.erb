@@ -2,7 +2,7 @@
 	<% if !@user.friendship? @friend %>
 		<%= reflex_tag :commit_edit,
 									 :div,
-									 class:                    'flex items-center w-content justify-center px-2 py-1 text-sm font-medium text-gray-500 border border-gray-100 rounded cursor-pointer select-none tap-highlight-none',
+									 class:                    'flex items-center w-content justify-center px-2 py-1 text-sm font-medium text-gray-600 border border-gray-100 rounded cursor-pointer select-none tap-highlight-none',
 									 'data-friendship-action': 'request' do %>
 			<svg class="w-5 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 				<path d="M0 0h24v24H0z" fill="none"/>
@@ -24,7 +24,7 @@
 	<% elsif @user.friendship_requested? @friend %>
 		<%= reflex_tag :commit_edit,
 									 :div,
-									 class:                    'flex items-center w-content justify-center px-2 py-1 text-sm font-medium text-gray-500 border-transparent rounded cursor-pointer select-none bg-gray-50 tap-highlight-none',
+									 class:                    'flex items-center w-content justify-center px-2 py-1 text-sm font-medium text-gray-600 border-transparent rounded cursor-pointer select-none bg-gray-50 tap-highlight-none',
 									 'data-friendship-action': 'cancel' do %>
 			<svg class="w-5 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 				<path d="M0 0h24v24H0z" fill="none"/>
@@ -55,7 +55,7 @@
 			<div class="absolute bottom-0 flex flex-col w-screen p-5 pb-8 space-y-5 bg-white rounded-t-lg h-content">
 				<div class="flex items-center space-x-5 font-medium">
 					<svg class="<%= helpers.class_names('fill-current h-6',
-																							{'text-gray-400':  @user.friendship_accepted?(@friend),
+																							{'text-gray-500':  @user.friendship_accepted?(@friend),
 																							 'text-green-400': !@user.friendship_accepted?(@friend)}) %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<g>
 							<rect fill="none" height="24" width="24"/>

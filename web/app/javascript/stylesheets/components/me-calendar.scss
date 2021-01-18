@@ -14,7 +14,7 @@
   }
 
   th {
-    @apply text-gray-400 text-sm font-medium;
+    @apply text-gray-500 text-sm font-medium;
   }
 
   table {
@@ -22,7 +22,7 @@
   }
 
   .calendar-heading {
-    @apply capitalize flex items-center font-medium justify-between px-5 text-gray-500 -mt-3 py-2 rounded-t-lg;
+    @apply capitalize flex items-center font-medium justify-between px-5 text-gray-600 -mt-3 py-2 rounded-t-lg;
 
     @screen md {
       @apply px-2;
@@ -50,11 +50,11 @@
   }
 
   .past {
-    @apply text-gray-200 line-through;
+    @apply text-gray-300 line-through;
   }
 
   .future {
-    @apply text-gray-500;
+    @apply text-gray-600;
   }
 
   .has-events {
@@ -77,7 +77,7 @@
   }
 
   .prev-month {
-    @apply text-gray-200;
+    @apply text-gray-300;
   }
 
   .current-month {}

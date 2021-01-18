@@ -19,7 +19,7 @@
 				</div>
 				<% if @movie.details_trailler %>
 					<a href="<%= @movie.details_trailler %>">
-						<div class="bg-white flex font-medium px-2 py-1 rounded-full text-gray-500 w-content">
+						<div class="bg-white flex font-medium px-2 py-1 rounded-full text-gray-600 w-content">
 							<svg class="w-5 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 								<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/>
 							</svg>
@@ -41,7 +41,7 @@
 												 taste_sentiment: :positive,
 												 html:            {
 														 container: {
-																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-500 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-600 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-600 text-sm transform transition-transform'
 														 }
 												 },
 												 opts:            {
@@ -58,7 +58,7 @@
 												 taste_sentiment: :negative,
 												 html:            {
 														 container: {
-																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-500 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-500 text-sm transform transition-transform'
+																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-600 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-600 text-sm transform transition-transform'
 														 }
 												 },
 												 opts:            {
@@ -68,7 +68,7 @@
 										 } %>
 				</div>
 			<% end %>
-			<h2 class="font-medium text-gray-500">
+			<h2 class="font-medium text-gray-600">
 				Serviços de streaming
 			</h2>
 			<div class="flex flex-wrap my-3 space-x-2">
@@ -80,10 +80,10 @@
 					</a>
 				<% end %>
 			</div>
-			<h2 class="mt-6 font-medium text-gray-500">
+			<h2 class="mt-6 font-medium text-gray-600">
 				Sinopse
 			</h2>
-			<div class="my-3 antialiased  leading-6 text-gray-500">
+			<div class="my-3 antialiased  leading-6 text-gray-600">
 				<%= @movie.details_description %>
 				<% if current_user&.admin? %>
 					<%= link_to "Editar", edit_movie_path(@movie) %>

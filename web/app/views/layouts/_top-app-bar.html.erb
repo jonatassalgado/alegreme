@@ -21,7 +21,7 @@
 	<div class="<%= class_names 'flex md:relative md:col-span-3 h-full',
 															'space-x-4': content_for?(:top_app_bar_title) %>">
 		<% if mobile_device? %>
-			<div class="my-auto text-gray-500 md:hidden">
+			<div class="my-auto text-gray-600 md:hidden">
 				<% if props[:visible][:back_button] %>
 					<a data-controller="ripple"
 						 href="<%= feed_path %>"
@@ -46,7 +46,7 @@
 		<div class="<%= class_names 'h-full inline-flex items-center flex-auto pr-8 md:pr-0',
 																'hidden': !props[:visible][:logo] %>">
 			<% if mobile_device? && content_for?(:top_app_bar_title) %>
-				<div class="font-semibold text-gray-500">
+				<div class="font-semibold text-gray-600">
 					<%= content_for(:top_app_bar_title) %>
 				</div>
 			<% elsif props[:visible][:logo] %>
@@ -108,9 +108,9 @@
 							<div class="w-8 h-8 mr-2 bg-gray-100 rounded-full"></div>
 						<% end %>
 					<% end %>
-					<%#= link_to('Sair', destroy_user_session_path, method: :delete, class: 'hidden md:inline-block text-gray-400 font-sm') %>
+					<%#= link_to('Sair', destroy_user_session_path, method: :delete, class: 'hidden md:inline-block text-gray-500 font-sm') %>
 				<% else %>
-					<%= link_to 'Criar conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'hidden md:inline-block text-gray-400 font-sm text-green-500 hover:text-gray-500' %>
+					<%= link_to 'Criar conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'hidden md:inline-block text-gray-500 font-sm text-green-500 hover:text-gray-600' %>
 				<% end %>
 			<% end %>
 		</div>

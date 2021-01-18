@@ -1,7 +1,7 @@
 <div id="<%= dom_id friend, :friendship_button %>"
 		 data-controller="friendship">
 	<% if !user.friendship? friend %>
-		<div class="flex items-center w-content justify-center px-2 py-1 text-sm font-medium text-gray-500 border border-gray-100 rounded cursor-pointer select-none tap-highlight-none"
+		<div class="flex items-center w-content justify-center px-2 py-1 text-sm font-medium text-gray-600 border border-gray-100 rounded cursor-pointer select-none tap-highlight-none"
 				 data-reflex="click->Friendship#friendship"
 				 data-reflex-root="#page"
 				 data-friend-id="<%= friend.id %>"
@@ -27,7 +27,7 @@
 			<span>Aceitar amizade</span>
 		</div>
 	<% elsif user.friendship_requested? friend %>
-		<div class="flex items-center w-content justify-center px-2 py-1 text-sm font-medium text-gray-500 border-transparent rounded cursor-pointer select-none bg-gray-50 tap-highlight-none"
+		<div class="flex items-center w-content justify-center px-2 py-1 text-sm font-medium text-gray-600 border-transparent rounded cursor-pointer select-none bg-gray-50 tap-highlight-none"
 				 data-reflex="click->Friendship#friendship"
 				 data-reflex-root="#page"
 				 data-friend-id="<%= friend.id %>"

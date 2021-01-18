@@ -1,7 +1,7 @@
 <%= content_tag :div, id: 'main-sidebar--large-event', data: { controller: 'main-sidebar--large-event', 'opened-event': @event&.id } do %>
 	<% if @event %>
 		<div class="relative mt-5 overflow-hidden bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl">
-			<div data-reflex="click->Event#close" class="fixed absolute top-0 right-0 z-50 p-1 mt-2 mr-3 text-gray-500 transition-transform duration-300 transform bg-white rounded-full shadow cursor-pointer hover:scale-105">
+			<div data-reflex="click->Event#close" class="fixed absolute top-0 right-0 z-50 p-1 mt-2 mr-3 text-gray-600 transition-transform duration-300 transform bg-white rounded-full shadow cursor-pointer hover:scale-105">
 				<svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<path d="M0 0h24v24H0V0z" fill="none"/>
 					<path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
@@ -13,10 +13,10 @@
 					<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.details_name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-50">
 				</div>
 				<div class="">
-					<div class="flex items-center w-full px-3 py-2 space-x-2 text-sm font-medium text-gray-400 bg-gray-100 cursor-pointer">
+					<div class="flex items-center w-full px-3 py-2 space-x-2 text-sm font-medium text-gray-500 bg-gray-100 cursor-pointer">
 						<a href="<%= @event.details_source_url %>" target="_blank" class="flex items-center justify-center flex-1 py-2 space-x-2 bg-white rounded shadow-sm">
 							<div>Abrir no facebook</div>
-							<svg class="h-4 text-gray-300 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<svg class="h-4 text-gray-400 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M16 16H2V2H9V0H2C0.89 0 0 0.9 0 2V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V9H16V16ZM11 0V2H14.59L4.76 11.83L6.17 13.24L16 3.41V7H18V0H11Z"/>
 							</svg>
 						</a>
@@ -28,14 +28,14 @@
 								 data-action="click->share-button#share">
 							<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
 							<div>Compartilhar</div>
-							<svg class="h-4 text-gray-300 fill-current" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<svg class="h-4 text-gray-400 fill-current" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M15 14.08C14.24 14.08 13.56 14.38 13.04 14.85L5.91 10.7C5.96 10.47 6 10.24 6 10C6 9.76 5.96 9.53 5.91 9.3L12.96 5.19C13.5 5.69 14.21 6 15 6C16.66 6 18 4.66 18 3C18 1.34 16.66 0 15 0C13.34 0 12 1.34 12 3C12 3.24 12.04 3.47 12.09 3.7L5.04 7.81C4.5 7.31 3.79 7 3 7C1.34 7 0 8.34 0 10C0 11.66 1.34 13 3 13C3.79 13 4.5 12.69 5.04 12.19L12.16 16.35C12.11 16.56 12.08 16.78 12.08 17C12.08 18.61 13.39 19.92 15 19.92C16.61 19.92 17.92 18.61 17.92 17C17.92 15.39 16.61 14.08 15 14.08Z"/>
 							</svg>
 						</div>
 					</div>
 				</div>
 				<div class="p-5">
-					<h1 class="text-2xl font-medium leading-tight text-gray-500">
+					<h1 class="text-2xl font-medium leading-tight text-gray-600">
 						<%= @event.details_name %>
 					</h1>
 					<div class="flex items-center -ml-1">
@@ -44,9 +44,9 @@
 														data:  {
 															reflex: 'click->Event#open'
 														},
-														class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
+														class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-600 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
 							<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
-																									{ 'text-gray-500':  !@user&.like?(@event),
+																									{ 'text-gray-600':  !@user&.like?(@event),
 																										'text-green-500': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 								<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
@@ -57,9 +57,9 @@
 														data:  {
 															reflex: 'click->Event#open'
 														},
-														class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform' do %>
+														class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-600 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
 							<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
-																									{ 'text-gray-500': !@user&.dislike?(@event),
+																									{ 'text-gray-600': !@user&.dislike?(@event),
 																										'text-red-500':  @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 								<path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
@@ -86,14 +86,14 @@
 					</div>
 				</div>
 				<div class="px-5 py-5 border-b border-gray-100">
-					<h2 class="font-bold text-gray-500 uppercase"><%= helpers.limit_place_name_size(@event.place_details_name, 40) %></h2>
-					<div class="mt-2 text-sm  leading-tight text-gray-500">
+					<h2 class="font-bold text-gray-600 uppercase"><%= helpers.limit_place_name_size(@event.place_details_name, 40) %></h2>
+					<div class="mt-2 text-sm  leading-tight text-gray-600">
 						<%= helpers.limit_address_name_size @event.geographic['address'] %>
 					</div>
 					<div>
 						<div class="flex justify-center h-16 mt-3 align-middle bg-cover" style="background-image: url('<%= asset_pack_path('media/images/open-google-maps.png') %>')">
 							<div class="flex px-2 py-2 my-auto rounded shadow h-content" style="background: rgba(255, 255, 255, 0.9);">
-								<svg class="h-5 mr-1 text-gray-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<svg class="h-5 mr-1 text-gray-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 									<path d="M0 0h24v24H0z" fill="none"/>
 									<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
 								</svg>
@@ -103,16 +103,16 @@
 					</div>
 				</div>
 				<div class="px-5 py-5">
-					<h2 class="font-bold text-gray-500 uppercase">Sobre o evento</h2>
-					<div class="mt-2 text-sm  leading-relaxed text-gray-500 break-words text-with-html">
+					<h2 class="font-bold text-gray-600 uppercase">Sobre o evento</h2>
+					<div class="mt-2 text-sm  leading-relaxed text-gray-600 break-words text-with-html">
 						<%= @event.details_description.html_safe %>
 					</div>
 				</div>
 				<% if @similar_events.present? %>
 					<div class="mt-10 mb-5">
-						<h2 class="px-5 font-bold text-gray-500 uppercase">Similares</h2>
+						<h2 class="px-5 font-bold text-gray-600 uppercase">Similares</h2>
 						<% @similar_events.each do |similar_event| %>
-							<div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-50">
+							<div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-100">
 								<div class="pr-6">
 									<div class="mb-1 text-sm  text-gray-600">
 										<%= I18n.l(similar_event.start_time, format: :long) %>
@@ -129,7 +129,7 @@
 																	class: 'md:hover:underline font-medium mb-1 leading-snug' do %>
 										<%= similar_event.details_name %>
 									<% end %>
-									<div class="text-sm  text-gray-500">
+									<div class="text-sm  text-gray-600">
 										<%= link_to helpers.limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline' %>
 									</div>
 								</div>

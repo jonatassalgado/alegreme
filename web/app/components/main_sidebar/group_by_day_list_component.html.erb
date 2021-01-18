@@ -1,17 +1,17 @@
 <div class="md:px-5">
 	<% @events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
 		<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="mb-5 md:mb-12 content-visibility-auto contain-intrinsic-size-md">
-			<div class="<%= helpers.class_names('bg-gray-50 md:bg-white flex-1 leading-6 md:leading-normal md:px-5 pb-2 pt-2 px-5 sticky text-center text-gray-500 top-0 z-10',
+			<div class="<%= helpers.class_names('bg-gray-50 md:bg-white flex-1 leading-6 md:leading-normal md:px-5 pb-2 pt-2 px-5 sticky text-center text-gray-600 top-0 z-10',
 																					{ 'top-0':  helpers.mobile_device?,
 																						'top-12': helpers.mobile_device? && current_page?('/minha-agenda'),
 																						'top-16': !helpers.mobile_device? }) %>">
 				<h2 class="font-black text-xl"><%= helpers.day_of_week(group[0].to_date).titlecase %></h2>
 				<% if group[0].to_date == Date.today || group[0].to_date == Date.tomorrow %>
-					<div class="text-sm text-gray-400"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
+					<div class="text-sm text-gray-500"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
 				<% elsif group[0].to_date < Date.today + 7 %>
-					<div class="text-sm text-gray-400"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
+					<div class="text-sm text-gray-500"><%= "#{I18n.l(group[0].to_date, format: :long)}" %></div>
 				<% else %>
-					<div class="text-sm text-gray-400">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
+					<div class="text-sm text-gray-500">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
 				<% end %>
 			</div>
 			<div id="vertical-daily-events" class="py-2 mb-10">

@@ -9,7 +9,7 @@
 								<div class="font-black md:text-2xl text-xl">
 									Que tipos de evento você curte?
 								</div>
-								<div class="text-sm text-gray-400">
+								<div class="text-sm text-gray-500">
 									Para receber sugestões personalizadas, indique os eventos que você curte ou não.
 								</div>
 							</div>
@@ -20,7 +20,7 @@
 					<% end %>
 					<% if @end_train_message %>
 						<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 bg-white bg-gray-100 rounded-lg h-content">
-							<div id="end-message-title" class="font-bold px-5 text-gray-500">
+							<div id="end-message-title" class="font-bold px-5 text-gray-600">
 								<div><%= "Obrigado #{@user.first_name}!" %></div>
 								<div>Agora já consigo recomendar eventos parecidos com seu gosto pessoal.</div>
 							</div>
@@ -36,7 +36,7 @@
 									<div class="font-black md:text-2xl text-xl">
 										Eventos escolhidos a dedo para você
 									</div>
-									<div class="text-sm text-gray-400">
+									<div class="text-sm text-gray-500">
 										Com base nos eventos que você gostou
 									</div>
 								</div>
@@ -46,7 +46,7 @@
 							</div>
 						<% else %>
 							<div class="flex flex-col items-center justify-center p-5 mx-5 my-auto mt-12 space-y-5 text-center text-gray-800 bg-white bg-gray-100 rounded-lg h-content">
-								<div id="end-message-title" class="font-semibold px-5 text-gray-500">
+								<div id="end-message-title" class="font-semibold px-5 text-gray-600">
 									<%= "Você já viu todas as recomendações que eu tinha para você hoje" %>
 								</div>
 								<%= content_tag :div, data: { reflex: 'click->Swipable#hidden_swipable' }, class: 'px-4 py-2 font-semibold text-white bg-green-500 rounded-full cursor-pointer' do %>

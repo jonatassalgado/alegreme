@@ -15,13 +15,13 @@
 			<% end %>
 		</div>
 		<div>
-			<h1 class="text-2xl text-gray-500">
+			<h1 class="text-2xl text-gray-600">
 				<%= @user.first_name %>
 			</h1>
 			<% if current_user == @user %>
 				<div class="space-x-1">
-					<%= link_to "Editar perfil", edit_user_path(@user), class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-500 text-sm' %>
-					<%= link_to "Sair", destroy_user_session_path, class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-500 text-sm', method: :delete if current_user.admin? %>
+					<%= link_to "Editar perfil", edit_user_path(@user), class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-600 text-sm' %>
+					<%= link_to "Sair", destroy_user_session_path, class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-600 text-sm', method: :delete if current_user.admin? %>
 				</div>
 			<% end %>
 			<% if current_user != @user %>
@@ -49,10 +49,10 @@
 <!--			</h2>-->
 			<%# if @user.friendships_request_received.present? %>
 <!--				<div class="px-5 leading-none mt-3">-->
-<!--  			<span class="pt-5 text-sm text-gray-400">-->
+<!--  			<span class="pt-5 text-sm text-gray-500">-->
 <!--  				Pedidos de amizade que você recebeu.-->
 <!--  			</span>-->
-<!--					<span class="text-sm  text-gray-400">-->
+<!--					<span class="text-sm  text-gray-500">-->
 <!--  				Você pode ter até 10 amigos e eles podem ver sua agenda, por isso os escolha bem.-->
 <!--  			</span>-->
 <!--				</div>-->
@@ -62,7 +62,7 @@
 					<%#= render(FriendshipRequestComponent.with_collection(@user.friends_requested_received, user: @user)) %>
 <!--				</div>-->
 			<%# else %>
-<!--				<div class="px-5 text-sm text-gray-400">-->
+<!--				<div class="px-5 text-sm text-gray-500">-->
 <!--					Você não possui notificações-->
 <!--				</div>-->
 			<%# end %>
@@ -76,7 +76,7 @@
 					<%#= render(UserChipComponent.with_collection(@user.friends_accepted, user: @user)) %>
 <!--				</div>-->
 			<%# else %>
-<!--				<div class="px-5 text-sm text-gray-400">-->
+<!--				<div class="px-5 text-sm text-gray-500">-->
 <!--					Você ainda não adicionou nenhum amigo-->
 <!--				</div>-->
 			<%# end %>
@@ -101,7 +101,7 @@
 <!--					</div>-->
 <!--				</div>-->
 			<%# else %>
-<!--				<div class="px-5 text-sm text-gray-400">-->
+<!--				<div class="px-5 text-sm text-gray-500">-->
 <!--					Você não segue nenhuma pessoa ainda-->
 <!--				</div>-->
 			<%# end %>
@@ -126,7 +126,7 @@
 					</div>
 				</div>
 			<% else %>
-				<div class="px-5 text-sm text-gray-400">
+				<div class="px-5 text-sm text-gray-500">
 					Você não segue nenhum local ainda
 				</div>
 			<% end %>
@@ -151,7 +151,7 @@
 					</div>
 				</div>
 			<% else %>
-				<div class="px-5 text-sm text-gray-400">
+				<div class="px-5 text-sm text-gray-500">
 					Você não segue nenhum organizador ainda
 				</div>
 			<% end %>
