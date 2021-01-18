@@ -115,9 +115,9 @@
 			<div class="md:space-y-2">
 				<% if @similar_events.present? %>
 					<% @similar_events.each do |similar_event| %>
-						<div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-50">
+						<div class="flex justify-between px-5 py-3 md:border-0">
 							<div class="pr-6">
-								<div class="mb-1 text-sm  text-gray-600">
+								<div class="mb-1 text-xs  text-gray-600">
 									<%= I18n.l(similar_event.start_time, format: :long) %>
 									às <%= format_hour similar_event.first_day_time %>h
 									· <%= similar_event.categories_primary_name.titleize %>
@@ -129,12 +129,9 @@
 																	url:        event_path(similar_event),
 																	'event-id': similar_event.id
 																},
-																class: 'md:hover:underline mb-1 leading-snug text-gray-700' do %>
+																class: 'md:hover:underline text-sm font-medium mb-1 leading-snug text-gray-500' do %>
 									<%= similar_event.details_name %>
 								<% end %>
-								<div class="text-sm  text-gray-500">
-									<%= link_to limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline' %>
-								</div>
 							</div>
 							<div>
 								<div data-controller="ripple" class="relative w-24 mt-6 overflow-hidden rounded shadow-xs ripple ripple-white">
