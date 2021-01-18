@@ -120,7 +120,8 @@ module.exports = {
         borderWidth: ["responsive", "first"],
         aspectRatio: ["responsive"],
         textColor:   ["responsive", "hover", "focus", "group-hover"],
-        display:     ["responsive", "group-hover"]
+        display:     ["responsive", "group-hover"],
+        zIndex:      ['responsive', 'focus-within', 'focus', 'last']
     },
     plugins:  [
         require("tailwindcss-elevation")(),

@@ -1,7 +1,7 @@
 <%= content_tag :div, id: 'swipable', data: { controller: 'hero--swipable' } do %>
 	<% if @show_swipable %>
 		<div class="mb-10">
-			<div class="bg-white inline-block my-4 md:my-0">
+			<div class="inline-block my-4 md:my-0">
 				<div class="h-content md:mx-auto md:px-6">
 					<% if @user.swipable['events']['finished_at'].blank? && @events_to_train.present? %>
 						<div data-swipable-target="items">
