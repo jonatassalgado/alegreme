@@ -13,15 +13,13 @@
   [
     <%= render partial: 'layouts/json_ld', collection: @upcoming_events, as: :event %>
   ]
-
-
 	</script>
 
 	<div class="mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-2xl md:max-w-screen-sm sm:container">
 		<div class="px-8 py-3 mx-3 space-y-3 text-center bg-white rounded-md shadow-sm">
 			<%= image_tag shrine_image_url(@place, :sm), {
 				loading: :lazy,
-				class:   'max-w-xs mx-auto rounded-full',
+				class:   'w-16 h-16 shadow mx-auto rounded-full',
 				onerror: "this.style.opacity='0'"
 			} if @place.image_data? %>
 			<div>
