@@ -32,12 +32,13 @@ def clean_description(value):
     description = re.sub(r'data-lynx-mode="hover"', '', description)
     description = re.sub(r'&amp', '', description)
     description = re.sub(r'<(\/|)span>', '', description)
+    description = unquote(description)
     description = BeautifulSoup(description, 'html.parser')
     hashtags = description.select("a[href*=hashtag]")
     for hashtag in hashtags:
         hashtag.decompose()
 
-    return str(unquote(description))
+    return str(description)
 
 
 def remove_url_params(value):
