@@ -17,7 +17,7 @@
 
 <% if user %>
 	<% if taste_sentiment.to_sym == :positive %>
-		<div class="<%= class_names html.dig(:container, :css) || 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform',
+		<div class="<%= class_names html.dig(:container, :css) || 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform',
 																{'bg-green-100': user.like?(resource)} %>"
 				 data-action="click->cable-ready#perform"
 				 data-controller="cable-ready"
@@ -29,7 +29,7 @@
 				 data-cable-ready-action="like"
 				 id="<%= "#{parent_id}-#{taste_type}-button-#{taste_type}" %>">
 			<% if opts.dig(:with_text) %>
-				<span class="<%= class_names class_names html.dig(:content, :css) || 'mr-1', {'text-gray-700': user.like?(resource)} %>">
+				<span class="<%= class_names class_names html.dig(:content, :css) || 'mr-1', {'text-gray-500': user.like?(resource)} %>">
 					<%= user.like?(resource) ? User.taste_texts(taste_type, :remove) : User.taste_texts(taste_type, :add) %>
 				</span>
 			<% end %>
@@ -41,7 +41,7 @@
 			</svg>
 		</div>
 	<% elsif taste_sentiment.to_sym == :negative %>
-		<div class="<%= class_names html.dig(:container, :css) || 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-700 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform',
+		<div class="<%= class_names html.dig(:container, :css) || 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-500 text-sm transform transition-transform',
 																{'bg-red-100':   user.dislike?(resource)} %>"
 				 data-action="click->cable-ready#perform"
 				 data-controller="cable-ready"
@@ -53,7 +53,7 @@
 				 data-cable-ready-action="dislike"
 				 id="<%= "#{parent_id}-#{taste_type}-button-#{taste_type}" %>">
 			<% if opts.dig(:with_text) %>
-				<span class="<%= class_names class_names html.dig(:content, :css) || 'mr-1', {'text-gray-700': user.like?(resource)} %>">
+				<span class="<%= class_names class_names html.dig(:content, :css) || 'mr-1', {'text-gray-500': user.like?(resource)} %>">
 					<%= user.like?(resource) ? User.taste_texts(taste_type, :remove) : User.taste_texts(taste_type, :add) %>
 				</span>
 			<% end %>

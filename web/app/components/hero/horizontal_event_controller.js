@@ -35,7 +35,7 @@ export default class extends ApplicationController {
 
             document.dispatchEvent(this.beginEvent)
 
-            this.stimulate("Event#open", event.target, {
+            this.stimulate("Event#open", event.currentTarget, {
                 resolveLate: true
             }).then(payload => {
                 // this._updateUrl(target);

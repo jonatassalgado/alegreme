@@ -1,6 +1,6 @@
 <% events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
 	<div class="bg-white content-visibility-auto contain-intrinsic-size-md">
-		<div class="<%= class_names('sticky bg-white z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-700 md:leading-normal md:px-5',
+		<div class="<%= class_names('sticky bg-white z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-500 md:leading-normal md:px-5',
 																{'top-0':  mobile_device?,
 																 'top-16': !mobile_device?}) %>">
 			<h2 class="text-xl font-semibold md:text-4xl"><%= day_of_week(group[0].to_date).titlecase %></h2>

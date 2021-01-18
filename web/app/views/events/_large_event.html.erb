@@ -21,7 +21,7 @@
 				 data-share-button-text="<%= strip_tags(limit_description_size(event.details_description, 160)) %>"
 				 data-share-button-title="<%= event.details_name %>"
 				 data-share-button-url="<%= event_url(event, format: :html) %>">
-			<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-sm text-gray-700 bg-gray-50 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-green-500 w-content"
+			<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-sm text-gray-500 bg-gray-50 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-green-500 w-content"
 					 data-action="click->share-button#share"
 					 data-controller="ripple">
 				<span>Compartilhar</span>
@@ -57,7 +57,7 @@
 										 }
 								 } %>
 		</div>
-		<h1 class="px-3 mb-5 text-2xl font-medium leading-tight text-gray-700 md:px-0 md:text-4xl">
+		<h1 class="px-3 mb-5 text-2xl font-medium leading-tight text-gray-500 md:px-0 md:text-4xl">
 			<%= event.details_name %>
 		</h1>
 	</div>
@@ -79,8 +79,8 @@
 		</div>
 	</div>
 	<div class="px-5 py-5 border-b border-gray-100">
-		<h2 class="font-bold text-gray-700 uppercase"><%= limit_place_name_size(event.place_details_name, 40) %></h2>
-		<div class="mt-2 text-sm  leading-tight text-gray-700">
+		<h2 class="font-bold text-gray-500 uppercase"><%= limit_place_name_size(event.place_details_name, 40) %></h2>
+		<div class="mt-2 text-sm  leading-tight text-gray-500">
 			<%= limit_address_name_size event.geographic['address'] %>
 		</div>
 		<div>
@@ -98,8 +98,8 @@
 		</div>
 	</div>
 	<div class="px-5 py-5">
-		<h2 class="font-bold text-gray-700 uppercase">Sobre o evento</h2>
-		<div class="mt-2 text-sm  leading-relaxed text-gray-700 break-words text-with-html">
+		<h2 class="font-bold text-gray-500 uppercase">Sobre o evento</h2>
+		<div class="mt-2 text-sm  leading-relaxed text-gray-500 break-words text-with-html">
 			<%= event.details_description.html_safe %>
 		</div>
 	</div>

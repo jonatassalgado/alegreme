@@ -1,7 +1,6 @@
 class Hero::SwipableComponent < ViewComponent::Base
 
 	def initialize(user:)
-		@max_events_to_show        = 3
 		@min_events_to_train       = 5
 		@suggestion_hours_interval = 24
 		@user                      = user
@@ -44,9 +43,9 @@ class Hero::SwipableComponent < ViewComponent::Base
 
 		@user.liked_or_disliked_events.reset
 		if @user.swipable['events']['finished_at'].blank? && @user.liked_event_ids.size < @min_events_to_train
-			@events_to_train = Event.not_ml_data.active.not_liked_or_disliked(@user).order_by_date.limit(3)
+			@events_to_train = Event.not_ml_data.active.not_liked_or_disliked(@user).order_by_date.limit(2)
 		else
-			@events_suggestions = Event.not_ml_data.active.in_user_suggestions(@user).not_liked_or_disliked(@user).limit(3)
+			@events_suggestions = Event.not_ml_data.active.in_user_suggestions(@user).not_liked_or_disliked(@user).limit(2)
 		end
 	end
 

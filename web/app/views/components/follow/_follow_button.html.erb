@@ -1,6 +1,6 @@
-<div class="<%= class_names('bg-white cursor-pointer duration-100 h-content hover:scale-110 inline-flex items-center pl-1 pr-2 py-1 rounded-full select-none space-x-1 tap-highlight-none text-gray-700 text-sm transform transition-transform',
+<div class="<%= class_names('bg-white cursor-pointer duration-100 h-content hover:scale-110 inline-flex items-center pl-1 pr-2 py-1 rounded-full select-none space-x-1 tap-highlight-none text-gray-500 text-sm transform transition-transform',
 														{ 'bg-green-100 text-green-500': @user.follow?(@followable),
-															'bg-gray-50 text-gray-700':    !@user.follow?(@followable) }) %>"
+															'bg-gray-50 text-gray-500':    !@user.follow?(@followable) }) %>"
 		 data-action="click->Place#follow"
 		 data-followable-id="<%= @followable.id %>"
 		 data-followable-type="<%= @followable.class.name %>"
