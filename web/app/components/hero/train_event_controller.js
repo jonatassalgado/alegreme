@@ -45,30 +45,37 @@ export default class extends ApplicationController {
         }
     }
 
-    beforeLike(anchorElement) {
-        this._animateHide(this.element)
-    }
-
-    beforeDislike(anchorElement) {
-        this._animateHide(this.element)
-    }
-
     like(event) {
-        this.stimulate('Swipable#like', event.currentTarget)
+        const currentTarget = event.currentTarget
+        Velocity(this.element, {opacity: 0})
             .then(value => {
-                this._updateCalendar()
-            })
-            .catch(reason => {
+                document.dispatchEvent(new Event('swipable#train-event:before'))
+                this.stimulate('Train#like', currentTarget)
+                    .then(value => {
+                        document.dispatchEvent(new Event('swipable#train-event:after'))
+                        this._updateCalendar()
+                    })
+                    .catch(reason => {
+
+                    })
+            }, reason => {
 
             })
     }
 
     dislike(event) {
-        this.stimulate('Swipable#dislike', event.currentTarget)
+        const currentTarget = event.currentTarget
+        Velocity(this.element, {opacity: 0})
             .then(value => {
-                this._updateCalendar()
-            })
-            .catch(reason => {
+                document.dispatchEvent(new Event('swipable#train-event:before'))
+                this.stimulate('Train#dislike', currentTarget)
+                    .then(value => {
+                        document.dispatchEvent(new Event('swipable#train-event:after'))
+                    })
+                    .catch(reason => {
+
+                    })
+            }, reason => {
 
             })
     }
@@ -90,15 +97,8 @@ export default class extends ApplicationController {
         return document.querySelector("[data-controller~='main-sidebar--large-event']");
     }
 
-    _animateHide(element) {
-        // element.dataset.reflexPermanent = ''
-
-        Velocity(element, {opacity: 0})
-            .then(value => {
-                element.classList.add('hidden')
-            }, reason => {
-
-            })
+    _hiddenSwipable() {
+        this.element.style.display = "none"
     }
 
     get openInSidebar() {

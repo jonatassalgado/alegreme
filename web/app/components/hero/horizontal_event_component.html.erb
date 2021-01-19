@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@event, :hero), data: { controller: 'hero--horizontal-event', 'hero--horizontal-event-open-in-sidebar': @open_in_sidebar } do %>
-	<div class="bg-white border-gray-100 flex justify-between md:border md:border-0 md:shadow-none mt-2 mx-2 px-5 py-3 rounded-lg shadow-sm">
+	<div class="bg-white flex justify-between md:px-5 mt-2 mx-2 px-4 py-3 rounded-lg shadow">
 		<div class="pr-6 flex-1">
 			<div class="mb-1 text-sm  text-gray-500">
 				<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h · <%= @event.categories_primary_name.titleize %>

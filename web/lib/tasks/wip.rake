@@ -5,25 +5,22 @@ require 'json'
 
 task wip: :environment do
 
+	users = User.all
 
-	locations = [
-			{
-					"icon"         => "https://utellyassets7.imgix.net/locations_icons/utelly/black_new/NetflixIVABR.png?w=92&auto=compress&app_version=5cb1e6a4-e86c-45a8-bd57-1fe10ea6e2ca_eww2020-07-15",
-					"country"      => [
-							"br"
-					],
-					"display_name" => "Netflix",
-					"name"         => "NetflixIVABR",
-					"id"           => "5d84d6e2d95dc7385f6a442f",
-					"url"          => "https://www.netflix.com/title/80244088"
-			}
-	]
+	users.each do |u|
+		u.likes.destroy_all
+		u.swipable.deep_merge!({
+														 :events => {
+															 :last_view_at => nil,
+															 :finished_at  => nil,
+															 :hidden_at    => nil,
+															 :active       => true
+														 }
+													 })
 
-	ap locations
+		u.save!
+	end
 
-	movie            = Movie.new
-	movie.streamings = locations
-	movie.save
 
 
 end

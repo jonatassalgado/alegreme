@@ -15,7 +15,7 @@ export default class extends ApplicationController {
     }
 
     teardown() {
-        // document.removeEventListener('hero--swipable:liked-or-disliked', debounce(this.update.bind(this), 250))
+
     }
 
     beforeCache() {
@@ -31,15 +31,19 @@ export default class extends ApplicationController {
         this.stimulate('Hero::SwipableComponent#update')
     }
 
-    beforeHiddenSwipable() {
-        this._hiddenSwipable()
+    beforeHideSwipable() {
+        this._hideSwipable()
     }
 
     _setMinHeigth() {
-        this.element.style.minHeight = `${this.element.offsetHeight}px`
+        setTimeout(() => {
+            if (this.element.offsetHeight > 0) {
+                this.element.style.minHeight = `${this.element.offsetHeight + 5}px`
+            }
+        }, 250)
     }
 
-    _hiddenSwipable() {
+    _hideSwipable() {
         this.element.style.display = "none"
     }
 
