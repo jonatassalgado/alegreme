@@ -28,7 +28,7 @@
 				</div>
 				<%= render MainSidebar::GroupByDayListComponent.new(events: @founded_events, user: current_user, open_in_sidebar: true) %>
 			<% else %>
-				<% if !params[:q] %>
+				<% if params[:q] %>
 					<h2 class="text-md m-5">Nenhum evento encontrado. <%= link_to 'Veja todos os eventos', feed_path, class: 'text-green-500' %>.</h2>
 				<% end %>
 				<% if @categories.present? %>
