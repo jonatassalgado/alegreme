@@ -1,7 +1,7 @@
 <%= content_tag :div, id: 'swipable', data: { controller: 'hero--swipable' }, class: 'flex' do %>
 	<% if @show_swipable %>
 		<div class="mb-10 flex w-full">
-			<div class="<%= helpers.class_names('md:mx-auto md:px-2 md:w-11/12 mt-5 mx-2 px-1 py-5 rounded-xl w-full',
+			<div class="<%= helpers.class_names('md:mt-5 md:mx-auto md:px-2 md:rounded-xl md:w-11/12 px-1 py-5 w-full',
 																					{ 'bg-gray-100': current_stage != :end_train_message,
 																						'bg-green-50': current_stage == :end_train_message }) %>">
 				<% if current_stage == :train %>
