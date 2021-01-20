@@ -32,7 +32,7 @@
 						</svg>
 					</a>
 				<% else %>
-					<% if controller_name != 'search' %>
+					<% if controller_name != 'search' && controller_name == 'feeds' %>
 						<a href="<%= search_index_path %>">
 							<svg class="w-6 h-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 								<path fill="none" d="M0 0h24v24H0V0z"/>
