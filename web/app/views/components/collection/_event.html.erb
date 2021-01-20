@@ -43,7 +43,7 @@
 		<%= image_tag shrine_image_url(event, :feed), {
 				loading: :lazy,
 				class:   'absolute cursor-pointer h-32 h-full left-0 object-center object-cover top-0 w-full rounded-t-lg overflow-hidden',
-				onclick: "Turbolinks.visit('#{event_path event}')",
+				onclick: "Turbo.visit('#{event_path event}')",
 				onerror: "this.style.opacity='0'"
 		} if event.image[:feed] %>
 	</div>

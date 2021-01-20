@@ -4,7 +4,7 @@
 // 	module.init = () => {
 // 		console.log("[LAZYLOAD]: started");
 // 		// module.lazyloadFeed();
-// 		document.addEventListener("turbolinks:load", module.lazyloadFeed);
+// 		document.addEventListener("turbo:load", module.lazyloadFeed);
 // 	};
 //
 //

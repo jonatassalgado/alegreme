@@ -21,14 +21,14 @@
   <%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-144x144.png', {sizes: "144x144", type: "image/png"} %>
 
   <link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Varela+Round|Montserrat:800,900|Roboto:300,400,500,700|Material+Icons|Material+Icons+Round|Material+Icons+Sharp&display=swap">
 
   <%= Gon::Base.render_data %>
 
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
+  <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload', defer: true %>
 
 </head>
 <body>

@@ -7,7 +7,7 @@ export default class GoToController extends ApplicationController {
         const trigger = event.currentTarget;
 
         setTimeout(() => {
-            Turbolinks.visit(trigger.dataset.goToUrl)
+            Turbo.visit(trigger.dataset.goToUrl)
         }, this.delay)
     }
 

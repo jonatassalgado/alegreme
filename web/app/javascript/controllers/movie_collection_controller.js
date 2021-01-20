@@ -10,7 +10,7 @@ export default class MovieCollectionController extends ApplicationController {
 
     beforeCache() {
         super.beforeCache();
-        this.turbolinksPersistScroll = this.scrollContainerTarget.scrollLeft;
+        this.turboPersistScroll = this.scrollContainerTarget.scrollLeft;
         this.teardown();
     }
 
@@ -19,15 +19,15 @@ export default class MovieCollectionController extends ApplicationController {
     }
 
     setup() {
-        this.scrollLeft = this.data.get("turbolinksPersistScroll");
+        this.scrollLeft = this.data.get("turboPersistScroll");
     }
 
     teardown() {
 
     }
 
-    set turbolinksPersistScroll(value) {
-        this.data.set("turbolinksPersistScroll", value);
+    set turboPersistScroll(value) {
+        this.data.set("turboPersistScroll", value);
     }
 
     set scrollLeft(value) {

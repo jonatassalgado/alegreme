@@ -2,7 +2,7 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
     purge:    {
-        enabled:              true,
+        enabled:              false,
         content:              [
             "./app/views/**/*.html.erb",
             "./app/views/**/**/*.html.erb",

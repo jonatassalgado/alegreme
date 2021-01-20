@@ -7,6 +7,7 @@
     "webpack:analyze_json": "webpack-bundle-analyzer webpack-stats.json public/packs"
   },
   "dependencies": {
+    "@hotwired/turbo": "^7.0.0-beta.3",
     "@material/tab-bar": "^4.0.0",
     "@material/tab-scroller": "^4.0.0",
     "@rails/actioncable": "^6.0.3-2",
@@ -35,7 +36,6 @@
     "stimulus_reflex": "^3.3.0",
     "tailwindcss": "^2.0.1-compat",
     "tailwindcss-elevation": "^0.3.4",
-    "turbolinks": "^5.2.0",
     "velocity-animate": "^2.0.6"
   },
   "devDependencies": {

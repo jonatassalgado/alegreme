@@ -16,7 +16,7 @@ export default class extends Controller {
     connect() {
         StimulusReflex.register(this)
         if (!this.isPreview) {
-            document.addEventListener("turbolinks:before-cache", this.beforeCache.bind(this), {once: true})
+            document.addEventListener("turbo:before-cache", this.beforeCache.bind(this), {once: true})
         }
         // console.log('connect', this.context.controller.identifier)
     }
@@ -60,6 +60,6 @@ export default class extends Controller {
     }
 
     get isPreview() {
-        return document.documentElement.hasAttribute("data-turbolinks-preview");
+        return document.documentElement.hasAttribute("data-turbo-preview");
     }
 }

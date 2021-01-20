@@ -24,7 +24,7 @@
 			<div class="my-auto text-gray-600 md:hidden">
 				<% if props[:visible][:back_button] %>
 					<a data-controller="ripple"
-						 href="<%= feed_path %>"
+						 onclick="Turbo.visit('<%= root_path %>')"
 						 class="relative select-none ripple ripple-black tap-highlight-none"
 						 aria-label="Voltar">
 						<svg class="h-4 fill-current md:w-auto" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +72,7 @@
 				data-controller="search"
 				data-search-target="search"
 				data-reflex-permanent
-				data-turbolinks-permanent
+				data-turbo-permanent
 				action="/busca"
 				method="get"
 				name="search"

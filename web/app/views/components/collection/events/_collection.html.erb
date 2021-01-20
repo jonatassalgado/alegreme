@@ -58,7 +58,7 @@
 										},
 										class:   class_string('relative overflow-hidden ripple ripple-black cursor-pointer flex justify-between group': continue_to,
 																					'flex justify-between':                                                                   !continue_to),
-										onclick: continue_to ? "Turbolinks.visit('#{continue_to}')" : nil do %>
+										onclick: continue_to ? "Turbo.visit('#{continue_to}')" : nil do %>
 			<h2 class="<%= data.dig(:title, :css) || class_names('flex-1 pl-5 text-xl font-bold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl') %>">
 				<%= title[:principal] %>
 			</h2>
@@ -121,7 +121,7 @@
 			<div data-section-target="grid"
 					 class="md:mt-2">
 				<div class="<%= html.dig(:grid, :css) || class_names('md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:gap-y-16 pt-3 pb-2 grid gap-x-6 grid-flow-col pl-5 grid-after-margin scrollx') %>"
-						 data-section-turbolinks-persist-scroll="0"
+						 data-section-turbo-persist-scroll="0"
 						 data-section-target="scrollContainer">
 					<%= render(partial:    'components/collection/event',
 										 collection: items,

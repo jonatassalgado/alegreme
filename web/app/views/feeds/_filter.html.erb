@@ -17,7 +17,7 @@
 							 data-chip-value="<%= filter['string'] %>"
 							 data-chip-selected="<%= selected[:days].include?(filter['string']) ? 'true' : 'false' %>"
 							 data-filter-target="chip"
-							 data-turbolinks-scroll="false"
+							 data-turbo-scroll="false"
 							 id="<%= "#{type}-#{index}" %>">
 						<%= filter['decorator'] %>
 					</div>
@@ -30,7 +30,7 @@
 							 data-chip-value="<%= filter %>"
 							 data-chip-selected="<%= selected[:categories].include?(filter) ? 'true' : 'false' %>"
 							 data-filter-target="chip"
-							 data-turbolinks-scroll="false"
+							 data-turbo-scroll="false"
 							 id="<%= "#{type}-#{index}" %>">
 						<%= filter %>
 					</div>

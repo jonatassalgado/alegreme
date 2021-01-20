@@ -28,7 +28,7 @@ import consumer                 from "../channels/consumer"
 import {CacheModule}   from "../modules/cache-module";
 import {AnimateModule} from "../modules/animate-module";
 
-CacheModule.activateTurbolinks();
+CacheModule.startTurbo();
 AnimateModule.init();
 
 const images             = require.context("../images", true)

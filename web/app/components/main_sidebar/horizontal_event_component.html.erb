@@ -10,8 +10,9 @@
 			<%= content_tag :a,
 											href:  event_path(@event),
 											data:  {
-												action:     'click->main-sidebar--horizontal-event#openEvent',
-												'event-id': @event.id
+												'turbo-preserve-scroll': true,
+												action:                  'click->main-sidebar--horizontal-event#openEvent',
+												'event-id':              @event.id
 											},
 											class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-600' do %>
 				<%= @event.details_name %>
@@ -56,8 +57,9 @@
 			<div data-controller="ripple" class="h-20 md:h-24 md:w-40 mt-3 overflow-hidden relative ripple ripple-white rounded-lg shadow w-32">
 				<%= link_to event_path(@event),
 										data: {
-											action:     'click->main-sidebar--horizontal-event#openEvent',
-											'event-id': @event.id
+											'turbo-preserve-scroll': true,
+											action:                  'click->main-sidebar--horizontal-event#openEvent',
+											'event-id':              @event.id
 										} do %>
 					<%= image_tag helpers.shrine_image_url(@event, :feed), {
 						loading: :lazy,

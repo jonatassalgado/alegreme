@@ -5,7 +5,7 @@ const AnimateModule = (function () {
     const module = {};
 
     module.init = () => {
-        document.addEventListener("turbolinks:load", module.animateOpenPage);
+        document.addEventListener("turbo:load", module.animateOpenPage);
         if (debug) console.log("[ANIMATE]: started");
     };
 
@@ -24,7 +24,7 @@ const AnimateModule = (function () {
                     page.style.transform = ""
                 });
             }
-            document.addEventListener("turbolinks:before-cache", () => {
+            document.addEventListener("turbo:before-cache", () => {
                 const page = document.querySelector(".me-page.is-animated");
                 if (page) {
                     page.style.opacity   = 0;

@@ -9,11 +9,11 @@ export default class SearchController extends ApplicationController {
 
 		};
 
-		document.addEventListener('turbolinks:before-cache', this.destroy, false);
+		document.addEventListener('turbo:before-cache', this.destroy, false);
 	}
 
 	disconnect() {
-		document.removeEventListener('turbolinks:before-cache', this.destroy, false);
+		document.removeEventListener('turbo:before-cache', this.destroy, false);
 	}
 
 	searching() {
