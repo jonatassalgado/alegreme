@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'relative last:z-10' do %>
-	<div class="bg-white border flex justify-between md:border mt-2 mx-2 px-5 py-3 rounded-lg">
+	<div class="bg-white border border-gray-100 flex justify-between md:border mt-2 mx-2 px-5 py-3 rounded-lg">
 		<div class="pr-6">
 			<div class="mb-1 text-sm">
 				<%= helpers.format_hour @event.first_day_time %>h ·

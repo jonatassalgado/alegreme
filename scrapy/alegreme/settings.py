@@ -47,10 +47,8 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-if os.environ.get('ENV') == 'production':
-    CONCURRENT_REQUESTS = 5
-else:
-    CONCURRENT_REQUESTS = 1
+CONCURRENT_REQUESTS = 8
+
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -134,9 +132,9 @@ else:
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-# AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
-# AUTOTHROTTLE_MAX_DELAY = 60
+AUTOTHROTTLE_MAX_DELAY = 60
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
 #AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
@@ -145,11 +143,9 @@ AUTOTHROTTLE_ENABLED = True
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-if os.environ.get('ENV') == 'production':
-    HTTPCACHE_ENABLED = True
-    HTTPCACHE_EXPIRATION_SECS = 80000
-else:
-    HTTPCACHE_ENABLED = False
+HTTPCACHE_ENABLED = True
+HTTPCACHE_EXPIRATION_SECS = 43200
+
 
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
