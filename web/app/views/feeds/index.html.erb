@@ -2,7 +2,7 @@
 
 <div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
 	<% unless mobile_device? %>
-		<section class="hidden md:inline-block md:col-span-3 md:bg-white md:pt-5 sticky"
+		<section class="hidden md:inline-block md:col-span-3 md:bg-white sticky"
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
 						 style="height: calc(100vh - 48px); top: 48px">
@@ -20,7 +20,7 @@
 			<div data-controller="toggle-loader"
 					 data-toggle-loader-listener-on="horizontal-event#open-event:before"
 					 data-toggle-loader-listener-off="horizontal-event#open-event:success"
-					 class="px-5 sticky top-24 z-10">
+					 class="px-5 sticky top-20 z-10">
 				<div id="open-event"
 						 data-toggle-loader-target="off">
 					<%= render MainSidebar::LargeEventComponent.new(user: current_user, event: nil) %>
