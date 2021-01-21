@@ -22,10 +22,10 @@
   }
 
   .calendar-heading {
-    @apply capitalize flex items-center font-medium justify-between px-5 text-gray-600 -mt-3 py-2 rounded-t-lg;
+    @apply capitalize flex items-center font-medium justify-between px-8 text-gray-600 -mt-3 py-2 rounded-t-lg;
 
     @screen md {
-      @apply px-2;
+      @apply px-10;
     }
 
     a {
