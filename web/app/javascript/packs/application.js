@@ -25,10 +25,10 @@ import {definitionsFromContext} from "stimulus/webpack-helpers"
 import StimulusReflex           from "stimulus_reflex"
 import consumer                 from "../channels/consumer"
 
-import {CacheModule}   from "../modules/cache-module";
+import {TurboModule}   from "../modules/turbo-module";
 import {AnimateModule} from "../modules/animate-module";
 
-CacheModule.startTurbo();
+TurboModule.startTurbo();
 AnimateModule.init();
 
 const images             = require.context("../images", true)

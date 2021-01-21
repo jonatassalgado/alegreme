@@ -222,7 +222,7 @@ const SwipableModule = (() => {
             }).then(
                 response => {
                     response.text().then(data => {
-                        // CacheModule.clearCache();
+                        // TurboModule.clearCache();
                     });
                 }
             ).catch(err => {
