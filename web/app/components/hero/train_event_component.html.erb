@@ -15,9 +15,6 @@
 			<% end %>
 		</div>
 		<div class="pr-2 md:pr-6 flex-1">
-			<div class="mb-1 text-sm  text-gray-500">
-				<%= @event.categories_primary_name.titleize %>
-			</div>
 			<%= content_tag :a,
 											id:    dom_id(@event, 'hero--train-event__link'),
 											href:  event_path(@event),
@@ -29,7 +26,7 @@
 				<%= @event.details_name %>
 			<% end %>
 			<div class="text-xs text-gray-500 mt-1">
-				<%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
+				<%= @event.categories_primary_name.titleize %> · <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
 			</div>
 		</div>
 		<div>
