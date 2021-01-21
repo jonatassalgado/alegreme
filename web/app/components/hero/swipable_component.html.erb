@@ -2,8 +2,8 @@
 	<% if @show_swipable %>
 		<div class="mb-10 flex w-full">
 			<div class="<%= helpers.class_names('md:mt-5 md:mx-auto md:px-2 md:rounded-xl md:w-11/12 px-1 py-5 w-full',
-																					{ 'bg-gray-100': current_stage != :end_train_message,
-																						'bg-green-50': current_stage == :end_train_message }) %>">
+																					{ 'bg-gray-50 md:shadow': current_stage != :end_train_message,
+																						'bg-green-50':          current_stage == :end_train_message }) %>">
 				<% if current_stage == :train %>
 					<div data-swipable-target="items">
 						<div class="px-5 mb-5 text-center">
