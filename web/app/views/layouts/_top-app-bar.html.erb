@@ -66,7 +66,8 @@
 		</div>
 	</div>
 	<% if props[:visible][:search] %>
-		<div class="hidden md:block col-span-12 md:col-span-5 md:px-5">
+		<div class="<%= class_names('col-span-12 md:col-span-5 md:px-5',
+																{ 'hidden md:block': controller_name != 'search' }) %>">
 			<form
 				class="flex items-center h-full px-2 bg-white rounded md:px-5"
 				data-controller="search"
@@ -83,12 +84,12 @@
 				<!--				</svg>-->
 				<input autocomplete="false"
 							 name="q"
-							 class="bg-gray-50 focus:bg-white focus:border-transparent focus:outline-none focus:ring focus:ring-green-500 h-10 px-4 mx-auto placeholder-gray-500 py-1 rounded-full w-full"
+							 class="bg-gray-200 text-gray-700 focus:bg-white focus:border-transparent focus:outline-none focus:ring focus:ring-green-500 h-10 px-4 mx-auto placeholder-gray-500 py-1 rounded-full w-full"
 							 id="text-field-shape-one"
 							 placeholder="Busque por eventos ou tags..."
 							 type="text"
 							 data-search-target="input">
-				<input class="bg-green-500 cursor-pointer font-light font-semibold h-10 md:hidden ml-3 my-1 px-4 rounded text-sm text-white"
+				<input class="bg-green-500 cursor-pointer font-light font-semibold h-10 md:hidden ml-3 my-1 px-4 rounded text-white"
 							 type="submit" value="Buscar"
 							 data-search-target="submit"
 							 data-action="click->search#searching"/>
