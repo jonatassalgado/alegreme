@@ -3,7 +3,7 @@
 		<div class="mb-1 text-xs text-gray-500">
 			<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h
 		</div>
-		<div class="mb-1 leading-snug text-gray-600 font-semibold">
+		<div class="mb-1 leading-snug text-gray-600 font-semibold text-sm">
 			<%= content_tag :a,
 											href:  event_path(@event),
 											data:  {
