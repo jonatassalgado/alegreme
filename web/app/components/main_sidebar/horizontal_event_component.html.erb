@@ -1,6 +1,6 @@
 <%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'relative last:z-10' do %>
-	<div class="bg-white border border-gray-100 flex justify-between md:border mt-2 mx-2 md:mx-0 px-5 py-3 rounded-lg">
-		<div class="pr-6">
+	<div class="bg-white border border-gray-100 flex justify-between md:border mt-2 mx-2 md:mx-0 px-3 md:px-5 py-3 rounded-lg">
+		<div class="pr-5 md:pr-6">
 			<div class="mb-1 text-sm md:text-xs text-gray-500">
 				<%= helpers.format_hour @event.first_day_time %>h ·
 				<%= @event.categories_primary_name.titleize %>
@@ -12,13 +12,13 @@
 												action:                  'click->main-sidebar--horizontal-event#openEvent',
 												'event-id':              @event.id
 											},
-											class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-600' do %>
+											class: 'font-bold md:hover:underline mb-1 leading-snug text-gray-700 inline-block' do %>
 				<%= @event.details_name %>
 			<% end %>
-			<div class="text-sm md:text-xs md:mt-2 text-gray-500">
+			<div class="text-sm md:text-xs md:mt-1 text-gray-500">
 				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %>
 			</div>
-			<div class="flex my-1 -ml-2">
+			<div class="flex mt-1 -ml-2">
 				<%= content_tag :div,
 												id:    dom_id(@event, :like),
 												data:  {

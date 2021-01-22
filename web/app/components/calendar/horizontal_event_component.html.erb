@@ -17,7 +17,7 @@
 			<div class="text-sm md:text-xs md:mt-2 text-gray-500">
 				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:underline' %>
 			</div>
-			<div class="flex my-1 -ml-2">
+			<div class="flex mt-1 -ml-2">
 				<%= content_tag :div,
 												id:    dom_id(@event, :like),
 												data:  {

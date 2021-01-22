@@ -116,12 +116,12 @@ module.exports = {
         }
     },
     variants: {
-        fontWeight:  ['hover', 'focus'],
-        margin:      ["responsive", "first"],
-        borderWidth: ["responsive", "first"],
-        aspectRatio: ["responsive"],
-        textColor:   ["responsive", "hover", "focus", "group-hover"],
-        display:     ["responsive", "group-hover"],
+        fontWeight:  ['responsive', 'hover', 'focus'],
+        margin:      ['responsive', 'first'],
+        borderWidth: ['responsive', 'first'],
+        aspectRatio: ['responsive'],
+        textColor:   ['responsive', 'hover', 'focus', 'group-hover'],
+        display:     ['responsive', 'group-hover'],
         zIndex:      ['responsive', 'focus-within', 'focus', 'last']
     },
     plugins:  [
