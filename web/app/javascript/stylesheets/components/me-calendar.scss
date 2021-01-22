@@ -1,85 +1,85 @@
-@import "../variables";
-
-.simple-calendar {
-  @apply bg-white py-3 rounded-lg text-center shadow mx-3 mb-5;
-
-  @screen md {
-    @apply py-3 rounded-lg text-center mx-0 mb-2 shadow-none;
-  }
-
-  tr {
-    @screen md {
-      @apply h-10;
-    }
-  }
-
-  th {
-    @apply text-gray-500 text-sm font-medium;
-  }
-
-  table {
-    @apply mx-auto;
-  }
-
-  .calendar-heading {
-    @apply capitalize flex items-center font-medium justify-between px-8 text-gray-600 -mt-3 py-2 rounded-t-lg;
-
-    @screen md {
-      @apply px-10;
-    }
-
-    a {
-      @apply text-green-500 font-bold text-lg;
-    }
-  }
-
-  .day {
-    @apply w-10;
-    text-align: center;
-    height: 2.2rem;
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-  }
-
-  .today {
-    @apply bg-gray-50 rounded-full text-gray-600;
-
-    @screen md {
-      @apply bg-gray-100;
-    }
-  }
-
-  .past {
-    @apply text-gray-300 line-through;
-  }
-
-  .future {
-    @apply text-gray-600;
-  }
-
-  .has-events {
-
-    & .day-of-month {
-
-    }
-  }
-
-  .wday-0 {}
-  .wday-1 {}
-  .wday-2 {}
-  .wday-3 {}
-  .wday-4 {}
-  .wday-5 {}
-  .wday-6 {}
-
-  .start-date {
-    @apply bg-green-500 rounded-full text-white font-semibold;
-  }
-
-  .prev-month {
-    @apply text-gray-300;
-  }
-
-  .current-month {}
-
-}
+//@import "../variables";
+//
+//.calendar {
+//  //@apply bg-white py-3 rounded-lg text-center shadow mx-3 mb-5;
+//  //
+//  //@screen md {
+//  //  @apply py-3 rounded-lg text-center mx-0 mb-2 shadow-none;
+//  //}
+//  //
+//  //tr {
+//  //  @screen md {
+//  //    @apply h-10;
+//  //  }
+//  //}
+//  //
+//  //th {
+//  //  @apply text-gray-500 text-sm font-medium;
+//  //}
+//  //
+//  //table {
+//  //  @apply mx-auto;
+//  //}
+//  //
+//  //.calendar-heading {
+//  //  @apply capitalize flex items-center font-medium justify-between px-8 text-gray-600 -mt-3 py-2 rounded-t-lg;
+//  //
+//  //  @screen md {
+//  //    @apply px-10;
+//  //  }
+//  //
+//  //  a {
+//  //    @apply text-green-500 font-bold text-lg;
+//  //  }
+//  //}
+//
+//  .day {
+//    @apply w-10;
+//    text-align: center;
+//    height: 2.2rem;
+//    padding-left: 0.25rem;
+//    padding-right: 0.25rem;
+//  }
+//
+//  .today {
+//    @apply bg-gray-50 rounded-full text-gray-600;
+//
+//    @screen md {
+//      @apply bg-gray-100;
+//    }
+//  }
+//
+//  .past {
+//    @apply text-gray-300 line-through;
+//  }
+//
+//  .future {
+//    @apply text-gray-600;
+//  }
+//
+//  .has-events {
+//
+//    & .day-of-month {
+//
+//    }
+//  }
+//
+//  .wday-0 {}
+//  .wday-1 {}
+//  .wday-2 {}
+//  .wday-3 {}
+//  .wday-4 {}
+//  .wday-5 {}
+//  .wday-6 {}
+//
+//  .start-date {
+//    @apply bg-green-500 rounded-full text-white font-semibold;
+//  }
+//
+//  .prev-month {
+//    @apply text-gray-300;
+//  }
+//
+//  .current-month {}
+//
+//}

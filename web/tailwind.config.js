@@ -86,7 +86,8 @@ module.exports = {
         extend:                  {
             width:        {
                 "content": "max-content",
-                "128":     "32rem"
+                "128":     "32rem",
+                "1/7":     "14.2857143%"
             },
             height:       {
                 "content":     "max-content",

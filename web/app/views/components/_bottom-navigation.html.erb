@@ -1,6 +1,6 @@
-<% if controller_name != 'events' && action_name != 'show' %>
+<% if !['events', 'users'].include?(controller_name) && action_name != 'show' %>
 	<div class="fixed bottom-0 z-40 w-full py-2 overflow-hidden transition-transform duration-100 transform bg-white md:hidden md:shadow-none elevation-8 md:sticky md:top-0 ripple ripple-black"
-			 data-controller="ripple bottom-navigation toggle-style go-to"
+			 data-controller="ripple bottom-navigation go-to"
 			 data-go-to-delay="100"
 			 data-reflex-permanent
 			 data-toggle-style-active-class='["text-green-500"]'

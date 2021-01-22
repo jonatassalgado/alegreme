@@ -1,4 +1,4 @@
-class LeftSidebar::CalendarComponent < ViewComponent::Base
+class CalendarComponent < ViewComponent::Base
 
 	attr_accessor :view_context, :options
 
@@ -18,7 +18,7 @@ class LeftSidebar::CalendarComponent < ViewComponent::Base
 	def td_classes_for(day)
 		today = Date.current
 
-		td_class = ['day h-12 text-center px-1 rounded-full cursor-pointer hover:bg-green-100 hover:text-green-500']
+		td_class = ['day h-12 text-center px-1 rounded-full cursor-pointer md:hover:bg-green-100 md:hover:text-green-500']
 		td_class << "wday-#{day.wday.to_s}"
 		td_class << 'bg-gray-100 rounded-full text-gray-600' if today == day
 		td_class << 'text-gray-300 line-through' if today > day

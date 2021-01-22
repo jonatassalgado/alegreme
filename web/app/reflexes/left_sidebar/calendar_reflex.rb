@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CalendarReflex < ApplicationReflex
+class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	before_reflex :set_user
 
@@ -10,7 +10,7 @@ class CalendarReflex < ApplicationReflex
 			# prevent_refresh!
 		else
 			start_date = date_range.first - 1.day
-			morph '#calendar', render(CalendarComponent.new(
+			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
 				events:     liked_events,
 				start_date: start_date,
 				user:       current_user,
@@ -25,7 +25,7 @@ class CalendarReflex < ApplicationReflex
 			# prevent_refresh!
 		else
 			start_date = date_range.last + 1.day
-			morph '#calendar', render(CalendarComponent.new(
+			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
 				events:     liked_events,
 				start_date: start_date,
 				user:       current_user,
@@ -39,7 +39,7 @@ class CalendarReflex < ApplicationReflex
 			# stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar eventos na sua agenda"})
 			# prevent_refresh!
 		else
-			morph '#calendar', render(CalendarComponent.new(
+			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
 				events:     liked_events.in_day(element['data-day'].to_date),
 				start_date: element['data-day'].to_date,
 				user:       current_user,
@@ -49,7 +49,7 @@ class CalendarReflex < ApplicationReflex
 	end
 
 	def clear_filter
-		morph '#calendar', render(CalendarComponent.new(
+		morph '#calendar', render(LeftSidebar::CalendarComponent.new(
 			events:     liked_events,
 			start_date: Date.today,
 			user:       current_user,
@@ -58,56 +58,12 @@ class CalendarReflex < ApplicationReflex
 	end
 
 	def update
-		morph '#calendar', render(CalendarComponent.new(
+		morph '#calendar', render(LeftSidebar::CalendarComponent.new(
 			events:     liked_events,
 			start_date: Date.today,
 			user:       current_user,
 			filter:     false,
 			indicators: indicators))
-	end
-
-	def like
-		if current_user
-			@event = Event.find element['data-event-id'] if element['data-event-id']
-
-			if current_user.like? @event
-				current_user.unlike! @event
-			elsif current_user.dislike? @event
-				current_user.like! @event, action: :update
-			else
-				current_user.like! @event
-			end
-			morph '#calendar', render(CalendarComponent.new(
-				events:     liked_events,
-				start_date: Date.today,
-				user:       current_user,
-				filter:     false,
-				indicators: indicators))
-		else
-			show_login_modal
-		end
-	end
-
-	def dislike
-		if current_user
-			@event = Event.find element['data-event-id'] if element['data-event-id']
-
-			if current_user.dislike? @event
-				current_user.unlike! @event
-			elsif current_user.like? @event
-				current_user.dislike! @event, action: :update
-			else
-				current_user.dislike! @event
-			end
-			morph '#calendar', render(CalendarComponent.new(
-				events:     liked_events,
-				start_date: Date.today,
-				user:       current_user,
-				filter:     false,
-				indicators: indicators))
-		else
-			show_login_modal
-		end
 	end
 
 	def unlike
@@ -117,12 +73,17 @@ class CalendarReflex < ApplicationReflex
 			if current_user.like_or_dislike? @event
 				current_user.unlike! @event
 
-				morph '#calendar', render(CalendarComponent.new(
+				morph '#calendar', render(LeftSidebar::CalendarComponent.new(
 					events:     liked_events,
 					start_date: Date.today,
 					user:       current_user,
 					filter:     false,
 					indicators: indicators))
+
+				morph "##{dom_id(@event, 'main-sidebar')}", render(MainSidebar::HorizontalEventComponent.new(
+					event:           @event,
+					user:            current_user,
+					open_in_sidebar: true))
 			end
 		else
 			morph '#modal', render(Modal::SignInComponent.new(

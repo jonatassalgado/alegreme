@@ -37,7 +37,7 @@ export default class extends ApplicationController {
 
             document.dispatchEvent(this.beginEvent)
 
-            this.stimulate("Event#open",
+            this.stimulate("Calendar#open",
                            event.target,
                            {resolveLate: true}
             ).then(payload => {
@@ -49,9 +49,9 @@ export default class extends ApplicationController {
     }
 
     like(event) {
-        this.stimulate('Event#like', event.currentTarget)
+        this.stimulate('Calendar#like', event.currentTarget)
             .then(value => {
-                this._updateCalendar()
+                // this._updateCalendar()
             })
             .catch(reason => {
 
@@ -59,9 +59,9 @@ export default class extends ApplicationController {
     }
 
     dislike(event) {
-        this.stimulate('Event#dislike', event.currentTarget)
+        this.stimulate('Calendar#dislike', event.currentTarget)
             .then(value => {
-                this._updateCalendar()
+                // this._updateCalendar()
             })
             .catch(reason => {
 
@@ -71,7 +71,7 @@ export default class extends ApplicationController {
     _updateCalendar() {
         const calendar = document.querySelector('#calendar')
         if (calendar) {
-            this.stimulate('LeftSidebar::Calendar#update', calendar, {resolveLate: true})
+            this.stimulate('Calendar#update', calendar, {resolveLate: true})
         }
     }
 

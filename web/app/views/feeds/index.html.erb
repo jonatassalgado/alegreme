@@ -5,7 +5,7 @@
 		<section class="hidden md:inline-block md:col-span-3 md:bg-white sticky"
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
-						 style="height: calc(100vh - 48px); top: 48px">
+						 style="height: calc(100vh - 64px); top: 64px">
 			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
 		</section>
 	<% end %>

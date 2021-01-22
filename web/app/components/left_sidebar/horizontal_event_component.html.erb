@@ -14,7 +14,7 @@
 				<%= @event.details_name %>
 			<% end %>
 		</div>
-		<%= content_tag :div, data: { reflex: 'click->Calendar#unlike', 'event-id': @event.id }, class: 'absolute bottom-0 mt-3 cursor-pointer group-hover:block hidden text-red-500 text-sm underline' do %>
+		<%= content_tag :div, data: { reflex: 'click->LeftSidebar::Calendar#unlike', 'event-id': @event.id }, class: 'absolute bottom-0 mt-3 cursor-pointer group-hover:block hidden text-red-500 text-sm underline' do %>
 			Remover
 		<% end %>
 	</div>

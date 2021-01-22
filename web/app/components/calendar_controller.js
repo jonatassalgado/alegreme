@@ -1,4 +1,4 @@
-import ApplicationController from "../../javascript/controllers/application_controller"
+import ApplicationController from "../javascript/controllers/application_controller"
 
 export default class extends ApplicationController {
     static targets = [''];
@@ -41,7 +41,7 @@ export default class extends ApplicationController {
         const target = event.target.closest('td');
 
         if (target.classList.contains('filter')) {
-            this.stimulate('LeftSidebar::Calendar#clear_filter', target, {resolveLate: true})
+            this.stimulate('Calendar#clear_filter', target, {resolveLate: true})
                 .then(payload => {
 
                 })
@@ -49,7 +49,7 @@ export default class extends ApplicationController {
 
                 })
         } else {
-            this.stimulate('LeftSidebar::Calendar#in_day', target, {resolveLate: true})
+            this.stimulate('Calendar#in_day', target, {resolveLate: true})
         }
     }
 
