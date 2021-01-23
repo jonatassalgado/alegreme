@@ -6,8 +6,9 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	def prev_month
 		unless @user
-			# stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
-			# prevent_refresh!
+			morph '#modal', render(Modal::SignInComponent.new(
+				text:   "Crie uma conta para salvar eventos favoritos e receber recomendações únicas",
+				opened: true))
 		else
 			start_date = date_range.first - 1.day
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
@@ -21,8 +22,9 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	def next_month
 		unless @user
-			# stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
-			# prevent_refresh!
+			morph '#modal', render(Modal::SignInComponent.new(
+				text:   "Crie uma conta para salvar eventos favoritos e receber recomendações únicas",
+				opened: true))
 		else
 			start_date = date_range.last + 1.day
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
@@ -36,8 +38,9 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	def in_day
 		unless @user
-			# stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar eventos na sua agenda"})
-			# prevent_refresh!
+			morph '#modal', render(Modal::SignInComponent.new(
+				text:   "Crie uma conta para salvar eventos favoritos e receber recomendações únicas",
+				opened: true))
 		else
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
 				events:     liked_events.in_day(element['data-day'].to_date),
