@@ -36,7 +36,7 @@
 													component:  'large-event'
 												},
 												class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
-					<svg class="<%= helpers.class_names 'fill-current h-6 hover:scale-150 hover:text-gray-400 w-6',
+					<svg class="<%= helpers.class_names 'fill-current h-6 hover:scale-150 w-6',
 																							{ 'text-gray-300':  !@user&.like?(@event),
 																								'text-green-500': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
@@ -50,7 +50,7 @@
 													component:  'large-event'
 												},
 												class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
-					<svg class="<%= helpers.class_names 'fill-current h-6 hover:scale-150 hover:text-gray-400 w-6',
+					<svg class="<%= helpers.class_names 'fill-current h-6 hover:scale-150 w-6',
 																							{ 'text-gray-300': !@user&.dislike?(@event),
 																								'text-red-500':  @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
