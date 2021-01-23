@@ -40,7 +40,7 @@ export default class extends ApplicationController {
     inDay(event) {
         const target = event.target.closest('td');
 
-        if (target.classList.contains('filter')) {
+        if (target && target.classList.contains('filter')) {
             this.stimulate('Calendar#clear_filter', target, {resolveLate: true})
                 .then(payload => {
 
@@ -49,7 +49,9 @@ export default class extends ApplicationController {
 
                 })
         } else {
-            this.stimulate('Calendar#in_day', target, {resolveLate: true})
+            if (target) {
+                this.stimulate('Calendar#in_day', target, {resolveLate: true})
+            }
         }
     }
 
