@@ -38,7 +38,7 @@ export default class extends ApplicationController {
     _setMinHeigth() {
         setTimeout(() => {
             if (this.element.offsetHeight > 0) {
-                this.element.style.minHeight = `${this.element.offsetHeight + 5}px`
+                this.element.style.minHeight = `${this.element.offsetHeight}px`
             }
         }, 250)
     }

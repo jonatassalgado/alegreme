@@ -43,6 +43,3 @@ application.load(definitionsFromContext(context).concat(
 
 StimulusReflex.initialize(application, {consumer, debug: true, isolate: true})
 
-window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-});
