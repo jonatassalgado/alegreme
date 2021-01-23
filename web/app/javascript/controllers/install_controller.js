@@ -21,7 +21,7 @@ export default class extends ApplicationController {
     }
 
     setup() {
-        if (MobileDetector.mobile() && !MobileDetector.pwa()) {
+        if (!this._pwaInstalled() && MobileDetector.mobile() && !MobileDetector.pwa()) {
             this.deferredPrompt
 
             window.addEventListener('beforeinstallprompt', (e) => {
@@ -37,12 +37,25 @@ export default class extends ApplicationController {
         }
     }
 
+    _pwaInstalled() {
+        try {
+            const storageContent = JSON.parse(localStorage.getItem('install_controller'))
+            return storageContent.pwaInstalled
+        } catch {
+            return false
+        }
+    }
+
     teardown() {
 
     }
 
     install() {
         this.deferredPrompt.prompt()
+        setTimeout(() => {
+            this.element.classList.add('hidden')
+            localStorage.setItem('install_controller', JSON.stringify({pwaInstalled: true}))
+        }, 500)
     }
 
     showButton() {
