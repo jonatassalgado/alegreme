@@ -1,6 +1,6 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'h-full' do %>
 	<div class="h-full">
-		<div data-calendar-target="calendar" class="bg-white mb-5 md:mb-2 md:py-5 md:rounded-lg md:text-center pl-2 pr-5 rounded-lg select-none tap-highlight-none text-center">
+		<div data-calendar-target="calendar" class="select-none tap-highlight-none bg-white mb-5 md:mb-2 md:py-5 md:rounded-lg md:text-center pl-2 pr-5 rounded-lg text-center">
 			<div class="capitalize flex font-medium items-center justify-between pb-5 px-8 rounded-t-lg text-gray-500">
 				<%= content_tag :div, id: 'calendar-previous', data: { reflex: 'click->LeftSidebar::Calendar#prev_month', start_date: start_date }, class: 'cursor-pointer text-gray-400 md:hover:bg-green-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
 					<svg class="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
