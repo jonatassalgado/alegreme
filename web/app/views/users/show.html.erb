@@ -2,26 +2,29 @@
 <% content_for :top_app_bar_title, truncate(@user.slug, length: 20) %>
 <% content_for :back_button, true %>
 
-<section id="page" data-controller="page" data-page-target="page" class="pt-2 mx-auto mb-24 space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
+<section id="page"
+				 data-controller="page"
+				 data-page-target="page"
+				 class="md:border is-animated mb-24 md:w-4/12 md:mt-12 mx-auto overflow-hidden md:pb-5 md:rounded-2xl md:shadow-2xl sm:container space-y-2">
 	<%= notice %>
 
-	<div class="flex px-5 py-10 text-gray-800 bg-white">
+	<div class="bg-gray-100 flex md:bg-auto px-5 py-5 text-gray-800">
 		<div class="relative w-20 mr-3 overflow-hidden bg-gray-100 rounded-full">
 			<div class="w-full aspect-ratio-square"></div>
 			<% if @user&.picture %>
-				<%= image_tag(@user.picture, {class: "w-full h-full absolute top-0 left-0 mx-auto mr-4 rounded-full", alt: @user.name, onerror: "this.style.opacity='0'"}) rescue nil %>
+				<%= image_tag(@user.picture, { class: "w-full h-full absolute top-0 left-0 mx-auto mr-4 rounded-full", alt: @user.name, onerror: "this.style.opacity='0'" }) rescue nil %>
 			<% else %>
 				<div class="absolute top-0 left-0 w-full h-full"></div>
 			<% end %>
 		</div>
 		<div>
-			<h1 class="text-2xl text-gray-600">
+			<h1 class="font-bold mb-2 text-3xl text-gray-700">
 				<%= @user.first_name %>
 			</h1>
 			<% if current_user == @user %>
 				<div class="space-x-1">
-					<%= link_to "Editar perfil", edit_user_path(@user), class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-600 text-sm' %>
-					<%= link_to "Sair", destroy_user_session_path, class: 'bg-gray-50 inline-block px-2 py-1 rounded text-gray-600 text-sm', method: :delete if current_user.admin? %>
+					<%= link_to "Editar perfil", edit_user_path(@user), class: 'bg-white inline-block px-2 py-1 rounded text-gray-600 text-sm' %>
+					<%= link_to "Sair", destroy_user_session_path, class: 'bg-white inline-block px-2 py-1 rounded text-gray-600 text-sm', method: :delete if current_user.admin? %>
 				</div>
 			<% end %>
 			<% if current_user != @user %>
@@ -43,81 +46,83 @@
 	<%# end %>
 
 	<% if current_user == @user %>
-<!--		<div class="py-6 bg-white">-->
-<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
-<!--				Notificações-->
-<!--			</h2>-->
-			<%# if @user.friendships_request_received.present? %>
-<!--				<div class="px-5 leading-none mt-3">-->
-<!--  			<span class="pt-5 text-sm text-gray-500">-->
-<!--  				Pedidos de amizade que você recebeu.-->
-<!--  			</span>-->
-<!--					<span class="text-sm  text-gray-500">-->
-<!--  				Você pode ter até 10 amigos e eles podem ver sua agenda, por isso os escolha bem.-->
-<!--  			</span>-->
-<!--				</div>-->
-			<%# end %>
-			<%# if @user.friendships_request_received.present? %>
-<!--				<div class="w-screen px-5 mt-3 space-y-2">-->
-					<%#= render(FriendshipRequestComponent.with_collection(@user.friends_requested_received, user: @user)) %>
-<!--				</div>-->
-			<%# else %>
-<!--				<div class="px-5 text-sm text-gray-500">-->
-<!--					Você não possui notificações-->
-<!--				</div>-->
-			<%# end %>
-<!--		</div>-->
-<!--		<div id="friends-list" class="py-6 bg-white">-->
-<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
-<!--				Amigos (<%#= @user.friends_accepted.size rescue 0 %>)-->
-<!--			</h2>-->
-			<%# if @user.friends_accepted.present? %>
-<!--				<div class="flex flex-wrap mt-3 px-5 w-screen">-->
-					<%#= render(UserChipComponent.with_collection(@user.friends_accepted, user: @user)) %>
-<!--				</div>-->
-			<%# else %>
-<!--				<div class="px-5 text-sm text-gray-500">-->
-<!--					Você ainda não adicionou nenhum amigo-->
-<!--				</div>-->
-			<%# end %>
-<!--		</div>-->
-<!--		<div class="py-6 bg-white">-->
-<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
-<!--				Pessoas que sigo-->
-<!--			</h2>-->
-			<%# if @user.following_users.present? %>
-<!--				<div class="w-screen mt-3 md:w-full">-->
-<!--					<div class="flex flex-wrap px-5 pl-5 space-y-2">-->
-						<%# @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-<!--							<a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">-->
-								<%#= resource.details_name.titleize %>
-								<%# if resource.events.active.size > 0 %>
-<!--  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">-->
-  										<%#= resource.events.active.size %>
-<!--  									</span>-->
-								<%# end %>
-<!--							</a>-->
-						<%# end %>
-<!--					</div>-->
-<!--				</div>-->
-			<%# else %>
-<!--				<div class="px-5 text-sm text-gray-500">-->
-<!--					Você não segue nenhuma pessoa ainda-->
-<!--				</div>-->
-			<%# end %>
-<!--		</div>-->
-		<div class="py-6 bg-white">
-			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">
+		<!--		<div class="py-6 bg-white">-->
+		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+		<!--				Notificações-->
+		<!--			</h2>-->
+		<%# if @user.friendships_request_received.present? %>
+		<!--				<div class="px-5 leading-none mt-3">-->
+		<!--  			<span class="pt-5 text-sm text-gray-500">-->
+		<!--  				Pedidos de amizade que você recebeu.-->
+		<!--  			</span>-->
+		<!--					<span class="text-sm  text-gray-500">-->
+		<!--  				Você pode ter até 10 amigos e eles podem ver sua agenda, por isso os escolha bem.-->
+		<!--  			</span>-->
+		<!--				</div>-->
+		<%# end %>
+		<%# if @user.friendships_request_received.present? %>
+		<!--				<div class="w-screen px-5 mt-3 space-y-2">-->
+		<%#= render(FriendshipRequestComponent.with_collection(@user.friends_requested_received, user: @user)) %>
+		<!--				</div>-->
+		<%# else %>
+		<!--				<div class="px-5 text-sm text-gray-500">-->
+		<!--					Você não possui notificações-->
+		<!--				</div>-->
+		<%# end %>
+		<!--		</div>-->
+		<!--		<div id="friends-list" class="py-6 bg-white">-->
+		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+		<!--				Amigos (<%#= @user.friends_accepted.size rescue 0 %>)-->
+		<!--			</h2>-->
+		<%# if @user.friends_accepted.present? %>
+		<!--				<div class="flex flex-wrap mt-3 px-5 w-screen">-->
+		<%#= render(UserChipComponent.with_collection(@user.friends_accepted, user: @user)) %>
+		<!--				</div>-->
+		<%# else %>
+		<!--				<div class="px-5 text-sm text-gray-500">-->
+		<!--					Você ainda não adicionou nenhum amigo-->
+		<!--				</div>-->
+		<%# end %>
+		<!--		</div>-->
+		<!--		<div class="py-6 bg-white">-->
+		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+		<!--				Pessoas que sigo-->
+		<!--			</h2>-->
+		<%# if @user.following_users.present? %>
+		<!--				<div class="w-screen mt-3 md:w-full">-->
+		<!--					<div class="flex flex-wrap px-5 pl-5 space-y-2">-->
+		<%# @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
+		<!--							<a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">-->
+		<%#= resource.details_name.titleize %>
+		<%# if resource.events.active.size > 0 %>
+		<!--  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">-->
+		<%#= resource.events.active.size %>
+		<!--  									</span>-->
+		<%# end %>
+		<!--							</a>-->
+		<%# end %>
+		<!--					</div>-->
+		<!--				</div>-->
+		<%# else %>
+		<!--				<div class="px-5 text-sm text-gray-500">-->
+		<!--					Você não segue nenhuma pessoa ainda-->
+		<!--				</div>-->
+		<%# end %>
+		<!--		</div>-->
+		<div class="py-6">
+			<h2 class="font-extrabold uppercase -mb-1 px-5 inline-block">
 				Locais que sigo
 			</h2>
 			<% if @user.following_places.present? %>
 				<div class="w-screen mt-3">
 					<div class="flex flex-wrap px-5 pl-5 space-y-2">
 						<% @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
+							<a onclick="window.AnimateModule.animatePageHide()"
+								 href="<%= organizer_or_place_path resource %>"
+								 class="border cursor-pointer font-bold font-medium h-content inline-block md:hover:bg-gray-50 mr-2 mt-2 px-5 py-3 relative rounded-full">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-5 text-sm font-bold bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
 								<% end %>
@@ -126,23 +131,25 @@
 					</div>
 				</div>
 			<% else %>
-				<div class="px-5 text-sm text-gray-500">
+				<div class="px-5 text-sm text-gray-500 mt-3">
 					Você não segue nenhum local ainda
 				</div>
 			<% end %>
 		</div>
 		<div class="py-6 bg-white">
-			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">
+			<h2 class="font-extrabold uppercase -mb-1 px-5 inline-block">
 				Organizadores que sigo
 			</h2>
 			<% if @user.following_organizers.present? %>
 				<div class="w-screen mt-3">
 					<div class="flex flex-wrap px-5 pl-5 space-y-2">
 						<% @user&.following_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-							<a onclick="window.AnimateModule.animatePageHide()" href="<%= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">
+							<a onclick="window.AnimateModule.animatePageHide()"
+								 href="<%= organizer_or_place_path resource %>"
+								 class="border cursor-pointer font-bold font-medium h-content inline-block md:hover:bg-gray-50 mr-2 mt-2 px-5 py-3 relative rounded-full">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-5 text-sm font-bold bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
 								<% end %>
@@ -151,7 +158,7 @@
 					</div>
 				</div>
 			<% else %>
-				<div class="px-5 text-sm text-gray-500">
+				<div class="px-5 text-sm text-gray-500 mt-3">
 					Você não segue nenhum organizador ainda
 				</div>
 			<% end %>
@@ -176,8 +183,8 @@
 
 		<div class="pt-2 mx-auto mb-24 space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
 			<%= render partial: 'events/group_by_day_list', locals: {
-					events: @upcoming_events,
-					user:   current_user
+				events: @upcoming_events,
+				user:   current_user
 			} %>
 		</div>
 	<% end %>
