@@ -1,20 +1,20 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'calendar' }, class: 'h-full' do %>
 	<div class="h-full">
-		<div data-calendar-target="calendar" class="select-none tap-highlight-none md:py-3 md:rounded-lg md:text-center md:mx-0 md:mb-2 md:shadow-none bg-white py-3 rounded-lg text-center mx-3 mb-5">
+		<div data-calendar-target="calendar" class="bg-gray-50 mb:bg-transparent select-none tap-highlight-none md:py-3 md:rounded-lg md:text-center md:mx-0 md:mb-2 md:shadow-none bg-white py-3 rounded-lg text-center mx-3 mb-5">
 			<div class="capitalize flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
 				<span class="font-extrabold ml-4 mr-2 text-green-500">
 					<%= t('date.month_names')[start_date.month] %> <%= start_date.year %>
 				</span>
 				<div class="flex text-green-500">
 					<%= content_tag :div, id: 'calendar-previous', data: { reflex: 'click->Calendar#prev_month', start_date: start_date }, class: 'mx-1 cursor-pointer md:hover:bg-green-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
-						<svg class="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 							<path d="M0 0h24v24H0z" fill="none"/>
 							<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 						</svg>
 					<% end %>
 
 					<%= content_tag :div, id: 'calendar-next', data: { reflex: 'click->Calendar#next_month', start_date: start_date }, class: 'mx-1 cursor-pointer md:hover:bg-green-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
-						<svg class="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 							<path d="M0 0h24v24H0z" fill="none"/>
 							<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
 						</svg>
@@ -55,7 +55,7 @@
 
 
 		<div id="calendar__list" class="mb-20">
-			<div class="<%= helpers.class_names('mt-3 flex items-center px-2 py-1 mx-auto text-sm font-semibold text-white bg-green-500 rounded-full select-none w-content',
+			<div class="<%= helpers.class_names('mb-1 bg-green-500 flex font-semibold items-center mt-3 mx-auto px-3 py-2 rounded-full select-none text-sm text-white w-content',
 																					'hidden': !@filter) %>">
 				<svg class="h-5 mr-2 text-white fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<path d="M0 0h24v24H0z" fill="none"/>
@@ -68,7 +68,7 @@
 												reflex: 'click->Calendar#clear_filter'
 											},
 											id:    'calendar__clear-filter',
-											class: helpers.class_names('px-5 text-center cursor-pointer underline text-gray-500 text-xs',
+											class: helpers.class_names('px-5 text-center cursor-pointer underline text-gray-500 text-xs mb-5',
 																								 'hidden': !@filter) do %>
 				Remover filtro
 			<% end %>

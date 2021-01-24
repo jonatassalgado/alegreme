@@ -20,13 +20,13 @@ class CalendarComponent < ViewComponent::Base
 
 		td_class = ['day h-14 text-center px-1 rounded-full cursor-pointer md:hover:bg-green-100 md:hover:text-green-500']
 		td_class << "wday-#{day.wday.to_s}"
-		td_class << 'bg-gray-100 rounded-full text-gray-600' if today == day
+		td_class << 'bg-gray-100 rounded-full text-gray-700' if today == day
 		td_class << 'text-gray-300' if today > day
 		td_class << '' if today < day
 		td_class << 'filter bg-green-500 text-white rounded-full text-white font-semibold' if day.to_date == start_date.to_date && @filter
 		td_class << 'text-gray-300' if start_date.month != day.month && day < start_date
 		td_class << 'text-gray-300' if start_date.month != day.month && day > start_date # next month
-		td_class << '' if start_date.month == day.month # current month
+		td_class << 'text-gray-700' if start_date.month == day.month && day.to_date != start_date.to_date # current month
 		td_class << 'has-events' if sorted_events&.fetch(day, []).any?
 
 		td_class
