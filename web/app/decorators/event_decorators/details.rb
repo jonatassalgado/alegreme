@@ -40,6 +40,14 @@ module EventDecorators
 				end
 			end
 
+			def details_ticket_url
+				details['ticket_url']
+			end
+
+			def details_ticket_url=(value)
+				details['ticket_url'] = value
+			end
+
 			def details_source_url
 				details['source_url']
 			end
