@@ -83,7 +83,7 @@ export default class extends ApplicationController {
     _updateCalendar() {
         const calendar = document.querySelector('#calendar')
         if (calendar) {
-            this.stimulate('Calendar#update', calendar, {resolveLate: true})
+            this.stimulate('LeftSidebar::Calendar#update', calendar, {resolveLate: true})
         }
     }
 
