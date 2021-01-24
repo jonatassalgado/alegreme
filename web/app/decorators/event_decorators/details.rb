@@ -26,6 +26,10 @@ module EventDecorators
 				details['prices'].map(&:to_i)
 			end
 
+			def details_prices_min
+				details_prices.try(:min)
+			end
+
 			def details_prices=(value)
 				if value.is_a? Array
 					details['prices'] = value
