@@ -14,9 +14,8 @@
 											class: 'font-bold inline-block leading-snug md:hover:underline text-gray-600' do %>
 				<%= @event.details_name %>
 			<% end %>
-			<div class="text-xs mt-2">
-				<span class="text-gray-500">Daqui <%= helpers.distance_of_time_in_words @event.start_time, DateTime.now %> em</span>
-				<span class="text-gray-600"><%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %></span>
+			<div class="text-sm mt-2 text-gray-600">
+				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline' %>
 			</div>
 			<div class="flex mt-1 -ml-2">
 				<%= content_tag :div, data: {action: 'click->hero--horizontal-event#like', 'event-id': @event.id}, class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
