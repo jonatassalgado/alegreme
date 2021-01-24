@@ -9,7 +9,6 @@ require_relative '../../geographic.rb'
 require_relative '../../../config/initializers/shrine.rb'
 require_relative '../../../app/uploaders/event_image_uploader'
 
-
 module PopulateEventsRake
 
 	def create_place(item)
@@ -22,13 +21,13 @@ module PopulateEventsRake
 			@geocode = Geocoder.search(item['address']).first if item['address']
 
 			place = Place.create!({
-					                      details:    {
-							                      name: item['place_name']
-					                      },
-					                      geographic: {
-							                      address: item['address']
-					                      }
-			                      })
+															details:    {
+																name: item['place_name']
+															},
+															geographic: {
+																address: item['address']
+															}
+														})
 
 			SetGeolocationJob.perform_later(place.id)
 			set_place_image(place, item)
@@ -68,11 +67,11 @@ module PopulateEventsRake
 				puts "Organizador: #{organizer.details['name']} - já existe".yellow
 			else
 				organizer = Organizer.create!({
-						                              details: {
-								                              name:       organizer_data['name'],
-								                              source_url: organizer_data['source_url']
-						                              }
-				                              })
+																				details: {
+																					name:       organizer_data['name'],
+																					source_url: organizer_data['source_url']
+																				}
+																			})
 
 				puts "Organizador: #{organizer_data['name']} - criado".white
 			end
@@ -123,7 +122,7 @@ module PopulateEventsRake
 
 	def classify_event(event, ml_data)
 		@label_query  = Base64.encode64(ml_data['stemmed'])
-		@label_params = {query: @label_query}
+		@label_params = { query: @label_query }
 
 		@label_uri       = URI("#{ENV['API_URL']}:5000/event/label")
 		@label_uri.query = URI.encode_www_form(@label_params)
@@ -136,28 +135,28 @@ module PopulateEventsRake
 		if @label_response_is_success
 			puts "Evento: #{event.details_name} - Adicionando classificação".white
 			event.ml_data.deep_merge!(
-					personas:   {
-							primary:   {
-									name:  @label_data['classification']['personas']['primary']['name'],
-									score: @label_data['classification']['personas']['primary']['score']
-							},
-							secondary: {
-									name:  @label_data['classification']['personas']['secondary']['name'],
-									score: @label_data['classification']['personas']['secondary']['score']
-							},
-							outlier:   false
+				personas:   {
+					primary:   {
+						name:  @label_data['classification']['personas']['primary']['name'],
+						score: @label_data['classification']['personas']['primary']['score']
 					},
-					categories: {
-							primary:   {
-									name:  @label_data['classification']['categories']['primary']['name'],
-									score: @label_data['classification']['categories']['primary']['score']
-							},
-							secondary: {
-									name:  @label_data['classification']['categories']['secondary']['name'],
-									score: @label_data['classification']['categories']['secondary']['score']
-							},
-							outlier:   false
-					}
+					secondary: {
+						name:  @label_data['classification']['personas']['secondary']['name'],
+						score: @label_data['classification']['personas']['secondary']['score']
+					},
+					outlier:   false
+				},
+				categories: {
+					primary:   {
+						name:  @label_data['classification']['categories']['primary']['name'],
+						score: @label_data['classification']['categories']['primary']['score']
+					},
+					secondary: {
+						name:  @label_data['classification']['categories']['secondary']['name'],
+						score: @label_data['classification']['categories']['secondary']['score']
+					},
+					outlier:   false
+				}
 			)
 
 			if @label_data['classification']['categories']
@@ -229,9 +228,9 @@ module PopulateEventsRake
 			return [false, false]
 		end
 
-		event                     = Event.where.contains(details: {source_url: item['source_url']}).first
+		event                     = Event.where.contains(details: { source_url: item['source_url'] }).first
 		query                     = Base64.encode64(item['description'])
-		features_params           = {query: query}
+		features_params           = { query: query }
 		features_uri              = URI("#{ENV['API_URL']}:5000/event/features")
 		features_uri.query        = URI.encode_www_form(features_params)
 		features_response         = Net::HTTP.get_response(features_uri)
@@ -243,30 +242,31 @@ module PopulateEventsRake
 			ml_data = JSON.parse(features_response.try(:body))
 
 			event.details.deep_merge!(
-					name:        item['name'],
-					description: item['description'],
-					prices:      item['prices'] || []
+				name:        item['name'],
+				description: item['description'],
+				ticket_url:  item['ticket_url'],
+				prices:      item['prices'] || []
 			)
 
 			event.ocurrences.deep_merge!(
-					dates: item['datetimes'].map {|datetime| datetime.to_datetime}
+				dates: item['datetimes'].map { |datetime| datetime.to_datetime }
 			)
 
 			event.geographic.deep_merge!(
-					address:      item['address'],
-					latlon:       @geocode.try(:coordinates),
-					neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality)[0]["long_name"] },
-					city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
-					cep:          Geographic.get_cep_from_address(item['address'])
+				address:      item['address'],
+				latlon:       @geocode.try(:coordinates),
+				neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality)[0]["long_name"] },
+				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
+				cep:          Geographic.get_cep_from_address(item['address'])
 			)
 
 			event.ml_data.deep_merge!(
-					cleanned: ml_data['cleanned'],
-					stemmed:  ml_data['stemmed'],
-					# freq:     ml_data['freq'],
-					nouns:    ml_data['nouns'],
-					verbs:    ml_data['verbs'],
-					adjs:     ml_data['adjs']
+				cleanned: ml_data['cleanned'],
+				stemmed:  ml_data['stemmed'],
+				# freq:     ml_data['freq'],
+				nouns: ml_data['nouns'],
+				verbs: ml_data['verbs'],
+				adjs:  ml_data['adjs']
 			)
 
 			puts "#{item['name']} - atualizado".white
@@ -285,31 +285,32 @@ module PopulateEventsRake
 			puts "#{@events_create_counter}: #{item['name']} - Evento criado".white
 
 			event.details.deep_merge!(
-					name:        item['name'],
-					description: item['description'],
-					source_url:  item['source_url'],
-					prices:      item['prices'] || []
+				name:        item['name'],
+				description: item['description'],
+				source_url:  item['source_url'],
+				ticket_url:  item['ticket_url'],
+				prices:      item['prices'] || []
 			)
 
 			event.ml_data.deep_merge!(
-					cleanned: ml_data['cleanned'],
-					stemmed:  ml_data['stemmed'],
-					# freq:     ml_data['freq'],
-					nouns:    ml_data['nouns'],
-					verbs:    ml_data['verbs'],
-					adjs:     ml_data['adjs']
+				cleanned: ml_data['cleanned'],
+				stemmed:  ml_data['stemmed'],
+				# freq:     ml_data['freq'],
+				nouns: ml_data['nouns'],
+				verbs: ml_data['verbs'],
+				adjs:  ml_data['adjs']
 			)
 
 			event.ocurrences.deep_merge!(
-					dates: item['datetimes']
+				dates: item['datetimes']
 			)
 
 			event.geographic.deep_merge!(
-					address:      item['address'],
-					latlon:       @geocode.try(:coordinates),
-					neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality)[0]["long_name"] },
-					city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
-					cep:          Geographic.get_cep_from_address(item['address'])
+				address:      item['address'],
+				latlon:       @geocode.try(:coordinates),
+				neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality)[0]["long_name"] },
+				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
+				cep:          Geographic.get_cep_from_address(item['address'])
 			)
 
 			[event, ml_data]
@@ -319,10 +320,10 @@ module PopulateEventsRake
 	def create_artifact
 		timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
 		artifact = Artifact.create(
-				details: {
-						name: @current_file_name,
-						type: 'scraped'
-				}
+			details: {
+				name: @current_file_name,
+				type: 'scraped'
+			}
 		)
 
 		artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
@@ -338,8 +339,8 @@ namespace :populate do
 		puts "Task populate:events iniciada em #{DateTime.now}".white
 
 		last_task_performed = Artifact.where.contains(details: {
-				name: "populate:events",
-				type: "task"
+			name: "populate:events",
+			type: "task"
 		}).first
 
 		# noinspection RubyArgCount
@@ -383,7 +384,7 @@ namespace :populate do
 			end
 
 			# if event.details_description != item['description']
-				classify_event(event, ml_data)
+			classify_event(event, ml_data)
 			# end
 
 			save_event(event)
@@ -393,13 +394,13 @@ namespace :populate do
 			last_task_performed.touch
 		else
 			Artifact.create(
-					details: {
-							name: "populate:events",
-							type: "task"
-					},
-					data:    {
-							last_file_used: @current_file_name
-					})
+				details: {
+					name: "populate:events",
+					type: "task"
+				},
+				data:    {
+					last_file_used: @current_file_name
+				})
 		end
 
 		puts "Task populate:events finalizada em #{DateTime.now}}".white
