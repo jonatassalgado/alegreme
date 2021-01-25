@@ -90,7 +90,6 @@ class Rack::Attack
 				req.path.include?('sql') ||
 				req.path.include?('php') ||
 				req.path.include?('mysql') ||
-				req.path.include?('admin') ||
 				req.path.include?('database') ||
 				req.path.include?('2php') ||
 				req.path.include?('myadmin')
