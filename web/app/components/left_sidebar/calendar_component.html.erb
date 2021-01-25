@@ -75,14 +75,14 @@
 			<%= render LeftSidebar::GroupByDayListComponent.new(events: @events, user: @user) if @events.present? %>
 		</div>
 
-		<% if @user && @events.empty? && (@start_date != Date.today) %>
+		<% if @user && @events&.empty? && (@start_date != Date.today) %>
 			<div id="calendar__filter" class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
 				Sem eventos na sua agenda neste dia.
 				<%= content_tag :div, data: { reflex: 'click->LeftSidebar::Calendar#clear_filter' }, class: 'text-center cursor-pointer underline text-gray-500 text-sm' do %>
 					Remover filtro
 				<% end %>
 			</div>
-		<% elsif @user && @events.empty? %>
+		<% elsif @user && @events&.empty? %>
 			<div id="calendar__filter" class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
 				Você não tem eventos salvos na sua agenda
 			</div>

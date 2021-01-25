@@ -35,8 +35,9 @@ class FeedsController < ApplicationController
 	end
 
 	def category
-		@categories ||= Event::CATEGORIES.dup
-		@events     ||= Event.not_ml_data.active.in_days(session[:stimulus][:days]).in_categories([params[:category]]).order_by_date.includes(:place, :categories)
+		@categories   = Event::CATEGORIES.dup
+		@events       = Event.not_ml_data.active.in_categories([params[:category]]).order_by_date.includes(:place, :categories)
+		@liked_events = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
 	end
 
 	def neighborhood
