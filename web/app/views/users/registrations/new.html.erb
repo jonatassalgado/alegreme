@@ -11,7 +11,7 @@
 			</div>
 		<% end %>
 
-		<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'me-form' }) do |f| %>
+		<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'me-form', data: { turbo: false } }) do |f| %>
 			<%= devise_error_messages! %>
 
 			<div data-gtm-action="view" data-gtm-category="Funil" data-gtm-label="Criar conta">
