@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 	get '/porto-alegre/eventos', to: 'feeds#index', as: :city_events
 	get '/minha-agenda', to: 'users#agenda', as: :my_agenda
 
-	resources :users, path: 'porto-alegre/u'
+	resources :users, path: 'u'
 
 	get '/porto-alegre/eventos/:day', to: 'feeds#day', as: :day_events, constraints: { day: /(\d{2})-(\d{2})-(\d{4})/ }
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
@@ -92,6 +92,7 @@ Rails.application.routes.draw do
 
 	authenticate :user, lambda { |u| u.admin? } do
 		mount Sidekiq::Web => '/sidekiq'
+		get 'admin/users', to: 'users#admin'
 	end
 
 	get 'job/submit/:who/:message', to: 'job#submit'

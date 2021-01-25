@@ -1,55 +1,100 @@
-<section class="with-section-constraints">
+<section class="">
 
-	<p id="notice"><%= notice %></p>
+	<p class="md:m-5 m-2" id="notice">
+		<%= notice %>
+	</p>
 
-	<h1>Users</h1>
+	<h1 class="font-black mb-5 mt-8 md:mx-5 mx-2 text-2xl">
+		Usuários
+	</h1>
 
-	<table class="me-table">
-		<thead>
-		<tr>
-			<th>Foto</th>
-			<th>Id</th>
-			<th>Nome</th>
-			<th>Email</th>
-			<th>Criado em</th>
-			<th>Acesso em</th>
-			<th>Acessos</th>
-			<th>Status</th>
-			<th>Notificações</th>
-			<th>Beta</th>
-			<th></th>
-			<th></th>
-		</tr>
-		</thead>
 
-		<tbody>
-		<% @users.each do |user| %>
-			<tr>
-				<td><%= image_tag(user.picture, class: 'picture') rescue nil %></td>
-				<td><%= user.id %></td>
-				<td><%= link_to user.name, user_path(user) %></td>
-				<td><%= user.email %></td>
-				<td><%= distance_of_time_in_words_to_now user.created_at %></td>
-				<td><%= distance_of_time_in_words_to_now user.current_sign_in_at if user.current_sign_in_at %></td>
-				<td><%= user.sign_in_count %></td>
-				<td style="width: 15%">
-					Beta requisitado: <%= user.beta_requested? ? 'Sim' : 'Não' %> <br>
-					Beta ativado: <%= user.beta_activated? ? 'Sim' : 'Não' %> <br>
-					Persona: <%= user.personas_assortment_finished? ? 'Sim' : 'Não' %> <br>
-					Eventos salvos: <%= user.liked_events.size %> <br>
-					Plataform Id: <%= user.social_plataform_id %>
-				</td>
-				<td>Notificações: <%= user.notifications_topics_all_active %></td>
-				<!--        <td><%#= link_to 'Show', user %></td>-->
-				<td><%= link_to 'Edit', edit_user_path(user) %></td>
-				<td><%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Tem certeza?'} %></td>
-				<td><%= link_to 'Ativar convite', send_invite_activation_link_path(user), remote: true, data: {confirm: "Ativar convite para #{user.first_name} (#{user.email})"} %></td>
-			</tr>
-		<% end %>
-		</tbody>
-	</table>
+	<div class="flex flex-col md:mx-5 mx-2">
+		<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+			<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+				<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+					<table class="min-w-full divide-y divide-gray-200">
+						<thead class="bg-gray-50">
+						<tr>
+							<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Perfil</th>
+							<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Informações</th>
+							<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Onboarding</th>
+							<th scope="col" class="relative px-6 py-3">
+								<span class="sr-only">Edit</span>
+							</th>
+						</tr>
+						</thead>
+						<tbody class="bg-white divide-y divide-gray-200">
+						<% @users.each do |user| %>
+							<tr>
+								<td class="px-6 py-4 whitespace-nowrap">
+									<div class="flex items-center">
+										<div class="bg-gray-300 flex-shrink-0 h-10 rounded-full w-10">
+											<%= image_tag(user.picture, class: 'h-10 w-10 rounded-full') rescue nil %>
+										</div>
+										<div class="ml-4">
+											<div class="font-bold text-gray-700">
+												(<%= user.id %>) <%= link_to user.name, user_path(user) %>
+											</div>
+											<div class="text-sm text-gray-500">
+												<%= user.email %>
+											</div>
+											<div class="text-sm text-gray-500">
+												<%= user.social_plataform_id&.upcase %>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap">
+									<div class="text-sm text-gray-500">
+										<div>
+											<b>Criado em:</b> <%= distance_of_time_in_words_to_now user.created_at %></div>
+										<div>
+											<b>Último acesso
+												em:</b> <%= distance_of_time_in_words_to_now user.current_sign_in_at if user.current_sign_in_at %>
+										</div>
+										<div>
+											<b>Acessos:</b> <%= user.sign_in_count %>
+										</div>
+										<div>
+											<b>Eventos salvos:</b> <%= user.liked_events.size %>
+										</div>
+									</div>
+									<div class="text-sm text-gray-500">
 
-	<br>
+									</div>
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap">
+									<% if user.swipable['events']['finished_at'] %>
+										<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                  		Completo
+                		</span>
+									<% else %>
+										<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-600">
+                  		Incompleto
+                		</span>
+									<% end %>
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+									<div class="flex space-x-3">
+										<div>
+											<%= link_to 'Edit', edit_user_path(user), class: 'text-gray-600 font-semibold hover:text-indigo-900' %>
+										</div>
+										<div>
+											<%= link_to 'Destroy', user, class: 'text-red-500 font-semibold hover:text-indigo-900', method: :delete, data: { confirm: 'Tem certeza?' } %>
+										</div>
+									</div>
+								</td>
+							</tr>
+						<% end %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 	<%= link_to 'New User', new_user_path %>
 </section>
