@@ -101,7 +101,7 @@ class EventSpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'alegreme.pipelines.EventPipeline': 400
         },
-        'CLOSESPIDER_ITEMCOUNT': 60,
+        'CLOSESPIDER_ITEMCOUNT': 100,
         'DEPTH_LIMIT': 2
     }
 
