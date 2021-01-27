@@ -83,7 +83,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 					filter:     false,
 					indicators: indicators))
 
-				morph "##{dom_id(@event, 'main-sidebar')}", render(MainSidebar::HorizontalEventComponent.new(
+				morph "#{dom_id(@event, 'main-sidebar')}", render(MainSidebar::HorizontalEventComponent.new(
 					event:           @event,
 					user:            current_user,
 					open_in_sidebar: true))

@@ -69,14 +69,14 @@ class EventReflex < ApplicationReflex
 	private
 
 	def morph_horizontal_event
-		morph "##{dom_id(@event, 'main-sidebar')}", render(MainSidebar::HorizontalEventComponent.new(
+		morph "#{dom_id(@event, 'main-sidebar')}", render(MainSidebar::HorizontalEventComponent.new(
 			event:           @event,
 			user:            current_user,
 			open_in_sidebar: true))
 	end
 
 	def morph_large_event
-		morph "##{dom_id(@event)}", render(LargeEventComponent.new(
+		morph "#{dom_id(@event)}", render(LargeEventComponent.new(
 			event:           @event,
 			user:            current_user))
 	end

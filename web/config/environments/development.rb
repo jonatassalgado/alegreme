@@ -1,3 +1,5 @@
+require "active_support/core_ext/integer/time"
+
 require 'socket'
 require 'ipaddr'
 
@@ -9,7 +11,7 @@ Rails.application.configure do
 	# since you don't have to restart the web server when you make code changes.
 	config.cache_classes = false
 
-	config.web_console.whitelisted_ips = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16', '172.16.0.0/12']
+	config.web_console.allowed_ips = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16', '172.16.0.0/12']
 
 	# Do not eager load code on boot.
 	config.eager_load = false

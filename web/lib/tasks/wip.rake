@@ -18,7 +18,7 @@ task wip: :environment do
 														 }
 													 })
 
-		u.save!
+		u.save
 	end
 
 

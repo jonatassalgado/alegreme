@@ -31,7 +31,8 @@ module EventQueries
 
 			scope 'in_user_suggestions', lambda { |user, opts = {}|
 				return Event.all unless user
-				where(id: user.suggestions['events']).order("position(id::text in '#{user.suggestions['events'].join(',')}')")
+				where(id: user.suggestions['events'])
+					.order(Arel.sql "position(id::text in '#{user.suggestions['events'].join(',')}')")
 			}
 
 			scope 'in_user_personas', lambda { |user, opts = {}|
@@ -202,9 +203,9 @@ module EventQueries
 
 				case opts[:direction]
 				when :asc
-					order("(ocurrences -> 'dates' ->> 0)::timestamptz ASC")
+					order(Arel.sql "(ocurrences -> 'dates' ->> 0)::timestamptz ASC")
 				when :desc
-					order("(ocurrences -> 'dates' ->> 0)::timestamptz DESC")
+					order(Arel.sql "(ocurrences -> 'dates' ->> 0)::timestamptz DESC")
 				else
 					none
 				end

@@ -11,7 +11,7 @@ class PlaceReflex < ApplicationReflex
 			else
 				current_user.follow! @place
 			end
-			morph "##{dom_id(@place, 'follow-button')}", render(FollowButtonComponent.new(followable: @place, user: current_user))
+			morph "#{dom_id(@place, 'follow-button')}", render(FollowButtonComponent.new(followable: @place, user: current_user))
 		else
 			show_login_modal
 		end

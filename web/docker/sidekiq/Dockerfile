@@ -1,4 +1,4 @@
-FROM ruby:2.6.3
+FROM ruby:2.7.2
 
 RUN apt-get update && apt-get install -y locales locales-all
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
@@ -44,11 +44,11 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 COPY . $SIDEKIQ_ROOT
 
-RUN yarn install
-
-RUN bundle exec rake assets:clobber
-RUN bundle exec rake webpacker:clobber
-RUN bundle exec rake assets:precompile
-RUN bundle exec rake webpacker:compile
+#RUN yarn install
+#
+#RUN bundle exec rake assets:clobber
+#RUN bundle exec rake webpacker:clobber
+#RUN bundle exec rake assets:precompile
+#RUN bundle exec rake webpacker:compile
 
 CMD bundle exec sidekiq -C config.yml

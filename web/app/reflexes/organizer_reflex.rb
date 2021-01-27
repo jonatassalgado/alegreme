@@ -11,7 +11,7 @@ class OrganizerReflex < ApplicationReflex
 			else
 				current_user.follow! @organizer
 			end
-			morph "##{dom_id(@organizer, 'follow-button')}", render(FollowButtonComponent.new(followable: @organizer, user: current_user))
+			morph "#{dom_id(@organizer, 'follow-button')}", render(FollowButtonComponent.new(followable: @organizer, user: current_user))
 		else
 			show_login_modal
 		end
