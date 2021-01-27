@@ -4,7 +4,7 @@ class SwipableReflex < ApplicationReflex
 
 	def like
 		if current_user
-			Rails.cache.increment("#{current_user.cache_key}/hero--swipable/suggestions_viewed", { expires_in: 1.hour })
+			Rails.cache.increment("#{current_user.cache_key}/hero--swipable/suggestions_viewed", 1, { expires_in: 1.hour})
 			@event = Event.find element['data-event-id']
 			current_user.like! @event
 
