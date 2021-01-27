@@ -32,7 +32,8 @@ gem 'friendly_id', '~> 5.2.4'
 gem 'rpush'
 
 # Devise
-gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
+gem 'devise'
+gem 'omniauth', '1.9.1'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'recaptcha'
@@ -55,7 +56,7 @@ gem "browser", require: "browser/browser"
 # Use CoffeeScript for .coffee assets and views
 # gem 'coffee-rails', '~> 5.0.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-# gem 'turbolinks', '~> 5.2.0'
+# 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.11'
 # Use Redis adapter to run Action Cable in production
@@ -113,7 +114,6 @@ gem 'rack-attack'
 gem 'stimulus_reflex', '~> 3.4.1'
 gem 'view_component', require: 'view_component/engine'
 gem 'view_component_reflex'
-# gem 'view_component_reflex', path: '/var/www/alegreme/gems/view_component_reflex', group: :development
 
 group :production do
 	gem 'aws-sdk-s3'
