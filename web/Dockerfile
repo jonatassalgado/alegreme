@@ -29,9 +29,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       libpq-dev \
   && rm -rf /var/lib/apt/lists/*
 
-#RUN rm -fr /usr/local/bin/bundle
-#RUN gem install --no-document bundler
-
 RUN apt-get update && curl --silent --location https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -54,22 +51,22 @@ COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
+
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
+RUN rm -fr /usr/local/bin/bundle
 RUN gem install bundler
-#RUN bundle install
+RUN bundle install
 
 ADD . $RAILS_ROOT
 
-#RUN bash -c "cat /proc/sys/fs/inotify/max_user_watches"
+RUN yarn install
 
-#RUN yarn install
-
-#RUN bundle exec rake assets:clobber
-#RUN bundle exec rake webpacker:clobber
-#RUN bundle exec rake assets:precompile
-#RUN bundle exec rake webpacker:compile
+RUN bundle exec rake assets:clobber; exit 0
+RUN bundle exec rake webpacker:clobber; exit 0
+RUN bundle exec rake assets:precompile
+RUN bundle exec rake webpacker:compile
 
 EXPOSE 3000
 

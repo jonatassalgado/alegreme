@@ -35,12 +35,12 @@
     "stimulus": "^2.0.0",
     "stimulus_reflex": "3.4.1",
     "tailwindcss": "^2.0.1-compat",
+    "tailwindcss-animations": "^2.0.0",
+    "tailwindcss-aspect-ratio": "^3.0.0",
     "tailwindcss-elevation": "^0.3.4",
     "velocity-animate": "^2.0.6"
   },
   "devDependencies": {
-    "tailwindcss-animations": "^2.0.0",
-    "tailwindcss-aspect-ratio": "^3.0.0",
     "tailwindcss-font-inter": "^1.0.8",
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-dev-server": "^3.1.14"
