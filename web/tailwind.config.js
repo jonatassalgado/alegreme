@@ -1,4 +1,18 @@
-const colors = require('tailwindcss/colors')
+const colors       = require('tailwindcss/colors')
+const customColors = {
+    limegreen: {
+        '50':  '#ebf8f6',
+        '100': '#d1f7ee',
+        '200': '#a1f3d8',
+        '300': '#61eabd',
+        '400': '#1cdc93',
+        '500': '#08c867',
+        '600': '#07af4e',
+        '700': '#03994c',
+        '800': '#11723e',
+        '900': '#115c35',
+    }
+}
 
 module.exports = {
     purge:    {
@@ -26,8 +40,8 @@ module.exports = {
             current:     'currentColor',
             black:       '#000',
             white:       '#fff',
-            green:       colors.green,
-            gray:        colors.coolGray,
+            green:       customColors.limegreen,
+            gray:        colors.blueGray,
             yellow:      colors.amber,
             red:         colors.red,
             purple:      colors.purple

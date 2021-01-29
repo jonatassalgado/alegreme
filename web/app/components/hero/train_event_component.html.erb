@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@event, :hero), data: { controller: 'hero--train-event', 'hero--train-event-open-in-sidebar': @open_in_sidebar } do %>
-	<div class="select-none tap-highlight-none bg-white flex justify-between mt-2 mx-2 pr-5 pl-3 py-3 rounded-lg shadow">
+	<div class="select-none tap-highlight-none bg-white flex justify-between mt-2 pr-5 pl-3 py-3 rounded-lg shadow">
 		<div class="flex flex-col md:w-auto mr-3 space-y-1 w-10">
 			<%= content_tag :div, data: { action: 'click->hero--train-event#like', 'event-id': @event.id }, class: 'h-full bg-green-50 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-green-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-green-500 text-sm transform transition-transform' do %>
 				<svg class="h-5 text-green-500 fill-current hover:scale-150" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
