@@ -228,7 +228,7 @@ module PopulateEventsRake
 			return [false, false]
 		end
 
-		event                     = Event.where.contains(details: { source_url: item['source_url'] }).first
+		event                     = Event.where("(details ->> 'source_url') = ?", item['source_url']).first
 		query                     = Base64.encode64(item['description'])
 		features_params           = { query: query }
 		features_uri              = URI("#{ENV['API_URL']}:5000/event/features")
@@ -338,7 +338,7 @@ namespace :populate do
 
 		puts "Task populate:events iniciada em #{DateTime.now}".white
 
-		last_task_performed = Artifact.where.contains(details: {
+		last_task_performed = Artifact.where(details: {
 			name: "populate:events",
 			type: "task"
 		}).first
