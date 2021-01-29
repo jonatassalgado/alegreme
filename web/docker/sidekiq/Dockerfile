@@ -46,6 +46,7 @@ COPY . $SIDEKIQ_ROOT
 
 RUN yarn install
 
+RUN npm rebuild node-sass
 RUN bundle exec rake assets:clobber; exit 0
 RUN bundle exec rake webpacker:clobber; exit 0
 RUN bundle exec rake assets:precompile
