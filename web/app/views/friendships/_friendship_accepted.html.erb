@@ -1,25 +1,25 @@
-<div id="<%= dom_id(friend, :friendships_accepted) %>" class="relative flex items-center py-1 pl-1 pr-3 mb-2 mr-2 bg-green-100 border-2 border-gray-100 border-green-200 rounded-full w-content">
+<div id="<%= dom_id(friend, :friendships_accepted) %>" class="relative flex items-center py-1 pl-1 pr-3 mb-2 mr-2 bg-brand-100 border-2 border-gray-100 border-brand-200 rounded-full w-content">
 	<% begin %>
 		<%= image_tag(friend.picture, {class: "w-8 h-8 mr-2 bg-white bg-cover rounded-full", alt: user.name, onerror: "this.style.opacity='0'"}) %>
 	<% rescue %>
 		<div class="w-8 h-8 mr-2 bg-white bg-cover rounded-full"></div>
 	<% end %>
 
-	<div class="text-sm font-medium text-green-600">
+	<div class="text-sm font-medium text-brand-600">
 		<%= link_to friend.first_name, user_path(friend), {id: dom_id(friend, :friendship_accepted)} %>
 	</div>
 	<div data-reflex="click->Sheet#edit_sheets_friendships"
 			 data-reflex-root="#page"
 			 data-user-id="<%= user.id %>"
 			 data-friend-id="<%= friend.id %>">
-		<svg class="h-4 ml-1 -mr-1 text-green-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+		<svg class="h-4 ml-1 -mr-1 text-brand-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 			<path d="M0 0h24v24H0z" fill="none"/>
 			<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
 		</svg>
 	</div>
 
 	<% if friend&.liked_events&.size > 0 %>
-		<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-10 text-sm font-bold text-green-500 bg-white rounded-full">
+		<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-10 text-sm font-bold text-brand-500 bg-white rounded-full">
 			<%= friend&.liked_events&.size %>
 		</span>
 	<% end %>

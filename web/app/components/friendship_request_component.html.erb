@@ -5,7 +5,7 @@
 		<% rescue %>
 			<div class="bg-cover bg-gray-100 h-8 rounded-full w-8"></div>
 		<% end %>
-		<div class="flex-1 font-medium px-2 text-green-500 text-sm">
+		<div class="flex-1 font-medium px-2 text-brand-500 text-sm">
 			<%= link_to @friend.first_name, user_path(@friend) %>
 		</div>
 		<div class="flex space-x-1">
@@ -20,14 +20,14 @@
 				<% end %>
 				<%= reflex_tag :reply,
 											 :div,
-											 class: 'bg-green-50 text-green-600 text-sm p-1 font-medium rounded',
+											 class: 'bg-brand-50 text-brand-600 text-sm p-1 font-medium rounded',
 											 data:  {
 													 'friendship-action': 'accept'
 											 } do %>
 					Aceitar
 				<% end %>
 			<% elsif @user.friendship_accepted? @friend %>
-				<div class="p-1 rounded text-green-500 text-sm">
+				<div class="p-1 rounded text-brand-500 text-sm">
 					Aceito
 				</div>
 			<% else %>

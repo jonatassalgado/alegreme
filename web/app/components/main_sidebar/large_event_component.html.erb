@@ -35,7 +35,7 @@
 					</div>
 				</div>
 				<div class="p-5">
-					<h1 class="text-2xl font-semibold leading-tight text-gray-700">
+					<h1 class="font-bold font-display text-2xl text-gray-900">
 						<%= @event.details_name %>
 					</h1>
 					<div class="flex items-center -ml-1">
@@ -47,7 +47,7 @@
 														class: 'p-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover:text-gray-600 items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
 							<svg class="<%= helpers.class_names 'fill-current h-5 hover:scale-150 w-5',
 																									{ 'text-gray-600':  !@user&.like?(@event),
-																										'text-green-500': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																										'text-brand-500': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/>
 								<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"/>
 							</svg>
@@ -68,7 +68,7 @@
 					</div>
 				</div>
 				<div class="flex p-5 border-t border-b border-gray-100">
-					<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-green-600 bg-green-100 h-content rounded-xl w-content">
+					<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-600 bg-brand-100 h-content rounded-xl w-content">
 						<div class="text-sm font-bold leading-tight uppercase">
 							<% if @event.day_of_week['date'] < Date.today + 7 %>
 								<%= I18n.l(@event.day_of_week['date'], format: :week) %>
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 				<div class="px-5 py-5 border-b border-gray-100">
-					<h2 class="font-bold text-gray-600 uppercase"><%= helpers.limit_place_name_size(@event.place_details_name, 40) %></h2>
+					<h2 class="font-bold text-gray-800 font-display uppercase"><%= helpers.limit_place_name_size(@event.place_details_name, 40) %></h2>
 					<div class="mt-2 text-sm  leading-tight text-gray-600">
 						<%= helpers.limit_address_name_size @event.geographic['address'] %>
 					</div>
@@ -103,14 +103,14 @@
 					</div>
 				</div>
 				<div class="px-5 py-5">
-					<h2 class="font-bold text-gray-600 uppercase">Sobre o evento</h2>
+					<h2 class="font-bold text-gray-800 font-display uppercase">Sobre o evento</h2>
 					<div class="mt-2 text-sm  leading-relaxed text-gray-600 break-words text-with-html">
 						<%= @event.details_description.html_safe %>
 					</div>
 				</div>
 				<% if @similar_events.present? %>
 					<div class="mt-10 mb-5">
-						<h2 class="px-5 font-bold text-gray-600 uppercase">Similares</h2>
+						<h2 class="px-5 font-bold text-gray-800 font-display uppercase">Similares</h2>
 						<% @similar_events.each do |similar_event| %>
 							<div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-100">
 								<div class="pr-6">

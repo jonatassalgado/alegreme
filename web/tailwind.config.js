@@ -1,17 +1,58 @@
 const colors       = require('tailwindcss/colors')
 const customColors = {
-    limegreen: {
-        '50':  '#ebf8f6',
-        '100': '#d1f7ee',
-        '200': '#a1f3d8',
-        '300': '#61eabd',
-        '400': '#1cdc93',
-        '500': '#08c867',
-        '600': '#07af4e',
-        '700': '#03994c',
-        '800': '#11723e',
-        '900': '#115c35',
-    }
+    greenHaze:       {
+        DEFAULT: '#03AA54',
+        '50':    '#F0FFF7',
+        '100':   '#CDFEE5',
+        '200':   '#87FDC0',
+        '300':   '#41FB9C',
+        '400':   '#05F077',
+        '500':   '#03AA54',
+        '600':   '#038C46',
+        '700':   '#026E37',
+        '800':   '#025028',
+        '900':   '#013219'
+    },
+    lunarGreen:      {
+        DEFAULT: '#454A45',
+        '50':    '#B7BDB8',
+        '100':   '#AAB1AB',
+        '200':   '#909891',
+        '300':   '#767F77',
+        '400':   '#5D655E',
+        '500':   '#454A45',
+        '600':   '#313532',
+        '700':   '#1D201E',
+        '800':   '#0A0B0A',
+        '900':   '#000000'
+    },
+    indigo:          {
+        DEFAULT: '#6369D1',
+        '50':    '#FFFFFF',
+        '100':   '#F1F1FB',
+        '200':   '#CDCFF0',
+        '300':   '#AAADE6',
+        '400':   '#868BDB',
+        '500':   '#6369D1',
+        '600':   '#3C43C5',
+        '700':   '#2F359F',
+        '800':   '#232878',
+        '900':   '#181B50',
+        body:    ''
+    },
+    alizarinCrimson: {
+        DEFAULT: '#D7263D',
+        '50':    '#FBE8EA',
+        '100':   '#F7D2D7',
+        '200':   '#EFA7B0',
+        '300':   '#E87B89',
+        '400':   '#E05063',
+        '500':   '#D7263D',
+        '600':   '#AC1E31',
+        '700':   '#801724',
+        '800':   '#550F18',
+        '900':   '#2A070C'
+    },
 }
 
 module.exports = {
@@ -32,18 +73,19 @@ module.exports = {
     },
     theme:    {
         fontFamily:              {
-            display: ['Mulish', 'system-ui', 'sans-serif'],
-            body:    ['Mulish', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'system-ui', 'sans-serif'],
+            body:    ['Roboto', 'system-ui', 'sans-serif'],
         },
         colors:                  {
             transparent: 'transparent',
             current:     'currentColor',
             black:       '#000',
             white:       '#fff',
-            green:       customColors.limegreen,
-            gray:        colors.blueGray,
+            green:       customColors.greenHaze,
+            brand:       customColors.indigo,
+            gray:        colors.coolGray,
             yellow:      colors.amber,
-            red:         colors.red,
+            red:         customColors.alizarinCrimson,
             purple:      colors.purple
         },
         animations:              {

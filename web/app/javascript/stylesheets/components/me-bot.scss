@@ -40,7 +40,7 @@
 }
 
 .bot__container:not(.no-icon)::after {
-  @apply bg-green-500 text-white;
+  @apply bg-brand-500 text-white;
   align-items: center;
   justify-content: center;
   border-radius: 50%;

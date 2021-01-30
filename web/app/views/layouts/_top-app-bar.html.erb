@@ -50,8 +50,8 @@
 					<%= content_for(:top_app_bar_title) %>
 				</div>
 			<% elsif props[:visible][:logo] %>
-				<a data-controller="ripple" class="relative inline-block mx-auto overflow-hidden rounded-full md:ml-0 md:px-5 ripple ripple-black" href="<%= root_path %>">
-					<svg class="h-8 ml-2 text-green-500 fill-current md:ml-0 md:w-32 md:h-auto" height="26" viewBox="0 0 148 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<a data-controller="ripple" class="relative inline-block mx-auto overflow-hidden rounded-full md:ml-0 ripple ripple-black" href="<%= root_path %>">
+					<svg class="h-8 ml-2 text-brand-500 fill-current md:ml-0 md:w-32 md:h-auto" height="26" viewBox="0 0 148 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M0.338745 14.6C0.338745 12.88 0.658745 11.37 1.29875 10.07C1.95874 8.77005 2.84874 7.77005 3.96874 7.07005C5.08874 6.37005 6.33874 6.02005 7.71874 6.02005C8.89874 6.02005 9.92874 6.26005 10.8087 6.74005C11.7087 7.22005 12.3987 7.85005 12.8787 8.63005V6.26005H18.0087V23H12.8787V20.63C12.3787 21.41 11.6787 22.04 10.7787 22.52C9.89874 23 8.86874 23.24 7.68874 23.24C6.32874 23.24 5.08874 22.89 3.96874 22.19C2.84874 21.47 1.95874 20.46 1.29875 19.16C0.658745 17.84 0.338745 16.32 0.338745 14.6ZM12.8787 14.63C12.8787 13.35 12.5187 12.34 11.7987 11.6C11.0987 10.86 10.2387 10.49 9.21874 10.49C8.19874 10.49 7.32874 10.86 6.60874 11.6C5.90874 12.32 5.55874 13.32 5.55874 14.6C5.55874 15.88 5.90874 16.9 6.60874 17.66C7.32874 18.4 8.19874 18.77 9.21874 18.77C10.2387 18.77 11.0987 18.4 11.7987 17.66C12.5187 16.92 12.8787 15.91 12.8787 14.63Z"/>
 						<path d="M26.7001 0.800049V23H21.5701V0.800049H26.7001Z"/>
 						<path d="M46.0477 14.36C46.0477 14.84 46.0177 15.34 45.9577 15.86H34.3477C34.4277 16.9 34.7577 17.7001 35.3377 18.26C35.9377 18.8 36.6677 19.07 37.5277 19.07C38.8077 19.07 39.6977 18.53 40.1977 17.45H45.6577C45.3777 18.55 44.8677 19.5401 44.1277 20.42C43.4077 21.3 42.4977 21.99 41.3977 22.49C40.2977 22.99 39.0677 23.24 37.7077 23.24C36.0677 23.24 34.6077 22.89 33.3277 22.19C32.0477 21.49 31.0477 20.49 30.3277 19.19C29.6077 17.89 29.2477 16.37 29.2477 14.63C29.2477 12.89 29.5977 11.37 30.2977 10.07C31.0177 8.77005 32.0177 7.77005 33.2977 7.07005C34.5777 6.37005 36.0477 6.02005 37.7077 6.02005C39.3277 6.02005 40.7677 6.36005 42.0277 7.04005C43.2877 7.72005 44.2677 8.69005 44.9677 9.95005C45.6877 11.21 46.0477 12.68 46.0477 14.36ZM40.7977 13.01C40.7977 12.13 40.4977 11.43 39.8977 10.91C39.2977 10.39 38.5477 10.13 37.6477 10.13C36.7877 10.13 36.0577 10.38 35.4577 10.88C34.8777 11.38 34.5177 12.09 34.3777 13.01H40.7977Z"/>
@@ -69,7 +69,7 @@
 		<div class="<%= class_names('col-span-12 md:col-span-5 md:px-5',
 																{ 'hidden md:block': controller_name != 'search' }) %>">
 			<form
-				class="flex items-center h-full px-2 bg-white rounded"
+				class="flex items-center h-full px-2 md:px-0 bg-white rounded"
 				data-controller="search"
 				data-search-target="search"
 				data-reflex-permanent
@@ -84,12 +84,12 @@
 				<!--				</svg>-->
 				<input autocomplete="false"
 							 name="q"
-							 class="bg-gray-200 focus:bg-white focus:border-transparent focus:outline-none focus:ring focus:ring-green-500 font-light h-10 md:bg-gray-50 md:shadow-inner mx-auto placeholder-gray-400 px-4 py-1 rounded text-sm w-full"
+							 class="bg-gray-100 focus:bg-white focus:border-transparent focus:outline-none focus:ring focus:ring-brand-500 font-light h-10 mx-auto placeholder-gray-800 px-4 py-1 rounded-full text-sm w-full"
 							 id="text-field-shape-one"
 							 placeholder="Busque por eventos ou tags..."
 							 type="text"
 							 data-search-target="input">
-				<input class="bg-green-500 cursor-pointer font-light font-semibold h-10 md:hidden ml-3 my-1 px-4 rounded text-white"
+				<input class="bg-brand-500 cursor-pointer font-light font-semibold h-10 md:hidden ml-3 my-1 px-4 rounded text-white"
 							 type="submit" value="Buscar"
 							 data-search-target="submit"
 							 data-action="click->search#searching"/>
@@ -117,7 +117,7 @@
 												'gtm-action':   'click',
 												'gtm-category': 'Funil',
 												'gtm-label':    'Criar meu perfil'
-											}, class: 'bg-green-500 border border-transparent focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 font-medium hover:bg-green-600 inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm text-white' %>
+											}, class: 'bg-brand-500 border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-600 inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm text-white' %>
 				<% end %>
 			<% end %>
 		</div>

@@ -34,7 +34,7 @@
 	<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&Roboto:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 	<% if content_for? :preload_image %>
 		<link rel="preload" as="image" href="<%= content_for :preload_image %>">
 	<% end %>
@@ -53,7 +53,7 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
+<div class="md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white md:py-2 z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
 		 data-controller="head"
 		 data-reflex-permanent
 		 data-head-target="head">

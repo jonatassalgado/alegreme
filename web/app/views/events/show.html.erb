@@ -56,11 +56,6 @@
  ]
 }
 
-
-
-
-
-
 </script>
 
 <script type="application/ld+json">
@@ -113,14 +108,14 @@
 	</div>
 	<div class="md:col-span-4 mb-10 md:mb-0 mt-5 md:mt-0">
 		<div class="bg-gray-200 cursor-pointer flex font-bold hidden items-center md:block bottom-auto mb-5 relative rounded-xl w-auto p-3 space-y-2 text-gray-600 text-sm">
-			<a href="<%= @event.details_source_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-green-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
+			<a href="<%= @event.details_source_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
 				<div>Abrir no facebook</div>
 				<svg class="group-hover:text-white transition-colors h-4 text-gray-400 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M16 16H2V2H9V0H2C0.89 0 0 0.9 0 2V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V9H16V16ZM11 0V2H14.59L4.76 11.83L6.17 13.24L16 3.41V7H18V0H11Z"/>
 				</svg>
 			</a>
 			<% if @event&.details_ticket_url %>
-				<a href="<%= @event.details_ticket_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-green-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
+				<a href="<%= @event.details_ticket_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
 					<div>Comprar ingressos</div>
 					<svg class="fill-current group-hover:text-white h-6 text-gray-400 transition-colors" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M0 0h24v24H0V0z" fill="none"/>
@@ -128,7 +123,7 @@
 					</svg>
 				</a>
 			<% end %>
-			<div class="select-none transition-colors overflow-hidden relative bg-white flex flex-1 group hover:bg-green-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer"
+			<div class="select-none transition-colors overflow-hidden relative bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer"
 					 data-controller="share-button"
 					 data-share-button-text="<%= strip_tags(limit_description_size(@event.details_description, 160)) %>"
 					 data-share-button-title="<%= @event.details_name %>"
@@ -143,7 +138,7 @@
 		</div>
 
 		<div class="overflow-hidden bg-white rounded-lg py-4 md:rounded-xl md:shadow-2xl md:border md:border-gray-100">
-			<h2 class="px-5 font-extrabold uppercase">Similares</h2>
+			<h2 class="px-5 font-bold font-display text-xl text-gray-800 uppercase">Similares</h2>
 			<div class="md:space-y-2">
 				<% if @similar_events.present? %>
 					<% @similar_events.each do |similar_event| %>
@@ -209,7 +204,7 @@
 	</div>
 
 	<div data-controller="install" class="select-none tap-highlight-none bottom-20 fixed transform transition-transform translate-y-32 w-full z-30">
-		<div data-action="click->install#install" data-install-target="button" class="bg-green-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">
+		<div data-action="click->install#install" data-install-target="button" class="bg-brand-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">
 			Instalar aplicativo
 		</div>
 	</div>

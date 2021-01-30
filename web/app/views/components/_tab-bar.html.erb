@@ -15,7 +15,7 @@
 			 data-go-to-delay="250"
 			 data-reflex-permanent
 			 data-head-target="tabBar"
-			 data-toggle-style-active-class='["border-b-2","border-green-600","font-bold","text-green-600"]'
+			 data-toggle-style-active-class='["border-b-2","border-brand-600","font-bold","text-brand-600"]'
 			 data-toggle-style-current-selected="<%= "#{controller_name}-#{action_name}" %>"
 			 data-toggle-style-inactive-class='["text-gray-800"]'
 			 data-toggle-style-init-selected="<%= "#{controller_name}-#{action_name}" %>"
@@ -25,27 +25,27 @@
 					 data-toggle-style-target="toggle"
 					 data-toggle-style-identifier="feeds-index"
 					 data-go-to-url="<%= feed_path %>"
-					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 controller_name == 'feeds' && action_name == 'index',
+					 class="<%= class_string('border-b-2 border-brand-600 font-bold text-brand-600':                                                                                                 controller_name == 'feeds' && action_name == 'index',
 																	 'text-gray-800':                                                                                                                                        controller_name != 'feeds',
-																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-green-500': true) %>">
+																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
 				Para você
 			</div>
 			<div data-action="click->toggle-style#toggle click->go-to#url"
 					 data-toggle-style-target="toggle"
 					 data-toggle-style-identifier="feeds-category"
 					 data-go-to-url="<%= category_events_path %>"
-					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 action_name == 'category',
+					 class="<%= class_string('border-b-2 border-brand-600 font-bold text-brand-600':                                                                                                 action_name == 'category',
 																	 'text-gray-800':                                                                                                                                        action_name != 'category',
-																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-green-500': true) %>">
+																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
 				Categorias
 			</div>
 			<div data-action="click->toggle-style#toggle click->go-to#url"
 					 data-toggle-style-target="toggle"
 					 data-toggle-style-identifier="feeds-city"
 					 data-go-to-url="<%= city_events_path %>"
-					 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 action_name == 'city',
+					 class="<%= class_string('border-b-2 border-brand-600 font-bold text-brand-600':                                                                                                 action_name == 'city',
 																	 'text-gray-800':                                                                                                                                        action_name != 'city',
-																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-green-500': true) %>">
+																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
 				Explorar tudo
 			</div>
 			<% unless mobile_device? %>
@@ -53,9 +53,9 @@
 						 data-toggle-style-target="toggle"
 						 data-toggle-style-identifier="movies"
 						 data-go-to-url="<%= movies_path %>"
-						 class="<%= class_string('border-b-2 border-green-600 font-bold text-green-600':                                                                                                 controller_name == 'movies',
+						 class="<%= class_string('border-b-2 border-brand-600 font-bold text-brand-600':                                                                                                 controller_name == 'movies',
 																		 'text-gray-800':                                                                                                                                        controller_name != 'movies',
-																		 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-green-500': true) %>">
+																		 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
 					Filmes
 				</div>
 			<% end %>

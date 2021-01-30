@@ -18,7 +18,7 @@
 			<% end %>
 		</div>
 		<div>
-			<h1 class="font-bold mb-2 text-3xl text-gray-700">
+			<h1 class="font-bold font-display mb-2 text-3xl text-gray-900">
 				<%= @user.first_name %>
 			</h1>
 			<% if current_user == @user %>
@@ -47,7 +47,7 @@
 
 	<% if current_user == @user %>
 		<!--		<div class="py-6 bg-white">-->
-		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
 		<!--				Notificações-->
 		<!--			</h2>-->
 		<%# if @user.friendships_request_received.present? %>
@@ -71,7 +71,7 @@
 		<%# end %>
 		<!--		</div>-->
 		<!--		<div id="friends-list" class="py-6 bg-white">-->
-		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
 		<!--				Amigos (<%#= @user.friends_accepted.size rescue 0 %>)-->
 		<!--			</h2>-->
 		<%# if @user.friends_accepted.present? %>
@@ -85,14 +85,14 @@
 		<%# end %>
 		<!--		</div>-->
 		<!--		<div class="py-6 bg-white">-->
-		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-green-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+		<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
 		<!--				Pessoas que sigo-->
 		<!--			</h2>-->
 		<%# if @user.following_users.present? %>
 		<!--				<div class="w-screen mt-3 md:w-full">-->
 		<!--					<div class="flex flex-wrap px-5 pl-5 space-y-2">-->
 		<%# @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-		<!--							<a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-green-600 bg-green-100 border-2 border-green-200 rounded-full cursor-pointer h-content hover:bg-purple-300">-->
+		<!--							<a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-brand-600 bg-brand-100 border-2 border-brand-200 rounded-full cursor-pointer h-content hover:bg-purple-300">-->
 		<%#= resource.details_name.titleize %>
 		<%# if resource.events.active.size > 0 %>
 		<!--  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">-->
@@ -110,7 +110,7 @@
 		<%# end %>
 		<!--		</div>-->
 		<div class="py-6">
-			<h2 class="font-extrabold uppercase -mb-1 px-5 inline-block">
+			<h2 class="font-bold font-display text-gray-800 uppercase -mb-1 px-5 inline-block">
 				Locais que sigo
 			</h2>
 			<% if @user.following_places.present? %>
@@ -119,10 +119,10 @@
 						<% @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
 							<a onclick="window.AnimateModule.animatePageHide()"
 								 href="<%= organizer_or_place_path resource %>"
-								 class="border cursor-pointer font-bold font-medium h-content inline-block md:hover:bg-gray-50 mr-2 mt-2 px-5 py-3 relative rounded-full">
+								 class="border cursor-pointer h-content inline-block md:hover:bg-gray-50 mr-2 mt-2 px-5 py-3 relative font-semibold rounded-full">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-5 text-sm font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-5 text-sm bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
 								<% end %>
@@ -137,7 +137,7 @@
 			<% end %>
 		</div>
 		<div class="py-6 bg-white">
-			<h2 class="font-extrabold uppercase -mb-1 px-5 inline-block">
+			<h2 class="font-bold font-display uppercase -mb-1 px-5 inline-block text-gray-800">
 				Organizadores que sigo
 			</h2>
 			<% if @user.following_organizers.present? %>
@@ -146,10 +146,10 @@
 						<% @user&.following_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
 							<a onclick="window.AnimateModule.animatePageHide()"
 								 href="<%= organizer_or_place_path resource %>"
-								 class="border cursor-pointer font-bold font-medium h-content inline-block md:hover:bg-gray-50 mr-2 mt-2 px-5 py-3 relative rounded-full">
+								 class="border cursor-pointer font-bold h-content inline-block md:hover:bg-gray-50 mr-2 mt-2 px-5 py-3 relative rounded-full">
 								<%= resource.details_name.titleize %>
 								<% if resource.events.active.size > 0 %>
-  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-5 text-sm font-bold bg-white rounded-full">
+  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-5 text-sm font-semibold bg-white rounded-full">
   										<%= resource.events.active.size %>
   									</span>
 								<% end %>
@@ -174,7 +174,7 @@
 
 				<%# events.each_with_index do |event, index| %>
 					<%# if event && index == 0 %>
-<!--						<div class="w-1 h-1 mx-auto bg-green-500 rounded-full">-->
+<!--						<div class="w-1 h-1 mx-auto bg-brand-500 rounded-full">-->
 <!--						</div>-->
 					<%# end %>
 				<%# end %>

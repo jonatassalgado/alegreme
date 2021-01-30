@@ -6,6 +6,9 @@
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
 						 style="height: calc(100vh - 64px); top: 64px">
+			<div class="bg-white font-bold font-display md:text-3xl pt-5 py-3 sticky text-gray-900 text-xl top-0 z-20">
+				Minha agenda
+			</div>
 			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
 		</section>
 	<% end %>
@@ -13,7 +16,7 @@
 		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
 			<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% if @upcoming_events.present? %>
-				<div class="font-black pb-5 px-5 text-xl pt-4">
+				<div class="font-display text-gray-900 font-bold pb-5 px-5 text-2xl md:text-3xl pt-4">
 					Eventos em Porto Alegre
 				</div>
 			<% end %>
@@ -47,7 +50,7 @@
 	<% end %>
 
 	<div data-controller="install" class="select-none tap-highlight-none bottom-20 fixed transform transition-transform translate-y-32 w-full z-30">
-		<div data-action="click->install#install" data-install-target="button" class="bg-green-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">
+		<div data-action="click->install#install" data-install-target="button" class="bg-brand-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">
 			Instalar aplicativo
 		</div>
 	</div>

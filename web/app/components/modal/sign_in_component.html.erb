@@ -1,7 +1,7 @@
 <%= content_tag :div, id: 'modal', data: { controller: 'modal--sign-in' } do %>
 	<% if @opened %>
 
-		<div class="fixed z-10 inset-0 overflow-y-auto">
+		<div class="fixed z-50 inset-0 overflow-y-auto">
 			<div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 				<!--
 					Background overlay, show/hide based on modal state.
@@ -32,9 +32,9 @@
 				<div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
 					<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 						<div class="sm:flex sm:items-start">
-							<div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+							<div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
 								<!-- Heroicon name: exclamation -->
-								<svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+								<svg class="h-6 w-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
 								</svg>
 							</div>
@@ -51,7 +51,7 @@
 						</div>
 					</div>
 					<div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-						<%= content_tag :a, href: new_user_registration_path, class: 'bg-green-500 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 font-medium hover:bg-green-600 inline-flex justify-center mt-3 px-4 py-2 rounded-md shadow-sm sm:ml-3 sm:mt-0 sm:text-sm sm:w-auto text-base text-white w-full', data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' } do %>
+						<%= content_tag :a, href: new_user_registration_path, class: 'bg-brand-500 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-600 inline-flex justify-center mt-3 px-4 py-2 rounded-md shadow-sm sm:ml-3 sm:mt-0 sm:text-sm sm:w-auto text-base text-white w-full', data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' } do %>
 							Criar conta
 						<% end %>
 					</div>
