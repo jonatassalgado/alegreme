@@ -57,7 +57,7 @@ const customColors = {
 
 module.exports = {
     purge:    {
-        enabled:              false,
+        enabled:              true,
         content:              [
             "./app/views/**/*.html.erb",
             "./app/views/**/**/*.html.erb",
