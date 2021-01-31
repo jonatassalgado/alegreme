@@ -78,11 +78,8 @@
 						</div>
 						<div class="text-sm"><%= helpers.format_hour @event.first_day_time %></div>
 					</div>
-					<div class="my-auto text-sm leading-snug text-gray-800">
-						O evento acontecerá
-						<span class="font-semibold">daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %></span>
-						em uma
-						<span class="font-semibold"><%= I18n.l(@event.day_of_week['date'], format: :week) %></span>.
+					<div class="my-auto text-sm font-semibold text-gray-800">
+						O evento acontecerá <%= I18n.l(@event.day_of_week['date'], format: :week) %> dia <%= I18n.l(@event.day_of_week['date'], format: :long) %> às <%= helpers.format_hour @event.first_day_time %>, daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
 					</div>
 				</div>
 				<div class="px-5 py-5 border-b border-gray-100">
