@@ -24,12 +24,12 @@
 	})
 
 	promise.then(function (value) {
-		PubSubModule.emit('<%= @data[:identifier] %>.updated', {
-			itemsCount: <%= @data[:collection][:detail][:total_events_in_collection] %>,
-			params    : {
-				similar: <%= @data[:similar] || {} %>
-			}
-		})
+//		PubSubModule.emit('<%= @data[:identifier] %>.updated', {
+//			itemsCount: <%#= @data[:collection][:detail][:total_events_in_collection] %>,
+//			params    : {
+//				similar: <%#= @data[:similar] || {} %>
+//			}
+//		})
 	})
 
 })()

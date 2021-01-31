@@ -19,12 +19,12 @@
 	})
 
 	promise.then(function (value) {
-	  PubSubModule.emit('saves.updated', {
-	    detail: {
-		    currentResourceFavorited: <%= @data[:current_resource_favorited] %>,
-		    resourceId              : <%= @data[:resource_id] %>
-	    }
-    })
+//	  PubSubModule.emit('saves.updated', {
+//	    detail: {
+//		    currentResourceFavorited: <%#= @data[:current_resource_favorited] %>,
+//		    resourceId              : <%#= @data[:resource_id] %>
+//	    }
+//    })
 	})
 
 })()
