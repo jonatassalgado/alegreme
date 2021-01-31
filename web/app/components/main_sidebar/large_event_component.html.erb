@@ -1,6 +1,6 @@
 <%= content_tag :div, id: 'main-sidebar--large-event', data: { controller: 'main-sidebar--large-event', 'opened-event': @event&.id } do %>
 	<% if @event %>
-		<div class="relative mt-5 overflow-hidden bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl">
+		<div class="relative mt-5 overflow-hidden bg-white border border-gray-100 shadow-xl h-screen-8/10 rounded-xl">
 			<div data-reflex="click->Event#close" class="fixed absolute top-0 right-0 z-50 p-1 mt-2 mr-3 text-gray-600 transition-transform duration-300 transform bg-white rounded-full shadow cursor-pointer hover:scale-105">
 				<svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<path d="M0 0h24v24H0V0z" fill="none"/>
@@ -109,13 +109,8 @@
 					<div class="mt-10 mb-5">
 						<h2 class="px-5 font-bold text-gray-800 font-display uppercase">Similares</h2>
 						<% @similar_events.each do |similar_event| %>
-							<div class="flex justify-between px-5 py-2 border-b md:border-0 border-gray-100">
+							<div class="flex justify-between px-5 py-2 mb-3">
 								<div class="pr-6">
-									<div class="mb-1 text-sm  text-gray-600">
-										<%= I18n.l(similar_event.start_time, format: :long) %>
-										às <%= helpers.format_hour similar_event.first_day_time %>h
-										· <%= similar_event.categories_primary_name.titleize %>
-									</div>
 									<%= content_tag :a,
 																	href:  event_path(similar_event),
 																	data:  {
@@ -123,15 +118,15 @@
 																		url:        event_path(similar_event),
 																		'event-id': similar_event.id
 																	},
-																	class: 'md:hover:underline font-medium mb-1 leading-snug' do %>
+																	class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-800 inline-block' do %>
 										<%= similar_event.details_name %>
 									<% end %>
-									<div class="text-sm  text-gray-600">
-										<%= link_to helpers.limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline' %>
+									<div class="text-sm md:text-xs text-gray-500">
+										<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h · <%= link_to helpers.limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline capitalize' %>
 									</div>
 								</div>
 								<div>
-									<div data-controller="ripple" class="shadow-xs relative w-24 mt-6 overflow-hidden rounded ripple ripple-white">
+									<div data-controller="ripple" class="shadow-xs relative w-24 overflow-hidden rounded ripple ripple-white">
 										<%= link_to event_path(similar_event),
 																data: {
 																	action:     'click->main-sidebar--horizontal-event#openEvent',
