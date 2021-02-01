@@ -1,6 +1,6 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'h-full' do %>
 	<div class="h-full">
-		<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none bg-white mb-5 md:mb-2 md:py-5 md:rounded-lg md:text-center pr-5 rounded-lg text-center">
+		<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none bg-white mb-5 md:mb-2 md:py-5 md:rounded-lg md:text-center rounded-lg text-center">
 			<div class="capitalize flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
 				<span class="font-bold font-display text-gray-800 mr-2">
 					<%= t('date.month_names')[start_date.month] %> <%= start_date.year %>
@@ -37,12 +37,14 @@
 						<% week.each do |day| %>
 							<%= content_tag :td, id: "calendar-#{day.strftime}", data: { action: 'click->left-sidebar--calendar#inDay', day: day.strftime }, class: td_classes_for(day) do %>
 								<%= content_tag :div, class: helpers.class_names('relative z-10 mx-auto text-xs day-of-month',
-																																 { 'mt-1': @indicators&.include?(day) }) do %>
-									<%= day.strftime '%e' %>
+																																 { 'mt-1':                                               @indicators&.include?(day),
+																																	 'today flex items-center justify-center flex-col':    Date.current == day,
+																																	 'selected flex items-center justify-center flex-col': day.to_date == start_date.to_date && @filter }) do %>
+									<div class="z-20">
+										<%= day.strftime '%e' %>
+									</div>
 								<% end %>
-								<div data-indicator class="<%= helpers.class_names 'h-1 mx-auto rounded-full transform translate-y-1 w-1',
-																																	 'bg-brand-500': day.to_date != start_date.to_date || start_date.to_date == Date.today,
-																																	 'bg-white':     day.to_date == start_date.to_date && @filter,
+								<div data-indicator class="<%= helpers.class_names 'h-1 mx-auto rounded-full transform translate-y-2 w-1 bg-brand-500',
 																																	 'hidden':       !@indicators&.include?(day) %>">
 								</div>
 							<% end %>
