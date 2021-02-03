@@ -1,4 +1,4 @@
-class FriendshipButtonComponent < ViewComponentReflex::Component
+class FriendshipButtonComponent < ViewComponent::Base
 	def initialize(user:, friend:)
 		@user    = user
 		@friend  = friend

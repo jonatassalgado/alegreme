@@ -1,4 +1,4 @@
-class Hero::CardEventComponent < ViewComponentReflex::Component
+class Hero::CardEventComponent < ViewComponent::Base
   with_collection_parameter :event
 
   def initialize(user:, event:)

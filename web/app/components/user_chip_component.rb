@@ -1,4 +1,4 @@
-class UserChipComponent < ViewComponentReflex::Component
+class UserChipComponent < ViewComponent::Base
 	with_collection_parameter :friend
 
 	def initialize(user:, friend:)
