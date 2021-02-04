@@ -96,6 +96,14 @@ module.exports = {
                 to:   {
                     transform: "rotate(360deg)",
                 },
+            },
+            "show": {
+                from: {
+                    opacity: "0"
+                },
+                to:   {
+                    opacity: "1"
+                }
             }
         },
         animationDuration:       { // defaults to these values
