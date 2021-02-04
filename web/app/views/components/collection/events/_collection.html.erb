@@ -138,22 +138,22 @@
 										 },
 										 cached:     false) %>
 					<% if disposition == :horizontal && (infinite_scroll_horizontal || display_load_more) && total_count > items.size %>
-						<div class="order-last md:hidden" data-controller="toggle-loader"
-								 data-toggle-loader-listener-on="section#loadMoreHere->started"
-								 data-toggle-loader-listener-off="section#loadMoreHere->finished">
+						<div class="order-last md:hidden" data-controller="loader"
+								 data-loader-on-loading="section#loadMoreHere->started"
+								 data-loader-on-loaded="section#loadMoreHere->finished">
 							<div class="flex items-center px-5 py-2 my-10 mr-10 text-center rounded-full shadow-xl cursor-pointer bg-brand-100 text-brand-800 w-content"
 									 data-action="click->section#loadMoreHere"
 									 data-section-target="loadMoreHorizontal"
-							     data-toggle-loader-target="off">
+							     data-loader-target="loaded">
 								Mostrar mais
 								<svg class="w-4 h-4 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 									<path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/>
 								</svg>
 							</div>
 							<div class="flex hidden px-5 py-2 my-10 mr-10 text-center rounded-full shadow-xl cursor-pointer bg-brand-100 text-brand-800 w-content"
-									 data-toggle-loader-target="on">
+									 data-loader-target="loading">
 								Carregando
-								<svg data-toggle-loader-target="onIcon" class="w-5 h-5 my-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<svg data-loader-target="onIcon" class="w-5 h-5 my-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 									<path fill="none" d="M0 0h24v24H0V0z"/>
 									<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
 								</svg>
@@ -175,19 +175,19 @@
 										 cached:  false %>
 				<% end %>
 				<% if disposition == :vertical && (infinite_scroll_vertical || display_load_more) && total_count > items.size %>
-					<div data-controller="toggle-loader"
-							 data-toggle-loader-listener-on="section#loadMoreHere->started"
-							 data-toggle-loader-listener-off="section#loadMoreHere->finished">
+					<div data-controller="loader"
+							 data-loader-on-loading="section#loadMoreHere->started"
+							 data-loader-on-loaded="section#loadMoreHere->finished">
 						<div class="flex px-5 py-2 mx-auto my-10 text-center rounded-full shadow-xl cursor-pointer bg-brand-100 text-brand-800 w-content"
 								 data-action="click->section#loadMoreHere"
 								 data-section-target="loadMoreVertical"
-						     data-toggle-loader-target="off">
+						     data-loader-target="loaded">
 							Mostrar mais
 						</div>
 						<div class="flex hidden px-5 py-2 mx-auto my-10 text-center rounded-full shadow-xl cursor-pointer bg-brand-100 text-brand-800 w-content"
-								 data-toggle-loader-target="on">
+								 data-loader-target="loading">
 							Carregando
-							<svg data-toggle-loader-target="onIcon" class="w-5 h-5 my-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<svg data-loader-target="onIcon" class="w-5 h-5 my-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 								<path fill="none" d="M0 0h24v24H0V0z"/>
 								<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
 							</svg>

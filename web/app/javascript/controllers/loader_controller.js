@@ -1,7 +1,7 @@
 import ApplicationController from "./application_controller"
 
-export default class ToggleLoaderController extends ApplicationController {
-    static targets = ["on", "off", "onIcon"];
+export default class extends ApplicationController {
+    static targets = ["loading", "loaded", "onIcon"];
 
     connect() {
         super.connect();
@@ -20,45 +20,45 @@ export default class ToggleLoaderController extends ApplicationController {
 
     setup() {
         document.addEventListener(this.listenerOn, (e) => {
-            this._turnOn();
+            this._loading();
         }, false);
         document.addEventListener(this.listenerOff, (e) => {
-            this._turnOff();
+            this._loaded();
         }, false);
     }
 
     teardown() {
         document.removeEventListener(this.listenerOn, (e) => {
-            this._turnOn();
+            this._loading();
         }, false);
         document.removeEventListener(this.listenerOff, (e) => {
-            this._turnOff();
+            this._loaded();
         }, false);
     }
 
     toggle(event) {
         if (!this.listenerOn) {
-            this._turnOn();
+            this._loading();
         }
     }
 
-    _turnOn() {
-        this.onTarget.classList.remove("hidden")
+    _loading() {
+        this.loadingTarget.classList.remove("hidden")
         this.onIconTarget.classList.add("animation-1s", "animation-linear", "animation-spin")
-        this.offTarget.classList.add("hidden")
+        this.loadedTarget.classList.add("hidden")
     }
 
-    _turnOff() {
-        this.onTarget.classList.add("hidden")
+    _loaded() {
+        this.loadingTarget.classList.add("hidden")
         this.onIconTarget.classList.remove("animation-1s", "animation-linear", "animation-spin")
-        this.offTarget.classList.remove("hidden")
+        this.loadedTarget.classList.remove("hidden")
     }
 
     get listenerOn() {
-        return this.data.get("listenerOn");
+        return this.data.get("onLoading");
     }
 
     get listenerOff() {
-        return this.data.get("listenerOff");
+        return this.data.get("onLoaded");
     }
 }
