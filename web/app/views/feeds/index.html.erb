@@ -2,7 +2,7 @@
 
 <div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
 	<% unless mobile_device? %>
-		<section class="hidden md:inline-block md:col-span-3 md:bg-white sticky"
+		<section class="hidden md:inline-block md:col-span-3 md:bg-white sticky w-72"
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
 						 style="height: calc(100vh - 64px); top: 64px">
@@ -19,14 +19,14 @@
 				<div>
 					<h2 class="font-bold font-display text-gray-900 text-2xl md:text-3xl">Aproveite a cidade de Porto Alegre</h2>
 					<span class="inline-block leading-snug mt-2 text-gray-500 text-sm">
-						Aprendemos o que você gosta e não gosta para te sugerir eventos, atividades, promoções e serviços que vão
+						Aprendemos o que você gosta e não gosta para te sugerir eventos e atividades que vão
 					de lazer a educação. Assim, você descobre coisas novas e não perde o que já conhece.
 					</span>
 				</div>
 			</div>
 			<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% if @upcoming_events.present? %>
-				<div class="font-display text-gray-900 font-bold pb-2 px-5 text-2xl md:text-3xl pt-4">
+				<div class="font-display text-gray-900 font-bold md:pb-1 px-5 text-2xl md:text-3xl pt-4">
 					Eventos em Porto Alegre
 				</div>
 			<% end %>
