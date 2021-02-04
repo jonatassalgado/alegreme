@@ -45,30 +45,37 @@ export default class extends ApplicationController {
         }
     }
 
-    beforeLike(anchorElement) {
-        this._animateHide(this.element)
-    }
-
-    beforeDislike(anchorElement) {
-        this._animateHide(this.element)
-    }
-
     like(event) {
-        this.stimulate('Swipable#like', event.currentTarget)
+        const currentTarget = event.currentTarget
+        Velocity(this.element, {opacity: 0})
             .then(value => {
-                this._updateCalendar()
-            })
-            .catch(reason => {
+                document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
+                this.stimulate('Swipable#like', currentTarget)
+                    .then(value => {
+                        document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
+                        this._updateCalendar()
+                    })
+                    .catch(reason => {
+
+                    })
+            }, reason => {
 
             })
     }
 
     dislike(event) {
-        this.stimulate('Swipable#dislike', event.currentTarget)
+        const currentTarget = event.currentTarget
+        Velocity(this.element, {opacity: 0})
             .then(value => {
-                this._updateCalendar()
-            })
-            .catch(reason => {
+                document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
+                this.stimulate('Swipable#dislike', currentTarget)
+                    .then(value => {
+                        document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
+                    })
+                    .catch(reason => {
+
+                    })
+            }, reason => {
 
             })
     }
@@ -95,12 +102,7 @@ export default class extends ApplicationController {
     _animateHide(element) {
         // element.dataset.reflexPermanent = ''
 
-        Velocity(element, {opacity: 0})
-            .then(value => {
-                element.classList.add('hidden')
-            }, reason => {
 
-            })
     }
 
     get openInSidebar() {
