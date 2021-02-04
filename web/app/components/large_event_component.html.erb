@@ -25,6 +25,9 @@
 			</div>
 		</div>
 		<div class="p-5">
+			<span class="text-sm text-gray-400 font-light">
+				Atualizado há <%= time_ago_in_words @event&.updated_at %>
+			</span>
 			<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-4xl text-2xl text-gray-800">
 				<%= @event.details_name %>
 			</h1>
