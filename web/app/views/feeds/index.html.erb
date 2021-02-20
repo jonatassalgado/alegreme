@@ -6,9 +6,6 @@
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
 						 style="height: calc(100vh - 64px); top: 64px">
-			<div class="bg-white font-bold font-display md:text-3xl pt-5 py-3 sticky text-gray-900 text-xl top-0 z-20">
-				Minha agenda
-			</div>
 			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
 		</section>
 	<% end %>

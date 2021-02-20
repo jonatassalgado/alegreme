@@ -1,60 +1,61 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'h-full' do %>
-	<div class="h-full">
-		<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none bg-white mb-5 md:mb-2 md:py-5 md:rounded-lg md:text-center rounded-lg text-center">
-			<div class="capitalize flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
+	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mb-5 md:mb-2 md:py-5">
+		<div class="sticky top-0 z-20 bg-white">
+			<div class="font-bold font-display md:text-3xl py-3 text-gray-900 text-xl">
+				Minha agenda
+			</div>
+		</div>
+		<div class="capitalize flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
 				<span class="font-bold font-display text-gray-800 mr-2">
 					<%= t('date.month_names')[start_date.month] %> <%= start_date.year %>
 				</span>
-				<div class="mr-2 flex">
-					<%= content_tag :div, id: 'calendar-previous', data: { reflex: 'click->LeftSidebar::Calendar#prev_month', start_date: start_date }, class: 'mx-1 cursor-pointer md:hover:bg-brand-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
-						<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-							<path d="M0 0h24v24H0z" fill="none"/>
-							<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-						</svg>
-					<% end %>
+			<div class="mr-2 flex">
+				<%= content_tag :div, id: 'calendar-previous', data: { reflex: 'click->LeftSidebar::Calendar#prev_month', start_date: start_date }, class: 'mx-1 cursor-pointer md:hover:bg-brand-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
+					<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path d="M0 0h24v24H0z" fill="none"/>
+						<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+					</svg>
+				<% end %>
 
-					<%= content_tag :div, id: 'calendar-next', data: { reflex: 'click->LeftSidebar::Calendar#next_month', start_date: start_date }, class: 'mx-1 cursor-pointer md:hover:bg-brand-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
-						<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-							<path d="M0 0h24v24H0z" fill="none"/>
-							<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-						</svg>
-					<% end %>
-				</div>
+				<%= content_tag :div, id: 'calendar-next', data: { reflex: 'click->LeftSidebar::Calendar#next_month', start_date: start_date }, class: 'mx-1 cursor-pointer md:hover:bg-brand-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
+					<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path d="M0 0h24v24H0z" fill="none"/>
+						<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+					</svg>
+				<% end %>
 			</div>
+		</div>
+		<table class="table-auto w-full md:-ml-2">
+			<thead>
+			<tr>
+				<% date_range.slice(0, 7).each do |day| %>
+					<th class="pb-2 text-gray-500 uppercase text-xs"><%= t('date.abbr_day_names')[day.wday] %></th>
+				<% end %>
+			</tr>
+			</thead>
 
-			<table class="table-auto w-full md:-ml-2">
-				<thead>
+			<tbody>
+			<% date_range.each_slice(7) do |week| %>
 				<tr>
-					<% date_range.slice(0, 7).each do |day| %>
-						<th class="pb-2 text-gray-500 uppercase text-xs"><%= t('date.abbr_day_names')[day.wday] %></th>
-					<% end %>
-				</tr>
-				</thead>
-
-				<tbody>
-				<% date_range.each_slice(7) do |week| %>
-					<tr>
-						<% week.each do |day| %>
-							<%= content_tag :td, id: "calendar-#{day.strftime}", data: { action: 'click->left-sidebar--calendar#inDay', day: day.strftime }, class: td_classes_for(day) do %>
-								<%= content_tag :div, class: helpers.class_names('relative z-10 mx-auto text-xs day-of-month',
-																																 { 'mt-1':                                               @indicators&.include?(day),
-																																	 'today flex items-center justify-center flex-col':    Date.current == day,
-																																	 'selected flex items-center justify-center flex-col': day.to_date == start_date.to_date && @filter }) do %>
-									<div class="z-20">
-										<%= day.strftime '%e' %>
-									</div>
-								<% end %>
-								<div data-indicator class="<%= helpers.class_names 'h-1 mx-auto rounded-full transform translate-y-2 w-1 bg-brand-500',
-																																	 'hidden':       !@indicators&.include?(day) %>">
+					<% week.each do |day| %>
+						<%= content_tag :td, id: "calendar-#{day.strftime}", data: { action: 'click->left-sidebar--calendar#inDay', day: day.strftime }, class: td_classes_for(day) do %>
+							<%= content_tag :div, class: helpers.class_names('relative z-10 mx-auto text-xs day-of-month',
+																															 { 'mt-1':                                               @indicators&.include?(day),
+																																 'today flex items-center justify-center flex-col':    Date.current == day,
+																																 'selected flex items-center justify-center flex-col': day.to_date == start_date.to_date && @filter }) do %>
+								<div class="z-20">
+									<%= day.strftime '%e' %>
 								</div>
 							<% end %>
+							<div data-indicator class="<%= helpers.class_names 'h-1 mx-auto rounded-full transform translate-y-2 w-1 bg-brand-500',
+																																 'hidden': !@indicators&.include?(day) %>">
+							</div>
 						<% end %>
-					</tr>
-				<% end %>
-				</tbody>
-			</table>
-		</div>
-
+					<% end %>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>
 
 		<div id="calendar__list" style="<%= helpers.class_names 'hidden': @events&.empty? %>">
 			<div class="<%= helpers.class_names('mt-3 flex items-center px-2 py-1 mx-auto text-sm font-semibold text-white bg-brand-500 rounded-full select-none w-content',
@@ -75,24 +76,24 @@
 				Remover filtro
 			<% end %>
 			<%= render LeftSidebar::GroupByDayListComponent.new(events: @events, user: @user) if @events.present? %>
+
+			<% if @user && @events&.empty? && (@start_date != Date.today) %>
+				<div id="calendar__filter" class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
+					Sem eventos na sua agenda neste dia.
+					<%= content_tag :div, data: { reflex: 'click->LeftSidebar::Calendar#clear_filter' }, class: 'text-center cursor-pointer underline text-gray-500 text-sm' do %>
+						Remover filtro
+					<% end %>
+				</div>
+			<% elsif @user && @events&.empty? %>
+				<div id="calendar__filter" class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
+					Você não tem eventos salvos na sua agenda
+				</div>
+			<% elsif !@user %>
+				<div class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
+					<%= link_to 'Crie uma conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'underline text-brand-500 hover:text-gray-600' %>
+					para salvar seus eventos favoritos
+				</div>
+			<% end %>
 		</div>
-
-		<% if @user && @events&.empty? && (@start_date != Date.today) %>
-			<div id="calendar__filter" class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
-				Sem eventos na sua agenda neste dia.
-				<%= content_tag :div, data: { reflex: 'click->LeftSidebar::Calendar#clear_filter' }, class: 'text-center cursor-pointer underline text-gray-500 text-sm' do %>
-					Remover filtro
-				<% end %>
-			</div>
-		<% elsif @user && @events&.empty? %>
-			<div id="calendar__filter" class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
-				Você não tem eventos salvos na sua agenda
-			</div>
-		<% elsif !@user %>
-			<div class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
-				<%= link_to 'Crie uma conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'underline text-brand-500 hover:text-gray-600' %>
-				para salvar seus eventos favoritos
-			</div>
-		<% end %></div>
-
+	</div>
 <% end %>
