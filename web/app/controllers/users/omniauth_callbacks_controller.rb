@@ -22,8 +22,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       #end
     else
       session['devise.google_data'] = request.env['omniauth.auth'].except(:extra) # Removing extra as it can overflow some session stores
-      # redirect_to new_user_registration_url, alert: @user.errors.full_messages.join("\n")
-      redirect_to root_url, notice: "Algo deu errado com o seu login!"
+      logger.debug "Something went wrong with Omniauth Provider -> user not returned from omniauth -> #{request.env['omniauth.auth']}"
+      redirect_to new_user_registration_path, alert: @user.errors.full_messages.join("\n")
     end
   end
 end

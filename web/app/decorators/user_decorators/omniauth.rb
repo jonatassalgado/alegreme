@@ -29,6 +29,7 @@ module UserDecorators
 					name    = auth.info.name
 					picture = auth.info.image
 				else
+					logger.debug "Something went wrong with Omniauth Provider -> json returned -> #{auth}"
 					return false
 				end
 
