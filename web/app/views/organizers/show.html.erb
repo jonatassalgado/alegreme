@@ -30,7 +30,7 @@
 						</h1>
 						<%= @upcoming_events.size %> eventos ativos
 					</div>
-					<div>
+					<div class="mb-3">
 						<%= render(FollowButtonComponent.new(
 							user:       current_user,
 							followable: @organizer
