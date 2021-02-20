@@ -1,13 +1,6 @@
-collection = EventServices::CollectionCreator.new(current_user, params).call({
-		                                                                             identifier: 'category',
-		                                                                             events:     Event.all
-                                                                             }, {
-		                                                                             in_categories:   [params[:category]],
-		                                                                             with_high_score: true,
-		                                                                             limit:           250
-                                                                             })
+@events = Event.not_ml_data.active.in_categories([params[:category]]).order_by_date.includes(:place, :categories)
 
-json.items collection[:events] do |event|
+json.items @events do |event|
 	json.name event.details_name
 	json.url event.url
 	json.cover shrine_image_url event, :feed

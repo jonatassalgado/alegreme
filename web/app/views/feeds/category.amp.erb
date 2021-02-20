@@ -3,7 +3,7 @@
 
 <script type="application/ld+json">
   [
-    <%= render partial: 'layouts/json_ld.html.erb', collection: @collection[:events], as: :event %>
+    <%= render partial: 'layouts/json_ld.html.erb', collection: @events, as: :event %>
   ]
 
 </script>
@@ -12,7 +12,7 @@
 <div class="me-list me-list--events">
   <h1 class="title"><%= "Eventos na categoria #{params[:category].capitalize} em Porto Alegre" %></h1>
   <div class="description">
-    <%= "Explore os #{@collection[:detail][:total_events_in_collection]} eventos de #{params[:category]} em Porto Alegre - RS" %>
+    <%= "Explore os #{@events.size} eventos de #{params[:category]} em Porto Alegre - RS" %>
   </div>
   <amp-list binding="no"
             height="300"
