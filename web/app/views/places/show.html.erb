@@ -15,31 +15,77 @@
   ]
 	</script>
 
-	<div class="mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-2xl md:max-w-screen-sm sm:container">
-		<div class="bg-gray-100 px-8 py-3 rounded-md space-y-3 text-center">
-			<%= image_tag shrine_image_url(@place, :sm), {
-				loading: :lazy,
-				class:   'w-16 h-16 shadow mx-auto rounded-full',
-				onerror: "this.style.opacity='0'"
-			} if @place.image_data? %>
-			<div>
-				<div class="flex-1 text-2xl font-black leading-6 text-gray-600 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-4xl">
-					<%= @place.details_name %>
+	<div class="max-w-screen-lg grid grid-cols-12 mx-auto">
+		<div class="col-span-12 md:col-span-4">
+			<div class="sticky top-24 mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-xl md:max-w-screen-sm sm:container">
+				<div class="px-8 py-3 mx-3 space-y-3 text-center bg-white rounded-md">
+					<%= image_tag shrine_image_url(@place, :sm), {
+						loading: :lazy,
+						class:   'w-12 h-12 max-w-xs mx-auto rounded-full shadow-sm',
+						onerror: "this.style.opacity='0'"
+					} if @place.image_data? %>
+					<div class="space-y-5">
+						<h1 class="flex-1 text-2xl font-bold font-display leading-tight text-gray-600 group-hover:text-brand-500 md:pl-0 md:text-4xl">
+							<%= @place.details_name %>
+						</h1>
+						<div class="leading-tight">
+							<%= @place.geographic_address %>
+						</div>
+						<div class="">
+							<%= @upcoming_events.size %> eventos ativos
+						</div>
+						<%= render(FollowButtonComponent.new(
+							user:       current_user,
+							followable: @place
+						)) %>
+					</div>
 				</div>
-				<div class="pt-1 text-sm leading-tight text-gray-600 md:px-0">
-					<%= @place.geographic_address %>
-				</div>
-			</div>
-			<div>
-				<%= render(FollowButtonComponent.new(
-					user:       current_user,
-					followable: @place
-				)) %>
 			</div>
 		</div>
+		<div class="col-span-12 md:col-span-8 space-y-10">
+			<div class="mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-xl md:max-w-screen-sm sm:container">
+				<h2 class="font-bold font-display pb-2 pt-8 px-5 text-3xl">Próximos eventos</h2>
+				<%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user %>
+			</div>
 
-		<%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user %>
-
+			<div class="mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-xl md:max-w-screen-sm sm:container">
+				<h2 class="font-bold font-display pb-2 pt-8 px-5 text-3xl">Eventos passados</h2>
+				<div class="opacity-75 grid grid-cols-12">
+					<% @past_events.each do |event| %>
+						<div class="col-span-12 md:col-span-6 flex justify-between px-5 py-3 md:border-0">
+							<div class="pr-6">
+								<%= content_tag :a,
+																href:  event_path(event),
+																data:  {
+																	action:     'click->main-sidebar--horizontal-event#openEvent',
+																	url:        event_path(event),
+																	'event-id': event.id
+																},
+																class: 'md:hover:underline inline-block md:text-sm font-semibold mb-1 leading-snug text-gray-600' do %>
+									<%= event.details_name %>
+								<% end %>
+							</div>
+							<div>
+								<div data-controller="ripple" class="relative w-24 overflow-hidden rounded shadow-xs ripple ripple-white">
+									<%= link_to event_path(event),
+															data: {
+																action:     'click->main-sidebar--horizontal-event#openEvent',
+																'event-id': event.id
+															} do %>
+										<div class="bg-gray-50 aspect-ratio-16/9"></div>
+										<%= image_tag shrine_image_url(event, :feed), {
+											loading: :lazy,
+											class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
+											onerror: "this.style.opacity='0'"
+										} rescue nil %>
+									<% end %>
+								</div>
+							</div>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </section>

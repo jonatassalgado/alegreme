@@ -12,11 +12,8 @@ class PlacesController < ApplicationController
 	# GET /places/1
 	# GET /places/1.json
 	def show
-		default_reflex_values(limit: 12)
-
 		@upcoming_events = @place.events.not_ml_data.active.order_by_date
-		@past_events = @place.events.not_ml_data.past.order_by_date(direction: :desc)
-		render 'show'
+		@past_events     = @place.events.not_ml_data.past.order_by_date(direction: :desc)
 	end
 
 	# GET /places/new

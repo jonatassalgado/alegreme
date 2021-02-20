@@ -21,7 +21,7 @@
 				<div class="px-8 py-3 mx-3 space-y-3 text-center bg-white rounded-md">
 					<%= image_tag shrine_image_url(@organizer, :sm), {
 						loading: :lazy,
-						class:   'max-w-xs mx-auto rounded-full',
+						class:   'w-12 h-12 shadow-sm max-w-xs mx-auto rounded-full',
 						onerror: "this.style.opacity='0'"
 					} if @organizer.image_data? %>
 					<div>

@@ -13,7 +13,7 @@ class OrganizersController < ApplicationController
 	# GET /organizers/1.json
 	def show
 		@upcoming_events = @organizer.events.not_ml_data.active
-		@past_events     = @organizer.events.not_ml_data.past
+		@past_events     = @organizer.events.not_ml_data.past.order_by_date(direction: :desc)
 	end
 
 	# GET /organizers/new
