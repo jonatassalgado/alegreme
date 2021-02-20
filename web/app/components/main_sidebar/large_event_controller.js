@@ -35,8 +35,25 @@ export default class extends ApplicationController {
         this.teardown()
     }
 
+    close(event) {
+        const animate = new Promise(resolve => {
+            requestAnimationFrame((rafId) => {
+                this.element.classList.add("opacity-0", "translate-x-32")
+                setTimeout(() => {
+                    resolve(rafId)
+                }, 500)
+            })
+        })
+
+        animate.then(result => {
+            this.element.classList.add("hidden")
+            this.element.classList.remove("opacity-0", "translate-x-32")
+        })
+    }
+
     _initSimpleScrollbar() {
         if (this.hasScrollContentTarget) {
+            this.element.classList.remove("hidden")
             this.SimpleScrollbar.initEl(this.scrollContentTarget);
         }
     }

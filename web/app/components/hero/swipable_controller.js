@@ -1,5 +1,4 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
-import {debounce}            from "../../javascript/utilities";
 
 export default class extends ApplicationController {
     static targets = [];
@@ -11,7 +10,6 @@ export default class extends ApplicationController {
 
     setup() {
         this._setMinHeigth();
-        // document.addEventListener('hero--swipable:liked-or-disliked', debounce(this.update.bind(this), 250))
     }
 
     teardown() {
