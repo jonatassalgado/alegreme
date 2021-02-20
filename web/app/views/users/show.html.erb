@@ -116,7 +116,7 @@
 			<% if @user.following_places.present? %>
 				<div class="w-screen mt-3">
 					<div class="flex flex-wrap px-5 pl-5 space-y-2">
-						<% @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
+						<% @user&.following_places.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
 							<a onclick="window.AnimateModule.animatePageHide()"
 								 href="<%= organizer_or_place_path resource %>"
 								 class="border cursor-pointer h-content inline-block md:hover:bg-gray-50 mr-2 mt-2 px-5 py-3 relative font-semibold rounded-full">
