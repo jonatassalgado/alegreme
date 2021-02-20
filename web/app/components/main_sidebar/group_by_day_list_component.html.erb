@@ -6,7 +6,7 @@
 																						'top-12': helpers.mobile_device? && current_page?('/minha-agenda'),
 																						'top-16': !helpers.mobile_device? }) %>">
 				<div class="-ml-2 absolute bg-brand-500 border-4 border-white h-4 left-0 rounded-full w-4 z-20"></div>
-				<div class="space-x-2 flex items-baseline text-xs">
+				<div class="space-x-2 flex items-baseline text-xs select-none">
 					<h2 class="font-semibold text-brand-500 uppercase">
 						<%= helpers.day_of_week(group[0].to_date).titlecase %>
 					</h2>
