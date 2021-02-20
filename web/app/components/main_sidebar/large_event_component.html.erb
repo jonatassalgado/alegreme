@@ -76,10 +76,10 @@
 								<%= I18n.l(@event.day_of_week['date'], format: :long) %>
 							<% end %>
 						</div>
-						<div class="text-sm"><%= helpers.format_hour @event.first_day_time %></div>
+						<div class="text-sm"><%= helpers.format_hour @event.start_time %></div>
 					</div>
 					<div class="my-auto text-sm font-semibold text-gray-800">
-						O evento acontecerá <%= I18n.l(@event.day_of_week['date'], format: :week) %> dia <%= I18n.l(@event.day_of_week['date'], format: :long) %> às <%= helpers.format_hour @event.first_day_time %>, daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
+						O evento acontecerá <%= I18n.l(@event.day_of_week['date'], format: :week) %> dia <%= I18n.l(@event.day_of_week['date'], format: :long) %> às <%= helpers.format_hour @event.start_time %>, daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
 					</div>
 				</div>
 				<div class="px-5 py-5 border-b border-gray-100">
@@ -122,7 +122,7 @@
 										<%= similar_event.details_name %>
 									<% end %>
 									<div class="text-sm md:text-xs text-gray-500">
-										<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h · <%= link_to helpers.limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline capitalize' %>
+										<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.start_time %>h · <%= link_to helpers.limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline capitalize' %>
 									</div>
 								</div>
 								<div>

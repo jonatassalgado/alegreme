@@ -1,7 +1,7 @@
 <%= content_tag :div, id: dom_id(@event, :left_sidebar), data: { controller: 'left-sidebar--horizontal-event' } do %>
 	<div class="select-none tap-highlight-none pr-5 py-4 group relative">
 		<div class="text-sm md:text-xs md:mt-1 text-gray-500">
-			<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h
+			<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.start_time %>h
 		</div>
 		<div class="mb-1 leading-snug text-gray-800 font-semibold">
 			<%= content_tag :a,

@@ -1,12 +1,12 @@
 module EventsHelper
 
 	def time_until event
-		if event.first_day_time.to_datetime.iso8601 > DateTime.now.iso8601
-			"Daqui #{distance_of_time_in_words event.first_day_time, DateTime.now}"
-		elsif event.first_day_time.to_datetime.iso8601 > (DateTime.now - 6.hours).iso8601
-			"Iniciou há #{distance_of_time_in_words event.first_day_time, DateTime.now}"
+		if event.start_time.to_datetime.iso8601 > DateTime.now.iso8601
+			"Daqui #{distance_of_time_in_words event.start_time, DateTime.now}"
+		elsif event.start_time.to_datetime.iso8601 > (DateTime.now - 6.hours).iso8601
+			"Iniciou há #{distance_of_time_in_words event.start_time, DateTime.now}"
 		else
-			"Aconteceu há #{distance_of_time_in_words event.first_day_time, DateTime.now}"
+			"Aconteceu há #{distance_of_time_in_words event.start_time, DateTime.now}"
 		end
 	end
 
@@ -27,7 +27,7 @@ module EventsHelper
 	end
 
 	def format_hour(datetime)
-		DateTime.parse(datetime).strftime("%H:%M")
+		datetime.strftime("%H:%M")
 	end
 
 	def datetime_local(datetime)

@@ -1,7 +1,7 @@
 <div id="<%= dom_id event %>" class="flex justify-between p-5 border-b border-gray-100">
 	<div class="pr-2">
 		<div class="mb-1 text-sm  text-gray-600">
-			<%= format_hour event.first_day_time %>h · <%= event.categories_primary_name.titleize %>
+			<%= format_hour event.start_time %>h · <%= event.categories_primary_name.titleize %>
 		</div>
 		<div class="mb-1 leading-snug text-gray-600">
 			<%= link_to event.details_name, event_path(event), class: 'md:hover:underline' %>

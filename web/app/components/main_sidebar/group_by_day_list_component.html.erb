@@ -1,5 +1,5 @@
 <div class="md:px-5 pl-3">
-	<% @events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
+	<% @events.group_by { |e| e.start_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
 		<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="border-gray-300 border-l ml-3 pb-10 relative">
 			<div class="<%= helpers.class_names('bg-white flex-1 leading-6 md:bg-white md:leading-normal md:pb-2 md:px-5 pb-3 pl-5 pt-2 md:pt-7 sticky text-gray-600 z-10',
 																					{ 'top-0':  helpers.mobile_device?,

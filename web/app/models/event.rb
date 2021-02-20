@@ -31,7 +31,7 @@ class Event < ApplicationRecord
 		[
 				[:details_name, :categories_primary_name],
 				[:details_name, :place_details_name, :categories_primary_name],
-				[:details_name, :place_details_name, :categories_primary_name, :first_day_time]
+				[:details_name, :place_details_name, :categories_primary_name, :start_time]
 		]
 	end
 
@@ -99,10 +99,6 @@ class Event < ApplicationRecord
 
 	def url
 		event_path(self)
-	end
-
-	def first_day_time
-		ocurrences['dates'].first
 	end
 
 	def start_time

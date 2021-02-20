@@ -12,7 +12,7 @@
 				<%= @event.details_name %>
 			<% end %>
 			<div class="text-sm md:text-xs md:mt-2 text-gray-500">
-				<%= helpers.day_of_week(@event.start_time).titlecase %> às <%= helpers.format_hour @event.first_day_time %>h ·
+				<%= helpers.day_of_week(@event.start_time).titlecase %> às <%= helpers.format_hour @event.start_time %>h ·
 				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:underline' %>
 			</div>
 			<div class="flex mt-2">

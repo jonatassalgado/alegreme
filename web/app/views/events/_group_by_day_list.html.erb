@@ -1,4 +1,4 @@
-<% events.group_by { |e| e.first_day_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
+<% events.group_by { |e| e.start_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
 	<div class="bg-white content-visibility-auto contain-intrinsic-size-md">
 		<div class="<%= class_names('sticky bg-white z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-600 md:leading-normal md:px-5',
 																{'top-0':  mobile_device?,

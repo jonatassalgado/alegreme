@@ -12,7 +12,7 @@
 				<%= @event.details_name %>
 			<% end %>
 			<div class="text-sm md:text-xs mt-2 text-gray-500">
-				<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.first_day_time %>h ·
+				<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.start_time %>h ·
 				<%= @event.categories_primary_name.titleize %> ·
 				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline capitalize' %>
 			</div>
