@@ -84,6 +84,7 @@ class Rack::Attack
 		Rack::Attack::Fail2Ban.filter("pentesters-#{req.ip}", maxretry: 2, findtime: 1.day, bantime: 1.year) do
 			# The count for the IP is incremented if the return value is truthy
 			CGI.unescape(req.query_string) =~ %r{/etc/passwd} ||
+				req.path.include?('.env') ||
 				req.path.include?('/etc/passwd') ||
 				req.path.include?('wp-admin') ||
 				req.path.include?('wp-login') ||
