@@ -26,9 +26,13 @@
 		</div>
 		<div class="p-5">
 			<span class="text-sm text-gray-400 font-light">
-				Atualizado há <%= time_ago_in_words @event&.updated_at %>
+				<% if helpers.already_happened? @event %>
+					O evento ocorreu dia <%= I18n.l(@event.end_time) %>
+				<% else %>
+					Atualizado há <%= time_ago_in_words @event&.updated_at %>
+				<% end %>
 			</span>
-			<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-4xl text-2xl text-gray-800">
+			<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-4xl text-2xl text-gray-800 w-full">
 				<%= @event.details_name %>
 			</h1>
 			<div class="flex items-center space-x-2 mt-1">
@@ -66,22 +70,26 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="flex p-5 border-t border-b border-gray-100">
-			<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-600 bg-brand-100 h-content rounded-xl w-content">
-				<div class="font-bold leading-tight text-sm uppercase">
-					<%= @event.start_time %>
-					<% if @event.day_of_week['date'] < Date.today + 7 %>
-						<%= I18n.l(@event.day_of_week['date'], format: :week) %>
-					<% else %>
-						<%= I18n.l(@event.day_of_week['date'], format: :long) %>
-					<% end %>
+		<% if helpers.will_happen? @event %>
+			<div class="flex p-5 border-t border-b border-gray-100">
+				<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-600 bg-brand-100 h-content rounded-xl w-content">
+					<div class="font-bold leading-tight text-sm uppercase">
+						<% if @event.day_of_week['date'] < Date.today + 7 %>
+							<%= I18n.l(@event.day_of_week['date'], format: :week) %>
+						<% else %>
+							<%= I18n.l(@event.day_of_week['date'], format: :long) %>
+						<% end %>
+					</div>
+					<div class="text-sm"><%= helpers.format_hour @event.start_time %></div>
 				</div>
-				<div class="text-sm"><%= helpers.format_hour @event.start_time %></div>
+
+				<div class="my-auto text-sm leading-snug text-gray-600">
+					O evento acontecerá <%= I18n.l(@event.day_of_week['date'], format: :week) %>
+					dia <%= I18n.l(@event.day_of_week['date'], format: :long) %> às <%= helpers.format_hour @event.start_time %>,
+					daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
+				</div>
 			</div>
-			<div class="my-auto text-sm leading-snug text-gray-600">
-				O evento acontecerá <%= I18n.l(@event.day_of_week['date'], format: :week) %> dia <%= I18n.l(@event.day_of_week['date'], format: :long) %> às <%= helpers.format_hour @event.start_time %>, daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
-			</div>
-		</div>
+		<% end %>
 		<div class="px-5 py-5 border-b border-gray-100">
 			<h2 class="font-bold font-display text-gray-800 text-xl uppercase">
 				<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>

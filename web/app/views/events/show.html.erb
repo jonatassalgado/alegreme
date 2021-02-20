@@ -98,44 +98,62 @@
   }
 }
 
+
+
 </script>
 
 <%= render Modal::SignInComponent.new(text: nil) %>
+
+<% if already_happened? @event %>
+	<div class="mt-5 bg-brand-100 border border-brand-200 flex font-semibold items-center max-w-screen-lg mx-auto p-5 rounded-lg space-x-2 text-brand-600">
+		<div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
+			<!-- Heroicon name: exclamation -->
+			<svg class="h-6 w-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+			</svg>
+		</div>
+		<div>
+			Este evento já ocorreu dia <%= I18n.l(@event.end_time) %>.
+		</div>
+	</div>
+<% end %>
 
 <section id="page" class="max-w-screen-lg grid-cols-12 pb-10 md:grid md:gap-10 md:mt-10 md:mx-auto">
 	<div class="md:col-span-8">
 		<%= render(LargeEventComponent.new(event: @event, user: current_user)) %>
 	</div>
 	<div class="md:col-span-4 mb-10 md:mb-0 mt-5 md:mt-0">
-		<div class="bg-gray-200 cursor-pointer flex font-bold hidden items-center md:block bottom-auto mb-5 relative rounded-xl w-auto p-3 space-y-2 text-gray-600 text-sm">
-			<a href="<%= @event.details_source_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
-				<div>Abrir no facebook</div>
-				<svg class="group-hover:text-white transition-colors h-4 text-gray-400 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M16 16H2V2H9V0H2C0.89 0 0 0.9 0 2V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V9H16V16ZM11 0V2H14.59L4.76 11.83L6.17 13.24L16 3.41V7H18V0H11Z"/>
-				</svg>
-			</a>
-			<% if @event&.details_ticket_url %>
-				<a href="<%= @event.details_ticket_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
-					<div>Comprar ingressos</div>
-					<svg class="fill-current group-hover:text-white h-6 text-gray-400 transition-colors" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M0 0h24v24H0V0z" fill="none"/>
-						<path d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM9.07 16L12 14.12 14.93 16l-.89-3.36 2.69-2.2-3.47-.21L12 7l-1.27 3.22-3.47.21 2.69 2.2z"/>
+		<% if already_happened? @event %>
+			<div class="bg-gray-200 cursor-pointer flex font-bold hidden items-center md:block bottom-auto mb-5 relative rounded-xl w-auto p-3 space-y-2 text-gray-600 text-sm">
+				<a href="<%= @event.details_source_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
+					<div>Abrir no facebook</div>
+					<svg class="group-hover:text-white transition-colors h-4 text-gray-400 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M16 16H2V2H9V0H2C0.89 0 0 0.9 0 2V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V9H16V16ZM11 0V2H14.59L4.76 11.83L6.17 13.24L16 3.41V7H18V0H11Z"/>
 					</svg>
 				</a>
-			<% end %>
-			<div class="select-none transition-colors overflow-hidden relative bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer"
-					 data-controller="share-button"
-					 data-share-button-text="<%= strip_tags(limit_description_size(@event.details_description, 160)) %>"
-					 data-share-button-title="<%= @event.details_name %>"
-					 data-share-button-url="<%= event_url(@event, format: :html) %>"
-					 data-action="click->share-button#share">
-				<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
-				<div>Compartilhar</div>
-				<svg class="group-hover:text-white transition-colors h-4 text-gray-400 fill-current" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M15 14.08C14.24 14.08 13.56 14.38 13.04 14.85L5.91 10.7C5.96 10.47 6 10.24 6 10C6 9.76 5.96 9.53 5.91 9.3L12.96 5.19C13.5 5.69 14.21 6 15 6C16.66 6 18 4.66 18 3C18 1.34 16.66 0 15 0C13.34 0 12 1.34 12 3C12 3.24 12.04 3.47 12.09 3.7L5.04 7.81C4.5 7.31 3.79 7 3 7C1.34 7 0 8.34 0 10C0 11.66 1.34 13 3 13C3.79 13 4.5 12.69 5.04 12.19L12.16 16.35C12.11 16.56 12.08 16.78 12.08 17C12.08 18.61 13.39 19.92 15 19.92C16.61 19.92 17.92 18.61 17.92 17C17.92 15.39 16.61 14.08 15 14.08Z"/>
-				</svg>
+				<% if @event&.details_ticket_url %>
+					<a href="<%= @event.details_ticket_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
+						<div>Comprar ingressos</div>
+						<svg class="fill-current group-hover:text-white h-6 text-gray-400 transition-colors" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M0 0h24v24H0V0z" fill="none"/>
+							<path d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM9.07 16L12 14.12 14.93 16l-.89-3.36 2.69-2.2-3.47-.21L12 7l-1.27 3.22-3.47.21 2.69 2.2z"/>
+						</svg>
+					</a>
+				<% end %>
+				<div class="select-none transition-colors overflow-hidden relative bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer"
+						 data-controller="share-button"
+						 data-share-button-text="<%= strip_tags(limit_description_size(@event.details_description, 160)) %>"
+						 data-share-button-title="<%= @event.details_name %>"
+						 data-share-button-url="<%= event_url(@event, format: :html) %>"
+						 data-action="click->share-button#share">
+					<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
+					<div>Compartilhar</div>
+					<svg class="group-hover:text-white transition-colors h-4 text-gray-400 fill-current" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M15 14.08C14.24 14.08 13.56 14.38 13.04 14.85L5.91 10.7C5.96 10.47 6 10.24 6 10C6 9.76 5.96 9.53 5.91 9.3L12.96 5.19C13.5 5.69 14.21 6 15 6C16.66 6 18 4.66 18 3C18 1.34 16.66 0 15 0C13.34 0 12 1.34 12 3C12 3.24 12.04 3.47 12.09 3.7L5.04 7.81C4.5 7.31 3.79 7 3 7C1.34 7 0 8.34 0 10C0 11.66 1.34 13 3 13C3.79 13 4.5 12.69 5.04 12.19L12.16 16.35C12.11 16.56 12.08 16.78 12.08 17C12.08 18.61 13.39 19.92 15 19.92C16.61 19.92 17.92 18.61 17.92 17C17.92 15.39 16.61 14.08 15 14.08Z"/>
+					</svg>
+				</div>
 			</div>
-		</div>
+		<% end %>
 
 		<div class="overflow-hidden bg-white rounded-lg py-4 md:rounded-xl md:shadow-2xl md:border md:border-gray-100">
 			<h2 class="px-5 font-bold font-display text-xl text-gray-800 uppercase">Similares</h2>
