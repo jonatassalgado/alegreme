@@ -2,28 +2,30 @@
 
 <div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
 	<% unless mobile_device? %>
-		<section class="hidden md:inline-block md:col-span-3 md:bg-white md:pt-5 sticky"
+		<section class="hidden md:inline-block md:col-span-3 md:bg-white sticky w-72"
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
-						 style="height: calc(100vh - 48px); top: 48px">
+						 style="height: calc(100vh - 64px); top: 64px">
 			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
 		</section>
 	<% end %>
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
 		<%= notice %>
 		<% if (@search_result&.suggestions.present? rescue false) %>
-			<div class="px-5 mx-auto mb-10 md:px-0">
+			<div class="mb-10 md:px-10 mx-auto px-5">
 				<h2 class="font-semibold text-gray-800">Você quis dizer?</h2>
 				<% @search_result&.suggestions&.each do |suggestion| %>
 					<a href="<%= search_index_path({ q: suggestion }) %>" class="me-chip mdc-chip">
-						<span class="inline-block px-4 py-2 mt-2 mr-2 text-gray-800 rounded-full bg-gray-50 hover:bg-gray-50"><%= suggestion %></span>
+						<span class="border inline-block mr-2 mt-2 px-4 py-2 rounded-full text-gray-800 text-sm hover:bg-gray-100">
+							<%= suggestion %>
+						</span>
 					</a>
 				<% end %>
 			</div>
 		<% end %>
 		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
 			<% if @search_result.try { |events| events.size > 0 } %>
-				<div class="font-bold mt-5 px-10 text-lg">
+				<div class="font-bold font-display md:px-10 md:text-3xl px-5 py-3 text-gray-900 text-xl">
 					Eventos encontrados para: <%= params[:q] %>
 				</div>
 				<%= render MainSidebar::GroupByDayListComponent.new(events: @founded_events, user: current_user, open_in_sidebar: true) %>
