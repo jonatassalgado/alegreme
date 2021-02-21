@@ -20,7 +20,9 @@ export default class extends ApplicationController {
     async setup() {
         await import("simple-scrollbar/simple-scrollbar.css")
         this.SimpleScrollbar = await import("simple-scrollbar")
-        this.SimpleScrollbar.initEl(this.element);
+        if (!this.element.classList.contains("ss-container")) {
+            this.SimpleScrollbar.initEl(this.element);
+        }
     }
 
     teardown() {

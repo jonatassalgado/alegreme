@@ -8,7 +8,7 @@
 				<div class="-ml-2 absolute bg-brand-500 border-4 border-white h-4 left-0 rounded-full w-4 z-20"></div>
 				<div class="space-x-2 flex items-baseline text-xs select-none">
 					<h2 class="font-semibold text-brand-500 uppercase">
-						<%= link_to helpers.day_of_week(group[0].to_date).titlecase, day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")) %>
+						<%= link_to helpers.day_of_week(group[0].to_date).titlecase, day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")), data: { 'turbo-preserve-scroll': true } %>
 					</h2>
 					<% if group[0].to_date == Date.today || group[0].to_date == Date.tomorrow %>
 						<div class="text-gray-500 capitalize"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
