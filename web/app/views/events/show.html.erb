@@ -110,7 +110,7 @@
 			</svg>
 		</div>
 		<div>
-			Este evento já ocorreu <%= I18n.l(@event.end_time, format: :full) %>.
+			Este evento já ocorreu <%= I18n.l(@event.end_time, format: :full) if @event&.end_time %>.
 		</div>
 	</div>
 <% end %>
