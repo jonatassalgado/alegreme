@@ -5,7 +5,7 @@
 <% content_for :meta_title, params[:category] ? "Eventos de #{params[:category].capitalize} em Porto Alegre - RS" : "Eventos de todas as categorias em Porto Alegre - RS" %>
 <% content_for :meta_description, params[:category] ? "Descubra eventos de #{params[:category]} que acontecem hoje e outros dias do mês em Porto Alegre - RS" : "Descubra eventos de todas as categorias que acontecem hoje e outros dias do mês em Porto Alegre - RS" %>
 
-<% content_for :top_app_bar_title, params[:category].titleize %>
+<% content_for :top_app_bar_title, params[:category]&.titleize %>
 <% content_for :back_button, true %>
 
 	<script type="application/ld+json">
