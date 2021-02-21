@@ -7,4 +7,8 @@ class MainSidebar::GroupByDayListComponent < ViewComponent::Base
     @open_in_sidebar = open_in_sidebar
   end
 
+  def render?
+    @events.present?
+  end
+
 end

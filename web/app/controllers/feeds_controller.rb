@@ -12,7 +12,7 @@ class FeedsController < ApplicationController
 							 :user_first_name => current_user.try(:first_name)
 						 })
 
-		@upcoming_events = Event.active.not_ml_data.includes(:place).order_by_date
+		@upcoming_events = requested_events
 		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
 
 		render layout: false if @stimulus_reflex
@@ -61,6 +61,14 @@ class FeedsController < ApplicationController
 	end
 
 	private
+
+	def requested_events
+		if params[:day]
+			Event.in_day(params[:day]).not_ml_data.includes(:place).order_by_date
+		else
+			Event.active.not_ml_data.includes(:place).order_by_date
+		end
+	end
 
 	def train_events
 		if current_user&.liked_events.size <= 3

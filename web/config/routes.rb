@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
 	resources :users, path: 'u'
 
-	get '/porto-alegre/eventos/:day', to: 'feeds#day', as: :day_events, constraints: { day: /(\d{2})-(\d{2})-(\d{4})/ }
+	get '/porto-alegre/eventos/:day', to: 'feeds#index', as: :day_events, constraints: { day: /(\d{2})-(\d{2})-(\d{4})/ }
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
 	get '/porto-alegre/eventos/semana', to: 'feeds#week', as: :week_events
 	get '/porto-alegre/eventos/categoria(/:category)', to: 'feeds#category', as: :category_events
