@@ -88,7 +88,15 @@
 					</div>
 				</div>
 				<div class="px-5 py-5 border-b border-gray-100">
-					<h2 class="font-bold text-gray-800 font-display uppercase"><%= helpers.limit_place_name_size(@event.place_details_name, 40) %></h2>
+					<%= link_to place_path(@event&.place), class: 'group inline-block flex items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
+						<%= image_tag @event&.place&.image[:sm].try { |image| image.url(public: true) },
+													loading: :lazy,
+													class:   'w-6 h-6 rounded-full shadow-sm',
+													onerror: "this.style.opacity='0'" rescue nil %>
+						<h2 class="font-bold text-gray-800 font-display uppercase group-hover:text-brand-500">
+							<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>
+						</h2>
+					<% end %>
 					<div class="mt-2 text-sm  leading-tight text-gray-600">
 						<%= helpers.limit_address_name_size @event.geographic['address'] %>
 					</div>
