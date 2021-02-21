@@ -5,7 +5,7 @@
 			logo:         (!mobile_device? && ['search'].include?(controller_name)) || !['search'].include?(controller_name),
 			back_button:  content_for?(:back_button),
 			search:       (['feeds', 'events', 'organizers', 'places', 'movies', 'dashboard'].include?(controller_name) && !mobile_device?) ||
-											['search'].include?(controller_name),
+											['search', 'pages'].include?(controller_name),
 			share_button: content_for?(:share_button_url) && action_name == 'show' && mobile_device?,
 			user_menu:    ['feeds', 'movies'].include?(controller_name) && action_name != 'show' && current_user,
 			sign_up:      !current_user

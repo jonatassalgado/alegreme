@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 	}
 
 	root to: 'feeds#index'
+	# get '/sobre', to: 'welcome#index'
 
 	namespace :api do
 		get 'porto-alegre/eventos/:id/similar', to: 'events#similar', as: :events_similar
