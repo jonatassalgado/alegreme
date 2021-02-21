@@ -61,6 +61,8 @@ class Hero::SwipableComponent < ViewComponent::Base
 	def current_stage
 		return :train unless @user
 
+		@user.reload
+
 		if @user.swipable['events']['finished_at'].blank? && @events_to_train.present?
 			:train
 		elsif show_end_message
