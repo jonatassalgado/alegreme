@@ -1,7 +1,7 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
 
 export default class extends ApplicationController {
-    static targets = [''];
+    static targets = ['loadingIcon', 'table', 'list'];
 
     initialize() {
         const self = this;
@@ -29,7 +29,16 @@ export default class extends ApplicationController {
         this.teardown()
     }
 
+    beforePrevMonth() {
+        this._loadingAnimate()
+    }
+
+    beforeNextMonth() {
+        this._loadingAnimate()
+    }
+
     beforeInDay(anchorElement) {
+        this._loadingAnimate()
         const dateGroup = document.querySelector(`#main-sidebar--group-${anchorElement.dataset.day}`);
         if (dateGroup) dateGroup.scrollIntoView({
                                                     block:    'start',
@@ -53,8 +62,15 @@ export default class extends ApplicationController {
         }
     }
 
-    afterClearFilter(anchorElement) {
-        // this._unselectDays(this.calendarTarget);
+    beforeClearFilter(anchorElement) {
+        this._loadingAnimate()
+    }
+
+    _loadingAnimate() {
+        this.loadingIconTarget.classList.remove("opacity-0")
+        this.loadingIconTarget.classList.add("animate-spin")
+        this.tableTarget.classList.add("animate-pulse")
+        this.listTarget.classList.add("animate-pulse")
     }
 
 }

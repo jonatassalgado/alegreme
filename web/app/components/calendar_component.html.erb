@@ -2,9 +2,15 @@
 	<div class="h-full">
 		<div data-calendar-target="calendar" class="mt-2 calendar bg-white mb-5 mb:bg-transparent md:mb-2 md:mx-0 md:py-3 md:rounded-lg md:shadow-none md:text-center py-2 rounded-lg select-none tap-highlight-none text-center">
 			<div class="capitalize flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
+				<div class="flex items-center">
 				<span class="font-display ml-4 mr-2 text-2xl text-brand-500">
 					<%= t('date.month_names')[start_date.month] %> <%= start_date.year %>
 				</span>
+					<svg data-calendar-target="loadingIcon" class="opacity-0 text-brand-600 w-7 h-7 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path fill="none" d="M0 0h24v24H0V0z"/>
+						<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+					</svg>
+				</div>
 				<div class="flex text-gray-800 pt-2 pr-2">
 					<%= content_tag :button, id: 'calendar-previous', data: { reflex: 'click->Calendar#prev_month', start_date: start_date }, class: 'cursor-pointer flex focus:bg-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-brand-200 focus:text-white h-8 items-center justify-center md:hover:bg-brand-500 md:hover:text-white mx-1 rounded-full w-8' do %>
 						<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -22,7 +28,7 @@
 				</div>
 			</div>
 
-			<table class="table-auto w-full">
+			<table data-calendar-target="table" class="table-auto w-full">
 				<thead>
 				<tr>
 					<% date_range.slice(0, 7).each do |day| %>
@@ -56,7 +62,7 @@
 		</div>
 
 
-		<div id="calendar__list" class="mb-20">
+		<div id="calendar__list" data-calendar-target="list" class="mb-20">
 			<div class="<%= helpers.class_names('mb-1 bg-brand-500 flex font-semibold items-center mt-3 mx-auto px-3 py-2 rounded-full select-none text-sm text-white w-content',
 																					'hidden': !@filter) %>">
 				<svg class="h-5 mr-2 text-white fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
