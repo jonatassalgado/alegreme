@@ -1,4 +1,4 @@
-<%= content_tag :div, id: dom_id(@event, :hero), data: { controller: 'hero--horizontal-event', 'hero--horizontal-event-open-in-sidebar': @open_in_sidebar } do %>
+<%= content_tag :div, id: dom_id(@event, :hero), class: 'transition-opacity duration-300', data: { controller: 'hero--horizontal-event', 'hero--horizontal-event-open-in-sidebar': @open_in_sidebar } do %>
 	<div class="bg-white flex justify-between mt-2 md:pr-5 py-3 rounded-lg select-none tap-highlight-none">
 		<div class="pr-6 flex-1">
 			<%= content_tag :a,

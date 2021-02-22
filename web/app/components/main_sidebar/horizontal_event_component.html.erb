@@ -1,4 +1,4 @@
-<%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: '' do %>
+<%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'transition-opacity' do %>
 	<div class="select-none tap-highlight-none bg-white flex justify-between mx-2 md:mx-0 px-3 md:px-5 py-3 rounded-lg">
 		<div class="pr-5 md:pr-6">
 			<%= content_tag :a,

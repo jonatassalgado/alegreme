@@ -44,13 +44,13 @@ export default class extends ApplicationController {
 
     _loading() {
         if (this.hasLoadingTarget) this.loadingTarget.classList.remove("hidden")
-        if (this.hasOnIconTarget) this.onIconTarget.classList.add("animation-1s", "animation-linear", "animation-spin")
+        if (this.hasOnIconTarget) this.onIconTarget.classList.add("animate-spin")
         if (this.hasLoadedTarget) this.loadedTarget.classList.add("hidden")
     }
 
     _loaded() {
         if (this.hasLoadingTarget) this.loadingTarget.classList.add("hidden")
-        if (this.hasOnIconTarget) this.onIconTarget.classList.remove("animation-1s", "animation-linear", "animation-spin")
+        if (this.hasOnIconTarget) this.onIconTarget.classList.remove("animate-spin")
         if (this.hasLoadedTarget) this.loadedTarget.classList.remove("hidden")
     }
 

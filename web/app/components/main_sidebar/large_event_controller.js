@@ -1,4 +1,5 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
+import {Transition}          from "../../javascript/modules/transition-module";
 
 export default class extends ApplicationController {
     static targets = ["scrollContent"];
@@ -36,18 +37,13 @@ export default class extends ApplicationController {
     }
 
     close(event) {
-        const animate = new Promise(resolve => {
-            requestAnimationFrame((rafId) => {
-                this.element.classList.add("opacity-0", "translate-x-32")
-                setTimeout(() => {
-                    resolve(rafId)
-                }, 500)
-            })
-        })
-
-        animate.then(result => {
+        Transition.to(this.element, {
+            transition: () => this.element.classList.add("opacity-0", "translate-x-32"),
+            observed:   ["opacity-0", "translate-x-32"],
+            resetState: true,
+            duration:   1000
+        }).then(el => {
             this.element.classList.add("hidden")
-            this.element.classList.remove("opacity-0", "translate-x-32")
         })
     }
 

@@ -72,11 +72,11 @@ module.exports = {
         preserveHtmlElements: false
     },
     theme:    {
-        fontFamily:              {
+        fontFamily:  {
             display: ['Poppins', 'system-ui', 'sans-serif'],
             body:    ['Roboto', 'system-ui', 'sans-serif'],
         },
-        colors:                  {
+        colors:      {
             transparent: 'transparent',
             current:     'currentColor',
             black:       '#000',
@@ -88,66 +88,7 @@ module.exports = {
             red:         customColors.alizarinCrimson,
             purple:      colors.purple
         },
-        animations:              {
-            "spin": {
-                from: {
-                    transform: "rotate(0deg)",
-                },
-                to:   {
-                    transform: "rotate(360deg)",
-                },
-            },
-            "show": {
-                from: {
-                    opacity: "0"
-                },
-                to:   {
-                    opacity: "1"
-                }
-            }
-        },
-        animationDuration:       { // defaults to these values
-            "DEFAULT": "1s",
-            "0s":      "0s",
-            "1s":      "1s",
-            "2s":      "2s",
-            "3s":      "3s",
-            "4s":      "4s",
-            "5s":      "5s",
-        },
-        animationTimingFunction: {
-            "DEFAULT": "ease",
-            "linear":  "linear",
-            "ease":    "ease",
-            "ease-in": "ease-in"
-        },
-        animationDelay:          {
-            "DEFAULT": "0s",
-            "0s":      "0s",
-            "1s":      "1s",
-            "2s":      "2s",
-            "3s":      "3s"
-        },
-        animationIterationCount: {
-            "DEFAULT":  "infinite",
-            "once":     "1",
-            "infinite": "infinite",
-        },
-        animationDirection:      {
-            "DEFAULT":           "normal",
-            "normal":            "normal",
-            "reverse":           "reverse",
-            "alternate":         "alternate",
-            "alternate-reverse": "alternate-reverse",
-        },
-        animationFillMode:       {
-            "DEFAULT": "none"
-        },
-        animationPlayState:      {
-            "running": "running",
-            "paused":  "paused",
-        },
-        extend:                  {
+        extend:      {
             width:        {
                 "content": "max-content",
                 "128":     "32rem",
@@ -170,8 +111,22 @@ module.exports = {
                 "16": "64px",
                 "24": "92px"
             },
+            keyframes:    {
+                show: {
+                    '0%':   {opacity: 0},
+                    '100%': {opacity: 1}
+                },
+                hide: {
+                    '0%':   {opacity: 1},
+                    '100%': {opacity: 0}
+                }
+            },
+            animation:    {
+                show: 'show 300ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards',
+                hide: 'hide 300ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards'
+            }
         },
-        aspectRatio:             {
+        aspectRatio: {
             "none":   0,
             "square": [1, 1],
             "16/9":   [16, 9],
@@ -190,7 +145,6 @@ module.exports = {
     },
     plugins:  [
         require("tailwindcss-elevation")(),
-        require("tailwindcss-aspect-ratio"),
-        require("tailwindcss-animations")
+        require("tailwindcss-aspect-ratio")
     ],
 }

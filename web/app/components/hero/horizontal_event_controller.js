@@ -1,6 +1,6 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
 import {MobileDetector}      from "../../javascript/modules/mobile-detector-module";
-import Velocity              from "velocity-animate";
+import {Transition}          from "../../javascript/modules/transition-module";
 
 export default class extends ApplicationController {
     static targets = [];
@@ -47,37 +47,43 @@ export default class extends ApplicationController {
 
     like(event) {
         const currentTarget = event.currentTarget
-        Velocity(this.element, {opacity: 0})
-            .then(value => {
-                document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
-                this.stimulate('Swipable#like', currentTarget)
-                    .then(value => {
-                        document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
-                        this._updateCalendar()
-                    })
-                    .catch(reason => {
+        Transition.to(this.element, {
+            transition: () => this.element.classList.add("opacity-0"),
+            observed:   ["opacity-0"],
+            duration:   300
+        }).then(value => {
+            document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
+            this.stimulate('Swipable#like', currentTarget)
+                .then(value => {
+                    document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
+                    this._updateCalendar()
+                })
+                .catch(reason => {
 
-                    })
-            }, reason => {
+                })
+        }, reason => {
 
-            })
+        })
     }
 
     dislike(event) {
         const currentTarget = event.currentTarget
-        Velocity(this.element, {opacity: 0})
-            .then(value => {
-                document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
-                this.stimulate('Swipable#dislike', currentTarget)
-                    .then(value => {
-                        document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
-                    })
-                    .catch(reason => {
+        Transition.to(this.element, {
+            transition: () => this.element.classList.add("opacity-0"),
+            observed:   ["opacity-0"],
+            duration:   300
+        }).then(value => {
+            document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
+            this.stimulate('Swipable#dislike', currentTarget)
+                .then(value => {
+                    document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
+                })
+                .catch(reason => {
 
-                    })
-            }, reason => {
+                })
+        }, reason => {
 
-            })
+        })
     }
 
     _updateCalendar() {

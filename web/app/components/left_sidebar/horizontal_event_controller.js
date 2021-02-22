@@ -1,5 +1,6 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
 import {MobileDetector}      from "../../javascript/modules/mobile-detector-module";
+import {Transition}          from "../../javascript/modules/transition-module";
 
 export default class extends ApplicationController {
     static targets = [];
@@ -10,7 +11,7 @@ export default class extends ApplicationController {
     }
 
     async setup() {
-        const Velocity = await import('velocity-animate');
+
     }
 
     teardown() {
@@ -45,25 +46,22 @@ export default class extends ApplicationController {
         }
     }
 
-    beforeUnlike(anchorElement) {
-        this._animateHide(this.element)
+    unlike(event) {
+        const currentTarget = event.currentTarget
+
+        Transition.to(this.element, {
+            transition: () => this.element.classList.add("opacity-0"),
+            observed:   ["opacity-0"],
+            duration:   300
+        }).then(value => {
+            this.stimulate("LeftSidebar::Calendar#unlike", currentTarget)
+        }, reason => {
+
+        })
     }
 
     _linkEl(e) {
         return e.target.closest("[data-action~='click->left-sidebar--horizontal-event#openEvent']");
-    }
-
-    _animateHide(element) {
-        element.dataset.reflexPermanent = ''
-
-        Velocity(element, {opacity: 0})
-            .then(value => {
-                setTimeout(() => {
-                    element.classList.add('hidden')
-                }, 250)
-            }, reason => {
-
-            })
     }
 
     get mainSidebarLargeEventEl() {

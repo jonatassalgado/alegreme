@@ -37,7 +37,7 @@
 					</div>
 				<% end %>
 				<% if current_stage == :end_train_message %>
-					<div class="animation-show animation-2s animation-once bg-brand-100 flex flex-col h-full items-center justify-center my-auto p-5 rounded-xl space-y-5 text-center">
+					<div class="animate-show bg-brand-100 flex flex-col h-full items-center justify-center my-auto p-5 rounded-xl space-y-5 text-center">
 						<div id="end-message-title" class="px-5 text-brand-700">
 							<div class="font-bold"><%= "Obrigado #{@user.first_name}!" %></div>
 							<div class="font-light">Agora já consigo recomendar eventos parecidos com seu gosto pessoal.</div>
@@ -71,7 +71,7 @@
 					</div>
 				<% end %>
 				<% if current_stage == :end_suggestions_message %>
-					<div class="animation-show animation-2s animation-once bg-brand-100 flex flex-col h-full items-center justify-center my-auto p-5 rounded-xl space-y-5 text-center text-gray-800">
+					<div class="animate-show bg-brand-100 flex flex-col h-full items-center justify-center my-auto p-5 rounded-xl space-y-5 text-center text-gray-800">
 						<div id="end-message-title" class="font-semibold px-5 text-gray-600">
 							<%= "Você já viu todas as recomendações que eu tinha para você hoje 😃" %>
 						</div>

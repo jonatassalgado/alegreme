@@ -145,7 +145,7 @@ export default class SwipableController extends ApplicationController {
     loadSuggestions() {
         this.loadingOffTarget.classList.add("hidden");
         this.loadingOnTarget.classList.remove("hidden");
-        this.loadingIconTarget.classList.add("animation-1s", "animation-linear", "animation-spin");
+        this.loadingIconTarget.classList.add("animate-spin");
     }
 
     get userName() {

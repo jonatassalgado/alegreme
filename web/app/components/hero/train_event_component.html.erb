@@ -1,4 +1,4 @@
-<%= content_tag :div, id: dom_id(@event, :hero), data: { controller: 'hero--train-event', 'hero--train-event-open-in-sidebar': @open_in_sidebar } do %>
+<%= content_tag :div, id: dom_id(@event, :hero), class: 'transition-opacity duration-300', data: { controller: 'hero--train-event', 'hero--train-event-open-in-sidebar': @open_in_sidebar } do %>
 	<div class="bg-white flex justify-between mt-2 pr-5 py-3 rounded-lg select-none tap-highlight-none">
 		<div class="flex flex-col h-28 md:w-auto mr-3 space-y-2">
 			<%= content_tag :div, data: { action: 'click->hero--train-event#like', 'event-id': @event.id }, class: 'w-12 h-12 h-full bg-green-50 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-green-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-green-500 text-sm transform transition-transform' do %>
