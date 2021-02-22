@@ -27,7 +27,7 @@
 		<div class="p-5">
 			<span class="text-sm text-gray-400 font-light">
 				<% if helpers.already_happened? @event %>
-					O evento ocorreu dia <%= I18n.l(@event.end_time) %>
+					O evento ocorreu <%= I18n.l(@event.end_time) %>
 				<% else %>
 					Atualizado há <%= time_ago_in_words @event&.updated_at %>
 				<% end %>

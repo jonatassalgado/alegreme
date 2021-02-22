@@ -1,4 +1,4 @@
-<%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'h-full' do %>
+<%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'h-full w-72' do %>
 	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mb-5 md:mb-2 md:py-5">
 		<div class="sticky top-0 z-20 bg-white">
 			<div class="font-bold font-display md:text-3xl py-3 text-gray-900 text-xl">
@@ -9,15 +9,15 @@
 				<span class="font-bold font-display text-gray-800 mr-2">
 					<%= t('date.month_names')[start_date.month] %> <%= start_date.year %>
 				</span>
-			<div class="mr-2 flex">
-				<%= content_tag :div, id: 'calendar-previous', data: { reflex: 'click->LeftSidebar::Calendar#prev_month', start_date: start_date }, class: 'mx-1 cursor-pointer md:hover:bg-brand-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
+			<div class="mr-2 flex pt-2">
+				<%= content_tag :button, id: 'calendar-previous', data: { reflex: 'click->LeftSidebar::Calendar#prev_month', start_date: start_date }, class: 'cursor-pointer flex focus:bg-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-brand-200 focus:text-white h-8 items-center justify-center md:hover:bg-brand-500 md:hover:text-white mx-1 rounded-full w-8' do %>
 					<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>
 						<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 					</svg>
 				<% end %>
 
-				<%= content_tag :div, id: 'calendar-next', data: { reflex: 'click->LeftSidebar::Calendar#next_month', start_date: start_date }, class: 'mx-1 cursor-pointer md:hover:bg-brand-500 md:hover:text-white h-8 w-8 rounded-full flex justify-center items-center' do %>
+				<%= content_tag :button, id: 'calendar-next', data: { reflex: 'click->LeftSidebar::Calendar#next_month', start_date: start_date }, class: 'cursor-pointer flex focus:bg-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-brand-200 focus:text-white h-8 items-center justify-center md:hover:bg-brand-500 md:hover:text-white mx-1 rounded-full w-8' do %>
 					<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>
 						<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
