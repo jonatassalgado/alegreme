@@ -13,8 +13,8 @@
 			<% end %>
 			<div class="text-sm md:text-xs md:mt-1 text-gray-500">
 				<%= helpers.format_hour @event.start_time %>h ·
-				<%= @event.categories_primary_name.titleize %> ·
-				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:underline' %>
+				<%= link_to @event&.categories_primary_name&.titleize, category_events_path(@event.categories_primary_name), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %> ·
+				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 			</div>
 			<div class="flex md:group-hover:opacity-100 md:opacity-0 transition-opacity duration-150 mt-1 mt-3 space-x-2">
 				<%= content_tag :div,
