@@ -48,7 +48,7 @@ pt-BR:
     - sexta
     - sábado
     formats:
-      default: "%d/%m/%Y"
+      default: "%A, %d de %B de %Y"
       full: "%d de %B de %Y"
       long: "%d de %B"
       short: "%-d %b"
@@ -228,7 +228,7 @@ pt-BR:
   time:
     am: ''
     formats:
-      default: "%a, %d de %B de %Y, %H:%M:%S %z"
+      default: "%A, %d de %B de %Y, %H:%M"
       long: "%d de %B de %Y, %H:%M"
       short: "%d de %B, %H:%M"
     pm: ''
