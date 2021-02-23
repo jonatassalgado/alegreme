@@ -12,17 +12,16 @@
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
 		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
 			<% unless params[:day] || params[:category] %>
-				<div class="items-start select-none tap-highlight-none flex flex-col flex-col-reverse gap-4 mb-12 md:mb-5 md:flex md:flex-row md:mx-0 md:px-5 mx-5 pr-16" style="min-height: 225px;">
-					<div class="pt-8">
+				<div data-turbo-permanent class="flex flex-row-reverse gap-4 items-start mb-12 md:flex md:flex-row md:mb-5 md:mx-0 md:px-5 mx-5 pt-5 select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '150px' : '225px' %>">
+					<div class="my-auto">
 						<h2 class="font-bold font-display text-gray-900 text-2xl md:text-3xl">
 							Aproveite Porto Alegre
 						</h2>
 						<span class="inline-block leading-snug mt-2 text-gray-500 text-sm">
-  						Aprendemos o que você gosta e não gosta para te sugerir eventos e atividades que vão
-  					de lazer a educação. Assim, você descobre coisas novas e não perde o que já conhece.
+  						Descubra novos eventos e siga seus locais e artistas favoritos para não perder nada que acontece.
   					</span>
 					</div>
-					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png", "hero/leitor-e-cao.png", "hero/passeando.png"].sample %>
+					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png", "hero/leitor-e-cao.png", "hero/passeando.png"].sample, class: 'md:w-auto md:h-auto my-auto w-32 h-32 md:-mt-6' %>
 				</div>
 				<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% end %>
