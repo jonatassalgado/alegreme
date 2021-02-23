@@ -11,7 +11,7 @@
 			<div data-toggle-style-target="toggle"
 					 data-action="click->toggle-style#toggle click->go-to#url"
 					 data-toggle-style-identifier="feeds-index"
-					 data-go-to-url="<%= feed_path %>"
+					 data-go-to-url="<%= root_path %>"
 					 class="<%= class_names 'cursor-pointer md:flex-row md:font-semibold md:text-2xl antialiased flex flex-1 flex-col items-center transform transition-transform text-xs duration-100',
 																	'text-brand-500': ['feeds', 'events'].include?(controller_name),
 																	'text-gray-600':  !['feeds', 'events'].include?(controller_name) %>">
