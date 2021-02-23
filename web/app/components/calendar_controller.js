@@ -1,4 +1,5 @@
 import ApplicationController from "../javascript/controllers/application_controller"
+import "./calendar_component.scss"
 
 export default class extends ApplicationController {
     static targets = ['loadingIcon', 'table', 'list'];

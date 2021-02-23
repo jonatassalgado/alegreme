@@ -50,8 +50,9 @@
 										<%= day.strftime '%e' %>
 									</div>
 								<% end %>
-								<div data-indicator class="<%= helpers.class_names 'h-1 mx-auto rounded-full transform translate-y-2 w-1 bg-brand-500',
-																																	 'hidden':       !@indicators&.include?(day) %>">
+								<% if @indicators&.include?(day) %>
+									<div data-indicator class="<%= helpers.class_names 'h-1 mx-auto rounded-full transform translate-y-2 w-1 bg-brand-500' %>">
+								<% end %>
 								</div>
 							<% end %>
 						<% end %>

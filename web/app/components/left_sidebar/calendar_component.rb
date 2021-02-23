@@ -20,13 +20,13 @@ class LeftSidebar::CalendarComponent < ViewComponent::Base
 
 		td_class = ['day h-14 text-center px-1 rounded-full cursor-pointer']
 		td_class << "wday-#{day.wday.to_s}"
-		td_class << '' if today == day
-		td_class << 'text-gray-400' if today > day
-		td_class << 'text-gray-800' if today < day
+		td_class << 'font-semibold' if today == day
+		td_class << 'text-gray-300' if today > day
+		td_class << 'text-gray-900' if today < day
 		td_class << 'filter' if day.to_date == start_date.to_date && @filter
-		td_class << 'text-gray-400' if start_date.month != day.month && day < start_date
-		td_class << 'text-gray-400' if start_date.month != day.month && day > start_date # next month
-		td_class << 'text-gray-800' if today < day && start_date.month == day.month && day.to_date != start_date.to_date # current month
+		td_class << 'past-month' if start_date.month != day.month && day < start_date
+		td_class << 'next-month' if start_date.month != day.month && day > start_date # next month
+		td_class << 'text-gray-900' if today < day && start_date.month == day.month && day.to_date != start_date.to_date # current month
 		td_class << 'has-events' if sorted_events&.fetch(day, []).any?
 
 		td_class
