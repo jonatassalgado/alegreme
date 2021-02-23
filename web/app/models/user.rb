@@ -77,12 +77,14 @@ class User < ApplicationRecord
 	def like!(event, action: :create)
 		if action == :create
 			self.likes.create!(event_id: event.id, sentiment: :positive)
-			self.liked_events.reset
 		elsif action == :update
 			self.like_update(event, sentiment: :positive)
-			self.liked_events.reset
-			self.disliked_events.reset
 		end
+
+		self.liked_events.reset
+		self.disliked_events.reset
+		self.liked_or_disliked_events.reset
+
 		UpdateUserEventsSuggestionsJob.perform_later(self.id)
 	end
 
@@ -91,6 +93,7 @@ class User < ApplicationRecord
 		like.destroy if like
 		self.liked_events.reset
 		self.disliked_events.reset
+		self.liked_or_disliked_events.reset
 	end
 
 	def dislike!(event, action: :create)
@@ -101,11 +104,12 @@ class User < ApplicationRecord
 			self.like_update(event, sentiment: :negative)
 			self.liked_events.reset
 			self.disliked_events.reset
+			self.liked_or_disliked_events.reset
 		end
 	end
 
 	def like_or_dislike?(event)
-		self.likes.exists?(event_id: event.id)
+		self.liked_or_disliked_event_ids.include?(event.id)
 	end
 
 	def like_update(event, values)
