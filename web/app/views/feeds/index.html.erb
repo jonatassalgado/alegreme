@@ -12,8 +12,8 @@
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
 		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
 			<% unless params[:day] %>
-				<div class="select-none tap-highlight-none flex flex-col flex-col-reverse gap-4 items-center mb-12 md:flex md:flex-row md:mx-0 md:pr-0 md:px-5 mx-5 pr-16" style="min-height: 252px;">
-					<div>
+				<div class="items-start select-none tap-highlight-none flex flex-col flex-col-reverse gap-4 mb-12 md:mb-5 md:flex md:flex-row md:mx-0 md:px-5 mx-5 pr-16" style="min-height: 225px;">
+					<div class="pt-8">
 						<h2 class="font-bold font-display text-gray-900 text-2xl md:text-3xl">
 							Aproveite Porto Alegre
 						</h2>
@@ -27,7 +27,9 @@
 				<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% end %>
 			<% if @upcoming_events.present? %>
-				<div class="pt-4">
+				<div class="<%= class_names('pt-4 bg-white pb-2 pt-4 sticky z-20',
+																		{ 'top-0':  mobile_device?,
+																			'top-20': !mobile_device? }) %>">
 					<h2 class="font-display text-gray-900 font-bold px-5 text-2xl md:text-3xl">
 						Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
 					</h2>
@@ -67,9 +69,7 @@
 					</svg>
 				</div>
 			</div>
-			<!--			<div id="user-resources-list" class="md:ml-8 md:mt-8 md:text-sm sticky top-12 transform">-->
-
-			<!--			</div>-->
+			<%= render MainSidebar::FilterComponent.new(categories: @categories) %>
 		</section>
 	<% end %>
 

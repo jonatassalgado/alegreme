@@ -1,0 +1,8 @@
+<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter' }, class: 'transition-all duration-300 translate-x-32 flex flex-wrap md:ml-8 mt-8 sticky top-24' do %>
+	<h2 class="block font-bold font-display mb-3 md:text-xl text-2xl text-gray-900 w-full">
+		Filtros
+	</h2>
+	<% @categories.each do |category| %>
+		<%= link_to category, category_events_path(category), data: { 'turbo-preserve-scroll': true }, class: 'border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none text-gray-500 transform transition-colors transition-all w-content w-full' %>
+	<% end %>
+<% end %>

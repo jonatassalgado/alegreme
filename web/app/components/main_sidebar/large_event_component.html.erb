@@ -1,4 +1,4 @@
-<%= content_tag :div, id: 'main-sidebar--large-event', data: { controller: 'main-sidebar--large-event', 'opened-event': @event&.id }, class: 'transition-all transform' do %>
+<%= content_tag :div, id: 'main-sidebar--large-event', data: { controller: 'main-sidebar--large-event', 'opened-event': @event&.id }, class: 'transition-all transform duration-300' do %>
 	<% if @event %>
 		<div class="relative mt-5 overflow-hidden bg-white border border-gray-100 shadow-xl h-screen-8/10 rounded-xl">
 			<div data-action="click->main-sidebar--large-event#close" class="fixed absolute top-0 right-0 z-50 p-1 mt-2 mr-3 text-gray-600 transition-transform duration-300 transform bg-white rounded-full shadow cursor-pointer hover:scale-105">

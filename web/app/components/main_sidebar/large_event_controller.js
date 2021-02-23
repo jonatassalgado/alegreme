@@ -41,9 +41,10 @@ export default class extends ApplicationController {
             transition: () => this.element.classList.add("opacity-0", "translate-x-32"),
             observed:   ["opacity-0", "translate-x-32"],
             resetState: true,
-            duration:   1000
+            duration:   300
         }).then(el => {
             this.element.classList.add("hidden")
+            document.dispatchEvent(new Event("horizontal-event#close-event:after"))
         })
     }
 

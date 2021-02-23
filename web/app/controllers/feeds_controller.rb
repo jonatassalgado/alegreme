@@ -14,6 +14,7 @@ class FeedsController < ApplicationController
 
 		@upcoming_events = requested_events
 		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
+		@categories      = Event::CATEGORIES.dup.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }
 
 		render layout: false if @stimulus_reflex
 	end
