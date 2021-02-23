@@ -50,10 +50,11 @@ export default class extends ApplicationController {
     beforeInDay(anchorElement) {
         this._loadingAnimate()
         const dateGroup = document.querySelector(`#main-sidebar--group-${anchorElement.dataset.day}`);
-        if (dateGroup) dateGroup.scrollIntoView({
-                                                    block:    'start',
-                                                    behavior: 'smooth'
-                                                })
+        const scrollTo  = dateGroup.getBoundingClientRect().top + window.pageYOffset - 150
+        if (dateGroup) window.scrollTo({
+                                           top:      scrollTo,
+                                           behavior: 'smooth'
+                                       })
     }
 
     inDay(event) {
