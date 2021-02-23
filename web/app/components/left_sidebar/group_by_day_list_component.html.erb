@@ -1,9 +1,3 @@
-<%= content_tag :div, class: 'pb-10' do %>
-	<% @events.group_by { |e| e.start_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
-		<div class="bg-white">
-			<div id="vertical-daily-events">
-				<%= render LeftSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: @parent_key) %>
-			</div>
-		</div>
-	<% end %>
+<% @events.group_by { |e| e.start_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
+	<%= render LeftSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: @parent_key) %>
 <% end %>

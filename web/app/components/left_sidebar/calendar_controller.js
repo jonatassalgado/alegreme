@@ -1,10 +1,20 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
+import {ChildMutation}       from "../../javascript/modules/child-mutation-module";
 
 export default class extends ApplicationController {
-    static targets = ['loadingIcon', 'table', 'list'];
+    static targets = ['loadingIcon', 'table', 'list', 'events'];
 
     initialize() {
-        const self = this;
+        this.element.addEventListener("cable-ready:before-morph", event => {
+            ChildMutation.read(this.eventsTarget)
+        })
+
+        this.element.addEventListener("cable-ready:after-morph", event => {
+            ChildMutation.diff(this.eventsTarget)
+                         .then(els => {
+                             els.forEach(el => el.classList.add("animate-added"))
+                         })
+        })
     }
 
     connect() {

@@ -1,7 +1,7 @@
 const colors       = require('tailwindcss/colors')
 const customColors = {
     greenHaze:       {
-        DEFAULT: '#03AA54',
+        default: '#03AA54',
         '50':    '#F0FFF7',
         '100':   '#CDFEE5',
         '200':   '#87FDC0',
@@ -14,7 +14,7 @@ const customColors = {
         '900':   '#013219'
     },
     lunarGreen:      {
-        DEFAULT: '#454A45',
+        default: '#454A45',
         '50':    '#B7BDB8',
         '100':   '#AAB1AB',
         '200':   '#909891',
@@ -27,7 +27,7 @@ const customColors = {
         '900':   '#000000'
     },
     indigo:          {
-        DEFAULT: '#6369D1',
+        default: '#6369D1',
         '50':    '#FFFFFF',
         '100':   '#F1F1FB',
         '200':   '#CDCFF0',
@@ -41,7 +41,7 @@ const customColors = {
         body:    ''
     },
     alizarinCrimson: {
-        DEFAULT: '#D7263D',
+        default: '#D7263D',
         '50':    '#FBE8EA',
         '100':   '#F7D2D7',
         '200':   '#EFA7B0',
@@ -112,18 +112,23 @@ module.exports = {
                 "24": "92px"
             },
             keyframes:    {
-                show: {
+                show:  {
                     '0%':   {opacity: 0},
                     '100%': {opacity: 1}
                 },
-                hide: {
+                added: {
+                    '0%':   {background: customColors.indigo["200"]},
+                    '100%': {background: "transparent"}
+                },
+                hide:  {
                     '0%':   {opacity: 1},
                     '100%': {opacity: 0}
                 }
             },
             animation:    {
-                show: 'show 300ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards',
-                hide: 'hide 300ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards'
+                show:  'show 300ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards',
+                hide:  'hide 300ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards',
+                added: 'added 1000ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards'
             }
         },
         aspectRatio: {
