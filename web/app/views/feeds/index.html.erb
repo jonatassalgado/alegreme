@@ -11,7 +11,7 @@
 	<% end %>
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
 		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
-			<% unless params[:day] %>
+			<% unless params[:day] || params[:category] %>
 				<div class="items-start select-none tap-highlight-none flex flex-col flex-col-reverse gap-4 mb-12 md:mb-5 md:flex md:flex-row md:mx-0 md:px-5 mx-5 pr-16" style="min-height: 225px;">
 					<div class="pt-8">
 						<h2 class="font-bold font-display text-gray-900 text-2xl md:text-3xl">
@@ -27,12 +27,22 @@
 				<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% end %>
 			<% if @upcoming_events.present? %>
-				<div class="<%= class_names('pt-4 bg-white pb-2 pt-4 sticky z-20',
-																		{ 'top-0':  mobile_device?,
-																			'top-20': !mobile_device? }) %>">
-					<h2 class="font-display text-gray-900 font-bold px-5 text-2xl md:text-3xl">
-						Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
-					</h2>
+				<div class="<%= class_names('bg-white pb-2 sticky z-20',
+																		{ 'top-0':      mobile_device? && params[:category],
+																			'top-0 pt-4': mobile_device? && current_page?('/'),
+																			'top-16 pt-4':     !mobile_device? && params[:category],
+																			'top-20 pt-4':     !mobile_device? && current_page?('/') }) %>">
+					<% if params[:category] %>
+						<div class="flex items-center justify-between md:pr-10 pr-5">
+							<h2 class="font-bold font-display md:text-3xl pl-5 pt-3 text-gray-900 text-xl">
+								<span class="text-brand-500 underline"><%= params[:category].titleize %></span> em Porto Alegre
+							</h2>
+						</div>
+					<% else %>
+						<h2 class="font-display text-gray-900 font-bold px-5 text-2xl md:text-3xl">
+							Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
+						</h2>
+					<% end %>
 					<div class="flex gap-1 px-5 text-gray-400 text-sm items-center" title="Devido ao Covid19 o número de eventos está abaixo do normal">
 						Atualizado há <%= time_ago_in_words @upcoming_events&.last&.updated_at %>
 						<svg class="stroke-current w-4 h-4" fill="none"
@@ -43,7 +53,8 @@
 				</div>
 			<% else %>
 				<h2 class="mt-5 font-display text-gray-900 font-bold px-5 text-2xl md:text-3xl">
-					Não foram encontrados eventos em Porto Alegre <%= I18n.l params[:day].to_datefull if params[:day] %>
+					Não foram encontrados eventos em Porto
+					Alegre <%= I18n.l params[:day].to_datefull if params[:day] %> <%= "na categoria #{params[:category]&.titleize}" if params[:category] %>
 				</h2>
 			<% end %>
 			<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>

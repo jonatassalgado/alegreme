@@ -66,6 +66,8 @@ class FeedsController < ApplicationController
 	def requested_events
 		if params[:day]
 			Event.in_day(params[:day]).not_ml_data.includes(:place).order_by_date
+		elsif params[:category]
+			Event.not_ml_data.active.in_categories([params[:category]]).order_by_date.includes(:place, :categories)
 		else
 			Event.active.not_ml_data.includes(:place).order_by_date
 		end
