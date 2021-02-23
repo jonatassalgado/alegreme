@@ -1,19 +1,16 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'h-full w-72' do %>
 	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mb-5 md:mb-2 md:py-5">
-		<div class="bg-white flex items-center justify-items-start sticky top-0 z-20">
-			<div class="font-bold font-display md:text-3xl py-3 text-gray-900 text-xl">
-				Minha agenda
-			</div>
-			<svg data-left-sidebar--calendar-target="loadingIcon" class="opacity-0 text-brand-600 w-7 h-7 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-				<path fill="none" d="M0 0h24v24H0V0z"/>
-				<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
-			</svg>
-		</div>
-		<div class="capitalize flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
-				<span class="font-bold font-display text-gray-800 mr-2">
+		<div class="capitalize pt-2 flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
+			<div class="flex items-center justify-items-start">
+			<span class="font-bold font-display text-gray-800 mr-2 text-xl">
 					<%= t('date.month_names')[start_date.month] %> <%= start_date.year %>
 				</span>
-			<div class="mr-2 flex pt-2">
+				<svg data-left-sidebar--calendar-target="loadingIcon" class="opacity-0 text-brand-600 w-7 h-7 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path fill="none" d="M0 0h24v24H0V0z"/>
+					<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+				</svg>
+			</div>
+			<div class="mr-2 flex">
 				<%= content_tag :button, id: 'calendar-previous', data: { reflex: 'click->LeftSidebar::Calendar#prev_month', start_date: start_date }, class: 'cursor-pointer flex focus:bg-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-brand-200 focus:text-white h-8 items-center justify-center md:hover:bg-brand-500 md:hover:text-white mx-1 rounded-full w-8' do %>
 					<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>
@@ -59,25 +56,24 @@
 			<% end %>
 			</tbody>
 		</table>
-		<div id="calendar__list" data-left-sidebar--calendar-target="list" style="<%= helpers.class_names 'hidden': @events&.empty? %>">
-			<div class="<%= helpers.class_names('mt-3 flex items-center px-2 py-1 mx-auto text-sm font-semibold text-white bg-brand-500 rounded-full select-none w-content',
-																					'hidden': !@filter) %>">
-				<svg class="h-5 mr-2 text-white fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-					<path d="M0 0h24v24H0z" fill="none"/>
-					<path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
-				</svg>
-				<%= start_date.strftime("%d/%m/%Y") %>
+		<div id="calendar__list" class="" data-left-sidebar--calendar-target="list" style="<%= helpers.class_names 'hidden': @events&.empty? %>">
+			<div class="flex justify-between items-baseline bg-white sticky top-0 z-20">
+				<div class="bg-white font-bold font-display pb-2 pt-10 text-gray-900 text-xl ">
+					Minha agenda
+				</div>
+				<%= content_tag :div,
+												data:  {
+													reflex: 'click->LeftSidebar::Calendar#clear_filter'
+												},
+												id:    'calendar__clear-filter',
+												class: helpers.class_names('hover:bg-brand-600 h-content cursor-pointer mt-3 flex items-center px-2 py-1 mx-auto text-sm font-semibold text-white bg-brand-500 rounded-full select-none w-content',
+																									 'hidden': !@filter) do %>
+					<svg class="fill-current mr-1 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+						<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+					</svg>
+					<%= start_date.strftime("%d/%m/%Y") %>
+				<% end %>
 			</div>
-			<%= content_tag :div,
-											data:  {
-												reflex: 'click->LeftSidebar::Calendar#clear_filter'
-											},
-											id:    'calendar__clear-filter',
-											class: helpers.class_names('px-5 text-center cursor-pointer underline text-gray-500 text-xs',
-																								 'hidden': !@filter) do %>
-				Remover filtro
-			<% end %>
-
 			<div id="calendar__events" data-left-sidebar--calendar-target="events" class="pb-10">
 				<%= render LeftSidebar::GroupByDayListComponent.new(events: @events, user: @user) if @events.present? %>
 			</div>
