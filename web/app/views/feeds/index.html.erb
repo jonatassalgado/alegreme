@@ -31,7 +31,7 @@
 																		{ 'top-0':       mobile_device? && params[:category],
 																			'top-0 pt-4':  mobile_device? && current_page?(controller: :feeds, action: :index),
 																			'top-16 pt-4': !mobile_device? && params[:category],
-																			'top-20 pt-4': !mobile_device? && current_page?(controller: :feeds, action: :index) }) %>">
+																			'top-20 pt-4': !mobile_device? && (controller_name == 'feeds') && (action_name == 'index') }) %>">
 					<% if params[:category] %>
 						<div class="flex items-center justify-between md:pr-10 pr-5">
 							<h2 class="font-bold font-display md:text-3xl pl-5 pt-3 text-gray-900 text-xl">

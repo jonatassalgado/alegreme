@@ -4,7 +4,7 @@
 			<div class="<%= helpers.class_names('bg-white flex-1 leading-6 md:bg-white md:leading-normal md:pb-2 md:px-5 pb-3 pl-5 pt-2 md:pt-7 sticky text-gray-600 z-10',
 																					{ 'top-16 pt-5':  helpers.mobile_device?,
 																						'top-12': helpers.mobile_device? && current_page?('/minha-agenda'),
-																						'top-36': !helpers.mobile_device? }) %>">
+																						'top-36': !helpers.mobile_device? && (controller_name == 'feeds') && (action_name == 'index') }) %>">
 				<div class="-ml-2 absolute bg-brand-500 border-4 border-white h-4 left-0 rounded-full w-4 z-20"></div>
 				<div class="space-x-2 flex items-baseline text-xs select-none">
 					<h2 class="font-semibold text-brand-500 uppercase">
