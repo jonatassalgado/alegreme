@@ -12,13 +12,7 @@ export default class extends ApplicationController {
 
     async setup() {
         document.addEventListener("horizontal-event#open-event:before", (e) => {
-            Transition.to(this.element, {
-                transition: () => this.element.classList.add("opacity-0"),
-                observed:   ["opacity-0"],
-                duration:   300
-            }).then(el => {
-                this.element.classList.add("hidden", "transform")
-            })
+            this.element.classList.add("hidden", "transform")
         }, false);
         document.addEventListener("horizontal-event#close-event:after", (e) => {
             this.element.classList.remove("hidden")

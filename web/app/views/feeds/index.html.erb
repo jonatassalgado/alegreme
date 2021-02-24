@@ -53,7 +53,7 @@
 			<% else %>
 				<h2 class="mt-5 font-display text-gray-900 font-bold px-5 text-2xl md:text-3xl">
 					Não foram encontrados eventos em Porto
-					Alegre <%= I18n.l params[:day].to_datefull if params[:day] %> <%= "na categoria #{params[:category]&.titleize}" if params[:category] %>
+					Alegre <%= I18n.l params[:day].to_date if params[:day] %> <%= "na categoria #{params[:category]&.titleize}" if params[:category] %>
 				</h2>
 			<% end %>
 			<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>

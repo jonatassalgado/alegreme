@@ -1,20 +1,42 @@
-<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter' }, class: 'transition-all duration-300 translate-x-32 md:ml-8 mt-8 sticky top-24' do %>
-	<div class="flex items-baseline space-x-3 mb-1">
-		<h2 class="block font-bold font-display mb-3 md:text-xl text-2xl text-gray-900">
-			Filtros
-		</h2>
-		<%= link_to root_path, class: 'bg-brand-100 cursor-pointer flex font-semibold hover:bg-brand-200 items-baseline px-2 relative rounded-full text-brand-600' do %>
-			<svg class="fill-current mr-1 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-				<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-			</svg>
-			Limpar filtro
-		<% end if params[:category] %>
+<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter' }, class: 'space-y-6 transition-all duration-300 translate-x-32 md:ml-8 mt-8 sticky top-24' do %>
+	<div>
+		<div class="flex items-baseline space-x-3 mb-1">
+			<h2 class="block font-bold font-display mb-2 md:text-xl text-2xl text-gray-900">
+				Dia da semana
+			</h2>
+			<%= link_to root_path, class: 'bg-brand-100 cursor-pointer flex font-semibold hover:bg-red-200 hover:text-red-600 items-baseline px-2 relative rounded-full text-brand-600' do %>
+				<svg class="fill-current mr-1 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+					<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+				</svg>
+				Limpar filtro
+			<% end if params[:day] %>
+		</div>
+		<div class="flex flex-wrap">
+			<% (Date.today..(Date.today + 7)).each do |day| %>
+				<%= link_to helpers.day_of_week(day), day_events_path(day.strftime("%d-%m-%Y")), data: { 'turbo-preserve-scroll': true }, class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content w-full',
+																																																																														 { 'bg-brand-200 border-brand-200 text-brand-600': params[:day] == day.strftime("%d-%m-%Y"),
+																																																																															 'text-gray-500':                                params[:day] != day.strftime("%d-%m-%Y") }) %>
+			<% end %>
+		</div>
 	</div>
-	<div class="flex flex-wrap">
-		<% @categories.each do |category| %>
-			<%= link_to category, category_events_path(category), data: { 'turbo-preserve-scroll': true }, class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content w-full',
-																																																																{ 'bg-brand-200 border-brand-200 text-brand-600': params[:category] == category,
-																																																																	'text-gray-500':                                params[:category] != category }) %>
-		<% end %>
+	<div>
+		<div class="flex items-baseline space-x-3 mb-1">
+			<h2 class="block font-bold font-display mb-2 md:text-xl text-2xl text-gray-900">
+				Categorias
+			</h2>
+			<%= link_to root_path, class: 'bg-brand-100 cursor-pointer flex font-semibold hover:bg-red-200 hover:text-red-600 items-baseline px-2 relative rounded-full text-brand-600' do %>
+				<svg class="fill-current mr-1 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+					<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+				</svg>
+				Limpar filtro
+			<% end if params[:category] %>
+		</div>
+		<div class="flex flex-wrap">
+			<% @categories.each do |category| %>
+				<%= link_to category, category_events_path(category), data: { 'turbo-preserve-scroll': true }, class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content w-full',
+																																																																	{ 'bg-brand-200 border-brand-200 text-brand-600': params[:category] == category,
+																																																																		'text-gray-500':                                params[:category] != category }) %>
+			<% end %>
+		</div>
 	</div>
 <% end %>
