@@ -22,7 +22,6 @@ SitemapGenerator::Sitemap.create do
 	#
 	# Add all articles:
 	#
-	add city_events_path, {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.9}
 
 	Event.find_each do |event|
 		add event_path(event), {:lastmod => event.updated_at, :changefreq => 'daily', :priority => 0.9}
