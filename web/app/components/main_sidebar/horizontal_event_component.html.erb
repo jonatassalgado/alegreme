@@ -15,7 +15,7 @@
 				<%= helpers.format_hour @event.start_time %>h ·
 				<%= link_to @event&.categories_primary_name&.titleize, category_events_path(@event.categories_primary_name), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				·
-				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 			</div>
 			<div class="<%= helpers.class_names('flex transition-opacity duration-150 mt-1 mt-3 space-x-1',
 																					{ 'md:group-hover:opacity-100  md:opacity-0': !@user&.like_or_dislike?(@event) }) %>">
