@@ -78,10 +78,11 @@
 					<%= start_date.strftime("%d/%m/%Y") %>
 				<% end %>
 			</div>
-			<div id="calendar__events" data-left-sidebar--calendar-target="events" class="pb-10">
-				<%= render LeftSidebar::GroupByDayListComponent.new(events: @events, user: @user) if @events.present? %>
-			</div>
-
+			<% if @events.present? %>
+				<div id="calendar__events" data-left-sidebar--calendar-target="events" class="pb-10">
+					<%= render LeftSidebar::GroupByDayListComponent.new(events: @events, user: @user) %>
+				</div>
+			<% end %>
 			<% if @user && @events&.empty? && (@start_date != Date.today) %>
 				<div id="calendar__filter" class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
 					Sem eventos na sua agenda neste dia.
@@ -90,11 +91,11 @@
 					<% end %>
 				</div>
 			<% elsif @user && @events&.empty? %>
-				<div id="calendar__filter" class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
+				<div id="calendar__filter" class="mt-3 text-sm text-center text-gray-600">
 					Você não tem eventos salvos na sua agenda
 				</div>
 			<% elsif !@user %>
-				<div class="p-2 my-6 mt-3 text-sm text-center text-gray-600 rounded-lg bg-gray-50">
+				<div class="text-sm text-gray-600">
 					<%= link_to 'Crie uma conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'underline text-brand-500 hover:text-gray-600' %>
 					para salvar seus eventos favoritos
 				</div>
