@@ -43,16 +43,20 @@ parse_event_script = """
         assert(splash:wait(3))
         splash.scroll_position = {y=1000}
 
-        result, error = splash:wait_for_resume([[
-            function main(splash) {
-                var checkExist = setInterval(function() {
-                    if (document.querySelector("._63ew").innerText && document.querySelector("._2ycp._5xhk").innerText && document.querySelector('._2xq3').innerText) {
-                        clearInterval(checkExist);
-                        splash.resume();
-                    }
-                }, 1000);
-            }
-        ]], 60)
+        local signupForm = splash:select('#login_form')
+
+        if signupForm == nil then
+            result, error = splash:wait_for_resume([[
+                        function main(splash) {
+                            var checkExist = setInterval(function() {
+                                if (document.querySelector("._63ew").innerText && document.querySelector("._2ycp._5xhk").innerText && document.querySelector('._2xq3').innerText) {
+                                    clearInterval(checkExist);
+                                    splash.resume();
+                                }
+                            }, 1000);
+                        }
+                    ]], 60)
+        end
 
         splash:runjs("window.close()")
         return splash:html()
@@ -224,6 +228,17 @@ class EventSpider(scrapy.Spider):
 
     def parse_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
+
+        sign_up_form_els = response.xpath('//form[@id="login_form"]')
+        if sign_up_form_els:
+            event_loader.add_value('deleted', 'true')
+            event_loader.add_value('source_url', response.url)
+            event_loader.load_item()
+            event = event_loader.item
+            self.log("EVENT DELETED: %s" % event)
+            yield event
+            return
+
         event_loader.add_xpath('name', '//title[1]/text()')
         event_loader.add_xpath('cover_url', '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src')
         event_loader.add_xpath('address', '//*[@id="event_summary"]//div[@class="_5xhp fsm fwn fcg"][1]/text()')

@@ -12,6 +12,8 @@ require_relative '../../../app/uploaders/event_image_uploader'
 module PopulateEventsRake
 
 	def create_place(item)
+		return if item['deleted']
+
 		place = Place.find_by("lower(details ->> 'name') = ?", item['place_name'].downcase)
 
 		if place
@@ -58,6 +60,7 @@ module PopulateEventsRake
 	end
 
 	def create_organizers(item)
+		return if item['deleted']
 		return unless item['organizers']
 
 		item['organizers'].map do |organizer_data|
@@ -218,6 +221,12 @@ module PopulateEventsRake
 	end
 
 	def create_event(item)
+		if item['deleted']&.present?
+			Event.destroy_by("(details ->> 'source_url') = ?", item['source_url'])
+			puts "Evento: #{item['source_url']} - Evento deletado".yellow
+			return [false, false]
+		end
+
 		if item['datetimes']&.empty?
 			puts "Evento: #{item['name']} - Evento sem data raspada".red
 			return [false, false]
@@ -370,6 +379,11 @@ namespace :populate do
 			event, ml_data = create_event(item)
 			place          = create_place(item)
 			organizers     = create_organizers(item)
+
+			if event == :deleted
+				puts "#{item['name']} - Próximo (evento deletado)".yellow
+				next
+			end
 
 			unless event
 				puts "#{item['name']} - Próximo (evento não criado)".yellow
