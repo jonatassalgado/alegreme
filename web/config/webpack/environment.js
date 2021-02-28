@@ -34,5 +34,4 @@ environment.config.merge({
 	}
 });
 
-
-module.exports = environment;
+module.exports = environment

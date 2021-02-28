@@ -38,8 +38,6 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'recaptcha'
 
-gem 'lupa', git: 'https://github.com/edelpero/lupa.git'
-
 gem 'jsonl'
 
 gem 'geocoder'
@@ -49,7 +47,7 @@ gem 'gon'
 gem 'picture_tag'
 
 # Webpacker
-gem 'webpacker', github: 'rails/webpacker', branch: 'master'
+gem 'webpacker', github: 'rails/webpacker', tag: 'v5.2.1'
 
 gem "browser", require: "browser/browser"
 
