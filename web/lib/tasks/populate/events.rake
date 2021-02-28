@@ -221,7 +221,7 @@ module PopulateEventsRake
 	end
 
 	def create_event(item)
-		if item['deleted']&.present?
+		if item['deleted'] == 'true'
 			Event.destroy_by("(details ->> 'source_url') = ?", item['source_url'])
 			puts "Evento: #{item['source_url']} - Evento deletado".yellow
 			return [false, false]

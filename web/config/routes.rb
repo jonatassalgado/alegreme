@@ -23,6 +23,10 @@ Rails.application.routes.draw do
 		post 'taste/:resource/:id/:taste', to: 'taste#update', as: :taste
 	end
 
+	namespace :ml do
+		get 'events', to: 'events#index'
+	end
+
 	get '/porto-alegre', to: 'feeds#index', as: :feed
 	get '/porto-alegre/eventos', to: 'feeds#index', as: :city_events
 	get '/minha-agenda', to: 'users#agenda', as: :my_agenda

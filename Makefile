@@ -8,6 +8,9 @@ ENV := development
 run:
 	$(RUN) $(command)
 
+run-scrapy:
+	docker-compose -f docker-compose.development.scrapy.yml run --rm scrapy bash
+
 build:
 	docker-compose -f docker-compose.development.yml up -d --build
 
@@ -27,7 +30,7 @@ restart:
 	docker-compose -f docker-compose.development.yml restart
 
 down:
-	docker-compose -f docker-compose.development.yml down
+	docker-compose -f docker-compose.development.yml down --remove-orphans
 
 ps:
 	docker-compose -f docker-compose.development.yml ps
@@ -61,9 +64,6 @@ db-create:
 
 credentials:
 	$(EXEC) bash -c "EDITOR=nano rails credentials:edit"
-
-run-scrapy:
-	docker-compose -f docker-compose.development.scrapy.yml run --rm scrapy bash
 
 restart-docker-service:
 	systemctl restart docker.socket docker.service
