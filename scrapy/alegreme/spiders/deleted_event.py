@@ -72,14 +72,14 @@ class DeletedEventSpider(scrapy.Spider):
 
     custom_settings = {
         'ITEM_PIPELINES': {
-            'alegreme.pipelines.EventPipeline': 400
+            'alegreme.pipelines.DeletedEventPipeline': 400
         },
         'CLOSESPIDER_ITEMCOUNT': 100,
         'DEPTH_LIMIT': 2
     }
 
     allowed_domains = ['facebook.com']
-    active_events = requests.get(url="http://" + os.environ.get('PRIVATE_IP') + ":3000/api/events.json")
+    active_events = requests.get(url="http://" + os.environ.get('DOMAIN') + "/api/events.json")
     start_urls = []
 
     for item in active_events.json()['items']:

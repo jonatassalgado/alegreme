@@ -24,7 +24,6 @@ class EventPipeline(object):
         timestr = time.strftime("%Y%m%d-%H%M%S")
         pwd = settings.get('PWD')
         file_path = pwd + '/scraped/events-' + timestr + '.jsonl'
-#         self.file = open('/var/www/scrapy/data/scraped/events-' + timestr + '.json', 'wb')
 
         try:
             if os.path.isdir(pwd + '/scraped'):
@@ -52,6 +51,42 @@ class EventPipeline(object):
         self.exporter.export_item(item)
         return item
 
+
+class DeletedEventPipeline(object):
+
+    file = None
+
+    def open_spider(self, spider):
+        settings = get_project_settings()
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        pwd = settings.get('PWD')
+        file_path = pwd + '/scraped/deleted-events-' + timestr + '.jsonl'
+
+        try:
+            if os.path.isdir(pwd + '/scraped'):
+                print("The directory /scraped already exists")
+            else:
+                os.makedirs(pwd + '/scraped')
+        except IOError as exception:
+            raise IOError('%s: %s' % (path, exception.strerror))
+
+        try:
+            self.file = open(file_path, 'wb')
+        except IOError:
+            self.file = open(file_path, 'w+')
+
+        self.exporter = JsonLinesItemExporter(self.file)
+        self.exporter.start_exporting()
+
+
+    def close_spider(self, spider):
+        self.exporter.finish_exporting()
+        self.file.close()
+
+
+    def process_item(self, item, spider):
+        self.exporter.export_item(item)
+        return item
 
 
 class MoviePipeline(object):
