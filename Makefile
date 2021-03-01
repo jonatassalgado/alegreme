@@ -84,3 +84,9 @@ prune:
 
 hint:
 	hint http://localhost:3000
+
+crontab-update:
+	whenever --update-crontab --load-file ./schedule.rb
+
+crontab-list:
+	crontab -l
