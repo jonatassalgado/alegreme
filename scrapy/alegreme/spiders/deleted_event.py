@@ -79,7 +79,7 @@ class DeletedEventSpider(scrapy.Spider):
     }
 
     allowed_domains = ['facebook.com']
-    active_events = requests.get(url="http://app:3000/ml/events.json")
+    active_events = requests.get(url="http://" + os.environ.get('PRIVATE_IP') + ":3000/api/events.json")
     start_urls = []
 
     for item in active_events.json()['items']:

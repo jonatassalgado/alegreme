@@ -1,6 +1,10 @@
 module Api
 	class EventsController < ApplicationController
 
+		def index
+
+		end
+
 		def similar_events
 
 		end

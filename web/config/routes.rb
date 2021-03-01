@@ -15,16 +15,13 @@ Rails.application.routes.draw do
 	# get '/sobre', to: 'welcome#index'
 
 	namespace :api do
+		get 'events', to: 'events#index'
 		get 'porto-alegre/eventos/:id/similar', to: 'events#similar', as: :events_similar
 		get 'porto-alegre/eventos/today', to: 'events#today', as: :today_and_tomorrow_events
 		get 'porto-alegre/eventos/week', to: 'events#week', as: :week_events
 		get 'porto-alegre/eventos/category/:category', to: 'events#category', as: :category_events
 		post 'collections', to: 'collections#index', as: :collections
 		post 'taste/:resource/:id/:taste', to: 'taste#update', as: :taste
-	end
-
-	namespace :ml do
-		get 'events', to: 'events#index'
 	end
 
 	get '/porto-alegre', to: 'feeds#index', as: :feed
