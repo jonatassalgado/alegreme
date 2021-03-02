@@ -1,5 +1,18 @@
 <%= content_tag :div, id: 'main-sidebar--large-event', data: { controller: 'main-sidebar--large-event', 'opened-event': @event&.id }, class: 'transition-all transform duration-300' do %>
 	<% if @event %>
+		<% if helpers.already_happened? @event %>
+			<div class="bg-brand-100 border border-brand-200 flex font-semibold items-center max-w-screen-lg mb-3 md:mb-0 md:mt-5 md:mx-auto mt-1 mx-4 p-3 rounded-lg space-x-2 text-brand-600 text-sm">
+				<div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
+					<!-- Heroicon name: exclamation -->
+					<svg class="h-6 w-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+					</svg>
+				</div>
+				<div>
+					Este evento já ocorreu <%= I18n.l(@event.end_time) if @event&.end_time %>.
+				</div>
+			</div>
+		<% end %>
 		<div class="relative mt-5 overflow-hidden bg-white border border-gray-100 shadow-xl h-screen-8/10 rounded-xl">
 			<div data-action="click->main-sidebar--large-event#close" class="fixed absolute top-0 right-0 z-50 p-1 mt-2 mr-3 text-gray-600 transition-transform duration-300 transform bg-white rounded-full shadow cursor-pointer hover:scale-105">
 				<svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
