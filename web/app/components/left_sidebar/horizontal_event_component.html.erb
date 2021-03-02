@@ -1,4 +1,4 @@
-<%= content_tag :div, id: dom_id(@event, :left_sidebar), class: 'duration-300 transition-opacity', data: { controller: 'left-sidebar--horizontal-event' } do %>
+<%= content_tag :div, id: dom_id(@event, :left_sidebar), class: 'duration-300 transition-all bg-white', data: { controller: 'left-sidebar--horizontal-event', 'flip-key': dom_id(@event, :left_sidebar) } do %>
 	<div class="select-none tap-highlight-none pr-5 py-3 group relative">
 		<div class="text-sm md:text-xs md:mt-1 text-gray-500">
 			<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.start_time %>h
