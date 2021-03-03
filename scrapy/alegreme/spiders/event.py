@@ -229,8 +229,8 @@ class EventSpider(scrapy.Spider):
     def parse_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
 
-        sign_up_form_els = response.xpath('//form[@id="login_form"]')
-        if sign_up_form_els:
+        sign_in_form = response.xpath('//*[contains(@class, "_585r _50f4") and contains(., "You must log in to continue")]')
+        if sign_in_form:
             event_loader.add_value('deleted', 'true')
             event_loader.add_value('source_url', response.url)
             event_loader.load_item()
