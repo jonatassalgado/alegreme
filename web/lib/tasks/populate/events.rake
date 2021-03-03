@@ -12,7 +12,7 @@ require_relative '../../../app/uploaders/event_image_uploader'
 module PopulateEventsRake
 
 	def create_place(item)
-		return if item['deleted']
+		return if item['deleted'] == 'true'
 
 		place = Place.find_by("lower(details ->> 'name') = ?", item['place_name'].downcase)
 
@@ -40,7 +40,7 @@ module PopulateEventsRake
 	end
 
 	def set_place_image(place, item)
-		return unless item['place_cover_url']
+		return if item['place_cover_url'].blank?
 		return if place.image_data?
 
 		begin
@@ -60,8 +60,8 @@ module PopulateEventsRake
 	end
 
 	def create_organizers(item)
-		return if item['deleted']
-		return unless item['organizers']
+		return if item['deleted'] == 'true'
+		return if item['organizers'].blank?
 
 		item['organizers'].map do |organizer_data|
 			organizer = Organizer.find_by("lower(details ->> 'name') = ?", organizer_data['name'].downcase)
@@ -94,7 +94,7 @@ module PopulateEventsRake
 	end
 
 	def set_organizer_image(organizer, organizer_data)
-		return unless organizer_data['cover_url']
+		return if organizer_data['cover_url'].blank?
 		return if organizer.image_data?
 
 		begin
@@ -175,7 +175,7 @@ module PopulateEventsRake
 	end
 
 	def set_cover(item, event)
-		return unless item['cover_url']
+		return if item['cover_url'].blank?
 
 		begin
 			event_cover_file = Down.download(item['cover_url'])
@@ -227,12 +227,12 @@ module PopulateEventsRake
 			return [false, false]
 		end
 
-		if item['datetimes']&.empty?
+		if item['datetimes'].blank?
 			puts "Evento: #{item['name']} - Evento sem data raspada".red
 			return [false, false]
 		end
 
-		if item['description']&.empty?
+		if item['description'].blank?
 			puts "Evento: #{item['name']} - Evento sem descrição raspada".red
 			return [false, false]
 		end
