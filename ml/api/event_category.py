@@ -7,8 +7,6 @@ import string
 import spacy
 import base64
 
-
-
 from nltk import download
 from nltk.tokenize import word_tokenize
 from nltk.stem import RSLPStemmer
@@ -409,8 +407,7 @@ class EventCategoryPrediction(object):
         # query = self.__cleanning_text(query)
         # query = self.__stemming_text(query)
 
-        regex = re.compile(
-            r'predict-event__category-model-\d{8}-\d{6}\.joblib$')
+        regex = re.compile(r'predict-event__category-model-\d{8}-\d{6}\.joblib$')
         last_file = max(filter(regex.search, os.listdir('./')))
 
         classificator = load(last_file)

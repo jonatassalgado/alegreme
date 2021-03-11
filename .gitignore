@@ -1,4 +1,16 @@
 TODO.md
+# Python files
+**/__pycache__
+*.pyc
+*.egg-info
+**/nltk_data
+**/.local
+.bash_history
+supervisord.log
+supervisord.pid
+**/completions/*
+**/label-studio/alegreme/upload/*
+
 .idea/
 .idea/alegreme.iml
 .idea/workspace.xml

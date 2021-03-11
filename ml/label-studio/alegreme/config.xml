@@ -1,0 +1,40 @@
+<View>
+  <Text name="name" value="$name"/>
+  <Text name="description" value="$description"/>
+  <Text name="categories" value="$categories"/>
+  <Choices name="category" toName="description" choice="single" showInline="true">
+    <Choice value="adventure_activities"/>
+    <Choice value="thrift_store"/>
+    <Choice value="cinema"/>
+    <Choice value="sports_competition"/>
+    <Choice value="academic_themes_course"/>
+    <Choice value="dance_course"/>
+    <Choice value="wellness_course"/>
+    <Choice value="business_course"/>
+    <Choice value="art_course"/>
+    <Choice value="kitchen_course"/>
+    <Choice value="music_course"/>
+    <Choice value="dance_show"/>
+    <Choice value="sport"/>
+    <Choice value="exhibition"/>
+    <Choice value="gastronomic_experience"/>
+    <Choice value="party"/>
+    <Choice value="traditional_party"/>
+    <Choice value="music_festival"/>
+    <Choice value="arts_festival"/>
+    <Choice value="food_fair"/>
+    <Choice value="trade_fair"/>
+    <Choice value="fashion_fair"/>
+    <Choice value="street_fair"/>
+    <Choice value="forum_or_seminar"/>
+    <Choice value="hackaton"/>
+    <Choice value="meetup"/>
+    <Choice value="outlier"/>
+    <Choice value="talk"/>
+    <Choice value="protest"/>
+    <Choice value="soiree"/>
+    <Choice value="poetry_slam"/>
+    <Choice value="show"/>
+    <Choice value="theatrical_show"/>
+  </Choices>
+</View>
