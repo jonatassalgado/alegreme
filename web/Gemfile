@@ -46,6 +46,9 @@ gem 'gon'
 
 gem 'picture_tag'
 
+# Google Cloud
+gem 'google-cloud-vision', require: false
+
 # Webpacker
 gem 'webpacker', github: 'rails/webpacker', tag: 'v5.2.1'
 

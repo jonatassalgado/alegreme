@@ -25,15 +25,11 @@ public_ip = os.environ.get('PUBLIC_IP')
 private_ip = os.environ.get('PRIVATE_IP')
 home = os.environ.get('HOME')
 
-# if home == '/home/jon':
 SPLASH_URL = 'http://splash:8050'
 SPLASH_USERNAME = 'jon'
 SPLASH_PASS = 'password'
 IS_DOCKER = 'true'
-# PWD = '/home/jon/Projects/alegreme/scrapy/'
-# else:
-#    SPLASH_URL = 'http://172.26.14.59:8050'
-#    IS_DOCKER = 'true'
+
 PWD = '/var/www/scrapy/data'
 
 
@@ -84,6 +80,7 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 750
 }
 
 # DOWNLOADER_MIDDLEWARES.update({
@@ -124,9 +121,11 @@ LOG_ENABLED = True
 LOG_FILE = '/var/www/scrapy/log/output.log'
 
 if os.environ.get('ENV') == 'production':
-    LOG_LEVEL = 'INFO'
+    LOG_LEVEL = 'DEBUG'
 else:
     LOG_LEVEL = 'DEBUG'
+
+COOKIES_DEBUG = True
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

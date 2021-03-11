@@ -1,27 +1,11 @@
-require 'net/http'
-require 'openssl'
-require 'uri'
-require 'json'
 
 task wip: :environment do
+	require "google/cloud/vision"
 
-	users = User.all
+	image_annotator = Google::Cloud::Vision.image_annotator
+	image_path      = 'https://scontent-gig2-1.cdninstagram.com/v/t51.2885-15/e35/151784047_1919199544913266_5030728972930945945_n.jpg?tp=1&_nc_ht=scontent-gig2-1.cdninstagram.com&_nc_cat=110&_nc_ohc=WevJPpHQwEsAX9Hldt_&oh=be03bee8a9b0566c1ab909bb2759978c&oe=60460AC6'
+	response        = image_annotator.text_detection(image:       image_path,
+											         max_results: 1)
 
-	users.each do |u|
-		Rails.cache.delete_matched("#{u.cache_key}/hero--swipable/suggestions_viewed")
-		u.likes.destroy_all
-		u.swipable.deep_merge!({
-														 :events => {
-															 :last_view_at => nil,
-															 :finished_at  => nil,
-															 :hidden_at    => nil,
-															 :active       => true
-														 }
-													 })
-
-		u.save
-	end
-
-
-
+	response.responses[0].text_annotations[0].description
 end

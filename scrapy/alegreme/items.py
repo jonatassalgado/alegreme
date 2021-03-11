@@ -187,3 +187,56 @@ class MovieLanguage(scrapy.Item):
 
 class MovieLanguageLoader(ItemLoader):
     default_item_class=MovieLanguage
+
+
+class Poster(scrapy.Item):
+    shortcode = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    media = scrapy.Field(
+        input_processor=Identity()
+    )
+    caption = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    taken_at_timestamp = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    source_url = scrapy.Field(
+        input_processor=MapCompose(remove_url_params),
+        output_processor=TakeFirst()
+    )
+    location = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    owner = scrapy.Field(
+        input_processor=Identity()
+    )
+    
+class PosterMedia(scrapy.Item):
+    is_video = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    display_url = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    video_url = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+
+class PosterMediaLoader(ItemLoader):
+    default_item_class=PosterMedia
+
+class PosterOwner(scrapy.Item):
+    full_name = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    profile_pic_url = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    username = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+
+class PosterOwnerLoader(ItemLoader):
+    default_item_class=PosterOwner
