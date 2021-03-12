@@ -85,12 +85,12 @@ services:
     cpus: 1
     restart: always
   label-studio:
-    image: heartexlabs/label-studio:latest
-    command: label-studio start alegreme
+    build:
+      context: ./ml/label-studio
+      dockerfile: ./Dockerfile
     ports: 
       - 8080:8080
     volumes: 
-      - ./ml/label-studio/alegreme:/label-studio/alegreme
+      - ./ml/label-studio/events:/label-studio/events
       - ./ml/label-studio/ml_backend:/label-studio/ml_backend
     restart: always
- 

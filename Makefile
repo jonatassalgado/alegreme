@@ -20,6 +20,9 @@ build-service:
 up:
 	docker-compose -f docker-compose.development.yml up -d
 
+up-service:
+	docker-compose -f docker-compose.development.yml up -d $(APP)
+
 up-clean-entrypoint:
 	docker run -it --entrypoint /bin/bash alegreme_app
 
