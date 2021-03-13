@@ -84,13 +84,3 @@ services:
     mem_reservation: 256m
     cpus: 1
     restart: always
-  label-studio:
-    build:
-      context: ./ml/label-studio
-      dockerfile: ./Dockerfile
-    ports: 
-      - 8080:8080
-    volumes: 
-      - ./ml/label-studio/events:/label-studio/events
-      - ./ml/label-studio/ml_backend:/label-studio/ml_backend
-    restart: always
