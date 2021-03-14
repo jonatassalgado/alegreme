@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import json
 import logging
+import base64
 
 
 from datetime import datetime
@@ -10,6 +11,7 @@ from flask import Flask
 from user_persona import UserPersonaPrediction
 from event_persona import EventPersonaPrediction
 from event_category import EventCategoryPrediction
+from event_price import EventPricePrediction
 from event_features import EventFeatures
 from event_similar import EventSimilar
 from flask_restful import reqparse, abort, Api, Resource
@@ -68,16 +70,18 @@ class EventLabelRoute(Resource):
     def get(self):
         args = parser.parse_args()
         user_query = args['query']
-        print(user_query)
 
         predictPersonaModel = EventPersonaPrediction()
         predictCategoryModel = EventCategoryPrediction()
+        predictPriceModel = EventPricePrediction()
 
         persona_prediction = predictPersonaModel.predict(user_query)
         category_prediction = predictCategoryModel.predict(user_query)
+        price_prediction = predictPriceModel.predict(user_query)
 
         persona_output = np.array(persona_prediction).tolist()
         category_output = np.array(category_prediction).tolist()
+        price_output = np.array(price_prediction).tolist()
 
         return {
                 'classification' : {
@@ -100,6 +104,10 @@ class EventLabelRoute(Resource):
                             'name': category_output[1][0],
                             'score': category_output[1][1]
                         }
+                    },
+                    'price': {
+                        'name': price_output[1][0],
+                        'score': price_output[1][1]
                     }
                 }
             }

@@ -9,11 +9,11 @@ WORKDIR $ML_ROOT
 
 RUN pip install --upgrade pip
 COPY ./requirements.txt ./requirements.txt
-RUN pip install -r $ML_ROOT/requirements.txt
+RUN pip3 install -r $ML_ROOT/requirements.txt
 RUN python -m spacy download pt
 
 ADD . $ML_ROOT
 
 WORKDIR $API_ROOT
 
-CMD python app.py
+CMD python3 app.py

@@ -1,0 +1,1 @@
+{"status": "ok", "train_output": {"labels": ["other", "discount", "event"], "model_file": "./ml_backend/project4bd4/1615683616/model.pkl"}, "project": "project4bd4", "workdir": "./ml_backend/project4bd4/1615683616", "version": "1615683616", "job_id": null, "time": 2.880277156829834}

@@ -1,5 +1,6 @@
 import os
 import re
+import pickle
 import pandas as pd
 import heapq as hq
 import time
@@ -20,8 +21,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import accuracy_score
-
-from joblib import dump, load
 
 download('stopwords')
 download('punkt')
@@ -378,8 +377,7 @@ class EventCategoryPrediction(object):
 
         classificator = classificator.fit(X_train, y_train)
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        dump(classificator,
-             'predict-event__category-model-' + timestr + '.joblib')
+        pickle.dump(classificator, open('predict-event__category-model-' + timestr + '.pkl', 'wb'))
 
         predictions = classificator.predict_proba(X_test)
 
@@ -407,10 +405,10 @@ class EventCategoryPrediction(object):
         # query = self.__cleanning_text(query)
         # query = self.__stemming_text(query)
 
-        regex = re.compile(r'predict-event__category-model-\d{8}-\d{6}\.joblib$')
+        regex = re.compile(r'predict-event__category-model-\d{8}-\d{6}\.pkl$')
         last_file = max(filter(regex.search, os.listdir('./')))
 
-        classificator = load(last_file)
+        classificator = pickle.load(open(last_file, "rb"))
         predictions = classificator.predict_proba([query])
 
         for prediction in predictions:

@@ -1,0 +1,29 @@
+version: "3.5"
+volumes:
+  redis_data:
+services:
+  redis:
+    image: redis
+    # command: redis-server
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    restart: always
+  server:
+    container_name: server
+    build: .
+    environment:
+      - MODEL_DIR=/data/models
+      - RQ_QUEUE_NAME=default
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - 9090:9090
+    depends_on:
+      - redis
+    links:
+      - redis
+    volumes:
+      - "./data/server:/data"
+      - "./logs:/tmp"

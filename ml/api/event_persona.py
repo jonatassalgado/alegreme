@@ -6,8 +6,7 @@ import time
 import string
 import spacy
 import base64
-
-
+import pickle
 
 from nltk import download
 from nltk.tokenize import word_tokenize
@@ -22,8 +21,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import accuracy_score
-
-from joblib import dump, load
 
 download('stopwords')
 download('punkt')
@@ -345,7 +342,7 @@ class EventPersonaPrediction(object):
 
         classificator = classificator.fit(X_train, y_train)
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        dump(classificator, 'predict-event__persona-model-' + timestr + '.joblib')
+        pickle.dump(classificator, open('predict-event__persona-model-' + timestr + '.pkl', 'wb'))
 
 #        predictions = classificator.predict(X_test)
 #        print(classificator.score(X_test, y_test))
@@ -375,11 +372,10 @@ class EventPersonaPrediction(object):
         # query = self.__cleanning_text(query)
         # query = self.__stemming_text(query)
 
-        regex = re.compile(
-            r'predict-event__persona-model-\d{8}-\d{6}\.joblib$')
+        regex = re.compile(r'predict-event__persona-model-\d{8}-\d{6}\.pkl$')
         last_file = max(filter(regex.search, os.listdir('./')))
 
-        classificator = load(last_file)
+        classificator = pickle.load(open(last_file, 'rb'))
         predictions = classificator.predict_proba([query])
 
         for prediction in predictions:

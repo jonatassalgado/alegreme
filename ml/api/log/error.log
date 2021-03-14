@@ -6,3 +6,107 @@ WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 113-932-049
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 291-202-102
+INFO:werkzeug: * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:32] "[35m[1mGET /event/label?query=Tk9WQSBEQVRBOiAxOCwgMTkgRSAyMCBERSBERVpFTUJSTyBERSAyMDIwCgpBcnQgVGF0dG9vIFBvYSBlc3RhIGNoZWdhbmRvIG5hIHN1YSAxwrAgZWRpw6fDo28gcGFyYSB0b2RvcyBvcyB0YXR1YWRvcmVzLCB0YXR1YWRvcyBlIHNpbXBhdGl6YW50ZXMuCgpDb250YW5kbyBjb20gbWFpcyBkZSA4MCBzdGFuZHMgZGl2aWRpZG9zIGVudHJlIGVzdMO6ZGlvcyBkZSB0YXR1YWdlbSwgbG9qYXMgZGUgcm91cGFzLCBwaWVyY2luZ3MsIGJhcmJlaXJvcywgZXRjLiBPIDHCuiBBcnQgVGF0dG9vIFBvYSB2YWkgdHJhemVyIHByYSB2b2PDqiB0dWRvIHF1ZSB2b2PDqiBwcm9jdXJhIGUgbWFpcyBxdWFuZG8gbyBuZWdvY2lvIMOpIHRhdHRvbyEKCk8gZXZlbnRvIGNvbnRhcsOhIGNvbSBiYW5kYXMgYW8gdml2bywgY2hvcHAsIGNvbWlkYXMgZXNwZWNpYWlzLCBicmluZGVzIHBhcmEgb3MgdmlzaXRhbnRlcywgc2hvd3MgZGUgZGFuw6dhLCBhcHJlc2VudGHDp8O1ZXMsIHRhdHRvb3MgZmVpdGFzIG5hIGhvcmEgZSBtdWl0byBtYWlzIQoKTyBHdXJpYSB0YXR1YWRhIHNlcsOhIHVtIGNvbmN1cnNvIGRlIGF0aXR1ZGUsIHRhdHVhZ2VucyBlIGJvbSBodW1vciEgR3VyaWFzIHbDo28gc3ViaXIgbm8gcGFsY28gZG8gZXZlbnRvIGUgbW9zdHJhciBxdWVtIG1hbmRhIGzDoSBlIDMgc2FpcsOjbyB2aXRvcmlvc2FzIGNvbW8gYXMgZ2Fyb3RhcyBtYWlzIGZvZGFzIGRvIGV2ZW50bywgZGV2aWRhbWVudGUgcHJlbWlhZGFzIGUgYWNsYW1hZGFzIQoKTyBldmVudG8gdmFpIGVzdGFyIHJvbGFuZG8gbm8gY2VudHJvIGRlIGV2ZW50b3MgQmFycmFTaG9wcGluZ1N1bCEgTm9zIGRpYXMgMTgsIDE5IGUgMjAgZGUgZGV6ZW1idG8gMjAyMC4KCgpUZXJlbW9zIHZlbmRhIGRlIGluZ3Jlc3NvIG5vIGxvY2FsIGVtIEJJTEhFVEVSSUEgb3UgYW50ZWNpcGFkb3MgcGVsbyB3d3cuc3ltcGxhLmNvbS5icgoKCkHDrSB2YWkgbyByZXN1bW86Cgo9PT4gTyBRVcOKPyBBcnQgVGF0dG9vIFBvYSAxwrogZWRpw6fDo28KCj09PiBPTkRFPyBDZW50cm8gZGUgZXZlbnRvcyBCYXJyYVNob3BwaW5nU3VsLgoKPT0+IFFVQU5ETz8gMTgsMTkgZSAyMCBkZSBkZXplbWJybyBkZSAyMDIwCgo9PT4gUVVBTlRPPyBSJAoKPT0+IE7Dg08gVEVNIFRBVFRPTz8gU2VtIHByb2JsZW1hcyEgVmVtIHByYSBjw6Egc2UgcmlzY2FyIGNvbSBhIGdlbnRlIQo9PT4gSsOBIFRFTSBUQVRUT08/IFRhbWLDqW0gbsOjbyB0ZW0gcHJvYmxlbWEsIHZlbSBmYXplciBtYWlzIQo9PT4gSsOBIE7Dg08gVEVOSE8gRVNQQcOHTyBOTyBDT1JQTyEgQmVsZXphLCB2ZW0gcHJhIGPDoSB0b21hciB1bWEgY2VydmVqYSBjb20gb3MgYW1pZ29zLCB2ZXIgYmFuZGFzIGFvIHZpdm8sIHRhdHVhZG9yZXMgZm9kYXMgZSBwb250by4== HTTP/1.1[0m" 500 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:32] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:32] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:32] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:33] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:33] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:33] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:57] "[35m[1mGET /event/label?query=RmVpcmEgZGUgcnVhIHZlZ2FuYQ== HTTP/1.1[0m" 500 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:57] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:57] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:57] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:57] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:02:57] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/event_persona.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:27:37] "[37mGET /event/label?query=RmVpcmEgZGUgcnVhIHZlZ2FuYQ== HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/var/www/ml/api/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug: * Detected change in '/var/www/ml/api/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 235-409-085
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:39:37] "[35m[1mGET /event/label?query=RmVpcmEgZGUgcnVhIHZlZ2FuYQ== HTTP/1.1[0m" 500 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:39:37] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:39:37] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:39:37] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:39:37] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:39:37] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:39:37] "[37mGET /event/label?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+INFO:werkzeug:172.20.0.1 - - [14/Mar/2021 19:43:06] "[37mGET /event/label?query=RmVpcmEgZGUgcnVhIHZlZ2FuYQ== HTTP/1.1[0m" 200 -
