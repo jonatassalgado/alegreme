@@ -7,11 +7,19 @@ module EventDecorators
 
 		module InstanceMethods
 			def categories_primary_name
-				ml_data['categories']['primary']['name']
+				categories&.first&.details['name']
 			end
 
 			def categories_primary_name=(value)
-				ml_data['categories']['primary']['name'] = value
+				categories&.first&.details['name'] = value
+			end
+
+			def categories_display_name
+				categories&.first&.details['display_name']
+			end
+
+			def categories_display_name=(value)
+				categories&.first&.details['display_name'] = value
 			end
 
 			def categories_secondary_name

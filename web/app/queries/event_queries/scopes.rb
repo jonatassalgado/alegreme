@@ -265,8 +265,7 @@ module EventQueries
 			}
 
 			scope 'in_categories', lambda { |categories, opts = {}|
-				opts       = {'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': []}.merge(opts)
-				categories = categories.present? ? (categories - opts[:not_in]) : (Event::CATEGORIES - opts[:not_in])
+				opts = {'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': []}.merge(opts)
 
 				if opts[:group_by] && categories.present?
 					raise ArgumentError, "categorias precisa ser um array" unless categories.is_a? Array

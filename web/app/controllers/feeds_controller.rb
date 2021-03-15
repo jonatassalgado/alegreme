@@ -14,7 +14,7 @@ class FeedsController < ApplicationController
 
 		@upcoming_events = requested_events
 		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
-		@categories      = Event::CATEGORIES.dup.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }
+		@categories      = Category.where("(details ->> 'name') NOT IN (?)", ['outlier'])
 
 		render layout: false if @stimulus_reflex
 	end
@@ -67,7 +67,8 @@ class FeedsController < ApplicationController
 		if params[:day]
 			Event.in_day(params[:day]).not_ml_data.includes(:place).order_by_date
 		elsif params[:category]
-			Event.not_ml_data.active.in_categories([params[:category]]).order_by_date.includes(:place, :categories)
+			@category = Category.find_by("(details ->> 'name') = :category", category: params[:category])
+			@category.events.not_ml_data.active.order_by_date.includes(:place, :categories)
 		else
 			Event.active.not_ml_data.includes(:place).order_by_date
 		end

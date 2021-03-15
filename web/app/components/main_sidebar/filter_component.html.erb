@@ -1,4 +1,4 @@
-<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter' }, class: 'space-y-6 transition-all duration-300 translate-x-32 md:ml-8 mt-8 sticky top-24' do %>
+<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter' }, class: 'space-y-6 transition-all duration-300 translate-x-32 md:ml-8 mt-8' do %>
 	<div>
 		<div class="flex items-baseline space-x-3 mb-1">
 			<h2 class="block font-bold font-display mb-2 md:text-xl text-2xl text-gray-900">
@@ -33,9 +33,9 @@
 		</div>
 		<div class="flex flex-wrap">
 			<% @categories.each do |category| %>
-				<%= link_to category, category_events_path(category), data: { 'turbo-preserve-scroll': true }, class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content w-full',
-																																																																	{ 'bg-brand-200 border-brand-200 text-brand-600': params[:category] == category,
-																																																																		'text-gray-500':                                params[:category] != category }) %>
+				<%= link_to category.details_display_name, category_events_path(category.details_name), data: { 'turbo-preserve-scroll': true }, class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content w-full',
+																																																																	{ 'bg-brand-200 border-brand-200 text-brand-600': params[:category] == category&.details_name,
+																																																																	  'text-gray-500':                                params[:category] != category&.details_name }) %>
 			<% end %>
 		</div>
 	</div>

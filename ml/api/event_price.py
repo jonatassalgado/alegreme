@@ -107,10 +107,57 @@ class EventPricePrediction(object):
     def __init__(self):
         pass
     
+    def __cleanning_text(self, text):
+        def __downcase(text):
+            return text.lower()
+
+        def __remove_digits(text):
+            return re.sub(r'\d+', '', text)
+
+        def __remove_ponctuation(text):
+            translator = str.maketrans(' ', ' ', string.punctuation)
+            return text.translate(translator)
+
+        def __remove_white_spaces(text):
+            return " ".join(text.split())
+
+        def __remove_stopwords(text):
+            tokens = word_tokenize(text)
+            text_without_stopwords = [i for i in tokens if not i in stopwords]
+            return ' '.join(text_without_stopwords)
+
+        def __remove_emojis(text):
+            return text.encode('latin-1', 'ignore').decode('latin-1')
+
+        def __remove_html_tags(text):
+            cleaner = re.compile('<.*?>')
+            clean_text = re.sub(cleaner, ' ', text)
+            return clean_text
+
+        text = __downcase(text)
+        text = __remove_html_tags(text)
+        text = __remove_digits(text)
+        text = __remove_ponctuation(text)
+        text = __remove_emojis(text)
+        text = __remove_stopwords(text)
+        text = __remove_white_spaces(text)
+
+        return text
+
+    def __stemming_text(self, text):
+        text_tokenized = word_tokenize(text)
+        text_stemmed = []
+        for word in text_tokenized:
+            stemmer = RSLPStemmer()
+            if word not in stopwords:
+                text_stemmed.append(stemmer.stem(word))
+                pass
+        return ' '.join(text_stemmed)
+    
     def predict(self, query):
-        query = base64.b64decode(query).decode('utf-8')
-        # query = self.__cleanning_text(query)
-        # query = self.__stemming_text(query)
+        # query = base64.b64decode(query).decode('utf-8')
+        query = self.__cleanning_text(query)
+        query = self.__stemming_text(query)
 
         regex = re.compile(r'predict-event__price-model-\d{8}-\d{6}\.pkl$')
         last_file = max(filter(regex.search, os.listdir('./')))
