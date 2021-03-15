@@ -8,4 +8,8 @@ class Category < ApplicationRecord
 	def details_display_name
 		details['display_name']
 	end
+
+	def details_url
+		details['url']
+	end
 end

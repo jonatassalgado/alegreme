@@ -22,6 +22,14 @@ module EventDecorators
 				categories&.first&.details['display_name'] = value
 			end
 
+			def categories_url
+				categories&.first&.details['url']
+			end
+
+			def categories_url=(value)
+				categories&.first&.details['url'] = value
+			end
+
 			def categories_secondary_name
 				ml_data['categories']['secondary']['name']
 			end
