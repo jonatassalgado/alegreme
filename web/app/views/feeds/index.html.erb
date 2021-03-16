@@ -10,7 +10,7 @@
 		</section>
 	<% end %>
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
-		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
+		<div class="mx-auto mb-24 is-animated sm:container">
 			<% unless params[:day] || params[:category] %>
 				<div data-turbo-permanent class="flex flex-row-reverse gap-4 items-start mb-12 md:flex md:flex-row md:mb-5 md:mx-0 md:px-5 mx-5 pt-5 select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '150px' : '225px' %>">
 					<div class="my-auto">
@@ -42,7 +42,7 @@
 							Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
 						</h2>
 					<% end %>
-					<div class="flex gap-1 px-5 text-gray-400 text-sm items-center" title="Devido ao Covid19 o número de eventos está abaixo do normal">
+					<div class="flex gap-1 px-5 text-gray-400 text-xs items-center" title="Devido ao Covid19 o número de eventos está abaixo do normal">
 						Atualizado há <%= time_ago_in_words @upcoming_events&.last&.updated_at %>
 						<svg class="stroke-current w-4 h-4" fill="none"
 								 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

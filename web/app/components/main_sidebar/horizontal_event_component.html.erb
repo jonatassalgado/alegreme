@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'transition-opacity group' do %>
-	<div class="select-none tap-highlight-none bg-white flex justify-items-start mx-2 md:mx-0 px-3 md:px-5 rounded">
+	<div class="select-none tap-highlight-none bg-white flex justify-items-start md:mx-0 rounded">
 		<div>
 			<div data-controller="ripple" class="h-20 md:h-20 md:w-32 overflow-hidden relative ripple ripple-white rounded shadow w-32">
 				<%= link_to event_path(@event),

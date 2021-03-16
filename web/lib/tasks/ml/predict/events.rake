@@ -4,6 +4,7 @@ require 'open-uri'
 require 'net/http'
 require 'down'
 require 'jsonl'
+require 'timecop'
 
 module PredictEventsLabelsRake
 
@@ -83,10 +84,12 @@ namespace :ml do
 		task events: :environment do
 	
 			include PredictEventsLabelsRake
+
+			Timecop.freeze("2019-09-1")
 	
 			puts "Task ml:predict:events iniciada em #{DateTime.now}".white
 	
-			Event.active.each do |event|
+			Event.active.order_by_date.limit(100).each do |event|
 				classify_event(event)
 				save_event(event)
 			end
