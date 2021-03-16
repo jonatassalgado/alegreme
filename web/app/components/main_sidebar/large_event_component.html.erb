@@ -47,7 +47,20 @@
 						</div>
 					</div>
 				</div>
-				<div class="px-5 pb-5 pt-3">
+				<div class="flex p-5">
+					<div class="mr-5 bg-brand-100 flex flex-col justify-items-center px-1.5 py-1 rounded-md text-center text-xs w-content">
+						<div class="font-display font-bold text-brand-700">
+							<%= l(@event.start_time, format: "%-d") %>
+						</div>
+						<div class="font-semibold text-brand-600">
+							<%= l(@event.start_time, format: "%^b") %>
+						</div>
+					</div>
+					<div class="my-auto text-sm text-gray-800 pr-10">
+						<%= I18n.l(@event.day_of_week['date'], format: :default).capitalize %>, às <%= helpers.format_hour(@event.start_time) %> horas, daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>
+					</div>
+				</div>
+				<div class="border-t border-b border-gray-100 px-5 py-3">
 					<div class="text-xs font-light text-gray-400">
 						Atualizado há <%= time_ago_in_words @event&.updated_at %>
 					</div>
@@ -81,23 +94,6 @@
 								<path d="M10.88 21.94l5.53-5.54c.37-.37.58-.88.58-1.41V5c0-1.1-.9-2-2-2H6c-.8 0-1.52.48-1.83 1.21L.91 11.82C.06 13.8 1.51 16 3.66 16h5.65l-.95 4.58c-.1.5.05 1.01.41 1.37.59.58 1.53.58 2.11-.01zM21 3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
 							</svg>
 						<% end %>
-					</div>
-				</div>
-				<div class="flex p-5 border-t border-b border-gray-100">
-					<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-600 bg-brand-100 h-content rounded-xl w-content">
-						<div class="text-sm font-bold leading-tight uppercase">
-							<% if @event.day_of_week['date'] < Date.today + 7 %>
-								<%= I18n.l(@event.day_of_week['date'], format: :week) %>
-							<% else %>
-								<%= I18n.l(@event.day_of_week['date'], format: :long) %>
-							<% end %>
-						</div>
-						<div class="text-sm"><%= helpers.format_hour @event.start_time %></div>
-					</div>
-					<div class="my-auto text-sm font-semibold text-gray-800">
-						O evento acontecerá <%= I18n.l(@event.day_of_week['date'], format: :week) %>
-						dia <%= I18n.l(@event.day_of_week['date'], format: :long) %> às <%= helpers.format_hour @event.start_time %>
-						, daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
 					</div>
 				</div>
 				<div class="px-5 py-5 border-b border-gray-100">

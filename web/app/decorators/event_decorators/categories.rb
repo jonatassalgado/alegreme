@@ -7,7 +7,7 @@ module EventDecorators
 
 		module InstanceMethods
 			def categories_primary_name
-				categories&.first&.details['name']
+				categories&.first&.details&.dig('name')
 			end
 
 			def categories_primary_name=(value)
@@ -15,7 +15,7 @@ module EventDecorators
 			end
 
 			def categories_display_name
-				categories&.first&.details['display_name']
+				categories&.first&.details&.dig('display_name')
 			end
 
 			def categories_display_name=(value)
@@ -23,7 +23,7 @@ module EventDecorators
 			end
 
 			def categories_url
-				categories&.first&.details['url']
+				categories&.first&.details&.dig('url')
 			end
 
 			def categories_url=(value)

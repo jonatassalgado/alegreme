@@ -31,7 +31,7 @@
 				Limpar filtro
 			<% end if params[:category] %>
 		</div>
-		<div class="flex flex-wrap">
+		<div class="flex flex-wrap lowercase">
 			<% @categories.each do |category| %>
 				<%= link_to category.details_display_name, category_events_path(category.details_url), data: { 'turbo-preserve-scroll': true }, class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content w-full',
 																																																																	{ 'bg-brand-200 border-brand-200 text-brand-600': params[:category] == category&.details_url,
