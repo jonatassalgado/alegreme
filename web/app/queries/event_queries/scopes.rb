@@ -267,7 +267,9 @@ module EventQueries
 			scope 'in_categories', lambda { |categories, opts = {}|
 				opts = {'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': []}.merge(opts)
 
-				if opts[:group_by] && categories.present?
+				return all if categories.blank?
+
+				if opts[:group_by]
 					raise ArgumentError, "categorias precisa ser um array" unless categories.is_a? Array
 					raise ArgumentError, "group_by precisa ser numérico" unless opts[:group_by].is_a? Numeric
 
@@ -292,8 +294,6 @@ module EventQueries
 					)
 				elsif opts[:group_by].blank?
 					where("(ml_data -> 'categories' -> 'primary' ->> 'name') IN (:categories)", categories: categories)
-				else
-					all
 				end
 			}
 

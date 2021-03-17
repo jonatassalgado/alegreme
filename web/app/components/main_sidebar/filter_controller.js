@@ -2,7 +2,11 @@ import ApplicationController from "../../javascript/controllers/application_cont
 import {Transition}          from "../../javascript/modules/transition-module";
 
 export default class extends ApplicationController {
-    static targets = [""];
+    static targets = ["loadingIcon", "filters"];
+
+    static values = {
+        loading: Boolean
+    }
 
     connect() {
         super.connect();
@@ -37,6 +41,44 @@ export default class extends ApplicationController {
     disconnect() {
         super.disconnect();
         this.teardown()
+    }
+
+    beforeReflex(element) {
+        this._startAnimate()
+    }
+
+    afterReflex(element) {
+        this._endAnimate()
+    }
+
+    _startAnimate() {
+        this.loadingValue = true
+        document.dispatchEvent(new Event('filter#filtering:start'))
+        Array.from(this.filtersTargets).forEach(filter => {
+            filter.classList.add("opacity-50", "pointer-events-none")
+        })
+        setTimeout(() => {
+            if (this.loadingValue) {
+                this.loadingIconTarget.classList.remove("opacity-0")
+                this.loadingIconTarget.classList.add("animate-spin")
+            }
+        }, 250)
+    }
+
+    _endAnimate() {
+        if (this.hasFiltersTarget) {
+            Array.from(this.filtersTargets).forEach(filter => {
+                filter.classList.remove("opacity-50", "pointer-events-none")
+            })
+        }
+        if (this.hasLoadingIconTarget) {
+            this.loadingIconTarget.classList.add("opacity-0")
+            setTimeout(() => {
+                this.loadingIconTarget.classList.remove("animate-spin")
+            }, 250)
+        }
+        this.loadingValue = false
+        document.dispatchEvent(new Event('filter#filtering:end'))
     }
 
 }

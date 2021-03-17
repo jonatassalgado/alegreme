@@ -1,4 +1,5 @@
-const colors       = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors')
+
 const customColors = {
     greenHaze:       {
         default: '#03AA54',
@@ -89,6 +90,9 @@ module.exports = {
             purple:      colors.purple
         },
         extend:      {
+            fontSize: {
+                xxs: ".60rem"
+            },
             width:        {
                 "content": "max-content",
                 "128":     "32rem",

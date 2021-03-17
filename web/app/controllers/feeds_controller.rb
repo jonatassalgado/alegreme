@@ -16,11 +16,12 @@ class FeedsController < ApplicationController
 
 		@upcoming_events = requested_events
 		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
-		@categories      = Category.where("(details ->> 'name') NOT IN (?)", ['outlier'])
-		# @categories      = Category.joins(:events).where("events.id > 0 AND (categories.details ->> 'name') NOT IN (?)", ['outlier']).uniq
 
-
-		render layout: false if @stimulus_reflex
+		if @stimulus_reflex
+			render layout: false
+		else
+			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
+		end
 	end
 
 	def suggestions

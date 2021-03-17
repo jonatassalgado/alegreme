@@ -34,7 +34,8 @@
 					<% if params[:category] %>
 						<div class="flex items-center justify-between md:pr-10 pr-5">
 							<h2 class="font-bold font-display md:text-3xl pl-5 pt-3 text-gray-900 text-xl">
-								<span class="text-brand-500 underline"><%= @category&.details_display_name&.titleize %></span> em Porto Alegre
+								<span class="text-brand-500 underline"><%= @category&.details_display_name&.titleize %></span> em Porto
+								Alegre
 							</h2>
 						</div>
 					<% else %>
@@ -79,7 +80,7 @@
 					</svg>
 				</div>
 			</div>
-			<%= render MainSidebar::FilterComponent.new(categories: @categories) %>
+			<%= render MainSidebar::FilterComponent.new(session: session.id, show_filter_group: nil, filters: {}) %>
 		</section>
 	<% end %>
 

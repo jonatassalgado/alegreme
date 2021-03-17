@@ -1,9 +1,8 @@
 class MainSidebar::GroupByDayListComponent < ViewComponent::Base
 
-  def initialize(events:, user:, parent_key: nil, open_in_sidebar: false)
-    @events          = events
+  def initialize(events:, user:, open_in_sidebar: false, filters: {category: []})
+    @events          = events.in_categories(filters[:category]).includes(:categories)
     @user            = user
-    @parent_key      = parent_key
     @open_in_sidebar = open_in_sidebar
   end
 
