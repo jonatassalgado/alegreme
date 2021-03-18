@@ -12,7 +12,7 @@
 				<div class="-mt-1 border-b-2 border-brand-500  text-sm w-content">daqui <%= distance_of_time_in_words group[0].to_date, DateTime.now %></div>
 			<% end %>
 		</div>
-		<div id="vertical-daily-events">
+		<div>
 			<% if mobile_device? %>
 				<%= render partial: 'feeds/horizontal_event', collection: group[1], as: :event, locals: {user: user} %>
 			<% else %>

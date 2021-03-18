@@ -27,7 +27,7 @@
 																																																 { 'rotate-180': @show_filter_group == 'category' }) %>">
 				<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
 			</svg>
-			<%= @filters[:categories].present? ? @filters[:categories].map { |category| Category::CATEGORIES[category]['display_name'] }.join(', ') : 'Categorias' %>
+			<%= @filters[:categories].present? ? @filters[:categories].map { |category| Category::CATEGORIES.select { |hash| hash['name'] == category }&.first['display_name'] }.join(', ') : 'Categorias' %>
 		</div>
 		<% if @filters[:categories].present? || @filters[:date] %>
 			<div data-reflex="click->Filter#clear_filter"
@@ -57,9 +57,9 @@
 								 data-filter-group="date"
 								 data-selected="<%= @filters[:date]&.to_date == day %>"
 								 data-filter-date="<%= day %>"
-								 class="<%= helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
-																								{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:date]&.to_date == day,
-																									'text-gray-500':                                !@filters[:date]&.to_date == day }) %>">
+								 class="<%= helpers.class_names('cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
+																								{ 'bg-brand-200 text-brand-600': @filters[:date]&.to_date == day,
+																									'bg-gray-100 text-gray-600':   !@filters[:date] || @filters[:date]&.to_date != day }) %>">
 							<%= helpers.day_of_week(day) %>
 						</div>
 					<% end %>
@@ -81,15 +81,21 @@
 				</div>
 				<div class="flex flex-wrap lowercase">
 					<% @categories.each do |category| %>
-						<div data-reflex="click->Filter#filter"
-								 data-filter-group="category"
-								 data-selected="<%= @filters[:categories]&.include?(category.details_name) %>"
-								 data-filter-category="<%= category.details_name %>"
-								 class="<%= helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
-																								{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:categories]&.include?(category.details_name),
-																									'text-gray-500':                                !@filters[:categories]&.include?(category.details_name) }) %>">
-							<%= category.details_display_name %>
-						</div>
+						<% if @params&.dig(:category) %>
+							<%= link_to category.details_display_name, category_events_path(category.details_url), class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
+																																																																{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:categories]&.include?(category.details_name),
+																																																																	'text-gray-500':                                !@filters[:categories]&.include?(category.details_name) }) %>
+						<% else %>
+							<div data-reflex="click->Filter#filter"
+									 data-filter-group="category"
+									 data-selected="<%= @filters[:categories]&.include?(category.details_name) %>"
+									 data-filter-category="<%= category.details_name %>"
+									 class="<%= helpers.class_names('cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
+																									{ 'bg-brand-200 text-brand-600': @filters[:categories]&.include?(category.details_name),
+																										'bg-gray-100 text-gray-600':   !@filters[:categories]&.include?(category.details_name) }) %>">
+								<%= category.details_display_name %>
+							</div>
+						<% end %>
 					<% end %>
 				</div>
 			</div>
