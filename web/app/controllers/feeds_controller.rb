@@ -6,7 +6,7 @@ class FeedsController < ApplicationController
 	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 
 	def index
-		Timecop.freeze("2019-09-1")
+		# Timecop.freeze("2019-09-1")
 
 		gon.push({
 							 :env             => Rails.env,
