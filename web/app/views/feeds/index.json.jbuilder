@@ -7,6 +7,7 @@ json.feed grouped_events do |group, events|
 		json.cover_url shrine_image_url(event, :feed)
 		json.name event.details_name
 		json.description event.details_description
+		json.start_time event.start_time
 		json.source_url event.details_source_url
 		json.price event.details_prices_min
 		json.geographic event.geographic
