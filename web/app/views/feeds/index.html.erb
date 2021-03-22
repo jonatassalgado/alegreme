@@ -14,14 +14,14 @@
 			<% unless params[:day] || params[:category] %>
 				<div data-turbo-permanent class="flex flex-row-reverse gap-4 items-start mb-12 md:flex md:flex-row md:mb-5 md:mx-0 md:px-5 mx-5 pt-5 select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '150px' : '225px' %>">
 					<div class="my-auto">
-						<h2 class="font-bold font-display text-gray-900 text-2xl md:text-3xl">
+						<h2 class="font-bold font-display text-gray-900 md:text-xl">
 							Aproveite Porto Alegre
 						</h2>
-						<span class="inline-block leading-snug mt-2 text-gray-500 text-sm">
+						<span class="inline-block leading-snug mt-2 text-gray-500 text-sm md:text-base">
   						Descubra eventos e siga seus locais e artistas favoritos para não perder nada que acontece na cidade.
   					</span>
 					</div>
-					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png", "hero/leitor-e-cao.png", "hero/passeando.png"].sample, class: 'md:w-auto md:h-auto my-auto w-32 h-32 md:-mt-6' %>
+					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png", "hero/leitor-e-cao.png", "hero/passeando.png"].sample, class: 'h-32 md:h-44 md:w-auto my-auto w-32' %>
 				</div>
 				<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% end %>
@@ -39,7 +39,7 @@
 							</h2>
 						</div>
 					<% else %>
-						<h2 class="font-display text-gray-900 font-bold px-5 text-2xl md:text-3xl">
+						<h2 class="bg-white font-bold font-display px-5 text-gray-900 text-xl">
 							Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
 						</h2>
 					<% end %>

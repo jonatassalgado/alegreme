@@ -1,26 +1,6 @@
 <%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'transition-opacity group' do %>
-	<div class="select-none tap-highlight-none bg-white flex justify-items-start md:mx-0 rounded">
-		<div>
-			<div data-controller="ripple" class="h-20 md:h-20 md:w-32 overflow-hidden relative ripple ripple-white rounded shadow w-32">
-				<%= link_to event_path(@event),
-										data: {
-											'turbo-preserve-scroll': true,
-											action:                  'click->main-sidebar--horizontal-event#openEvent',
-											'event-id':              @event.id
-										} do %>
-					<%= image_tag helpers.shrine_image_url(@event, :feed), {
-						loading: :lazy,
-						alt:     "Cartaz do evento #{@event.details_name}",
-						data:    {
-							'event-id': @event.id
-						},
-						class:   'cursor-pointer object-center object-cover h-full w-full',
-						onerror: "this.style.opacity='0'"
-					} rescue nil %>
-				<% end %>
-			</div>
-		</div>
-		<div class="pl-5 md:pl-6">
+	<div class="select-none tap-highlight-none bg-white flex justify-between md:mx-0 rounded">
+		<div class="pr-5 md:pr-6">
 			<%= content_tag :a,
 											href:  event_path(@event),
 											data:  {
@@ -28,10 +8,10 @@
 												action:                  'click->main-sidebar--horizontal-event#openEvent',
 												'event-id':              @event.id
 											},
-											class: 'font-semibold md:hover:text-brand-500 mb-1 leading-snug text-gray-800 inline-block' do %>
+											class: 'md:text-xl font-semibold md:font-bold md:hover:text-brand-500 mb-1 leading-snug text-gray-800 inline-block' do %>
 				<%= @event.details_name %>
 			<% end %>
-			<div class="text-sm md:text-xs md:mt-1 text-gray-500">
+			<div class="text-sm md:mt-1 text-gray-500">
 				<%= helpers.format_hour @event.start_time %>h ·
 				<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				·
@@ -79,6 +59,26 @@
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M39.1518 37.7101C39.1524 37.7111 39.1529 37.7122 36.862 38.8388C34.5711 39.9654 34.5716 39.9664 34.5721 39.9674L34.573 39.9692L34.5747 39.9725L34.5774 39.9777L34.5796 39.9819C34.5797 39.982 34.577 39.977 34.5716 39.9671C34.5608 39.9474 34.539 39.9084 34.5061 39.853C34.4402 39.7417 34.3307 39.5663 34.1765 39.3479C33.8658 38.9078 33.3874 38.3133 32.735 37.721C31.4433 36.5483 29.5207 35.4201 26.8 35.4201C24.0793 35.4201 22.1566 36.5483 20.865 37.721C20.2125 38.3133 19.7341 38.9078 19.4234 39.3479C19.2692 39.5663 19.1598 39.7417 19.0938 39.853C19.0609 39.9084 19.0391 39.9474 19.0283 39.9671C19.0229 39.977 19.0203 39.982 19.0204 39.9819L19.0225 39.9777L19.0252 39.9725L19.0269 39.9692L19.0278 39.9674C19.0283 39.9664 19.0288 39.9654 16.7379 38.8388C14.447 37.7122 14.4475 37.7111 14.4481 37.7101L14.4492 37.7078L14.4518 37.7029L14.4577 37.6913C14.4621 37.6828 14.4673 37.6729 14.4733 37.6616C14.4852 37.639 14.5004 37.6107 14.5188 37.577C14.5556 37.5098 14.6056 37.4212 14.669 37.3143C14.7956 37.1008 14.977 36.8124 15.2158 36.4741C15.6912 35.8008 16.4078 34.9109 17.3904 34.0188C19.3689 32.2226 22.4772 30.3819 26.8 30.3819C31.1227 30.3819 34.2311 32.2226 36.2096 34.0188C37.1922 34.9109 37.9087 35.8008 38.3841 36.4741C38.6229 36.8124 38.8043 37.1008 38.931 37.3143C38.9944 37.4212 39.0443 37.5098 39.0812 37.577C39.0996 37.6107 39.1147 37.639 39.1267 37.6616C39.1326 37.6729 39.1378 37.6828 39.1422 37.6913L39.1481 37.7029L39.1507 37.7078L39.1518 37.7101Z" class="fill-current"></path>
 						</svg>
 					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<div>
+			<div data-controller="ripple" class="h-20 md:h-24 md:w-40 overflow-hidden relative ripple ripple-white rounded shadow w-32">
+				<%= link_to event_path(@event),
+										data: {
+											'turbo-preserve-scroll': true,
+											action:                  'click->main-sidebar--horizontal-event#openEvent',
+											'event-id':              @event.id
+										} do %>
+					<%= image_tag helpers.shrine_image_url(@event, :feed), {
+						loading: :lazy,
+						alt:     "Cartaz do evento #{@event.details_name}",
+						data:    {
+							'event-id': @event.id
+						},
+						class:   'cursor-pointer object-center object-cover h-full w-full',
+						onerror: "this.style.opacity='0'"
+					} rescue nil %>
 				<% end %>
 			</div>
 		</div>
