@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 	# GET /events/1
 	# GET /events/1.json
 	def show
-		@similar_events = Event.includes(:place).not_ml_data.active.not_disliked(current_user).where(id: @event.similar_data).order_by_ids(@event.similar_data).not_liked(current_user).limit(8)
+		@similar_events = Event.includes(:place, :categories).not_ml_data.active.not_disliked(current_user).where(id: @event.similar_data).order_by_ids(@event.similar_data).not_liked(current_user).limit(8)
 
 		respond_to do |format|
 			format.html { render :show }
@@ -140,11 +140,10 @@ class EventsController < ApplicationController
 	# Use callbacks to share common setup or constraints between actions.
 	def set_event
 		if params[:id].numeric?
-			@event = Event.friendly.find(params[:id])
-			redirect_to event_path @event
+			@event = Event.includes(:place, :categories).find(params[:id])
 		else
 			if Event.friendly.exists_by_friendly_id? params[:id]
-				@event = Event.friendly.find(params[:id])
+				@event = Event.includes(:place, :categories).friendly.find(params[:id])
 			else
 				redirect_to search_index_path(q: params[:id].gsub("-", " "))
 			end

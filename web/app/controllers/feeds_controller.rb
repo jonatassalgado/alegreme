@@ -70,12 +70,12 @@ class FeedsController < ApplicationController
 
 	def requested_events
 		if params[:day]
-			Event.in_day(params[:day]).not_ml_data.includes(:place).order_by_date
+			Event.includes(:place, :categories).in_day(params[:day]).not_ml_data.order_by_date
 		elsif params[:category]
 			@category = Category.find_by("(details ->> 'url') = :category", category: params[:category])
 			@category.events.not_ml_data.active.order_by_date.includes(:place, :categories)
 		else
-			Event.active.not_ml_data.includes(:place).order_by_date.limit(100)
+			Event.includes(:place, :categories).active.not_ml_data.order_by_date.limit(100)
 		end
 	end
 
