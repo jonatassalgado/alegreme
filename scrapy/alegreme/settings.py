@@ -26,8 +26,8 @@ private_ip = os.environ.get('PRIVATE_IP')
 home = os.environ.get('HOME')
 
 SPLASH_URL = 'http://splash:8050'
-SPLASH_USERNAME = 'jon'
-SPLASH_PASS = 'password'
+SPLASH_USERNAME = 'alegreme'
+SPLASH_PASS = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
 IS_DOCKER = 'true'
 
 PWD = '/var/www/scrapy/data'
@@ -43,7 +43,7 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 8
+CONCURRENT_REQUESTS = 6
 
 
 # Configure a delay for requests for the same website (default: 0)
@@ -131,9 +131,9 @@ COOKIES_DEBUG = True
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_START_DELAY = 15
 # The maximum download delay to be set in case of high latencies
-AUTOTHROTTLE_MAX_DELAY = 60
+AUTOTHROTTLE_MAX_DELAY = 120
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
 #AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0

@@ -65,8 +65,8 @@ parse_event_script = """
 """
 
 class DeletedEventSpider(scrapy.Spider):
-    http_user = 'jon'
-    http_pass = 'password'
+    http_user = 'alegreme'
+    http_pass = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
 
     name = 'deleted_event'
 

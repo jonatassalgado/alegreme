@@ -57,7 +57,7 @@ parse_profile_script = """
         return splash:html()
     end
 """
-
+           
 parse_poster_script = """
     function main(splash, args)
         splash.private_mode_enabled = false
@@ -97,8 +97,8 @@ def get_url(url):
 
 
 class PosterSpider(scrapy.Spider):
-    http_user = 'jon'
-    http_pass = 'password'
+    http_user = 'alegreme'
+    http_pass = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
 
     name = 'poster'
 

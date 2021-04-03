@@ -125,8 +125,8 @@ parse_movie_cover_script = """
 """
 
 class MovieSpider(scrapy.Spider):
-    http_user = 'jon'
-    http_pass = 'password'
+    http_user = 'alegreme'
+    http_pass = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
 
     name = 'movie'
 

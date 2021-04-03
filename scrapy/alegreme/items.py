@@ -41,7 +41,11 @@ def clean_description(value):
     return str(description)
 
 
+def remove_trail_slash(value):
+    return re.sub("/$", "", value)
+
 def remove_url_params(value):
+    value = remove_trail_slash(value)
     return urljoin(value, urlparse(value).path)
 
 

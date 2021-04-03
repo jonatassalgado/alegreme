@@ -123,7 +123,7 @@ module PopulateEventsRake
 		end
 	end
 
-	def classify_event(event, ml_data)
+	def classify_event(event)
 		@label_query  = event.details_description
 		@label_params = { 'query' => @label_query }
 
@@ -167,8 +167,10 @@ module PopulateEventsRake
 
 			if @label_data['classification']['categories']
 				labels     = @label_data['classification']['categories']
-				categories = Category.where("(details ->> 'name') IN (:categories)", categories: [labels['primary']['name'], labels['secondary']['name']])
+				categories = Category.where("(details ->> 'name') IN (:categories)", categories: [labels['primary']['name']])
+				event.categories = [] if event.categories.present?
 				event.categories << categories
+				puts "Evento: #{event.details_name} - #{labels['primary']['name']} - Eventos classificado".white
 			end
 
 		else
@@ -226,31 +228,23 @@ module PopulateEventsRake
 		if item['deleted'] == 'true'
 			Event.destroy_by("(details ->> 'source_url') = ?", item['source_url'])
 			puts "Evento: #{item['source_url']} - Evento deletado".yellow
-			return [false, false]
+			return :deleted
 		end
 
 		if item['datetimes'].blank?
 			puts "Evento: #{item['name']} - Evento sem data raspada".red
-			return [false, false]
+			return false
 		end
 
 		if item['description'].blank?
 			puts "Evento: #{item['name']} - Evento sem descrição raspada".red
-			return [false, false]
+			return false
 		end
 
-		event                     = Event.where("(details ->> 'source_url') = ?", item['source_url']).first
-		# query                     = item['description']
-		# features_params           = { query: query }
-		# features_uri              = URI("#{ENV['API_URL']}:5000/event/features")
-		# features_uri.query        = URI.encode_www_form(features_params)
-		# features_response         = Net::HTTP.get_response(features_uri)
-		# @features_response_failed = !features_response.is_a?(Net::HTTPSuccess)
+		event = Event.where("(details ->> 'source_url') = ?", item['source_url']).first
 
 		if event
 			puts "#{@events_create_counter}: #{item['name']} - Evento já existe".yellow
-
-			# ml_data = JSON.parse(features_response.try(:body))
 
 			event.details.deep_merge!(
 				name:        item['name'],
@@ -270,27 +264,11 @@ module PopulateEventsRake
 				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
 				cep:          Geographic.get_cep_from_address(item['address'])
 			)
-
-			# event.ml_data.deep_merge!(
-			# 	cleanned: ml_data['cleanned'],
-			# 	stemmed:  ml_data['stemmed'],
-			# 	# freq:     ml_data['freq'],
-			# 	nouns: ml_data['nouns'],
-			# 	verbs: ml_data['verbs'],
-			# 	adjs:  ml_data['adjs']
-			# )
-
 			puts "#{item['name']} - atualizado".white
 
 			event
 
-		# elsif @features_response_failed
-		# 	puts "#{@events_create_counter}: #{item['name']} - Evento falhou durante a criação (ML Data)".red
-
-		# 	return [false, false]
-
 		else
-			# ml_data = JSON.parse(features_response.try(:body))
 			event   = Event.new
 
 			puts "#{@events_create_counter}: #{item['name']} - Evento criado".white
@@ -302,15 +280,6 @@ module PopulateEventsRake
 				ticket_url:  item['ticket_url'],
 				prices:      item['prices'] || []
 			)
-
-			# event.ml_data.deep_merge!(
-			# 	cleanned: ml_data['cleanned'],
-			# 	stemmed:  ml_data['stemmed'],
-			# 	# freq:     ml_data['freq'],
-			# 	nouns: ml_data['nouns'],
-			# 	verbs: ml_data['verbs'],
-			# 	adjs:  ml_data['adjs']
-			# )
 
 			event.ocurrences.deep_merge!(
 				dates: item['datetimes']
@@ -399,10 +368,7 @@ namespace :populate do
 				next unless set_cover(item, event)
 			end
 
-			# if event.details_description != item['description']
-			classify_event(event, ml_data)
-			# end
-
+			classify_event(event)
 			save_event(event)
 		end
 
