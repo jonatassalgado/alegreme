@@ -69,7 +69,6 @@ class UserPersonaRoute(Resource):
 class EventLabelRoute(Resource):
     def post(self):
         args = parser.parse_args()
-        print(args['query'])
         user_query = args['query']
 
         predictPersonaModel = EventPersonaPrediction()
@@ -128,7 +127,7 @@ class EventFeaturesRoute(Resource):
 
 
 class EventSimilarRoute(Resource):
-    def get(self):
+    def post(self):
         args = parser.parse_args()
         text = args['text']
         base = args['base']
