@@ -241,7 +241,7 @@ module PopulateEventsRake
 			return false
 		end
 
-		event = Event.where("(details ->> 'source_url') = ?", item['source_url']).first
+		event = Event.where("(details ->> 'source_url') = ?", "%#{item['source_url']}%").first
 
 		if event
 			puts "#{@events_create_counter}: #{item['name']} - Evento já existe".yellow
