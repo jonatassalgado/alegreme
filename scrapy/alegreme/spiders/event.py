@@ -68,7 +68,7 @@ parse_event_script = """
 parse_page_script = """
     function main(splash, args)
         splash:set_viewport_size(360, 640)
-        splash.private_mode_enabled = true
+        splash.private_mode_enabled = false
         splash.images_enabled = false
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
