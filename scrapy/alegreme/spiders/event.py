@@ -29,9 +29,6 @@ user_agents = [
   "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
 ]
 
-random.shuffle(user_agents)
-ua = user_agents[0]
-
 parse_event_script = """
     function main(splash, args)
         splash.private_mode_enabled = false
@@ -179,8 +176,9 @@ class EventSpider(scrapy.Spider):
     # random.shuffle(pages)
 
     def start_requests(self):
+        random.shuffle(user_agents)
         self.log("INITIALIZING...")
-        self.log("UA: %s" % ua)
+        self.log("UA: %s" % user_agents[0])
         yield SplashRequest(
             url='https://www.facebook.com/events/discovery/?city_id=264859',
             callback=self.parse_page,
@@ -188,7 +186,7 @@ class EventSpider(scrapy.Spider):
             args={
             'timeout': 300,
             'lua_source': parse_page_script,
-            'ua': ua
+            'ua': user_agents[0]
             }
         )
 
@@ -205,15 +203,16 @@ class EventSpider(scrapy.Spider):
             self.log("PAGE WITH " + str(len(events_in_page)) + " EVENTS")
 
         for event_link in events_in_page.extract():
+            random.shuffle(user_agents)
             if event_link is not None:
                 yield SplashRequest(
                     url=urljoin(response.url, event_link),
                     callback=self.parse_event,
                     endpoint='execute',
                     args={
-                    'timeout': 300,
+                    'timeout': 500,
                     'lua_source': parse_event_script,
-                    'ua': ua
+                    'ua': user_agents[0]
                     }
                 )
                 pass
@@ -273,12 +272,14 @@ class EventSpider(scrapy.Spider):
 
         for event_link in related_events_links.extract():
             if event_link is not None:
+                random.shuffle(user_agents)
                 yield SplashRequest(
                     url=urljoin(response.url, event_link),
                      callback=self.parse_event,
                     endpoint='execute',
                     args={
                         'lua_source': parse_event_script,
+                        'ua': user_agents[0]
                     }
                 )
                 pass
