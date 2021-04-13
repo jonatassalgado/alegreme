@@ -73,20 +73,8 @@ parse_page_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
+        splash:set_user_agent(tostring(args.ua))
         splash.resource_timeout = 300
-        splash:set_custom_headers({
-              ["user-agent"] = "Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Mobile Safari/537.36",
-              ["cache-control"] = "max-age=0",
-              ["sec-ch-ua"] = "'Chromium';v='88', 'Google Chrome';v='88', ';Not A Brand';v='99'",
-              ["sec-ch-ua-mobile"] = "?1",
-              ["upgrade-insecure-requests"] = "1",
-              ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-              ["sec-fetch-user"] = "?1",
-              ["sec-fetch-site"] = "same-origin",
-              ["sec-fetch-mode"] = "navigate",
-              ["sec-fetch-dest"] = "document",
-              ["accept-language"] = "pt,en;q=0.9",
-            })
 
         local num_scrolls = 4
         local scroll_delay = 1.5
@@ -211,7 +199,7 @@ class EventSpider(scrapy.Spider):
 
     def parse_page(self, response):
 
-        events_in_page = response.xpath('//*[contains(text(), "Próximos eventos")]/ancestor::div[1]//*[contains(@class, "_5379")]/@href')
+        events_in_page = response.xpath('//*[contains(text(), "Upcoming Events")]/ancestor::div[1]//*[contains(@class, "_5379")]/@href')
 
         if not events_in_page:
             self.log("PAGE WITHOUT EVENTS")
