@@ -67,7 +67,6 @@ parse_event_script = """
 
 parse_page_script = """
     function main(splash, args)
-        splash:set_viewport_size(360, 640)
         splash.private_mode_enabled = false
         splash.images_enabled = false
         splash.plugins_enabled = false
@@ -76,7 +75,7 @@ parse_page_script = """
         splash:set_user_agent(tostring(args.ua))
         splash.resource_timeout = 300
 
-        local num_scrolls = 4
+        local num_scrolls = 10
         local scroll_delay = 1.5
 
         local scroll_to = splash:jsfunc("window.scrollTo")
@@ -182,24 +181,23 @@ class EventSpider(scrapy.Spider):
     def start_requests(self):
         self.log("INITIALIZING...")
         self.log("UA: %s" % ua)
-        for page in self.pages:
-            yield SplashRequest(
-                url='https://m.facebook.com/' + page + '/pages/permalink/?view_type=tab_events',
-                callback=self.parse_page,
-                endpoint='execute',
-                args={
-                'timeout': 300,
-                'lua_source': parse_page_script,
-                'ua': ua
-                }
-            )
+        yield SplashRequest(
+            url='https://www.facebook.com/events/discovery/?city_id=264859',
+            callback=self.parse_page,
+            endpoint='execute',
+            args={
+            'timeout': 300,
+            'lua_source': parse_page_script,
+            'ua': ua
+            }
+        )
 
 
 
 
     def parse_page(self, response):
 
-        events_in_page = response.xpath('//*[contains(text(), "Upcoming Events")]/ancestor::div[1]//*[contains(@class, "_5379")]/@href')
+        events_in_page = response.xpath('//*[contains(@class, "_7ty")]/@href')
 
         if not events_in_page:
             self.log("PAGE WITHOUT EVENTS")
@@ -208,9 +206,8 @@ class EventSpider(scrapy.Spider):
 
         for event_link in events_in_page.extract():
             if event_link is not None:
-                base_url = re.sub(r'm.facebook', 'www.facebook', response.url)
                 yield SplashRequest(
-                    url=urljoin(base_url, event_link),
+                    url=urljoin(response.url, event_link),
                     callback=self.parse_event,
                     endpoint='execute',
                     args={
