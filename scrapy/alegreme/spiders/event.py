@@ -39,6 +39,7 @@ parse_event_script = """
         splash.resource_timeout = 300
         splash:set_user_agent(tostring(args.ua))
         assert(splash:go(splash.args.url))
+        assert(splash:wait(1))
         splash.scroll_position = {y=1000}
         assert(splash:wait(3))
 
@@ -102,7 +103,7 @@ class EventSpider(scrapy.Spider):
             'alegreme.pipelines.EventPipeline': 400
         },
         'CLOSESPIDER_ITEMCOUNT': 100,
-        'DEPTH_LIMIT': 3
+        'DEPTH_LIMIT': 2
     }
 
     allowed_domains = ['facebook.com']
@@ -210,7 +211,7 @@ class EventSpider(scrapy.Spider):
                     callback=self.parse_event,
                     endpoint='execute',
                     args={
-                    'timeout': 500,
+                    'timeout': 600,
                     'lua_source': parse_event_script,
                     'ua': user_agents[0]
                     }
@@ -260,7 +261,6 @@ class EventSpider(scrapy.Spider):
         event_loader.load_item()
 
         event = event_loader.item
-        self.log("EVENT SCRAPED: %s" % event)
 
         if 'address' in event and "Porto Alegre" in event['address']:
             yield event
@@ -278,6 +278,7 @@ class EventSpider(scrapy.Spider):
                      callback=self.parse_event,
                     endpoint='execute',
                     args={
+                        'timeout': 600,
                         'lua_source': parse_event_script,
                         'ua': user_agents[0]
                     }

@@ -34,4 +34,4 @@ services:
       - splash_data:/var/www/splash/data
     mem_limit: 4gb
     mem_reservation: 256m
-    command: --maxrss 4048 --max-timeout 600 --disable-lua-sandbox
+    command: --maxrss 4048 --max-timeout 3600 --slots 5
