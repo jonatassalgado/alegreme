@@ -16,7 +16,7 @@
 					</div>
 					<div class="space-x-2 flex select-none">
 						<h2 class="font-bold text-brand-600 uppercase flex items-center">
-							<%= link_to day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")), class: 'font-display text-2xl', data: { 'turbo-preserve-scroll': true } do %>
+							<%= link_to day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")), class: 'font-display text-md', data: { 'turbo-preserve-scroll': true } do %>
 								<% if group[0].to_date.today? %>
 									Hoje, <%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
 								<% elsif group[0].to_date == Date.tomorrow %>
@@ -28,7 +28,7 @@
 								<% end %>
 							<% end %>
 							<% if group[0].to_date > Date.today + 6 %>
-								<div class="text-md font-normal text-gray-400">
+								<div class="text-sm font-normal text-gray-400">
 									&nbsp;<%= "· daqui #{distance_of_time_in_words(group[0]&.to_date, DateTime.now)}" %>
 								</div>
 							<% end %>

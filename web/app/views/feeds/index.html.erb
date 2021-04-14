@@ -80,13 +80,13 @@
 					</svg>
 				</div>
 			</div>
-			<%= render MainSidebar::FilterComponent.new(session:           session.id,
-																									params:            params,
-																									show_filter_group: nil,
-																									filters:           {
-																										categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
-																										date:       nil
-																									}) %>
+			<%= render MainSidebar::FilterComponent.new(session: session.id,
+														params:            params,
+														show_filter_group: nil,
+														filters:           {
+															categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
+															date:       nil
+														}) %>
 		</section>
 	<% end %>
 
