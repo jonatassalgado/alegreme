@@ -33,9 +33,6 @@ IS_DOCKER = 'true'
 PWD = '/var/www/scrapy/data'
 
 
-DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
-
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'alegreme (+http://www.yourdomain.com)'
 
@@ -43,8 +40,8 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 2
-CONCURRENT_ITEMS = 10
+CONCURRENT_REQUESTS = 8
+CONCURRENT_ITEMS = 16
 
 
 # Configure a delay for requests for the same website (default: 0)
@@ -80,9 +77,11 @@ DOWNLOADER_MIDDLEWARES = {
 #    'alegreme.middlewares.AlegremeDownloaderMiddleware': 543,
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
-    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
-    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 750
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810
 }
+
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+RETRY_TIMES = 1
 
 # DOWNLOADER_MIDDLEWARES.update({
 #     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
@@ -134,21 +133,24 @@ COOKIES_DEBUG = False
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-AUTOTHROTTLE_START_DELAY = 10
+AUTOTHROTTLE_START_DELAY = 3
 # The maximum download delay to be set in case of high latencies
 #AUTOTHROTTLE_MAX_DELAY = 120
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
-#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+AUTOTHROTTLE_TARGET_CONCURRENCY = 3.0
 # Enable showing throttling stats for every response received:
 # AUTOTHROTTLE_DEBUG = False
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
 HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = 43200
+HTTPCACHE_EXPIRATION_SECS = 604800
+HTTPCACHE_DIR = 'httpcache'
+# Don't cache pages that throw an error
+HTTPCACHE_IGNORE_HTTP_CODES = [503, 504, 505, 500, 400, 401, 402, 403, 404]
 
 
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
-#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'

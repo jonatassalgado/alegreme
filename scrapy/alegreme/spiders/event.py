@@ -41,7 +41,7 @@ parse_event_script = """
         assert(splash:go(splash.args.url))
         assert(splash:wait(1))
         splash.scroll_position = {y=1000}
-        assert(splash:wait(3))
+        assert(splash:wait(2))
 
         local signupForm = splash:select('._585r._50f4')
 
@@ -74,7 +74,7 @@ parse_page_script = """
         splash.resource_timeout = 300
 
         local num_scrolls = 10
-        local scroll_delay = 1.5
+        local scroll_delay = 2
 
         local scroll_to = splash:jsfunc("window.scrollTo")
         local get_body_height = splash:jsfunc(
