@@ -29,9 +29,11 @@ user_agents = [
   "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
 ]
 
+random.shuffle(user_agents)
+
 parse_event_script = """
     function main(splash, args)
-        splash.private_mode_enabled = false
+        splash.private_mode_enabled = true
         splash.images_enabled = false
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
@@ -39,9 +41,8 @@ parse_event_script = """
         splash.resource_timeout = 300
         splash:set_user_agent(tostring(args.ua))
         assert(splash:go(splash.args.url))
-        assert(splash:wait(1))
+        assert(splash:wait(3))
         splash.scroll_position = {y=1000}
-        assert(splash:wait(2))
 
         local signupForm = splash:select('._585r._50f4')
 
@@ -58,14 +59,13 @@ parse_event_script = """
                     ]], 60)
         end
 
-        splash:runjs("window.close()")
         return splash:html()
     end
 """
 
 parse_page_script = """
     function main(splash, args)
-        splash.private_mode_enabled = false
+        splash.private_mode_enabled = true
         splash.images_enabled = false
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
@@ -177,7 +177,6 @@ class EventSpider(scrapy.Spider):
     # random.shuffle(pages)
 
     def start_requests(self):
-        random.shuffle(user_agents)
         self.log("INITIALIZING...")
         self.log("UA: %s" % user_agents[0])
         yield SplashRequest(
@@ -204,7 +203,6 @@ class EventSpider(scrapy.Spider):
             self.log("PAGE WITH " + str(len(events_in_page)) + " EVENTS")
 
         for event_link in events_in_page.extract():
-            random.shuffle(user_agents)
             if event_link is not None:
                 yield SplashRequest(
                     url=urljoin(response.url, event_link),
@@ -272,7 +270,6 @@ class EventSpider(scrapy.Spider):
 
         for event_link in related_events_links.extract():
             if event_link is not None:
-                random.shuffle(user_agents)
                 yield SplashRequest(
                     url=urljoin(response.url, event_link),
                      callback=self.parse_event,

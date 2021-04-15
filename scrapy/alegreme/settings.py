@@ -43,6 +43,11 @@ ROBOTSTXT_OBEY = False
 CONCURRENT_REQUESTS = 8
 CONCURRENT_ITEMS = 16
 
+# Scrapy Proxy Pool
+# https://github.com/rejoiceinhope/scrapy-proxy-pool
+# PROXY_POOL_ENABLED = False
+# PROXY_POOL_FILTER_CODE = 'br'
+
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -75,6 +80,8 @@ SPIDER_MIDDLEWARES = {
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
 #    'alegreme.middlewares.AlegremeDownloaderMiddleware': 543,
+#    'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+#    'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810
