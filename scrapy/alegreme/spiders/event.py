@@ -49,11 +49,11 @@ parse_event_script = """
             result, error = splash:wait_for_resume([[
                         function main(splash) {
                             var checkExist = setInterval(function() {
-                                if (document.querySelector("._63ew").innerText && document.querySelector("._2ycp._5xhk").innerText && document.querySelector('._2xq3').innerText) {
+                                if (document.querySelector("._63ew").innerText && document.querySelector("._2ycp._5xhk").innerText && document.querySelector('._63ew').innerText) {
                                     clearInterval(checkExist);
                                     splash.resume();
                                 }
-                            }, 1000);
+                            }, 2000);
                         }
                     ]], 60)
         end
