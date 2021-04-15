@@ -8,7 +8,7 @@ import re
 
 # import shadow_useragent
 
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 from alegreme.items import Event, EventOrganizer, EventOrganizerLoader
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
@@ -39,7 +39,17 @@ parse_event_script = """
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
         splash.resource_timeout = 300
-        splash:set_user_agent(tostring(args.ua))
+        splash:set_custom_headers({
+              ["user-agent"] = tostring(args.ua),
+              ["cache-control"] = "max-age=0",
+              ["upgrade-insecure-requests"] = "1",
+              ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+      		  ["accept-enconding"] = "gzip, deflate, br",
+              ["sec-fetch-site"] = "same-origin",
+              ["sec-fetch-mode"] = "navigate",
+              ["sec-fetch-dest"] = "document",
+              ["accept-language"] = "en;q=0.9"
+            })
         assert(splash:go(splash.args.url))
         assert(splash:wait(3))
         splash.scroll_position = {y=1000}
@@ -205,7 +215,7 @@ class EventSpider(scrapy.Spider):
         for event_link in events_in_page.extract():
             if event_link is not None:
                 yield SplashRequest(
-                    url=urljoin(response.url, event_link),
+                    url=urljoin(response.url, urlparse(event_link).path),
                     callback=self.parse_event,
                     endpoint='execute',
                     args={
@@ -271,7 +281,7 @@ class EventSpider(scrapy.Spider):
         for event_link in related_events_links.extract():
             if event_link is not None:
                 yield SplashRequest(
-                    url=urljoin(response.url, event_link),
+                    url=urljoin(response.url, urlparse(event_link).path),
                      callback=self.parse_event,
                     endpoint='execute',
                     args={

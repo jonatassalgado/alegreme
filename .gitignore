@@ -133,3 +133,4 @@ yarn-debug.log*
 app/storage/*
 !/storage/.keep
 .vscode/settings.json
+.vscode/settings.json

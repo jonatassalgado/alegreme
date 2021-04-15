@@ -40,7 +40,7 @@ PWD = '/var/www/scrapy/data'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 8
+CONCURRENT_REQUESTS = 2
 CONCURRENT_ITEMS = 16
 
 # Scrapy Proxy Pool

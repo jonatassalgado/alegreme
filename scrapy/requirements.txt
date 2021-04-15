@@ -1,8 +1,7 @@
 scrapy
 scrapy-splash
-scrapy-do
 dateparser
 scrapy-useragents
-beautifulsoup4
 shadow_useragent
 scrapy_proxy_pool
+extruct
