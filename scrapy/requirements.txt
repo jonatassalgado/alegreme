@@ -5,3 +5,4 @@ scrapy-useragents
 shadow_useragent
 scrapy_proxy_pool
 extruct
+requests

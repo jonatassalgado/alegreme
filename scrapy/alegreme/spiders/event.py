@@ -5,6 +5,7 @@ import json
 import os
 import random
 import re
+import requests
 
 # import shadow_useragent
 
@@ -15,6 +16,19 @@ from scrapy.loader import ItemLoader
 
 # ua = shadow_useragent.ShadowUserAgent()
 # ua = ua.firefox
+
+url = "https://api.proxyorbit.com/v1/"
+querystring = {"token": "REMOVED",
+               "protocols": "http", 
+               "facebook": "true", 
+               "lastChecked": "20"}
+headers = {}
+proxy_response = requests.request("GET", url, headers=headers, params=querystring)
+proxy_data = proxy_response.json()
+proxy_ip = proxy_data['ip']
+proxy_port = proxy_data['port']
+
+print(f'Usando o proxy {proxy_ip}:{proxy_port}')
 
 user_agents = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
@@ -33,23 +47,18 @@ random.shuffle(user_agents)
 
 parse_event_script = """
     function main(splash, args)
-        splash.private_mode_enabled = true
+        splash.private_mode_enabled = false
         splash.images_enabled = false
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
         splash.resource_timeout = 300
-        splash:set_custom_headers({
-              ["user-agent"] = tostring(args.ua),
-              ["cache-control"] = "max-age=0",
-              ["upgrade-insecure-requests"] = "1",
-              ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-      		  ["accept-enconding"] = "gzip, deflate, br",
-              ["sec-fetch-site"] = "same-origin",
-              ["sec-fetch-mode"] = "navigate",
-              ["sec-fetch-dest"] = "document",
-              ["accept-language"] = "en;q=0.9"
-            })
+        splash:on_request(function(request)
+            request:set_proxy{
+                host = tostring(args.proxy_ip),
+                port = tostring(args.proxy_port)
+            }
+        end)
         assert(splash:go(splash.args.url))
         assert(splash:wait(3))
         splash.scroll_position = {y=1000}
@@ -221,7 +230,9 @@ class EventSpider(scrapy.Spider):
                     args={
                     'timeout': 600,
                     'lua_source': parse_event_script,
-                    'ua': user_agents[0]
+                    'ua': user_agents[0],
+                    'proxy_ip': proxy_ip,
+                    'proxy_port': proxy_port
                     }
                 )
                 pass
@@ -282,12 +293,14 @@ class EventSpider(scrapy.Spider):
             if event_link is not None:
                 yield SplashRequest(
                     url=urljoin(response.url, urlparse(event_link).path),
-                     callback=self.parse_event,
+                    callback=self.parse_event,
                     endpoint='execute',
                     args={
                         'timeout': 600,
                         'lua_source': parse_event_script,
-                        'ua': user_agents[0]
+                        'ua': user_agents[0],
+                        'proxy_ip': proxy_ip,
+                        'proxy_port': proxy_port
                     }
                 )
                 pass
