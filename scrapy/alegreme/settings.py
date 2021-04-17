@@ -40,8 +40,8 @@ PWD = '/var/www/scrapy/data'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 2
-CONCURRENT_ITEMS = 16
+CONCURRENT_REQUESTS = 8
+# CONCURRENT_ITEMS = 50
 
 # Scrapy Proxy Pool
 # https://github.com/rejoiceinhope/scrapy-proxy-pool
@@ -111,7 +111,7 @@ RETRY_TIMES = 1
 
 # DEPTH_LIMIT = 4
 # CLOSESPIDER_ITEMCOUNT = 2
-CLOSESPIDER_ERRORCOUNT = 50
+CLOSESPIDER_ERRORCOUNT = 30
 CLOSESPIDER_PAGECOUNT = 150
 
 # Enable or disable extensions
@@ -140,24 +140,20 @@ COOKIES_DEBUG = False
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-AUTOTHROTTLE_START_DELAY = 3
+AUTOTHROTTLE_START_DELAY = 2
 # The maximum download delay to be set in case of high latencies
 #AUTOTHROTTLE_MAX_DELAY = 120
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
-AUTOTHROTTLE_TARGET_CONCURRENCY = 3.0
+# AUTOTHROTTLE_TARGET_CONCURRENCY = 5.0
 # Enable showing throttling stats for every response received:
 # AUTOTHROTTLE_DEBUG = False
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = 604800
-HTTPCACHE_DIR = 'httpcache'
+# HTTPCACHE_ENABLED = True
+# HTTPCACHE_EXPIRATION_SECS = 604800
+# HTTPCACHE_DIR = 'httpcache'
 # Don't cache pages that throw an error
-HTTPCACHE_IGNORE_HTTP_CODES = [503, 504, 505, 500, 400, 401, 402, 403, 404]
-
-
-#HTTPCACHE_DIR = 'httpcache'
-#HTTPCACHE_IGNORE_HTTP_CODES = []
-HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
+# HTTPCACHE_IGNORE_HTTP_CODES = [503, 504, 505, 500, 400, 401, 402, 403, 404]
+# HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'

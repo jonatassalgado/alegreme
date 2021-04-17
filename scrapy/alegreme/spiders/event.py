@@ -7,28 +7,14 @@ import random
 import re
 import requests
 
-# import shadow_useragent
-
 from urllib.parse import urljoin, urlparse
 from alegreme.items import Event, EventOrganizer, EventOrganizerLoader
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
+from alegreme.services.proxy_service import ProxyService
 
-# ua = shadow_useragent.ShadowUserAgent()
-# ua = ua.firefox
-
-url = "https://api.proxyorbit.com/v1/"
-querystring = {"token": "REMOVED",
-               "protocols": "http", 
-               "facebook": "true", 
-               "lastChecked": "20"}
-headers = {}
-proxy_response = requests.request("GET", url, headers=headers, params=querystring)
-proxy_data = proxy_response.json()
-proxy_ip = proxy_data['ip']
-proxy_port = proxy_data['port']
-
-print(f'Usando o proxy {proxy_ip}:{proxy_port}')
+ps = ProxyService()
+ps.get_proxy_list()
 
 user_agents = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
@@ -52,13 +38,27 @@ parse_event_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
-        splash.resource_timeout = 300
+        splash.resource_timeout = 60
         splash:on_request(function(request)
+            if string.find(request.url, ".css") ~= nil then
+                request.abort()
+            end
             request:set_proxy{
                 host = tostring(args.proxy_ip),
-                port = tostring(args.proxy_port)
+                port = tostring(args.proxy_port),
+                username = tostring(args.proxy_username),
+                password = tostring(args.proxy_password)
             }
         end)
+
+        splash:set_custom_headers({
+                ["user-agent"] = tostring(args.ua),
+                ["cache-control"] = "max-age=0",
+                ["upgrade-insecure-requests"] = "1",
+                ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                ["accept-enconding"] = "gzip, deflate, br",
+                ["accept-language"] = "en;q=0.9"
+            })
         assert(splash:go(splash.args.url))
         assert(splash:wait(3))
         splash.scroll_position = {y=1000}
@@ -75,7 +75,7 @@ parse_event_script = """
                                 }
                             }, 2000);
                         }
-                    ]], 60)
+                    ]], 30)
         end
 
         return splash:html()
@@ -84,13 +84,13 @@ parse_event_script = """
 
 parse_page_script = """
     function main(splash, args)
-        splash.private_mode_enabled = true
+        splash.private_mode_enabled = false
         splash.images_enabled = false
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
         splash:set_user_agent(tostring(args.ua))
-        splash.resource_timeout = 300
+        splash.resource_timeout = 120
 
         local num_scrolls = 10
         local scroll_delay = 2
@@ -126,74 +126,7 @@ class EventSpider(scrapy.Spider):
     }
 
     allowed_domains = ['facebook.com']
-    pages = ['opiniao.produtora',
-            'nopalcors',
-            'art.tattoopoa',
-            'SerenataIluminada',
-            'feiradajoao',
-            'CCMQportoalegre',
-            'agulha.poa',
-            'vilaflorespoa',
-            'cinemateca.capitolio',
-            'InstitutoLing',
-            'GoetheInstitutPortoAlegre',
-            'ksacentro',
-            'casacinepoa',
-            'picnicculturalnomuseu',
-            'noitedosmuseus',
-            'CentroCulturalUFRGS',
-            'mercadovintage',
-            'prefpoa',
-            'fundacaoiberecamargo',
-            'margsmuseu',
-            'gretacollective',
-            'coletivoarruaca',
-            'coletivoplano',
-            'fennnnnda',
-            'pepsionstageoficial',
-            'auditorioaraujovianna',
-            'ospabr',
-            'teatrodobourboncountry',
-            'sesccentro',
-            'Bar.Ocidente',
-            'comicconrs',
-            'bibliotecapublicadoestadors',
-            'somosMODAUT',
-            'GoetheInstitutPortoAlegre',
-            'tonaruamurb',
-            'aerofeira',
-            'acasacc',
-            'ILEAUFRGS',
-            'cumbianarua',
-            'cccev.rs',
-            'forroderuadeportoalegre',
-            'ciarusticadeteatro',
-            'feiramegusta',
-            'MegaRevelRS',
-            'viradasustentavelpoa',
-            'feiramultipalco',
-            'feiralamovida',
-            'uxconferencebr',
-            'ResultadosDigitais',
-            'CODEESCOLA',
-            'Uergs',
-            'forumdaliberdade',
-            'SindilojasPOA',
-            'ligadesaudedesportiva',
-            'centrodeeventospucrs',
-            'revistajadore',
-            'FestivaldaCervejaPOA',
-            'mercadodepulgaspoa',
-            'lojaprofana',
-            'casadestemperados',
-            'festaacabouchorare',
-            'zonaexpfm',
-            'gomarec',
-            'darumT',
-            'basepoas'
-            ]
-
-    # random.shuffle(pages)
+    
 
     def start_requests(self):
         self.log("INITIALIZING...")
@@ -211,9 +144,7 @@ class EventSpider(scrapy.Spider):
 
 
 
-
     def parse_page(self, response):
-
         events_in_page = response.xpath('//*[contains(@class, "_7ty")]/@href')
 
         if not events_in_page:
@@ -223,6 +154,9 @@ class EventSpider(scrapy.Spider):
 
         for event_link in events_in_page.extract():
             if event_link is not None:
+                ps.shuffle_list()
+                proxy = ps.select_proxy()
+                
                 yield SplashRequest(
                     url=urljoin(response.url, urlparse(event_link).path),
                     callback=self.parse_event,
@@ -231,20 +165,15 @@ class EventSpider(scrapy.Spider):
                     'timeout': 600,
                     'lua_source': parse_event_script,
                     'ua': user_agents[0],
-                    'proxy_ip': proxy_ip,
-                    'proxy_port': proxy_port
+                    'proxy_ip': proxy['ip'],
+                    'proxy_port': proxy['port'],
+                    'proxy_username': proxy['username'],
+                    'proxy_password': proxy['password']
                     }
                 )
                 pass
             else:
                 pass
-
-
-    # def parse_result(self, response):
-    #     imgdata = base64.b64decode(response.data['png'])
-    #     filename = 'some_image.png'
-    #     with open(filename, 'wb') as f:
-    #         f.write(imgdata)
 
 
     def parse_event(self, response):
@@ -291,6 +220,9 @@ class EventSpider(scrapy.Spider):
 
         for event_link in related_events_links.extract():
             if event_link is not None:
+                ps.shuffle_list()
+                proxy = ps.select_proxy()
+                
                 yield SplashRequest(
                     url=urljoin(response.url, urlparse(event_link).path),
                     callback=self.parse_event,
@@ -299,8 +231,10 @@ class EventSpider(scrapy.Spider):
                         'timeout': 600,
                         'lua_source': parse_event_script,
                         'ua': user_agents[0],
-                        'proxy_ip': proxy_ip,
-                        'proxy_port': proxy_port
+                        'proxy_ip': proxy['ip'],
+                        'proxy_port': proxy['port'],
+                        'proxy_username': proxy['username'],
+                        'proxy_password': proxy['password']
                     }
                 )
                 pass

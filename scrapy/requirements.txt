@@ -2,7 +2,6 @@ scrapy
 scrapy-splash
 dateparser
 scrapy-useragents
-shadow_useragent
 scrapy_proxy_pool
 extruct
 requests
