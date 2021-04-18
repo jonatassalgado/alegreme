@@ -155,7 +155,6 @@ class EventPricePrediction(object):
         return ' '.join(text_stemmed)
     
     def predict(self, query):
-        # query = base64.b64decode(query).decode('utf-8')
         query = self.__cleanning_text(query)
         query = self.__stemming_text(query)
 

@@ -148,7 +148,7 @@ class EventFeatures(object):
         return ' '.join(text_stemmed)
 
     def __get_activities(self, text, n=30):
-        nlp = spacy.load("pt")
+        nlp = spacy.load("pt_core_news_sm")
 
         matcher = Matcher(nlp.vocab)
 
@@ -171,7 +171,7 @@ class EventFeatures(object):
         return activities[:30]
 
     def __get_verbs(self, text, n=30):
-        nlp = spacy.load("pt")
+        nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
         matcher.add("VERB", None, [{"TEXT": {"REGEX": "(.+(er|ar|ir)$)"}}])
 
@@ -186,7 +186,7 @@ class EventFeatures(object):
         return verbs[:n]
 
     def __get_nouns(self, text, n=30):
-        nlp = spacy.load("pt")
+        nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
         matcher.add("NOUN", None, [{"POS": "NOUN"}])
 
@@ -201,7 +201,7 @@ class EventFeatures(object):
         return verbs[:n]
 
     def __get_adjs(self, text, n=30):
-        nlp = spacy.load("pt")
+        nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
         matcher.add("ADJ", None, [{"POS": "ADJ"}])
 
@@ -221,7 +221,6 @@ class EventFeatures(object):
     # text_activities = self.__get_activities(text_cleanned)
 
     def extract_features(self, text):
-        text = base64.b64decode(text).decode('utf-8')
         text_cleanned = self.__cleanning_text(text)
         text_stemmed = self.__stemming_text(text_cleanned)
 

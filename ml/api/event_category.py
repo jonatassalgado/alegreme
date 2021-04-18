@@ -183,7 +183,7 @@ class EventCategoryPrediction(object):
         return ' '.join(text_stemmed)
 
     def __get_activities(self, text, n=30):
-        nlp = spacy.load("pt")
+        nlp = spacy.load("pt_core_news_sm")
 
         matcher = Matcher(nlp.vocab)
 
@@ -206,7 +206,7 @@ class EventCategoryPrediction(object):
         return activities[:30]
 
     def __get_verbs(self, text, n=30):
-        nlp = spacy.load("pt")
+        nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
         matcher.add("VERB", None, [{"TEXT": {"REGEX": "(.+(er|ar|ir)$)"}}])
 
@@ -221,7 +221,7 @@ class EventCategoryPrediction(object):
         return verbs[:n]
 
     def __get_nouns(self, text, n=30):
-        nlp = spacy.load("pt")
+        nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
         matcher.add("NOUN", None, [{"POS": "NOUN"}])
 
@@ -236,7 +236,7 @@ class EventCategoryPrediction(object):
         return verbs[:n]
 
     def __get_adjs(self, text, n=30):
-        nlp = spacy.load("pt")
+        nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
         matcher.add("ADJ", None, [{"POS": "ADJ"}])
 
@@ -401,7 +401,6 @@ class EventCategoryPrediction(object):
         print(accuracyc)
 
     def predict(self, query):
-        # query = base64.b64decode(query).decode('utf-8')
         query = self.__cleanning_text(query)
         query = self.__stemming_text(query)
 

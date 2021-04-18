@@ -46,12 +46,10 @@ class EventSimilar(object):
         return similar_items_ids
 
     def get_similarity(self, text, base):
-        base = base64.b64decode(base).decode('utf-8')
         similarity = self.__get_similarity(text, base)
 
-#        print(similarity)
         return similarity
 
 
 #predictModel = EventSimilar()
-#predictModel.get_similarity(1)
+# predictModel.get_similarity(1)
