@@ -114,10 +114,9 @@ class EventLabelRoute(Resource):
 
 
 class EventFeaturesRoute(Resource):
-    def get(self):
+    def post(self):
         args = parser.parse_args()
         query = args['query']
-        print(query)
 
         eventFeatures = EventFeatures()
         features = eventFeatures.extract_features(query)

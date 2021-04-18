@@ -85,12 +85,8 @@ class Event < ApplicationRecord
 		}
 	end
 
-	def ml_data_all
-		nouns = ml_data['nouns']
-		verbs = ml_data['verbs']
-		adjs  = ml_data['adjs']
-
-		nouns.union(verbs, adjs)
+	def text_to_ml
+		"#{details_name} #{details_description} #{place_details_name}"
 	end
 
 	def cover_url(type = :list)

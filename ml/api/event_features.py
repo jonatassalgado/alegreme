@@ -90,177 +90,162 @@ stopwords.extend([
 
 
 class EventFeatures(object):
-	
-	def __cleanning_text(self, text):
-		def __downcase(text):
-				return text.lower()
 
-		def __remove_digits(text):
-				return re.sub(r'\d+', '', text)
+    def __cleanning_text(self, text):
+        def __downcase(text):
+            return text.lower()
 
-		def __remove_ponctuation(text):
-				translator = str.maketrans(' ', ' ', string.punctuation)
-				return text.translate(translator)
+        def __remove_digits(text):
+            return re.sub(r'\d+', '', text)
 
-		def __remove_white_spaces(text):
-				return " ".join(text.split())
+        def __remove_ponctuation(text):
+            translator = str.maketrans(' ', ' ', string.punctuation)
+            return text.translate(translator)
 
-		def __remove_stopwords(text):
-				tokens = word_tokenize(text)
-				text_without_stopwords = [i for i in tokens if not i in stopwords]
-				return ' '.join(text_without_stopwords)
+        def __remove_white_spaces(text):
+            return " ".join(text.split())
 
-		def __remove_emojis(text):
-				return text.encode('latin-1', 'ignore').decode('latin-1')
+        def __remove_stopwords(text):
+            tokens = word_tokenize(text)
+            text_without_stopwords = [i for i in tokens if not i in stopwords]
+            return ' '.join(text_without_stopwords)
 
-		def __remove_html_tags(text):
-				cleaner = re.compile('<.*?>')
-				clean_text = re.sub(cleaner, ' ', text)
-				return clean_text
+        def __remove_emojis(text):
+            return text.encode('latin-1', 'ignore').decode('latin-1')
 
-		text = __downcase(text)
-		text = __remove_html_tags(text)
-		text = __remove_digits(text)
-		text = __remove_ponctuation(text)
-		text = __remove_emojis(text)
-		text = __remove_stopwords(text)
-		text = __remove_white_spaces(text)
+        def __remove_html_tags(text):
+            cleaner = re.compile('<.*?>')
+            clean_text = re.sub(cleaner, ' ', text)
+            return clean_text
 
-		return text
+        text = __downcase(text)
+        text = __remove_html_tags(text)
+        text = __remove_digits(text)
+        text = __remove_ponctuation(text)
+        text = __remove_emojis(text)
+        text = __remove_stopwords(text)
+        text = __remove_white_spaces(text)
 
-	def __get_top_n_words(self, corpus, n=None):
-		vec = CountVectorizer().fit(corpus)
-		bag_of_words = vec.transform(corpus)
-		sum_words = bag_of_words.sum(axis=0)
-		words_freq = [[word, int(sum_words[0, idx])]
-									for word, idx in vec.vocabulary_.items()]
-		words_freq = sorted(words_freq, key=lambda x: x[1], reverse=True)
-		return words_freq[:n]
+        return text
 
-	def __stemming_text(self, text):
-		text_tokenized = word_tokenize(text)
-		text_stemmed = []
-		for word in text_tokenized:
-				stemmer = RSLPStemmer()
-				if word not in stopwords:
-						text_stemmed.append(stemmer.stem(word))
-						pass
-		return ' '.join(text_stemmed)
+    def __get_top_n_words(self, corpus, n=None):
+        vec = CountVectorizer().fit(corpus)
+        bag_of_words = vec.transform(corpus)
+        sum_words = bag_of_words.sum(axis=0)
+        words_freq = [[word, int(sum_words[0, idx])]
+                      for word, idx in vec.vocabulary_.items()]
+        words_freq = sorted(words_freq, key=lambda x: x[1], reverse=True)
+        return words_freq[:n]
 
-	def __get_activities(self, text, n=30):
-		nlp = spacy.load("pt")
+    def __stemming_text(self, text):
+        text_tokenized = word_tokenize(text)
+        text_stemmed = []
+        for word in text_tokenized:
+            stemmer = RSLPStemmer()
+            if word not in stopwords:
+                text_stemmed.append(stemmer.stem(word))
+                pass
+        return ' '.join(text_stemmed)
 
-		matcher = Matcher(nlp.vocab)
+    def __get_activities(self, text, n=30):
+        nlp = spacy.load("pt")
 
-		matcher.add("andar_ADP_NOUN", None, [{
-				"LEMMA": "andar"
-		}, {
-				"POS": "ADP"
-		}, {
-				"POS": "NOUN"
-		}])
+        matcher = Matcher(nlp.vocab)
 
-		doc = nlp(text)
-		matches = matcher(doc)
+        matcher.add("andar_ADP_NOUN", None, [{
+            "LEMMA": "andar"
+        }, {
+            "POS": "ADP"
+        }, {
+            "POS": "NOUN"
+        }])
 
-		activities = []
-		for match_id, start, end in matches:
-				span = doc[start:end]
-				activities.append(span.text)
+        doc = nlp(text)
+        matches = matcher(doc)
 
-		return activities[:30]
+        activities = []
+        for match_id, start, end in matches:
+            span = doc[start:end]
+            activities.append(span.text)
 
-	def __get_verbs(self, text, n=30):
-		nlp = spacy.load("pt")
-		matcher = Matcher(nlp.vocab)
-		matcher.add("VERB", None, [{"TEXT": {"REGEX": "(.+(er|ar|ir)$)"}}])
+        return activities[:30]
 
-		doc = nlp(text)
-		matches = matcher(doc)
+    def __get_verbs(self, text, n=30):
+        nlp = spacy.load("pt")
+        matcher = Matcher(nlp.vocab)
+        matcher.add("VERB", None, [{"TEXT": {"REGEX": "(.+(er|ar|ir)$)"}}])
 
-		verbs = []
-		for match_id, start, end in matches:
-				span = doc[start:end]
-				verbs.append(span.text)
+        doc = nlp(text)
+        matches = matcher(doc)
 
-		return verbs[:n]
+        verbs = []
+        for match_id, start, end in matches:
+            span = doc[start:end]
+            verbs.append(span.text)
 
-	def __get_nouns(self, text, n=30):
-		nlp = spacy.load("pt")
-		matcher = Matcher(nlp.vocab)
-		matcher.add("NOUN", None, [{"POS": "NOUN"}])
+        return verbs[:n]
 
-		doc = nlp(text)
-		matches = matcher(doc)
+    def __get_nouns(self, text, n=30):
+        nlp = spacy.load("pt")
+        matcher = Matcher(nlp.vocab)
+        matcher.add("NOUN", None, [{"POS": "NOUN"}])
 
-		verbs = []
-		for match_id, start, end in matches:
-				span = doc[start:end]
-				verbs.append(span.text)
+        doc = nlp(text)
+        matches = matcher(doc)
 
-		return verbs[:n]
+        verbs = []
+        for match_id, start, end in matches:
+            span = doc[start:end]
+            verbs.append(span.text)
 
-	def __get_adjs(self, text, n=30):
-		nlp = spacy.load("pt")
-		matcher = Matcher(nlp.vocab)
-		matcher.add("ADJ", None, [{"POS": "ADJ"}])
+        return verbs[:n]
 
-		doc = nlp(text)
-		matches = matcher(doc)
+    def __get_adjs(self, text, n=30):
+        nlp = spacy.load("pt")
+        matcher = Matcher(nlp.vocab)
+        matcher.add("ADJ", None, [{"POS": "ADJ"}])
 
-		adjs = []
-		for match_id, start, end in matches:
-				span = doc[start:end]
-				adjs.append(span.text)
+        doc = nlp(text)
+        matches = matcher(doc)
 
-		return adjs[:n]
+        adjs = []
+        for match_id, start, end in matches:
+            span = doc[start:end]
+            adjs.append(span.text)
 
-	
+        return adjs[:n]
 
-	def __bag_of_words(self, text_cleanned, text_stemmed):
+    def __bag_of_words(self, text_cleanned, text_stemmed):
+        pass
+    # text_top_tfifd = self.__get_top_tfifd(text_cleanned)
+    # text_activities = self.__get_activities(text_cleanned)
 
-#     bag = []
-#
-#     for idx, description in enumerate(self.X_raw):        
-		text_words_freq = self.__get_top_n_words([text_cleanned], 30)
-		text_nouns = self.__get_nouns(text_cleanned)
-		text_verbs = self.__get_verbs(text_cleanned)
-		text_adjs = self.__get_adjs(text_cleanned)
-		#            similar_texts = self.__get_similarity(idx)
-#        text_top_tfifd = self.__get_top_tfifd(text_cleanned)
-		#text_activities = self.__get_activities(text_cleanned)
+    def extract_features(self, text):
+        text = base64.b64decode(text).decode('utf-8')
+        text_cleanned = self.__cleanning_text(text)
+        text_stemmed = self.__stemming_text(text_cleanned)
 
-		item = {
-				'cleanned': text_cleanned,
-				'stemmed': text_stemmed,
-				'freq': text_words_freq,
-				'nouns': text_nouns,
-				'verbs': text_verbs,
-				'adjs': text_adjs
-#            'similar_texts': similar_texts,
-#            'text_top_tfifd': text_top_tfifd
-				#'activities': text_activities
-		}
+        text_words_freq = self.__get_top_n_words([text_cleanned], 30)
+        text_nouns = self.__get_nouns(text_cleanned)
+        text_verbs = self.__get_verbs(text_cleanned)
+        text_adjs = self.__get_adjs(text_cleanned)
 
-		return item
+        item = {
+            'cleanned': text_cleanned,
+            'stemmed': text_stemmed,
+            'freq': text_words_freq,
+            'nouns': text_nouns,
+            'verbs': text_verbs,
+            'adjs': text_adjs
+        }
 
-
-	def extract_features(self, text): 
-		text = base64.b64decode(text).decode('utf-8')
-		text_cleanned = self.__cleanning_text(text)
-		text_stemmed = self.__stemming_text(text_cleanned)
-		
-		return self.__bag_of_words(text_cleanned, text_stemmed)
-
-	
-
-	
+        return item
 
 
 # predictModel = EventPersonaPrediction()
-#predictModel.clean()
-#predictModel.train()
-#predictModel.debug
+# predictModel.clean()
+# predictModel.train()
+# predictModel.debug
 #bagOfWords = predictModel.bag_of_words()
 
 #stemmed, cleanned = predictModel.X
