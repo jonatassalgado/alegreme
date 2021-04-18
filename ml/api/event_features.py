@@ -152,13 +152,13 @@ class EventFeatures(object):
 
         matcher = Matcher(nlp.vocab)
 
-        matcher.add("andar_ADP_NOUN", None, [{
+        matcher.add("andar_ADP_NOUN", [[{
             "LEMMA": "andar"
         }, {
             "POS": "ADP"
         }, {
             "POS": "NOUN"
-        }])
+        }]])
 
         doc = nlp(text)
         matches = matcher(doc)
@@ -173,7 +173,7 @@ class EventFeatures(object):
     def __get_verbs(self, text, n=30):
         nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
-        matcher.add("VERB", None, [{"TEXT": {"REGEX": "(.+(er|ar|ir)$)"}}])
+        matcher.add("VERB", [[{"TEXT": {"REGEX": "(.+(er|ar|ir)$)"}}]])
 
         doc = nlp(text)
         matches = matcher(doc)
@@ -188,7 +188,7 @@ class EventFeatures(object):
     def __get_nouns(self, text, n=30):
         nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
-        matcher.add("NOUN", None, [{"POS": "NOUN"}])
+        matcher.add("NOUN", [[{"POS": "NOUN"}]])
 
         doc = nlp(text)
         matches = matcher(doc)
@@ -203,7 +203,7 @@ class EventFeatures(object):
     def __get_adjs(self, text, n=30):
         nlp = spacy.load("pt_core_news_sm")
         matcher = Matcher(nlp.vocab)
-        matcher.add("ADJ", None, [{"POS": "ADJ"}])
+        matcher.add("ADJ", [[{"POS": "ADJ"}]])
 
         doc = nlp(text)
         matches = matcher(doc)
