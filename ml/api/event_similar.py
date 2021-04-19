@@ -1,5 +1,4 @@
 import pandas as pd
-import base64
 import json
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -37,9 +36,9 @@ class EventSimilar(object):
             similar_scores = round(top_10_items[1][index], 6)
             similar_descriptions = df.loc[similar_index, 'text']
             similar_ids = int(df.loc[similar_index, 'ids'])
-
-            similar_items.append(
-                [similar_descriptions, similar_scores, similar_ids])
+            
+            if similar_scores >= 0.6:
+                similar_items.append([similar_descriptions, similar_scores, similar_ids])
 
         similar_items_ids = [item[2] for item in similar_items]
 
@@ -51,5 +50,6 @@ class EventSimilar(object):
         return similarity
 
 
-#predictModel = EventSimilar()
-# predictModel.get_similarity(1)
+# base = "[[\"god sav queen araúj viann god sav queen eleit revist rolling ston band tribut queen traz show auditóri araúj viann conseg cri sens vend ouv queen integr ocup mesm cen instrument orig vestu cenograf cop detalh band freddi mercury brian may john deacon rog tayl god sav queen araúj viann osvald aranh eduard holm pont uno plate alt later plate alt centr plate later plate centr plate gold meiaentr estudantil cie espetácul vál determin descont jov pertenc famíl rend jov defici acompanh necess prest continu assist defici emit institut segur ins doad regul sang estad n° vál exped hemocentrosbanc sang sóci club assin zh vers lindo cobranç vers gal chav planet surf iguatem wallig ipirang wwwsymplacombraraujoviann wwwaraujoviannaoficialcombr wwwfacebookcomaraujoviannaofic wwwtwittercomaraujoviann araúj viann\", 9693], [\"paul viol araúj viann paul viol samb auditóri araúj viann carr músic deix algum compos etern músic coraçã levi pass paul viol araúj viann osvald aranh opin produt plate alt later compr kg plate alt centr compr kg plate later compr kg plate centr compr kg plate gold compr kg aliment auditóri araúj viann meiaentr estudantil cie espetácul vál determin descont jov pertenc famíl rend jov defici acompanh necess prest continu assist defici emit institut segur ins sóci club assin zh vers lindo cobranç vers gal chav planet surf iguatem wallig ipirang wwwsymplacombr wwwopiniaocombr wwwfacebookcomopiniaoprodu wwwtwittercomopinia araúj viann\", 9691], [\"bonni tyl araúj viann confirm aí comemor carr tour histór pass cidad reviv sucess bonni tyl únic imperd bonni tyl sextaf araúj viann osvald aranh morphin coproduç fg music plate alt later compr kg plate alt centr compr kg plate later compr kg plate centr compr kg plate gold compr kg aliment auditóri araúj viann meiaentr estudantil cie espetácul vál determin descont jov pertenc famíl rend jov defici acompanh necess prest continu assist defici emit institut segur ins vers lindo cobranç vers gal chav planet surf iguatem wallig ipirang httpsbiletosymplacombrevent wwwopiniaocombr wwwfacebookcomopiniaoprodu wwwtwittercomopinia araúj viann\", 9697], [\"enald authentic gam araúj viann youtub enald authentic gam junt auditóri araúj viann enald authentic gam araúj viann osvald aranh opin produt plate alt later compr kg plate alt centr compr kg plate later compr kg plate centr compr kg plate gold compr kg plate alt later compr kg plate alt centr compr kg plate later compr kg plate centr compr kg plate gold compr kg aliment auditóri araúj viann meiaentr estudantil cie espetácul vál determin vers lindo cobranç vers gal chav planet surf iguatem wallig ipirang wwwsymplacombraraujoviann wwwaraujoviannaoficialcombr wwwfacebookcomaraujoviannaofic wwwtwittercomaraujoviann araúj viann\", 9698]]"
+# predictModel = EventSimilar()
+# s = predictModel.get_similarity("0", base)

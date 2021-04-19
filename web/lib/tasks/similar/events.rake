@@ -5,7 +5,7 @@ namespace :similar do
 		base_to_compare = active_events.map { |event| [event.ml_data['stemmed'], event.id] }
 
 		active_events.each_with_index do |event, index|
-			similar_params   = {'text' => index, 'base' => base_to_compare.to_s}
+			similar_params   = {'text' => index.to_s, 'base' => base_to_compare.to_s}
 			similar_uri      = URI("#{ENV["API_URL"]}:5000/event/similar")
 			similar_response = Net::HTTP.post_form(similar_uri, similar_params)
 			similar_data     = JSON.parse(similar_response.body) if similar_response.is_a?(Net::HTTPSuccess)
