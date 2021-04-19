@@ -123,10 +123,12 @@ services:
       - "5000:5000"
     volumes:
       - api_data:/var/www/api/data
+      - ./ml/api:/var/www/ml/api
       - ./scrapy/data:/var/www/scrapy/data
       - ./logs/api:/var/www/ml/api/log
     environment:
       IS_DOCKER: 'true'
+    restart: always
     mem_limit: 4gb
     memswap_limit: 4gb
     mem_reservation: 256m
