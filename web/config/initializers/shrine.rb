@@ -16,17 +16,17 @@ if Rails.env != 'test'
 			region:            'sfo2'
 	}
 
-if Rails.env == 'test'
-	Shrine.storages = {
-			cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
-			store: Shrine::Storage::FileSystem.new("public", prefix: "uploads"),
-	}
-else
-	Shrine.storages = {
-			cache: Shrine::Storage::S3.new(prefix: "cache", upload_options: {acl: 'public-read'}, **s3_options),
-			store: Shrine::Storage::S3.new(prefix: "store", upload_options: {acl: 'public-read'}, **s3_options)
-	}
-end
+	if Rails.env == 'test' || Rails.env == 'development'
+		Shrine.storages = {
+				cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
+				store: Shrine::Storage::FileSystem.new("public", prefix: "uploads"),
+		}
+	else
+		Shrine.storages = {
+				cache: Shrine::Storage::S3.new(prefix: "cache", upload_options: {acl: 'public-read'}, **s3_options),
+				store: Shrine::Storage::S3.new(prefix: "store", upload_options: {acl: 'public-read'}, **s3_options)
+		}
+	end
 
 
 	Shrine.plugin :activerecord
