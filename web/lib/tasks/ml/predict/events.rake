@@ -9,6 +9,7 @@ require 'timecop'
 module PredictEventsLabelsRake
 
 	def get_features_of_event(event)
+		puts "#{event.details_name} #{event.id} - Adicionando features".white
 		features_query  = event.text_to_ml
 		features_params = { 'query' => features_query }
 
@@ -20,7 +21,6 @@ module PredictEventsLabelsRake
 		features_response_is_success = features_response.is_a?(Net::HTTPSuccess)
 
 		if features_response_is_success
-			puts "#{event.details_name} #{event.id} - Adicionando features".white
 			event.ml_data.deep_merge!(
 				'stemmed' => features_data['stemmed']
 			)
@@ -30,6 +30,7 @@ module PredictEventsLabelsRake
 	end
 
 	def classify_event(event)
+		puts "#{event.details_name} #{event.id} - Adicionando classificação".white
 		label_query  = event.details_description
 		label_params = { 'query' => label_query }
 
@@ -41,7 +42,6 @@ module PredictEventsLabelsRake
 		label_response_is_success = label_response.is_a?(Net::HTTPSuccess)
 
 		if label_response_is_success
-			puts "#{event.details_name} #{event.id} - Adicionando classificação".white
 			data = {
 				personas:   {
 					primary:   {

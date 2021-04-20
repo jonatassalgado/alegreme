@@ -124,6 +124,7 @@ module PopulateEventsRake
 	end
 
 	def get_features_of_event(event)
+		puts "Evento: #{event.details_name} - Adicionando features".white
 		features_query  = event.text_to_ml
 		features_params = { 'query' => features_query }
 
@@ -135,7 +136,6 @@ module PopulateEventsRake
 		features_response_is_success = features_response.is_a?(Net::HTTPSuccess)
 
 		if features_response_is_success
-			puts "Evento: #{event.details_name} - Adicionando features".white
 			event.ml_data.deep_merge!(
 				'stemmed' => features_data['stemmed']
 			)
@@ -145,6 +145,7 @@ module PopulateEventsRake
 	end
 
 	def classify_event(event)
+		puts "Evento: #{event.details_name} - Adicionando classificação".white
 		label_query  = event.text_to_ml
 		label_params = { 'query' => label_query }
 
@@ -156,7 +157,6 @@ module PopulateEventsRake
 		label_response_is_success = label_response.is_a?(Net::HTTPSuccess)
 
 		if label_response_is_success
-			puts "Evento: #{event.details_name} - Adicionando classificação".white
 			event.ml_data.deep_merge!(
 				personas:   {
 					primary:   {
@@ -384,11 +384,7 @@ namespace :populate do
 
 			associate_event_organizers(event, organizers)
 			associate_event_place(event, place)
-
-			unless event.image_data?
-				next unless set_cover(item, event)
-			end
-
+			next unless set_cover(item, event)
 			get_features_of_event(event)
 			classify_event(event)
 			save_event(event)
