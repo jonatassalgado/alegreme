@@ -1,10 +1,10 @@
-<div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list" class="md:pr-5 pl-3">
+<div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list" class="pr-5 pl-3">
 	<% @events.group_by { |e| e.start_time.strftime("%Y-%m-%d") }.each do |group| %>
 		<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="ml-2 mb-5 relative">
 			<div class="<%= helpers.class_names('-ml-1 pl-1 bg-white flex-1 leading-6 md:bg-white md:leading-normal md:pb-2 pb-3 mb-3 pt-2 md:pt-5 sticky text-gray-600 z-10',
-																					{ 'top-16 pt-5':  helpers.mobile_device?,
-																						'top-12': helpers.mobile_device? && current_page?('/minha-agenda'),
-																						'top-36': !helpers.mobile_device? && (controller_name == 'feeds') && (action_name == 'index') }) %>">
+																					{ 'top-0 pt-5':  helpers.mobile_device?,
+																					  'top-0': helpers.mobile_device? && current_page?('/minha-agenda'),
+																					  'top-16': !helpers.mobile_device? && (controller_name == 'feeds') && (action_name == 'index') }) %>">
 				<div class="flex items-center space-x-3">
 					<div class="w-9 bg-brand-100 flex flex-col justify-items-center px-1.5 py-1 rounded-md text-center">
 						<div class="font-display font-bold text-brand-700">

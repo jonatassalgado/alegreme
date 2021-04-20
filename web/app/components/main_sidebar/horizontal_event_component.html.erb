@@ -8,10 +8,10 @@
 												action:                  'click->main-sidebar--horizontal-event#openEvent',
 												'event-id':              @event.id
 											},
-											class: 'md:text-xl font-semibold md:font-bold md:hover:text-brand-500 mb-1 leading-snug text-gray-800 inline-block' do %>
+											class: 'md:text-lg font-semibold md:hover:text-brand-500 mb-1 leading-snug text-gray-800 inline' do %>
 				<%= @event.details_name %>
 			<% end %>
-			<div class="text-sm md:mt-1 text-gray-500">
+			<div class="text-sm md:mt-1 text-gray-500 inline">
 				<%= helpers.format_hour @event.start_time %>h ·
 				<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				·
