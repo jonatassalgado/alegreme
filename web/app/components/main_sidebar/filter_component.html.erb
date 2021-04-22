@@ -1,41 +1,43 @@
-<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter', 'main-sidebar--filter-loading-value': false }, class: 'sticky top-24 transition-all duration-300 translate-x-32 md:ml-8 mt-8' do %>
-	<div class="pb-2 text-xl font-bold text-gray-900 bg-white font-display flex items-center">
-		Filtros
-		<svg data-main-sidebar--filter-target="loadingIcon" class="transition-opacity opacity-0 text-brand-600 w-7 h-7 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-			<path fill="none" d="M0 0h24v24H0V0z"/>
-			<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
-		</svg>
-	</div>
-	<div class="flex flex-wrap">
-		<div data-reflex="click->Filter#show_filter_group"
-				 data-filter-group="date"
-				 data-open="<%= @show_filter_group == 'date' %>"
-				 class="<%= helpers.class_names('text-lg border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 pl-1.5 pr-4 py-1 rounded-full select-none tap-highlight-none transform transition-all transition-colors w-content',
-																				{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:date] || @show_filter_group == 'date' }) %>">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="<%= helpers.class_names('fill-current w-5 mr-1 transform transition-transform',
-																																																 { 'rotate-180': @show_filter_group == 'date' }) %>">
-				<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter', 'main-sidebar--filter-loading-value': false }, class: 'transition-all duration-300 translate-x-32 md:ml-8 mt-8' do %>
+	<div class="">
+		<div class="pb-2 text-xl font-bold text-gray-900 bg-white font-display flex items-center">
+			Filtros
+			<svg data-main-sidebar--filter-target="loadingIcon" class="transition-opacity opacity-0 text-brand-600 w-7 h-7 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<path fill="none" d="M0 0h24v24H0V0z"/>
+				<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
 			</svg>
-			<%= @filters[:date] ? @filters[:date]&.to_date&.strftime("%d/%m/%y") : 'Data' %>
 		</div>
-		<div data-reflex="click->Filter#show_filter_group"
-				 data-filter-group="category"
-				 data-open="<%= @show_filter_group == 'category' %>"
-				 class="<%= helpers.class_names('text-lg border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 pl-1.5 pr-4 py-1 rounded-full select-none tap-highlight-none transform transition-all transition-colors w-content',
-																				{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:categories].present? || @show_filter_group == 'category' }) %>">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="<%= helpers.class_names('fill-current w-5 mr-1 transform transition-transform',
-																																																 { 'rotate-180': @show_filter_group == 'category' }) %>">
-				<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-			</svg>
-			<%= @filters[:categories].present? ? @filters[:categories].map { |category| Category::CATEGORIES.select { |hash| hash['name'] == category }&.first['display_name'] }.join(', ') : 'Categorias' %>
-		</div>
-		<% if @filters[:categories].present? || @filters[:date] %>
-			<div data-reflex="click->Filter#clear_filter"
-					 data-filter-group="category"
-					 class="inline-block flex justify-start items-center py-1 pr-4 pl-4 mr-2 mb-2 font-semibold text-gray-700 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none duration-50 hover:bg-red-200 hover:text-red-700 tap-highlight-none w-content">
-				Limpar
+		<div class="flex flex-wrap">
+			<div data-reflex="click->Filter#show_filter_group"
+					data-filter-group="date"
+					data-open="<%= @show_filter_group == 'date' %>"
+					class="<%= helpers.class_names('text-lg border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 pl-1.5 pr-4 py-1 rounded-full select-none tap-highlight-none transform transition-all transition-colors w-content',
+																					{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:date] || @show_filter_group == 'date' }) %>">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="<%= helpers.class_names('fill-current w-5 mr-1 transform transition-transform',
+																																																	{ 'rotate-180': @show_filter_group == 'date' }) %>">
+					<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+				</svg>
+				<%= @filters[:date] ? @filters[:date]&.to_date&.strftime("%d/%m/%y") : 'Data' %>
 			</div>
-		<% end %>
+			<div data-reflex="click->Filter#show_filter_group"
+					data-filter-group="category"
+					data-open="<%= @show_filter_group == 'category' %>"
+					class="<%= helpers.class_names('text-lg border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 pl-1.5 pr-4 py-1 rounded-full select-none tap-highlight-none transform transition-all transition-colors w-content',
+																					{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:categories].present? || @show_filter_group == 'category' }) %>">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="<%= helpers.class_names('fill-current w-5 mr-1 transform transition-transform',
+																																																	{ 'rotate-180': @show_filter_group == 'category' }) %>">
+					<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+				</svg>
+				<%= @filters[:categories].present? ? @filters[:categories].map { |category| Category::CATEGORIES.select { |hash| hash['name'] == category }&.first['display_name'] }.join(', ') : 'Categorias' %>
+			</div>
+			<% if @filters[:categories].present? || @filters[:date] %>
+				<div data-reflex="click->Filter#clear_filter"
+						data-filter-group="category"
+						class="inline-block flex justify-start items-center py-1 pr-4 pl-4 mr-2 mb-2 font-semibold text-gray-700 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none duration-50 hover:bg-red-200 hover:text-red-700 tap-highlight-none w-content">
+					Limpar
+				</div>
+			<% end %>
+		</div>
 	</div>
 	<div class="mt-6 space-y-6">
 		<% if @show_filter_group == 'date' %>
