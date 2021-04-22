@@ -25,15 +25,7 @@ class Event < ApplicationRecord
 	include Scopes
 	include EventQueries::Scopes
 
-	friendly_id :slug_candidates, use: :slugged
-
-	def slug_candidates
-		[
-				[:details_name, :categories_primary_name],
-				[:details_name, :place_details_name, :categories_primary_name],
-				[:details_name, :place_details_name, :categories_primary_name, :start_time]
-		]
-	end
+	friendly_id :details_name, use: :slugged
 
 	validate :uniq_details_name, on: :create
 
