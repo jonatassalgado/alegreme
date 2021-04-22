@@ -158,15 +158,12 @@
 																		url:        event_path(similar_event),
 																		'event-id': similar_event.id
 																	},
-																	class: 'font-semibold md:hover:underline mb-1 leading-snug text-gray-800 inline-block' do %>
+																	class: 'font-semibold inline leading-snug mb-1 md:hover:text-brand-500 text-gray-800' do %>
 										<%= similar_event.details_name %>
 									<% end %>
-									<div class="text-sm md:text-xs text-gray-500">
-										<%= link_to helpers.limit_place_name_size(similar_event.place_details_name, 24), place_path(similar_event.place), class: 'md:hover:underline capitalize' %>
-									</div>
 								</div>
 								<div>
-									<div data-controller="ripple" class="shadow-xs relative w-24 overflow-hidden rounded ripple ripple-white">
+									<div data-controller="ripple" class="shadow-xs relative w-20 overflow-hidden rounded ripple ripple-white">
 										<%= link_to event_path(similar_event),
 																data: {
 																	action:     'click->main-sidebar--horizontal-event#openEvent',
