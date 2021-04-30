@@ -59,6 +59,17 @@ class Event < ApplicationRecord
 
 	scope :search_import, -> { active }
 
+	serialize_json %i[
+		theme
+		geographic
+		ocurrences
+		details
+		entries
+		ml_data
+		similar_data
+		image_data
+	]
+
 	def should_index?
 		active
 	end
@@ -107,10 +118,9 @@ class Event < ApplicationRecord
 		datetimes
 	end
 
-	# scope 'similar_events', -> |user|
-	# 	Event.where(id: self.similar_data).order_by_ids(self.similar_data).active.not_liked(user)
-	# end
-
+	def similar_data=(value)
+		similar_data.is_a?(String) ? similar_data.to_json : []
+	end
 
 	private
 

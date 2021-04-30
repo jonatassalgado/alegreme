@@ -94,7 +94,25 @@ Rails.application.routes.draw do
 
 	authenticate :user, lambda { |u| u.admin? } do
 		mount Sidekiq::Web => '/sidekiq'
-		get 'admin/users', to: 'users#admin'
+		namespace :admin do
+		resources :users
+		resources :events
+		resources :likes
+		resources :tags
+		resources :artifacts
+		resources :posters
+		resources :places
+		resources :organizers
+		resources :kinds
+		resources :movies
+		resources :streamings
+		resources :cine_films
+		resources :friendships
+		resources :categories
+		resources :follows
+
+		root to: "events#index"
+		end
 	end
 
 	get 'job/submit/:who/:message', to: 'job#submit'
