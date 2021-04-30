@@ -56,7 +56,7 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
 RUN rm -fr /usr/local/bin/bundle
-RUN gem install bundler
+RUN gem install bundler:2.2.14
 RUN bundle install
 
 ADD . $RAILS_ROOT

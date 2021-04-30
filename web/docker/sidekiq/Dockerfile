@@ -31,7 +31,7 @@ WORKDIR $SIDEKIQ_ROOT
 RUN mkdir -p config
 COPY ./docker/sidekiq/config.yml config.yml
 
-RUN gem install bundler
+RUN gem install bundler:2.2.14
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
