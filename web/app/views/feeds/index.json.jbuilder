@@ -1,4 +1,4 @@
-grouped_events = @upcoming_events.includes(:categories).limit(50).group_by { |e| e.start_time.strftime("%Y-%m-%d") }
+grouped_events = @upcoming_events.includes(:categories).limit(100).group_by { |e| e.start_time.strftime("%Y-%m-%d") }
 
 json.feed grouped_events do |group, events|
 	json.date group
@@ -12,6 +12,7 @@ json.feed grouped_events do |group, events|
 		json.geographic event.geographic
 		json.categories event.categories.pluck(:details)
 		json.liked current_user&.like?(event) || false
+		json.place event.place_details_name
 		# json.source_url event.details_source_url
 		json.origin_url event_url(event, format: :html)
 		# json.created_at event.created_at
