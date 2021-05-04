@@ -8,7 +8,7 @@ json.feed grouped_events do |group, events|
 		json.name event.name
 		# json.description event.description
 		json.start_time event.start_time
-		json.price event.prices.try(0)
+		json.price event.prices.try(:min)
 		json.geographic event.geographic
 		json.categories event.categories.pluck(:details)
 		json.liked current_user&.like?(event) || false
