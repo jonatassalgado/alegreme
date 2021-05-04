@@ -10,7 +10,7 @@ module EventDecorators
 				return if event_ocurrences_is_empty?(self)
 
 				@today        = Date.current
-				@current_date = ocurrences['dates'].first.to_date
+				@current_date = datetimes.first.to_date
 				@difference   = diff_of_days
 
 				case @difference
@@ -125,7 +125,7 @@ module EventDecorators
 		end
 
 		def event_ocurrences_is_empty?(event)
-			event.ocurrences['dates'].blank?
+			event.datetimes.blank?
 		end
 
 		def diff_of_days

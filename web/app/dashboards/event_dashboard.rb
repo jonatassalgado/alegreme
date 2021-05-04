@@ -17,9 +17,9 @@ class EventDashboard < Administrate::BaseDashboard
     id: Field::Number,
     theme: Field::JSONB,
     geographic: Field::JSONB,
-    ocurrences: Field::JSONB,
+    datetimes: Field::String,
     details: Field::JSONB,
-    details_name: Field::String.with_options(searchable: false),
+    name: Field::String.with_options(searchable: false),
     entries: Field::JSONB,
     ml_data: Field::JSONB,
     similar_data: Field::JSONB,
@@ -36,7 +36,7 @@ class EventDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    details_name
+    name
     created_at
     updated_at
   ].freeze
@@ -52,7 +52,7 @@ class EventDashboard < Administrate::BaseDashboard
     id
     theme
     geographic
-    ocurrences
+    datetimes
     details
     entries
     ml_data
@@ -74,7 +74,7 @@ class EventDashboard < Administrate::BaseDashboard
     users
     theme
     geographic
-    ocurrences
+    datetimes
     details
     entries
     ml_data

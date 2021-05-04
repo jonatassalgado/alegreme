@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<h3 class="select-none font-semibold pt-5 px-5 text-gray-600">
-		Similares a <%= link_to(limit_name_size(data[:event].details['name'], 60), event_path(data[:event])) %>
+		Similares a <%= link_to(limit_name_size(data[:event].name, 60), event_path(data[:event])) %>
 	</h3>
 	<div data-slider-target="scroller" class="gap-4 grid grid-after-margin grid-flow-col pl-5 py-5 scrollx">
 		<%= render partial:    'components/collection/event',

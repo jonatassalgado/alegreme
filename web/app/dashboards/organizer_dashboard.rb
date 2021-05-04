@@ -12,7 +12,7 @@ class OrganizerDashboard < Administrate::BaseDashboard
     follows: Field::HasMany,
     id: Field::Number,
     details: Field::JSONB,
-    details_name: Field::String,
+    name: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     slug: Field::String,
@@ -28,7 +28,7 @@ class OrganizerDashboard < Administrate::BaseDashboard
     events
     follows
     id
-    details_name
+    name
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

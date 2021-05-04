@@ -35,7 +35,7 @@
 												'event-id': @event.id
 											},
 											class: 'font-semibold md:text-lg inline-block leading-snug md:hover:underline text-gray-800' do %>
-				<%= @event.details_name %>
+				<%= @event.name %>
 			<% end %>
 			<div class="text-xs text-gray-500 mt-1">
 				<%= @event.categories_primary_name.titleize %> · <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>

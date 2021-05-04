@@ -4,7 +4,7 @@
 			<%= format_hour event.start_time %>h · <%= event.categories_primary_name.titleize %>
 		</div>
 		<div class="mb-1 leading-snug text-gray-600">
-			<%= link_to event.details_name, event_path(event), class: 'md:hover:underline' %>
+			<%= link_to event.name, event_path(event), class: 'md:hover:underline' %>
 		</div>
 		<div class="text-sm  text-gray-600">
 			<%= link_to limit_place_name_size(event.place_details_name, 24), place_path(event.place), class: 'md:hover:underline' %>

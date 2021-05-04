@@ -7,11 +7,11 @@
 
 		<div class="relative">
 			<div class="aspect-ratio-16/9"></div>
-			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.details_name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-50">
+			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-50">
 			<div class="absolute top-0 right-0 hidden mt-2 mr-2 transition-all duration-150 opacity-0 w-content"
 					 data-controller="share-button"
-					 data-share-button-text="<%= helpers.strip_tags(helpers.limit_description_size(@event.details_description, 160)) %>"
-					 data-share-button-title="<%= @event.details_name %>"
+					 data-share-button-text="<%= helpers.strip_tags(helpers.limit_description_size(@event.description, 160)) %>"
+					 data-share-button-title="<%= @event.name %>"
 					 data-share-button-url="<%= event_url(@event, format: :html) %>">
 				<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-sm bg-gray-50 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-brand-500 w-content"
 						 data-action="click->share-button#share"
@@ -33,7 +33,7 @@
 				<% end %>
 			</span>
 			<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-4xl text-2xl text-gray-800 w-full">
-				<%= @event.details_name %>
+				<%= @event.name %>
 			</h1>
 			<div class="flex items-center space-x-2 mt-1">
 				<%= content_tag :div,
@@ -118,7 +118,7 @@
 		<div class="px-5 py-5">
 			<h2 class="font-bold font-display text-xl text-gray-800 uppercase">Sobre o evento</h2>
 			<div class="mt-2 text-sm  leading-relaxed break-words text-with-html">
-				<%= @event.details_description.html_safe %>
+				<%= @event.description.html_safe %>
 			</div>
 		</div>
 	</div>

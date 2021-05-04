@@ -21,9 +21,9 @@ class BotController < ApplicationController
 		events.map do |event|
 			{
 					id:             event.id,
-					name:           event.details_name,
+					name:           event.name,
 					image_url:      event.image[:feed].url(public: true),
-					description:    helpers.strip_tags(event.details_description).truncate(160),
+					description:    helpers.strip_tags(event.description).truncate(160),
 					dominant_color: "#53456a"
 			}
 		end

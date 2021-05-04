@@ -8,7 +8,7 @@ module GeocoderEventsRake
 
 	def geocode_event(event)
 		if event.geographic_latlon.present?
-			puts "#{event.details_name} - Geocoder já realizado".yellow
+			puts "#{event.name} - Geocoder já realizado".yellow
 			return false
 		end
 
@@ -24,9 +24,9 @@ module GeocoderEventsRake
 
 		if event.save
 			@events_create_counter += 1
-			puts "#{@events_create_counter}: #{event.details_name} #{event.geographic_latlon} - Geocoder realizado".white
+			puts "#{@events_create_counter}: #{event.name} #{event.geographic_latlon} - Geocoder realizado".white
 		else
-		  puts "#{event.details_name} - Geocoder não realizado".red
+		  puts "#{event.name} - Geocoder não realizado".red
 		end
 	end
 

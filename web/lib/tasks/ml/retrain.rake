@@ -13,9 +13,9 @@ namespace :ml do
 			event_retrained = retrain_event event
 
 			if event_retrained.save!
-				puts "#{event_retrained.details_name} - Evento retreinado".green
+				puts "#{event_retrained.name} - Evento retreinado".green
 			else
-				puts "#{event_retrained.details_name} - Problema no retreino".red
+				puts "#{event_retrained.name} - Problema no retreino".red
 			end
 		end
 	end
@@ -67,7 +67,7 @@ namespace :ml do
 
 			return event
 		else
-			puts "Erro durante a classificação - #{event.details_name}".red
+			puts "Erro durante a classificação - #{event.name}".red
 		end
 	end
 end

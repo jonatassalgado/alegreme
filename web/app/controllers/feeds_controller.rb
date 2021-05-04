@@ -109,10 +109,10 @@ class FeedsController < ApplicationController
 		events.map do |event|
 			{
 				id:             event.id,
-				name:           event.details_name,
+				name:           event.name,
 				category:       event.categories_primary_name,
 				image_url:      event.image[:feed].url(public: true),
-				description:    helpers.strip_tags(event.details_description).truncate(160),
+				description:    helpers.strip_tags(event.description).truncate(160),
 				dominant_color: helpers.get_image_dominant_color(event)
 			}
 		end

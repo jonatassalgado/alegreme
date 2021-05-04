@@ -8,6 +8,15 @@ class Event < ApplicationRecord
 
 	extend FriendlyId
 
+	include PgSearch::Model
+	pg_search_scope :kinda_spelled_like,
+									against: :name,
+									using:   {
+										trigram: {
+											threshold: 0.5
+										}
+	}
+
 	include EventImageUploader::Attachment.new(:image)
 	include Rails.application.routes.url_helpers
 
@@ -25,7 +34,7 @@ class Event < ApplicationRecord
 	include Scopes
 	include EventQueries::Scopes
 
-	friendly_id :details_name, use: :slugged
+	friendly_id :name, use: :slugged
 
 	validate :uniq_details_name, on: :create
 
@@ -38,32 +47,30 @@ class Event < ApplicationRecord
 
 	accepts_nested_attributes_for :place, :organizers
 
-	# delegate :details_name, to: :place, prefix: true, allow_nil: true
+	# delegate :name, to: :place, prefix: true, allow_nil: true
 
 	searchkick(word:        [:name, :description, :category, :place, :organizers],
-	           word_start:  [:name, :place, :organizers],
-	           word_end:    [:name, :place, :organizers],
-	           word_middle: [:name, :place, :organizers],
-	           text_start:  [:name],
-	           text_middle: [:name],
-	           text_end:    [:name],
-	           suggest:     [:name],
-	           callbacks:   false,
-	           language:    'portuguese',
-	           highlight:   %i[name],
-			   batch_size:  100,
-			   settings:    {
-				   number_of_shards: 1, 
-				   number_of_replicas: 1
-				})
+						 word_start:  [:name, :place, :organizers],
+						 word_end:    [:name, :place, :organizers],
+						 word_middle: [:name, :place, :organizers],
+						 text_start:  [:name],
+						 text_middle: [:name],
+						 text_end:    [:name],
+						 suggest:     [:name],
+						 callbacks:   false,
+						 language:    'portuguese',
+						 highlight:   %i[name],
+						 batch_size:  100,
+						 settings:    {
+							 number_of_shards:   1,
+							 number_of_replicas: 1
+						 })
 
 	scope :search_import, -> { active }
 
 	serialize_json %i[
 		theme
 		geographic
-		ocurrences
-		details
 		entries
 		ml_data
 		similar_data
@@ -75,21 +82,21 @@ class Event < ApplicationRecord
 	end
 
 	def active
-		ocurrences['dates'][0].to_date >= DateTime.now - 6.hours if ocurrences['dates'].present?
+		start_time >= DateTime.now - 6.hours if datetimes.present?
 	end
 
 	def search_data
 		{
-				name:        details_name,
-				description: ml_data_cleanned,
-				category:    categories_primary_name,
-				place:       place_details_name,
-				organizers:  organizers.map(&:details_name)
+			name:        name,
+			description: ml_data_cleanned,
+			category:    categories_primary_name,
+			place:       place_details_name,
+			organizers:  organizers.map(&:details_name)
 		}
 	end
 
 	def text_to_ml
-		"#{details_name} #{details_description} #{place_details_name}"
+		"#{name} #{description} #{place_details_name}"
 	end
 
 	def cover_url(type = :list)
@@ -101,22 +108,16 @@ class Event < ApplicationRecord
 	end
 
 	def start_time
-		ocurrences['dates'][0].to_datetime rescue nil
+		datetimes.first.to_datetime rescue nil
 	end
 
 	def end_time
-		ocurrences['dates'][1].to_datetime rescue start_time
+		start_time
 	end
 
-	def datetimes
-		datetimes = []
-
-		ocurrences['dates'].each do |date|
-			datetimes << DateTime.parse(date).strftime('%Y-%m-%d %H:%M:%S')
-		end
-
-		datetimes
-	end
+	# def datetimes
+	# 	read_attribute(:datetimes)&.map { |date| DateTime.parse(date).strftime('%Y-%m-%d %H:%M:%S') } || read_attribute(:datetimes)
+	# end
 
 	def similar_data=(value)
 		similar_data.is_a?(String) ? similar_data.to_json : []
@@ -125,8 +126,8 @@ class Event < ApplicationRecord
 	private
 
 	def uniq_details_name
-		if details_name && Event.where("lower(details ->> 'name') = ?", details_name&.downcase).present?
-			errors.add(:details_name, "O nome do evento precisa ser único")
+		if name && Event.where("lower(name) = ?", name&.downcase).present?
+			errors.add(:name, "O nome do evento precisa ser único")
 		end
 	end
 

@@ -9,7 +9,7 @@
 												'event-id':              @event.id
 											},
 											class: 'font-semibold md:hover:underline mb-1 inline-block leading-snug text-gray-800' do %>
-				<%= @event.details_name %>
+				<%= @event.name %>
 			<% end %>
 			<div class="text-sm md:text-xs md:mt-2 text-gray-500">
 				<%= helpers.day_of_week(@event.start_time).titlecase %> às <%= helpers.format_hour @event.start_time %>h ·
@@ -50,7 +50,7 @@
 										} do %>
 					<%= image_tag helpers.shrine_image_url(@event, :feed), {
 						loading: :lazy,
-						alt:     "Cartaz do evento #{@event.details_name}",
+						alt:     "Cartaz do evento #{@event.name}",
 						data:    {
 							'event-id': @event.id
 						},

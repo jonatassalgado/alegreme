@@ -1,11 +1,11 @@
     {
         "@context":    "https://schema.org",
         "@type":       "Event",
-        "name":        "<%= event.details_name.gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
+        "name":        "<%= event.name.gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
         "image":       [
                            "<%= get_original_image_url event %>"
                        ],
-        "description": "<%= strip_tags(event.details_description).gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
+        "description": "<%= strip_tags(event.description).gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
         "url": "<%= event_path event %>",
         "startDate":   "<%= event.ld_json.start_date %>",
         "endDate":     "<%= event.ld_json.end_date %>",

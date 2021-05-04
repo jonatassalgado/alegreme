@@ -9,7 +9,7 @@
 												'event-id':              @event.id
 											},
 											class: 'md:text-lg font-semibold md:hover:text-brand-500 mb-1 leading-snug text-gray-800 inline' do %>
-				<%= @event.details_name %>
+				<%= @event.name %>
 			<% end %>
 			<div class="text-sm md:mt-1 text-gray-500 inline">
 				<%= helpers.format_hour @event.start_time %>h ·
@@ -72,7 +72,7 @@
 										} do %>
 					<%= image_tag helpers.shrine_image_url(@event, :feed), {
 						loading: :lazy,
-						alt:     "Cartaz do evento #{@event.details_name}",
+						alt:     "Cartaz do evento #{@event.name}",
 						data:    {
 							'event-id': @event.id
 						},

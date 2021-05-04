@@ -112,7 +112,7 @@ class MoviesController < ApplicationController
 				:details_original_title,
 				:details_title,
 				:details_genres,
-				:details_description,
+				:description,
 				:details_cover,
 				:details_trailler,
 				:details_popularity,

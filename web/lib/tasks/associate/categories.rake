@@ -15,9 +15,9 @@ namespace :associate do
 				event.categories << categories
 
 				if event.save!
-					puts "Evento associado - #{event.details_name} #{event.categories_primary_name}".green
+					puts "Evento associado - #{event.name} #{event.categories_primary_name}".green
 				else
-					puts "Erro ao associar evento - #{event.details_name}".red
+					puts "Erro ao associar evento - #{event.name}".red
 				end
 			end
 		end

@@ -1,7 +1,7 @@
 @events = Event.not_ml_data.active.in_categories([params[:category]]).order_by_date.includes(:place, :categories)
 
 json.items @events do |event|
-	json.name event.details_name
+	json.name event.name
 	json.url event.url
 	json.cover shrine_image_url event, :feed
 	json.date "#{event.day_of_week['decorator']} #{format_hour event.start_time }"

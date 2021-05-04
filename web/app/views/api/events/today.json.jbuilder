@@ -7,7 +7,7 @@ collection = EventServices::CollectionCreator.new(current_user, params).call({
                                                                                        })
 
 json.items collection[:events] do |event|
-	json.name event.details_name
+	json.name event.name
 	json.url event.url
 	json.cover shrine_image_url event, :feed
 	json.date "#{event.day_of_week['decorator']} #{format_hour event.start_time }"

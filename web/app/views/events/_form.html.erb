@@ -22,24 +22,24 @@
 
 		<div class="">
 			<label class="font-semibold" for="" style="">Nome</label>
-			<%= form.text_field :details_name, class: 'w-full p-2 border' %>
+			<%= form.text_field :name, class: 'w-full p-2 border' %>
 		</div>
 
 		<div class="">
 			<label class="font-semibold">Descrição</label>
-			<%= form.text_area :details_description, { class: "w-full p-2 border", rows: "8", cols: "40" } %>
+			<%= form.text_area :description, { class: "w-full p-2 border", rows: "8", cols: "40" } %>
 		</div>
 
 		<div class="">
 			<%= form.fields_for :ocurrences, event.ocurrences do |occur| %>
 				<label class="font-semibold" for="" style="">Data</label>
-				<%= occur.datetime_field :dates, { value: datetime_local(event.ocurrences['dates'][0]), class: 'w-full p-2 border', multiple: true } %>
+				<%= occur.datetime_field :dates, { value: datetime_local(event.start_time), class: 'w-full p-2 border', multiple: true } %>
 			<% end %>
 		</div>
 
 		<div>
 			<label class="font-semibold" for="" style="">Preço</label>
-			<%= form.text_field :details_prices, class: 'w-full p-2 border' %>
+			<%= form.text_field :prices, class: 'w-full p-2 border' %>
 		</div>
 
 		<h3 class="font-bold text-xl">Personas</h3>

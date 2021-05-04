@@ -140,20 +140,20 @@ module EventQueries
 			}
 
 			scope 'in_next_2_hours', lambda {
-				where("(ocurrences -> 'dates' ->> 0)::timestamptz BETWEEN ? AND ?", DateTime.now - 2.hours, DateTime.now)
+				where("datetimes[1] BETWEEN ? AND ?", DateTime.now - 2.hours, DateTime.now)
 			}
 
-			scope 'in_days', lambda { |ocurrences, opts = {}|
+			scope 'in_days', lambda { |days, opts = {}|
 				opts = {'turn_on': true}.merge(opts)
 
-				if opts[:turn_on] && ocurrences.present?
+				if opts[:turn_on] && days.present?
 
 					# ocurrences_to_query = []
-					# contains_range = ocurrences.any? { |ocurr| ocurr[0] == '[' }
+					# contains_range = days.any? { |ocurr| ocurr[0] == '[' }
 
 					# if contains_range
-					# ocurrences.map do |ocurr|
-					# ocurrences_to_query << ocurrences.map(&:yday)
+					# days.map do |ocurr|
+					# ocurrences_to_query << days.map(&:yday)
 					# is_array = ocurr[0] == '['
 
 					# if ocurr
@@ -164,7 +164,7 @@ module EventQueries
 					# end
 					# end
 
-					where("(ocurrences -> 'dates' ->> 0)::date IN (?)", ocurrences.map { |occur| occur.to_date })
+					where("datetimes[1]::date IN (?)", days.map { |occur| occur.to_date })
 				else
 					all
 				end
@@ -172,7 +172,7 @@ module EventQueries
 
 			scope 'in_day', lambda { |date|
 				if date.present?
-					where("(ocurrences -> 'dates' ->> 0)::date = :date", date: date.to_date)
+					where("datetimes[1]::date = :date", date: date.to_date)
 				else
 					all
 				end
@@ -180,19 +180,19 @@ module EventQueries
 
 			scope 'between_days', lambda { |low, high|
 				if low.present? && high.present?
-					where("(ocurrences -> 'dates' ->> 0)::date BETWEEN :low AND :high", low: low.to_date, high: high.to_date)
+					where("datetimes[1]::date BETWEEN :low AND :high", low: low.to_date, high: high.to_date)
 				else
 					all
 				end
 			}
 
 
-			scope 'not_in_days', lambda { |ocurrences, opts = {}|
+			scope 'not_in_days', lambda { |days, opts = {}|
 				opts       = {'turn_on': true}.merge(opts)
-				ocurrences = ocurrences.map(&:to_date).map(&:yday)
+				days = days.map(&:to_date).map(&:yday)
 
-				if opts[:turn_on] && !ocurrences.blank?
-					where("date_part('doy', (ocurrences -> 'dates' ->> 0)::timestamptz) NOT IN (?)", ocurrences)
+				if opts[:turn_on] && !days.blank?
+					where("date_part('doy', datetimes[1]) NOT IN (?)", days)
 				else
 					all
 				end
@@ -203,9 +203,9 @@ module EventQueries
 
 				case opts[:direction]
 				when :asc
-					order(Arel.sql "(ocurrences -> 'dates' ->> 0)::timestamptz ASC")
+					order(Arel.sql "datetimes[1] ASC")
 				when :desc
-					order(Arel.sql "(ocurrences -> 'dates' ->> 0)::timestamptz DESC")
+					order(Arel.sql "datetimes[1] DESC")
 				else
 					none
 				end
@@ -320,7 +320,7 @@ module EventQueries
 
 			scope 'active', lambda { |turn_on = true|
 				if turn_on
-					where("(ocurrences -> 'dates' ->> 0)::timestamptz > ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", (DateTime.now - 6.hours))
+					where("datetimes[1] > ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", (DateTime.now - 6.hours))
 				else
 					all
 				end
@@ -328,7 +328,7 @@ module EventQueries
 
 			scope 'past', lambda { |turn_on = true|
 				if turn_on
-					where("(ocurrences -> 'dates' ->> 0)::timestamptz <= ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", (DateTime.now - 6.hours))
+					where("datetimes[1] <= ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", (DateTime.now - 6.hours))
 				else
 					all
 				end

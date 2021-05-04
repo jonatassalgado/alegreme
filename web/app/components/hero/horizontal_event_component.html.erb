@@ -9,7 +9,7 @@
 												'event-id': @event.id
 											},
 											class: 'font-semibold md:text-lg inline-block leading-snug md:hover:underline text-gray-800' do %>
-				<%= @event.details_name %>
+				<%= @event.name %>
 			<% end %>
 			<div class="text-sm md:text-xs mt-2 text-gray-500">
 				<%= helpers.day_of_week(@event.start_time).titlecase %> · <%= helpers.format_hour @event.start_time %>h ·

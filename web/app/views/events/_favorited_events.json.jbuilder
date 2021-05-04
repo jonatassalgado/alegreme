@@ -2,7 +2,7 @@ favorited_events = Event.select("id, details, ocurrences, image_data").favorited
 
 json.events favorited_events do |event|
   json.id event.id
-  json.name event.details_name
+  json.name event.name
   json.day_of_week event.day_of_week['decorator']
   json.url event.url
   json.cover_style get_image_style_attr(event)

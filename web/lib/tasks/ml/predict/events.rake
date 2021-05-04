@@ -9,7 +9,7 @@ require 'timecop'
 module PredictEventsLabelsRake
 
 	def get_features_of_event(event)
-		puts "#{event.details_name} #{event.id} - Adicionando features".white
+		puts "#{event.name} #{event.id} - Adicionando features".white
 		features_query  = event.text_to_ml
 		features_params = { 'query' => features_query }
 
@@ -25,13 +25,13 @@ module PredictEventsLabelsRake
 				'stemmed' => features_data['stemmed']
 			)
 		else
-			puts "#{event.details_name} #{event.id} - Erro durante a extração de features".red
+			puts "#{event.name} #{event.id} - Erro durante a extração de features".red
 		end
 	end
 
 	def classify_event(event)
-		puts "#{event.details_name} #{event.id} - Adicionando classificação".white
-		label_query  = event.details_description
+		puts "#{event.name} #{event.id} - Adicionando classificação".white
+		label_query  = event.description
 		label_params = { 'query' => label_query }
 
 		label_uri = URI("#{ENV['API_URL']}:5000/event/label")
@@ -79,17 +79,17 @@ module PredictEventsLabelsRake
 				
 				event.categories = [] if event.categories.present?
 				event.categories << categories
-				puts "#{event.details_name} #{event.id} - Evento classificado - (#{labels['primary']['name']})".white
+				puts "#{event.name} #{event.id} - Evento classificado - (#{labels['primary']['name']})".white
 			end
 
 		else
-			puts "#{event.details_name} #{event.id} - Erro durante a classificação".red
+			puts "#{event.name} #{event.id} - Erro durante a classificação".red
 		end
 	end
 
 	def save_event(event)
 		if event.save!
-			puts "#{event.id}, #{event.details['name'][0..60]} - Salvo!".green
+			puts "#{event.id}, #{event.name[0..60]} - Salvo!".green
 			true
 		end
 	end
@@ -106,7 +106,7 @@ namespace :ml do
 			puts "\n Task ml:predict:events iniciada em #{DateTime.now} \n".blue
 	
 			Event.active.order_by_date.limit(100).each_with_index do |event, index|
-				puts "#{index}: #{event.details_name[0..60]} \n ---------------------------------"
+				puts "#{index}: #{event.name[0..60]} \n ---------------------------------"
 				get_features_of_event(event)
 				classify_event(event)
 				save_event(event)

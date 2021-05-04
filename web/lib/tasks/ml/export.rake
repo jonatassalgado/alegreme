@@ -22,9 +22,9 @@ namespace :ml do
 
 
 		events.each do |event|
-			item = csv.find { |row| row[7] == event.details['source_url'] }
+			item = csv.find { |row| row[7] == event.source_url }
 			if item
-				puts "Atualizando #{event.details['name']}...".blue
+				puts "Atualizando #{event.name}...".blue
 
 				item[8]  = event.personas_primary_name
 				item[9]  = event.theme['name']
@@ -34,17 +34,17 @@ namespace :ml do
 				item[13] = event.tags_activities
 				item[14] = event.tags_features
 			else
-				puts "Adicionando #{event.details['name']}...".green
+				puts "Adicionando #{event.name}...".green
 
 				csv << [
-						event.details['name'],
+						event.name,
 						event.geographic['address'],
 						event.datetimes,
 						event.place_details_name,
 						event.organizers.pluck("details ->> 'name'"),
-						event.details['description'],
+						event.details.description,
 						nil,
-						event.details['source_url'],
+						event.details.source_url,
 						event.personas_primary_name,
 						event.theme['name'],
 						event.categories_primary_name,

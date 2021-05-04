@@ -29,7 +29,7 @@ module PopulatePostersRake
 	# 	@label_response_is_success = @label_response.is_a?(Net::HTTPSuccess)
 
 	# 	if @label_response_is_success
-	# 		puts "Evento: #{event.details_name} - Adicionando classificação".white
+	# 		puts "Evento: #{event.name} - Adicionando classificação".white
 	# 		event.ml_data.deep_merge!(
 	# 			personas:   {
 	# 				primary:   {
@@ -63,7 +63,7 @@ module PopulatePostersRake
 	# 		end
 
 	# 	else
-	# 		puts "Evento: #{event.details_name} - Erro durante a classificação".red
+	# 		puts "Evento: #{event.name} - Erro durante a classificação".red
 	# 	end
 	# end
 

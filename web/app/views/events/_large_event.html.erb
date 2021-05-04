@@ -15,11 +15,11 @@
 
 	<div class="relative">
 		<div class="aspect-ratio-16/9"></div>
-		<img src="<%= event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= event.details_name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-50">
+		<img src="<%= event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= event.name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-50">
 		<div class="absolute top-0 right-0 hidden mt-2 mr-2 transition-all duration-150 opacity-0 w-content"
 				 data-controller="share-button"
-				 data-share-button-text="<%= strip_tags(limit_description_size(event.details_description, 160)) %>"
-				 data-share-button-title="<%= event.details_name %>"
+				 data-share-button-text="<%= strip_tags(limit_description_size(event.description, 160)) %>"
+				 data-share-button-title="<%= event.name %>"
 				 data-share-button-url="<%= event_url(event, format: :html) %>">
 			<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-sm text-gray-600 bg-gray-50 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-brand-500 w-content"
 					 data-action="click->share-button#share"
@@ -58,7 +58,7 @@
 								 } %>
 		</div>
 		<h1 class="px-3 mb-5 text-2xl font-medium leading-tight text-gray-600 md:px-0 md:text-4xl">
-			<%= event.details_name %>
+			<%= event.name %>
 		</h1>
 	</div>
 	<div class="flex p-5 border-t border-b border-gray-100">
@@ -100,7 +100,7 @@
 	<div class="px-5 py-5">
 		<h2 class="font-bold text-gray-600 uppercase">Sobre o evento</h2>
 		<div class="mt-2 text-sm  leading-relaxed text-gray-600 break-words text-with-html">
-			<%= event.details_description.html_safe %>
+			<%= event.description.html_safe %>
 		</div>
 	</div>
 </div>

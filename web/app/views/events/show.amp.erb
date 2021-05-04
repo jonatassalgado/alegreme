@@ -1,5 +1,5 @@
-<% content_for :meta_title, "Evento #{@event.details_name.gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, '')} em Porto Alegre" %>
-<% content_for :meta_description, strip_tags(limit_description_size(@event.details_description, 160)) %>
+<% content_for :meta_title, "Evento #{@event.name.gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, '')} em Porto Alegre" %>
+<% content_for :meta_description, strip_tags(limit_description_size(@event.description, 160)) %>
 <% content_for :meta_image, @event.image[:original].url(public: true) %>
 
 
@@ -7,13 +7,13 @@
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "<%= @event.details_name.gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, '') %>",
+  "name": "<%= @event.name.gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, '') %>",
   "startDate": "<%= @event.ld_json.start_date %>",
   "endDate": "<%= @event.ld_json.end_date %>",
   "image": [
     "<%= @event.image[:original].url(public: true) %>"
    ],
-  "description": "<%= strip_tags(@event.details_description).gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
+  "description": "<%= strip_tags(@event.description).gsub(/[^[$][-]\p{L}\p{M}*+ ]/i, '') %>",
   "url": "<%= event_path(@event, format: :html) %>",
   "location": {
     "@type": "Place",
@@ -50,11 +50,11 @@
   <amp-img height="1"
            layout="responsive"
            class="me-event__cover"
-           alt="<%= @event.details_name %>"
+           alt="<%= @event.name %>"
            src="<%= get_original_image_url @event %>"
            width="1.66"></amp-img>
 
-  <%= tag.h1 @event.details_name, class: 'title' %>
+  <%= tag.h1 @event.name, class: 'title' %>
 
   <div class="me-event__primary-section">
     <div class="me-event__place">
@@ -96,7 +96,7 @@
   </div>
 
   <div class="me-event__description">
-    <%= sanitize @event.details_description, scrubber: AmpScrubber.new %>
+    <%= sanitize @event.description, scrubber: AmpScrubber.new %>
   </div>
 
   <div class="me-event__similar">

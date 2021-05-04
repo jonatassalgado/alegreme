@@ -118,13 +118,13 @@ module PopulateEventsRake
 
 		if event.save!
 			@events_create_counter += 1
-			puts "Evento: #{event.id}, #{event.details['name'][0..60]} - Salvo!".green
+			puts "Evento: #{event.id}, #{event.name[0..60]} - Salvo!".green
 			true
 		end
 	end
 
 	def get_features_of_event(event)
-		puts "Evento: #{event.details_name} - Adicionando features".white
+		puts "Evento: #{event.name} - Adicionando features".white
 		features_query  = event.text_to_ml
 		features_params = { 'query' => features_query }
 
@@ -140,12 +140,12 @@ module PopulateEventsRake
 				'stemmed' => features_data['stemmed']
 			)
 		else
-			puts "Evento: #{event.details_name} - Erro durante a extração de features".red
+			puts "Evento: #{event.name} - Erro durante a extração de features".red
 		end
 	end
 
 	def classify_event(event)
-		puts "Evento: #{event.details_name} - Adicionando classificação".white
+		puts "Evento: #{event.name} - Adicionando classificação".white
 		label_query  = event.text_to_ml
 		label_params = { 'query' => label_query }
 
@@ -180,22 +180,22 @@ module PopulateEventsRake
 					},
 					outlier:   false
 				},
-				price: {
+				price:      {
 					name:  label_data['classification']['price']['name'],
 					score: label_data['classification']['price']['score']
 				}
 			)
 
 			if label_data['classification']['categories']
-				labels     = label_data['classification']['categories']
-				categories = Category.where("(details ->> 'name') IN (:categories)", categories: [labels['primary']['name']])
+				labels           = label_data['classification']['categories']
+				categories       = Category.where("(details ->> 'name') IN (:categories)", categories: [labels['primary']['name']])
 				event.categories = [] if event.categories.present?
 				event.categories << categories
-				puts "Evento: #{event.details_name} - #{labels['primary']['name']} - Eventos classificado".white
+				puts "Evento: #{event.name} - #{labels['primary']['name']} - Eventos classificado".white
 			end
 
 		else
-			puts "Evento: #{event.details_name} - Erro durante a classificação".red
+			puts "Evento: #{event.name} - Erro durante a classificação".red
 		end
 	end
 
@@ -247,7 +247,7 @@ module PopulateEventsRake
 
 	def create_event(item)
 		if item['deleted'] == 'true'
-			Event.destroy_by("(details ->> 'source_url') LIKE ?", "%#{item['source_url']}%")
+			Event.destroy_by("source_url LIKE ?", "%#{item['source_url']}%")
 			puts "Evento: #{item['source_url']} - Evento deletado".yellow
 			return :deleted
 		end
@@ -262,21 +262,16 @@ module PopulateEventsRake
 			return false
 		end
 
-		event = Event.find_by("(details ->> 'source_url') LIKE ?", "%#{item['source_url']}%")
+		event = Event.find_by("source_url LIKE ?", "%#{item['source_url']}%")
 
 		if event
 			puts "#{@events_create_counter}: #{item['name']} - Evento já existe".yellow
 
-			event.details.deep_merge!(
-				name:        item['name'],
-				description: item['description'],
-				ticket_url:  item['ticket_url'],
-				prices:      item['prices'] || []
-			)
-
-			event.ocurrences.deep_merge!(
-				dates: item['datetimes'].map { |datetime| datetime.to_datetime }
-			)
+			event.name        = item['name']
+			event.description = item['description']
+			event.ticket_url  = item['ticket_url']
+			event.prices      = item['prices']
+			event.datetimes   = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 
 			event.geographic.deep_merge!(
 				address:      item['address'],
@@ -290,21 +285,16 @@ module PopulateEventsRake
 			event
 
 		else
-			event   = Event.new
+			event = Event.new
 
 			puts "#{@events_create_counter}: #{item['name']} - Evento criado".white
 
-			event.details.deep_merge!(
-				name:        item['name'],
-				description: item['description'],
-				source_url:  item['source_url'],
-				ticket_url:  item['ticket_url'],
-				prices:      item['prices'] || []
-			)
-
-			event.ocurrences.deep_merge!(
-				dates: item['datetimes']
-			)
+			event.name        = item['name']
+			event.description = item['description']
+			event.ticket_url  = item['ticket_url']
+			event.prices      = item['prices']
+			event.source_url  = item['source_url']
+			event.datetimes   = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 
 			event.geographic.deep_merge!(
 				address:      item['address'],

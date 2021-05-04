@@ -15,7 +15,7 @@ namespace :similar do
 			if similar_response_is_success
 				puts "#{similar_data} - Similares ao evento #{event.id}".blue
 				event.update_attribute :similar_data, similar_data
-				puts "#{event.details['name'][0..60]} - Similares salvos".green
+				puts "#{event.name[0..60]} - Similares salvos".green
 			else
 				puts "Eventos similares não encontrados".yellow
 			end

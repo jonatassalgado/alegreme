@@ -29,31 +29,31 @@ module EventDecorators
 		private
 
 		def set_start_date
-			ocurrences['dates'].first.to_datetime.iso8601
+			datetimes.first.to_datetime.iso8601
 		end
 
 		def set_end_date
-			if ocurrences['dates'].size == 1
-				(ocurrences['dates'].first.to_datetime + 2.hours).iso8601
+			if datetimes.size == 1
+				(datetimes.first.to_datetime + 2.hours).iso8601
 			else
-				ocurrences['dates'].last.to_datetime.iso8601
+				datetimes.last.to_datetime.iso8601
 			end
 		end
 
 		def set_price
-			details_prices.try(:min)
+			prices.try(:min)
 		end
 
 		def set_low_price
-			details_prices.try(:min)
+			prices.try(:min)
 		end
 
 		def set_high_price
-			details_prices.try(:max)
+			prices.try(:max)
 		end
 
 		def set_availability
-			if ocurrences['dates'].first.to_datetime >= DateTime.now
+			if datetimes.first.to_datetime >= DateTime.now
 				'http://schema.org/InStock'
 			else
 				'http://schema.org/OutOfStock'

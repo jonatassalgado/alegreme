@@ -27,7 +27,7 @@ module DeletedEventsRake
 
 	def remove_event(item)
 		if item['deleted'] == 'true'
-			Event.destroy_by("(details ->> 'source_url') = ?", item['source_url'])
+			Event.destroy_by("source_url = ?", item['source_url'])
 			puts "Evento: #{item['source_url']} - Evento deletado".yellow
 		end
 	end

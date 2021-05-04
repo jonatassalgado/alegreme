@@ -23,11 +23,11 @@
 			<div data-main-sidebar--large-event-target="scrollContent" class="h-full">
 				<div class="relative">
 					<div class="aspect-ratio-16/9"></div>
-					<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.details_name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-50">
+					<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-50">
 				</div>
 				<div class="">
 					<div class="flex items-center w-full px-3 py-2 space-x-2 text-sm font-medium text-gray-500 bg-gray-100 cursor-pointer">
-						<a href="<%= @event.details_source_url %>" target="_blank" class="select-none hover:bg-gray-300 hover:text-gray-800 hover:shadow-none group flex items-center justify-center flex-1 py-2 space-x-2 bg-white rounded shadow-sm">
+						<a href="<%= @event.source_url %>" target="_blank" class="select-none hover:bg-gray-300 hover:text-gray-800 hover:shadow-none group flex items-center justify-center flex-1 py-2 space-x-2 bg-white rounded shadow-sm">
 							<div>Abrir no facebook</div>
 							<svg class="group-hover:text-gray-700 h-4 text-gray-400 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M16 16H2V2H9V0H2C0.89 0 0 0.9 0 2V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V9H16V16ZM11 0V2H14.59L4.76 11.83L6.17 13.24L16 3.41V7H18V0H11Z"/>
@@ -35,8 +35,8 @@
 						</a>
 						<div class="select-none hover:bg-gray-300 hover:text-gray-800 hover:shadow-none group flex items-center justify-center flex-1 py-2 space-x-2 bg-white rounded shadow-sm cursor-pointer"
 								 data-controller="share-button"
-								 data-share-button-text="<%= strip_tags(helpers.limit_description_size(@event.details_description, 160)) %>"
-								 data-share-button-title="<%= @event.details_name %>"
+								 data-share-button-text="<%= strip_tags(helpers.limit_description_size(@event.description, 160)) %>"
+								 data-share-button-title="<%= @event.name %>"
 								 data-share-button-url="<%= event_url(@event, format: :html) %>"
 								 data-action="click->share-button#share">
 							<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
@@ -65,7 +65,7 @@
 						Atualizado há <%= time_ago_in_words @event&.updated_at %>
 					</div>
 					<h1 class="font-bold font-display text-2xl text-gray-900">
-						<%= @event.details_name %>
+						<%= @event.name %>
 					</h1>
 					<div class="flex items-center -ml-1">
 						<%= content_for :div,
@@ -124,7 +124,7 @@
 				<div class="px-5 py-5">
 					<h2 class="font-bold text-gray-800 font-display uppercase">Sobre o evento</h2>
 					<div class="mt-2 text-sm  leading-relaxed text-gray-600 break-words text-with-html">
-						<%= @event.details_description.html_safe %>
+						<%= @event.description.html_safe %>
 					</div>
 				</div>
 				<% if @event&.organizers.present? %>
@@ -159,7 +159,7 @@
 																		'event-id': similar_event.id
 																	},
 																	class: 'font-semibold inline leading-snug mb-1 md:hover:text-brand-500 text-gray-800' do %>
-										<%= similar_event.details_name %>
+										<%= similar_event.name %>
 									<% end %>
 								</div>
 								<div>
