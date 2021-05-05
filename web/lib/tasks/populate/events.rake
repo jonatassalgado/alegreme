@@ -214,7 +214,11 @@ module PopulateEventsRake
 		return unless event_cover_file
 
 		begin
-			event.image = event_cover_file
+			if event.image&.present?
+				event.update(image: event_cover_file) 
+			else
+				event.image = event_cover_file
+			end
 			puts "Evento: #{item['name']} - Upload de imagem".white
 		rescue
 			puts "Evento: #{item['name']} - Erro no upload da image #{e}".red
