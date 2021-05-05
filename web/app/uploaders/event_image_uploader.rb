@@ -4,6 +4,8 @@ class EventImageUploader < Shrine
   plugin :processing
   plugin :versions
   plugin :delete_raw
+  plugin :pretty_location
+
 
   plugin :add_metadata
   plugin :color
