@@ -22,7 +22,7 @@ module PopulateEventsRake
 		else
 			@geocode = Geocoder.search(item['address']).first if item['address']
 
-			place = Place.create!({
+			place = Place.create({
 															details:    {
 																name: item['place_name']
 															},
@@ -52,7 +52,7 @@ module PopulateEventsRake
 			begin
 				place.image = place_cover_file
 				puts "Local: #{item['place_name']} - Upload de imagem".white
-				place.save!
+				place.save
 			rescue
 				puts "Local: #{item['place_name']} - Erro no upload da image #{e}".red
 			end
@@ -69,7 +69,7 @@ module PopulateEventsRake
 			if organizer.present?
 				puts "Organizador: #{organizer.details['name']} - já existe".yellow
 			else
-				organizer = Organizer.create!({
+				organizer = Organizer.create({
 																				details: {
 																					name:       organizer_data['name'],
 																					source_url: organizer_data['source_url']
@@ -106,7 +106,7 @@ module PopulateEventsRake
 			begin
 				organizer.image = organizer_cover_file
 				puts "Organizador: #{organizer_data['name']} - Upload de imagem".white
-				organizer.save!
+				organizer.save
 			rescue
 				puts "Organizador: #{organizer_data['name']} - Erro no upload da image #{e}".red
 			end
@@ -116,7 +116,7 @@ module PopulateEventsRake
 	def save_event(event)
 		event.slug = nil
 
-		if event.save!
+		if event.save
 			@events_create_counter += 1
 			puts "Evento: #{event.id}, #{event.name[0..60]} - Salvo!".green
 			true
