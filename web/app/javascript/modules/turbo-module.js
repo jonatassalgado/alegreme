@@ -22,21 +22,21 @@ const TurboModule = (function () {
         status.turboStarted = true;
 
         let scrollTop = 0
-        let lastPage  = window.location.href
+        let lastPage
 
         addEventListener("turbo:click", ({target}) => {
             if (target.hasAttribute("data-turbo-preserve-scroll")) {
+                lastPage  = window.location.pathname
                 scrollTop = document.scrollingElement.scrollTop
             }
         })
 
-        addEventListener("turbo:load", () => {
-            if (scrollTop && (window.location.href === lastPage)) {
+        addEventListener("turbo:render", () => {
+            if (scrollTop && window.location.pathname === lastPage) {
                 document.scrollingElement.scrollTo(0, scrollTop)
-                scrollTop = 0
+                // scrollTop = 0
             }
         })
-
         if (debug) console.log("[TURBOLINKS]: started");
     };
 
