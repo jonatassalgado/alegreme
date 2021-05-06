@@ -15,7 +15,7 @@ class Event < ApplicationRecord
 										trigram: {
 											threshold: 0.5
 										}
-	}
+									}
 
 	include EventImageUploader::Attachment.new(:image)
 	include Rails.application.routes.url_helpers

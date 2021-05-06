@@ -12,7 +12,7 @@
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
 		<div class="mx-auto mb-24 is-animated sm:container">
 			<% unless params[:day] || params[:category] %>
-				<div data-turbo-permanent class="flex flex-row-reverse gap-4 items-start mb-12 md:flex md:flex-row md:mb-5 md:mx-0 md:px-5 mx-5 pt-5 select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '150px' : '225px' %>">
+				<div id="hero__presentation" data-turbo-permanent class="flex flex-row-reverse gap-4 items-start mb-12 md:flex md:flex-row md:mb-5 md:mx-0 md:px-5 mx-5 pt-5 select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '150px' : '225px' %>">
 					<div class="my-auto">
 						<h2 class="font-bold font-display text-gray-900 md:text-xl">
 							Aproveite Porto Alegre
@@ -39,12 +39,33 @@
 							Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
 						</h2>
 					<% end %>
-					<div class="flex gap-1 px-5 text-gray-400 text-xs items-center" title="Devido ao Covid19 o número de eventos está abaixo do normal">
-						Atualizado há <%= time_ago_in_words @upcoming_events&.last&.updated_at %>
-						<svg class="stroke-current w-4 h-4" fill="none"
-								 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-						</svg>
+<!--					<div class="flex gap-1 px-5 text-gray-400 text-xs items-center" title="Devido ao Covid19 o número de eventos está abaixo do normal">-->
+<!--						Atualizado há <%#= time_ago_in_words @upcoming_events&.last&.updated_at %>-->
+<!--						<svg class="stroke-current w-4 h-4" fill="none"-->
+<!--								 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">-->
+<!--							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>-->
+<!--						</svg>-->
+<!--					</div>-->
+					<div class="flex flex-wrap px-5 pt-4">
+						<a href="<%= root_path theme: 'entretenimento-lazer' %>" data-turbo-preserve-scroll="true" class="<%= class_names('cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
+																																																															{ 'bg-brand-200 text-brand-600': !params[:theme] || params[:theme] == 'entretenimento-lazer',
+																																																																'bg-gray-100 text-gray-600':   params[:theme] && params[:theme] != 'entretenimento-lazer' }) %>">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+							</svg>
+							Entretenimento
+						</a>
+						<a href="<%= root_path theme: 'trabalho-educacao' %>" data-turbo-preserve-scroll="true" class="<%= class_names('cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
+																																																													 { 'bg-brand-200 text-brand-600': params[:theme] == 'trabalho-educacao',
+																																																														 'bg-gray-100 text-gray-600':   params[:theme] != 'trabalho-educacao' }) %>">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+							</svg>
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+							</svg>
+							Trabalho & Educação
+						</a>
 					</div>
 				</div>
 			<% else %>
@@ -76,13 +97,13 @@
 					</svg>
 				</div>
 			</div>
-			<%= render MainSidebar::FilterComponent.new(session: session.id,
-														params:            params,
-														show_filter_group: nil,
-														filters:           {
-															categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
-															date:       nil
-														}) %>
+			<%= render MainSidebar::FilterComponent.new(session:           session.id,
+																									params:            params,
+																									show_filter_group: nil,
+																									filters:           {
+																										categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
+																										date:       nil
+																									}) %>
 		</section>
 	<% end %>
 

@@ -1,7 +1,6 @@
 require "administrate/base_dashboard"
 
-class EventDashboard < Administrate::BaseDashboard
-
+class ThemeDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,23 +8,13 @@ class EventDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    place: Field::BelongsTo,
-    organizers: Field::HasMany,
-    categories: Field::HasMany,
-    likes: Field::HasMany,
-    users: Field::HasMany,
     id: Field::Number,
-    theme: Field::JSONB,
-    geographic: Field::JSONB,
-    datetimes: Field::String,
-    name: Field::String.with_options(searchable: false),
-    entries: Field::JSONB,
-    ml_data: Field::JSONB,
-    similar_data: Field::JSONB,
-    image_data: Field::JSONB,
+    name: Field::String,
+    display_name: Field::String,
+    slug: Field::String,
+    categories: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    slug: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -36,47 +25,32 @@ class EventDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     name
+    display_name
+    slug
+    categories
     created_at
-    updated_at
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-    place
-    organizers
-    categories
-    likes
-    users
     id
-    theme
-    geographic
-    datetimes
-    entries
-    ml_data
-    similar_data
-    image_data
+    name
+    display_name
+    slug
+    categories
     created_at
     updated_at
-    slug
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    place
-    organizers
-    categories
-    likes
-    users
-    theme
-    geographic
-    datetimes
-    entries
-    ml_data
-    similar_data
+    name
+    display_name
     slug
+    categories
   ].freeze
 
   # COLLECTION_FILTERS
@@ -86,16 +60,15 @@ class EventDashboard < Administrate::BaseDashboard
   # For example to add an option to search for open resources by typing "open:"
   # in the search field:
   #
-  COLLECTION_FILTERS = {
-    active: ->(resources) { resources.active },
-    today: ->(resources) {resources.in_day(DateTime.now)}
-  }.freeze
-  # COLLECTION_FILTERS = {}.freeze
+  #   COLLECTION_FILTERS = {
+  #     open: ->(resources) { resources.where(open: true) }
+  #   }.freeze
+  COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how events are displayed
+  # Overwrite this method to customize how categories are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(event)
-  #   "Event ##{event.id}"
-  # end
+  def display_resource(theme)
+    "#{theme.id} #{theme.name}"
+  end
 end

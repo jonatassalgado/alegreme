@@ -98,6 +98,7 @@ Rails.application.routes.draw do
 		resources :users
 		resources :events
 		resources :likes
+		resources :themes
 		resources :tags
 		resources :artifacts
 		resources :posters

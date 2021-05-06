@@ -74,8 +74,11 @@ class FeedsController < ApplicationController
 		elsif params[:category]
 			@category = Category.find_by("(details ->> 'url') = :category", category: params[:category])
 			@category.events.not_ml_data.active.order_by_date.includes(:place, :categories)
+		elsif params[:theme]
+			@theme = Theme.find_by_slug(params[:theme])
+			Event.includes(:place).joins(:categories).active.where("categories.theme_id = ?", @theme.id).not_ml_data.order_by_date.limit(100)
 		else
-			Event.includes(:place, :categories).active.not_ml_data.order_by_date.limit(100)
+			Event.includes(:place).joins(:categories).active.where("categories.theme_id = 1").not_ml_data.order_by_date.limit(100)
 		end
 	end
 
