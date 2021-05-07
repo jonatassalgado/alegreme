@@ -48,6 +48,7 @@ class UserDashboard < Administrate::BaseDashboard
     slug: Field::String,
     image_data: Field::String.with_options(searchable: false),
     swipable: Field::JSONB,
+    name: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -56,10 +57,11 @@ class UserDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    likes
-    liked_or_disliked_events
-    liked_events
-    disliked_events
+    name
+    email
+    last_sign_in_at
+    last_sign_in_ip
+    created_at
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
