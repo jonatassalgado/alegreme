@@ -18,11 +18,11 @@ export default class extends ApplicationController {
         document.addEventListener('filter#filtering:end', () => {
             requestAnimationFrame(() => {
                 this.element.classList.remove('animate-pulse')
-                const scrollTo = this.element.getBoundingClientRect().top + window.pageYOffset - 160
-                window.scrollTo({
-                                    top:      scrollTo,
-                                    behavior: 'smooth'
-                                })
+                // const scrollTo = this.element.getBoundingClientRect().top + window.pageYOffset - 160
+                // window.scrollTo({
+                //                     top:      scrollTo,
+                //                     behavior: 'smooth'
+                //                 })
             })
         }, false)
     }

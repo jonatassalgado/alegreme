@@ -15,19 +15,19 @@ export default class extends ApplicationController {
 
 
     async setup() {
-        document.addEventListener("horizontal-event#open-event:before", (e) => {
-            this.element.classList.add("hidden", "transform")
-        }, false);
-        document.addEventListener("horizontal-event#close-event:after", (e) => {
-            this.element.classList.remove("hidden")
-            Transition.to(this.element, {
-                transition: () => this.element.classList.remove("opacity-0", "transform"),
-                observed:   [],
-                duration:   300
-            }).then(el => {
-
-            })
-        }, false);
+        // document.addEventListener("horizontal-event#open-event:before", (e) => {
+        //     this.element.classList.add("hidden", "transform")
+        // }, false);
+        // document.addEventListener("horizontal-event#close-event:after", (e) => {
+        //     this.element.classList.remove("hidden")
+        //     Transition.to(this.element, {
+        //         transition: () => this.element.classList.remove("opacity-0", "transform"),
+        //         observed:   [],
+        //         duration:   300
+        //     }).then(el => {
+        //
+        //     })
+        // }, false);
     }
 
     teardown() {
