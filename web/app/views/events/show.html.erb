@@ -213,17 +213,17 @@
 			</div>
 		</div>
 
-		<%= link_to category_events_path(@event&.categories_primary_name), class: 'mx-5 md:mx-0 md:hover:bg-brand-600 bg-brand-500 inline-block cursor-pointer overflow-hidden bg-white rounded-lg md:rounded-xl md:shadow-2xl space-y-3' do %>
+		<%= link_to category_events_path(@event&.categories_url), class: 'mx-5 md:mx-0 md:hover:bg-brand-600 bg-brand-500 inline-block cursor-pointer overflow-hidden bg-white rounded-lg md:rounded-xl md:shadow-2xl space-y-3' do %>
 			<div class="flex items-center justify-between p-5 pb-0 flex items-center justify-between">
 				<h2 class="font-bold font-display rounded-lg text-white text-xl">
-					<%= @event&.categories_primary_name&.titleize %>
+					<%= @event&.categories_display_name %>
 				</h2>
 				<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current text-white w-6" fill="none" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
 				</svg>
 			</div>
 			<div class="pb-5 px-5 text-white">
-				Ver todos os eventos da categoria <%= @event&.categories_primary_name %> em Porto Alegre
+				Ver todos os eventos da categoria <%= @event&.categories_display_name %> em Porto Alegre
 			</div>
 		<% end %>
 	</div>
