@@ -20,6 +20,11 @@
 
 		<h3 class="font-bold text-xl">Detalhes</h3>
 
+		<div>
+			<label class="font-semibold" for="" style="">Id</label>
+			<%= form.text_field :id, class: 'w-full p-2 border', readonly: true %>
+		</div>
+
 		<div class="">
 			<label class="font-semibold" for="" style="">Nome</label>
 			<%= form.text_field :name, class: 'w-full p-2 border' %>
@@ -31,15 +36,27 @@
 		</div>
 
 		<div class="">
-			<%= form.fields_for :ocurrences, event.ocurrences do |occur| %>
+			<% event.datetimes.each do |d| %>
 				<label class="font-semibold" for="" style="">Data</label>
-				<%= occur.datetime_field :dates, { value: datetime_local(event.start_time), class: 'w-full p-2 border', multiple: true } %>
+				<%= datetime_field :event, :datetimes, { value: datetime_local(d), class: 'w-full p-2 border', multiple: true } %>
 			<% end %>
 		</div>
 
 		<div>
 			<label class="font-semibold" for="" style="">Preço</label>
 			<%= form.text_field :prices, class: 'w-full p-2 border' %>
+		</div>
+
+		<h3 class="font-bold text-xl">Categorias</h3>
+
+		<div class="">
+			<label for="" class="font-semibold" style="">Categoria primária</label>
+			<%= form.collection_select :category_ids, Category.all, :id, :details_display_name, { include_hidden: false, multiple: false }, { name: 'event[category_ids][]', class: 'w-full p-2 border' } %>
+		</div>
+
+		<div>
+			<label class="font-semibold" for="" style="">Score</label>
+			<%= form.text_field :categories_primary_score, class: 'w-full p-2 border' %>
 		</div>
 
 		<h3 class="font-bold text-xl">Personas</h3>
@@ -52,38 +69,6 @@
 		<div class="">
 			<label class="font-semibold" for="" style="">Score</label>
 			<%= form.text_field :personas_primary_score, class: 'w-full p-2 border' %>
-		</div>
-
-		<div class="">
-			<label for="" class="font-semibold" style="">Persona secundária</label>
-			<%= form.select(:personas_secondary_name, Event::PERSONAS, {}, { class: "w-full p-2 border" }) %>
-		</div>
-
-		<div>
-			<label class="font-semibold" for="" style="">Score</label>
-			<%= form.text_field :personas_secondary_score, class: 'w-full p-2 border' %>
-		</div>
-
-		<h3 class="font-bold text-xl">Categorias</h3>
-
-		<div class="">
-			<label for="" class="font-semibold" style="">Categoria primária</label>
-			<%= form.select(:categories_primary_name, Event::CATEGORIES, {}, { class: "w-full p-2 border" }) %>
-		</div>
-
-		<div>
-			<label class="font-semibold" for="" style="">Score</label>
-			<%= form.text_field :categories_primary_score, class: 'w-full p-2 border' %>
-		</div>
-
-		<div class="">
-			<label for="" class=" " style="">Categoria secundária</label>
-			<%= form.select(:categories_secondary_name, Event::CATEGORIES, {}, { class: "w-full p-2 border" }) %>
-		</div>
-
-		<div>
-			<label class="font-semibold" for="" style="">Score</label>
-			<%= form.text_field :categories_secondary_score, class: 'w-full p-2 border' %>
 		</div>
 
 		<div class="">

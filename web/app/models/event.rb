@@ -37,6 +37,7 @@ class Event < ApplicationRecord
 	friendly_id :name, use: :slugged
 
 	validate :uniq_details_name, on: :create
+	before_validation :parse_datetimes
 
 	belongs_to :place, touch: true
 	has_and_belongs_to_many :organizers, -> { distinct }, touch: true
@@ -108,7 +109,7 @@ class Event < ApplicationRecord
 	end
 
 	def start_time
-		datetimes.first.to_datetime rescue nil
+		datetimes.first&.to_datetime rescue nil
 	end
 
 	def end_time
@@ -137,6 +138,12 @@ class Event < ApplicationRecord
 		users.each do |user|
 			user.taste['events']['saved'].delete id
 			user.taste['events']['total_saves'] -= 1
+		end
+	end
+
+	def parse_datetimes
+		if attribute_present?(:datetimes)
+			self.datetimes = datetimes.map { |date| Time.zone.parse(date).to_datetime }
 		end
 	end
 
