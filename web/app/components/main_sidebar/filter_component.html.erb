@@ -1,5 +1,5 @@
-<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter', 'main-sidebar--filter-loading-value': false }, class: 'transition-all duration-300 translate-x-32' do %>
-	<div class="flex flex-wrap px-5 pt-4">
+<%= content_tag :div, id: 'main-sidebar--filter', data: { controller: 'main-sidebar--filter', 'main-sidebar--filter-loading-value': false }, class: 'duration-300 md:overflow-x-auto overflow-x-scroll transition-all translate-x-32 w-full' do %>
+	<div class="flex flex-wrap md:w-auto pt-4 px-5 w-content">
 		<% if @filters[:categories].present? %>
 			<div data-reflex="click->Filter#open"
 					 data-filter-group="category"

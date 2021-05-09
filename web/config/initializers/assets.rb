@@ -14,3 +14,9 @@ Rails.application.config.assets.paths << Rails.root.join('app', 'javascript')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.configuration.assets.precompile += %w[serviceworker.js manifest.json welcome/* avatars/* 'amp/application-amp.scss']
+
+
+# https://github.com/sass/sassc-ruby/issues/197
+Rails.application.config.assets.configure do |env|
+	env.export_concurrent = false
+end
