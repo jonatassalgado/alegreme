@@ -73,6 +73,7 @@ class FeedsController < ApplicationController
 			Event.includes(:place, :categories).in_day(params[:day]).not_ml_data.order_by_date
 		elsif params[:category]
 			@category = Category.find_by("(details ->> 'url') = :category", category: params[:category])
+			redirect_to root_path, notice: 'Categoria não encontrada' unless @category
 			@category.events.not_ml_data.active.order_by_date.includes(:place, :categories)
 		elsif params[:theme]
 			@theme = Theme.find_by_slug(params[:theme])
