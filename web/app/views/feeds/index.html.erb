@@ -96,6 +96,11 @@
 					</svg>
 				</div>
 			</div>
+			<% unless current_user %>
+				<a href="https://play.google.com/store/apps/details?id=com.alegreme.app&referrer=utm_source%3Dwebsite" class="absolute bg-gray-100 left-12 top-20" style="width: 250px; height: 250px;">
+					<%= image_tag "https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png", loading: 'lazy' %>
+				</a>
+			<% end %>
 		</section>
 	<% end %>
 
