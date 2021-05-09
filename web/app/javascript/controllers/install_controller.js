@@ -28,7 +28,7 @@ export default class extends ApplicationController {
                 e.preventDefault()
                 this.deferredPrompt = e
             });
-            window.addEventListener("scroll", debounce(this.showButton.bind(this)), {
+            window.addEventListener("scroll", debounce(this._showButton.bind(this)), {
                 capture: false,
                 passive: true
             });
@@ -51,14 +51,23 @@ export default class extends ApplicationController {
     }
 
     install() {
-        this.deferredPrompt.prompt()
+        if (this.data.get('native')) {
+            location.assign('https://play.google.com/store/apps/details?id=com.alegreme.app&referrer=utm_source%3Dwebsite')
+            this._hideButton();
+        } else {
+            this.deferredPrompt.prompt()
+            this._hideButton();
+        }
+    }
+
+    _hideButton() {
         setTimeout(() => {
             this.element.classList.add('hidden')
             localStorage.setItem('install_controller', JSON.stringify({pwaInstalled: true}))
         }, 500)
     }
 
-    showButton() {
+    _showButton() {
         if (!this.hasButtonTarget) return;
         let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
         requestIdleCallback(() => {
