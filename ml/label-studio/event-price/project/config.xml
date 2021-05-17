@@ -1,9 +1,0 @@
-<View>
-  <Text name="name" value="$name"/>
-  <Text name="description" value="$description"/>
-  <Text name="categories" value="$categories"/>
-  <Choices name="price" toName="description" choice="single" showInline="true">
-    <Choice value="free"/>
-    <Choice value="paid"/>
-  </Choices>
-</View>

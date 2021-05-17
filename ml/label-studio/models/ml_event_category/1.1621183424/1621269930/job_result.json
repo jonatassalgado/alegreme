@@ -1,0 +1,1 @@
+{"status": "ok", "train_output": {"labels": ["traditional_party", "food_fair", "show"], "model_file": "./ml_backend/1.1621183424/1621269930/model.pkl"}, "project": "1.1621183424", "workdir": "./ml_backend/1.1621183424/1621269930", "version": "1621269930", "job_id": null, "time": 0.16204595565795898}

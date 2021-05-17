@@ -1,0 +1,35 @@
+[
+    {
+        "id": "1",
+        "data": {
+            "my_text": "Festa bonita",
+            "ref_id": 455,
+            "meta_info": {
+                "timestamp": "2020-03-09 18:15:28.212882",
+                "location": "North Pole"
+            }
+        }
+    },
+    {
+        "id": "2",
+        "data": {
+            "my_text": "Show bonito",
+            "ref_id": 456,
+            "meta_info": {
+                "timestamp": "2020-03-09 18:15:28.212882",
+                "location": "North Pole"
+            }
+        }
+    },
+    {
+        "id": "3",
+        "data": {
+            "my_text": "Show feio",
+            "ref_id": 457,
+            "meta_info": {
+                "timestamp": "2020-03-09 18:15:28.212882",
+                "location": "North Pole"
+            }
+        }
+    }
+]

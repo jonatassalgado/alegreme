@@ -1,0 +1,35 @@
+version: "3"
+services: 
+  label-studio:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    ports: 
+      - 8080:8080
+    restart: on-failure
+    volumes:
+      - "./data:/root/.local/share/label-studio/"
+      - "./logs:/tmp"
+    command: label-studio start
+  ls-ml-categories:
+    build: 
+      context: ./label-studio-ml-backend
+      dockerfile: ./Dockerfile
+    ports: 
+      - "9090:9090"
+    restart: on-failure
+    volumes:
+      - "./logs:/tmp"
+      - "./models/ml_event_category:/ls/ml_backend"
+    command: label-studio-ml start ml_backend
+  ls-ml-price:
+    build: 
+      context: ./label-studio-ml-backend
+      dockerfile: ./Dockerfile
+    ports: 
+      - "9091:9090"
+    restart: on-failure
+    volumes:
+      - "./logs:/tmp"
+      - "./models/ml_event_price:/ls/ml_backend"
+    command: label-studio-ml start ml_backend

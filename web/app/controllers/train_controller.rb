@@ -4,21 +4,23 @@ class TrainController < ApplicationController
 	before_action :authorize_admin
 
 	def index
-		if params[:q]
-			query = params[:q].downcase.split.delete_if { |word| Event::STOPWORDS.include?(word) }.join(' ')
-
-			@events = Event.search(query, {
-																			fields:       ["name^2", "organizers", "description", "category"],
-																			suggest:      true,
-																			limit:        150,
-																			includes:     [:place],
-																			operator:     "or",
-																			body_options: {min_score: 100}
-																		})
-
-		else
-			events_not_trained_yet = get_events_not_trained_yet
-			@pagy, @events         = pagy(events_not_trained_yet, items: 6)
+		unless params[:format] == 'json'
+			if params[:q]
+				query = params[:q].downcase.split.delete_if { |word| Event::STOPWORDS.include?(word) }.join(' ')
+	
+				@events = Event.search(query, {
+																				fields:       ["name^2", "organizers", "description", "category"],
+																				suggest:      true,
+																				limit:        150,
+																				includes:     [:place],
+																				operator:     "or",
+																				body_options: {min_score: 100}
+																			})
+	
+			else
+				events_not_trained_yet = get_events_not_trained_yet
+				@pagy, @events         = pagy(events_not_trained_yet, items: 6)
+			end
 		end
 	end
 

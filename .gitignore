@@ -54,6 +54,7 @@ web/db/backups/
 wip.py
 .scrapy/
 ml/__pycache__
+ml/label-studio/label-studio-ml-backend
 web/tmp/pids
 web/tmp/cache
 web/.idea/workspace.xml

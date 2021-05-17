@@ -1,1 +1,0 @@
-{"status": "ok", "train_output": {"labels": ["free", "paid"], "model_file": "./ml_backend/projecta9b2/1615665860/model.pkl"}, "project": "projecta9b2", "workdir": "./ml_backend/projecta9b2/1615665860", "version": "1615665860", "job_id": null, "time": 16.625624179840088}
