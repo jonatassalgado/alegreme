@@ -85,6 +85,7 @@ module PopulateEventsRake
 	end
 
 	def associate_event_organizers(event, organizers)
+		return if organizers.blank?
 		organizers.each do |organizer|
 			unless event.organizers.include?(organizer)
 				event.organizers << organizer
