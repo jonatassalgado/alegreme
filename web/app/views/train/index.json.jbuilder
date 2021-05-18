@@ -1,8 +1,8 @@
-@active_events = Event.offset(params[:offset] || 0).includes(:place).order("created_at DESC").limit(1000)
+@active_events = Event.where("id >= ? AND id <= ?", params.fetch(:gte, 0), params.fetch(:lte, 1_000_000)).includes(:place).order("created_at DESC")
 
 json.array! @active_events.each do |event|
-    json.id event.id
     json.data do
+        json.ref_id event.id
         json.name event.name || ""
         json.description event.description || ""
         json.place event.place_details_name
