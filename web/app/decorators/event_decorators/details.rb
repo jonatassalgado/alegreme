@@ -15,13 +15,13 @@ module EventDecorators
 			# 	details['description'] = value
 			# end
 
-			# def details_prices
-			# 	details['prices'].map(&:to_i)
-			# end
-			#
-			# def details_prices_min
-			# 	details_prices.try(:min)
-			# end
+			def prices
+				read_attribute(:prices)&.map(&:to_i)
+			end
+			
+			def prices_min
+				read_attribute(:prices)&.map(&:to_i).try(:min)
+			end
 			#
 			# def details_prices=(value)
 			# 	if value.is_a? Array

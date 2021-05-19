@@ -11,6 +11,7 @@ module EventDecorators
 			end
 
 			def categories_primary_name=(value)
+				ml_data['categories']['annotations'][0]['result'][0]['value']['choices'] = [value]
 				categories&.first&.details['name'] = value
 			end
 
@@ -31,27 +32,27 @@ module EventDecorators
 			end
 
 			def categories_secondary_name
-				ml_data['categories']['secondary']['name']
+				# ml_data['categories']['predictions'][0]['result'][0]['value']['choices'][0]
 			end
 
 			def categories_secondary_name=(value)
-				ml_data['categories']['secondary']['name'] = value
+				# ml_data['categories']['secondary']['name'] = value
 			end
 
 			def categories_primary_score
-				ml_data['categories']['primary']['score']
+				ml_data['categories']['predictions'][0]['score']
 			end
 
 			def categories_primary_score=(value)
-				ml_data['categories']['primary']['score'] = value
+				# ml_data['categories']['predictions'][0]['score'] = value
 			end
 
 			def categories_secondary_score
-				ml_data['categories']['secondary']['score']
+				# ml_data['categories']['secondary']['score']
 			end
 
 			def categories_secondary_score=(value)
-				ml_data['categories']['secondary']['score'] = value
+				# ml_data['categories']['secondary']['score'] = value
 			end
 
 			def categories_as_model

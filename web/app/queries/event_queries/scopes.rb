@@ -36,12 +36,12 @@ module EventQueries
 			}
 
 			scope 'in_user_personas', lambda { |user, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 				if opts[:turn_on] && user
 					where("(ml_data -> 'personas' -> 'primary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary) OR
                 (ml_data -> 'personas' -> 'secondary' ->> 'name') IN (:primary, :secondary, :tertiary, :quartenary)",
-					      primary:  user.personas_primary_name, secondary: user.personas_secondary_name,
-					      tertiary: user.personas_tertiary_name, quartenary: user.personas_quartenary_name)
+								primary:  user.personas_primary_name, secondary: user.personas_secondary_name,
+								tertiary: user.personas_tertiary_name, quartenary: user.personas_quartenary_name)
 				else
 					all
 				end
@@ -49,7 +49,7 @@ module EventQueries
 			}
 
 			scope 'not_in', lambda { |ids, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 				if opts[:turn_on] && !ids.blank?
 					where.not(id: ids)
 				else
@@ -58,7 +58,7 @@ module EventQueries
 			}
 
 			scope 'only_in', lambda { |ids, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 				if opts[:turn_on] && !ids.blank?
 					where(id: ids)
 				else
@@ -67,7 +67,7 @@ module EventQueries
 			}
 
 			scope 'following_topics_by_user', lambda { |user, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 
 				if opts[:turn_on] && user
 					user.events_from_following_topics
@@ -78,7 +78,7 @@ module EventQueries
 			}
 
 			scope 'in_theme', lambda { |themes, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 
 				if opts[:turn_on] && !themes.blank?
 					where("(theme ->> 'name') IN (?)", themes)
@@ -89,7 +89,7 @@ module EventQueries
 			}
 
 			scope 'with_personas', lambda { |personas, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 
 				if opts[:turn_on]
 					where("(ml_data -> 'personas' -> 'primary' ->> 'name') IN (?)", personas)
@@ -110,10 +110,10 @@ module EventQueries
 			# }
 
 			scope 'in_kinds', lambda { |kinds, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 
 				if opts[:turn_on] && !kinds.blank?
-					kinds   = kinds.map { |kind| [{"name": kind}].to_json }
+					kinds   = kinds.map { |kind| [{ "name": kind }].to_json }
 					queries = []
 					kinds.each_with_index do |kind, index|
 						if index == 0
@@ -130,7 +130,7 @@ module EventQueries
 			}
 
 			scope 'order_by_score', lambda { |opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 
 				if opts[:turn_on]
 					order(Arel.sql "(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC")
@@ -144,7 +144,7 @@ module EventQueries
 			}
 
 			scope 'in_days', lambda { |days, opts = {}|
-				opts = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 
 				if opts[:turn_on] && days.present?
 
@@ -186,9 +186,8 @@ module EventQueries
 				end
 			}
 
-
 			scope 'not_in_days', lambda { |days, opts = {}|
-				opts       = {'turn_on': true}.merge(opts)
+				opts = { 'turn_on': true }.merge(opts)
 				days = days.map(&:to_date).map(&:yday)
 
 				if opts[:turn_on] && !days.blank?
@@ -199,7 +198,7 @@ module EventQueries
 			}
 
 			scope 'order_by_date', lambda { |opts = {}|
-				opts = {direction: :asc}.merge(opts)
+				opts = { direction: :asc }.merge(opts)
 
 				case opts[:direction]
 				when :asc
@@ -211,7 +210,6 @@ module EventQueries
 				end
 			}
 
-
 			scope 'order_by_ids', lambda { |ids = false|
 				if ids.is_a?(Array)
 					order(Arel.sql "position(id::text in '#{ids.join(',')}')")
@@ -220,9 +218,8 @@ module EventQueries
 				end
 			}
 
-
 			scope 'order_by_persona', lambda { |active = true, opts = {}|
-				opts = {personas: Event::PERSONAS}.merge(opts)
+				opts = { personas: Event::PERSONAS }.merge(opts)
 				if active && !opts[:personas].blank?
 					order_by = ["case"]
 					opts[:personas].each_with_index.map do |persona, index|
@@ -244,18 +241,18 @@ module EventQueries
 			scope 'in_places', lambda { |places, opts = {}|
 				raise ArgumentError unless places.is_a? Array
 
-				opts   = {'turn_on': true}.merge(opts)
+				opts   = { 'turn_on': true }.merge(opts)
 				places = places || []
 
 				if opts[:turn_on] && !places.blank?
 					if places.any?(&:numeric?)
 						joins(:place)
-								.where("places.id IN (?)", places)
+							.where("places.id IN (?)", places)
 						# where("places.id IN (?)", places)
 						# select("e.*").from("events AS e").joins("INNER JOIN places p ON e.place_id = p.id").where("p.id IN (?)", places)
 					else
 						joins(:place)
-								.where("places.slug IN (?)", places)
+							.where("places.slug IN (?)", places)
 						# where("places.slug IN (?)", places)
 						# select("e.*").from("events AS e").joins("INNER JOIN places p ON e.place_id = p.id").where("p.slug IN (?)", places)
 					end
@@ -265,7 +262,7 @@ module EventQueries
 			}
 
 			scope 'in_categories', lambda { |categories, opts = {}|
-				opts = {'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': []}.merge(opts)
+				opts = { 'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': [] }.merge(opts)
 
 				return all if categories.blank?
 
@@ -276,20 +273,20 @@ module EventQueries
 					categories_query_array = categories.map { |category| "'#{category}'" }.join(', ')
 
 					from(
-							<<~SQL
-							  (SELECT events.* from (
-							      SELECT *,
-							         (p.ml_data -> 'categories' -> 'primary' ->> 'score')::numeric AS score,
-							         row_number()  OVER (
-							             PARTITION BY p.ml_data -> 'categories' -> 'primary' -> 'name'
-							             ORDER BY (p.ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC
-							             ) AS rank
-							      FROM events AS p
-							      ) AS events
-							  WHERE events.score IS NOT NULL
-							    AND rank::numeric <= #{ActiveRecord::Base::sanitize_sql(opts[:group_by])}
-							    AND (events.ml_data -> 'categories' -> 'primary' ->> 'name') IN (#{ActiveRecord::Base::sanitize_sql(categories_query_array)})
-							  ORDER BY events.rank) events
+						<<~SQL
+						  (SELECT events.* from (
+						      SELECT *,
+						         (p.ml_data -> 'categories' -> 'primary' ->> 'score')::numeric AS score,
+						         row_number()  OVER (
+						             PARTITION BY p.ml_data -> 'categories' -> 'primary' -> 'name'
+						             ORDER BY (p.ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC
+						             ) AS rank
+						      FROM events AS p
+						      ) AS events
+						  WHERE events.score IS NOT NULL
+						    AND rank::numeric <= #{ActiveRecord::Base::sanitize_sql(opts[:group_by])}
+						    AND (events.ml_data -> 'categories' -> 'primary' ->> 'name') IN (#{ActiveRecord::Base::sanitize_sql(categories_query_array)})
+						  ORDER BY events.rank) events
 					SQL
 					)
 				elsif opts[:group_by].blank?
@@ -297,9 +294,8 @@ module EventQueries
 				end
 			}
 
-
 			scope 'in_organizers', lambda { |organizers, opts = {}|
-				opts       = {'turn_on': true, 'active': true}.merge(opts)
+				opts       = { 'turn_on': true, 'active': true }.merge(opts)
 				organizers = organizers || []
 
 				raise ArgumentError unless organizers.is_a? Array
@@ -307,20 +303,19 @@ module EventQueries
 				if opts[:turn_on] && !organizers.blank?
 					if organizers.any?(&:numeric?)
 						joins(:organizers)
-								.where("organizers.id IN (?)", organizers)
+							.where("organizers.id IN (?)", organizers)
 					else
 						joins(:organizers)
-								.where("organizers.slug IN (?)", organizers)
+							.where("organizers.slug IN (?)", organizers)
 					end
 				else
 					all
 				end
 			}
 
-
 			scope 'active', lambda { |turn_on = true|
 				if turn_on
-					where("datetimes[1] > ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", (DateTime.now - 6.hours))
+					where("datetimes[1] > ?", (DateTime.now - 6.hours))
 				else
 					all
 				end
@@ -328,7 +323,7 @@ module EventQueries
 
 			scope 'past', lambda { |turn_on = true|
 				if turn_on
-					where("datetimes[1] <= ? AND (ml_data -> 'categories' -> 'primary' ->> 'name') != 'outlier'", (DateTime.now - 6.hours))
+					where("datetimes[1] <= ?", (DateTime.now - 6.hours))
 				else
 					all
 				end
@@ -339,7 +334,7 @@ module EventQueries
 			}
 
 			scope 'with_high_score', lambda { |opts = {}|
-				opts = {'turn_on': true, 'active': true}.merge(opts)
+				opts = { 'turn_on': true, 'active': true }.merge(opts)
 
 				if opts[:turn_on]
 					persona_score  = 0.35
@@ -356,7 +351,7 @@ module EventQueries
 
 			scope 'not_ml_data', lambda {
 				select(column_names - ['ml_data'])
-						.select("json_build_object('categories',  ml_data -> 'categories', 'personas', ml_data -> 'personas') as ml_data")
+					.select("json_build_object('categories',  ml_data -> 'categories', 'personas', ml_data -> 'personas') as ml_data")
 			}
 
 			scope 'favorited_by', lambda { |user = current_user|
@@ -367,7 +362,6 @@ module EventQueries
 				Event.select('*').from(Event.select('*, jsonb_array_elements(kinds) as kind')).where("(kind ->> 'score')::numeric >= :score", score: score)
 			}
 		end
-
 
 	end
 end

@@ -23,13 +23,13 @@ module PopulateEventsRake
 			@geocode = Geocoder.search(item['address']).first if item['address']
 
 			place = Place.create({
-															details:    {
-																name: item['place_name']
-															},
-															geographic: {
-																address: item['address']
-															}
-														})
+														 details:    {
+															 name: item['place_name']
+														 },
+														 geographic: {
+															 address: item['address']
+														 }
+													 })
 
 			SetGeolocationJob.perform_later(place.id)
 			set_place_image(place, item)
@@ -70,11 +70,11 @@ module PopulateEventsRake
 				puts "Organizador: #{organizer.details['name']} - já existe".yellow
 			else
 				organizer = Organizer.create({
-																				details: {
-																					name:       organizer_data['name'],
-																					source_url: organizer_data['source_url']
-																				}
-																			})
+																			 details: {
+																				 name:       organizer_data['name'],
+																				 source_url: organizer_data['source_url']
+																			 }
+																		 })
 
 				puts "Organizador: #{organizer_data['name']} - criado".white
 			end
@@ -138,7 +138,7 @@ module PopulateEventsRake
 
 		if features_response_is_success
 			event.ml_data.deep_merge!(
-				'stemmed' => features_data['stemmed']
+				stemmed: features_data['stemmed']
 			)
 		else
 			puts "Evento: #{event.name} - Erro durante a extração de features".red
@@ -160,30 +160,67 @@ module PopulateEventsRake
 		if label_response_is_success
 			event.ml_data.deep_merge!(
 				personas:   {
-					primary:   {
-						name:  label_data['classification']['personas']['primary']['name'],
-						score: label_data['classification']['personas']['primary']['score']
-					},
-					secondary: {
-						name:  label_data['classification']['personas']['secondary']['name'],
-						score: label_data['classification']['personas']['secondary']['score']
-					},
-					outlier:   false
+					annotations: [],
+					predictions: [
+												 {
+													 model_version: DateTime.now.strftime("persona-%Y%m%d-%H%M%S"),
+													 result:        [
+																						{
+																							from_name: "persona",
+																							to_name:   "description",
+																							type:      "choices",
+																							value:     {
+																								choices: [
+																													 label_data['classification']['personas']['primary']['name']
+																												 ]
+																							}
+																						}
+																					],
+													 score:         label_data['classification']['personas']['primary']['score']
+												 }
+											 ]
 				},
 				categories: {
-					primary:   {
-						name:  label_data['classification']['categories']['primary']['name'],
-						score: label_data['classification']['categories']['primary']['score']
-					},
-					secondary: {
-						name:  label_data['classification']['categories']['secondary']['name'],
-						score: label_data['classification']['categories']['secondary']['score']
-					},
-					outlier:   false
+					annotations: [],
+					predictions: [
+												 {
+													 model_version: DateTime.now.strftime("category-%Y%m%d-%H%M%S"),
+													 result:        [
+																						{
+																							from_name: "category",
+																							to_name:   "description",
+																							type:      "choices",
+																							value:     {
+																								choices: [
+																													 label_data['classification']['categories']['primary']['name']
+																												 ]
+																							}
+																						}
+																					],
+													 score:         label_data['classification']['categories']['primary']['score']
+												 }
+											 ]
 				},
 				price:      {
-					name:  label_data['classification']['price']['name'],
-					score: label_data['classification']['price']['score']
+					annotations: [],
+					predictions: [
+												 {
+													 model_version: DateTime.now.strftime("price-%Y%m%d-%H%M%S"),
+													 result:        [
+																						{
+																							from_name: "price",
+																							to_name:   "description",
+																							type:      "choices",
+																							value:     {
+																								choices: [
+																													 label_data['classification']['price']['name']
+																												 ]
+																							}
+																						}
+																					],
+													 score:         label_data['classification']['price']['score']
+												 }
+											 ]
 				}
 			)
 
@@ -216,7 +253,7 @@ module PopulateEventsRake
 
 		begin
 			if event.image&.present?
-				event.update(image: event_cover_file) 
+				event.update(image: event_cover_file)
 			else
 				event.image = event_cover_file
 			end
@@ -276,7 +313,7 @@ module PopulateEventsRake
 			event.description = item['description']
 			event.ticket_url  = item['ticket_url']
 			event.prices      = item['prices']
-			event.datetimes   = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
+			event.datetimes = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 
 			event.geographic.deep_merge!(
 				address:      item['address'],
@@ -299,7 +336,7 @@ module PopulateEventsRake
 			event.ticket_url  = item['ticket_url']
 			event.prices      = item['prices']
 			event.source_url  = item['source_url']
-			event.datetimes   = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
+			event.datetimes = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 
 			event.geographic.deep_merge!(
 				address:      item['address'],
