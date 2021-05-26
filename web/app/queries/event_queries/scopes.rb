@@ -313,12 +313,16 @@ module EventQueries
 				end
 			}
 
-			scope 'active', lambda { |turn_on = true|
-				if turn_on
-					where("datetimes[1] > ?", (DateTime.now - 6.hours))
-				else
-					all
-				end
+			scope 'active', lambda {
+				where("datetimes[1] > ?", (DateTime.now - 6.hours))
+			}
+
+			scope 'valid', lambda {
+				where("(ml_data -> 'content_rules' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0 ) = 'valid'")
+			}
+
+			scope 'invalid', lambda {
+				where("(ml_data -> 'content_rules' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0 ) = 'invalid'")
 			}
 
 			scope 'past', lambda { |turn_on = true|

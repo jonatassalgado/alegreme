@@ -159,6 +159,10 @@ module PopulateEventsRake
 
 		if label_response_is_success
 			event.ml_data.deep_merge!(
+				content_rules: {
+					annotations: [],
+					predictions: label_data['classification']['content_rules']
+				},
 				personas:   {
 					annotations: [],
 					predictions: [

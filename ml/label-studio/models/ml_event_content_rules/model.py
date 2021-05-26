@@ -105,11 +105,11 @@ stopwords.extend([
 from label_studio_ml.model import LabelStudioMLBase
 
 
-class EventCategoryClassifier(LabelStudioMLBase):
+class EventContentRulesClassifier(LabelStudioMLBase):
 
     def __init__(self, **kwargs):
         # don't forget to initialize base class...
-        super(EventCategoryClassifier, self).__init__(**kwargs)
+        super(EventContentRulesClassifier, self).__init__(**kwargs)
 
         self.label_encoder = preprocessing.LabelEncoder()
         

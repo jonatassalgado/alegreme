@@ -8,6 +8,7 @@ import base64
 
 from datetime import datetime
 from flask import Flask
+from event_content_rules import EventContentRulesPrediction
 from user_persona import UserPersonaPrediction
 from event_persona import EventPersonaPrediction
 from event_category import EventCategoryPrediction
@@ -71,20 +72,39 @@ class EventLabelRoute(Resource):
         args = parser.parse_args()
         user_query = args['query']
 
+        predictEventContentRulesModel = EventContentRulesPrediction()
         predictPersonaModel = EventPersonaPrediction()
         predictCategoryModel = EventCategoryPrediction()
         predictPriceModel = EventPricePrediction()
 
+        content_rules_prediction = predictEventContentRulesModel.predict(user_query)
         persona_prediction = predictPersonaModel.predict(user_query)
         category_prediction = predictCategoryModel.predict(user_query)
         price_prediction = predictPriceModel.predict(user_query)
 
+        content_rules_output = np.array(content_rules_prediction).tolist()
         persona_output = np.array(persona_prediction).tolist()
         category_output = np.array(category_prediction).tolist()
         price_output = np.array(price_prediction).tolist()
 
         return {
                 'classification' : {
+                    'content_rules': [
+                        {
+                            'model_version': datetime.strftime(datetime.today(), 'content-rules-%Y%m%d-%H%M%S'),
+                            'result': [
+                                        {
+                                            'from_name': "content_rules",
+                                            'to_name':   "description",
+                                            'type':      "choices",
+                                            'value':     {
+                                                'choices': [content_rules_output[0][0].lower()]
+                                            }
+                                        }
+                                        ],
+                            'score': content_rules_output[0][1]
+                        }
+                    ],
                     'personas': {
                         'primary' : {
                             'name': persona_output[0][0],

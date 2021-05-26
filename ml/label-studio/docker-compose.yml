@@ -33,3 +33,14 @@ services:
       - "./logs:/tmp"
       - "./models/ml_event_price:/ls/ml_backend"
     command: label-studio-ml start ml_backend
+  ls-ml-content-rules:
+    build: 
+      context: ./label-studio-ml-backend
+      dockerfile: ./Dockerfile
+    ports: 
+      - "9092:9090"
+    restart: on-failure
+    volumes:
+      - "./logs:/tmp"
+      - "./models/ml_event_content_rules:/ls/ml_backend"
+    command: label-studio-ml start ml_backend

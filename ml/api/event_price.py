@@ -172,5 +172,5 @@ class EventPricePrediction(object):
 
             output = [[best_labels_name[0], round(best_labels_score[0], 6)],
                       [best_labels_name[1], round(best_labels_score[1], 6)]]
-            print(output)
+
             return output
