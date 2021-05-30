@@ -43,75 +43,75 @@ module PredictEventsLabelsRake
 
 		if label_response_is_success
 
-			event.ml_data.deep_merge!({
-																	content_rules: {
-																		annotations: [],
-																		predictions: label_data['classification']['content_rules']
-																	},
-																	personas:   {
-																		annotations: [],
-																		predictions: [
-																									 {
-																										 model_version: DateTime.now.strftime("persona-%Y%m%d-%H%M%S"),
-																										 result:        [
-																																			{
-																																				from_name: "persona",
-																																				to_name:   "description",
-																																				type:      "choices",
-																																				value:     {
-																																					choices: [
-																																										 label_data['classification']['personas']['primary']['name']
-																																									 ]
-																																				}
-																																			}
-																																		],
-																										 score:         label_data['classification']['personas']['primary']['score']
-																									 }
-																								 ]
-																	},
-																	categories: {
-																		annotations: [],
-																		predictions: [
-																									 {
-																										 model_version: DateTime.now.strftime("category-%Y%m%d-%H%M%S"),
-																										 result:        [
-																																			{
-																																				from_name: "category",
-																																				to_name:   "description",
-																																				type:      "choices",
-																																				value:     {
-																																					choices: [
-																																										 label_data['classification']['categories']['primary']['name']
-																																									 ]
-																																				}
-																																			}
-																																		],
-																										 score:         label_data['classification']['categories']['primary']['score']
-																									 }
-																								 ]
-																	},
-																	price:      {
-																		annotations: [],
-																		predictions: [
-																									 {
-																										 model_version: DateTime.now.strftime("price-%Y%m%d-%H%M%S"),
-																										 result:        [
-																																			{
-																																				from_name: "price",
-																																				to_name:   "description",
-																																				type:      "choices",
-																																				value:     {
-																																					choices: [
-																																										 label_data['classification']['price']['name']
-																																									 ]
-																																				}
-																																			}
-																																		],
-																										 score:         label_data['classification']['price']['score']
-																									 }
-																								 ]
-																	}
-																})
+			event.ml_data = {
+				content_rules: {
+					annotations: [],
+					predictions: label_data['classification']['content_rules']
+				},
+				personas:      {
+					annotations: [],
+					predictions: [
+												 {
+													 model_version: DateTime.now.strftime("persona-%Y%m%d-%H%M%S"),
+													 result:        [
+																						{
+																							from_name: "persona",
+																							to_name:   "description",
+																							type:      "choices",
+																							value:     {
+																								choices: [
+																													 label_data['classification']['personas']['primary']['name']
+																												 ]
+																							}
+																						}
+																					],
+													 score:         label_data['classification']['personas']['primary']['score']
+												 }
+											 ]
+				},
+				categories:    {
+					annotations: [],
+					predictions: [
+												 {
+													 model_version: DateTime.now.strftime("category-%Y%m%d-%H%M%S"),
+													 result:        [
+																						{
+																							from_name: "category",
+																							to_name:   "description",
+																							type:      "choices",
+																							value:     {
+																								choices: [
+																													 label_data['classification']['categories']['primary']['name']
+																												 ]
+																							}
+																						}
+																					],
+													 score:         label_data['classification']['categories']['primary']['score']
+												 }
+											 ]
+				},
+				price:         {
+					annotations: [],
+					predictions: [
+												 {
+													 model_version: DateTime.now.strftime("price-%Y%m%d-%H%M%S"),
+													 result:        [
+																						{
+																							from_name: "price",
+																							to_name:   "description",
+																							type:      "choices",
+																							value:     {
+																								choices: [
+																													 label_data['classification']['price']['name']
+																												 ]
+																							}
+																						}
+																					],
+													 score:         label_data['classification']['price']['score']
+												 }
+											 ]
+				}
+			}
 
 			if label_data['classification']['categories']
 				labels           = label_data['classification']['categories']
@@ -119,7 +119,7 @@ module PredictEventsLabelsRake
 
 				event.categories = [] if event.categories.present?
 				event.categories << categories
-				puts "#{event.name} #{event.id} - Evento classificado - (#{labels['primary']['name']})".white
+				puts "#{event.name} #{event.id} - Evento classificado - (#{label_data['classification']['content_rules'][0]['result'][0]['value']['choices'][0]} / #{labels['primary']['name']})".white
 			end
 
 		else
@@ -144,7 +144,7 @@ namespace :ml do
 			include PredictEventsLabelsRake
 			puts "\n Task ml:predict:events iniciada em #{DateTime.now} \n".blue
 
-			Event.active.order_by_date.each_with_index do |event, index|
+			Event.all.order("created_at DESC").each_with_index do |event, index|
 				puts "#{index}: #{event.name[0..60]} \n ---------------------------------"
 				# get_features_of_event(event)
 				classify_event(event)
