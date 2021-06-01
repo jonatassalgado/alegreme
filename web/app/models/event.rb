@@ -100,6 +100,10 @@ class Event < ApplicationRecord
 		"#{name} #{description} #{place_details_name}"
 	end
 
+	def cover(size: :feed)
+		image[size].try { |image| image.url(public: true) } if image
+	end
+
 	def cover_url(type = :list)
 		image[type].url if image && image[type].exists?
 	end

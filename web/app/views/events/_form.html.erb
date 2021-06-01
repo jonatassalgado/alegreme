@@ -1,8 +1,7 @@
-<%= form_with(model: event, local: true) do |form| %>
+<%= form_with(model: event, local: true, html: { enctype: "multipart/form-data", data: { turbo: false } }) do |form| %>
 	<% if event.errors.any? %>
 		<div id="error_explanation">
 			<h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
 			<ul>
 				<% event.errors.full_messages.each do |message| %>
 					<li><%= message %></li>
@@ -10,79 +9,80 @@
 			</ul>
 		</div>
 	<% end %>
-
-	<div class="max-w-md w-full space-y-10 mx-auto mb-10">
-
+	<div class="max-w-md w-full space-y-5 mx-auto mb-10">
+		<h3 class="font-bold text-xl">Cover</h3>
+		<div class="">
+			<% if event.cover %>
+				<%= image_tag event.cover, { class: "mb-1 bg-cover bg-gray-400 w-52", alt: event.name, onerror: "this.style.opacity='0'" } %>
+				<%= form.hidden_field :image, value: event.cached_image_data %>
+				<%= form.file_field :image, class: "" %>
+			<% else %>
+				Este eventos não possui nenhuma foto, envie clicando abaixo.
+				<%= form.hidden_field :image, value: event.cached_image_data %>
+				<%= form.file_field :image, class: "" %>
+			<% end %>
+		</div>
 		<div class="">
 			<div class="" style="<%= get_image_style_attr @event, { preload: true } %>">
 			</div>
 		</div>
-
 		<h3 class="font-bold text-xl">Detalhes</h3>
-
 		<div>
 			<label class="font-semibold" for="" style="">Id</label>
 			<%= form.text_field :id, class: 'w-full p-2 border', readonly: true %>
 		</div>
-
 		<div class="">
 			<label class="font-semibold" for="" style="">Nome</label>
 			<%= form.text_field :name, class: 'w-full p-2 border' %>
 		</div>
-
 		<div class="">
 			<label class="font-semibold">Descrição</label>
 			<%= form.text_area :description, { class: "w-full p-2 border", rows: "8", cols: "40" } %>
 		</div>
-
 		<div class="">
 			<% event.datetimes.each do |d| %>
 				<label class="font-semibold" for="" style="">Data</label>
 				<%= datetime_field :event, :datetimes, { value: datetime_local(d), class: 'w-full p-2 border', multiple: true } %>
 			<% end %>
 		</div>
-
 		<div>
-			<label class="font-semibold" for="" style="">Preço</label>
-			<%= form.text_field :prices, class: 'w-full p-2 border' %>
+			<% if event.prices.present? %>
+				<% event.prices.each do |p| %>
+					<label class="font-semibold" for="" style="">Preços</label>
+					<%= number_field :event, :prices, { value: '%.2f' % p, step: 0.01, class: 'w-full p-2 border', multiple: true } %>
+				<% end %>
+			<% else %>
+				<label class="font-semibold" for="" style="">Preços</label>
+				<%= number_field :event, :prices, { value: nil, step: 0.01, class: 'w-full p-2 border', multiple: true } %>
+			<% end %>
 		</div>
-
 		<h3 class="font-bold text-xl">Categorias</h3>
-
 		<div class="">
 			<label for="" class="font-semibold" style="">Categoria primária</label>
 			<%= form.collection_select :category_ids, Category.all, :id, :details_display_name, { include_hidden: false, multiple: false }, { name: 'event[category_ids][]', class: 'w-full p-2 border' } %>
 		</div>
-
 		<div>
 			<label class="font-semibold" for="" style="">Score</label>
 			<%= form.text_field :categories_primary_score, class: 'w-full p-2 border' %>
 		</div>
-
 		<h3 class="font-bold text-xl">Personas</h3>
-
 		<div class="">
 			<label for="" class="font-semibold" style="">Persona primária</label>
 			<%= form.select(:personas_primary_name, Event::PERSONAS, {}, { class: "w-full p-2 border" }) %>
 		</div>
-
 		<div class="">
 			<label class="font-semibold" for="" style="">Score</label>
 			<%= form.text_field :personas_primary_score, class: 'w-full p-2 border' %>
 		</div>
-
 		<div class="">
 			<label class="font-semibold" for="">Outlier</label>
 			<%= form.check_box :personas_outlier, { class: '' }, 'true', 'false' %>
 		</div>
-
 		<div class="flex gap-2 inline-block justify-end w-full">
 			<%= link_to 'Exluir', @event, method: :delete, data: { confirm: 'Destruir evento' }, class: 'bg-gray-100 font-semibold px-5 py-2 rounded text-gray-500' %>
 			<button class="bg-brand-500 font-semibold px-5 py-2 rounded text-white">
 				Salvar
 			</button>
 		</div>
-
 	</div>
-
 <% end %>

@@ -11,7 +11,7 @@ module EventDecorators
 			end
 
 			def personas_primary_name=(value)
-				ml_data['personas']['annotations'][0]['result'][0]['value']['choices'] = [value]
+				ml_data['personas']['predictions'][0]['result'][0]['value']['choices'] = [value]
 			end
 
 			def personas_secondary_name

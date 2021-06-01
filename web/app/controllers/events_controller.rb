@@ -151,6 +151,7 @@ class EventsController < ApplicationController
 	# Never trust parameters from the scary internet, only allow the white list through.
 	def event_params
 		params.require(:event).permit(:name,
+																	:image,
 																	:description,
 																	:url,
 																	:personas_primary_name,
@@ -158,6 +159,7 @@ class EventsController < ApplicationController
 																	:personas_primary_score,
 																	:personas_secondary_score,
 																	:personas_outlier,
+																	prices:       [],
 																	category_ids: [],
 																	datetimes:    [])
 	end
