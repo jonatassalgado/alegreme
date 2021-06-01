@@ -57,7 +57,9 @@ parse_event_script = """
                 ["upgrade-insecure-requests"] = "1",
                 ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                 ["accept-enconding"] = "gzip, deflate, br",
-                ["accept-language"] = "en;q=0.9"
+                ["accept-language"] = "en;q=0.9",
+                ["content-language"] = "en-US",
+                ["cookie"] = "locale=en_US"
             })
         assert(splash:go(splash.args.url))
         assert(splash:wait(3))
@@ -89,21 +91,38 @@ parse_page_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
-        splash:set_user_agent(tostring(args.ua))
-        splash.resource_timeout = 120
+        splash.resource_timeout = 60
+        splash:on_request(function(request)
+            if string.find(request.url, ".css") ~= nil then
+                request.abort()
+            end
+            request:set_proxy{
+                host = tostring(args.proxy_ip),
+                port = tostring(args.proxy_port),
+                username = tostring(args.proxy_username),
+                password = tostring(args.proxy_password)
+            }
+        end)
+
+        splash:set_custom_headers({
+            ["user-agent"] = tostring(args.ua),
+            ["cache-control"] = "max-age=0",
+            ["upgrade-insecure-requests"] = "1",
+            ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            ["accept-enconding"] = "gzip, deflate, br",
+            ["accept-language"] = "en;q=0.9",
+            ["content-language"] = "en-US",
+            ["cookie"] = "locale=en_US"
+        })
 
         local num_scrolls = 10
         local scroll_delay = 2
 
-        local scroll_to = splash:jsfunc("window.scrollTo")
-        local get_body_height = splash:jsfunc(
-            "function() {return document.body.scrollHeight;}"
-        )
         assert(splash:go(splash.args.url))
         splash:wait(2)
 
-        for _ = 1, num_scrolls do
-            scroll_to(0, get_body_height())
+        for i = 1, num_scrolls do
+    				splash.scroll_position = {0, 768 * i}
             splash:wait(scroll_delay)
         end   
 
@@ -131,6 +150,9 @@ class EventSpider(scrapy.Spider):
     def start_requests(self):
         self.log("INITIALIZING...")
         self.log("UA: %s" % user_agents[0])
+        ps.shuffle_list()
+        proxy = ps.select_proxy()
+        
         yield SplashRequest(
             url='https://www.facebook.com/events/discovery/?city_id=264859',
             callback=self.parse_page,
@@ -138,7 +160,11 @@ class EventSpider(scrapy.Spider):
             args={
             'timeout': 300,
             'lua_source': parse_page_script,
-            'ua': user_agents[0]
+            'ua': user_agents[0],
+            'proxy_ip': proxy['ip'],
+            'proxy_port': proxy['port'],
+            'proxy_username': proxy['username'],
+            'proxy_password': proxy['password']
             }
         )
 
