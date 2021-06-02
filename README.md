@@ -64,6 +64,10 @@ CUSTOM | TCP | 3030 | API (FLASK)
 ### Docker
 
     docker-compose up -d --build <service_name>
+    
+Docker stop all
+    
+    docker kill $(docker ps -q)
 
 ### Certbot
     sudo ./init-letsencrypt.sh
