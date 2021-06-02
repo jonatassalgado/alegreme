@@ -1,8 +1,9 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'h-full w-72' do %>
-	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mb-5 md:mb-2 md:py-5">
+	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mt-10 md:py-5">
+		<span class="bg-white font-bold font-display pb-2 pt-10 text-gray-900 text-xl">Minha agenda</span>
 		<div class="capitalize pt-2 flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
 			<div class="flex items-center justify-items-start">
-			<span class="font-bold font-display text-gray-800 mr-2 text-xl">
+				<span class="font-semibold text-gray-600 mr-2">
 					<%= t('date.month_names')[start_date.month] %> <%= start_date.year %>
 				</span>
 				<svg data-left-sidebar--calendar-target="loadingIcon" class="opacity-0 text-brand-600 w-7 h-7 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -49,7 +50,7 @@
 							<% end %>
 							<% if @indicators&.include?(day) %>
 								<div class="flex justify-center space-x-0.5">
-									<% @indicators.find_all {|indic| indic == day}[...3].each do %>
+									<% @indicators.find_all { |indic| indic == day }[...3].each do %>
 										<div data-indicator class="<%= helpers.class_names 'h-1 rounded-full transform translate-y-2 w-1 bg-brand-500' %>">
 										</div>
 									<% end %>
@@ -63,9 +64,9 @@
 		</table>
 		<div id="calendar__list" class="" data-left-sidebar--calendar-target="list" style="<%= helpers.class_names 'hidden': @events&.empty? %>">
 			<div class="flex justify-between items-baseline bg-white sticky top-0 z-20">
-				<div class="bg-white font-bold font-display pb-2 pt-10 text-gray-900 text-xl ">
-					Minha agenda
-				</div>
+				<!--				<div class="bg-white font-bold font-display pb-2 pt-10 text-gray-900 text-xl ">-->
+				<!--					Minha agenda-->
+				<!--				</div>-->
 				<%= content_tag :div,
 												data:  {
 													reflex: 'click->LeftSidebar::Calendar#clear_filter'
@@ -83,7 +84,7 @@
 				<% end %>
 			</div>
 			<% if @events.present? %>
-				<div id="calendar__events" data-left-sidebar--calendar-target="events" class="pb-10">
+				<div id="calendar__events" data-left-sidebar--calendar-target="events" class="pb-10 mt-6">
 					<%= render LeftSidebar::GroupByDayListComponent.new(events: @events, user: @user) %>
 				</div>
 			<% end %>

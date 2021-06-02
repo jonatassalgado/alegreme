@@ -11,13 +11,13 @@ export default class extends ApplicationController {
 
 
     async setup() {
-        this.SimpleScrollbar = await import("simple-scrollbar")
-        await import("simple-scrollbar/simple-scrollbar.css")
-
-        this.element.addEventListener("cable-ready:before-morph", event => {
-            this.element.innerHTML = null;
-        })
-
+        // this.SimpleScrollbar = await import("simple-scrollbar")
+        // await import("simple-scrollbar/simple-scrollbar.css")
+        //
+        // this.element.addEventListener("cable-ready:before-morph", event => {
+        //     this.element.innerHTML = null;
+        // })
+        //
         this.element.addEventListener("cable-ready:after-morph", event => {
             this._initSimpleScrollbar()
         })
@@ -37,6 +37,7 @@ export default class extends ApplicationController {
     }
 
     close(event) {
+        this.scrollContentTarget.scrollTo(0, 0)
         Transition.to(this.element, {
             transition: () => this.element.classList.add("opacity-0", "translate-x-32"),
             observed:   ["opacity-0", "translate-x-32"],
@@ -51,7 +52,7 @@ export default class extends ApplicationController {
     _initSimpleScrollbar() {
         if (this.hasScrollContentTarget) {
             this.element.classList.remove("hidden")
-            this.SimpleScrollbar.initEl(this.scrollContentTarget);
+            // this.SimpleScrollbar.initEl(this.scrollContentTarget);
         }
     }
 }

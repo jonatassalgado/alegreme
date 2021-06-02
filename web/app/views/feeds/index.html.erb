@@ -1,15 +1,34 @@
 <%= render Modal::SignInComponent.new(text: nil) %>
 
-<div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
-	<% unless mobile_device? %>
-		<section class="hidden md:inline-block md:col-span-3 md:bg-white sticky w-72"
-						 id="left-sidebar"
-						 data-controller="simple-scrollbar"
-						 style="height: calc(100vh - 64px); top: 64px">
-			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
-		</section>
-	<% end %>
-	<section id="main-sidebar" class="col-span-12 md:col-span-5">
+
+<div data-controller="loader"
+		 data-loader-on-loading="horizontal-event#open-event:before"
+		 data-loader-on-loaded="horizontal-event#open-event:success"
+		 class="mx-auto px-5 sticky top-20 z-10 z-50">
+	<div id="open-event"
+			 data-loader-target="loaded">
+		<%= render MainSidebar::LargeEventComponent.new(user: current_user, event: nil) %>
+	</div>
+	<div
+		class="fixed flex font-display h-screen hidden items-center justify-center left-0 overscroll-contain rounded-xl shadow-lg text-3xl text-gray-800 top-0 w-screen"
+		data-loader-target="loading"
+		style="background: #abacbfeb">
+		Carregando
+		<svg data-loader-target="onIcon" class="w-5 h-5 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+			<path fill="none" d="M0 0h24v24H0V0z"/>
+			<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+		</svg>
+	</div>
+</div>
+<%# unless current_user %>
+<!--	<a href="https://play.google.com/store/apps/details?id=com.alegreme.app&referrer=utm_source%3Dwebsite" class="absolute bg-gray-100 left-12 top-20" style="width: 250px; height: 250px;">-->
+		<%#= image_tag "https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png", loading: 'lazy' %>
+<!--	</a>-->
+<%# end %>
+
+
+<div id="main-content" class="gap-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto">
+	<section id="main-sidebar" class="col-span-8 md:col-span-5">
 		<div class="mx-auto mb-24 is-animated sm:container">
 			<% if notice %>
 				<div class="bg-brand-100 border border-brand-200 flex font-semibold items-center max-w-screen-lg mb-3 md:mb-0 md:mt-5 mt-1 mx-4 p-3 rounded-lg space-x-2 text-brand-600 text-sm">
@@ -77,32 +96,38 @@
 		</div>
 	</section>
 	<% unless mobile_device? %>
-		<section id="right-sidebar" class="hidden md:inline-block md:bg-white md:h-full md:col-span-4 will-change">
-			<div data-controller="loader"
-					 data-loader-on-loading="horizontal-event#open-event:before"
-					 data-loader-on-loaded="horizontal-event#open-event:success"
-					 class="px-5 sticky top-20 z-10">
-				<div id="open-event"
-						 data-loader-target="loaded">
-					<%= render MainSidebar::LargeEventComponent.new(user: current_user, event: nil) %>
-				</div>
-				<div
-					class="flex items-center justify-center hidden h-16 mt-5 bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl text-md"
-					data-loader-target="loading">
-					Carregando
-					<svg data-loader-target="onIcon" class="w-5 h-5 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-						<path fill="none" d="M0 0h24v24H0V0z"/>
-						<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
-					</svg>
-				</div>
-			</div>
-			<% unless current_user %>
-				<a href="https://play.google.com/store/apps/details?id=com.alegreme.app&referrer=utm_source%3Dwebsite" class="absolute bg-gray-100 left-12 top-20" style="width: 250px; height: 250px;">
-					<%= image_tag "https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png", loading: 'lazy' %>
-				</a>
-			<% end %>
+		<section class="hidden md:inline-block md:col-span-3 md:bg-white"
+						 id="left-sidebar">
+			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
 		</section>
 	<% end %>
+	<%# unless mobile_device? %>
+	<!--		<section id="right-sidebar" class="hidden md:inline-block md:bg-white md:h-full md:col-span-4 will-change">-->
+	<!--			<div data-controller="loader"-->
+	<!--					 data-loader-on-loading="horizontal-event#open-event:before"-->
+	<!--					 data-loader-on-loaded="horizontal-event#open-event:success"-->
+	<!--					 class="px-5 sticky top-20 z-10">-->
+	<!--				<div id="open-event"-->
+	<!--						 data-loader-target="loaded">-->
+	<%#= render MainSidebar::LargeEventComponent.new(user: current_user, event: nil) %>
+	<!--				</div>-->
+	<!--				<div-->
+	<!--					class="flex items-center justify-center hidden h-16 mt-5 bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl text-md"-->
+	<!--					data-loader-target="loading">-->
+	<!--					Carregando-->
+	<!--					<svg data-loader-target="onIcon" class="w-5 h-5 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
+	<!--						<path fill="none" d="M0 0h24v24H0V0z"/>-->
+	<!--						<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>-->
+	<!--					</svg>-->
+	<!--				</div>-->
+	<!--			</div>-->
+	<%# unless current_user %>
+	<!--				<a href="https://play.google.com/store/apps/details?id=com.alegreme.app&referrer=utm_source%3Dwebsite" class="absolute bg-gray-100 left-12 top-20" style="width: 250px; height: 250px;">-->
+	<%#= image_tag "https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png", loading: 'lazy' %>
+	<!--				</a>-->
+	<%# end %>
+	<!--		</section>-->
+	<%# end %>
 
 	<div data-controller="install" data-install-native="true" data-install-target="button" class="items-center flex select-none tap-highlight-none bottom-20 fixed transform transition-transform translate-y-32 w-full z-30">
 		<span data-action="click->install#install" class="bg-brand-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">
