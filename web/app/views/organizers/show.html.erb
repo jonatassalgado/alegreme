@@ -15,38 +15,37 @@
   ]
 	</script>
 
-	<div class="max-w-screen-lg grid grid-cols-12 mx-auto">
+	<div class="max-w-screen-lg gap-10 grid grid-cols-12 mx-auto">
 		<div class="col-span-12 md:col-span-4">
-			<div class="sticky top-24 mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-xl md:max-w-screen-sm sm:container">
-				<div class="px-8 py-3 mx-3 space-y-3 text-center bg-white rounded-md">
-					<%= image_tag shrine_image_url(@organizer, :sm), {
-						loading: :lazy,
-						class:   'w-12 h-12 shadow-sm max-w-xs mx-auto rounded-full',
-						onerror: "this.style.opacity='0'"
-					} if @organizer.image_data? %>
-					<div>
-						<h1 class="flex-1 text-2xl font-bold font-display leading-6 text-gray-600 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-4xl">
-							<%= @organizer.details_name %>
-						</h1>
-						<%= @upcoming_events.size %> eventos ativos
-					</div>
-					<div class="mb-3">
-						<%= render(FollowButtonComponent.new(
-							user:       current_user,
-							followable: @organizer
-						)) %>
+			<div class="sticky top-24 mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-xl md:shadow-lg md:max-w-screen-sm sm:container">
+				<div class="p-6 space-y-5 bg-white rounded-md">
+					<div class="flex space-x-5 items-center">
+						<%= image_tag shrine_image_url(@organizer, :sm), {
+							loading: :lazy,
+							class:   'w-12 h-12 max-w-xs mx-auto rounded-full shadow-sm border border-gray-100',
+							onerror: "this.style.opacity='0'"
+						} if @organizer.image_data? %>
+						<div class="flex-grow">
+							<h1 class="flex-1 font-bold font-display leading-tight text-gray-900 group-hover:text-brand-500 md:pl-0">
+								<%= @organizer.details_name %>
+							</h1>
+							<%= render(FollowButtonComponent.new(
+								user:       current_user,
+								followable: @organizer
+							)) %>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-span-12 md:col-span-8 space-y-10">
-			<div class="mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-xl md:max-w-screen-sm sm:container">
-				<h2 class="font-bold font-display pb-2 pt-8 px-5 text-3xl">Próximos eventos</h2>
+		<div class="col-span-12 md:col-span-8 space-y-10 pt-5">
+			<div class="mx-auto space-y-3 overflow-hidden is-animated md:rounded-2xl md:max-w-screen-sm sm:container">
+				<h2 class="font-bold font-display pb-2 px-5 text-gray-900 text-xl">Próximos eventos</h2>
 				<%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user %>
 			</div>
 
-			<div class="mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-2xl md:shadow-xl md:max-w-screen-sm sm:container">
-				<h2 class="font-bold font-display pb-2 pt-8 px-5 text-3xl">Eventos passados</h2>
+			<div class="mx-auto space-y-3 overflow-hidden is-animated md:rounded-2xl md:max-w-screen-sm sm:container">
+				<h2 class="font-bold font-display pb-2 px-5 text-gray-900 text-xl">Eventos passados</h2>
 				<div class="opacity-75 grid grid-cols-12">
 					<% @past_events.each do |event| %>
 						<div class="col-span-12 md:col-span-6 flex justify-between px-5 py-3 md:border-0">

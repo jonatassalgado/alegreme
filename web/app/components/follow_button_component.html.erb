@@ -1,15 +1,14 @@
 <%= content_tag :div, id: dom_id(@followable, 'follow-button') do %>
-	<div class="<%= helpers.class_names('cursor-pointer duration-100 h-content hover:scale-110 inline-flex items-center pl-2 pr-3 py-2 rounded-full select-none space-x-1 tap-highlight-none transform transition-transform',
-																			{ 'bg-brand-100 text-brand-500': @user&.follow?(@followable),
-																				'bg-gray-100 text-gray-600':    !@user&.follow?(@followable) }) %>"
+	<div class="<%= helpers.class_names('text-sm cursor-pointer duration-100 h-content inline-flex items-center pl-1 pr-3 py-1 rounded-full select-none tap-highlight-none transform transition-transform',
+																			{ 'bg-brand-500 text-white':     @user&.follow?(@followable),
+																				'bg-brand-200 text-brand-600': !@user&.follow?(@followable) }) %>"
 			 data-reflex="<%= "click->#{@followable.class.name}#follow" %>"
 			 data-followable-id="<%= @followable.id %>"
 			 id="<%= "follow-button_#{@followable.id}" %>">
 		<svg class="<%= helpers.class_names('fill-current h-4 hover:scale-150 px-1',
-																				{ 'text-brand-500': @user&.follow?(@followable),
-																					'text-gray-600':  !@user&.follow?(@followable) }) %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M0 0h24v24H0V0z" fill="none" opacity=".87"></path>
-			<path d="M13.12 2.06L7.58 7.6c-.37.37-.58.88-.58 1.41V19c0 1.1.9 2 2 2h9c.8 0 1.52-.48 1.84-1.21l3.26-7.61C23.94 10.2 22.49 8 20.34 8h-5.65l.95-4.58c.1-.5-.05-1.01-.41-1.37-.59-.58-1.53-.58-2.11.01zM3 21c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2s-2 .9-2 2v8c0 1.1.9 2 2 2z"></path>
+																				{ 'text-white':     @user&.follow?(@followable),
+																					'text-brand-500': !@user&.follow?(@followable) }) %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
 		</svg>
 		<span>
 		<%= @user&.follow?(@followable) ? 'Seguindo' : 'Seguir' %>
