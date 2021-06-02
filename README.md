@@ -74,4 +74,4 @@ CUSTOM | TCP | 3030 | API (FLASK)
 
 
 ### Whenever
-    web/config/schedule.rb
+    whenever --update-crontab --load-file /root/alegreme/schedule.rb
