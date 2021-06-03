@@ -10,7 +10,9 @@
 		</div>
 		<div class="">
 			<div class="text-xs">
-				<%= tag.span "#{helpers.format_hour(@event.start_time)}h", class: 'font-semibold' %> · <%= l(@event.start_time.to_date, format: :week).titlecase %> · <%= "daqui #{distance_of_time_in_words(@event.start_time.to_date, DateTime.now)}" %>
+				<%= tag.span "#{helpers.format_hour(@event.start_time)}h" %>
+				· <%= l(@event.start_time.to_date, format: :week).titlecase %>
+				· <%= "daqui #{distance_of_time_in_words(@event.start_time.to_date, DateTime.now)}" %>
 			</div>
 			<div class="mb-1 leading-snug text-gray-700 font-semibold">
 				<%= content_tag :a,
@@ -19,7 +21,7 @@
 													action:     'click->left-sidebar--horizontal-event#openEvent',
 													'event-id': @event.id
 												},
-												class: 'md:hover:underline' do %>
+												class: 'md:hover:underline text-sm' do %>
 					<%= @event.name %>
 				<% end %>
 			</div>
