@@ -58,7 +58,7 @@ export default class extends ApplicationController {
             filter.classList.add("opacity-50", "pointer-events-none")
         })
         setTimeout(() => {
-            if (this.loadingValue) {
+            if (this.hasLoadingIconTarget && this.loadingValue) {
                 this.loadingIconTarget.classList.remove("opacity-0")
                 this.loadingIconTarget.classList.add("animate-spin")
             }

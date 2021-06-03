@@ -276,21 +276,21 @@ module EventQueries
 						<<~SQL
 						  (SELECT events.* from (
 						      SELECT *,
-						         (p.ml_data -> 'categories' -> 'primary' ->> 'score')::numeric AS score,
+						         (p.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric AS score,
 						         row_number()  OVER (
-						             PARTITION BY p.ml_data -> 'categories' -> 'primary' -> 'name'
-						             ORDER BY (p.ml_data -> 'categories' -> 'primary' ->> 'score')::numeric DESC
+						             PARTITION BY p.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0
+						             ORDER BY (p.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric DESC
 						             ) AS rank
 						      FROM events AS p
 						      ) AS events
 						  WHERE events.score IS NOT NULL
 						    AND rank::numeric <= #{ActiveRecord::Base::sanitize_sql(opts[:group_by])}
-						    AND (events.ml_data -> 'categories' -> 'primary' ->> 'name') IN (#{ActiveRecord::Base::sanitize_sql(categories_query_array)})
+						    AND (events.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0) IN (#{ActiveRecord::Base::sanitize_sql(categories_query_array)})
 						  ORDER BY events.rank) events
 					SQL
 					)
 				elsif opts[:group_by].blank?
-					where("(ml_data -> 'categories' -> 'primary' ->> 'name') IN (:categories)", categories: categories)
+					where("(ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0) IN (:categories)", categories: categories)
 				end
 			}
 
@@ -334,7 +334,7 @@ module EventQueries
 			}
 
 			scope 'with_low_score', lambda {
-				where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.7 AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 0.7")
+				where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.7 AND (ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric < 0.7")
 			}
 
 			scope 'with_high_score', lambda { |opts = {}|
@@ -343,14 +343,14 @@ module EventQueries
 				if opts[:turn_on]
 					persona_score  = 0.35
 					category_score = 0.35
-					where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= :persona_score AND (ml_data -> 'categories' -> 'primary' ->> 'score')::numeric >= :category_score", persona_score: persona_score, category_score: category_score)
+					where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= :persona_score AND (ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric >= :category_score", persona_score: persona_score, category_score: category_score)
 				else
 					all
 				end
 			}
 
 			scope 'not_retrained', lambda {
-				where("(ml_data -> 'categories' -> 'primary' ->> 'score')::numeric < 1 OR (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 1")
+				where("(ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric < 1 OR (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 1")
 			}
 
 			scope 'not_ml_data', lambda {
