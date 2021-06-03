@@ -5,14 +5,12 @@
 																					{ 'top-0 pt-5': helpers.mobile_device?,
 																						'top-0':      helpers.mobile_device? && current_page?('/minha-agenda'),
 																						'top-16':     !helpers.mobile_device? && (controller_name == 'feeds') }) %>">
-				<div class="flex items-center space-x-3">
-					<div class="w-9 bg-brand-100 flex flex-col justify-items-center px-1.5 py-1 rounded-md text-center">
-						<div class="font-display font-bold text-brand-700">
-							<%= l(group[0]&.to_date, format: "%-d") %>
-						</div>
-						<div class="font-semibold text-xs -mt-1 text-brand-600">
-							<%= l(group[0]&.to_date, format: "%^b") %>
-						</div>
+				<div class="">
+					<div class="text-sm text-brand-500">
+						<%= l(group[0]&.to_date, format: "%d/%m") %>
+						<% if group[0].to_date > Date.today + 6 %>
+							&nbsp;<%= "· daqui #{distance_of_time_in_words(group[0]&.to_date, DateTime.now)}" %>
+						<% end %>
 					</div>
 					<div class="space-x-2 flex select-none">
 						<h2 class="font-bold text-brand-600 uppercase flex items-center">
@@ -28,16 +26,11 @@
 									, <%= I18n.l(group[0]&.to_date, format: :long).titlecase %>
 								<% end %>
 							<% end %>
-							<% if group[0].to_date > Date.today + 6 %>
-								<div class="text-sm font-normal text-gray-400">
-									&nbsp;<%= "· daqui #{distance_of_time_in_words(group[0]&.to_date, DateTime.now)}" %>
-								</div>
-							<% end %>
 						</h2>
 					</div>
 				</div>
 			</div>
-			<div class="space-y-8 pl-12 pr-1">
+			<div class="space-y-8">
 				<%= render MainSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, open_in_sidebar: @open_in_sidebar) %>
 			</div>
 		</div>
