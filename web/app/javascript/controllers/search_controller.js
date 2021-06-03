@@ -17,13 +17,13 @@ export default class SearchController extends ApplicationController {
 	}
 
 	searching() {
-		this.inputTarget.attr('readonly', 'readonly');
-		this.inputTarget.attr('disabled', 'true');
-		setTimeout(function () {
-			this.inputTarget.blur();
-			this.inputTarget.removeAttr('readonly');
-			this.inputTarget.removeAttr('disabled');
-		}, 100);
+		// this.inputTarget.attr('readonly', 'readonly');
+		// this.inputTarget.attr('disabled', 'true');
+		// setTimeout(function () {
+		// 	this.inputTarget.blur();
+		// 	this.inputTarget.removeAttr('readonly');
+		// 	this.inputTarget.removeAttr('disabled');
+		// }, 100);
 	}
 
 }

@@ -100,6 +100,7 @@ class User < ApplicationRecord
 		if action == :create
 			self.likes.create!(event_id: event.id, sentiment: :negative)
 			self.disliked_events.reset
+			self.liked_or_disliked_events.reset
 		elsif action == :update
 			self.like_update(event, sentiment: :negative)
 			self.liked_events.reset

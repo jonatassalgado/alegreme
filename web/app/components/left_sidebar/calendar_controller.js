@@ -1,6 +1,7 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
 import {ChildMutation}       from "../../javascript/modules/child-mutation-module";
 import FlippingWeb           from "flipping/lib/adapters/web";
+import StickySidebar         from "sticky-sidebar";
 import "./calendar_component.scss"
 
 
@@ -31,7 +32,11 @@ export default class extends ApplicationController {
     }
 
     setup() {
-
+        new StickySidebar('#left-sidebar', {
+            containerSelector:    '#main-content',
+            innerWrapperSelector: '#calendar',
+            topSpacing:           30
+        });
     }
 
     teardown() {

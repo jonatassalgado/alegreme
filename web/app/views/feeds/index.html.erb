@@ -53,7 +53,7 @@
   						Descubra eventos e siga seus locais e artistas favoritos para não perder nada que acontece na cidade.
   					</span>
 					</div>
-					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/passeando.png"].sample, class: 'h-32 md:h-auto md:w-44 my-auto w-32' %>
+					<%= image_pack_tag ["hero/bebendo.png", "hero/passeando.png"].sample, class: 'h-32 md:h-auto md:w-44 my-auto w-32' %>
 				</div>
 				<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% end %>
