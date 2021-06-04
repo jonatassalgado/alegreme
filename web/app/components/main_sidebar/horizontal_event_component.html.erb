@@ -1,7 +1,9 @@
 <%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'transition-opacity group' do %>
 	<div class="select-none tap-highlight-none bg-white flex md:mx-0 rounded">
 		<div>
-			<div data-controller="ripple" class="bg-gray-50 h-16 md:h-28 md:w-48 overflow-hidden relative ripple ripple-white rounded-lg shadow w-24">
+			<div data-controller="ripple"
+					 class="bg-brand-100 rounded-lg h-16 md:h-28 md:w-48 relative ripple ripple-white shadow w-24"
+					 style="background-color: <%= helpers.get_image_dominant_color(@event) %>">
 				<%= link_to event_path(@event),
 										data: {
 											'turbo-preserve-scroll': true,
@@ -14,9 +16,12 @@
 						data:    {
 							'event-id': @event.id
 						},
-						class:   'cursor-pointer object-center object-cover h-full w-full',
+						class:   'cursor-pointer object-center object-cover h-full w-full rounded-lg',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
+				<% end %>
+				<% if @event.created_at > (DateTime.now - 24.hours) %>
+					<div title="Criado nas últimas 24 horas" class="-bottom-2 absolute bg-brand-500 font-semibold left-3 px-1 rounded text-white text-xs">NOVO</div>
 				<% end %>
 			</div>
 		</div>
@@ -31,7 +36,7 @@
 											class: 'md:text-lg font-semibold md:hover:text-brand-500 mb-1 leading-snug text-gray-700' do %>
 				<%= @event.name %>
 			<% end %>
-			<div class="text-sm md:mt-1 text-gray-500">
+			<div class="text-sm mt-2 text-gray-500">
 				<%= helpers.format_hour @event.start_time %>h ·
 				<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				·
