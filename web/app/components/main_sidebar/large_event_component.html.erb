@@ -27,7 +27,7 @@
 				<div data-main-sidebar--large-event-target="scrollContent" class="overflow-y-scroll overscroll-contain h-full">
 					<div class="relative">
 						<div class="aspect-ratio-16/9"></div>
-						<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.name %>" class="object-cover object-center absolute top-0 left-0 w-full min-w-full h-full bg-gray-50">
+						<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.name %>" class="object-cover object-center absolute top-0 left-0 w-full min-w-full h-full" style="background-color: <%= helpers.get_image_dominant_color(@event) %>">
 					</div>
 					<div class="-mt-6 relative z-20 flex items-center py-2 px-3 space-x-2">
 						<a href="<%= @event.source_url %>" rel="nofollow" target="_blank" class="flex flex-1 justify-center items-center py-2 space-x-2 rounded-full select-none bg-gray-300 text-gray-800 hover:bg-brand-200 hover:text-brand-600 group">

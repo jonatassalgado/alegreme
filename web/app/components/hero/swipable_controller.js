@@ -1,7 +1,20 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
+import FlippingWeb           from "flipping/lib/adapters/web";
 
 export default class extends ApplicationController {
     static targets = [];
+
+    initialize() {
+        this.flipping = new FlippingWeb();
+
+        this.element.addEventListener("cable-ready:before-morph", event => {
+            this.flipping.read()
+        })
+
+        this.element.addEventListener("cable-ready:after-morph", event => {
+            this.flipping.flip()
+        })
+    }
 
     connect() {
         super.connect();

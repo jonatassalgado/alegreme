@@ -8,9 +8,9 @@
 					<div data-swipable-target="items">
 						<div class="mb-5">
 							<div class="font-bold font-display text-brand-600 text-xl">
-								Que eventos você curte?
+								Que tipos de evento você curte?
 							</div>
-							<div class="text-xs md:text-sm text-gray-500 w-10/12 md:w-8/12">
+							<div class="text-xs md:text-sm text-gray-500">
 								Para receber sugestões personalizadas, indique ao menos
 								<span class="text-brand-500 font-bold"><%= @min_events_to_train - events_trained %> eventos</span>
 								que você curte.
@@ -56,7 +56,10 @@
 					<div data-controller="loader"
 							 data-loader-on-loading="swipable#suggestion-event:loading"
 							 data-loader-on-loaded="swipable#suggestion-event:loaded">
-						<div id="suggestion-events" data-loader-target="loaded">
+						<div id="suggestion-events" data-loader-target="loaded" class="relative">
+							<% if @suggestions_batch_size - @suggestions_viewed.to_i > 0 %>
+
+							<% end %>
 							<%= render Hero::HorizontalEventComponent.with_collection(@events_suggestions, user: @user, open_in_sidebar: true) %>
 						</div>
 						<div

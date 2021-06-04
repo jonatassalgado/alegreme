@@ -133,7 +133,7 @@ module EventQueries
 				opts = { 'turn_on': true }.merge(opts)
 
 				if opts[:turn_on]
-					order(Arel.sql "(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric DESC")
+					order(Arel.sql "(ml_data -> 'persona' -> 'predictions' -> 0 ->> 'score')::numeric DESC")
 				else
 					all
 				end
@@ -276,10 +276,10 @@ module EventQueries
 						<<~SQL
 						  (SELECT events.* from (
 						      SELECT *,
-						         (p.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric AS score,
+						         (p.ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric AS score,
 						         row_number()  OVER (
 						             PARTITION BY p.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0
-						             ORDER BY (p.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric DESC
+						             ORDER BY (p.ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric DESC
 						             ) AS rank
 						      FROM events AS p
 						      ) AS events
@@ -334,7 +334,7 @@ module EventQueries
 			}
 
 			scope 'with_low_score', lambda {
-				where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 0.7 AND (ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric < 0.7")
+				where("(ml_data -> 'personas' -> 'predictions' -> 0 ->> 'score')::numeric < 0.7 AND (ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric < 0.7")
 			}
 
 			scope 'with_high_score', lambda { |opts = {}|
@@ -343,14 +343,14 @@ module EventQueries
 				if opts[:turn_on]
 					persona_score  = 0.35
 					category_score = 0.35
-					where("(ml_data -> 'personas' -> 'primary' ->> 'score')::numeric >= :persona_score AND (ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric >= :category_score", persona_score: persona_score, category_score: category_score)
+					where("(ml_data -> 'personas' -> 'predictions' -> 0 ->> 'score')::numeric >= :persona_score AND (ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric >= :category_score", persona_score: persona_score, category_score: category_score)
 				else
 					all
 				end
 			}
 
 			scope 'not_retrained', lambda {
-				where("(ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'score')::numeric < 1 OR (ml_data -> 'personas' -> 'primary' ->> 'score')::numeric < 1")
+				where("(ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric < 1 OR (ml_data -> 'personas' -> 'predictions' -> 0 ->> 'score')::numeric < 1")
 			}
 
 			scope 'not_ml_data', lambda {

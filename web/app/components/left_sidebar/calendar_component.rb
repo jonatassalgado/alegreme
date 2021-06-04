@@ -18,7 +18,7 @@ class LeftSidebar::CalendarComponent < ViewComponent::Base
 	def td_classes_for(day)
 		today = Date.current
 
-		td_class = ['day h-10 text-center px-1 rounded-full cursor-pointer']
+		td_class = ['day h-12 text-center px-1 rounded-full cursor-pointer']
 		td_class << "wday-#{day.wday.to_s}"
 		td_class << 'font-semibold' if today == day
 		td_class << 'text-gray-300' if today > day

@@ -3,7 +3,7 @@ import {MobileDetector}      from "../../javascript/modules/mobile-detector-modu
 import {Transition}          from "../../javascript/modules/transition-module";
 
 export default class extends ApplicationController {
-    static targets = [];
+    static targets = ['currentItem', 'shadowItem'];
 
     connect() {
         super.connect();
@@ -11,6 +11,10 @@ export default class extends ApplicationController {
     }
 
     setup() {
+        requestAnimationFrame(() => {
+            this.shadowItemTarget.classList.remove("opacity-0")
+        })
+
         this.beginEvent = new Event("horizontal-event#open-event:before")
         this.endEvent   = new Event("horizontal-event#open-event:success");
     }
@@ -47,15 +51,19 @@ export default class extends ApplicationController {
 
     like(event) {
         const currentTarget = event.currentTarget
-        Transition.to(this.element, {
-            transition: () => this.element.classList.add("opacity-0"),
-            observed:   ["opacity-0"],
+        Transition.to(this.shadowItemTarget, {
+            transition: () => {
+                this.currentItemTarget.classList.add("opacity-0")
+                this.shadowItemTarget.classList.add("-translate-x-3", "-translate-y-3")
+                // this.element.classList.add("opacity-0");
+            },
+            observed:   ["-translate-x-3", "-translate-y-3"],
             duration:   300
         }).then(value => {
-            document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
+            // document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
             this.stimulate('Swipable#like', currentTarget)
                 .then(value => {
-                    document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
+                    // document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
                     this._updateCalendar()
                 })
                 .catch(reason => {
@@ -68,15 +76,18 @@ export default class extends ApplicationController {
 
     dislike(event) {
         const currentTarget = event.currentTarget
-        Transition.to(this.element, {
-            transition: () => this.element.classList.add("opacity-0"),
-            observed:   ["opacity-0"],
+        Transition.to(this.shadowItemTarget, {
+            transition: () => {
+                this.currentItemTarget.classList.add("opacity-0")
+                this.shadowItemTarget.classList.add("-translate-x-3", "-translate-y-3")
+            },
+            observed:   ["-translate-x-3", "-translate-y-3"],
             duration:   300
         }).then(value => {
-            document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
+            // document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
             this.stimulate('Swipable#dislike', currentTarget)
                 .then(value => {
-                    document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
+                    // document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
                 })
                 .catch(reason => {
 

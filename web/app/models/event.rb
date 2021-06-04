@@ -120,9 +120,13 @@ class Event < ApplicationRecord
 		start_time
 	end
 
-	# def datetimes
-	# 	read_attribute(:datetimes)&.map { |date| DateTime.parse(date).strftime('%Y-%m-%d %H:%M:%S') } || read_attribute(:datetimes)
-	# end
+	def image_dominant_color
+		if self&.image_data['feed']
+			self.image_data.dig('feed', 'metadata', 'dominant_color')
+		else
+			'#f1f1f1'
+		end
+	end
 
 	def similar_data=(value)
 		similar_data.is_a?(String) ? similar_data.to_json : []

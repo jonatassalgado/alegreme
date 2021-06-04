@@ -12,17 +12,20 @@ export default class extends ApplicationController {
         this.flipping = new FlippingWeb();
 
         this.element.addEventListener("cable-ready:before-morph", event => {
-            ChildMutation.read(this.eventsTarget)
-            this.flipping.read()
+            if (this.hasEventsTarget) {
+                ChildMutation.read(this.eventsTarget)
+                this.flipping.read()
+            }
         })
 
         this.element.addEventListener("cable-ready:after-morph", event => {
-            console.log(this.flipping)
-            this.flipping.flip()
-            ChildMutation.diff(this.eventsTarget)
-                         .then(els => {
-                             els.forEach(el => el.classList.add("animate-added"))
-                         })
+            if (this.hasEventsTarget) {
+                this.flipping.flip()
+                ChildMutation.diff(this.eventsTarget)
+                             .then(els => {
+                                 els.forEach(el => el.classList.add("animate-added"))
+                             })
+            }
         })
     }
 
