@@ -7,9 +7,9 @@ json.price @event.prices.try(:min)
 json.place @event.place_details_name
 json.geographic @event.geographic
 json.categories @event.categories.pluck(:details)
-json.liked current_user&.like?(@event) || false
 json.source_url @event.source_url
 json.origin_url event_url(@event, format: :html)
+json.ticket_url @event.ticket_url
 json.created_at @event.created_at
 json.updated_at @event.updated_at
 json.similar @similar_events do |similar|

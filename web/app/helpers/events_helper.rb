@@ -1,5 +1,9 @@
 module EventsHelper
 
+	def is_new_event? event
+		event.created_at > (DateTime.now - 24.hours)
+	end
+
 	def time_until event
 		if event.start_time.to_datetime.iso8601 > DateTime.now.iso8601
 			"Daqui #{distance_of_time_in_words event.start_time, DateTime.now}"
