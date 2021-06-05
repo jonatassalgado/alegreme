@@ -12,7 +12,7 @@
 				content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 	<%= render partial: 'layouts/meta-tags', cached: -> { [controller_name, action_name] } %>
-	<%= render partial: 'layouts/google_analytics', cached: true %>
+	<%= render partial: 'layouts/google_analytics' %>
 
 	<%= canonical_url %>
 	<%= amp_url %>
