@@ -1,6 +1,6 @@
 <%= render Modal::SignInComponent.new(text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
 
-<section class="min-h-screen mb-24 is-animated md:mt-16">
+<section class="mb-24 min-h-screen is-animated md:mt-16">
 
 	<% content_for :canonical_url, organizer_url(@organizer, format: :html) %>
 	<% content_for :meta_title, "Eventos por #{@organizer.details_name} em Porto Alegre | Alegreme.com" %>
@@ -13,20 +13,21 @@
   [
     <%= render partial: 'layouts/json_ld', collection: @events, as: :event %>
   ]
+	
 	</script>
 
-	<div class="max-w-screen-lg gap-10 grid grid-cols-12 mx-auto">
+	<div class="grid grid-cols-12 gap-10 mx-auto max-w-screen-lg">
 		<div class="col-span-12 md:col-span-4">
-			<div class="sticky top-24 mx-auto space-y-3 overflow-hidden is-animated md:border md:border-gray-100 md:rounded-xl md:shadow-lg md:max-w-screen-sm sm:container">
+			<div class="overflow-hidden sticky top-24 mx-auto space-y-3 is-animated md:border md:border-gray-100 md:rounded-xl md:shadow-lg md:max-w-screen-sm sm:container">
 				<div class="p-6 space-y-5 bg-white rounded-md">
-					<div class="flex space-x-5 items-center">
+					<div class="flex items-center space-x-5">
 						<%= image_tag shrine_image_url(@organizer, :sm), {
 							loading: :lazy,
 							class:   'w-12 h-12 max-w-xs mx-auto rounded-full shadow-sm border border-gray-100',
 							onerror: "this.style.opacity='0'"
 						} if @organizer.image_data? %>
 						<div class="flex-grow">
-							<h1 class="flex-1 font-bold font-display leading-tight text-gray-900 group-hover:text-brand-500 md:pl-0">
+							<h1 class="flex-1 mb-2 font-bold leading-tight text-gray-900 font-display group-hover:text-brand-500 md:pl-0">
 								<%= @organizer.details_name %>
 							</h1>
 							<%= render(FollowButtonComponent.new(
@@ -38,49 +39,51 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-span-12 md:col-span-8 space-y-10 pt-5">
-			<div class="mx-auto space-y-3 overflow-hidden is-animated md:rounded-2xl md:max-w-screen-sm sm:container">
-				<h2 class="font-bold font-display pb-2 px-5 text-gray-900 text-xl">Próximos eventos</h2>
+		<div class="col-span-12 pt-5 space-y-10 md:col-span-8">
+			<div class="overflow-hidden mx-auto space-y-3 is-animated md:rounded-2xl md:max-w-screen-sm sm:container">
+				<h2 class="px-5 pb-2 text-xl font-bold text-gray-900 font-display">Próximos eventos</h2>
 				<%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user %>
 			</div>
 
-			<div class="mx-auto space-y-3 overflow-hidden is-animated md:rounded-2xl md:max-w-screen-sm sm:container">
-				<h2 class="font-bold font-display pb-2 px-5 text-gray-900 text-xl">Eventos passados</h2>
-				<div class="opacity-75 grid grid-cols-12">
-					<% @past_events.each do |event| %>
-						<div class="col-span-12 md:col-span-6 flex justify-between px-5 py-3 md:border-0">
-							<div class="pr-6">
-								<%= content_tag :a,
-																href:  event_path(event),
-																data:  {
-																	action:     'click->main-sidebar--horizontal-event#openEvent',
-																	url:        event_path(event),
-																	'event-id': event.id
-																},
-																class: 'md:hover:underline inline-block md:text-sm font-semibold mb-1 leading-snug text-gray-600' do %>
-									<%= event.name %>
-								<% end %>
-							</div>
-							<div>
-								<div data-controller="ripple" class="relative w-24 overflow-hidden rounded shadow-xs ripple ripple-white">
-									<%= link_to event_path(event),
-															data: {
-																action:     'click->main-sidebar--horizontal-event#openEvent',
-																'event-id': event.id
-															} do %>
-										<div class="bg-gray-50 aspect-ratio-16/9"></div>
-										<%= image_tag shrine_image_url(event, :feed), {
-											loading: :lazy,
-											class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
-											onerror: "this.style.opacity='0'"
-										} rescue nil %>
+			<% if @past_events.present? %>
+				<div class="overflow-hidden mx-auto space-y-3 is-animated md:rounded-2xl md:max-w-screen-sm sm:container">
+					<h2 class="px-5 pb-2 text-xl font-bold text-gray-900 font-display">Eventos passados</h2>
+					<div class="grid grid-cols-12 opacity-75">
+						<% @past_events.each do |event| %>
+							<div class="flex col-span-12 justify-between py-3 px-5 md:col-span-6 md:border-0">
+								<div class="pr-6">
+									<%= content_tag :a,
+																	href:  event_path(event),
+																	data:  {
+																		action:     'click->main-sidebar--horizontal-event#openEvent',
+																		url:        event_path(event),
+																		'event-id': event.id
+																	},
+																	class: 'md:hover:underline inline-block md:text-sm font-semibold mb-1 leading-snug text-gray-600' do %>
+										<%= event.name %>
 									<% end %>
 								</div>
+								<div>
+									<div data-controller="ripple" class="overflow-hidden relative w-24 rounded shadow-xs ripple ripple-white">
+										<%= link_to event_path(event),
+																data: {
+																	action:     'click->main-sidebar--horizontal-event#openEvent',
+																	'event-id': event.id
+																} do %>
+											<div class="bg-gray-50 aspect-ratio-16/9"></div>
+											<%= image_tag shrine_image_url(event, :feed), {
+												loading: :lazy,
+												class:   'absolute cursor-pointer h-full left-0 object-center object-cover top-0 w-full overflow-hidden',
+												onerror: "this.style.opacity='0'"
+											} rescue nil %>
+										<% end %>
+									</div>
+								</div>
 							</div>
-						</div>
-					<% end %>
+						<% end %>
+					</div>
 				</div>
-			</div>
+			<% end %>
 		</div>
 	</div>
 </section>

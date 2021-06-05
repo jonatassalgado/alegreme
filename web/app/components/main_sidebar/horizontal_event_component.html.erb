@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'transition-opacity group' do %>
-	<div class="select-none tap-highlight-none bg-white flex md:mx-0 rounded">
+	<div class="select-none tap-highlight-none bg-white flex">
 		<div>
 			<div data-controller="ripple"
 					 class="bg-brand-100 rounded-lg h-16 md:h-28 md:w-48 relative ripple ripple-white shadow w-24"
@@ -26,6 +26,29 @@
 			</div>
 		</div>
 		<div class="pl-6">
+			<div class="flex items-center space-x-2">
+				<span class="-space-x-2 flex">
+					<% @event.organizers.each do |organizer| %>
+						<%= link_to organizer_path(organizer), class: 'inline-block' do %>
+							<%= image_tag helpers.shrine_image_url(organizer, :sm), {
+								loading: :lazy,
+								title:   organizer.details_name,
+								alt:     "Organizador #{organizer.details_name}",
+								class:   'border-2 border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6',
+								onerror: "this.style.opacity='0'"
+							} rescue nil %>
+						<% end %>
+					<% end %>
+				</span>
+				<span class="text-sm text-gray-400">·</span>
+				<span class="text-sm text-gray-500">
+							<%= helpers.format_hour @event.start_time %>h
+							</span>
+				<span class="text-sm text-gray-400">·</span>
+				<span class="text-sm text-gray-500">
+					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+				</span>
+			</div>
 			<%= content_tag :a,
 											href:  event_path(@event),
 											data:  {
@@ -33,16 +56,25 @@
 												action:                  'click->main-sidebar--horizontal-event#openEvent',
 												'event-id':              @event.id
 											},
-											class: 'md:text-lg font-semibold md:hover:text-brand-500 mb-1 leading-snug text-gray-700' do %>
+											class: 'block md:text-lg font-semibold md:hover:text-brand-500 mb-1 leading-snug text-gray-700' do %>
 				<%= @event.name %>
 			<% end %>
-			<div class="text-sm mt-2 text-gray-500">
-				<%= helpers.format_hour @event.start_time %>h ·
-				<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
-				·
-				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+			<div>
+				<span class="text-sm text-brand-500">
+					<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+				</span>
+				<span class="text-sm text-gray-400 px-1">
+					·
+				</span>
+				<span class="text-sm text-gray-500">
+				<%= helpers.limit_description_size @event.description %>
+				</span>
 			</div>
-			<div class="<%= helpers.class_names('flex transition-opacity duration-150 mt-1 mt-3 space-x-1',
+			<!--			<div class="text-sm text-gray-500">-->
+			<!--				<%#= helpers.format_hour @event.start_time %>h ·-->
+			<%#= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+			<!--			</div>-->
+			<div class="<%= helpers.class_names('flex transition-opacity duration-150 mt-1 mt-3',
 																					{ 'md:group-hover:opacity-100  md:opacity-0': !@user&.like_or_dislike?(@event) }) %>">
 				<% unless @user&.dislike?(@event) %>
 					<%= content_tag :div,
@@ -52,7 +84,8 @@
 														'event-id': @event.id,
 														component:  'horizontal-event'
 													},
-													class: 'mr-3 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform' do %>
+													class: helpers.class_names('mr-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform',
+																										 { 'bg-brand-100 px-2 py-1 -mt-1': @user&.like?(@event) }) do %>
 						<svg class="<%= helpers.class_names 'group h-5 w-5 stroke-current',
 																								{ 'text-gray-500':  !@user&.like?(@event),
 																									'text-brand-600': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,6 +113,19 @@
 						</svg>
 					<% end %>
 				<% end %>
+				<div class="<%= helpers.class_names('md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform bg-brand-100 hover:bg-brand-200 -mt-1 px-2 py-1 -mt-1',
+																						{ 'ml-5': !@user&.like?(@event) }) %>"
+						 data-controller="share-button"
+						 data-share-button-text="<%= strip_tags(helpers.limit_description_size(@event.description, 160)) %>"
+						 data-share-button-title="<%= @event.name %>"
+						 data-share-button-url="<%= event_url(@event, format: :html) %>"
+						 data-action="click->share-button#share">
+					<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
+					<svg class="h-4 mr-1 stroke-current text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+					</svg>
+					<div>Compartilhar</div>
+				</div>
 			</div>
 		</div>
 	</div>

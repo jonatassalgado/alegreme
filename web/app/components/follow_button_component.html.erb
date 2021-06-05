@@ -1,7 +1,7 @@
 <%= content_tag :div, id: dom_id(@followable, 'follow-button') do %>
 	<div class="<%= helpers.class_names('text-sm cursor-pointer duration-100 h-content inline-flex items-center pl-1 pr-3 py-1 rounded-full select-none tap-highlight-none transform transition-transform',
 																			{ 'bg-brand-500 text-white':     @user&.follow?(@followable),
-																				'bg-brand-200 text-brand-600': !@user&.follow?(@followable) }) %>"
+																				'bg-brand-100 text-brand-600': !@user&.follow?(@followable) }) %>"
 			 data-reflex="<%= "click->#{@followable.class.name}#follow" %>"
 			 data-followable-id="<%= @followable.id %>"
 			 id="<%= "follow-button_#{@followable.id}" %>">
