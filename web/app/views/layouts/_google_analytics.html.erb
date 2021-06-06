@@ -1,4 +1,4 @@
-<% return if Rails.env.development? || (Rails.env.production? && current_user.try(:admin?)) %>
+<% return if (Rails.env.production? && current_user.try(:admin?)) %>
 
 <!-- Google Analytics -->
 <script>
