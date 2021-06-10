@@ -292,11 +292,11 @@ module PopulateEventsRake
 	end
 
 	def create_event(item)
-		if item['deleted'] == 'true'
-			Event.destroy_by("source_url LIKE ?", "%#{item['source_url']}%")
-			puts "Evento: #{item['source_url']} - Evento deletado".yellow
-			return :deleted
-		end
+		# if item['deleted'] == 'true'
+		# 	Event.destroy_by("source_url LIKE ?", "%#{item['source_url']}%")
+		# 	puts "Evento: #{item['source_url']} - Evento deletado".yellow
+		# 	return :deleted
+		# end
 
 		if item['datetimes'].blank?
 			puts "Evento: #{item['name']} - Evento sem data raspada".red
@@ -408,10 +408,10 @@ namespace :populate do
 			place      = create_place(item)
 			organizers = create_organizers(item)
 
-			if event == :deleted
-				puts "#{item['name']} - Próximo (evento deletado)".yellow
-				next
-			end
+			# if event == :deleted
+			# 	puts "#{item['name']} - Próximo (evento deletado)".yellow
+			# 	next
+			# end
 
 			unless event
 				puts "#{item['name']} - Próximo (evento não criado)".yellow

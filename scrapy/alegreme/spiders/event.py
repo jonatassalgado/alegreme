@@ -205,15 +205,15 @@ class EventSpider(scrapy.Spider):
     def parse_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
 
-        sign_in_form = response.xpath('//*[contains(@class, "_585r _50f4") and contains(., "You must log in to continue")]')
-        if sign_in_form:
-            event_loader.add_value('deleted', 'true')
-            event_loader.add_value('source_url', response.url)
-            event_loader.load_item()
-            event = event_loader.item
-            self.log("EVENT DELETED: %s" % event)
-            yield event
-            return
+#         sign_in_form = response.xpath('//*[contains(@class, "_585r _50f4") and contains(., "You must log in to continue")]')
+#         if sign_in_form:
+#             event_loader.add_value('deleted', 'true')
+#             event_loader.add_value('source_url', response.url)
+#             event_loader.load_item()
+#             event = event_loader.item
+#             self.log("EVENT DELETED: %s" % event)
+#             yield event
+#             return
 
         event_loader.add_xpath('name', '//title[1]/text()')
         event_loader.add_xpath('cover_url', '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src')
