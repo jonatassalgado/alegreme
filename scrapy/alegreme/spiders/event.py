@@ -13,9 +13,6 @@ from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
 from alegreme.services.proxy_service import ProxyService
 
-ps = ProxyService()
-ps.get_proxy_list()
-
 user_agents = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
@@ -43,12 +40,6 @@ parse_event_script = """
             if string.find(request.url, ".css") ~= nil then
                 request.abort()
             end
-            request:set_proxy{
-                host = tostring(args.proxy_ip),
-                port = tostring(args.proxy_port),
-                username = tostring(args.proxy_username),
-                password = tostring(args.proxy_password)
-            }
         end)
 
         splash:set_custom_headers({
@@ -96,12 +87,6 @@ parse_page_script = """
             if string.find(request.url, ".css") ~= nil then
                 request.abort()
             end
-            request:set_proxy{
-                host = tostring(args.proxy_ip),
-                port = tostring(args.proxy_port),
-                username = tostring(args.proxy_username),
-                password = tostring(args.proxy_password)
-            }
         end)
 
         splash:set_custom_headers({
@@ -115,8 +100,8 @@ parse_page_script = """
             ["cookie"] = "locale=en_US"
         })
 
-        local num_scrolls = 10
-        local scroll_delay = 2
+        local num_scrolls = 20
+        local scroll_delay = 4
 
         assert(splash:go(splash.args.url))
         splash:wait(2)
@@ -150,9 +135,7 @@ class EventSpider(scrapy.Spider):
     def start_requests(self):
         self.log("INITIALIZING...")
         self.log("UA: %s" % user_agents[0])
-        ps.shuffle_list()
-        proxy = ps.select_proxy()
-        
+
         yield SplashRequest(
             url='https://www.facebook.com/events/discovery/?city_id=264859',
             callback=self.parse_page,
@@ -160,11 +143,7 @@ class EventSpider(scrapy.Spider):
             args={
             'timeout': 300,
             'lua_source': parse_page_script,
-            'ua': user_agents[0],
-            'proxy_ip': proxy['ip'],
-            'proxy_port': proxy['port'],
-            'proxy_username': proxy['username'],
-            'proxy_password': proxy['password']
+            'ua': user_agents[0]
             }
         )
 
@@ -180,8 +159,6 @@ class EventSpider(scrapy.Spider):
 
         for event_link in events_in_page.extract():
             if event_link is not None:
-                ps.shuffle_list()
-                proxy = ps.select_proxy()
                 
                 yield SplashRequest(
                     url=urljoin(response.url, urlparse(event_link).path),
@@ -190,11 +167,7 @@ class EventSpider(scrapy.Spider):
                     args={
                     'timeout': 600,
                     'lua_source': parse_event_script,
-                    'ua': user_agents[0],
-                    'proxy_ip': proxy['ip'],
-                    'proxy_port': proxy['port'],
-                    'proxy_username': proxy['username'],
-                    'proxy_password': proxy['password']
+                    'ua': user_agents[0]
                     }
                 )
                 pass
@@ -246,8 +219,6 @@ class EventSpider(scrapy.Spider):
 
         for event_link in related_events_links.extract():
             if event_link is not None:
-                ps.shuffle_list()
-                proxy = ps.select_proxy()
                 
                 yield SplashRequest(
                     url=urljoin(response.url, urlparse(event_link).path),
@@ -256,11 +227,7 @@ class EventSpider(scrapy.Spider):
                     args={
                         'timeout': 600,
                         'lua_source': parse_event_script,
-                        'ua': user_agents[0],
-                        'proxy_ip': proxy['ip'],
-                        'proxy_port': proxy['port'],
-                        'proxy_username': proxy['username'],
-                        'proxy_password': proxy['password']
+                        'ua': user_agents[0]
                     }
                 )
                 pass

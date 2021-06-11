@@ -24,7 +24,6 @@ class ProxyService:
         username = self.proxy_list[0]["username"]
         password = self.proxy_list[0]["password"]
 
-        # print(f'Selected proxy {self.proxy_list[0]}')
 
         return {
             'ip': ip,

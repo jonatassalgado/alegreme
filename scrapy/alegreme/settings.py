@@ -17,20 +17,11 @@ SPIDER_MODULES = ['alegreme.spiders']
 NEWSPIDER_MODULE = 'alegreme.spiders'
 
 
-
-# Splash
-is_docker = os.environ.get('IS_DOCKER')
-splash_url = os.environ.get('SPLASH_URL')
-public_ip = os.environ.get('PUBLIC_IP')
-private_ip = os.environ.get('PRIVATE_IP')
-home = os.environ.get('HOME')
-
-SPLASH_URL = 'http://splash:8050'
 SPLASH_USERNAME = 'alegreme'
+SPLASH_URL = os.environ.get('SPLASH_URL')
 SPLASH_PASS = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
 IS_DOCKER = 'true'
-
-PWD = '/var/www/scrapy/data'
+PWD = os.environ.get('PWD')
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

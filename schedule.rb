@@ -11,11 +11,11 @@ set :output, '/root/alegreme/logs/whenever/cron.log'
 
 
 # Populate new events
-every 1.day, at: '17:30 pm' do
+every 1.day, at: '16:30 pm' do
   command "cd /root/alegreme/scrapy && sudo docker-compose run --rm scrapy scrapy crawl event -s JOBDIR=crawls/event-1 && sudo docker-compose down"
 end
 
-every 1.day, at: '19:00 pm' do
+every 1.day, at: '18:00 pm' do
   command "cd /root/alegreme && sudo docker exec alegreme_app_1 bundle exec rake populate:events similar:events suggestions:users sitemap:refresh search:refresh"
 end
 

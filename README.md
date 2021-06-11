@@ -79,3 +79,4 @@ Docker stop all
 
 ### Whenever
     whenever --update-crontab --load-file /root/alegreme/schedule.rb
+    crontab -l
