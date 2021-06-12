@@ -24,6 +24,7 @@ class EventPipeline(object):
         timestr = time.strftime("%Y%m%d-%H%M%S")
         pwd = settings.get('PWD')
         file_path = pwd + '/scraped/events-' + timestr + '.jsonl'
+        print("Salvando em: " + file_path)
 
         try:
             if os.path.isdir(pwd + '/scraped'):

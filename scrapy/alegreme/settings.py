@@ -18,11 +18,10 @@ NEWSPIDER_MODULE = 'alegreme.spiders'
 
 
 SPLASH_USERNAME = 'alegreme'
-SPLASH_URL = os.environ.get('SPLASH_URL')
+SPLASH_URL = 'http://e10ade1dbfcd.ngrok.io'
+PWD = '/var/www/scrapy/data'
 SPLASH_PASS = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
 IS_DOCKER = 'true'
-PWD = os.environ.get('PWD')
-
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'alegreme (+http://www.yourdomain.com)'
@@ -31,7 +30,7 @@ PWD = os.environ.get('PWD')
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 8
+CONCURRENT_REQUESTS = 4
 # CONCURRENT_ITEMS = 50
 
 # Scrapy Proxy Pool
@@ -103,7 +102,7 @@ RETRY_TIMES = 1
 # DEPTH_LIMIT = 4
 # CLOSESPIDER_ITEMCOUNT = 2
 CLOSESPIDER_ERRORCOUNT = 30
-CLOSESPIDER_PAGECOUNT = 150
+CLOSESPIDER_PAGECOUNT = 100
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -131,12 +130,12 @@ COOKIES_DEBUG = False
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-AUTOTHROTTLE_START_DELAY = 2
+AUTOTHROTTLE_START_DELAY = 10
 # The maximum download delay to be set in case of high latencies
 AUTOTHROTTLE_MAX_DELAY = 30
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
-AUTOTHROTTLE_TARGET_CONCURRENCY = 2.0
+# AUTOTHROTTLE_TARGET_CONCURRENCY = 2.0
 # Enable showing throttling stats for every response received:
 # AUTOTHROTTLE_DEBUG = False
 
