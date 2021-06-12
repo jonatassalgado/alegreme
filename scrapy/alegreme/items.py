@@ -25,6 +25,10 @@ def get_date(value):
 
     return parsed_datetimes
 
+def clean_name(value):
+    name = re.sub(r'●', '-', value)
+    return name
+
 def clean_description(value):
     description = re.sub(r'http(s|):\/\/l.facebook?.+?u=', '', value)
     description = re.sub(r';h=.+?(?=")', '', description)
@@ -73,6 +77,7 @@ def get_image_url_from_style(value):
 
 class Event(scrapy.Item):
     name = scrapy.Field(
+        input_processor=MapCompose(clean_name),
         output_processor=TakeFirst()
     )
     cover_url = scrapy.Field(
