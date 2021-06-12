@@ -14,8 +14,8 @@
 
 %>
 
-<header class="<%= class_names('h-14 md:h-16 max-w-screen-lg md:grid md:grid-cols-12 mx-auto my-auto select-none tap-highlight-none',
-															 { 'h-14 px-5':      !current_page?('/busca'),
+<header class="<%= class_names('h-14 px-5 md:h-16 max-w-screen-lg md:grid md:grid-cols-12 mx-auto my-auto select-none tap-highlight-none',
+															 { 'h-14':      !current_page?('/busca'),
 																 'h-content py-1': current_page?('/busca') }) %>"
 				id="top-bar">
 	<div class="<%= class_names 'flex md:relative md:col-span-3 h-full',
