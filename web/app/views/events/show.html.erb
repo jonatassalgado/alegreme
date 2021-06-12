@@ -57,6 +57,7 @@
 }
 
 
+
 </script>
 
 <script type="application/ld+json">
@@ -99,6 +100,7 @@
   }
 }
 
+
 </script>
 
 <%= render Modal::SignInComponent.new(text: nil) %>
@@ -122,6 +124,9 @@
 		<%= render(LargeEventComponent.new(event: @event, user: current_user)) %>
 	</div>
 	<div class="md:col-span-4 md:mb-0 mt-5 md:mt-0 space-y-8">
+<!--		<a class="inline-block mx-auto w-content" href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>-->
+<!--			<img src="https://alegreme.sfo2.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png" alt="Baixe o aplicativo">-->
+<!--		</a>-->
 		<% if will_happen? @event %>
 			<div class="bg-gray-200 cursor-pointer flex font-bold hidden items-center md:block bottom-auto relative rounded-xl w-auto p-3 space-y-2 text-gray-600 text-sm">
 				<a href="<%= @event.source_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
@@ -219,7 +224,7 @@
 					<%= @event&.categories_display_name %>
 				</h2>
 				<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current text-white w-6" fill="none" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
 				</svg>
 			</div>
 			<div class="pb-5 px-5 text-white">
