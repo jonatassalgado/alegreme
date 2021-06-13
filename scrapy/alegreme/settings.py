@@ -18,7 +18,7 @@ NEWSPIDER_MODULE = 'alegreme.spiders'
 
 
 SPLASH_USERNAME = 'alegreme'
-SPLASH_URL = 'http://e10ade1dbfcd.ngrok.io'
+SPLASH_URL = 'https://724980c0dcd02d8fda535068339fb6fbebf437d6a9.sa.ngrok.io'
 PWD = '/var/www/scrapy/data'
 SPLASH_PASS = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
 IS_DOCKER = 'true'

@@ -80,6 +80,9 @@ restore-backup:
 cloud:
 	ssh root@159.89.84.18
 
+ngrok-splash:
+	ngrok http --region=sa -subdomain=724980c0dcd02d8fda535068339fb6fbebf437d6a9 8050
+
 prune:
 	docker image prune --filter="dangling=true"
 	docker volume prune

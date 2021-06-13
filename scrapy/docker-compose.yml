@@ -8,11 +8,9 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      SPLASH_URL: http://d8f799f3b6c3.ngrok.io
       IS_DOCKER: 'true'
       ENV: 'production'
       DOMAIN: 'www.alegreme.com'
-      PWD: '/var/www/scrapy/data'
     depends_on:
       - splash
     volumes:
