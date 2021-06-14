@@ -9,7 +9,10 @@ export default class extends ApplicationController {
     }
 
     setup() {
+        this.beginEvent = new Event("sign-in#open")
+        this.endEvent   = new Event("sign-in#close");
 
+        document.dispatchEvent(this.beginEvent)
     }
 
     teardown() {
@@ -26,6 +29,7 @@ export default class extends ApplicationController {
     }
 
     close(event) {
-        this.element.innerHTML = "";
+        this.element.innerHTML = ""
+        document.dispatchEvent(this.endEvent)
     }
 }

@@ -40,10 +40,16 @@ export default class extends ApplicationController {
             innerWrapperSelector: '#calendar',
             topSpacing:           30
         });
+
+        document.addEventListener('sign-in#close', () => {
+            this._cleanLoadingAnimate()
+        },false)
     }
 
     teardown() {
-
+        document.removeEventListener('sign-in#close', () => {
+            this._cleanLoadingAnimate()
+        },false)
     }
 
     beforeCache() {
@@ -93,6 +99,13 @@ export default class extends ApplicationController {
 
     beforeClearFilter(anchorElement) {
         this._loadingAnimate()
+    }
+
+    _cleanLoadingAnimate() {
+        this.loadingIconTarget.classList.add("opacity-0")
+        this.loadingIconTarget.classList.remove("animate-spin")
+        this.tableTarget.classList.remove("animate-pulse")
+        this.listTarget.classList.remove("animate-pulse")
     }
 
     _loadingAnimate() {
