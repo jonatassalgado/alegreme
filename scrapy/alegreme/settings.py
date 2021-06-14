@@ -141,9 +141,9 @@ AUTOTHROTTLE_MAX_DELAY = 30
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-# HTTPCACHE_ENABLED = True
-# HTTPCACHE_EXPIRATION_SECS = 604800
+HTTPCACHE_ENABLED = True
+HTTPCACHE_EXPIRATION_SECS = 86400
 # HTTPCACHE_DIR = 'httpcache'
 # Don't cache pages that throw an error
-# HTTPCACHE_IGNORE_HTTP_CODES = [503, 504, 505, 500, 400, 401, 402, 403, 404]
+HTTPCACHE_IGNORE_HTTP_CODES = [503, 504, 505, 500, 400, 401, 402, 403, 404]
 # HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
