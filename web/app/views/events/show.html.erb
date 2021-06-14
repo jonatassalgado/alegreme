@@ -56,8 +56,6 @@
  ]
 }
 
-
-
 </script>
 
 <script type="application/ld+json">
@@ -100,7 +98,6 @@
   }
 }
 
-
 </script>
 
 <%= render Modal::SignInComponent.new(text: nil) %>
@@ -124,15 +121,15 @@
 		<%= render(LargeEventComponent.new(event: @event, user: current_user)) %>
 	</div>
 	<div class="md:col-span-4 md:mb-0 mt-5 md:mt-0 space-y-8">
-<!--		<a class="inline-block mx-auto w-content" href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>-->
-<!--			<img src="https://alegreme.sfo2.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png" alt="Baixe o aplicativo">-->
-<!--		</a>-->
+		<!--		<a class="inline-block mx-auto w-content" href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>-->
+		<!--			<img src="https://alegreme.sfo2.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png" alt="Baixe o aplicativo">-->
+		<!--		</a>-->
 		<% if will_happen? @event %>
 			<div class="bg-gray-200 cursor-pointer flex font-bold hidden items-center md:block bottom-auto relative rounded-xl w-auto p-3 space-y-2 text-gray-600 text-sm">
 				<a href="<%= @event.source_url %>" target="_blank" rel="nofollow" class="select-none transition-colors bg-white flex flex-1 group hover:bg-brand-500 hover:text-white items-center justify-center py-3 rounded shadow-sm space-x-2 cursor-pointer">
-					<div>Abrir no facebook</div>
+					<div>Abrir página oficial</div>
 					<svg class="group-hover:text-white transition-colors h-4 text-gray-400 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M16 16H2V2H9V0H2C0.89 0 0 0.9 0 2V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V9H16V16ZM11 0V2H14.59L4.76 11.83L6.17 13.24L16 3.41V7H18V0H11Z"/>
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
 					</svg>
 				</a>
 				<% if @event&.ticket_url %>
