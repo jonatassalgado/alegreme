@@ -1,4 +1,10 @@
-<%= content_tag :div, id: dom_id(@event, :'main-sidebar'), data: { controller: 'main-sidebar--horizontal-event', 'main-sidebar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'transition-opacity group' do %>
+<%= content_tag :div,
+								id:    dom_id(@event, :'main-sidebar'),
+								data:  {
+									controller:                                             'main-sidebar--horizontal-event',
+									'main-sidebar--horizontal-event-open-in-sidebar-value': @open_in_sidebar,
+									'main-sidebar--horizontal-event-open-value':            false },
+								class: 'transition-opacity group' do %>
 	<div class="select-none tap-highlight-none bg-white flex">
 		<div>
 			<div data-controller="ripple"

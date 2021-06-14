@@ -1,6 +1,8 @@
 <%= content_tag :div,
 								id:   'main-sidebar--large-event',
-								data: { controller: 'main-sidebar--large-event', 'opened-event': @event&.id } do %>
+								data: {
+									controller: 'main-sidebar--large-event'
+								} do %>
 	<% if @event %>
 		<div class="flex fixed top-0 left-0 items-center w-screen h-screen transition-all duration-300 transform"
 				 style="background: #abacbfeb">
@@ -53,7 +55,7 @@
 							<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
 							<div class="font-semibold">Compartilhar</div>
 							<svg class="h-5 stroke-current text-gray-700 group-hover:text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
 							</svg>
 						</div>
 					</div>
@@ -162,13 +164,14 @@
 							<h2 class="px-5 font-bold text-gray-800 uppercase font-display">Similares</h2>
 							<div class="grid grid-cols-2">
 								<% @similar_events.each do |similar_event| %>
-									<div class="flex justify-between py-2 px-5 mb-3">
+									<div data-controller="main-sidebar--horizontal-event"
+											 data-main-sidebar--horizontal-event-open-in-sidebar-value="false"
+											 class="flex justify-between py-2 px-5 mb-3">
 										<div class="pr-6">
 											<%= content_tag :a,
 																			href:  event_path(similar_event),
 																			data:  {
 																				action:     'click->main-sidebar--horizontal-event#openEvent',
-																				url:        event_path(similar_event),
 																				'event-id': similar_event.id
 																			},
 																			class: 'font-semibold inline text-sm leading-snug mb-1 md:hover:text-brand-500 text-gray-700' do %>

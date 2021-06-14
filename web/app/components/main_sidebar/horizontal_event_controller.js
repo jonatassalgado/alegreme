@@ -3,6 +3,10 @@ import {MobileDetector}      from "../../javascript/modules/mobile-detector-modu
 
 export default class extends ApplicationController {
     static targets = [];
+    static values  = {
+        open:          Boolean,
+        openInSidebar: Boolean
+    }
 
     connect() {
         super.connect();
@@ -10,7 +14,13 @@ export default class extends ApplicationController {
     }
 
     setup() {
-
+        this.initialUrl = window.location.href
+        document.addEventListener('horizontal-event#close-event:after', () => {
+            if (!MobileDetector.mobile() && this.openInSidebarValue && this.openValue) {
+                this.openValue = false
+                this._cleanUrl()
+            }
+        }, false)
     }
 
     teardown() {
@@ -27,10 +37,9 @@ export default class extends ApplicationController {
     }
 
     openEvent(event) {
-        if (!MobileDetector.mobile() && this.openInSidebar) {
+        if (!MobileDetector.mobile() && this.openInSidebarValue) {
             event.preventDefault()
             event.stopPropagation()
-            const target    = this._linkEl(event);
             this.beginEvent = new Event("horizontal-event#open-event:before")
             this.endEvent   = new Event("horizontal-event#open-event:success");
 
@@ -40,6 +49,8 @@ export default class extends ApplicationController {
                            event.target,
                            {resolveLate: true}
             ).then(payload => {
+                this.openValue = true
+                this._updateUrl(this._linkEl(event))
                 document.dispatchEvent(this.endEvent)
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
@@ -50,6 +61,11 @@ export default class extends ApplicationController {
             }).catch(payload => {
 
             })
+        } else if (!MobileDetector.mobile() && !this.openInSidebarValue) {
+            event.preventDefault()
+            event.stopPropagation()
+            this._cleanUrl()
+            Turbo.visit(this._linkEl(event).href)
         }
     }
 
@@ -81,15 +97,23 @@ export default class extends ApplicationController {
     }
 
     _linkEl(e) {
-        return e.target.closest("[data-action~='click->main-sidebar--horizontal-event#openEvent']");
+        return e.target.closest("a");
     }
 
     _updateUrl(target) {
-        window.history.replaceState({}, "", `${target.href.replace(target.origin, "")}`);
+        window.history.pushState({
+                                     turbo: true,
+                                     url:   target.href.replace(target.origin, "")
+                                 }, '', target.href.replace(target.origin, ""))
+        // window.history.replaceState({}, "", target.href.replace(target.origin, ""));
     }
 
-    get openInSidebar() {
-        return JSON.parse(this.data.get('openInSidebar'))
+    _cleanUrl() {
+        window.history.replaceState({
+                                        turbo: true,
+                                        url:   this.initialUrl
+                                    }, '', this.initialUrl)
     }
+
 
 }
