@@ -16,7 +16,7 @@
 	
 	</script>
 
-	<div class="grid grid-cols-12 gap-10 mx-auto max-w-screen-lg">
+	<div class="grid grid-cols-12 gap-0 mx-auto max-w-screen-lg md:gap-10">
 		<div class="col-span-12 md:col-span-4">
 			<div class="overflow-hidden sticky top-24 mx-auto space-y-3 is-animated md:border md:border-gray-100 md:rounded-xl md:shadow-lg md:max-w-screen-sm sm:container">
 				<div class="p-6 space-y-5 bg-white rounded-md">
@@ -48,9 +48,9 @@
 			<% if @past_events.present? %>
 				<div class="overflow-hidden mx-auto space-y-3 is-animated md:rounded-2xl md:max-w-screen-sm sm:container">
 					<h2 class="px-5 pb-2 text-xl font-bold text-gray-900 font-display">Eventos passados</h2>
-					<div class="grid grid-cols-12 opacity-75">
+					<div class="grid grid-cols-12 px-5 opacity-75">
 						<% @past_events.each do |event| %>
-							<div class="flex col-span-12 justify-between py-3 px-5 md:col-span-6 md:border-0">
+							<div class="flex col-span-12 justify-between py-3 md:col-span-6 md:border-0">
 								<div class="pr-6">
 									<%= content_tag :a,
 																	href:  event_path(event),

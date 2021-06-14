@@ -69,7 +69,7 @@ module ApplicationHelper
 		if session[:mobile_param]
 			session[:mobile_param] == "1"
 		else
-			browser.device.mobile?
+			request.user_agent =~ /Mobile|webOS/
 		end
 	end
 
