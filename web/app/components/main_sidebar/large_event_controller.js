@@ -21,14 +21,18 @@ export default class extends ApplicationController {
         this.element.addEventListener("cable-ready:after-morph", event => {
             this._initSimpleScrollbar()
         })
+
+        document.addEventListener('turbo:before-cache', this.beforeCache, false);
     }
 
     teardown() {
-
+        document.removeEventListener('turbo:before-cache', this.beforeCache, false);
     }
 
     beforeCache() {
-
+        if (this.element) {
+            this.element.classList.add("hidden")
+        }
     }
 
     disconnect() {

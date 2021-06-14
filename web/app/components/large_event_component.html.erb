@@ -32,41 +32,46 @@
 					Atualizado há <%= time_ago_in_words @event&.updated_at %>
 				<% end %>
 			</span>
-			<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-4xl text-2xl text-gray-800 w-full">
+			<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-3xl text-2xl text-gray-800 w-full">
 				<%= @event.name %>
 			</h1>
 			<div class="flex items-center space-x-2 mt-1">
-				<%= content_tag :div,
-												data:  {
-													reflex:     'click->Event#like',
-													'event-id': @event.id,
-													component:  'large-event'
-												},
-												class: 'cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
-					<svg class="<%= helpers.class_names 'h-8 hover:scale-150 w-8',
-																							{ 'text-gray-300':  !@user&.like?(@event),
-																								'text-green-500': @user&.like?(@event) } %>" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M49.9974 26.4C49.9974 39.3235 39.4767 49.8 26.4987 49.8C13.5207 49.8 3 39.3235 3 26.4C3 13.4765 13.5207 3 26.4987 3C39.4767 3 49.9974 13.4765 49.9974 26.4Z" stroke-width="5" class="stroke-current"></path>
-						<path d="M21.6848 20.6999C21.6848 22.8538 19.93 24.5999 17.7652 24.5999C15.6005 24.5999 13.8456 22.8538 13.8456 20.6999C13.8456 18.546 15.6005 16.7999 17.7652 16.7999C19.93 16.7999 21.6848 18.546 21.6848 20.6999Z" class="fill-current"></path>
-						<path d="M39.1519 20.6999C39.1519 22.8538 37.397 24.5999 35.2323 24.5999C33.0675 24.5999 31.3126 22.8538 31.3126 20.6999C31.3126 18.546 33.0675 16.7999 35.2323 16.7999C37.397 16.7999 39.1519 18.546 39.1519 20.6999Z" class="fill-current"></path>
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M14.4481 32.6537C14.4476 32.6526 14.4471 32.6516 16.738 31.525C19.0289 30.3984 19.0284 30.3974 19.0279 30.3964L19.0269 30.3946L19.0252 30.3912L19.0226 30.3861L19.0204 30.3819C19.0203 30.3817 19.023 30.3868 19.0284 30.3966C19.0392 30.4164 19.061 30.4554 19.0939 30.5108C19.1598 30.622 19.2693 30.7975 19.4235 31.0159C19.7342 31.4559 20.2125 32.0505 20.865 32.6428C22.1567 33.8155 24.0793 34.9436 26.8 34.9436C29.5207 34.9436 31.4433 33.8155 32.735 32.6428C33.3875 32.0505 33.8658 31.4559 34.1765 31.0159C34.3307 30.7975 34.4402 30.622 34.5062 30.5108C34.5391 30.4554 34.5608 30.4164 34.5717 30.3966C34.5771 30.3868 34.5797 30.3817 34.5796 30.3819L34.5774 30.3861L34.5748 30.3912L34.5731 30.3946L34.5721 30.3964C34.5716 30.3974 34.5711 30.3984 36.862 31.525C39.153 32.6516 39.1524 32.6526 39.1519 32.6537L39.1507 32.656L39.1482 32.6609L39.1422 32.6725C39.1379 32.6809 39.1327 32.6908 39.1267 32.7022C39.1148 32.7248 39.0996 32.7531 39.0812 32.7867C39.0444 32.8539 38.9944 32.9425 38.931 33.0494C38.8044 33.263 38.623 33.5514 38.3841 33.8897C37.9087 34.5629 37.1922 35.4529 36.2096 36.3449C34.2311 38.1412 31.1227 39.9819 26.8 39.9819C22.4773 39.9819 19.3689 38.1412 17.3904 36.3449C16.4078 35.4529 15.6913 34.5629 15.2159 33.8897C14.977 33.5514 14.7957 33.263 14.669 33.0494C14.6056 32.9425 14.5557 32.8539 14.5188 32.7867C14.5004 32.7531 14.4852 32.7248 14.4733 32.7022C14.4673 32.6908 14.4622 32.6809 14.4578 32.6725L14.4518 32.6609L14.4493 32.656L14.4481 32.6537Z" class="fill-current"></path>
-					</svg>
+				<% unless @user&.dislike?(@event) %>
+					<%= content_tag :div,
+													id:    dom_id(@event, :like),
+													data:  {
+														reflex:     'click->Event#like',
+														'event-id': @event.id,
+														component:  'large-event'
+													},
+													class: helpers.class_names('mr-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform',
+																										 { 'bg-brand-100 px-2 py-1 -mt-1': @user&.like?(@event) }) do %>
+						<svg class="<%= helpers.class_names 'group h-6 w-6 stroke-current',
+																								{ 'text-gray-500':  !@user&.like?(@event),
+																									'text-brand-600': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+						</svg>
+						<span class="<%= helpers.class_names('ml-1', { 'text-gray-500':  !@user&.like?(@event),
+																													 'text-brand-600': @user&.like?(@event) }) %>">
+							<%= @user&.like?(@event) ? 'Curti' : 'Curtir' %>
+						</span>
+					<% end %>
 				<% end %>
-				<%= content_tag :div,
-												data:  {
-													reflex:     'click->Event#dislike',
-													'event-id': @event.id,
-													component:  'large-event'
-												},
-												class: 'cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:scale-105 hover items-center justify-center mdc-ripple-upgraded--unbounded rounded-full select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
-					<svg class="<%= helpers.class_names 'h-8 hover:scale-150 w-8',
-																							{ 'text-gray-300': !@user&.dislike?(@event),
-																								'text-red-500':  @user&.dislike?(@event) } %>" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M49.9974 26.4C49.9974 39.3235 39.4767 49.8 26.4987 49.8C13.5207 49.8 3 39.3235 3 26.4C3 13.4765 13.5207 3 26.4987 3C39.4767 3 49.9974 13.4765 49.9974 26.4Z" stroke-width="5" class="stroke-current"></path>
-						<path d="M21.6848 20.6999C21.6848 22.8538 19.93 24.5999 17.7652 24.5999C15.6005 24.5999 13.8456 22.8538 13.8456 20.6999C13.8456 18.546 15.6005 16.7999 17.7652 16.7999C19.93 16.7999 21.6848 18.546 21.6848 20.6999Z" class="fill-current"></path>
-						<path d="M39.1519 20.6999C39.1519 22.8538 37.397 24.5999 35.2323 24.5999C33.0675 24.5999 31.3126 22.8538 31.3126 20.6999C31.3126 18.546 33.0675 16.7999 35.2323 16.7999C37.397 16.7999 39.1519 18.546 39.1519 20.6999Z" class="fill-current"></path>
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M39.1518 37.7101C39.1524 37.7111 39.1529 37.7122 36.862 38.8388C34.5711 39.9654 34.5716 39.9664 34.5721 39.9674L34.573 39.9692L34.5747 39.9725L34.5774 39.9777L34.5796 39.9819C34.5797 39.982 34.577 39.977 34.5716 39.9671C34.5608 39.9474 34.539 39.9084 34.5061 39.853C34.4402 39.7417 34.3307 39.5663 34.1765 39.3479C33.8658 38.9078 33.3874 38.3133 32.735 37.721C31.4433 36.5483 29.5207 35.4201 26.8 35.4201C24.0793 35.4201 22.1566 36.5483 20.865 37.721C20.2125 38.3133 19.7341 38.9078 19.4234 39.3479C19.2692 39.5663 19.1598 39.7417 19.0938 39.853C19.0609 39.9084 19.0391 39.9474 19.0283 39.9671C19.0229 39.977 19.0203 39.982 19.0204 39.9819L19.0225 39.9777L19.0252 39.9725L19.0269 39.9692L19.0278 39.9674C19.0283 39.9664 19.0288 39.9654 16.7379 38.8388C14.447 37.7122 14.4475 37.7111 14.4481 37.7101L14.4492 37.7078L14.4518 37.7029L14.4577 37.6913C14.4621 37.6828 14.4673 37.6729 14.4733 37.6616C14.4852 37.639 14.5004 37.6107 14.5188 37.577C14.5556 37.5098 14.6056 37.4212 14.669 37.3143C14.7956 37.1008 14.977 36.8124 15.2158 36.4741C15.6912 35.8008 16.4078 34.9109 17.3904 34.0188C19.3689 32.2226 22.4772 30.3819 26.8 30.3819C31.1227 30.3819 34.2311 32.2226 36.2096 34.0188C37.1922 34.9109 37.9087 35.8008 38.3841 36.4741C38.6229 36.8124 38.8043 37.1008 38.931 37.3143C38.9944 37.4212 39.0443 37.5098 39.0812 37.577C39.0996 37.6107 39.1147 37.639 39.1267 37.6616C39.1326 37.6729 39.1378 37.6828 39.1422 37.6913L39.1481 37.7029L39.1507 37.7078L39.1518 37.7101Z" class="fill-current"></path>
-					</svg>
+				<% unless @user&.like?(@event) %>
+					<%= content_tag :div,
+													id:    dom_id(@event, :dislike),
+													data:  {
+														reflex:     'click->Event#dislike',
+														'event-id': @event.id,
+														component:  'large-event'
+													},
+													class: 'cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform' do %>
+						<svg class="<%= helpers.class_names 'h-6 w-6 stroke-current',
+																								{ 'text-gray-500 hover:text-gray-600': !@user&.dislike?(@event),
+																									'text-red-500':                      @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/>
+						</svg>
+					<% end %>
 				<% end %>
 			</div>
 		</div>
@@ -83,8 +88,9 @@
 					<div class="text-sm"><%= helpers.format_hour @event.start_time %></div>
 				</div>
 
-				<div class="my-auto text-sm leading-snug text-gray-600">
-					O evento acontecerá <%= I18n.l(@event.start_time) %>. Daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
+				<div class="my-auto leading-snug text-gray-600">
+					O evento acontecerá <%= I18n.l(@event.start_time) %>.
+					Daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
 				</div>
 			</div>
 		<% end %>
@@ -117,7 +123,7 @@
 		</div>
 		<div class="px-5 py-5">
 			<h2 class="font-bold font-display text-xl text-gray-800 uppercase">Sobre o evento</h2>
-			<div class="mt-2 text-sm  leading-relaxed break-words text-with-html">
+			<div class="mt-2 leading-relaxed break-words text-with-html">
 				<%= @event.description.html_safe %>
 			</div>
 		</div>
