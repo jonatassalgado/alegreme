@@ -33,9 +33,11 @@ gem 'rpush'
 # Devise
 gem 'devise'
 gem 'omniauth', '1.9.1'
+gem 'devise_token_auth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'recaptcha'
+gem 'google-id-token'
 
 gem 'jsonl'
 

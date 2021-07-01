@@ -4,6 +4,7 @@ require 'sidekiq-scheduler/web'
 Rails.application.routes.draw do
 
 	resources :likes
+
 	devise_for :users, controllers: {
 		omniauth_callbacks: 'users/omniauth_callbacks',
 		passwords:          'users/passwords',
@@ -14,14 +15,28 @@ Rails.application.routes.draw do
 	root to: 'feeds#index'
 	# get '/sobre', to: 'welcome#index'
 
-	namespace :api do
+	namespace :api, constraints: { format: 'json' } do
+		# auth
+		get 'omniauth/google_oauth2', to: 'omniauth#google_oauth2'
+		mount_devise_token_auth_for 'User', at: 'auth'
+
+		#users
+		get 'me', to: 'users#me'
+
+		# feed
+		get 'porto-alegre', to: 'feed#index'
+
+		# events
 		get 'events', to: 'events#index'
+		get 'events/liked', to: 'events#liked'
 		get 'porto-alegre/eventos/:id/similar', to: 'events#similar', as: :events_similar
 		get 'porto-alegre/eventos/today', to: 'events#today', as: :today_and_tomorrow_events
 		get 'porto-alegre/eventos/week', to: 'events#week', as: :week_events
 		get 'porto-alegre/eventos/category/:category', to: 'events#category', as: :category_events
-		post 'collections', to: 'collections#index', as: :collections
-		post 'taste/:resource/:id/:taste', to: 'taste#update', as: :taste
+		post 'events/:id/like', to: 'events#like'
+
+		# post 'collections', to: 'collections#index', as: :collections
+		# post 'taste/:resource/:id/:taste', to: 'taste#update', as: :taste
 	end
 
 	get '/porto-alegre', to: 'feeds#index', as: :feed
@@ -95,24 +110,24 @@ Rails.application.routes.draw do
 	authenticate :user, lambda { |u| u.admin? } do
 		mount Sidekiq::Web => '/sidekiq'
 		namespace :admin do
-		resources :users
-		resources :events
-		resources :likes
-		resources :themes
-		resources :tags
-		resources :artifacts
-		resources :posters
-		resources :places
-		resources :organizers
-		resources :kinds
-		resources :movies
-		resources :streamings
-		resources :cine_films
-		resources :friendships
-		resources :categories
-		resources :follows
+			resources :users
+			resources :events
+			resources :likes
+			resources :themes
+			resources :tags
+			resources :artifacts
+			resources :posters
+			resources :places
+			resources :organizers
+			resources :kinds
+			resources :movies
+			resources :streamings
+			resources :cine_films
+			resources :friendships
+			resources :categories
+			resources :follows
 
-		root to: "events#index"
+			root to: "events#index"
 		end
 	end
 

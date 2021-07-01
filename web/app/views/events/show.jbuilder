@@ -15,8 +15,10 @@ json.updated_at @event.updated_at
 json.similar @similar_events do |similar|
     json.id similar.id
     json.cover_url shrine_image_url(similar, :feed)
-    json.name similar.name
-    json.categories similar.categories.pluck(:details)
-    json.start_time similar.start_time
+		json.name similar.name
+		json.start_time similar.start_time
+		json.geographic similar.geographic
+		json.categories similar.categories.pluck(:details)
+		json.updated_at similar.updated_at
 end
 

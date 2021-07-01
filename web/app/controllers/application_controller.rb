@@ -37,7 +37,6 @@ class ApplicationController < ActionController::Base
 		# stored_location_for(resource) || root_path
 	end
 
-
 	private
 
 	def stimulus_session
@@ -47,12 +46,12 @@ class ApplicationController < ActionController::Base
 	def default_reflex_values(args = {})
 		unless @stimulus_reflex
 			session[:stimulus] = {
-					tab:             :suggestions,
-					days:            [],
-					categories:      [],
-					limit:           8,
-					show_similar_to: [],
-					in_this_section: []
+				tab:             :suggestions,
+				days:            [],
+				categories:      [],
+				limit:           8,
+				show_similar_to: [],
+				in_this_section: []
 			}.merge!(args)
 		end
 	end

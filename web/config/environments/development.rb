@@ -49,6 +49,7 @@ Rails.application.configure do
 	config.action_mailer.perform_caching = false
 
  	config.hosts << "app"
+	config.hosts << "flutter-724980c0dcd02d8fda535068339fb6fbebf437d6a9.sa.ngrok.io"
 
 	config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 	config.action_mailer.delivery_method     = :smtp

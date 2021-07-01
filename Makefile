@@ -83,6 +83,9 @@ cloud:
 ngrok-splash:
 	ngrok http --region=sa -subdomain=724980c0dcd02d8fda535068339fb6fbebf437d6a9 8050
 
+ngrok-flutter:
+	ngrok http --region=sa -subdomain=flutter-724980c0dcd02d8fda535068339fb6fbebf437d6a9 3000
+
 prune:
 	docker image prune --filter="dangling=true"
 	docker volume prune

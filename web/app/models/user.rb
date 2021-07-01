@@ -1,7 +1,9 @@
 class User < ApplicationRecord
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
+	include DeviseTokenAuth::Concerns::User
 	devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
 	validates :name, :length => { :in => 3..60 }
@@ -115,7 +117,7 @@ class User < ApplicationRecord
 
 	def like_update(event, values)
 		event_to_update = self.likes.find_by(event_id: event.id)
-		event_to_update.update(values) if event_to_update
+		event_to_update.update!(values) if event_to_update
 	end
 
 	def like?(event)

@@ -36,45 +36,71 @@ module UserDecorators
 				user = User.where(email: email).first
 
 				if user
-					user
+					update_user(user, {
+						fbId:     fbId,
+						googleId: googleId,
+						name:     name,
+						picture:  picture
+					})
 				else
-					create_user({
-							            email:    email,
-							            fbId:     fbId,
-							            googleId: googleId,
-							            name:     name,
-							            picture:  picture
-					            })
+					create_user(
+						email:    email,
+						fbId:     fbId,
+						googleId: googleId,
+						name:     name,
+						picture:  picture
+					)
 				end
 			end
 
 			private
 
-			def create_user(args = {
-					    email:    nil,
-					    fbId:     nil,
-					    googleId: nil,
-					    name:     nil,
-					    picture:  nil
-			    })
-
-				user = User.new(email:    args[:email],
-				                password: Devise.friendly_token[0, 20])
+			def update_user(user, args = {
+						fbId:     nil,
+						googleId: nil,
+						name:     nil,
+						picture:  nil
+					})
 
 				user.features.deep_merge!({
-						                          'demographic' => {
-								                          'name'    => args[:name],
-								                          'picture' => args[:picture],
-								                          'beta'    => {
-										                          'requested' => true,
-										                          'activated' => true
-								                          },
-								                          'social'  => {
-										                          'fbId'     => args[:fbId],
-										                          'googleId' => args[:googleId]
-								                          },
-						                          }
-				                          })
+																		'demographic' => {
+																			'name'    => args[:name],
+																			'picture' => args[:picture],
+																			'social'  => {
+																				'fbId'     => args[:fbId],
+																				'googleId' => args[:googleId]
+																			},
+																		}
+																	})
+				user.save
+				user
+			end
+
+			def create_user(args = {
+						email:    nil,
+						fbId:     nil,
+						googleId: nil,
+						name:     nil,
+						picture:  nil
+					})
+
+				user = User.new(email:    args[:email],
+												password: Devise.friendly_token[0, 20])
+
+				user.features.deep_merge!({
+																		'demographic' => {
+																			'name'    => args[:name],
+																			'picture' => args[:picture],
+																			'beta'    => {
+																				'requested' => true,
+																				'activated' => true
+																			},
+																			'social'  => {
+																				'fbId'     => args[:fbId],
+																				'googleId' => args[:googleId]
+																			},
+																		}
+																	})
 
 				if args[:picture]
 					begin
