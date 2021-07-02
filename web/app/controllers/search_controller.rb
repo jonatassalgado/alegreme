@@ -10,7 +10,7 @@ class SearchController < ApplicationController
 				fields:        ["name^2", "organizers", "description", "category"],
 				suggest:       true,
 				limit:         150,
-				includes:      [:place],
+				includes:      [:place, :organizers, :categories],
 				operator:      "or",
 				body_options:  { min_score: 10 },
 				scope_results: ->(r) { r.active }
@@ -25,9 +25,8 @@ class SearchController < ApplicationController
 		render layout: false if @stimulus_reflex
 	end
 
-	private
 
-	protected
+	private
 
 	def search_params
 		params.permit(:categories, :personas, categories: [], personas: [])
