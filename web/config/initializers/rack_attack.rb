@@ -75,7 +75,6 @@ class Rack::Attack
 	#    ['']] # body
 	# end
 
-
 	# Block suspicious requests for '/etc/password' or wordpress specific paths.
 	# After 3 blocked requests in 10 minutes, block all requests from that IP for 5 minutes.
 	blocklist('fail2ban/malicious-requests') do |req|
@@ -93,7 +92,8 @@ class Rack::Attack
 				req.path.include?('mysql') ||
 				req.path.include?('database') ||
 				req.path.include?('2php') ||
-				req.path.include?('myadmin')
+				req.path.include?('myadmin') ||
+				req.path.include?('/ecp/Current')
 		end
 	end
 end
