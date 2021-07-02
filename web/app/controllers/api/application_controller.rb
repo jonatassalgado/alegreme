@@ -3,7 +3,7 @@ module Api
 		skip_before_action :verify_authenticity_token
 		include DeviseTokenAuth::Concerns::SetUserByToken
 
-		before_action :log_headers
+		# before_action :log_headers
 
 		private
 
