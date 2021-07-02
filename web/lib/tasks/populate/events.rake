@@ -163,7 +163,7 @@ module PopulateEventsRake
 					annotations: [],
 					predictions: label_data['classification']['content_rules']
 				},
-				personas:   {
+				personas:      {
 					annotations: [],
 					predictions: [
 												 {
@@ -184,7 +184,7 @@ module PopulateEventsRake
 												 }
 											 ]
 				},
-				categories: {
+				categories:    {
 					annotations: [],
 					predictions: [
 												 {
@@ -205,7 +205,7 @@ module PopulateEventsRake
 												 }
 											 ]
 				},
-				price:      {
+				price:         {
 					annotations: [],
 					predictions: [
 												 {
@@ -322,7 +322,7 @@ module PopulateEventsRake
 			event.geographic.deep_merge!(
 				address:      item['address'],
 				latlon:       @geocode.try(:coordinates),
-				neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality)[0]["long_name"] },
+				neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality).dig(0, "long_name") },
 				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
 				cep:          Geographic.get_cep_from_address(item['address'])
 			)
@@ -345,7 +345,7 @@ module PopulateEventsRake
 			event.geographic.deep_merge!(
 				address:      item['address'],
 				latlon:       @geocode.try(:coordinates),
-				neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality)[0]["long_name"] },
+				neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality).dig(0, "long_name") },
 				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
 				cep:          Geographic.get_cep_from_address(item['address'])
 			)
