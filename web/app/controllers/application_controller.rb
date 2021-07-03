@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 	#		::ActiveRecord::Associations::Preloader.new.preload(user, :likes)
 	#	end
 	#end
-	
+
 	def authorize_user
 		unless current_user
 			redirect_to root_path, notice: 'Acesso somente para usuários logados' and return

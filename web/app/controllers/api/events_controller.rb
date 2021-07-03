@@ -1,7 +1,7 @@
 module Api
 	class EventsController < ApplicationController
-		before_action :authenticate_user!, only: [:like, :liked]
-		before_action :set_event, only: :like
+		before_action :authenticate_user!, only: [:like, :liked, :suggestions]
+		before_action :set_event, only: [:like, :show]
 
 		def index
 
@@ -44,11 +44,35 @@ module Api
 
 		def liked
 			begin
-				@user = current_user
+				@user         = current_user
 				@liked_events = @user.liked_events.includes(:place, :organizers, :categories).active.valid.not_ml_data.order_by_date.limit(100)
 			rescue StandardError => e
 				render json: {
 					error:  "Failed request liked events. Error: #{e}",
+					status: 400
+				}, status:   :unprocessable_entity
+			end
+		end
+
+		def suggestions
+			begin
+				@user               = current_user
+				@events_suggestions = Event.includes(:place, :categories, :organizers).not_ml_data.active.valid.in_user_suggestions(@user).not_liked_or_disliked(@user).limit(5)
+			rescue StandardError => e
+				render json: {
+					error:  "Failed request suggestions events. Error: #{e}",
+					status: 400
+				}, status:   :unprocessable_entity
+			end
+		end
+
+		def show
+			begin
+				@user           = current_user
+				@similar_events = Event.includes(:place, :categories).not_ml_data.active.not_disliked(@user).where(id: @event.similar_data).order_by_ids(@event.similar_data).not_liked(@user).limit(8)
+			rescue StandardError => e
+				render json: {
+					error:  "Failed request event. Error: #{e}",
 					status: 400
 				}, status:   :unprocessable_entity
 			end

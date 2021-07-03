@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 		# events
 		get 'events', to: 'events#index'
 		get 'events/liked', to: 'events#liked'
+		get 'events/suggestions', to: 'events#suggestions'
+		get 'events/:id', to: 'events#show'
 		get 'porto-alegre/eventos/:id/similar', to: 'events#similar', as: :events_similar
 		get 'porto-alegre/eventos/today', to: 'events#today', as: :today_and_tomorrow_events
 		get 'porto-alegre/eventos/week', to: 'events#week', as: :week_events
