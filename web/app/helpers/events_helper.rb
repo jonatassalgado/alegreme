@@ -111,11 +111,11 @@ module EventsHelper
 	end
 
 	def already_happened? event
-		event.end_time < DateTime.now - 6.hours
+		event.end_time < DateTime.now - 12.hours
 	end
 
 	def will_happen? event
-		event.end_time >= DateTime.now - 6.hours
+		event.end_time >= DateTime.now - 2.hours
 	end
 
 end
