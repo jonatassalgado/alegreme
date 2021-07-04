@@ -50,12 +50,12 @@
 				<span class="text-sm text-gray-500">
 							<%= helpers.format_hour @event.start_time %>h
 							</span>
-				<% unless helpers.mobile_device? %>
+				<div class="hidden md:inline">
 					<span class="text-sm text-gray-400">·</span>
 					<span class="text-sm text-gray-500">
   					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
   				</span>
-				<% end %>
+				</div>
 			</div>
 			<%= content_tag :a,
 											href:  event_path(@event),
@@ -74,16 +74,12 @@
 				<span class="px-1 text-sm text-gray-400">
 						·
 				</span>
-				<%= session[:mobile_param] %>
-				<% unless helpers.mobile_device? %>
-					<span class="text-sm text-gray-500">
-					<%= helpers.limit_description_size @event.description %>
-					</span>
-				<% else %>
-				<span class="text-sm text-gray-500">
+				<span class="text-sm text-gray-500 md:hidden">
 					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
-				<% end %>
+				<span class="text-sm text-gray-500 hidden md:inline">
+					<%= helpers.limit_description_size @event.description %>
+				</span>
 			</div>
 			<!--			<div class="text-sm text-gray-500">-->
 			<!--				<%#= helpers.format_hour @event.start_time %>h ·-->
