@@ -8,7 +8,7 @@ class UpdateUserEventsSuggestionsJob < ApplicationJob
 	def perform(user_id)
 		user          = User.find user_id
 		active_events = Event.active
-		liked_events  = user.liked_events
+		liked_events  = user.liked_events.order("likes.created_at DESC").limit(10)
 
 		similar_events = EventServices::SimilarFetcher.new(liked_events, active_events).call(mixed_suggestions: true)
 

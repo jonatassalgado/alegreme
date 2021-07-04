@@ -13,9 +13,11 @@ namespace :similar do
 			similar_response_is_success = similar_response.is_a?(Net::HTTPSuccess)
 
 			if similar_response_is_success
-				puts "#{similar_data} - Similares ao evento #{event.id}".blue
-				event.update_attribute :similar_data, similar_data
-				puts "#{event.name[0..60]} - Similares salvos".green
+				event.similar_data = similar_data
+				if event.save!
+					puts "#{event.id} #{event.name[0..60]} - Similares salvos".green
+					puts "#{similar_data} - Similares ao evento #{event.id} \n".blue
+				end
 			else
 				puts "Eventos similares não encontrados".yellow
 			end

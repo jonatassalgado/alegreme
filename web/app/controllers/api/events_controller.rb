@@ -69,7 +69,7 @@ module Api
 		def show
 			begin
 				@user           = current_user
-				@similar_events = Event.includes(:place, :categories).not_ml_data.active.not_disliked(@user).where(id: @event.similar_data).order_by_ids(@event.similar_data).not_liked(@user).limit(8)
+				@similar_events = Event.includes(:place, :categories).not_ml_data.active.where(id: @event.similar_data).order_by_ids(@event.similar_data).limit(8)
 			rescue StandardError => e
 				render json: {
 					error:  "Failed request event. Error: #{e}",

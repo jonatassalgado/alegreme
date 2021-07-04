@@ -6,8 +6,8 @@ module EventDecorators
 		end
 
 		module InstanceMethods
-			def ml_data_cleanned
-				ml_data['cleanned']
+			def ml_data_stemmed
+				ml_data['stemmed']
 			end
 		end
 

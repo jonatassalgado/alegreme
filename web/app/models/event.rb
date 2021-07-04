@@ -89,7 +89,7 @@ class Event < ApplicationRecord
 	def search_data
 		{
 			name:        name,
-			description: ml_data_cleanned,
+			description: ml_data_stemmed,
 			category:    categories_primary_name,
 			place:       place_details_name,
 			organizers:  organizers.map(&:details_name)
@@ -126,10 +126,6 @@ class Event < ApplicationRecord
 		else
 			'#f1f1f1'
 		end
-	end
-
-	def similar_data=(value)
-		similar_data.is_a?(String) ? similar_data.to_json : []
 	end
 
 	private

@@ -37,7 +37,7 @@ class EventSimilar(object):
             similar_descriptions = df.loc[similar_index, 'text']
             similar_ids = int(df.loc[similar_index, 'ids'])
             
-            if similar_scores >= 0.10:
+            if similar_scores >= 0.02:
                 similar_items.append([similar_descriptions, similar_scores, similar_ids])
 
         similar_items_ids = [item[2] for item in similar_items]
