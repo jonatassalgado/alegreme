@@ -60,6 +60,7 @@ module.exports = {
     purge:    {
         enabled:              true,
         content:              [
+            "./app/views/**/*.html",
             "./app/views/**/*.html.erb",
             "./app/views/**/**/*.html.erb",
             "./app/components/*.html.erb",
