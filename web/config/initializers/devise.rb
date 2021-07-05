@@ -258,7 +258,7 @@ Devise.setup do |config|
 	# up on your models and hooks.
 	if Rails.env != 'test'
 		config.omniauth :google_oauth2, Rails.application.credentials[Rails.env.to_sym][:google][:app_id], Rails.application.credentials[Rails.env.to_sym][:google][:app_secret], {}
-		config.omniauth :facebook, Rails.application.credentials[Rails.env.to_sym][:facebook][:app_id], Rails.application.credentials[Rails.env.to_sym][:facebook][:app_secret], scope: 'public_profile,email', fields: 'email,first_name,last_name,gender,birthday,location,picture', token_params: { parse: :json }
+		config.omniauth :facebook, Rails.application.credentials[Rails.env.to_sym][:facebook][:app_id], Rails.application.credentials[Rails.env.to_sym][:facebook][:app_secret], scope: 'public_profile,email', info_fields: 'email,first_name,last_name,picture', token_params: { parse: :json }
 	end
 
 	# ==> Warden configuration
