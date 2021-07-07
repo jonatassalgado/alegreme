@@ -7,11 +7,12 @@ Aplicativo com objetivo de fazer as pessoas aproveitarem mais a cidade de Porto 
     Ruby 2.6.3
     Rails 5.2.1
 
-
+---
 ### Anaconda
     conda create --name alegreme python=3
     source activate alegreme
 
+---
 ### Scrapy
 
 
@@ -24,15 +25,13 @@ Aplicativo com objetivo de fazer as pessoas aproveitarem mais a cidade de Porto 
     scrapy-do-cl --url http://159.89.84.18:7654 push-project
     scrapy-do-cl schedule-job --url http://159.89.84.18:7654 --project alegreme --spider event --when 'every day at 01:00'
 
+---
 
 ### Flask
 
     python ml/api/main.py
 
-### Lightsail
-
-https://lightsail.aws.amazon.com/ls/webapp/home
-
+---
 ### Firewall
 
 |ENC|PROT|PORT|SERV|
@@ -43,7 +42,7 @@ HTTPS | TCP | 443 | -
 CUSTOM | TCP | 3000 | RAILS
 CUSTOM | TCP | 3030 | API (FLASK)
 
-
+---
 ### SECURE SSH
 
     apt install fail2ban
@@ -60,7 +59,7 @@ CUSTOM | TCP | 3030 | API (FLASK)
     # banned ips
     sudo zgrep 'Ban' /var/log/fail2ban.log*
 
-
+---
 ### Docker
 
     docker-compose up -d --build <service_name>
@@ -68,7 +67,7 @@ CUSTOM | TCP | 3030 | API (FLASK)
 Docker stop all
     
     docker kill $(docker ps -q)
-
+---
 ### Certbot
     sudo ./init-letsencrypt.sh
 
@@ -76,7 +75,21 @@ Docker stop all
 
 * Verificar se arquivos do github estão atualizados
 
-
+----
 ### Whenever
     whenever --update-crontab --load-file /root/alegreme/schedule.rb
     crontab -l
+
+---
+### Label Studio    
+Get json with events:
+
+    https://www.alegreme.com/train.json?&gte=9948
+
+Run label studio front:
+
+    docker-compose up label-studio
+
+Run ml label studio:
+
+    docker-compose up ls-ml-content-rules
