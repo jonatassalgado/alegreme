@@ -46,13 +46,13 @@ class Hero::SwipableComponent < ViewComponent::Base
 
 	def events_to_train_or_suggestions
 		unless @user
-			@events_to_train = Event.includes(:place, :categories).active.valid.limit(1)
+			@events_to_train = Event.includes(:place, :categories).active.valid.where(categories: { theme_id: 1 }).limit(1)
 			return
 		end
 
 		@user.liked_or_disliked_events.reset
 		if @user.swipable['events']['finished_at'].blank? && events_trained < @min_events_to_train
-			@events_to_train = Event.includes(:place, :categories).not_ml_data.active.valid.order_by_score.not_liked_or_disliked(@user).order_by_date.limit(1)
+			@events_to_train = Event.includes(:place, :categories).not_ml_data.active.valid.order_by_score.not_liked_or_disliked(@user).where(categories: { theme_id: 1 }).order_by_date.limit(1)
 		else
 			@events_suggestions = Event.includes(:place, :categories).not_ml_data.active.valid.in_user_suggestions(@user).not_liked_or_disliked(@user).limit(1)
 		end
