@@ -6,7 +6,7 @@ services:
       dockerfile: ./Dockerfile
     ports: 
       - 8080:8080
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - "./data:/root/.local/share/label-studio/"
       - "./logs:/tmp"
@@ -17,7 +17,7 @@ services:
       dockerfile: ./Dockerfile
     ports: 
       - "9090:9090"
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - "./logs:/tmp"
       - "./models/ml_event_category:/ls/ml_backend"
@@ -28,7 +28,7 @@ services:
       dockerfile: ./Dockerfile
     ports: 
       - "9091:9090"
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - "./logs:/tmp"
       - "./models/ml_event_price:/ls/ml_backend"
@@ -39,7 +39,7 @@ services:
       dockerfile: ./Dockerfile
     ports: 
       - "9092:9090"
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - "./logs:/tmp"
       - "./models/ml_event_content_rules:/ls/ml_backend"

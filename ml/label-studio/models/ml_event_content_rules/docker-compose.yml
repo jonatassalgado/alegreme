@@ -2,15 +2,14 @@ version: "3.5"
 
 services:
   redis:
-    image: redis:alpine
-    container_name: redis
+    image: redis
     hostname: redis
     volumes:
       - "./data/redis:/data"
     expose:
       - 6379
+    restart: unless-stopped
   server:
-    container_name: server
     build: .
     environment:
       - MODEL_DIR=/data/models
@@ -26,3 +25,4 @@ services:
     volumes:
       - "./data/server:/data"
       - "./logs:/tmp"
+    restart: unless-stopped

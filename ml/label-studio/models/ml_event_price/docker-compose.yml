@@ -9,6 +9,7 @@ services:
       - "./data/redis:/data"
     expose:
       - 6379
+    restart: unless-stopped	
   server:
     container_name: server
     build: .
@@ -26,3 +27,4 @@ services:
     volumes:
       - "./data/server:/data"
       - "./logs:/tmp"
+    restart: unless-stopped	
