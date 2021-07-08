@@ -42,8 +42,8 @@ class Event < ApplicationRecord
 	belongs_to :place, touch: true
 	has_and_belongs_to_many :organizers, -> { distinct }, touch: true
 	has_and_belongs_to_many :categories, -> { distinct }, touch: true
-	has_many :likes, dependent: :destroy
-	has_many :users, through: :likes
+	has_many :likes, as: :likeable, dependent: :destroy
+	has_many :users, through: :likes, source: :likeable, source_type: 'Event'
 	# has_and_belongs_to_many :kinds
 
 	accepts_nested_attributes_for :place, :organizers

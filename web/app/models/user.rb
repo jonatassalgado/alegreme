@@ -26,9 +26,9 @@ class User < ApplicationRecord
 	include UserDecorators::Notifications
 
 	has_many :likes, dependent: :destroy
-	has_many :liked_or_disliked_events, through: :likes, source: :event
-	has_many :liked_events, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :event
-	has_many :disliked_events, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :event
+	has_many :liked_or_disliked_events, through: :likes, source: :likeable, source_type: 'Event'
+	has_many :liked_events, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :likeable, source_type: 'Event'
+	has_many :disliked_events, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :likeable, source_type: 'Event'
 
 	has_many :friendships, dependent: :destroy
 	has_many :friendships_requested, -> { where(status: :requested) }, foreign_key: :user_id, class_name: 'Friendship'
@@ -76,11 +76,11 @@ class User < ApplicationRecord
 		places_from_liked_events + organizers_from_liked_events
 	end
 
-	def like!(event, action: :create)
+	def like!(resource, action: :create)
 		if action == :create
-			self.likes.create!(event_id: event.id, sentiment: :positive)
+			self.likes.create!(likeable_id: resource.id, sentiment: :positive, likeable_type: resource.class.name.demodulize)
 		elsif action == :update
-			self.like_update(event, sentiment: :positive)
+			self.like_update(resource, sentiment: :positive)
 		end
 
 		self.liked_events.reset
@@ -90,42 +90,42 @@ class User < ApplicationRecord
 		UpdateUserEventsSuggestionsJob.perform_later(self.id)
 	end
 
-	def unlike!(event)
-		like = self.likes.find_by(event_id: event.id)
+	def unlike!(resource)
+		like = self.likes.find_by(likeable_id: resource.id)
 		like.destroy if like
 		self.liked_events.reset
 		self.disliked_events.reset
 		self.liked_or_disliked_events.reset
 	end
 
-	def dislike!(event, action: :create)
+	def dislike!(resource, action: :create)
 		if action == :create
-			self.likes.create!(event_id: event.id, sentiment: :negative)
+			self.likes.create!(likeable_id: resource.id, sentiment: :negative, likeable_type: resource.class.name.demodulize)
 			self.disliked_events.reset
 			self.liked_or_disliked_events.reset
 		elsif action == :update
-			self.like_update(event, sentiment: :negative)
+			self.like_update(resource, sentiment: :negative)
 			self.liked_events.reset
 			self.disliked_events.reset
 			self.liked_or_disliked_events.reset
 		end
 	end
 
-	def like_or_dislike?(event)
-		self.liked_or_disliked_event_ids.include?(event.id)
+	def like_or_dislike?(resource)
+		self.liked_or_disliked_event_ids.include?(resource.id)
 	end
 
-	def like_update(event, values)
-		event_to_update = self.likes.find_by(event_id: event.id)
+	def like_update(resource, values)
+		event_to_update = self.likes.find_by(likeable_id: resource.id, likeable_type: resource.class.name.demodulize)
 		event_to_update.update!(values) if event_to_update
 	end
 
-	def like?(event)
-		self.liked_event_ids.include?(event.id)
+	def like?(resource)
+		self.liked_event_ids.include?(resource.id)
 	end
 
-	def dislike?(event)
-		self.disliked_event_ids.include?(event.id)
+	def dislike?(resource)
+		self.disliked_event_ids.include?(resource.id)
 	end
 
 	def follow!(following)
