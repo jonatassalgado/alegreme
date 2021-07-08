@@ -15,7 +15,6 @@ from urllib.parse import unquote, urljoin, urlparse
 from bs4 import BeautifulSoup
 
 
-
 def get_date(value):
     datetimes = re.findall('\d{4}-\d{2}-\d{2}\w+:\d+:\w+-\w+:\w+', value)
     parsed_datetimes = []
@@ -73,6 +72,15 @@ def get_image_url_from_style(value):
     url = re.search('http(s|):\/\/.+?(?=\))', value)
     return url.group(0)
 
+
+def clean_movie_description(value):
+    name = re.sub(r'… MAIS', '', value)
+    return name
+
+def get_movie_genre(value):
+    genre = re.search(r'(.+?(?:‧.))(.*)(?= ‧)', value)
+    genre = genre.group(2)
+    return genre.split('/')
 
 
 class Event(scrapy.Item):
@@ -141,6 +149,7 @@ class Movie(scrapy.Item):
         output_processor=TakeFirst()
     )
     description = scrapy.Field(
+        input_processor=MapCompose(clean_movie_description),
         output_processor=TakeFirst()
     )
     cover = scrapy.Field(
@@ -150,7 +159,8 @@ class Movie(scrapy.Item):
         output_processor=TakeFirst()
     )
     genre = scrapy.Field(
-        output_processor=TakeFirst()
+        input_processor=MapCompose(get_movie_genre),
+        output_processor=Identity()
     )
     dates = scrapy.Field(
         input_processor=Identity()

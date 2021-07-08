@@ -21,7 +21,7 @@ module PopulateMoviesRake
 		if movie
 			movie.details.deep_merge!(
 					title:       item['name'],
-					genres:      [item['genre']],
+					genres:      item['genre'],
 					description: item['description'],
 					cover:       item['cover'],
 					trailler:    item['trailler']
@@ -32,7 +32,7 @@ module PopulateMoviesRake
 			movie = Movie.new
 			movie.details.deep_merge!(
 					title:       item['name'],
-					genres:      [item['genre']],
+					genres:      item['genre'],
 					description: item['description'],
 					cover:       item['cover'],
 					trailler:    item['trailler']
@@ -80,7 +80,11 @@ module PopulateMoviesRake
 		return unless movie_cover_file
 
 		begin
-			movie.image = movie_cover_file
+			if movie.image&.present?
+				movie.update(image: movie_cover_file)
+			else
+				movie.image = movie_cover_file
+			end
 			puts "#{item['name']} - Upload de imagem".blue
 		rescue
 			puts "#{item['name']} - Erro no upload da image #{e} - #{movie.image.inspect}".red

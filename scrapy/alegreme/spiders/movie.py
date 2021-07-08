@@ -4,12 +4,13 @@ import base64
 import json
 import os
 import random
+from unidecode import unidecode
 
 from urllib.parse import urljoin
 from alegreme.items import Movie, MovieOcurrenceLoader, MoviePlaceLoader, MovieLanguageLoader
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
-from scrapy.loader.processors import TakeFirst
+from itemloaders.processors import TakeFirst
 
 search_movies_script = """
     function main(splash, args)
@@ -104,22 +105,11 @@ parse_movie_cover_script = """
 
         assert(splash:wait(5))
 
-        local cover = splash:select('[data-ri=\"0\"] a')
+        local cover = splash:select('.tile--img__media')
         cover:mouse_click()
 
-        result, error = splash:wait_for_resume([[
-            function main(splash) {
-                var checkExist = setInterval(function() {
-                    if (document.querySelectorAll(".rg_i")[1].src !== "") {
-                        clearInterval(checkExist);
-                        splash.resume();
-                    }
-                }, 2000);
-            }
-        ]], 15)
+        assert(splash:wait(3))
 
-        assert(splash:wait(1))
-        splash:runjs("window.close()")
         return splash:html()
     end
 """
@@ -134,11 +124,12 @@ class MovieSpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'alegreme.pipelines.MoviePipeline': 400
         },
-        'CLOSESPIDER_ITEMCOUNT': 50
+        'CLOSESPIDER_ITEMCOUNT': 50,
+        'CLOSESPIDER_PAGECOUNT': 100
     }
 
     allowed_domains = ['google.com']
-    start_urls = ['https://www.google.com/search?q=movies+porto+alegre+cinema']
+    start_urls = ['https://www.google.com/search?q=cinema+porto+alegre+programação']
 
     def start_requests(self):
         for url in self.start_urls:
@@ -155,9 +146,11 @@ class MovieSpider(scrapy.Spider):
 
     def parse_movies(self, response):
 
-        movie_links = response.xpath('//*[contains(@class, "MiPcId")]/@href')
+        movie_links = response.xpath('//*[contains(@class, "klitem-tr")]/@href')
 
-        for movie_link in movie_links.extract():
+        self.log("PAGE WITH " + str(len(movie_links)) + " MOVIES")
+
+        for movie_link in movie_links[0:5].extract():
             if movie_link is not None:
                 yield SplashRequest(
                     url=urljoin(response.url, movie_link),
@@ -170,22 +163,25 @@ class MovieSpider(scrapy.Spider):
 
 
     def parse_movie(self, response):
-        movie_container_el = response.xpath('(//*[contains(@class, "lr_container")])[1]')
-        movie_right_card_el = response.xpath('(//*[contains(@class, "EyBRub")])[1]')
+        movie_container_el = response.xpath('(//*[contains(@class, "fjnsEe")])[1]')
+        movie_right_card_el = response.xpath('(//*[contains(@class, "kp-wholepage")])[1]')
 
         loader = ItemLoader(item=Movie(), selector=movie_container_el)
         loader.add_xpath('name', './/*[contains(@class, "lr_c_h")]/span/text()')
 
-        movie_cover_link =  "https://www.google.com/images?q=" + loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower() + "+filme+cartaz&tbm=isch"
 
         if movie_right_card_el is not None:
-            loader.add_value('description', movie_right_card_el.xpath('substring-after(substring-before(string(.//*[contains(@class, "kno-rdesc")]), "…"), "Descrição")').get())
+            loader.add_value('description', movie_right_card_el.xpath('substring-after(string(.//*[contains(@class, "kno-rdesc")]), "Descrição")').get())
             loader.add_value('trailler', movie_right_card_el.xpath('.//*[contains(@class, "B1uW2d")]/@href').get())
             loader.add_value('genre', movie_right_card_el.xpath('.//*[contains(@class, "wwUB2c")]/span/text()').get())
 
         movie_dates_els = movie_container_el.xpath('.//*[contains(@class, "tb_c")]')
         for movie_date_el in movie_dates_els:
             loader.add_value('dates', self.parse_ocurrence_meta(response, movie_date_el))
+
+        movie_cover_link = "https://duckduckgo.com/?q=" + unidecode(loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower()) + "+filme+poster&t=h_&iar=images&iax=images&ia=images&iaf=layout%3ATall"
+        
+        # //*[contains(@data-ri, "0")]/./@data-id
 
         if movie_cover_link:
             yield SplashRequest(
@@ -239,5 +235,5 @@ class MovieSpider(scrapy.Spider):
     def parse_cover_meta(self, response):
         loader = response.meta['loader']
         loader.selector = response
-        loader.add_xpath('cover', '(.//*[contains(@id, "islsp")]//*[contains(@alt, "Resultado de imagem para")]/@src)[1]')
+        loader.add_xpath('cover', './/*[contains(@class, "js-image-detail-link")]/@href')
         return loader.load_item()

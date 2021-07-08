@@ -50,7 +50,11 @@ module PopulateEventsRake
 		else
 			puts "Local: #{item['place_name']} - Download da imagem (#{item['place_cover_url']}) - Sucesso".white
 			begin
-				place.image = place_cover_file
+				if place.image&.present?
+					place.update(image: place_cover_file)
+				else
+					place.image = place_cover_file
+				end
 				puts "Local: #{item['place_name']} - Upload de imagem".white
 				place.save
 			rescue
@@ -105,7 +109,11 @@ module PopulateEventsRake
 		else
 			puts "Organizador: #{organizer_data['name']} - Download da imagem (#{organizer_data['cover_url']}) - Sucesso".white
 			begin
-				organizer.image = organizer_cover_file
+				if organizer.image&.present?
+					organizer.update(image: organizer_cover_file)
+				else
+					organizer.image = organizer_cover_file
+				end
 				puts "Organizador: #{organizer_data['name']} - Upload de imagem".white
 				organizer.save
 			rescue
