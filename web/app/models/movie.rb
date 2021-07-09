@@ -31,7 +31,7 @@ class Movie < ApplicationRecord
 	include Scopes
 	include MovieQueries::Scopes
 
-	friendly_id :details_title, use: :slugged
+	friendly_id :title, use: :slugged
 
 	def url
 		movie_path(self)

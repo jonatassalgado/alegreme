@@ -11,7 +11,7 @@ require_relative '../../../app/uploaders/movie_image_uploader'
 module PopulateMoviesRake
 
 	def create_movie(item)
-		movie = Movie.where.contains(details: {title: item['name']}).first
+		movie = Movie.find_by(title: item['name'])
 
 		if item['dates'].blank?
 			puts "#{@movies_create_counter}: #{item['name']} - Evento sem data raspada".red
@@ -19,26 +19,21 @@ module PopulateMoviesRake
 		end
 
 		if movie
-			movie.details.deep_merge!(
-					title:       item['name'],
-					genres:      item['genre'],
-					description: item['description'],
-					cover:       item['cover'],
-					trailler:    item['trailler']
-			)
-			movie.dates = item['dates']
+			movie.title       = item['name']
+			movie.genres      = item['genre']
+			movie.description = item['description']
+			movie.cover       = item['cover']
+			movie.trailer     = item['trailer']
+			movie.dates       = item['dates']
 			puts "#{@movies_create_counter}: #{item['name']} - Filme já existe (atualizado)".white
 		else
-			movie = Movie.new
-			movie.details.deep_merge!(
-					title:       item['name'],
-					genres:      item['genre'],
-					description: item['description'],
-					cover:       item['cover'],
-					trailler:    item['trailler']
-			)
-
-			movie.dates = item['dates']
+			movie             = Movie.new
+			movie.title       = item['name']
+			movie.genres      = item['genre']
+			movie.description = item['description']
+			movie.cover       = item['cover']
+			movie.trailer     = item['trailer']
+			movie.dates       = item['dates']
 		end
 
 		movie.type = 'CineFilm'
@@ -46,16 +41,14 @@ module PopulateMoviesRake
 		movie
 	end
 
-
 	def save_movie(movie)
 
 		if movie.save!
 			@movies_create_counter += 1
-			puts "#{movie.details['name'][0..60]} criado #{@movies_create_counter}".green
+			puts "#{movie.title[0..60]} criado #{@movies_create_counter}".green
 			true
 		end
 	end
-
 
 	def set_cover(item, movie)
 		unless movie
@@ -94,7 +87,6 @@ module PopulateMoviesRake
 		true
 	end
 
-
 	def read_file
 		files              = Dir['/var/www/scrapy/data/scraped/*']
 		@current_file_name = (files.select { |file| file[/movies-\d{8}-\d{6}\.jsonl$/] }).max
@@ -104,14 +96,13 @@ module PopulateMoviesRake
 		@current_file = File.read(@current_file_name)
 	end
 
-
 	def create_artifact
 		timestr  = DateTime.now.strftime("%Y%m%d-%H%M%S")
 		artifact = Artifact.create(
-				details: {
-						name: @current_file_name,
-						type: 'scraped'
-				}
+			details: {
+				name: @current_file_name,
+				type: 'scraped'
+			}
 		)
 		artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "movies-#{timestr}.jsonl", content_type: "application/json")
 	end
@@ -126,9 +117,9 @@ namespace :populate do
 
 		puts "Task populate:movies iniciada em #{DateTime.now}".white
 
-		@last_task_performed = Artifact.where.contains(details: {
-				name: "populate:movies",
-				type: "task"
+		@last_task_performed = Artifact.where(details: {
+			name: "populate:movies",
+			type: "task"
 		}).first
 
 		# noinspection RubyArgCount
@@ -169,13 +160,13 @@ namespace :populate do
 			@last_task_performed.touch
 		else
 			Artifact.create(
-					details: {
-							name: "populate:movies",
-							type: "task"
-					},
-					data:    {
-							last_file_used: @current_file_name
-					})
+				details: {
+					name: "populate:movies",
+					type: "task"
+				},
+				data:    {
+					last_file_used: @current_file_name
+				})
 		end
 
 		puts "Task populate:movies finalizada em #{DateTime.now}}".white

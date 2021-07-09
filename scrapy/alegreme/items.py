@@ -155,7 +155,7 @@ class Movie(scrapy.Item):
     cover = scrapy.Field(
         output_processor=TakeFirst()
     )
-    trailler = scrapy.Field(
+    trailer = scrapy.Field(
         output_processor=TakeFirst()
     )
     genre = scrapy.Field(

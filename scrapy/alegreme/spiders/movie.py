@@ -150,7 +150,7 @@ class MovieSpider(scrapy.Spider):
 
         self.log("PAGE WITH " + str(len(movie_links)) + " MOVIES")
 
-        for movie_link in movie_links[0:5].extract():
+        for movie_link in movie_links.extract():
             if movie_link is not None:
                 yield SplashRequest(
                     url=urljoin(response.url, movie_link),
@@ -172,7 +172,7 @@ class MovieSpider(scrapy.Spider):
 
         if movie_right_card_el is not None:
             loader.add_value('description', movie_right_card_el.xpath('substring-after(string(.//*[contains(@class, "kno-rdesc")]), "Descrição")').get())
-            loader.add_value('trailler', movie_right_card_el.xpath('.//*[contains(@class, "B1uW2d")]/@href').get())
+            loader.add_value('trailer', movie_right_card_el.xpath('.//*[contains(@class, "B1uW2d")]/@href').get())
             loader.add_value('genre', movie_right_card_el.xpath('.//*[contains(@class, "wwUB2c")]/span/text()').get())
 
         movie_dates_els = movie_container_el.xpath('.//*[contains(@class, "tb_c")]')
