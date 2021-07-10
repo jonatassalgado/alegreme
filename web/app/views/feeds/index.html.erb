@@ -20,12 +20,6 @@
 		</svg>
 	</div>
 </div>
-<%# unless current_user %>
-<!--	<a href="https://play.google.com/store/apps/details?id=com.alegreme.app&referrer=utm_source%3Dwebsite" class="absolute bg-gray-100 left-12 top-20" style="width: 250px; height: 250px;">-->
-		<%#= image_tag "https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png", loading: 'lazy' %>
-<!--	</a>-->
-<%# end %>
-
 
 <div id="main-content" class="gap-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto">
 	<section id="main-sidebar" class="col-span-8 md:col-span-5">
@@ -57,43 +51,89 @@
 				</div>
 				<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% end %>
-			<% if @upcoming_events.present? %>
-				<div class="<%= class_names('bg-white pb-2') %>">
-					<% if params[:category] %>
-						<div class="flex items-center justify-between md:pr-10 pr-5">
-							<h2 class="font-bold font-display md:text-3xl pl-5 pt-3 text-gray-900 text-xl">
-								<span class="text-brand-600 underline"><%= @category&.details_display_name&.titleize %></span> em Porto
-								Alegre
-							</h2>
+
+
+			<% if @movies.present? %>
+				<div id="movies" class="mb-12" data-controller="movie-collection slider" data-model="movie">
+					<h2 class="font-bold font-display text-brand-600 text-xl px-5">
+						Filmes nos cinemas de Porto Alegre
+					</h2>
+					<div class="relative mt-2 px-5">
+						<div class="hidden md:flex select-none items-center absolute left-0 top-0 bg-x-white-to-transparent h-full w-2 z-20">
+							<div data-action="click->slider#left" class="mt-14 bg-white rounded-full border shadow-md transition-colors duration-200 text-gray-600 hover:text-brand-500 cursor-pointer my-auto -ml-1">
+								<svg class="fill-current h-10 p-2 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black">
+									<path d="M0 0h24v24H0V0z" fill="none"/>
+									<path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/>
+								</svg>
+							</div>
 						</div>
-					<% else %>
-						<h2 class="bg-white font-bold font-display px-5 text-brand-600 text-xl">
-							Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
-						</h2>
-					<% end %>
-					<!--					<div class="flex gap-1 px-5 text-gray-400 text-xs items-center" title="Devido ao Covid19 o número de eventos está abaixo do normal">-->
-					<!--						Atualizado há <%#= time_ago_in_words @upcoming_events&.last&.updated_at %>-->
-					<!--						<svg class="stroke-current w-4 h-4" fill="none"-->
-					<!--								 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">-->
-					<!--							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>-->
-					<!--						</svg>-->
-					<!--					</div>-->
-					<%= render MainSidebar::FilterComponent.new(session:           session.id,
-																											params:            params,
-																											show_filter_group: nil,
-																											filters:           {
-																												categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
-																												date:       nil
-																											}) %>
+						<div class="hidden md:flex select-none items-center absolute right-0 top-0 bg-x-transparent-to-white h-full w-3 z-20">
+							<div data-action="click->slider#right" class="mt-14 bg-white rounded-full border shadow-md transition-colors duration-200 text-gray-600 hover:text-brand-500 cursor-pointer my-auto -ml-7">
+								<svg class="fill-current h-10 p-2 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black">
+									<path d="M0 0h24v24H0V0z" fill="none"/>
+									<path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/>
+								</svg>
+							</div>
+						</div>
+						<div data-slider-target="scroller"
+								 class="scrollx py-3">
+							<div class="gap-2 grid grid-flow-col w-content grid-after-margin"
+									 data-movie-collection-turbo-persist-scroll="0"
+									 data-movie-collection-target="scrollContainer">
+								<% @movies.each do |movie| %>
+									<div class="flex flex-col hover:scale-105 transform transition-transform w-24">
+										<%= link_to cine_film_path(movie), class: 'flex flex-col', data: { 'turbo-preserve-scroll': true } do %>
+											<%= image_tag shrine_image_url(movie, :small), {
+												loading: :lazy,
+												title:   movie.title,
+												alt:     "Filme #{movie.title}",
+												class:   'shadow-sm bg-brand-100  object-center object-cover rounded',
+												style:   'min-height: 130px',
+												onerror: "this.style.opacity='0'"
+											} rescue nil %>
+											<%= tag.div limit_name_size(movie.title, 24), class: 'leading-tight mt-2 inline-block text-xs text-center font-semibold text-gray-800' %>
+											<div class="text-xxs text-center mt-1"><%= movie.genres&.join(", ") %></div>
+										<% end %>
+									</div>
+								<% end %>
+							</div>
+						</div>
+					</div>
 				</div>
-			<% else %>
-				<h2 class="bg-white font-bold font-display px-5 text-gray-900 text-xl">
-					Não foram encontrados eventos em Porto
-					Alegre <%= I18n.l params[:day].to_date if params[:day] %> <%= "na categoria #{@category&.details_display_name&.titleize}" if params[:category] %>
-				</h2>
 			<% end %>
-			<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
+
 		</div>
+
+		<% if @upcoming_events.present? %>
+			<div class="<%= class_names('bg-white pb-2') %>">
+				<% if params[:category] %>
+					<div class="flex items-center justify-between md:pr-10 pr-5">
+						<h2 class="font-bold font-display md:text-3xl pl-5 pt-3 text-gray-900 text-xl">
+							<span class="text-brand-600 underline"><%= @category&.details_display_name&.titleize %></span> em Porto
+							Alegre
+						</h2>
+					</div>
+				<% else %>
+					<h2 class="bg-white font-bold font-display px-5 text-brand-600 text-xl">
+						Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
+					</h2>
+				<% end %>
+				<%= render MainSidebar::FilterComponent.new(session:           session.id,
+																										params:            params,
+																										show_filter_group: nil,
+																										filters:           {
+																											categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
+																											date:       nil
+																										}) %>
+			</div>
+		<% else %>
+			<h2 class="bg-white font-bold font-display px-5 text-gray-900 text-xl">
+				Não foram encontrados eventos em Porto
+				Alegre <%= I18n.l params[:day].to_date if params[:day] %> <%= "na categoria #{@category&.details_display_name&.titleize}" if params[:category] %>
+			</h2>
+		<% end %>
+		<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
+
 	</section>
 	<% unless mobile_device? %>
 		<section class="hidden md:inline-block md:col-span-3 md:bg-white"
@@ -101,33 +141,7 @@
 			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
 		</section>
 	<% end %>
-	<%# unless mobile_device? %>
-	<!--		<section id="right-sidebar" class="hidden md:inline-block md:bg-white md:h-full md:col-span-4 will-change">-->
-	<!--			<div data-controller="loader"-->
-	<!--					 data-loader-on-loading="horizontal-event#open-event:before"-->
-	<!--					 data-loader-on-loaded="horizontal-event#open-event:success"-->
-	<!--					 class="px-5 sticky top-20 z-10">-->
-	<!--				<div id="open-event"-->
-	<!--						 data-loader-target="loaded">-->
-	<%#= render MainSidebar::LargeEventComponent.new(user: current_user, event: nil) %>
-	<!--				</div>-->
-	<!--				<div-->
-	<!--					class="flex items-center justify-center hidden h-16 mt-5 bg-white border border-gray-100 shadow-lg h-screen-8/10 rounded-xl text-md"-->
-	<!--					data-loader-target="loading">-->
-	<!--					Carregando-->
-	<!--					<svg data-loader-target="onIcon" class="w-5 h-5 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
-	<!--						<path fill="none" d="M0 0h24v24H0V0z"/>-->
-	<!--						<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>-->
-	<!--					</svg>-->
-	<!--				</div>-->
-	<!--			</div>-->
-	<%# unless current_user %>
-	<!--				<a href="https://play.google.com/store/apps/details?id=com.alegreme.app&referrer=utm_source%3Dwebsite" class="absolute bg-gray-100 left-12 top-20" style="width: 250px; height: 250px;">-->
-	<%#= image_tag "https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner-android-download-250x250.png", loading: 'lazy' %>
-	<!--				</a>-->
-	<%# end %>
-	<!--		</section>-->
-	<%# end %>
+
 
 	<div data-controller="install" data-install-native="true" data-install-target="button" class="items-center flex select-none tap-highlight-none bottom-20 fixed transform transition-transform translate-y-32 w-full z-30">
 		<span data-action="click->install#install" class="bg-brand-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">
@@ -136,7 +150,6 @@
 	</div>
 
 </div>
-
 
 
 

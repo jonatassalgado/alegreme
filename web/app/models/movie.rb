@@ -31,6 +31,11 @@ class Movie < ApplicationRecord
 	include Scopes
 	include MovieQueries::Scopes
 
+	validates :title, uniqueness: true
+
+	has_many :screenings
+	has_many :cinemas, through: :screenings
+
 	friendly_id :title, use: :slugged
 
 	def url

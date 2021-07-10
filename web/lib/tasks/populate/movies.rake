@@ -13,7 +13,7 @@ module PopulateMoviesRake
 	def create_movie(item)
 		movie = Movie.find_by(title: item['name'])
 
-		if item['dates'].blank?
+		if item['screenings'].blank?
 			puts "#{@movies_create_counter}: #{item['name']} - Evento sem data raspada".red
 			return false
 		end
@@ -24,7 +24,6 @@ module PopulateMoviesRake
 			movie.description = item['description']
 			movie.cover       = item['cover']
 			movie.trailer     = item['trailer']
-			movie.dates       = item['dates']
 			puts "#{@movies_create_counter}: #{item['name']} - Filme já existe (atualizado)".white
 		else
 			movie             = Movie.new
@@ -33,7 +32,7 @@ module PopulateMoviesRake
 			movie.description = item['description']
 			movie.cover       = item['cover']
 			movie.trailer     = item['trailer']
-			movie.dates       = item['dates']
+			set_cover(item, movie)
 		end
 
 		movie.type = 'CineFilm'
@@ -41,11 +40,69 @@ module PopulateMoviesRake
 		movie
 	end
 
+	def create_screenings(item)
+		movie = CineFilm.find_by(title: item['name'])
+
+		if movie
+			puts "Filme: #{item['name']} - Filme já existe (atualizado) \n".white
+		else
+			movie = CineFilm.create!(title:       item['name'],
+															 genres:      item['genre'],
+															 description: item['description'],
+															 cover:       item['cover'],
+															 trailer:     item['trailer'])
+
+			set_cover(item, movie)
+			save_movie(movie)
+		end
+
+		item['screenings'].each do |screening_data|
+
+			screening_data.dig('places').each do |cinema_data|
+				cinema = Cinema.find_by_name(cinema_data.dig('name'))
+
+				if cinema
+					puts "Cinema: #{cinema.id} #{cinema.name} - Cinema já existe".white
+				else
+					cinema = Cinema.create!(name:         cinema_data.dig('name'),
+																	display_name: cinema_data.dig('name'),
+																	address:      cinema_data.dig('address'))
+
+					puts "Cinema: #{cinema.id} #{cinema.name} - Cinema criado".green
+				end
+
+				cinema_data.dig('languages').each do |language_data|
+					screening = Screening.find_by(day:         screening_data.dig('date'),
+																				times:       language_data.dig('times'),
+																				language:    language_data.dig('name'),
+																				screen_type: language_data.dig('screen_type'),
+																				cinema_id:   cinema.id,
+																				movie_id:    movie.id)
+					if screening
+						puts "Exibição: #{screening.id} - Exibição já existe".white
+					else
+						screening = Screening.create!(day:         screening_data.dig('date'),
+																					times:       language_data.dig('times'),
+																					language:    language_data.dig('name'),
+																					screen_type: language_data.dig('screen_type'),
+																					cinema_id:   cinema.id,
+																					movie_id:    movie.id)
+
+						puts "Exibição: #{screening.id} #{screening.language} - Exibição criada".green
+					end
+
+				end
+
+			end
+		end
+
+	end
+
 	def save_movie(movie)
 
 		if movie.save!
 			@movies_create_counter += 1
-			puts "#{movie.title[0..60]} criado #{@movies_create_counter}".green
+			puts "Filme: (#{@movies_create_counter}) #{movie.title[0..60]} criado \n".green
 			true
 		end
 	end
@@ -146,14 +203,8 @@ namespace :populate do
 		end
 
 		data.each do |item|
+			create_screenings(item)
 
-			movie = create_movie(item)
-
-			unless set_cover(item, movie)
-				next
-			end
-
-			save_movie(movie)
 		end
 
 		if @last_task_performed

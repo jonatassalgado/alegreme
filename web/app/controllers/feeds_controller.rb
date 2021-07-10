@@ -16,6 +16,7 @@ class FeedsController < ApplicationController
 
 		@upcoming_events = requested_events
 		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
+		@movies          = CineFilm.joins(:screenings).includes(:cinemas).where("screenings.day >= ?", Date.current).all.uniq
 
 		if @stimulus_reflex
 			render layout: false

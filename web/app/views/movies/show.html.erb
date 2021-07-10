@@ -1,135 +1,95 @@
 <% content_for :meta_title, "Ver online #{@movie.title}" %>
 <%= notice %>
 
-<section id="<%= dom_id @movie %>" class="mx-auto mt-12 is-animated md:mt-40 md:overflow-hidden md:rounded-t-lg md:w-6/12">
+<section id="<%= dom_id @movie %>" class="mx-auto mt-12 max-w-screen-lg">
 	<div class="flex flex-col min-h-screen">
-		<div class="flex items-end px-5 pt-10 space-x-5 bg-gray-50">
-			<div class="relative w-32 -mb-5">
-				<div class="absolute z-10 pl-1 pr-2 m-1 text-sm text-gray-800 bg-white rounded-full shadow-sm me-movie__vote">
-					<%= @movie.rating %> ⭐
-				</div>
-				<%= image_tag(@movie.image[:medium].url(public: true), class: 'h-auto bg-white object-cover rounded-lg shadow-lg w-32', style: 'min-height: 195px') if @movie.image %>
-			</div>
-			<div class="pb-3 flex-1">
-				<h1 class="inline-block my-3 text-xl font-semibold leading-tight text-gray-900">
+		<%= image_tag shrine_image_url(@movie, :medium), {
+			loading: :lazy,
+			title:   @movie.title,
+			alt:     "Filme #{@movie.title}",
+			class:   'h-auto bg-white object-cover rounded-lg shadow-lg w-32 mx-auto',
+			style:   'min-height: 195px',
+			onerror: "this.style.opacity='0'"
+		} rescue nil %>
+		<div class="flex flex-col items-center mt-6 space-y-3">
+			<div class="text-center">
+				<h1 class="inline-block text-2xl font-semibold leading-tight text-gray-900">
 					<%= @movie.title %>
 				</h1>
-				<div class="mb-3 -mt-3 text-sm antialiased  text-gray-600">
-					<%= @movie.genres.join(", ") %>
+				<div class="italic">
+					<%= @movie&.genres&.join(", ") %>
 				</div>
-				<% if @movie.trailer %>
-					<a href="<%= @movie.trailer %>">
-						<div class="bg-white flex font-medium px-2 py-1 rounded-full text-gray-600 w-content">
-							<svg class="w-5 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/>
-							</svg>
-							Ver trailler
-						</div>
-					</a>
-				<% end %>
+			</div>
+			<% if @movie.trailer %>
+				<a href="<%= @movie.trailer %>" class="inline-block text-center">
+					<div class="border border-brand-300 flex px-2 py-1 rounded-full text-gray-600 w-content items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 fill-current text-brand-600" viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+						</svg>
+						<span class="font-semibold text-brand-600">
+							Ver trailer
+						</span>
+					</div>
+				</a>
+			<% end %>
+			<div class="w-11/12 md:w-7/12 text-center mx-auto">
+				<%= @movie.description %>
 			</div>
 		</div>
-		<div class="px-5 mt-10">
-			<% if current_user %>
-				<div class="border-b border-gray-100 flex justify-center mb-5 py-2 space-x-2">
-					<%= render partial: 'components/taste_button',
-										 locals:  {
-												 user:            current_user,
-												 resource:        @movie,
-												 parent_id:       dom_id(@movie),
-												 taste_type:      :save,
-												 taste_sentiment: :positive,
-												 html:            {
-														 container: {
-																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-600 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-600 text-sm transform transition-transform'
-														 }
-												 },
-												 opts:            {
-														 remove_on_action:            false,
-														 update_collection_on_action: false
-												 }
-										 } %>
-					<%= render partial: 'components/taste_button',
-										 locals:  {
-												 user:            current_user,
-												 resource:        @movie,
-												 parent_id:       dom_id(@movie),
-												 taste_type:      :dislike,
-												 taste_sentiment: :negative,
-												 html:            {
-														 container: {
-																 css: 'select-none tap-highlight-none bg-white w-content border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-600 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-600 text-sm transform transition-transform'
-														 }
-												 },
-												 opts:            {
-														 remove_on_action:            false,
-														 update_collection_on_action: false
-												 }
-										 } %>
-				</div>
-			<% end %>
-			<h2 class="font-medium text-gray-600">
-				Serviços de streaming
-			</h2>
-			<div class="flex flex-wrap my-3 space-x-2">
-				<% @movie.streamings.each do |streaming| %>
-					<a class="inline-block mb-2" href="<%= streaming.url %>">
-						<div class="flex px-3 py-1 text-gray-600 border rounded-full w-content">
-							<%= streaming.display_name %>
-						</div>
-					</a>
-				<% end %>
-			</div>
-			<h2 class="mt-6 font-medium text-gray-600">
-				Sinopse
-			</h2>
-			<div class="my-3 antialiased  leading-6 text-gray-600">
-				<%= @movie.description %>
-				<% if current_user&.admin? %>
-					<%= link_to "Editar", edit_movie_path(@movie) %>
-				<% end %>
-			</div>
-			<% if @movie.dates.any? { |date| date['date'] } %>
-				<div class="me-movie__dates">
-					<% @movie.dates.select { |date| date['date'].to_date >= Date.today }.each do |date| %>
-						<div class="me-movie__date">
-							<div class="me-movie__date-name">
-								<%= "#{day_of_week(date['date']).upcase} - #{I18n.l(date['date'].to_date, format: :long)}" %>
-							</div>
-							<% if date['places'] %>
-								<div class="me-movie__places">
-									<% date['places'].each do |place| %>
-										<div class="me-movie__place">
-											<div class="me-movie__place-name">
-												<%= link_to place['name'], place['address'] %>
-											</div>
-											<% if place['languages'] %>
-												<div class="me-movie__languages">
-													<% place['languages'].each do |language| %>
-														<div class="me-movie__language">
-															<div class="me-movie__language-name"><%= language['name'] %></div>
-															<div class="me-movie__times">
-																<% if language['times'] %>
-																	<% language['times'].each do |time| %>
-																				<span class="me-movie__time">
-																					<%= time %>
-																				</span>
-																	<% end %>
-																<% end %>
-															</div>
+
+		<div class="gap-0 grid grid-cols-12 grid-flow-col max-w-screen-lg md:gap-10 md:px-0 mt-20 px-5">
+			<div class="col-span-12 md:col-span-9 mx-auto space-y-12">
+				<% @movie.screenings.group_by { |s| s.cinema.name }.each_with_index do |cinema_name_group, index| %>
+					<div class="">
+						<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="font-bold text-xl mb-2 text-gray-800">
+							<%= cinema_name_group[0] %>
+						</h2>
+						<div class="gap-1 grid grid-cols-1 grid-flow-row md:grid-cols-3">
+							<% cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
+								<div class="p-3 bg-gray-100 rounded">
+									<h3 class="font-semibold text-gray-700">
+										<%= day_of_week(screening_day_group[0]).titleize %>
+									</h3>
+									<div class="space-y-1">
+										<% screening_day_group[1].each do |screening| %>
+											<div class="">
+												<div class="italic text-xs">
+													<%= screening.language %>
+												</div>
+												<div class="flex flex-wrap mt-1">
+													<% screening&.times&.each do |time| %>
+														<div class="rounded-full text-sm bg-white w-content px-2 py-1 mr-1 mb-1">
+															<%= time %>
 														</div>
 													<% end %>
 												</div>
-											<% end %>
-										</div>
-									<% end %>
+											</div>
+										<% end %>
+									</div>
 								</div>
 							<% end %>
 						</div>
-					<% end %>
-				</div>
-				</div>
-			<% end %>
+					</div>
+				<% end %>
 			</div>
+			<div class="col-span-3 hidden md:block">
+				<div class="sticky top-24">
+					<h4 class="font-bold text-xl mb-2 text-gray-800">Cinemas</h4>
+					<div class="space-y-3">
+						<% @movie&.cinemas&.uniq&.each_with_index do |cinema, index| %>
+							<a data-controller="scroll-to-anchor-link"
+								 data-action="click->scroll-to-anchor-link#scrollTo"
+								 data-turbo="false"
+								 data-scroll-to-anchor-link-url-value="#<%= cinema.slug %>"
+								 class="block cursor-pointer hover:underline text-sm leading-tight">
+								<%= cinema.display_name %>
+							</a>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
 
+
+	</div>
 </section>

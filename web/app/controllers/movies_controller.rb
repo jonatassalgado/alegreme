@@ -1,30 +1,30 @@
 class MoviesController < ApplicationController
-	before_action :authorize_admin, only: [:new, :edit, :create, :update, :destroy]
+	before_action :authorize_admin, except: [:show]
 
 	def index
 
-		@movies       = Movie.active.not_liked_or_disliked(current_user).with_streaming
+		@movies       = CineFilm.includes(:cinemas, :screenings).all
 		@saved_movies = current_user.try(:saved_movies)
 		@movies_group = [
-				{
-						:identifier => 'editors-choice',
-						:title      => "Escolha dos editores",
-						:items      => @movies.filter { |movie| movie.collections.include? "editors choice" }
-				}
+			{
+				:identifier => 'editors-choice',
+				:title      => "Escolha dos editores",
+				:items      => @movies.filter { |movie| movie.collections.include? "editors choice" }
+			}
 		]
 
 		Movie::GENRES.each_with_index do |genre, index|
 			@movies_group << {
-					:identifier => genre.parameterize,
-					:title      => genre,
-					:items      => @movies.filter { |movie| movie.details["genres"].include? genre }.sort.slice(0..16)
+				:identifier => genre.parameterize,
+				:title      => genre,
+				:items      => @movies.filter { |movie| movie.details["genres"].include? genre }.sort.slice(0..16)
 			}
 		end
 	end
 
 	def show
 		model  = get_model(params[:type])
-		@movie = model.friendly.find(params[:id])
+		@movie = model.includes(:cinemas, :screenings).friendly.find(params[:id])
 
 		respond_to do |format|
 			format.html { render :show }
@@ -92,9 +92,7 @@ class MoviesController < ApplicationController
 		end
 	end
 
-
 	private
-
 
 	def get_model type
 		if type
@@ -108,19 +106,19 @@ class MoviesController < ApplicationController
 		model = params[:type] ? params[:type].underscore.to_sym : :movie
 
 		params.require(model).permit(
-				:image,
-				:details_original_title,
-				:details_title,
-				:details_genres,
-				:description,
-				:details_cover,
-				:details_trailler,
-				:details_popularity,
-				:details_vote_average,
-				:details_adult,
-				:details_tmdb_id,
-				:type,
-				streamings_attributes:  [:display_name, :url],
-				collections_attributes: [])
+			:image,
+			:details_original_title,
+			:details_title,
+			:details_genres,
+			:description,
+			:details_cover,
+			:details_trailler,
+			:details_popularity,
+			:details_vote_average,
+			:details_adult,
+			:details_tmdb_id,
+			:type,
+			streamings_attributes:  [:display_name, :url],
+			collections_attributes: [])
 	end
 end
