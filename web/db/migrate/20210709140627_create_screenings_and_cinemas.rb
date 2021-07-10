@@ -14,7 +14,7 @@ class CreateScreeningsAndCinemas < ActiveRecord::Migration[6.0]
 			t.string :language
 			t.string :screen_type
 			t.belongs_to :cinema, index: true, foreign_key: true
-			t.belongs_to :movies, index: true, foreign_key: true
+			t.belongs_to :movie, index: true, foreign_key: true
 			t.timestamps
 		end
 	end

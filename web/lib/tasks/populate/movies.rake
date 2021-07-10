@@ -10,40 +10,12 @@ require_relative '../../../app/uploaders/movie_image_uploader'
 
 module PopulateMoviesRake
 
-	def create_movie(item)
-		movie = Movie.find_by(title: item['name'])
-
-		if item['screenings'].blank?
-			puts "#{@movies_create_counter}: #{item['name']} - Evento sem data raspada".red
-			return false
-		end
-
-		if movie
-			movie.title       = item['name']
-			movie.genres      = item['genre']
-			movie.description = item['description']
-			movie.cover       = item['cover']
-			movie.trailer     = item['trailer']
-			puts "#{@movies_create_counter}: #{item['name']} - Filme já existe (atualizado)".white
-		else
-			movie             = Movie.new
-			movie.title       = item['name']
-			movie.genres      = item['genre']
-			movie.description = item['description']
-			movie.cover       = item['cover']
-			movie.trailer     = item['trailer']
-			set_cover(item, movie)
-		end
-
-		movie.type = 'CineFilm'
-
-		movie
-	end
-
+	
 	def create_screenings(item)
 		movie = CineFilm.find_by(title: item['name'])
 
 		if movie
+			set_cover(item, movie) if ENV['update_images'] == 'true'
 			puts "Filme: #{item['name']} - Filme já existe (atualizado) \n".white
 		else
 			movie = CineFilm.create!(title:       item['name'],
@@ -58,7 +30,7 @@ module PopulateMoviesRake
 
 		item['screenings'].each do |screening_data|
 
-			screening_data.dig('places').each do |cinema_data|
+			screening_data.dig('places')&.each do |cinema_data|
 				cinema = Cinema.find_by_name(cinema_data.dig('name'))
 
 				if cinema
@@ -116,8 +88,6 @@ module PopulateMoviesRake
 			puts "#{item['name']} - Próximo (atributo cover não capturado durante scrapy)".yellow
 		end
 
-		return true if movie&.image
-
 		begin
 			movie_cover_file = Down.download(item['cover'])
 		rescue Down::Error => e
@@ -167,13 +137,13 @@ module PopulateMoviesRake
 end
 
 namespace :populate do
-	desc 'Populate movies scraped from google'
+	desc 'Populate movies scraped from google. args: update_images=false'
 	task movies: :environment do
 
 		include PopulateMoviesRake
 
 		puts "Task populate:movies iniciada em #{DateTime.now}".white
-
+		
 		@last_task_performed = Artifact.where(details: {
 			name: "populate:movies",
 			type: "task"
@@ -204,7 +174,6 @@ namespace :populate do
 
 		data.each do |item|
 			create_screenings(item)
-
 		end
 
 		if @last_task_performed

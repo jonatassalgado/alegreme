@@ -30,11 +30,12 @@ search_movies_script = """
 
         assert(splash:wait(1))
         splash.scroll_position = {y=500}
+        assert(splash:wait(3))
 
         result, error = splash:wait_for_resume([[
             function main(splash) {
                 var checkExist = setInterval(function() {
-                    if (document.querySelector(".klitem").innerHTML) {
+                    if (document.querySelector(".klitem").innerHTML && document.querySelector(".kno-rdesc").innerHTML) {
                         clearInterval(checkExist);
                         splash.resume();
                     }
@@ -65,13 +66,14 @@ parse_movie_script = """
 
         assert(splash:go(splash.args.url))
 
-        assert(splash:wait(5))
+        assert(splash:wait(1))
         splash.scroll_position = {y=500}
+        assert(splash:wait(3))
 
         result, error = splash:wait_for_resume([[
             function main(splash) {
                 var checkExist = setInterval(function() {
-                    if (document.querySelector(".tb_c.tb_stc").innerText) {
+                    if (document.querySelector(".tb_c.tb_stc").innerText && document.querySelector(".kno-rdesc").innerHTML) {
                         clearInterval(checkExist);
                         splash.resume();
                     }
@@ -138,7 +140,7 @@ class MovieSpider(scrapy.Spider):
                 callback=self.parse_movies,
                 endpoint='execute',
                 args={
-                'timeout': 90,
+                'timeout': 300,
                 'lua_source': search_movies_script,
                 }
             )
@@ -157,6 +159,7 @@ class MovieSpider(scrapy.Spider):
                     callback=self.parse_movie,
                     endpoint='execute',
                     args={
+                        'timeout': 300,
                         'lua_source': parse_movie_script,
                     }
                 )
@@ -177,9 +180,9 @@ class MovieSpider(scrapy.Spider):
 
         movie_dates_els = movie_container_el.xpath('.//*[contains(@class, "tb_c")]')
         for movie_date_el in movie_dates_els:
-            loader.add_value('dates', self.parse_ocurrence_meta(response, movie_date_el))
+            loader.add_value('screenings', self.parse_ocurrence_meta(response, movie_date_el))
 
-        movie_cover_link = "https://duckduckgo.com/?q=" + unidecode(loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower()) + "+filme+poster&t=h_&iar=images&iax=images&ia=images&iaf=layout%3ATall"
+        movie_cover_link = 'https://duckduckgo.com/?q="' + unidecode(loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower()) + '+filme"&t=h_&iar=images&iax=images&ia=images&iaf=layout%3ATall'
         
         # //*[contains(@data-ri, "0")]/./@data-id
 
@@ -191,6 +194,7 @@ class MovieSpider(scrapy.Spider):
                 meta={'loader': loader},
                 endpoint='execute',
                 args={
+                    'timeout': 300,
                     'lua_source': parse_movie_cover_script,
                 }
             )

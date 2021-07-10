@@ -162,7 +162,7 @@ class Movie(scrapy.Item):
         input_processor=MapCompose(get_movie_genre),
         output_processor=Identity()
     )
-    dates = scrapy.Field(
+    screenings = scrapy.Field(
         input_processor=Identity()
     )
 
