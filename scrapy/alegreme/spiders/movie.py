@@ -201,7 +201,7 @@ class MovieSpider(scrapy.Spider):
         for movie_date_el in movie_dates_els:
             loader.add_value('screenings', self.parse_ocurrence_meta(response, movie_date_el))
 
-        movie_cover_link = 'https://duckduckgo.com/?q="' + unidecode(loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower()) + '+filme"&t=h_&iar=images&iax=images&ia=images&iaf=layout%3ATall'
+        movie_cover_link = "https://duckduckgo.com/?q=" + unidecode(loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower()) + "+filme&iax=images&ia=images&iaf=layout%3ATall"
         
         # //*[contains(@data-ri, "0")]/./@data-id
 

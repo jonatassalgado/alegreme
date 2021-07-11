@@ -20,6 +20,16 @@ every 1.day, at: ['13:30 pm', '19:30 pm'] do
 end
 
 
+# Populate new movies
+every 1.day, at: ['11:00 am', '17:00 pm'] do
+  command "cd /root/alegreme/scrapy && sudo docker-compose run --rm scrapy scrapy crawl movie -s JOBDIR=crawls/movie-1 && sudo docker-compose down"
+end
+
+every 1.day, at: ['11:40 am', '17:40 pm'] do
+  command "cd /root/alegreme && sudo docker exec alegreme_app_1 bundle exec rake populate:movies"
+end
+
+
 # DevOps
 every 1.day do
   command "cd /root/alegreme && > logs/api/error.log"

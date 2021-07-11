@@ -163,7 +163,7 @@ class Movie(scrapy.Item):
         output_processor=TakeFirst()
     )
     genres = scrapy.Field(
-        input_processor=MapCompose(get_movie_genre),
+        input_processor=MapCompose(get_movie_genres),
         output_processor=Identity()
     )
     year = scrapy.Field(
