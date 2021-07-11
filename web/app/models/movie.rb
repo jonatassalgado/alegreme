@@ -2,24 +2,24 @@ class Movie < ApplicationRecord
 
 	COLLECTIONS = ['new release', 'editors choice'].sort.freeze
 	GENRES      = ['Ação',
-	               'Aventura',
-	               'Animação',
-	               'Comédia',
-	               'Crime',
-	               'Documentário',
-	               'Drama',
-	               'Família',
-	               'Fantasia',
-	               'História',
-	               'Terror',
-	               'Música',
-	               'Mistério',
-	               'Romance',
-	               'Ficção científica',
-	               'Cinema TV',
-	               'Thriller',
-	               'Guerra',
-	               'Faroeste'].freeze
+								 'Aventura',
+								 'Animação',
+								 'Comédia',
+								 'Crime',
+								 'Documentário',
+								 'Drama',
+								 'Família',
+								 'Fantasia',
+								 'História',
+								 'Terror',
+								 'Música',
+								 'Mistério',
+								 'Romance',
+								 'Ficção científica',
+								 'Cinema TV',
+								 'Thriller',
+								 'Guerra',
+								 'Faroeste'].freeze
 
 	extend FriendlyId
 
@@ -34,7 +34,7 @@ class Movie < ApplicationRecord
 	validates :title, uniqueness: true
 
 	has_many :screenings
-	has_many :cinemas, through: :screenings
+	has_many :cinemas, -> { distinct }, through: :screenings
 
 	friendly_id :title, use: :slugged
 

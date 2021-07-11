@@ -114,20 +114,14 @@ Rails.application.routes.draw do
 		namespace :admin do
 			resources :users
 			resources :events
-			resources :likes
-			resources :themes
-			resources :tags
-			resources :artifacts
 			resources :posters
 			resources :places
 			resources :organizers
-			resources :kinds
-			resources :movies
-			resources :streamings
 			resources :cine_films
-			resources :friendships
+			resources :cinemas
+			resources :screenings
 			resources :categories
-			resources :follows
+
 
 			root to: "events#index"
 		end

@@ -39,7 +39,7 @@
 
 		<div class="gap-0 grid grid-cols-12 grid-flow-col max-w-screen-lg md:gap-10 md:px-0 mt-20 px-5">
 			<div class="col-span-12 md:col-span-9 mx-auto space-y-12">
-				<% @movie.screenings&.order("day ASC")&.group_by { |s| s.cinema.name }.each_with_index do |cinema_name_group, index| %>
+				<% @movie.screenings&.order("day ASC")&.group_by { |s| s&.cinema&.display_name }.each_with_index do |cinema_name_group, index| %>
 					<div class="">
 						<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="font-bold text-xl mb-2 text-gray-800">
 							<%= cinema_name_group[0] %>
@@ -76,7 +76,7 @@
 				<div class="sticky top-24">
 					<h4 class="font-bold text-xl mb-2 text-gray-800">Cinemas</h4>
 					<div class="space-y-3">
-						<% @movie&.cinemas&.order("screenings.day ASC")&.uniq&.each_with_index do |cinema, index| %>
+						<% @cinemas&.each_with_index do |cinema, index| %>
 							<a data-controller="scroll-to-anchor-link"
 								 data-action="click->scroll-to-anchor-link#scrollTo"
 								 data-turbo="false"

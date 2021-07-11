@@ -23,8 +23,9 @@ class MoviesController < ApplicationController
 	end
 
 	def show
-		model  = get_model(params[:type])
-		@movie = model.includes(:cinemas, :screenings).friendly.find(params[:id])
+		model    = get_model(params[:type])
+		@movie   = model.includes(:cinemas, :screenings).friendly.find(params[:id])
+		@cinemas = Cinema.includes(:screenings).where("movie_id = ? AND day >= ?", @movie.id, Date.current).order("screenings.day ASC").uniq
 
 		respond_to do |format|
 			format.html { render :show }

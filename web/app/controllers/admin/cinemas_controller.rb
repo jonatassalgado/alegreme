@@ -1,5 +1,5 @@
 module Admin
-  class CineFilmsController < Admin::ApplicationController
+  class CinemasController < Admin::ApplicationController
     # Overwrite any of the RESTful controller actions to implement custom behavior
     # For example, you may want to send an email after a foo is updated.
     #
@@ -14,9 +14,9 @@ module Admin
     #
     def find_resource(param)
       if params[:id].numeric?
-        CineFilm.find(params[:id])
+        Cinema.find(params[:id])
       else
-        CineFilm.friendly.find(params[:id])
+        Cinema.friendly.find(params[:id])
       end
     end
 
