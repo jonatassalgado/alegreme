@@ -92,7 +92,7 @@
 												onerror: "this.style.opacity='0'"
 											} rescue nil %>
 											<%= tag.div limit_name_size(movie.title, 24), class: 'leading-tight mt-2 inline-block text-xs text-center font-semibold text-gray-800' %>
-											<div class="text-xxs text-center mt-1"><%= movie.genres&.join(", ") %></div>
+											<div class="text-xxs leading-tight text-center mt-1"><%= movie.genres&.join(", ") %></div>
 										<% end %>
 									</div>
 								<% end %>

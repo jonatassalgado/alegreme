@@ -1,8 +1,8 @@
-<% content_for :meta_title, "Ver online #{@movie.title}" %>
+<% content_for :meta_title, "Filme #{@movie.title} nos cinemas de Porto Alegre - RS" %>
 <%= notice %>
 
 <section id="<%= dom_id @movie %>" class="mx-auto mt-12 max-w-screen-lg">
-	<div class="flex flex-col min-h-screen">
+	<div class="flex flex-col min-h-screen mb-32">
 		<%= image_tag shrine_image_url(@movie, :medium), {
 			loading: :lazy,
 			title:   @movie.title,
@@ -39,7 +39,7 @@
 
 		<div class="gap-0 grid grid-cols-12 grid-flow-col max-w-screen-lg md:gap-10 md:px-0 mt-20 px-5">
 			<div class="col-span-12 md:col-span-9 mx-auto space-y-12">
-				<% @movie.screenings.group_by { |s| s.cinema.name }.each_with_index do |cinema_name_group, index| %>
+				<% @movie.screenings&.order("day ASC")&.group_by { |s| s.cinema.name }.each_with_index do |cinema_name_group, index| %>
 					<div class="">
 						<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="font-bold text-xl mb-2 text-gray-800">
 							<%= cinema_name_group[0] %>
@@ -57,7 +57,7 @@
 													<%= screening.language %>
 												</div>
 												<div class="flex flex-wrap mt-1">
-													<% screening&.times&.each do |time| %>
+													<% screening.times&.each do |time| %>
 														<div class="rounded-full text-sm bg-white w-content px-2 py-1 mr-1 mb-1">
 															<%= time %>
 														</div>
@@ -76,7 +76,7 @@
 				<div class="sticky top-24">
 					<h4 class="font-bold text-xl mb-2 text-gray-800">Cinemas</h4>
 					<div class="space-y-3">
-						<% @movie&.cinemas&.uniq&.each_with_index do |cinema, index| %>
+						<% @movie&.cinemas&.order("screenings.day ASC")&.uniq&.each_with_index do |cinema, index| %>
 							<a data-controller="scroll-to-anchor-link"
 								 data-action="click->scroll-to-anchor-link#scrollTo"
 								 data-turbo="false"
