@@ -23,11 +23,13 @@ module UserDecorators
 					email    = auth.info.email
 					name     = auth.info.name
 					picture  = auth.info.image
+					provider = 'google'
 				when 'facebook'
-					fbId    = auth.uid
-					email   = auth.info.email
-					name    = auth.info.name
-					picture = auth.info.image
+					fbId     = auth.uid
+					email    = auth.info.email
+					name     = auth.info.name
+					picture  = auth.info.image
+					provider = 'facebook'
 				else
 					logger.debug "Something went wrong with Omniauth Provider -> json returned -> #{auth}"
 					return false
@@ -40,7 +42,8 @@ module UserDecorators
 						fbId:     fbId,
 						googleId: googleId,
 						name:     name,
-						picture:  picture
+						picture:  picture,
+						provider: provider
 					})
 				else
 					create_user(
@@ -48,7 +51,8 @@ module UserDecorators
 						fbId:     fbId,
 						googleId: googleId,
 						name:     name,
-						picture:  picture
+						picture:  picture,
+						provider: provider
 					)
 				end
 			end

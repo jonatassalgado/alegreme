@@ -36,7 +36,8 @@ module Api
 
 					unless user
 						user = User.new(email:    payload['email'],
-														password: Devise.friendly_token[0, 20])
+														password: Devise.friendly_token[0, 20],
+														provider: 'google')
 
 						user.features.deep_merge!({
 																				'demographic' => {
@@ -71,11 +72,12 @@ module Api
 							'expiry_date':  DateTime.strptime(payload['exp'].to_s, "%s").iso8601
 						},
 						'current_user': {
-							id:      user.id,
-							name:    user.features.dig('demographic', 'name'),
-							email:   user.email,
-							slug:    user.slug,
-							picture: user.features.dig('demographic', 'picture')
+							id:       user.id,
+							name:     user.features.dig('demographic', 'name'),
+							email:    user.email,
+							slug:     user.slug,
+							picture:  user.features.dig('demographic', 'picture'),
+							provider: user.provider
 						}
 					}
 				end
