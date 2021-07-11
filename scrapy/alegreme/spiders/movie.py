@@ -105,12 +105,30 @@ parse_movie_cover_script = """
 
         splash.scroll_position = {y=200}
 
-        assert(splash:wait(5))
+        result, error = splash:wait_for_resume([[
+            function main(splash) {
+                var checkExist = setInterval(function() {
+                    if (document.querySelector('.tile--img__media')) {
+                        clearInterval(checkExist);
+                        splash.resume();
+                    }
+                }, 2000);
+            }
+        ]], 30)
 
         local cover = splash:select('.tile--img__media')
         cover:mouse_click()
 
-        assert(splash:wait(3))
+        result, error = splash:wait_for_resume([[
+            function main(splash) {
+                var checkExist = setInterval(function() {
+                    if (document.querySelector('.detail__pane .c-detail__desc .c-detail__btn').innerText) {
+                        clearInterval(checkExist);
+                        splash.resume();
+                    }
+                }, 2000);
+            }
+        ]], 30)
 
         return splash:html()
     end
