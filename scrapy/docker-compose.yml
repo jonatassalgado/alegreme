@@ -11,8 +11,6 @@ services:
       IS_DOCKER: 'true'
       ENV: 'production'
       DOMAIN: 'www.alegreme.com'
-    depends_on:
-      - splash
     volumes:
       - ./alegreme:/var/www/scrapy/alegreme
       - ./data:/var/www/scrapy/data
@@ -29,6 +27,6 @@ services:
     restart: on-failure
     volumes:
       - splash_data:/var/www/splash/data
-    mem_limit: 4gb
+    mem_limit: 2gb
     mem_reservation: 256m
-    command: --maxrss 4048 --max-timeout 3600 --slots 5
+    command: --maxrss 2048 --max-timeout 3600 --slots 2

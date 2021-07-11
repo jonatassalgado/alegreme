@@ -36,7 +36,7 @@ services:
       ELASTICSEARCH_URL: http://search:9200
       REDIS_URL: redis://redis:6379/1
       GOOGLE_APPLICATION_CREDENTIALS: /var/www/alegreme/config/google_application_credentials.json
-    restart: always
+    restart: unless-stopped
     ports:
       - 3000:3000
     stdin_open: true
@@ -58,7 +58,7 @@ services:
       PGTZ: 'America/Sao_Paulo'
     ports:
       - 5432:5432
-    restart: always
+    restart: unless-stopped
   api:
     build:
       context: ./ml
@@ -83,4 +83,4 @@ services:
     memswap_limit: 2gb
     mem_reservation: 256m
     cpus: 1
-    restart: always
+    restart: unless-stopped

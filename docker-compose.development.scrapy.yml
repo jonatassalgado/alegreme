@@ -36,7 +36,7 @@ services:
       RAILS_MAX_THREADS: 3
       ELASTICSEARCH_URL: http://search:9200
       REDIS_URL: redis://redis:6379/1
-    restart: always
+    restart: unless-stopped
     ports:
       - 3000:3000
     stdin_open: true
@@ -68,7 +68,7 @@ services:
   #      NODE_ENV: development
   #      JOB_WORKER_URL: redis://redis:6379/0
   #    command: bundle exec sidekiq -C /var/www/sidekiq/config.yml -r /var/www/alegreme
-  #    restart: always
+  #    restart: unless-stopped
   #    mem_limit: 3gb
   #    memswap_limit: 3gb
   #    cpus: 0.5
@@ -84,7 +84,7 @@ services:
       PGTZ: 'America/Sao_Paulo'
     ports:
       - 5432:5432
-    restart: always
+    restart: unless-stopped
   #    mem_limit: 2gb
   #    memswap_limit: 3gb
   #    cpus: 0.5
@@ -149,7 +149,7 @@ services:
     memswap_limit: 2gb
     mem_reservation: 256m
     cpus: 0.3
-    restart: always
+    restart: unless-stopped
   # web:
   #   build:
   #     context: ./web
@@ -162,7 +162,7 @@ services:
   #   volumes:
   #     - ./data/certbot/conf:/etc/letsencrypt
   #     - ./data/certbot/www:/var/www/certbot
-  #   restart: always
+  #   restart: unless-stopped
   # certbot:
   #   image: certbot/certbot
   #   volumes:
@@ -176,7 +176,7 @@ services:
   #     discovery.type: single-node
   #   ports:
   #     - "9200:9200"
-  #   restart: always
+  #   restart: unless-stopped
 #  ofelia:
 #    image: 'mcuadros/ofelia:latest'
 #    volumes:
@@ -184,4 +184,4 @@ services:
 #      - /home/centos/.docker/config.json:/root/.docker/config.json
 #      - /var/run/docker.sock:/var/run/docker.sock
 #      - ./logs/ofelia:/tmp/logs
-#    restart: always
+#    restart: unless-stopped
