@@ -10,7 +10,6 @@ require_relative '../../../app/uploaders/movie_image_uploader'
 
 module PopulateMoviesRake
 
-	
 	def create_screenings(item)
 		movie = CineFilm.find_by(title: item['name'])
 
@@ -31,14 +30,15 @@ module PopulateMoviesRake
 		item['screenings'].each do |screening_data|
 
 			screening_data.dig('places')&.each do |cinema_data|
-				cinema = Cinema.find_by_name(cinema_data.dig('name'))
+				cinema = Cinema.find_by(name:        cinema_data.dig('name'),
+																google_maps: cinema_data.dig('google_maps'))
 
 				if cinema
 					puts "Cinema: #{cinema.id} #{cinema.name} - Cinema já existe".white
 				else
 					cinema = Cinema.create!(name:         cinema_data.dig('name'),
 																	display_name: cinema_data.dig('name'),
-																	address:      cinema_data.dig('address'))
+																	google_maps:  cinema_data.dig('google_maps'))
 
 					puts "Cinema: #{cinema.id} #{cinema.name} - Cinema criado".green
 				end
@@ -143,7 +143,7 @@ namespace :populate do
 		include PopulateMoviesRake
 
 		puts "Task populate:movies iniciada em #{DateTime.now}".white
-		
+
 		@last_task_performed = Artifact.where(details: {
 			name: "populate:movies",
 			type: "task"

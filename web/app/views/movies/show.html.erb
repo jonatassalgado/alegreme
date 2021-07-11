@@ -54,7 +54,7 @@
 										<% screening_day_group[1].each do |screening| %>
 											<div class="">
 												<div class="italic text-xs">
-													<%= screening.language %>
+													<%= screening.language %> <span class="text-xxs text-gray-500"><%= screening.screen_type %></span>
 												</div>
 												<div class="flex flex-wrap mt-1">
 													<% screening.times&.each do |time| %>

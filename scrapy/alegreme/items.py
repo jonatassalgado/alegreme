@@ -192,7 +192,7 @@ class MoviePlace(scrapy.Item):
     name = scrapy.Field(
         output_processor=TakeFirst()
     )
-    address = scrapy.Field(
+    google_maps = scrapy.Field(
         output_processor=TakeFirst()
     )
     languages = scrapy.Field(
