@@ -19,7 +19,7 @@ module PopulateMoviesRake
 			puts "Filme: #{item['name']} - Filme já existe (atualizado) \n".white
 		else
 			movie = CineFilm.create!(title:       item['name'],
-															 genres:      item['genre'],
+															 genres:      item['genres'],
 															 description: item['description'],
 															 cover:       item['cover'],
 															 trailer:     item['trailer'])

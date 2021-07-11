@@ -77,10 +77,14 @@ def clean_movie_description(value):
     name = re.sub(r'… MAIS', '', value)
     return name
 
-def get_movie_genre(value):
-    genre = re.search(r'(.+?(?:‧.))(.*)(?= ‧)', value)
-    genre = genre.group(2)
+def get_movie_genres(value):
+    genre = re.search(r'(?:(?:‧.))([\S]+)', value)
+    genre = genre.group(1)
     return genre.split('/')
+
+def get_movie_year(value):
+    year = re.search(r'(\d{4})', value)
+    return year.group(1)
 
 
 class Event(scrapy.Item):
@@ -158,9 +162,13 @@ class Movie(scrapy.Item):
     trailer = scrapy.Field(
         output_processor=TakeFirst()
     )
-    genre = scrapy.Field(
+    genres = scrapy.Field(
         input_processor=MapCompose(get_movie_genre),
         output_processor=Identity()
+    )
+    year = scrapy.Field(
+        input_processor=MapCompose(get_movie_year),
+        output_processor=TakeFirst()
     )
     screenings = scrapy.Field(
         input_processor=Identity()
