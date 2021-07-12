@@ -24,6 +24,7 @@ gem 'rake', '13.0.3'
 #Admin panel
 gem 'administrate'
 gem 'administrate-field-jsonb'
+gem 'administrate-field-shrine'
 
 gem 'friendly_id', '~> 5.2.4'
 

@@ -53,7 +53,7 @@
 			<% end %>
 
 
-			<% if @movies.present? %>
+			<% if @movies.present? && controller_name == 'feeds' && action_name == 'index' %>
 				<div id="movies" class="mb-12" data-controller="movie-collection slider" data-model="movie">
 					<h2 class="font-bold font-display text-brand-600 text-xl px-5">
 						Filmes nos cinemas de Porto Alegre

@@ -11,6 +11,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
 		id:          Field::Number,
 		cinemas:     Field::HasMany,
 		screenings:  Field::HasMany,
+		image: 		 Field::Shrine.with_options(version: :small),
 		title:       Field::String.with_options,
 		description: Field::Text.with_options(searchable: false),
 		cover:       Field::String.with_options(searchable: false),
@@ -39,6 +40,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
 	# an array of attributes that will be displayed on the model's show page.
 	SHOW_PAGE_ATTRIBUTES = %i[
     id
+	image
     title
     description
     trailer
@@ -55,6 +57,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
 	# an array of attributes that will be displayed
 	# on the model's form (`new` and `edit`) pages.
 	FORM_ATTRIBUTES = %i[
+	image
     title
     description
     trailer
