@@ -234,6 +234,7 @@ class MovieSpider(scrapy.Spider):
 
     def parse_place_meta(self, response, place_el):
         place_loader = MoviePlaceLoader(selector=place_el)
+        place_loader.add_xpath('google_id', './@data-tm')
         place_loader.add_xpath('name', './/*[contains(@class, "lr-s-din")]/text()')
         place_loader.add_value('google_maps', urljoin(response.url, place_el.xpath('.//*[contains(@class, "ObBBIf")]/a/@href')[0].extract()))
 

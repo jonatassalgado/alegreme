@@ -86,6 +86,10 @@ def get_movie_year(value):
     year = re.search(r'(\d{4})', value)
     return year.group(1)
 
+def get_movie_google_id(value):
+    google_id = re.sub(r'\/g\/', '', value)
+    return google_id
+
 
 class Event(scrapy.Item):
     name = scrapy.Field(
@@ -189,6 +193,10 @@ class MovieOcurrenceLoader(ItemLoader):
 
 
 class MoviePlace(scrapy.Item):
+    google_id = scrapy.Field(
+        input_processor=MapCompose(get_movie_google_id),
+        output_processor=TakeFirst()
+    )
     name = scrapy.Field(
         output_processor=TakeFirst()
     )

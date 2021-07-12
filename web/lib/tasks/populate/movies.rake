@@ -30,14 +30,14 @@ module PopulateMoviesRake
 		item['screenings'].each do |screening_data|
 
 			screening_data.dig('places')&.each do |cinema_data|
-				cinema = Cinema.find_by(name:        cinema_data.dig('name'),
-																google_maps: cinema_data.dig('google_maps'))
+				cinema = Cinema.find_by(google_id: cinema_data.dig('google_id'))
 
 				if cinema
 					puts "Cinema: #{cinema.id} #{cinema.name} - Cinema já existe".white
 				else
 					cinema = Cinema.create!(name:         cinema_data.dig('name'),
 																	display_name: cinema_data.dig('name'),
+																	google_id:    cinema_data.dig('google_id'),
 																	google_maps:  cinema_data.dig('google_maps'))
 
 					puts "Cinema: #{cinema.id} #{cinema.name} - Cinema criado".green
