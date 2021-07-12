@@ -67,6 +67,8 @@ module.exports = {
             "./app/components/**/*.html.erb",
             "./app/components/*.js",
             "./app/components/**/*.js",
+            "./app/components/*.rb",
+            "./app/components/**/*.rb",
             "./app/helpers/**/*.rb",
             "./app/javascript/**/*.js",
             "./app/javascript/**/**/*.js"
