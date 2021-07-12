@@ -41,11 +41,37 @@
 			<div class="col-span-12 md:col-span-9 mx-auto space-y-12">
 				<% @movie.screenings&.order("day ASC")&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
 					<div class="">
-						<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="font-bold text-xl mb-2 text-gray-800">
-							<%= cinema_name_group[0][0] %>
-						</h2>
-						<%#= cinema_name_group[1][0]&.cinema&.neighborhood %>
-						<%= cinema_name_group[1][index]&.cinema&.address %>
+						<div class="grid grid-cols-4">
+							<div class="text-sm mb-3 col-span-3 pr-5">
+								<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="font-bold text-xl text-gray-800">
+									<%= cinema_name_group[0][0] %>
+								</h2>
+								<%= cinema_name_group[1][0]&.cinema&.address %>
+								<% if cinema_name_group[1][0]&.cinema&.neighborhood&.present? %>
+									‧
+									<span class="font-semibold">Bairro próximo:</span> <%= cinema_name_group[1][0]&.cinema&.neighborhood %>
+								<% end %>
+								<% if cinema_name_group[1][0]&.cinema&.reference_place&.present? %>
+									‧
+									<span class="font-semibold">Local:</span> <%= cinema_name_group[1][0]&.cinema&.reference_place %>
+								<% end %>
+								<% if cinema_name_group[1][0]&.cinema&.lower_price&.present? %>
+									‧
+									<span class="font-semibold">Menor preço da inteira:</span> <%= number_to_currency cinema_name_group[1][0]&.cinema&.lower_price, locale: 'pt-BR' %>
+								<% end %>
+								<% if cinema_name_group[1][0]&.cinema&.google_maps&.present? %>
+									‧
+									<a href="<%= cinema_name_group[1][0]&.cinema&.google_maps %>" rel="nofollow" class="text-brand-600 font-semibold">Abrir no Google Maps</a>
+								<% end %>
+							</div>
+							<div class="col-span-1 flex items-center justify-end">
+								<% if cinema_name_group[1][0]&.cinema&.website&.present? %>
+									<a href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" class="bg-brand-200 font-semibold hover:scale-105 inline-block md:transform px-3 py-1 rounded-full text-brand-700 text-sm transition-transform">
+										Ver site oficial
+									</a>
+								<% end %>
+							</div>
+						</div>
 						<div class="gap-1 grid grid-cols-1 grid-flow-row md:grid-cols-3">
 							<% cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
 								<div class="p-3 bg-gray-100 rounded">
@@ -53,10 +79,11 @@
 										<%= day_of_week(screening_day_group[0]).titleize %>
 									</h3>
 									<div class="space-y-1">
-										<% screening_day_group[1].filter{|s| s.times&.any?}.each do |screening| %>
+										<% screening_day_group[1].filter { |s| s.times&.any? }.each do |screening| %>
 											<div class="">
 												<div class="italic text-xs">
-													<%= screening.language %> <span class="text-xxs text-gray-500"><%= screening.screen_type %></span>
+													<%= screening.language %>
+													<span class="text-xxs text-gray-500"><%= screening.screen_type %></span>
 												</div>
 												<div class="flex flex-wrap mt-1">
 													<% screening.times&.each do |time| %>

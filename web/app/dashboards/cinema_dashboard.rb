@@ -31,7 +31,8 @@ class CinemaDashboard < Administrate::BaseDashboard
 	# Feel free to add, remove, or rearrange items.
 	COLLECTION_ATTRIBUTES = %i[
     id
-    name
+    display_name
+	updated_at
   ].freeze
 
 	# SHOW_PAGE_ATTRIBUTES
@@ -44,10 +45,10 @@ class CinemaDashboard < Administrate::BaseDashboard
     display_name
     address
     website
-		reference_place
-		lower_price
-		neighborhood
-		google_maps
+	reference_place
+	lower_price
+	neighborhood
+	google_maps
     slug
     created_at
     updated_at
@@ -62,10 +63,10 @@ class CinemaDashboard < Administrate::BaseDashboard
     name
     display_name
     website
-		reference_place
-		lower_price
-		neighborhood
-		google_maps
+	reference_place
+	lower_price
+	neighborhood
+	google_maps
     address
     slug
   ].freeze
