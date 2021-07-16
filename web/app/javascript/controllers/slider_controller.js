@@ -2,6 +2,9 @@ import ApplicationController from "./application_controller"
 
 export default class SliderController extends ApplicationController {
     static targets = ["left", "right", "scroller"];
+    static values = {
+        distance: String
+    }
 
     connect() {
         super.connect();
@@ -42,7 +45,7 @@ export default class SliderController extends ApplicationController {
     }
 
     get distance() {
-        return this.data.get("distance") || this.scrollerTarget.offsetWidth;
+        return this.distanceValue || this.scrollerTarget.offsetWidth;
     }
 
     get behavior() {

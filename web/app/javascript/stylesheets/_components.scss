@@ -1,0 +1,26 @@
+@layer components {
+  .c-h2 {
+    @apply font-bold font-display text-2xl md:text-3xl text-gray-800;
+  }
+
+  .c-h3 {
+    @apply font-semibold leading-snug text-gray-800;
+  }
+
+  .c-span {
+    @apply leading-snug text-gray-500;
+  }
+
+  .c-header {
+    box-shadow: #00000014 0 1px 12px;
+  }
+
+  .c-chip {
+    @apply bg-gray-100 cursor-pointer duration-100 flex font-display hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block items-center justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none text-gray-700 transform transition-all transition-colors w-content;
+
+    &--active {
+      @apply bg-brand-200 cursor-pointer duration-100 flex font-display hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block items-center justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none text-brand-700 transform transition-all transition-colors w-content;
+    }
+  }
+
+}

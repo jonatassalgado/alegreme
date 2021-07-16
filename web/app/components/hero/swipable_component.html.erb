@@ -7,10 +7,10 @@
 				<% if current_stage == :train %>
 					<div data-swipable-target="items">
 						<div class="mb-5">
-							<div class="font-bold font-display text-brand-600 text-xl">
-								Que tipos de evento você curte?
+							<div class="c-h2">
+								O que você curte?
 							</div>
-							<div class="text-xs md:text-sm text-gray-500">
+							<div class="c-span">
 								Para receber sugestões personalizadas, indique ao menos
 								<span class="text-brand-500 font-bold"><%= @min_events_to_train - events_trained %> eventos</span>
 								que você curte.
@@ -49,7 +49,7 @@
 				<% end %>
 				<% if current_stage == :suggestions %>
 					<div class="md:mb-5">
-						<div class="font-bold font-display text-brand-600 text-xl">
+						<div class="c-h2">
 							Sugestões para você
 						</div>
 					</div>

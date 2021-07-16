@@ -34,7 +34,7 @@
 		<div class="pl-6">
 			<div class="flex items-center space-x-2">
 				<span class="flex -space-x-2">
-					<% @event.organizers.order(:id).each do |organizer| %>
+					<% @event.organizers[0...1].each do |organizer| %>
 						<%= link_to organizer_path(organizer), class: 'inline-block' do %>
 							<%= image_tag helpers.shrine_image_url(organizer, :sm), {
 								loading: :lazy,
@@ -46,13 +46,13 @@
 						<% end %>
 					<% end %>
 				</span>
-				<span class="text-sm text-gray-400">·</span>
-				<span class="text-sm text-gray-500">
+				<span class="text-gray-700 text-sm">·</span>
+				<span class="text-gray-700 text-sm">
 							<%= helpers.format_hour @event.start_time %>h
 							</span>
 				<div class="hidden md:inline">
-					<span class="text-sm text-gray-400">·</span>
-					<span class="text-sm text-gray-500">
+					<span class="text-gray-700 text-sm">·</span>
+					<span class="text-gray-700 text-sm">
   					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
   				</span>
 				</div>
@@ -64,11 +64,11 @@
 												action:                  'click->main-sidebar--horizontal-event#openEvent',
 												'event-id':              @event.id
 											},
-											class: 'block md:text-lg font-semibold md:hover:text-brand-500 mb-1 leading-snug text-gray-700' do %>
+											class: 'c-h3 block md:hover:text-brand-600 mb-1' do %>
 				<%= @event.name %>
 			<% end %>
-			<div>
-				<span class="text-sm text-brand-500">
+			<div class="leading-tight">
+				<span class="text-sm text-brand-600">
 					<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
 				<span class="px-1 text-sm text-gray-400">
@@ -77,7 +77,7 @@
 				<span class="text-sm text-gray-500 md:hidden">
 					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
-				<span class="text-sm text-gray-500 hidden md:inline">
+				<span class="font-light hidden leading-tight md:inline text-gray-700 text-xs">
 					<%= helpers.limit_description_size @event.description %>
 				</span>
 			</div>

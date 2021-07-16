@@ -33,8 +33,9 @@
 	<link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
 	<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&Roboto:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<% if content_for? :preload_image %>
 		<link rel="preload" as="image" href="<%= content_for :preload_image %>">
 	<% end %>
@@ -44,7 +45,7 @@
 	<%= javascript_pack_tag 'application', 'data-turbo-track': 'reload', defer: true %>
 
 </head>
-<body class="antialiased font-body text-gray-600 bg-white md:bg-white tap-highlight-none overflow-x-hidden" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
+<body class="antialiased font-display text-gray-600 bg-white md:bg-white tap-highlight-none overflow-x-hidden" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
 <!-- Google Tag Manager (noscript) -->
 <noscript>
@@ -53,7 +54,7 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white md:py-2 z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
+<div class="c-header md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white md:py-2 z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
 		 data-controller="head"
 		 data-reflex-permanent
 		 data-head-target="head">

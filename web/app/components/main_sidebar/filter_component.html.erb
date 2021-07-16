@@ -29,17 +29,15 @@
 			</div>
 		<% end %>
 		<% unless filters_present? %>
-			<a href="<%= root_path theme: 'entretenimento-lazer' %>" data-turbo-preserve-scroll="true" class="<%= helpers.class_names('items-center cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
-																																																																{ 'bg-brand-200 text-brand-600': !params[:theme] || params[:theme] == 'entretenimento-lazer',
-																																																																	'bg-gray-100 text-gray-600':   params[:theme] && params[:theme] != 'entretenimento-lazer' }) %>">
+			<a href="<%= root_path theme: 'entretenimento-lazer' %>" data-turbo-preserve-scroll="true" class="<%= helpers.class_names({ 'c-chip--active': !params[:theme] || params[:theme] == 'entretenimento-lazer',
+																																																																	'c-chip':         params[:theme] && params[:theme] != 'entretenimento-lazer' }) %>">
 				<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
 				</svg>
 				Entretenimento
 			</a>
-			<a href="<%= root_path theme: 'trabalho-educacao' %>" data-turbo-preserve-scroll="true" class="<%= helpers.class_names('items-center cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
-																																																														 { 'bg-brand-200 text-brand-600': params[:theme] == 'trabalho-educacao',
-																																																															 'bg-gray-100 text-gray-600':   params[:theme] != 'trabalho-educacao' }) %>">
+			<a href="<%= root_path theme: 'trabalho-educacao' %>" data-turbo-preserve-scroll="true" class="<%= helpers.class_names({ 'c-chip--active': params[:theme] == 'trabalho-educacao',
+																																																															 'c-chip':         params[:theme] != 'trabalho-educacao' }) %>">
 				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
 				</svg>
@@ -71,7 +69,7 @@
 
 				<div class="inline-block overflow-hidden p-5 text-left align-bottom bg-white rounded-lg shadow-xl transition-all transform sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
 					<svg data-reflex="click->Filter#close" xmlns="http://www.w3.org/2000/svg" class="absolute cursor-pointer h-6 hover:text-brand-500 right-5 top-5 w-6" viewBox="0 0 20 20" fill="currentColor">
-						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
 					</svg>
 					<div class="flex items-center pb-2 text-xl font-bold text-gray-900 bg-white font-display">
 						Filtros
@@ -84,7 +82,7 @@
 						<div data-reflex="click->Filter#show_filter_group"
 								 data-filter-group="category"
 								 data-open="<%= @show_filter_group == 'category' %>"
-								 class="<%= helpers.class_names('items-center border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 pl-1.5 pr-4 py-2 rounded-full select-none tap-highlight-none transform transition-all transition-colors w-content',
+								 class="<%= helpers.class_names('items-center border cursor-pointer duration-50 flex hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 pl-1.5 pr-4 py-2 rounded-full select-none tap-highlight-none transform transition-all transition-colors w-content',
 																								{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:categories].present? || @show_filter_group == 'category' }) %>">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="<%= helpers.class_names('fill-current w-5 mr-1 transform transition-transform',
 																																																				 { 'rotate-180': @show_filter_group == 'category' }) %>">
@@ -95,7 +93,7 @@
 						<div data-reflex="click->Filter#show_filter_group"
 								 data-filter-group="date"
 								 data-open="<%= @show_filter_group == 'date' %>"
-								 class="<%= helpers.class_names('items-center border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 pl-1.5 pr-4 py-2 rounded-full select-none tap-highlight-none transform transition-all transition-colors w-content',
+								 class="<%= helpers.class_names('items-center border cursor-pointer duration-50 flex hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 pl-1.5 pr-4 py-2 rounded-full select-none tap-highlight-none transform transition-all transition-colors w-content',
 																								{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:date] || @show_filter_group == 'date' }) %>">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="<%= helpers.class_names('fill-current w-5 mr-1 transform transition-transform',
 																																																				 { 'rotate-180': @show_filter_group == 'date' }) %>">
@@ -120,7 +118,7 @@
 												 data-filter-group="date"
 												 data-selected="<%= @filters[:date]&.to_date == day %>"
 												 data-filter-date="<%= day %>"
-												 class="<%= helpers.class_names('items-center cursor-pointer duration-50 flex font-semibold text-sm hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
+												 class="<%= helpers.class_names('items-center cursor-pointer duration-50 flex text-sm hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
 																												{ 'bg-brand-200 text-brand-600': @filters[:date]&.to_date == day,
 																													'bg-gray-100 text-gray-600':   !@filters[:date] || @filters[:date]&.to_date != day }) %>">
 											<%= helpers.day_of_week(day) %>
@@ -147,7 +145,7 @@
 													 data-filter-group="category"
 													 data-selected="<%= @filters[:categories]&.include?(category.details_name) %>"
 													 data-filter-category="<%= category.details_name %>"
-													 class="<%= helpers.class_names('items-center cursor-pointer duration-50 flex font-semibold text-sm hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
+													 class="<%= helpers.class_names('items-center cursor-pointer duration-50 flex text-sm hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
 																													{ 'bg-brand-200 text-brand-600': @filters[:categories]&.include?(category.details_name),
 																														'bg-gray-100 text-gray-600':   !@filters[:categories]&.include?(category.details_name) }) %>">
 												<%= category.details_display_name %>

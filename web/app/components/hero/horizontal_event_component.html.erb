@@ -12,15 +12,15 @@
 												action:     'click->hero--horizontal-event#openEvent',
 												'event-id': @event.id
 											},
-											class: 'font-semibold md:text-lg inline-block leading-snug md:hover:underline text-gray-700' do %>
+											class: 'c-h3' do %>
 				<%= @event.name %>
 			<% end %>
-			<div class="mt-2 text-sm text-gray-500">
+			<div class="mt-2 text-sm text-gray-700">
 				<%= helpers.day_of_week(@event.start_time) %> · <%= helpers.format_hour @event.start_time %>h ·
 				<%= @event.categories_primary_name.titleize %> ·
 				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline capitalize' %>
 			</div>
-			<div class="mt-2 text-sm text-gray-500">
+			<div class="font-light leading-relaxed mt-2 text-gray-700 text-xs">
 				<%= helpers.limit_description_size @event.description %>
 			</div>
 			<div class="flex mt-1 mt-2 space-x-2">
