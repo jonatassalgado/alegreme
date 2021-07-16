@@ -21,7 +21,7 @@
 				</div>
 			</div>
 			<% if @movie.trailer %>
-				<a href="<%= @movie.trailer %>" class="inline-block text-center">
+				<a href="<%= @movie.trailer %>" rel="nofollow" target="_blank" class="inline-block text-center">
 					<div class="border border-brand-300 flex px-2 py-1 rounded-full text-gray-600 w-content items-center">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 fill-current text-brand-600" viewBox="0 0 20 20" fill="currentColor">
 							<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
@@ -62,13 +62,13 @@
 									<% end %>
 									<% if cinema_name_group[1][0]&.cinema&.google_maps&.present? %>
 										‧
-										<a href="<%= cinema_name_group[1][0]&.cinema&.google_maps %>" rel="nofollow" class="text-brand-600 font-semibold">Abrir
+										<a href="<%= cinema_name_group[1][0]&.cinema&.google_maps %>" rel="nofollow" target="_blank" class="text-brand-600 font-semibold">Abrir
 											no Google Maps</a>
 									<% end %>
 								</div>
 								<div class="col-span-1 flex items-center justify-end">
 									<% if cinema_name_group[1][0]&.cinema&.website&.present? %>
-										<a href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" class="bg-brand-200 font-semibold hover:scale-105 inline-block md:transform px-3 py-1 rounded-full text-brand-700 text-sm transition-transform">
+										<a href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="bg-brand-200 font-semibold hover:scale-105 inline-block md:transform px-3 py-1 rounded-full text-brand-700 text-sm transition-transform">
 											Ver site oficial
 										</a>
 									<% end %>
