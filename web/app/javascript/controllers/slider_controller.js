@@ -1,9 +1,9 @@
 import ApplicationController from "./application_controller"
 
-export default class SliderController extends ApplicationController {
+export default class extends ApplicationController {
     static targets = ["left", "right", "scroller"];
-    static values = {
-        distance: String
+    static values  = {
+        distance: Number
     }
 
     connect() {
@@ -27,21 +27,48 @@ export default class SliderController extends ApplicationController {
     }
 
     left() {
-        requestAnimationFrame(() => {
-            this.scrollerTarget.scrollTo({
-                                             left:     this.scrollerTarget.scrollLeft - this.distance,
-                                             behavior: this.behavior
-                                         })
-        })
+        let scrollLeft = this.scrollerTarget.scrollLeft;
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                this.scrollerTarget.scrollTo({
+                                                 left:     scrollLeft - this.distance,
+                                                 behavior: this.behavior
+                                             })
+            })
+            this.handleLeftRightButtons();
+        }, 100)
     }
 
     right() {
-        requestAnimationFrame(() => {
-            this.scrollerTarget.scrollTo({
-                                             left:     this.scrollerTarget.scrollLeft + this.distance,
-                                             behavior: this.behavior
-                                         })
-        })
+        let scrollLeft = this.scrollerTarget.scrollLeft;
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                this.scrollerTarget.scrollTo({
+                                                 left:     scrollLeft + this.distance,
+                                                 behavior: this.behavior
+                                             })
+            })
+            this.handleLeftRightButtons();
+        }, 100)
+    }
+
+    handleLeftRightButtons() {
+        setTimeout(() => {
+            let scrollLeft  = this.scrollerTarget.scrollLeft;
+            let offsetWidth = this.scrollerTarget.offsetWidth;
+            let scrollWidth = this.scrollerTarget.scrollWidth;
+
+            if (scrollLeft === 0) {
+                this.leftTarget.classList.add('hidden')
+            } else {
+                this.leftTarget.classList.remove('hidden')
+            }
+            if (scrollLeft + offsetWidth === scrollWidth) {
+                this.rightTarget.classList.add('hidden')
+            } else {
+                this.rightTarget.classList.remove('hidden')
+            }
+        }, 350)
     }
 
     get distance() {

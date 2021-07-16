@@ -64,10 +64,10 @@
 												action:                  'click->main-sidebar--horizontal-event#openEvent',
 												'event-id':              @event.id
 											},
-											class: 'c-h3 block md:hover:text-brand-600 mb-1' do %>
+											class: 'c-h3 inline md:inline-block md:hover:text-brand-600 mb-1' do %>
 				<%= @event.name %>
 			<% end %>
-			<div class="leading-tight">
+			<div class="leading-tight inline md:inline-block pl-2 md:pl-0">
 				<span class="text-sm text-brand-600">
 					<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
