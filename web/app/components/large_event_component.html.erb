@@ -1,13 +1,68 @@
 <%= content_tag :div, id: dom_id(@event), data: { controller: 'large-event' } do %>
-	<div class="bg-white md:rounded-xl md:shadow-2xl md:border md:border-gray-100 overflow-hidden md:rounded-lg"
+	<div class="bg-white overflow-hidden"
 			 data-event-favorited="<%= @user and @user.like?(@event) if @user and @user %>"
 			 data-event-identifier="<%= @event.id %>"
 			 data-event-description-open="false"
 			 data-event-modifier="single">
-
-		<div class="relative">
-			<div class="aspect-ratio-16/9"></div>
-			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.name %>" class="absolute top-0 left-0 object-cover object-center w-full h-full min-w-full bg-gray-50">
+		<div class="flex px-5">
+			<div>
+				<span class="text-sm text-gray-400 font-light">
+				<% if helpers.already_happened? @event %>
+					O evento ocorreu <%= I18n.l(@event.end_time) %>
+				<% else %>
+					Atualizado há <%= time_ago_in_words @event&.updated_at %>
+				<% end %>
+			</span>
+				<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-3xl text-2xl text-gray-800 w-full">
+					<%= @event.name %>
+				</h1>
+			</div>
+			<div class="flex">
+				<div class="flex items-center space-x-2 mt-1">
+					<% unless @user&.dislike?(@event) %>
+						<%= content_tag :div,
+														id:    dom_id(@event, :like),
+														data:  {
+															reflex:     'click->Event#like',
+															'event-id': @event.id,
+															component:  'large-event'
+														},
+														class: helpers.class_names('mr-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform',
+																											 { 'bg-brand-100 px-2 py-1 -mt-1': @user&.like?(@event) }) do %>
+							<svg class="<%= helpers.class_names 'group h-6 w-6 stroke-current',
+																									{ 'text-gray-500':  !@user&.like?(@event),
+																										'text-brand-600': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+							</svg>
+							<span class="<%= helpers.class_names('ml-1', { 'text-gray-500':  !@user&.like?(@event),
+																														 'text-brand-600': @user&.like?(@event) }) %>">
+							<%= @user&.like?(@event) ? 'Curti' : 'Curtir' %>
+						</span>
+						<% end %>
+					<% end %>
+					<% unless @user&.like?(@event) %>
+						<%= content_tag :div,
+														id:    dom_id(@event, :dislike),
+														data:  {
+															reflex:     'click->Event#dislike',
+															'event-id': @event.id,
+															component:  'large-event'
+														},
+														class: 'cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform' do %>
+							<svg class="<%= helpers.class_names 'h-6 w-6 stroke-current',
+																									{ 'text-gray-500 hover:text-gray-600': !@user&.dislike?(@event),
+																										'text-red-500':                      @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/>
+							</svg>
+						<% end %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+		<div class="relative px-5">
+			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>"
+					 alt="<%= @event.name %>"
+					 class="rounded-lg object-cover object-center w-full h-80 bg-gray-50">
 			<div class="absolute top-0 right-0 hidden mt-2 mr-2 transition-all duration-150 opacity-0 w-content"
 					 data-controller="share-button"
 					 data-share-button-text="<%= helpers.strip_tags(helpers.limit_description_size(@event.description, 160)) %>"
@@ -24,60 +79,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="p-5">
-			<span class="text-sm text-gray-400 font-light">
-				<% if helpers.already_happened? @event %>
-					O evento ocorreu <%= I18n.l(@event.end_time) %>
-				<% else %>
-					Atualizado há <%= time_ago_in_words @event&.updated_at %>
-				<% end %>
-			</span>
-			<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-3xl text-2xl text-gray-800 w-full">
-				<%= @event.name %>
-			</h1>
-			<div class="flex items-center space-x-2 mt-1">
-				<% unless @user&.dislike?(@event) %>
-					<%= content_tag :div,
-													id:    dom_id(@event, :like),
-													data:  {
-														reflex:     'click->Event#like',
-														'event-id': @event.id,
-														component:  'large-event'
-													},
-													class: helpers.class_names('mr-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform',
-																										 { 'bg-brand-100 px-2 py-1 -mt-1': @user&.like?(@event) }) do %>
-						<svg class="<%= helpers.class_names 'group h-6 w-6 stroke-current',
-																								{ 'text-gray-500':  !@user&.like?(@event),
-																									'text-brand-600': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
-						</svg>
-						<span class="<%= helpers.class_names('ml-1', { 'text-gray-500':  !@user&.like?(@event),
-																													 'text-brand-600': @user&.like?(@event) }) %>">
-							<%= @user&.like?(@event) ? 'Curti' : 'Curtir' %>
-						</span>
-					<% end %>
-				<% end %>
-				<% unless @user&.like?(@event) %>
-					<%= content_tag :div,
-													id:    dom_id(@event, :dislike),
-													data:  {
-														reflex:     'click->Event#dislike',
-														'event-id': @event.id,
-														component:  'large-event'
-													},
-													class: 'cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform' do %>
-						<svg class="<%= helpers.class_names 'h-6 w-6 stroke-current',
-																								{ 'text-gray-500 hover:text-gray-600': !@user&.dislike?(@event),
-																									'text-red-500':                      @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/>
-						</svg>
-					<% end %>
-				<% end %>
-			</div>
-		</div>
 		<% if helpers.will_happen? @event %>
-			<div class="flex p-5 border-t border-b border-gray-100">
-				<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-600 bg-brand-100 h-content rounded-xl w-content">
+			<div class="flex p-5 border-b border-gray-100">
+				<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-600 bg-brand-100 h-content rounded-lg w-content">
 					<div class="font-bold leading-tight text-sm uppercase">
 						<% if @event.day_of_week['date'] < Date.today + 7 %>
 							<%= I18n.l(@event.day_of_week['date'], format: :week) %>
@@ -90,17 +94,17 @@
 
 				<div class="my-auto leading-snug text-gray-600">
 					O evento acontecerá <%= I18n.l(@event.start_time) %>.
-					Daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>.
+					Daqui <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now %>.
 				</div>
 			</div>
 		<% end %>
 		<div class="px-5 py-5 border-b border-gray-100">
 			<%= link_to place_path(@event&.place), class: 'group inline-block flex items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
-				<%= image_tag @event&.place&.image[:sm].try { |image| image.url(public: true) },
+				<%#= image_tag @event&.place&.image[:sm].try { |image| image.url(public: true) },
 											loading: :lazy,
 											class:   'w-8 h-8 rounded-full shadow-sm',
 											onerror: "this.style.opacity='0'" rescue nil %>
-				<h2 class="font-bold font-display text-gray-800 text-xl uppercase group-hover:text-brand-500">
+				<h2 class="c-h3">
 					<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>
 				</h2>
 			<% end %>
@@ -122,7 +126,7 @@
 			</div>
 		</div>
 		<div class="px-5 py-5">
-			<h2 class="font-bold font-display text-xl text-gray-800 uppercase">Sobre o evento</h2>
+			<h2 class="c-h3">Sobre o evento</h2>
 			<div class="mt-2 leading-relaxed break-words text-with-html">
 				<%= @event.description.html_safe %>
 			</div>

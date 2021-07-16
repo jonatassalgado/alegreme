@@ -12,7 +12,7 @@
 			<div class="text-xs">
 				<%= tag.span "#{helpers.format_hour(@event.start_time)}h" %>
 				· <%= l(@event.start_time.to_date, format: :week).titlecase %>
-				· <%= "daqui #{distance_of_time_in_words(@event.start_time.to_date, DateTime.now)}" %>
+				· <%= "daqui #{distance_of_time_in_words(@event.start_time, DateTime.now)}" %>
 			</div>
 			<div class="mb-1 leading-snug text-gray-700 font-semibold">
 				<%= content_tag :a,

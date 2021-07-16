@@ -107,7 +107,7 @@
 						<div class="pr-10 my-auto text-sm text-gray-800">
 							<%= I18n.l(@event.day_of_week['date'], format: :default).capitalize %>,
 							às <%= helpers.format_hour(@event.start_time) %> horas,
-							daqui <%= helpers.distance_of_time_in_words @event.day_of_week['date'], DateTime.now %>
+							daqui <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now %>
 						</div>
 					</div>
 					<div class="py-5 px-5 border-b border-gray-100">
