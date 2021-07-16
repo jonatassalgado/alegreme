@@ -38,18 +38,18 @@ export default class extends ApplicationController {
         new StickySidebar('#left-sidebar', {
             containerSelector:    '#main-content',
             innerWrapperSelector: '#calendar',
-            topSpacing:           30
+            topSpacing:           70
         });
 
         document.addEventListener('sign-in#close', () => {
             this._cleanLoadingAnimate()
-        },false)
+        }, false)
     }
 
     teardown() {
         document.removeEventListener('sign-in#close', () => {
             this._cleanLoadingAnimate()
-        },false)
+        }, false)
     }
 
     beforeCache() {

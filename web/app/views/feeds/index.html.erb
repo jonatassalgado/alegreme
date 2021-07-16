@@ -22,8 +22,8 @@
 </div>
 
 <div id="main-content" class="gap-16 mx-auto max-w-screen-lg md:grid md:grid-cols-8">
-	<section id="main-sidebar" class="col-span-8 md:col-span-5">
-		<div class="mx-auto mb-24 is-animated sm:container">
+	<section id="main-sidebar" class="pt-12 space-y-16 col-span-8 md:col-span-5">
+		<div class="space-y-16 mx-auto is-animated sm:container">
 			<% if notice %>
 				<div class="flex items-center p-3 mx-4 mt-1 mb-3 space-x-2 max-w-screen-lg text-sm font-semibold rounded-lg border bg-brand-100 border-brand-200 md:mb-0 md:mt-5 text-brand-600">
 					<div class="flex flex-shrink-0 justify-center items-center mx-auto w-12 h-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -38,23 +38,30 @@
 				</div>
 			<% end %>
 			<% unless params[:day] || params[:category] %>
-				<div id="hero__presentation" data-turbo-permanent class="flex flex-row-reverse gap-4 items-start pt-5 mx-5 mb-12 select-none md:flex md:flex-row md:mb-5 md:mx-0 md:px-5 tap-highlight-none" style="min-height: <%= mobile_device? ? '150px' : '225px' %>">
+				<% unless current_user %>
+				<div id="hero__presentation" data-turbo-permanent class="flex flex-row-reverse gap-4 items-start md:flex md:flex-row md:mx-0 md:px-5 mx-5 select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '150px' : '185px' %>">
 					<div class="my-auto">
 						<h2 class="c-h2">
 							Eventos e Cinema em Porto Alegre
 						</h2>
 						<span class="inline-block mt-2 c-span">
-  						Descubra eventos e siga seus locais e artistas favoritos para não perder nada que acontece na cidade.
-  					</span>
+    						Descubra eventos e siga seus locais e artistas favoritos para não perder nada que acontece na cidade.
+    					</span>
 					</div>
 					<%= image_pack_tag ["hero/bebendo.png", "hero/passeando.png", "hero/dancando.png", "hero/skate.png"].sample, class: 'h-32 md:h-auto md:w-44 my-auto w-32' %>
 				</div>
+				<% end %>
+
+				<!--				<div class="w-full h-60" style="background-image: url(<%#= asset_pack_url 'media/images/welcome/experiences.jpg' %>)">-->
+
+				<!--				</div>-->
+
 				<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% end %>
 
 
 			<% if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
-				<div id="movies" class="mb-12" data-controller="persist-horizontal-scroll slider" data-model="movie" data-slider-distance-value="400" data-persist-horizontal-scroll-value="0">
+				<div id="movies" class="py-3" data-controller="persist-horizontal-scroll slider" data-model="movie" data-slider-distance-value="400" data-persist-horizontal-scroll-value="0">
 					<h2 class="px-5 c-h2">
 						Cinemas de Porto Alegre
 					</h2>
@@ -100,39 +107,39 @@
 					</div>
 				</div>
 			<% end %>
-
 		</div>
 
-		<% if @upcoming_events.present? %>
-			<div class="<%= class_names('bg-white pb-2') %>">
-				<% if params[:category] %>
-					<div class="flex justify-between items-center pr-5 md:pr-10">
+		<div>
+			<% if @upcoming_events.present? %>
+				<div class="bg-white">
+					<% if params[:category] %>
+						<div class="flex justify-between items-center pr-5 md:pr-10">
+							<h2 class="px-5 c-h2">
+								<span class="underline text-brand-600"><%= @category&.details_display_name&.titleize %></span> em Porto
+								Alegre
+							</h2>
+						</div>
+					<% else %>
 						<h2 class="px-5 c-h2">
-							<span class="underline text-brand-600"><%= @category&.details_display_name&.titleize %></span> em Porto
-							Alegre
+							Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
 						</h2>
-					</div>
-				<% else %>
-					<h2 class="px-5 c-h2">
-						Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
-					</h2>
-				<% end %>
-				<%= render MainSidebar::FilterComponent.new(session:           session.id,
-																										params:            params,
-																										show_filter_group: nil,
-																										filters:           {
-																											categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
-																											date:       nil
-																										}) %>
-			</div>
-		<% else %>
-			<h2 class="px-5 text-xl font-bold text-gray-900 bg-white font-display">
-				Não foram encontrados eventos em Porto
-				Alegre <%= I18n.l params[:day].to_date if params[:day] %> <%= "na categoria #{@category&.details_display_name&.titleize}" if params[:category] %>
-			</h2>
-		<% end %>
-		<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
-
+					<% end %>
+					<%= render MainSidebar::FilterComponent.new(session:           session.id,
+																											params:            params,
+																											show_filter_group: nil,
+																											filters:           {
+																												categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
+																												date:       nil
+																											}) %>
+				</div>
+			<% else %>
+				<h2 class="px-5 text-xl font-bold text-gray-900 bg-white font-display">
+					Não foram encontrados eventos em Porto
+					Alegre <%= I18n.l params[:day].to_date if params[:day] %> <%= "na categoria #{@category&.details_display_name&.titleize}" if params[:category] %>
+				</h2>
+			<% end %>
+			<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
+		</div>
 	</section>
 	<% unless mobile_device? %>
 		<section class="hidden md:inline-block md:col-span-3 md:bg-white"

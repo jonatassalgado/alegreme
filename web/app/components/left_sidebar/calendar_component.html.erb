@@ -1,5 +1,5 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: '' do %>
-	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mt-10 md:py-5">
+	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mt-10">
 		<span class="c-h2 pb-2 pt-10">Minha agenda</span>
 		<div class="capitalize pt-2 flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
 			<div class="flex items-center justify-items-start">
@@ -65,9 +65,6 @@
 		</table>
 		<div id="calendar__list" class="" data-left-sidebar--calendar-target="list" style="<%= helpers.class_names 'hidden': @events&.empty? %>">
 			<div class="flex justify-between items-baseline bg-white sticky top-0 z-20">
-				<!--				<div class="bg-white font-bold font-display pb-2 pt-10 text-gray-900 text-xl ">-->
-				<!--					Minha agenda-->
-				<!--				</div>-->
 				<%= content_tag :div,
 												data:  {
 													reflex: 'click->LeftSidebar::Calendar#clear_filter'
