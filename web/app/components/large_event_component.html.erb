@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@event), data: { controller: 'large-event' } do %>
-	<div class="bg-white overflow-hidden"
+	<div class="bg-white md:mt-0 mt-5 overflow-hidden"
 			 data-event-favorited="<%= @user and @user.like?(@event) if @user and @user %>"
 			 data-event-identifier="<%= @event.id %>"
 			 data-event-description-open="false"
@@ -30,18 +30,18 @@
 														class: helpers.class_names('mr-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform',
 																											 { 'bg-brand-100 px-2 py-1 -mt-1': @user&.like?(@event) }) do %>
 							<svg class="<%= helpers.class_names 'group h-6 w-6 stroke-current',
-																									{ 'text-gray-500':  !@user&.like?(@event),
-																										'text-brand-600': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+																									{ 'text-gray-800':               !@user&.like?(@event),
+																										'text-brand-600 fill-current': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
 							</svg>
-							<span class="<%= helpers.class_names('ml-1', { 'text-gray-500':  !@user&.like?(@event),
+							<span class="<%= helpers.class_names('ml-1', { 'text-gray-800':  !@user&.like?(@event),
 																														 'text-brand-600': @user&.like?(@event) }) %>">
-							<%= @user&.like?(@event) ? 'Curti' : 'Curtir' %>
+							<%= @user&.like?(@event) ? 'Salvo' : 'Salvar' %>
 						</span>
 						<% end %>
 					<% end %>
-					<% unless @user&.like?(@event) %>
-						<%= content_tag :div,
+					<%# unless @user&.like?(@event) %>
+					<%#= content_tag :div,
 														id:    dom_id(@event, :dislike),
 														data:  {
 															reflex:     'click->Event#dislike',
@@ -49,20 +49,20 @@
 															component:  'large-event'
 														},
 														class: 'cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform' do %>
-							<svg class="<%= helpers.class_names 'h-6 w-6 stroke-current',
+					<!--							<svg class="<%#= helpers.class_names 'h-6 w-6 stroke-current',
 																									{ 'text-gray-500 hover:text-gray-600': !@user&.dislike?(@event),
 																										'text-red-500':                      @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/>
-							</svg>
-						<% end %>
-					<% end %>
+							</svg>-->
+					<%# end %>
+					<%# end %>
 				</div>
 			</div>
 		</div>
 		<div class="relative px-5">
 			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>"
 					 alt="<%= @event.name %>"
-					 class="rounded-lg object-cover object-center w-full h-80 bg-gray-50">
+					 class="bg-gray-50 h-60 md:h-80 object-center object-cover rounded-lg w-full">
 			<div class="absolute top-0 right-0 hidden mt-2 mr-2 transition-all duration-150 opacity-0 w-content"
 					 data-controller="share-button"
 					 data-share-button-text="<%= helpers.strip_tags(helpers.limit_description_size(@event.description, 160)) %>"
@@ -79,7 +79,7 @@
 				</div>
 			</div>
 		</div>
-		<% if helpers.will_happen? @event %>
+		<% unless helpers.already_happened? @event %>
 			<div class="flex p-5 border-b border-gray-100">
 				<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-600 bg-brand-100 h-content rounded-lg w-content">
 					<div class="font-bold leading-tight text-sm uppercase">
@@ -98,31 +98,31 @@
 				</div>
 			</div>
 		<% end %>
-		<div class="px-5 py-5 border-b border-gray-100">
-			<%= link_to place_path(@event&.place), class: 'group inline-block flex items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
-				<%#= image_tag @event&.place&.image[:sm].try { |image| image.url(public: true) },
-											loading: :lazy,
-											class:   'w-8 h-8 rounded-full shadow-sm',
-											onerror: "this.style.opacity='0'" rescue nil %>
-				<h2 class="c-h3">
-					<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>
-				</h2>
-			<% end %>
-			<div class="mt-2 text-sm  leading-tight">
-				<%= helpers.limit_address_name_size @event.geographic['address'] %>
-			</div>
-			<div>
-
-				<div class="flex justify-center h-16 mt-3 align-middle bg-cover" style="background-image: url('<%= asset_pack_path('media/images/open-google-maps.png') %>')">
-					<div class="flex px-2 py-2 my-auto rounded shadow h-content" style="background: rgba(255, 255, 255, 0.9);">
-						<svg class="h-5 mr-1 text-gray-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-							<path d="M0 0h24v24H0z" fill="none"/>
-							<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-						</svg>
-						<%= link_to 'Abrir no Google Maps', helpers.google_maps_url(@event.geographic['address']), class: 'text-gray-600 text-sm' %>
-					</div>
+		<div class="flex px-5 py-5 border-b border-gray-100">
+			<div class="flex-grow">
+				<%= link_to place_path(@event&.place), class: 'group inline-block flex items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
+					<%#= image_tag @event&.place&.image[:sm].try { |image| image.url(public: true) },
+														loading: :lazy,
+														class:   'w-8 h-8 rounded-full shadow-sm',
+														onerror: "this.style.opacity='0'" rescue nil %>
+					<h2 class="c-h3">
+						<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>
+					</h2>
+				<% end %>
+				<div class="mt-2 text-sm  leading-tight">
+					<%= helpers.limit_address_name_size @event.geographic['address'] %>
 				</div>
-
+			</div>
+			<div class="flex justify-center h-12 align-middle bg-cover group" style="">
+				<%= link_to helpers.google_maps_url(@event.geographic['address']), class: 'flex px-2 py-2 my-auto rounded shadow h-content text-gray-700 group-hover:text-brand-600 group-hover:bg-brand-100' do %>
+					<svg class="h-5 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path d="M0 0h24v24H0z" fill="none"/>
+						<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+					</svg>
+					<div class="text-sm">
+						Abrir no Google Maps
+					</div>
+				<% end %>
 			</div>
 		</div>
 		<div class="px-5 py-5">
