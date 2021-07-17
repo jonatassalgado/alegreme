@@ -7,7 +7,7 @@
     "webpack:analyze_json": "webpack-bundle-analyzer webpack-stats.json public/packs"
   },
   "dependencies": {
-    "@hotwired/turbo": "^7.0.0-beta.3",
+    "@hotwired/turbo": "^7.0.0-beta.8",
     "@material/tab-bar": "^4.0.0",
     "@material/tab-scroller": "^4.0.0",
     "@rails/actioncable": "^6.0.3-2",

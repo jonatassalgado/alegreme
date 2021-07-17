@@ -1,12 +1,15 @@
 <% content_for :meta_title, "Filme #{@movie.title} nos cinemas de Porto Alegre - RS" %>
 <%= notice %>
 
+<!--<turbo-frame id="movies" target="movie">-->
 <% cache ['movies', @movies.max] do %>
-	<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false) %>
+	<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false, id: 'movies-show', selected: @movie.slug) %>
 <% end %>
+<!--</turbo-frame>-->
 
+<!--<turbo-frame id="movie">-->
 <% cache @movie do %>
-	<section id="<%= dom_id @movie %>" class="mx-auto mt-12 max-w-screen-lg">
+	<section class="mx-auto mt-12 max-w-screen-lg">
 		<div class="flex flex-col min-h-screen mb-32">
 			<%= image_tag shrine_image_url(@movie, :medium), {
 				loading: :lazy,
@@ -128,7 +131,7 @@
 				</div>
 			</div>
 
-
 		</div>
 	</section>
 <% end %>
+<!--</turbo-frame>-->

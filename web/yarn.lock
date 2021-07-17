@@ -907,10 +907,10 @@
   dependencies:
     purgecss "^3.1.3"
 
-"@hotwired/turbo@^7.0.0-beta.3":
-  version "7.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.0.0-beta.3.tgz#c3b5dea05fb246aa2bcf53b073675e97ddbc76d8"
-  integrity sha512-lOyxOaZJBLxD8sGowjghkmCxuN4FcqYDciRI88DuzyXok35vK6nYewGSfZ4SOpb7McOJ5qVChEsUaBfmY+N8NA==
+"@hotwired/turbo@^7.0.0-beta.8":
+  version "7.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.0.0-beta.8.tgz#133630eabbd3c26183efcfb6dea2db5dd172e8da"
+  integrity sha512-3HfWoxtGGQOxaXo2bh2tvEBFAV4oSSIA/BFnMvIfY5D4HbEKYpPH2Q3Roa707/E9LtnIgyN/RibDY6dszCwPuw==
 
 "@material/animation@^4.0.0":
   version "4.0.0"

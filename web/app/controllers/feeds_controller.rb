@@ -10,7 +10,7 @@ class FeedsController < ApplicationController
 
 		@upcoming_events = requested_events
 		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
-		@movies          = CineFilm.includes(:cinemas).active.uniq
+		@movies          = CineFilm.active
 
 		if @stimulus_reflex
 			render layout: false
