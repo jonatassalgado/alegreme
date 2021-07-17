@@ -2,12 +2,16 @@ import ApplicationController from "./application_controller"
 
 export default class ScrollOnClickedController extends ApplicationController {
     static targets = ["scroller", "item"];
+    static values = {
+        initSelected: String,
+        offsetLeft: Number
+    }
 
     connect() {
         super.connect();
         if (this.hasItemTarget && this.hasScrollerTarget) {
             const initSelectedEl = this.itemTargets.find(item => {
-                return item.dataset.scrollOnClickedSelected === this.initSelected
+                return item.dataset.scrollOnClickedSelected === this.initSelectedValue
             })
             this._left(initSelectedEl, "auto")
         }
@@ -26,7 +30,7 @@ export default class ScrollOnClickedController extends ApplicationController {
     teardown() {
         if (this.hasItemTarget && this.hasScrollerTarget) {
             const initSelectedEl = this.itemTargets.find(item => {
-                return item.dataset.scrollOnClickedSelected === this.initSelected
+                return item.dataset.scrollOnClickedSelected === this.initSelectedValue
             })
             this._left(initSelectedEl, "auto")
         }
@@ -46,19 +50,12 @@ export default class ScrollOnClickedController extends ApplicationController {
         })
 
         this.scrollerTarget.scrollTo({
-                                         left:     currentTarget.offsetLeft - this.offsetLeft,
+                                         left:     currentTarget.offsetLeft - this.offsetLeftValue,
                                          behavior: behavior
                                      })
 
         currentTarget.dataset.scrollOnClickedSelected = true
     }
 
-    get initSelected() {
-        return this.data.get("initSelected").trim();
-    }
-
-    get offsetLeft() {
-        return parseInt(this.data.get("offsetLeft")) ?? 0;
-    }
 
 }

@@ -2,6 +2,12 @@ import ApplicationController from "./application_controller"
 
 export default class ToggleStyleController extends ApplicationController {
     static targets = ["toggle"];
+    static values  = {
+        initSelected:    String,
+        currentSelected: String,
+        activeClass:     Array,
+        inactiveClass:   Array
+    }
 
     connect() {
         super.connect();
@@ -18,7 +24,7 @@ export default class ToggleStyleController extends ApplicationController {
     }
 
     teardown() {
-        this.currentSelected = this.initSelected;
+        this.currentSelectedValue = this.initSelectedValue;
         this._updateStyle();
     }
 
@@ -28,34 +34,14 @@ export default class ToggleStyleController extends ApplicationController {
     }
 
     _toggleChip(currentTarget) {
-        this.currentSelected = currentTarget.dataset.toggleStyleIdentifier;
+        this.currentSelectedValue = currentTarget.dataset.toggleStyleIdentifier;
     }
 
     _updateStyle() {
         this.toggleTargets.forEach(toggle => {
-            this.inactiveClass.forEach(cl => toggle.classList.toggle(cl, toggle.dataset.toggleStyleIdentifier !== this.currentSelected))
-            this.activeClass.forEach(cl => toggle.classList.toggle(cl, toggle.dataset.toggleStyleIdentifier === this.currentSelected))
+            this.inactiveClassValue.forEach(cl => toggle.classList.toggle(cl, toggle.dataset.toggleStyleIdentifier !== this.currentSelectedValue))
+            this.activeClassValue.forEach(cl => toggle.classList.toggle(cl, toggle.dataset.toggleStyleIdentifier === this.currentSelectedValue))
         })
-    }
-
-    get initSelected() {
-        return this.data.get("initSelected");
-    }
-
-    get currentSelected() {
-        return this.data.get("currentSelected")
-    }
-
-    set currentSelected(value) {
-        this.data.set("currentSelected", value)
-    }
-
-    get activeClass() {
-        return JSON.parse(this.data.get("activeClass"));
-    }
-
-    get inactiveClass() {
-        return JSON.parse(this.data.get("inactiveClass"));
     }
 
 }

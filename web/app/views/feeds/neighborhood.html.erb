@@ -18,8 +18,8 @@
 	<section class="md:w-9/12 mx-auto">
 		<div class="scrollx"
 				 data-controller="scroll-on-clicked"
-				 data-scroll-on-clicked-init-selected="<%= params[:neighborhood] %>"
-				 data-scroll-on-clicked-offset-left="24"
+				 data-scroll-on-clicked-init-selected-value="<%= params[:neighborhood] %>"
+				 data-scroll-on-clicked-offset-left-value="24"
 				 data-scroll-on-clicked-target="scroller">
 			<div data-controller="toggle-style go-to"
 					 data-go-to-delay="250"
@@ -31,8 +31,8 @@
 				<% @neighborhoods.each do |neighborhood| %>
 					<div data-action="click->scroll-on-clicked#scroll click->toggle-style#toggle click->go-to#url"
 							 data-toggle-style-target="toggle"
-							 data-scroll-on-clicked-target="item"
 							 data-toggle-style-identifier="<%= neighborhood.try(:parameterize_with_accents) %>"
+							 data-scroll-on-clicked-target="item"
 							 data-scroll-on-clicked-selected="<%= params[:neighborhood] == neighborhood.try(:parameterize_with_accents) %>"
 							 data-go-to-url="<%= neighborhood_events_path neighborhood.try(:parameterize_with_accents) %>"
 							 class="<%= class_names 'tap-highlight-none w-content user select-none antialiased bg-gray-50 border md:mb-3 mr-2 md:mr-3 px-4 py-1 rounded-full cursor-pointer transform transition-colors duration-200',
