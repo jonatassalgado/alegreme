@@ -22,7 +22,7 @@ export default class extends ApplicationController {
     }
 
     setup() {
-        this._setMinHeigth();
+        // this._setMinHeigth();
     }
 
     teardown() {

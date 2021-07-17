@@ -9,6 +9,7 @@ export default class extends ApplicationController {
     static targets = ['loadingIcon', 'table', 'list', 'events'];
 
     initialize() {
+        const selfEl  = this.element;
         this.flipping = new FlippingWeb();
 
         this.element.addEventListener("cable-ready:before-morph", event => {
@@ -27,6 +28,16 @@ export default class extends ApplicationController {
                              })
             }
         })
+
+        document.addEventListener("horizontal-event#open-event:before", event => {
+            selfEl.classList.add("opacity-0")
+        }, false)
+
+        document.addEventListener("horizontal-event#close-event:after", event => {
+            setTimeout(() => {
+                selfEl.classList.remove("opacity-0")
+            }, 500)
+        }, false)
     }
 
     connect() {
@@ -49,6 +60,16 @@ export default class extends ApplicationController {
     teardown() {
         document.removeEventListener('sign-in#close', () => {
             this._cleanLoadingAnimate()
+        }, false)
+
+        document.removeEventListener("horizontal-event#open-event:before", event => {
+            selfEl.classList.add("opacity-0")
+        }, false)
+
+        document.removeEventListener("horizontal-event#close-event:after", event => {
+            setTimeout(() => {
+                selfEl.classList.remove("opacity-0")
+            }, 500)
         }, false)
     }
 

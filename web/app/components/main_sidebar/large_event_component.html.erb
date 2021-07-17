@@ -1,12 +1,12 @@
 <%= content_tag :div,
-								id:   'main-sidebar--large-event',
-								data: {
+								id:    'main-sidebar--large-event',
+								data:  {
 									controller: 'main-sidebar--large-event'
-								} do %>
+								},
+								class: 'transition-all overflow-x-hidden transform duration-300' do %>
 	<% if @event %>
-		<div class="flex fixed top-0 left-0 items-center w-screen h-screen transition-all duration-300 transform"
-				 style="background: #abacbfeb">
-			<div class="overflow-hidden relative z-20 mx-auto max-w-2xl bg-white rounded-xl shadow-2xl h-screen-9/10">
+		<div class="flex items-center transition-all duration-300 transform">
+			<div class="overflow-hidden relative rounded-xl border h-screen-8/10">
 				<% if helpers.already_happened? @event %>
 					<div class="flex items-center p-3 mx-4 mb-3 space-x-2 max-w-screen-lg text-sm font-semibold rounded-lg bg-brand-100 border-brand-200 md:mb-0 md:mx-auto text-brand-600">
 						<div class="flex flex-shrink-0 justify-center items-center mx-auto w-12 h-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -31,22 +31,22 @@
 						<div class="aspect-ratio-16/9"></div>
 						<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>" alt="<%= @event.name %>" class="object-cover object-center absolute top-0 left-0 w-full min-w-full h-full" style="background-color: <%= helpers.get_image_dominant_color(@event) %>">
 					</div>
-					<div class="flex relative z-20 items-center py-2 px-3 -mt-6 space-x-2">
-						<a href="<%= @event.source_url %>" rel="nofollow" target="_blank" class="flex flex-1 justify-center items-center py-2 space-x-2 text-gray-800 bg-gray-300 rounded-full select-none hover:bg-brand-200 hover:text-brand-600 group">
-							<div class="font-semibold">Abrir no facebook</div>
-							<svg class="h-5 text-gray-700 stroke-current group-hover:text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<div class="flex relative z-20 flex-wrap items-center py-2 px-3 -mt-6">
+						<a href="<%= @event.source_url %>" rel="nofollow" target="_blank" class="text-xs c-chip shadow group hover:shadow-md">
+							<div class="font-semibold">Site oficial</div>
+							<svg class="ml-2 h-5 text-gray-700 stroke-current group-hover:text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
 							</svg>
 						</a>
 						<% if @event.ticket_url %>
-							<a href="<%= @event.ticket_url %>" rel="nofollow" target="_blank" class="flex flex-1 justify-center items-center py-2 space-x-2 text-gray-800 bg-gray-300 rounded-full select-none hover:bg-brand-200 hover:text-brand-600 group">
+							<a href="<%= @event.ticket_url %>" rel="nofollow" target="_blank" class="text-xs c-chip shadow group hover:shadow-md">
 								<div class="font-semibold">Ingressos</div>
-								<svg class="h-5 text-gray-700 stroke-current group-hover:text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<svg class="ml-2 h-5 text-gray-700 stroke-current group-hover:text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/>
 								</svg>
 							</a>
 						<% end %>
-						<div class="flex flex-1 justify-center items-center py-2 space-x-2 text-gray-800 bg-gray-300 rounded-full cursor-pointer select-none hover:bg-brand-200 hover:text-brand-600 group"
+						<div class="text-xs c-chip shadow group hover:shadow-md"
 								 data-controller="share-button"
 								 data-share-button-text="<%= strip_tags(helpers.limit_description_size(@event.description, 160)) %>"
 								 data-share-button-title="<%= @event.name %>"
@@ -54,7 +54,7 @@
 								 data-action="click->share-button#share">
 							<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
 							<div class="font-semibold">Compartilhar</div>
-							<svg class="h-5 text-gray-700 stroke-current group-hover:text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<svg class="ml-2 h-5 text-gray-700 stroke-current group-hover:text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
 							</svg>
 						</div>
@@ -63,7 +63,7 @@
 						<div class="text-xs font-light text-gray-400">
 							Atualizado há <%= time_ago_in_words @event&.updated_at %>
 						</div>
-						<h1 class="text-2xl font-bold text-brand-600 font-display">
+						<h1 class="c-h3">
 							<%= @event.name %>
 						</h1>
 						<div class="flex items-center -ml-1">
@@ -96,7 +96,7 @@
 						</div>
 					</div>
 					<div class="flex p-5 border-t border-b border-gray-100">
-						<div class="mr-5 bg-brand-100 flex flex-col justify-items-center px-1.5 py-1 rounded-md text-center text-xs w-content">
+						<div class="bg-brand-100 flex flex-col h-content justify-items-center mr-5 my-auto px-1.5 py-1 rounded-md text-center text-xs w-content">
 							<div class="font-bold font-display text-brand-700">
 								<%= l(@event.start_time, format: "%-d") %>
 							</div>
@@ -104,7 +104,7 @@
 								<%= l(@event.start_time, format: "%^b") %>
 							</div>
 						</div>
-						<div class="pr-10 my-auto text-sm text-gray-800">
+						<div class="pr-10 my-auto text-xs text-gray-800">
 							<%= I18n.l(@event.day_of_week['date'], format: :default).capitalize %>,
 							às <%= helpers.format_hour(@event.start_time) %> horas,
 							daqui <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now %>
@@ -112,46 +112,32 @@
 					</div>
 					<div class="py-5 px-5 border-b border-gray-100">
 						<%= link_to place_path(@event&.place), class: 'group inline-block flex items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
-							<%= image_tag @event&.place&.image[:sm].try { |image| image.url(public: true) },
-														loading: :lazy,
-														class:   'w-6 h-6 rounded-full shadow-sm',
-														onerror: "this.style.opacity='0'" rescue nil %>
-							<h2 class="font-bold text-gray-800 uppercase font-display group-hover:text-brand-500">
+							<h2 class="c-h3">
 								<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>
 							</h2>
 						<% end %>
 						<div class="mt-2 text-sm leading-tight text-gray-600">
-							<%= helpers.limit_address_name_size @event.geographic['address'] %>
-						</div>
-						<div>
-							<div class="flex justify-center mt-3 h-16 align-middle bg-cover" style="background-image: url('<%= asset_pack_path('media/images/open-google-maps.png') %>')">
-								<div class="flex py-2 px-2 my-auto rounded shadow h-content" style="background: rgba(255, 255, 255, 0.9);">
-									<svg class="mr-1 h-5 text-gray-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-										<path d="M0 0h24v24H0z" fill="none"/>
-										<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-									</svg>
-									<%= link_to 'Abrir no Google Maps', helpers.google_maps_url(@event.geographic['address']), class: 'text-gray-600 text-sm' %>
-								</div>
-							</div>
+							<%= helpers.limit_address_name_size @event.geographic['address'] %> ·
+							<%= link_to 'Abrir no Google Maps', helpers.google_maps_url(@event.geographic['address']), class: 'inline text-brand-600 underline text-xs', target: '_blank' %>
 						</div>
 					</div>
 					<div class="py-5 px-5">
-						<h2 class="font-bold text-gray-800 uppercase font-display">Sobre o evento</h2>
-						<div class="mt-2 leading-relaxed text-gray-600 break-words text-with-html">
+						<h2 class="c-h3">Sobre o evento</h2>
+						<div class="mt-2 text-sm leading-relaxed text-gray-600 break-words text-with-html">
 							<%= @event.description.html_safe %>
 						</div>
 					</div>
 					<% if @event&.organizers.present? %>
 						<div class="px-5 mt-6 mb-5">
-							<h2 class="font-bold text-gray-800 uppercase font-display">Organizadores</h2>
-							<div class="grid grid-cols-3 mt-2 space-y-2">
+							<h2 class="c-h3">Organizadores</h2>
+							<div class="grid grid-cols-1 mt-2 space-y-2">
 								<% @event.organizers.each do |organizer| %>
-									<%= link_to organizer_path(organizer), class: 'flex font-semibold items-center space-x-3' do %>
+									<%= link_to organizer_path(organizer), class: 'flex text-sm items-center space-x-3' do %>
 										<%= image_tag organizer.image[:sm].try { |image| image.url(public: true) },
 																	loading: :lazy,
 																	class:   'w-6 h-6 rounded-full shadow-sm border border-gray-100',
 																	onerror: "this.style.opacity='0'" rescue nil %>
-										<div class="text-sm">
+										<div class="text-sm text-gray-800">
 											<%= organizer.details_name %>
 										</div>
 									<% end %>
@@ -161,45 +147,40 @@
 					<% end %>
 					<% if @similar_events.present? %>
 						<div class="mt-10 mb-5">
-							<h2 class="px-5 font-bold text-gray-800 uppercase font-display">Similares</h2>
-							<div class="grid grid-cols-2">
+							<h2 class="px-5 c-h3">Similares</h2>
+							<div class="grid grid-cols-1 space-y-4 mt-2">
 								<% @similar_events.each do |similar_event| %>
 									<div data-controller="main-sidebar--horizontal-event"
 											 data-main-sidebar--horizontal-event-open-in-sidebar-value="false"
-											 class="flex justify-between py-2 px-5 mb-3">
-										<div class="pr-6">
-											<%= content_tag :a,
-																			href:  event_path(similar_event),
-																			data:  {
-																				action:     'click->main-sidebar--horizontal-event#openEvent',
-																				'event-id': similar_event.id
-																			},
-																			class: 'font-semibold inline text-sm leading-snug mb-1 md:hover:text-brand-500 text-gray-700' do %>
-												<%= similar_event.name %>
-											<% end %>
-										</div>
-										<div>
-											<div data-controller="ripple" class="overflow-hidden relative w-24 rounded shadow-xs ripple ripple-white">
-												<%= link_to event_path(similar_event),
-																		data: {
+											 class="flex px-5">
+										<%= link_to event_path(similar_event),
+																data:     {
+																	action:     'click->main-sidebar--horizontal-event#openEvent',
+																	'event-id': similar_event.id
+																}, class: 'flex-shrink-0 h-16 mr-4 overflow-hidden w-16' do %>
+											<%= image_tag helpers.shrine_image_url(similar_event, :feed), {
+												loading: :lazy,
+												class:   'h-full object-center object-cover rounded-lg w-full border',
+												onerror: "this.style.opacity='0'"
+											} rescue nil %>
+										<% end %>
+										<%= content_tag :a,
+																		href:  event_path(similar_event),
+																		data:  {
 																			action:     'click->main-sidebar--horizontal-event#openEvent',
 																			'event-id': similar_event.id
-																		} do %>
-													<%= image_tag helpers.shrine_image_url(similar_event, :feed), {
-														loading: :lazy,
-														class:   'cursor-pointer w-full object-center object-cover overflow-hidden',
-														onerror: "this.style.opacity='0'"
-													} rescue nil %>
-												<% end %>
-											</div>
-										</div>
+																		},
+																		class: 'text-sm inline text-sm leading-snug md:hover:text-brand-500 text-gray-800' do %>
+											<%= similar_event.name %>
+										<% end %>
 									</div>
-								<% end %></div>
+								<% end %>
+							</div>
 						</div>
 					<% end %>
 				</div>
 			</div>
-			<div data-action="click->main-sidebar--large-event#close" class="fixed z-10 w-screen h-screen"></div>
+			<!--			<div data-action="click->main-sidebar--large-event#close" class="fixed z-10 w-screen h-screen"></div>-->
 		</div>
 	<% end %>
 <% end %>
