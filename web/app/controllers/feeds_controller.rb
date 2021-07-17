@@ -8,15 +8,9 @@ class FeedsController < ApplicationController
 	def index
 		# Timecop.freeze("2019-09-1")
 
-		gon.push({
-							 :env             => Rails.env,
-							 :user_id         => current_user.try(:id),
-							 :user_first_name => current_user.try(:first_name)
-						 })
-
 		@upcoming_events = requested_events
 		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
-		@movies          = CineFilm.joins(:screenings).includes(:cinemas).where("screenings.day >= ?", Date.current).all.uniq
+		@movies          = CineFilm.includes(:cinemas).active.uniq
 
 		if @stimulus_reflex
 			render layout: false

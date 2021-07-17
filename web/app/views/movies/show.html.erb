@@ -1,128 +1,134 @@
 <% content_for :meta_title, "Filme #{@movie.title} nos cinemas de Porto Alegre - RS" %>
 <%= notice %>
 
-<section id="<%= dom_id @movie %>" class="mx-auto mt-12 max-w-screen-lg">
-	<div class="flex flex-col min-h-screen mb-32">
-		<%= image_tag shrine_image_url(@movie, :medium), {
-			loading: :lazy,
-			title:   @movie.title,
-			alt:     "Filme #{@movie.title}",
-			class:   'h-auto bg-white object-cover rounded-lg shadow-lg w-32 mx-auto',
-			style:   'min-height: 195px',
-			onerror: "this.style.opacity='0'"
-		} rescue nil %>
-		<div class="flex flex-col items-center mt-6 space-y-3">
-			<div class="text-center">
-				<h1 class="inline-block text-2xl font-semibold leading-tight text-gray-900">
-					<%= @movie.title %>
-				</h1>
-				<div class="italic">
-					<%= @movie&.genres&.join(", ") %>
+<% cache ['movies', @movies.max] do %>
+	<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false) %>
+<% end %>
+
+<% cache @movie do %>
+	<section id="<%= dom_id @movie %>" class="mx-auto mt-12 max-w-screen-lg">
+		<div class="flex flex-col min-h-screen mb-32">
+			<%= image_tag shrine_image_url(@movie, :medium), {
+				loading: :lazy,
+				title:   @movie.title,
+				alt:     "Filme #{@movie.title}",
+				class:   'h-auto bg-white object-cover rounded-lg shadow-lg w-32 mx-auto',
+				style:   'min-height: 195px',
+				onerror: "this.style.opacity='0'"
+			} rescue nil %>
+			<div class="flex flex-col items-center mt-6 space-y-3">
+				<div class="text-center">
+					<h1 class="inline-block text-2xl font-semibold leading-tight text-gray-900">
+						<%= @movie.title %>
+					</h1>
+					<div class="italic">
+						<%= @movie&.genres&.join(", ") %>
+					</div>
 				</div>
-			</div>
-			<% if @movie.trailer %>
-				<a href="<%= @movie.trailer %>" rel="nofollow" target="_blank" class="inline-block text-center">
-					<div class="border border-brand-300 flex px-2 py-1 rounded-full text-gray-600 w-content items-center">
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 fill-current text-brand-600" viewBox="0 0 20 20" fill="currentColor">
-							<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
-						</svg>
-						<span class="font-semibold text-brand-600">
+				<% if @movie.trailer %>
+					<a href="<%= @movie.trailer %>" rel="nofollow" target="_blank" class="inline-block text-center">
+						<div class="border border-brand-300 flex px-2 py-1 rounded-full text-gray-600 w-content items-center">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 fill-current text-brand-600" viewBox="0 0 20 20" fill="currentColor">
+								<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+							</svg>
+							<span class="font-semibold text-brand-600">
 							Ver trailer
 						</span>
-					</div>
-				</a>
-			<% end %>
-			<div class="w-11/12 md:w-7/12 text-center mx-auto">
-				<%= @movie.description %>
-			</div>
-		</div>
-
-		<div class="gap-0 grid grid-cols-12 grid-flow-col max-w-screen-lg md:gap-10 md:px-0 mt-20 px-5">
-			<div class="col-span-12 md:col-span-9 mx-auto space-y-24">
-				<% @movie.screenings&.order("day ASC")&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
-					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
-						<div class="">
-							<div class="grid grid-cols-4">
-								<div class="text-sm mb-3 col-span-3 pr-5">
-									<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="font-bold text-xl text-gray-800">
-										<%= cinema_name_group[0][0] %>
-									</h2>
-									<%= cinema_name_group[1][0]&.cinema&.address %>
-									<% if cinema_name_group[1][0]&.cinema&.neighborhood&.present? %>
-										‧
-										<span class="font-semibold">Bairro próximo:</span> <%= cinema_name_group[1][0]&.cinema&.neighborhood %>
-									<% end %>
-									<% if cinema_name_group[1][0]&.cinema&.reference_place&.present? %>
-										‧
-										<span class="font-semibold">Local:</span> <%= cinema_name_group[1][0]&.cinema&.reference_place %>
-									<% end %>
-									<% if cinema_name_group[1][0]&.cinema&.lower_price&.present? %>
-										‧
-										<span class="font-semibold">Menor preço da inteira:</span> <%= number_to_currency cinema_name_group[1][0]&.cinema&.lower_price, locale: 'pt-BR' %>
-									<% end %>
-									<% if cinema_name_group[1][0]&.cinema&.google_maps&.present? %>
-										‧
-										<a href="<%= cinema_name_group[1][0]&.cinema&.google_maps %>" rel="nofollow" target="_blank" class="text-brand-600 font-semibold">Abrir
-											no Google Maps</a>
-									<% end %>
-								</div>
-								<div class="col-span-1 flex items-center justify-end">
-									<% if cinema_name_group[1][0]&.cinema&.website&.present? %>
-										<a href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="bg-brand-200 font-semibold hover:scale-105 inline-block md:transform px-3 py-1 rounded-full text-brand-700 text-sm transition-transform">
-											Ver site oficial
-										</a>
-									<% end %>
-								</div>
-							</div>
-							<div class="gap-1 grid grid-cols-1 grid-flow-row md:grid-cols-3">
-								<% cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
-									<div class="p-3 bg-gray-100 rounded">
-										<h3 class="font-semibold text-gray-700 inline">
-											<%= day_of_week(screening_day_group[0]).titleize %>
-										</h3>
-										<span class="text-xs"><%= screening_day_group[0].strftime('%d/%m/%y') %></span>
-										<div class="space-y-1">
-											<% screening_day_group[1].filter { |s| s.times&.any? }.each do |screening| %>
-												<div class="">
-													<div class="italic text-xs">
-														<%= screening.language %>
-														<span class="text-xxs text-gray-500"><%= screening.screen_type %></span>
-													</div>
-													<div class="flex flex-wrap mt-1">
-														<% screening.times&.each do |time| %>
-															<div class="rounded-full text-sm bg-white w-content px-2 py-1 mr-1 mb-1">
-																<%= time %>
-															</div>
-														<% end %>
-													</div>
-												</div>
-											<% end %>
-										</div>
-									</div>
-								<% end %>
-							</div>
 						</div>
-					<% end %>
+					</a>
 				<% end %>
+				<div class="w-11/12 md:w-7/12 text-center mx-auto">
+					<%= @movie.description %>
+				</div>
 			</div>
-			<div class="col-span-3 hidden md:block">
-				<div class="">
-					<h4 class="font-bold text-xl mb-2 text-gray-800">Cinemas</h4>
-					<div class="space-y-3">
-						<% @cinemas&.each_with_index do |cinema, index| %>
-							<a data-controller="scroll-to-anchor-link"
-								 data-action="click->scroll-to-anchor-link#scrollTo"
-								 data-turbo="false"
-								 data-scroll-to-anchor-link-url-value="#<%= cinema.slug %>"
-								 class="block cursor-pointer hover:underline text-sm leading-tight">
-								<%= cinema.display_name %>
-							</a>
+
+			<div class="gap-0 grid grid-cols-12 grid-flow-col max-w-screen-lg md:gap-10 md:px-0 mt-20 px-5">
+				<div class="col-span-12 md:col-span-9 mx-auto space-y-24">
+					<% @movie.screenings&.includes(:cinema)&.order("day ASC")&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
+						<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
+							<div class="">
+								<div class="grid grid-cols-4">
+									<div class="text-sm mb-3 col-span-3 pr-5">
+										<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="font-bold text-xl text-gray-800">
+											<%= cinema_name_group[0][0] %>
+										</h2>
+										<%= cinema_name_group[1][0]&.cinema&.address %>
+										<% if cinema_name_group[1][0]&.cinema&.neighborhood&.present? %>
+											‧
+											<span class="font-semibold">Bairro próximo:</span> <%= cinema_name_group[1][0]&.cinema&.neighborhood %>
+										<% end %>
+										<% if cinema_name_group[1][0]&.cinema&.reference_place&.present? %>
+											‧
+											<span class="font-semibold">Local:</span> <%= cinema_name_group[1][0]&.cinema&.reference_place %>
+										<% end %>
+										<% if cinema_name_group[1][0]&.cinema&.lower_price&.present? %>
+											‧
+											<span class="font-semibold">Menor preço da inteira:</span> <%= number_to_currency cinema_name_group[1][0]&.cinema&.lower_price, locale: 'pt-BR' %>
+										<% end %>
+										<% if cinema_name_group[1][0]&.cinema&.google_maps&.present? %>
+											‧
+											<a href="<%= cinema_name_group[1][0]&.cinema&.google_maps %>" rel="nofollow" target="_blank" class="text-brand-600 font-semibold">Abrir
+												no Google Maps</a>
+										<% end %>
+									</div>
+									<div class="col-span-1 flex items-center justify-end">
+										<% if cinema_name_group[1][0]&.cinema&.website&.present? %>
+											<a href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="bg-brand-200 font-semibold hover:scale-105 inline-block md:transform px-3 py-1 rounded-full text-brand-700 text-sm transition-transform">
+												Ver site oficial
+											</a>
+										<% end %>
+									</div>
+								</div>
+								<div class="gap-1 grid grid-cols-1 grid-flow-row md:grid-cols-3">
+									<% cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
+										<div class="p-3 bg-gray-100 rounded">
+											<h3 class="font-semibold text-gray-700 inline">
+												<%= day_of_week(screening_day_group[0]).titleize %>
+											</h3>
+											<span class="text-xs"><%= screening_day_group[0].strftime('%d/%m/%y') %></span>
+											<div class="space-y-1">
+												<% screening_day_group[1].filter { |s| s.times&.any? }.each do |screening| %>
+													<div class="">
+														<div class="italic text-xs">
+															<%= screening.language %>
+															<span class="text-xxs text-gray-500"><%= screening.screen_type %></span>
+														</div>
+														<div class="flex flex-wrap mt-1">
+															<% screening.times&.each do |time| %>
+																<div class="rounded-full text-sm bg-white w-content px-2 py-1 mr-1 mb-1">
+																	<%= time %>
+																</div>
+															<% end %>
+														</div>
+													</div>
+												<% end %>
+											</div>
+										</div>
+									<% end %>
+								</div>
+							</div>
 						<% end %>
+					<% end %>
+				</div>
+				<div class="col-span-3 hidden md:block">
+					<div class="">
+						<h4 class="font-bold text-xl mb-2 text-gray-800">Cinemas</h4>
+						<div class="space-y-3">
+							<% @cinemas&.each_with_index do |cinema, index| %>
+								<a data-controller="scroll-to-anchor-link"
+									 data-action="click->scroll-to-anchor-link#scrollTo"
+									 data-turbo="false"
+									 data-scroll-to-anchor-link-url-value="#<%= cinema.slug %>"
+									 class="block cursor-pointer hover:underline text-sm leading-tight">
+									<%= cinema.display_name %>
+								</a>
+							<% end %>
+						</div>
 					</div>
 				</div>
 			</div>
+
+
 		</div>
-
-
-	</div>
-</section>
+	</section>
+<% end %>
