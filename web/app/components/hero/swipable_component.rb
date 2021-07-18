@@ -10,6 +10,10 @@ class Hero::SwipableComponent < ViewComponent::Base
 		events_to_train_or_suggestions
 	end
 
+	def render?
+		show_swipable?
+	end
+
 	private
 
 	def get_suggestions_viewed

@@ -14,7 +14,7 @@
 					</div>
 					<div class="space-x-2 flex select-none">
 						<h2 class="flex items-center text-gray-800 uppercase">
-							<%= link_to day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")), class: 'font-display text-sm', data: { 'turbo-preserve-scroll': true } do %>
+							<%= link_to day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")), class: 'font-display text-sm font-medium', data: { 'turbo-preserve-scroll': true } do %>
 								<% if group[0].to_date.today? %>
 									Hoje, <%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
 								<% elsif group[0].to_date == Date.tomorrow %>

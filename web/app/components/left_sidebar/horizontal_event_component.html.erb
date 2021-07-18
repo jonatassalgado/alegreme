@@ -1,7 +1,7 @@
 <%= content_tag :div, id: dom_id(@event, :left_sidebar), class: 'duration-300 transition-all bg-white', data: { controller: 'left-sidebar--horizontal-event', 'flip-key': dom_id(@event, :left_sidebar) } do %>
 	<div class="flex relative py-4 pr-4 space-x-3 select-none group tap-highlight-none">
 		<div class="<%= helpers.class_names 'flex flex-col flex-shrink-0 justify-items-center py-1 w-9 text-xs text-center rounded h-content',
-																				{ 'bg-brand-100 text-brand-600 border border-brand-200': @event&.start_time.today?,
+																				{ 'bg-brand-100 text-brand-600': @event&.start_time.today?,
 																					'bg-gray-100 text-gray-800':   !@event&.start_time.today? } %>">
 			<div class="<%= helpers.class_names('font-semibold': @event&.start_time.today?) %>">
 				<%= l(@event.start_time, format: "%-d") %>
@@ -24,7 +24,7 @@
 													action:     'click->left-sidebar--horizontal-event#openEvent',
 													'event-id': @event.id
 												},
-												class: 'md:hover:underline text-sm' do %>
+												class: 'md:hover:underline text-sm font-medium' do %>
 					<%= @event.name %>
 				<% end %>
 			</div>

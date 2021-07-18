@@ -1,4 +1,4 @@
-<div id="<%= @id %>" data-turbo-permanent class="max-w-screen-lg mx-auto py-3" data-controller="persist-horizontal-scroll slider" data-model="movie" data-slider-distance-value="400" data-persist-horizontal-scroll-value="0">
+<div id="<%= @id %>" data-turbo-permanent class="max-w-screen-lg mx-auto" data-controller="persist-horizontal-scroll slider" data-model="movie" data-slider-distance-value="400" data-persist-horizontal-scroll-value="0">
 	<% if @title %>
 		<h2 class="px-5 c-h2">
 			<%= @title %>
@@ -23,7 +23,7 @@
 		</div>
 		<div data-slider-target="scroller"
 				 data-persist-horizontal-scroll-target="scroller"
-				 class="py-3 scrollx">
+				 class="border px-5 py-5 rounded-lg scrollx">
 			<div class="px-5 md:px-0 grid grid-flow-col gap-2 w-content grid-after-margin">
 				<% @movies.each do |movie| %>
 					<div class="flex flex-col w-24 transition-transform transform group md:hover:scale-105">
@@ -32,12 +32,12 @@
 								loading: :lazy,
 								title:   movie.title,
 								alt:     "Filme #{movie.title}",
-								class:   'border shadow-sm group-hover:shadow bg-brand-100  object-center object-cover rounded',
-								style:   'min-height: 130px',
+								class:   'border shadow-sm group-hover:shadow bg-white object-center object-cover rounded',
+								style:   'min-height: 145px',
 								onerror: "this.style.opacity='0'"
 							} rescue nil %>
-							<%= tag.div helpers.limit_name_size(movie.title, 24), class: 'leading-tight mt-2 inline-block text-xs text-center font-semibold text-gray-800' %>
-							<div class="mt-1 leading-tight text-center text-xxs"><%= movie.genres&.join(", ") %></div>
+							<%= tag.div helpers.limit_name_size(movie.title, 24), class: 'leading-tight mt-2 inline-block text-xs text-center font-semibold text-gray-900' %>
+							<div class="mt-1 leading-tight text-center text-xxs text-gray-700"><%= movie.genres&.join(", ") %></div>
 						<% end %>
 					</div>
 				<% end %>

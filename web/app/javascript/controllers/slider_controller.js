@@ -63,7 +63,7 @@ export default class extends ApplicationController {
             } else {
                 this.leftTarget.classList.remove('hidden')
             }
-            if (scrollLeft + offsetWidth === scrollWidth) {
+            if (scrollLeft + offsetWidth >= scrollWidth - 50) {
                 this.rightTarget.classList.add('hidden')
             } else {
                 this.rightTarget.classList.remove('hidden')
