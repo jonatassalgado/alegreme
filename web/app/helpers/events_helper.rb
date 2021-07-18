@@ -1,7 +1,7 @@
 module EventsHelper
 
 	def is_new_event? event
-		event.created_at > (DateTime.now - 24.hours)
+		event.created_at > (DateTime.now - 48.hours)
 	end
 
 	def time_until event
