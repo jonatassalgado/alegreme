@@ -22,34 +22,35 @@
 						data:    {
 							'event-id': @event.id
 						},
-						class:   'cursor-pointer object-center object-cover h-full w-full rounded md:rounded-lg',
+						class:   'border cursor-pointer object-center object-cover h-full w-full rounded md:rounded-lg',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
 				<% end %>
 				<% if helpers.is_new_event? @event %>
-					<div title="Criado nas últimas 48 horas" class="absolute -top-2 left-3 py-1 px-2 font-semibold bg-white rounded-full border border-gray-100 shadow text-brand-600 text-xxs">NOVO</div>
+					<div title="Criado nas últimas 48 horas" class="absolute left-1 -top-2 py-1 px-2 font-semibold bg-white rounded-full border border-gray-100 shadow md:left-3 text-brand-600 text-xxs">NOVO</div>
 				<% end %>
 			</div>
 		</div>
-		<div class="pl-6">
-			<div class="flex items-center space-x-2 text-sm">
-				<span class="flex -space-x-2">
+		<div class="-mt-1.5 pl-6">
+			<div class="inline items-center text-sm md:flex md:space-x-2">
+				<span class="hidden -space-x-2 md:flex">
 					<% @event.organizers[0...1].each do |organizer| %>
 						<%= link_to organizer_path(organizer), class: 'inline-block' do %>
 							<%= image_tag helpers.shrine_image_url(organizer, :sm), {
 								loading: :lazy,
 								title:   organizer.details_name,
 								alt:     "Organizador #{organizer.details_name}",
-								class:   'border-2 border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6',
+								class:   'border border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6',
 								onerror: "this.style.opacity='0'"
 							} rescue nil %>
 						<% end %>
 					<% end %>
 				</span>
-				<span class="text-gray-700">·</span>
-				<span class="text-gray-700">
+				<span class="hidden text-gray-700 md:inline">·</span>
+				<span class="inline text-gray-700 md:inline-block">
 							<%= helpers.format_hour @event.start_time %>h
-							</span>
+				</span>
+				<span class="text-gray-700 md:hidden">·</span>
 				<div class="hidden md:inline">
 					<span class="text-gray-700">·</span>
 					<span class="text-gray-700">
@@ -67,11 +68,11 @@
 											class: 'text-sm md:text-base c-h3 inline md:hover:text-brand-600 mb-1' do %>
 				<%= @event.name %>
 			<% end %>
-			<div class="inline pl-2 text-sm md:pl-0">
-				<span>
+			<div class="inline text-sm">
+				<span class="hidden md:inline">
 						·
 				</span>
-				<span class="font-semibold text-brand-600">
+				<span class="hidden font-semibold md:inline text-brand-600">
 					<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
 				<span>
@@ -88,8 +89,9 @@
 			<!--				<%#= helpers.format_hour @event.start_time %>h ·-->
 			<%#= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 			<!--			</div>-->
-			<div class="<%= helpers.class_names('-ml-3 md:ml-0 flex transition-opacity duration-150 mt-2',
-																					{ 'md:group-hover:opacity-100  md:opacity-0': !@user&.like_or_dislike?(@event) }) %>">
+			<div class="<%= helpers.class_names('flex transition-opacity duration-150',
+																					{ 'mt-1 -ml-3 md:group-hover:opacity-100  md:opacity-0': !@user&.like_or_dislike?(@event),
+																						'mt-2':                                           @user&.like_or_dislike?(@event) }) %>">
 				<% unless @user&.dislike?(@event) %>
 					<%= content_tag :div,
 													id:    dom_id(@event, :like),
@@ -99,7 +101,7 @@
 														component:  'horizontal-event'
 													},
 													class: helpers.class_names('mr-1 cursor-pointer duration-100 ease-linear flex font-medium group hover:bg-brand-100 px-2 py-1 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform',
-																										 { 'bg-brand-100 px-2 py-1 -mt-1': @user&.like?(@event) }) do %>
+																										 { 'bg-brand-100 px-2 py-1': @user&.like?(@event) }) do %>
 						<svg class="<%= helpers.class_names 'h-4 stroke-current group-hover:text-brand-600',
 																								{ 'text-gray-500':               !@user&.like?(@event),
 																									'text-brand-600 fill-current': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +129,7 @@
 										</svg>-->
 				<%# end %>
 				<%# end %>
-				<div class="<%= helpers.class_names('md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1',
+				<div class="<%= helpers.class_names('hidden md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1',
 																						{ 'ml-2': !@user&.like?(@event) }) %>"
 						 data-controller="share-button"
 						 data-share-button-text="<%= strip_tags(helpers.limit_description_size(@event.description)) %>"
