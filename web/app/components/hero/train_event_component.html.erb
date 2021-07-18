@@ -8,9 +8,9 @@
 				</svg>
 
 			<% end %>
-			<%= content_tag :div, data: { action: 'click->hero--train-event#dislike', 'event-id': @event.id }, class: 'w-12 h-12 h-full bg-gray-50 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-gray-600 text-sm transform transition-transform' do %>
+			<%= content_tag :div, data: { action: 'click->hero--train-event#dislike', 'event-id': @event.id }, class: 'w-12 h-12 h-full bg-gray-50 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-gray-400 text-sm transform transition-transform' do %>
 
-				<svg class="w-6 h-6 text-gray-600 stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg class="w-6 h-6 stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/>
 				</svg>
 			<% end %>
@@ -26,13 +26,13 @@
 											class: 'c-h3 block md:hover:text-brand-600 mb-1' do %>
 				<%= @event.name %>
 			<% end %>
-			<div class="mt-2 text-gray-700 text-sm">
+			<div class="mt-2 text-gray-800 text-sm">
 				<%= @event&.categories_display_name %>
 				· <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
 			</div>
 			<% unless helpers.mobile_device? %>
-				<div class="font-light leading-normal mt-2 text-gray-500 text-xs">
-					<%= helpers.limit_description_size @event.description %>
+				<div class="font-light mt-2 text-gray-700 text-sm">
+					<%= helpers.limit_description_size @event.description, 80 %>
 				</div>
 			<% end %>
 		</div>

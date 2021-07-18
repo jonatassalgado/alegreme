@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		<div class="pl-6">
-			<div class="flex items-center space-x-2">
+			<div class="flex items-center space-x-2 text-sm">
 				<span class="flex -space-x-2">
 					<% @event.organizers[0...1].each do |organizer| %>
 						<%= link_to organizer_path(organizer), class: 'inline-block' do %>
@@ -46,13 +46,13 @@
 						<% end %>
 					<% end %>
 				</span>
-				<span class="text-gray-700 text-sm">·</span>
-				<span class="text-gray-700 text-sm">
+				<span class="text-gray-700">·</span>
+				<span class="text-gray-700">
 							<%= helpers.format_hour @event.start_time %>h
 							</span>
 				<div class="hidden md:inline">
-					<span class="text-gray-700 text-sm">·</span>
-					<span class="text-gray-700 text-sm">
+					<span class="text-gray-700">·</span>
+					<span class="text-gray-700">
   					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
   				</span>
 				</div>
@@ -64,28 +64,31 @@
 												action:                  'click->main-sidebar--horizontal-event#openEvent',
 												'event-id':              @event.id
 											},
-											class: 'c-h3 inline md:inline-block md:hover:text-brand-600 mb-1' do %>
+											class: 'c-h3 inline md:hover:text-brand-600 mb-1' do %>
 				<%= @event.name %>
 			<% end %>
-			<div class="leading-tight inline md:inline-block pl-2 md:pl-0">
-				<span class="text-sm text-brand-600">
-					<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
-				</span>
-				<span class="px-1 text-sm text-gray-400">
+			<div class="inline pl-2 text-sm md:pl-0">
+				<span>
 						·
 				</span>
-				<span class="text-sm text-gray-500 md:hidden">
+				<span class="font-semibold text-brand-600">
+					<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+				</span>
+				<span>
+						·
+				</span>
+				<span class="text-gray-500 md:hidden">
 					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
-				<span class="font-light hidden leading-tight md:inline text-gray-700 text-xs">
-					<%= helpers.limit_description_size @event.description %>
+				<span class="hidden font-light text-gray-700 md:inline">
+					<%= helpers.limit_description_size @event.description, 80 %>
 				</span>
 			</div>
-			<!--			<div class="text-sm text-gray-500">-->
+			<!--			<div class="text-gray-500">-->
 			<!--				<%#= helpers.format_hour @event.start_time %>h ·-->
 			<%#= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 			<!--			</div>-->
-			<div class="<%= helpers.class_names('flex transition-opacity duration-150 mt-1 mt-3',
+			<div class="<%= helpers.class_names('flex transition-opacity duration-150 mt-2',
 																					{ 'md:group-hover:opacity-100  md:opacity-0': !@user&.like_or_dislike?(@event) }) %>">
 				<% unless @user&.dislike?(@event) %>
 					<%= content_tag :div,
@@ -95,15 +98,15 @@
 														'event-id': @event.id,
 														component:  'horizontal-event'
 													},
-													class: helpers.class_names('mr-2 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform',
+													class: helpers.class_names('mr-1 cursor-pointer duration-100 ease-linear flex font-medium group hover:bg-brand-100 px-2 py-1 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform',
 																										 { 'bg-brand-100 px-2 py-1 -mt-1': @user&.like?(@event) }) do %>
-						<svg class="<%= helpers.class_names 'group h-5 w-5 stroke-current',
+						<svg class="<%= helpers.class_names 'h-4 stroke-current group-hover:text-brand-600',
 																								{ 'text-gray-500':               !@user&.like?(@event),
 																									'text-brand-600 fill-current': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
 						</svg>
-						<span class="<%= helpers.class_names('ml-1', { 'text-gray-500':  !@user&.like?(@event),
-																													 'text-brand-600': @user&.like?(@event) }) %>">
+						<span class="<%= helpers.class_names('ml-1 group-hover:text-brand-600', { 'text-gray-500':  !@user&.like?(@event),
+																																											'text-brand-600': @user&.like?(@event) }) %>">
 							<%= @user&.like?(@event) ? 'Salvo' : 'Salvar' %>
 						</span>
 					<% end %>
@@ -124,8 +127,8 @@
 										</svg>-->
 				<%# end %>
 				<%# end %>
-				<div class="<%= helpers.class_names('md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform hover:bg-brand-100 -mt-1 px-2 py-1 -mt-1',
-																						{ 'ml-5': !@user&.like?(@event) }) %>"
+				<div class="<%= helpers.class_names('md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1',
+																						{ 'ml-2': !@user&.like?(@event) }) %>"
 						 data-controller="share-button"
 						 data-share-button-text="<%= strip_tags(helpers.limit_description_size(@event.description)) %>"
 						 data-share-button-title="<%= @event.name %>"
