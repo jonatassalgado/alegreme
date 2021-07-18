@@ -1,20 +1,23 @@
 <%= content_tag :div, id: dom_id(@event, :left_sidebar), class: 'duration-300 transition-all bg-white', data: { controller: 'left-sidebar--horizontal-event', 'flip-key': dom_id(@event, :left_sidebar) } do %>
-	<div class="flex group pr-5 py-3 relative select-none space-x-2 tap-highlight-none">
-		<div class="bg-gray-100 flex flex-col justify-items-center px-1.5 py-1 rounded-md text-center text-xs w-content h-content">
-			<div class="font-display text-gray-700">
+	<div class="flex relative py-4 pr-4 space-x-3 select-none group tap-highlight-none">
+		<div class="<%= helpers.class_names 'flex flex-col flex-shrink-0 justify-items-center py-1 w-9 text-xs text-center rounded h-content',
+																				{ 'bg-brand-100 text-brand-600 border border-brand-200': @event&.start_time.today?,
+																					'bg-gray-100 text-gray-800':   !@event&.start_time.today? } %>">
+			<div class="<%= helpers.class_names('font-semibold': @event&.start_time.today?) %>">
 				<%= l(@event.start_time, format: "%-d") %>
 			</div>
-			<div class="text-xxs -mt-1 text-gray-600">
+			<div class="-mt-1 text-xxs">
 				<%= l(@event.start_time, format: "%^b") %>
 			</div>
 		</div>
-		<div class="">
+		<div class="<%= helpers.class_names({ 'text-brand-600': @event&.start_time.today?,
+																					'text-gray-800':  !@event&.start_time.today? }) %>">
 			<div class="text-xs">
 				<%= tag.span "#{helpers.format_hour(@event.start_time)}h" %>
-				· <%= l(@event.start_time.to_date, format: :week).titlecase %>
+				· <%= helpers.day_of_week @event.start_time %>
 				· <%= "daqui #{distance_of_time_in_words(@event.start_time, DateTime.now)}" %>
 			</div>
-			<div class="mb-1 leading-snug text-gray-700">
+			<div class="mb-1 leading-snug">
 				<%= content_tag :a,
 												href:  event_path(@event),
 												data:  {
