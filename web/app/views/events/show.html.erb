@@ -97,16 +97,15 @@
     "validFrom": "<%= @event.ld_json.valid_from %>"
   }
 }
-
 </script>
 
 <%= render Modal::SignInComponent.new(text: nil) %>
 
 <% if already_happened? @event %>
-	<div class="bg-brand-100 border border-brand-200 flex font-semibold items-center max-w-screen-lg mb-3 md:mb-0 md:mt-5 md:mx-auto mt-1 mx-4 p-5 rounded-lg space-x-2 text-brand-600">
-		<div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
+	<div class="flex items-center p-5 mx-4 mt-1 mb-3 space-x-2 max-w-screen-lg font-semibold rounded-lg border bg-brand-100 border-brand-200 md:mb-0 md:mt-5 md:mx-auto text-brand-600">
+		<div class="flex flex-shrink-0 justify-center items-center mx-auto w-12 h-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
 			<!-- Heroicon name: exclamation -->
-			<svg class="h-6 w-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+			<svg class="w-6 h-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
 			</svg>
 		</div>
@@ -116,36 +115,36 @@
 	</div>
 <% end %>
 
-<section id="page" class="max-w-screen-lg grid-cols-8 pb-10 md:grid md:gap-10 md:mt-10 md:mx-auto">
+<section id="page" class="grid-cols-8 pb-10 max-w-screen-lg md:grid md:gap-10 md:mt-10 md:mx-auto">
 	<div class="md:col-span-5">
 		<%= render(LargeEventComponent.new(event: @event, user: current_user)) %>
 	</div>
-	<div class="pt-24 md:col-span-3 md:mb-0 mt-5 md:mt-0 space-y-8">
+	<div class="mt-5 space-y-8 md:col-span-3 md:mb-0 md:mt-0">
 		<% if will_happen? @event %>
-			<div class="cursor-pointer flex hidden items-center md:block bottom-auto relative rounded-xl w-auto p-3 space-y-2 text-gray-600 text-sm">
-				<a href="<%= @event.source_url %>" target="_blank" rel="nofollow" class="group items-center cursor-pointer duration-50 flex group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content bg-gray-100 text-gray-600">
-					<svg class="group-hover:text-brand-700 transition-colors h-5 text-gray-400 stroke-current mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<div class="flex hidden relative bottom-auto items-center p-3 space-y-2 w-auto text-sm text-gray-600 rounded-xl cursor-pointer md:block">
+				<a href="<%= @event.source_url %>" target="_blank" rel="nofollow" class="inline-block flex justify-start items-center py-2 px-4 mr-3 mb-3 text-gray-600 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none group duration-50 group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none w-content">
+					<svg class="mr-3 h-5 text-gray-400 transition-colors stroke-current group-hover:text-brand-700" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
 					</svg>
 					<div>Abrir página oficial</div>
 				</a>
 				<% if @event&.ticket_url %>
-					<a href="<%= @event.ticket_url %>" target="_blank" rel="nofollow" class="group items-center cursor-pointer duration-50 flex group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content bg-gray-100 text-gray-600">
-						<svg class="fill-current group-hover:text-brand-700 h-5 text-gray-400 transition-colors mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<a href="<%= @event.ticket_url %>" target="_blank" rel="nofollow" class="inline-block flex justify-start items-center py-2 px-4 mr-3 mb-3 text-gray-600 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none group duration-50 group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none w-content">
+						<svg class="mr-3 h-5 text-gray-400 transition-colors fill-current group-hover:text-brand-700" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M0 0h24v24H0V0z" fill="none"/>
 							<path d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM9.07 16L12 14.12 14.93 16l-.89-3.36 2.69-2.2-3.47-.21L12 7l-1.27 3.22-3.47.21 2.69 2.2z"/>
 						</svg>
 						<div>Comprar ingressos</div>
 					</a>
 				<% end %>
-				<div class="group items-center cursor-pointer duration-50 flex group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content bg-gray-100 text-gray-600"
+				<div class="inline-block flex justify-start items-center py-2 px-4 mr-3 mb-3 text-gray-600 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none group duration-50 group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none w-content"
 						 data-controller="share-button"
 						 data-share-button-text="<%= strip_tags(limit_description_size(@event.description, 160)) %>"
 						 data-share-button-title="<%= @event.name %>"
 						 data-share-button-url="<%= event_url(@event, format: :html) %>"
 						 data-action="click->share-button#share">
 					<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
-					<svg class="group-hover:text-brand-700 transition-colors h-4 text-gray-400 fill-current mr-3" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg class="mr-3 h-4 text-gray-400 transition-colors fill-current group-hover:text-brand-700" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M15 14.08C14.24 14.08 13.56 14.38 13.04 14.85L5.91 10.7C5.96 10.47 6 10.24 6 10C6 9.76 5.96 9.53 5.91 9.3L12.96 5.19C13.5 5.69 14.21 6 15 6C16.66 6 18 4.66 18 3C18 1.34 16.66 0 15 0C13.34 0 12 1.34 12 3C12 3.24 12.04 3.47 12.09 3.7L5.04 7.81C4.5 7.31 3.79 7 3 7C1.34 7 0 8.34 0 10C0 11.66 1.34 13 3 13C3.79 13 4.5 12.69 5.04 12.19L12.16 16.35C12.11 16.56 12.08 16.78 12.08 17C12.08 18.61 13.39 19.92 15 19.92C16.61 19.92 17.92 18.61 17.92 17C17.92 15.39 16.61 14.08 15 14.08Z"/>
 					</svg>
 					<div>Compartilhar</div>
@@ -169,13 +168,13 @@
 		</div>
 
 		<div class="py-4 space-y-3">
-			<h2 class="c-h3 px-5">Similares</h2>
+			<h2 class="px-5 c-h3">Similares</h2>
 			<div class="md:space-y-2">
 				<% if @similar_events.present? %>
 					<% @similar_events.each do |similar_event| %>
-						<div class="flex justify-start px-5 py-3 md:border-0">
+						<div class="flex justify-start py-3 px-5 md:border-0">
 							<div>
-								<div data-controller="ripple" class="relative w-16 h-16 rounded overflow-hidden ripple ripple-white">
+								<div data-controller="ripple" class="overflow-hidden relative w-16 h-16 rounded ripple ripple-white">
 									<%= link_to event_path(similar_event),
 															data: {
 																action:     'click->main-sidebar--horizontal-event#openEvent',
@@ -211,29 +210,29 @@
 			</div>
 		</div>
 
-		<%= link_to category_events_path(@event&.categories_url), class: 'mx-5 md:mx-0 md:hover:bg-brand-600 bg-brand-500 inline-block cursor-pointer overflow-hidden bg-white rounded-lg md:rounded-xl md:shadow-2xl space-y-3' do %>
-			<div class="flex items-center justify-between p-5 pb-0 flex items-center justify-between">
-				<h2 class="font-bold font-display rounded-lg text-white text-xl">
+		<%= link_to category_events_path(@event&.categories_url), class: 'bg-white border cursor-pointer inline-block md:hover:bg-brand-100 md:hover:text-brand-600 mx-5 overflow-hidden rounded-lg space-y-3' do %>
+			<div class="flex justify-between items-center p-5 pb-0">
+				<h2 class="text-xl font-bold rounded-lg font-display">
 					<%= @event&.categories_display_name %>
 				</h2>
-				<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current text-white w-6" fill="none" viewBox="0 0 24 24">
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-6 stroke-current" fill="none" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
 				</svg>
 			</div>
-			<div class="pb-5 px-5 text-white">
-				Ver todos os eventos da categoria <%= @event&.categories_display_name %> em Porto Alegre
+			<div class="px-5 pb-5">
+				Ver todos os eventos da categoria <%= @event&.categories_display_name&.underscore %> em Porto Alegre
 			</div>
 		<% end %>
 	</div>
 
-	<div class="select-none tap-highlight-none fixed bottom-0 flex items-center w-screen px-3 py-2 space-x-2 text-sm font-medium text-gray-500 cursor-pointer md:hidden bg-gray-300">
-		<a href="<%= @event.source_url %>" target="_blank" rel="nofollow" class="select-none flex items-center justify-center flex-1 py-3 space-x-2 bg-white rounded shadow-sm">
-			<div>Abrir no facebook</div>
-			<svg class="h-4 text-gray-400 fill-current" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M16 16H2V2H9V0H2C0.89 0 0 0.9 0 2V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V9H16V16ZM11 0V2H14.59L4.76 11.83L6.17 13.24L16 3.41V7H18V0H11Z"/>
+	<div class="flex fixed bottom-0 py-2 px-3 space-x-2 w-screen text-sm font-medium text-gray-500 bg-white border-t cursor-pointer select-none md:hidden tap-highlight-none">
+		<a href="<%= @event.source_url %>" target="_blank" rel="nofollow" class="flex-1 justify-center space-x-2 select-none c-chip">
+			<div>Site oficial</div>
+			<svg class="h-5 stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
 			</svg>
 		</a>
-		<div class="select-none flex items-center justify-center flex-1 py-3 space-x-2 bg-white rounded shadow-sm"
+		<div class="flex-1 justify-center space-x-2 select-none c-chip"
 				 data-controller="share-button"
 				 data-share-button-text="<%= strip_tags(limit_description_size(@event.description, 160)) %>"
 				 data-share-button-title="<%= @event.name %>"
@@ -241,14 +240,14 @@
 				 data-action="click->share-button#share">
 			<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
 			<div>Compartilhar</div>
-			<svg class="h-4 text-gray-400 fill-current" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<svg class="h-4 fill-current" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M15 14.08C14.24 14.08 13.56 14.38 13.04 14.85L5.91 10.7C5.96 10.47 6 10.24 6 10C6 9.76 5.96 9.53 5.91 9.3L12.96 5.19C13.5 5.69 14.21 6 15 6C16.66 6 18 4.66 18 3C18 1.34 16.66 0 15 0C13.34 0 12 1.34 12 3C12 3.24 12.04 3.47 12.09 3.7L5.04 7.81C4.5 7.31 3.79 7 3 7C1.34 7 0 8.34 0 10C0 11.66 1.34 13 3 13C3.79 13 4.5 12.69 5.04 12.19L12.16 16.35C12.11 16.56 12.08 16.78 12.08 17C12.08 18.61 13.39 19.92 15 19.92C16.61 19.92 17.92 18.61 17.92 17C17.92 15.39 16.61 14.08 15 14.08Z"/>
 			</svg>
 		</div>
 	</div>
 
-	<div data-controller="install" data-install-native="true" data-install-target="button" class="items-center flex select-none tap-highlight-none bottom-20 fixed transform transition-transform translate-y-32 w-full z-30">
-		<span data-action="click->install#install" class="bg-brand-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">
+	<div data-controller="install" data-install-native="true" data-install-target="button" class="flex fixed bottom-20 z-30 items-center w-full transition-transform transform translate-y-32 select-none tap-highlight-none">
+		<span data-action="click->install#install" class="py-3 px-5 mx-auto font-bold text-white bg-white rounded-full shadow-lg bg-brand-500 w-content">
 			Instalar aplicativo
 		</span>
 	</div>

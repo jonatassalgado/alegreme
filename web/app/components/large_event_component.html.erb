@@ -1,24 +1,24 @@
 <%= content_tag :div, id: dom_id(@event), data: { controller: 'large-event' } do %>
-	<div class="bg-white md:mt-0 mt-5 overflow-hidden"
+	<div class="overflow-hidden mt-5 bg-white md:mt-0"
 			 data-event-favorited="<%= @user and @user.like?(@event) if @user and @user %>"
 			 data-event-identifier="<%= @event.id %>"
 			 data-event-description-open="false"
 			 data-event-modifier="single">
 		<div class="flex px-5">
 			<div>
-				<span class="text-sm text-gray-400 font-light">
+				<span class="text-sm font-light text-gray-400">
 				<% if helpers.already_happened? @event %>
 					O evento ocorreu <%= I18n.l(@event.end_time) %>
 				<% else %>
 					Atualizado há <%= time_ago_in_words @event&.updated_at %>
 				<% end %>
 			</span>
-				<h1 class="inline-block font-bold font-display font-medium leading-tight mb-2 md:px-0 md:text-3xl text-2xl text-gray-800 w-full">
+				<h1 class="inline-block mb-2 w-full text-2xl font-medium font-bold leading-tight text-gray-800 font-display md:px-0 md:text-3xl">
 					<%= @event.name %>
 				</h1>
 			</div>
 			<div class="flex">
-				<div class="flex items-center space-x-2 mt-1">
+				<div class="flex items-center mt-1 space-x-2">
 					<% unless @user&.dislike?(@event) %>
 						<%= content_tag :div,
 														id:    dom_id(@event, :like),
@@ -62,17 +62,17 @@
 		<div class="relative px-5">
 			<img src="<%= @event.image[:original].try { |image| image.url(public: true) } %>"
 					 alt="<%= @event.name %>"
-					 class="bg-gray-50 h-60 md:h-80 object-center object-cover rounded-lg w-full">
-			<div class="absolute top-0 right-0 hidden mt-2 mr-2 transition-all duration-150 opacity-0 w-content"
+					 class="object-cover object-center w-full h-60 bg-gray-50 rounded-lg md:h-80">
+			<div class="hidden absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-all duration-150 w-content"
 					 data-controller="share-button"
 					 data-share-button-text="<%= helpers.strip_tags(helpers.limit_description_size(@event.description, 160)) %>"
 					 data-share-button-title="<%= @event.name %>"
 					 data-share-button-url="<%= event_url(@event, format: :html) %>">
-				<div class="relative flex px-3 py-2 mx-auto overflow-hidden text-sm bg-gray-50 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-brand-500 w-content"
+				<div class="flex overflow-hidden relative py-2 px-3 mx-auto text-sm bg-gray-50 rounded-full shadow cursor-pointer ripple ripple-black hover:bg-white hover:text-brand-500 w-content"
 						 data-action="click->share-button#share"
 						 data-controller="ripple">
 					<span>Compartilhar</span>
-					<svg class="w-4 h-4 ml-1 fill-current" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+					<svg class="ml-1 w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
 						<path d="M0 0h24v24H0z" fill="none"/>
 						<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
 					</svg>
@@ -81,8 +81,8 @@
 		</div>
 		<% unless helpers.already_happened? @event %>
 			<div class="flex p-5 border-b border-gray-100">
-				<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-600 bg-brand-100 h-content rounded-lg w-content">
-					<div class="font-bold leading-tight text-sm uppercase">
+				<div class="flex flex-col justify-center py-2 px-3 my-auto mr-3 text-center rounded-lg text-brand-600 bg-brand-100 h-content w-content">
+					<div class="text-sm font-bold leading-tight uppercase">
 						<% if @event.day_of_week['date'] < Date.today + 7 %>
 							<%= I18n.l(@event.day_of_week['date'], format: :week) %>
 						<% else %>
@@ -92,13 +92,13 @@
 					<div class="text-sm"><%= helpers.format_hour @event.start_time %></div>
 				</div>
 
-				<div class="my-auto leading-snug text-gray-600">
+				<div class="leading-snug md:text-base my-auto text-gray-700 text-sm">
 					O evento acontecerá <%= I18n.l(@event.start_time) %>.
 					Daqui <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now %>.
 				</div>
 			</div>
 		<% end %>
-		<div class="flex px-5 py-5 border-b border-gray-100">
+		<div class="flex flex-col py-5 px-5 border-b border-gray-100 md:flex-row">
 			<div class="flex-grow">
 				<%= link_to place_path(@event&.place), class: 'group inline-block flex items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
 					<%#= image_tag @event&.place&.image[:sm].try { |image| image.url(public: true) },
@@ -109,23 +109,23 @@
 						<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>
 					</h2>
 				<% end %>
-				<div class="mt-2 text-sm  leading-tight">
+				<div class="mt-2 text-sm leading-tight">
 					<%= helpers.limit_address_name_size @event.geographic['address'] %>
 				</div>
 			</div>
 			<div class="flex justify-center h-12 align-middle bg-cover group" style="">
-				<%= link_to helpers.google_maps_url(@event.geographic['address']), class: 'flex px-2 py-2 my-auto rounded shadow h-content text-gray-700 group-hover:text-brand-600 group-hover:bg-brand-100' do %>
-					<svg class="h-5 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<%= link_to helpers.google_maps_url(@event.geographic['address']), class: 'border flex group-hover:bg-brand-100 group-hover:text-brand-600 h-content items-center justify-center md:justify-end md:mt-0 mt-3 my-auto px-2 py-2 rounded text-gray-700 text-xs w-full' do %>
+					<svg class="mr-1 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path d="M0 0h24v24H0z" fill="none"/>
 						<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
 					</svg>
-					<div class="text-sm">
-						Abrir no Google Maps
+					<div>
+						Google Maps
 					</div>
 				<% end %>
 			</div>
 		</div>
-		<div class="px-5 py-5">
+		<div class="py-5 px-5">
 			<h2 class="c-h3">Sobre o evento</h2>
 			<div class="mt-2 leading-relaxed break-words text-with-html">
 				<%= @event.description.html_safe %>

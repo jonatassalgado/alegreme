@@ -12,6 +12,8 @@ const TurboModule = (function () {
             let referrer = Turbo.navigator.currentVisit.referrer.absoluteURL;
             if (referrer) {
                 window.history.back()
+            } else {
+                Turbo.visit('/')
             }
         } catch {
             Turbo.visit('/')

@@ -5,7 +5,7 @@
 																					{ 'top-0 pt-5': helpers.mobile_device?,
 																						'top-0':      helpers.mobile_device? && current_page?('/minha-agenda'),
 																						'top-16':     !helpers.mobile_device? && (controller_name == 'feeds') }) %>">
-				<div class="pt-4">
+				<div class="md:pt-4">
 					<div class="text-xs">
 						<%= l(group[0]&.to_date, format: "%d/%m") %>
 						<% if group[0].to_date > Date.today + 6 %>
