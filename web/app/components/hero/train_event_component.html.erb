@@ -27,12 +27,11 @@
 				<%= @event.name %>
 			<% end %>
 			<div class="mt-2 text-gray-800 text-sm">
-				<%= @event&.categories_display_name %>
-				· <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
+				<%= @event&.categories_display_name %> em <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
 			</div>
 			<% unless helpers.mobile_device? %>
 				<div class="font-light mt-2 text-gray-700 text-sm">
-					<%= helpers.limit_description_size @event.description, 80 %>
+					<%= helpers.limit_description_size @event.description, 120 %>
 				</div>
 			<% end %>
 		</div>

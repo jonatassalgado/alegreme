@@ -20,7 +20,7 @@
 				<%= @event.categories_primary_name.titleize %> ·
 				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline capitalize' %>
 			</div>
-			<div class="font-light mt-2 text-gray-700 text-sm">
+			<div class="font-light hidden md:inline-block mt-2 text-gray-700 text-sm">
 				<%= helpers.limit_description_size @event.description, 120 %>
 			</div>
 			<div class="flex mt-3 space-x-4">
