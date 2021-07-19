@@ -2,13 +2,15 @@
 <%= notice %>
 
 <!--<turbo-frame id="movies" target="movie">-->
-<% cache ['movies', @movies.max] do %>
-	<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false, id: 'movies-show', selected: @movie.slug) %>
+<% cache ['movies', @movies&.map(&:id), @movies&.max&.updated_at&.to_i] do %>
+	<div class="md:mt-6">
+		<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false, id: 'movies-show', selected: @movie.slug) %>
+	</div>
 <% end %>
 <!--</turbo-frame>-->
 
 <!--<turbo-frame id="movie">-->
-<% cache @movie do %>
+<% cache [@movie, @movie&.screenings&.max, DateTime.now.day] do %>
 	<section class="mx-auto mt-12 max-w-screen-lg">
 		<div class="flex flex-col mb-32 min-h-screen">
 			<div class="flex flex-col justify-center md:flex-row md:mx-auto md:w-8/12">
