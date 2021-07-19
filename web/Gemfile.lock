@@ -79,6 +79,8 @@ GEM
       momentjs-rails (~> 2.8)
       sassc-rails (~> 2.1)
       selectize-rails (~> 0.6)
+    administrate-field-enum (0.0.9)
+      administrate (~> 0.12)
     administrate-field-jsonb (0.4.3)
       administrate (< 1.0.0)
       rails (>= 4.2, < 7)
@@ -534,6 +536,7 @@ PLATFORMS
 
 DEPENDENCIES
   administrate
+  administrate-field-enum
   administrate-field-jsonb
   administrate-field-shrine
   awesome_print

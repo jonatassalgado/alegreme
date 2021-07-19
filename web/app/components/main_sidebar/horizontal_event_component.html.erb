@@ -91,7 +91,7 @@
 			<!--			</div>-->
 			<div class="<%= helpers.class_names('flex transition-opacity duration-150',
 																					{ 'mt-1 -ml-3 md:group-hover:opacity-100  md:opacity-0': !@user&.like_or_dislike?(@event),
-																						'mt-2':                                           @user&.like_or_dislike?(@event) }) %>">
+																						'mt-2':                                                @user&.like_or_dislike?(@event) }) %>">
 				<% unless @user&.dislike?(@event) %>
 					<%= content_tag :div,
 													id:    dom_id(@event, :like),
@@ -113,22 +113,7 @@
 						</span>
 					<% end %>
 				<% end %>
-				<%# unless @user&.like?(@event) %>
-				<%#= content_tag :div,
-													id:    dom_id(@event, :dislike),
-													data:  {
-														action:     'click->main-sidebar--horizontal-event#dislike',
-														'event-id': @event.id,
-														component:  'horizontal-event'
-													},
-													class: 'cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 hover:text-gray-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform' do %>
-				<!--						<svg class="<%#= helpers.class_names 'h-5 w-5 stroke-current',-->
-																								{ 'text-gray-500 hover:text-gray-600': !@user&.dislike?(@event),
-																									'text-red-500':                      @user&.dislike?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/>
-										</svg>-->
-				<%# end %>
-				<%# end %>
+
 				<div class="<%= helpers.class_names('hidden md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1',
 																						{ 'ml-2': !@user&.like?(@event) }) %>"
 						 data-controller="share-button"
@@ -142,6 +127,10 @@
 					</svg>
 					<div>Compartilhar</div>
 				</div>
+				<% if @user&.admin? %>
+					<div class="flex-grow"></div>
+					<%= link_to 'Editar', edit_admin_event_path(@event), class: 'md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1 jus' %>
+				<% end %>
 			</div>
 		</div>
 	</div>

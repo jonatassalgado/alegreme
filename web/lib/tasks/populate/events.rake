@@ -348,6 +348,8 @@ module PopulateEventsRake
 			event.ticket_url  = item['ticket_url']
 			event.prices      = item['prices']
 			event.source_url  = item['source_url']
+			event.status      = 'active'
+
 			event.datetimes = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 
 			event.geographic.deep_merge!(

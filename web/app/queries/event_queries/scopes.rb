@@ -314,7 +314,7 @@ module EventQueries
 			}
 
 			scope 'active', lambda {
-				where("datetimes[1] > ?", (DateTime.now - 6.hours))
+				where("datetimes[1] > ? AND status = 1", (DateTime.now - 6.hours))
 			}
 
 			scope 'valid', lambda {
