@@ -37,7 +37,8 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<% if content_for? :preload_image %>
-		<link rel="preload" as="image" href="<%= content_for :preload_image %>">
+		<link rel="preconnect" href="<%= content_for :preload_image %>" />
+		<link rel="dns-prefetch" href="<%= content_for :preload_image %>" />
 	<% end %>
 
 	<%= javascript_pack_tag 'application', 'data-turbo-track': 'reload', defer: true %>
