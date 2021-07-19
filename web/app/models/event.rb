@@ -39,9 +39,9 @@ class Event < ApplicationRecord
 	validate :uniq_details_name, on: :create
 	before_validation :parse_datetimes
 
-	belongs_to :place, touch: true
-	has_and_belongs_to_many :organizers, -> { distinct }, touch: true
-	has_and_belongs_to_many :categories, -> { distinct }, touch: true
+	belongs_to :place
+	has_and_belongs_to_many :organizers, -> { distinct }
+	has_and_belongs_to_many :categories, -> { distinct }
 	has_many :likes, as: :likeable, dependent: :destroy
 	has_many :users, through: :likes, source: :likeable, source_type: 'Event'
 	# has_and_belongs_to_many :kinds

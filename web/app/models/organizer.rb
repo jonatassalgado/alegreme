@@ -6,7 +6,7 @@ class Organizer < ApplicationRecord
 
 	validate :uniq_details_name, on: :create
 
-	has_and_belongs_to_many :events, touch: true
+	has_and_belongs_to_many :events
 	has_many :follows, as: :following
 
 	def details_name
