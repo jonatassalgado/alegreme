@@ -5,13 +5,14 @@ class PlaceReflex < ApplicationReflex
 	def follow
 		if current_user
 			@place = Place.find element['data-followable-id']
+			@type  = element['data-type']
 
 			if current_user.follow? @place
 				current_user.unfollow! @place
 			else
 				current_user.follow! @place
 			end
-			morph "#{dom_id(@place, 'follow-button')}", render(FollowButtonComponent.new(followable: @place, user: current_user))
+			morph "#{dom_id(@place, 'follow-button')}", render(FollowButtonComponent.new(followable: @place, user: current_user, type: @type))
 		else
 			show_login_modal
 		end

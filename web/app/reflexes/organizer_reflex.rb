@@ -5,13 +5,14 @@ class OrganizerReflex < ApplicationReflex
 	def follow
 		if current_user
 			@organizer = Organizer.find element['data-followable-id']
+			@type      = element['data-type']
 
 			if current_user.follow? @organizer
 				current_user.unfollow! @organizer
 			else
 				current_user.follow! @organizer
 			end
-			morph "#{dom_id(@organizer, 'follow-button')}", render(FollowButtonComponent.new(followable: @organizer, user: current_user))
+			morph "#{dom_id(@organizer, 'follow-button')}", render(FollowButtonComponent.new(followable: @organizer, user: current_user, type: @type))
 		else
 			show_login_modal
 		end

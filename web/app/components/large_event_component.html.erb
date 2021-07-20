@@ -100,15 +100,17 @@
 		<% end %>
 		<div class="flex flex-col py-5 px-5 border-b border-gray-100 md:flex-row">
 			<div class="flex-grow">
-				<%= link_to place_path(@event&.place), class: 'group inline-block flex items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
-					<%#= image_tag @event&.place&.image[:sm].try { |image| image.url(public: true) },
-														loading: :lazy,
-														class:   'w-8 h-8 rounded-full shadow-sm',
-														onerror: "this.style.opacity='0'" rescue nil %>
-					<h2 class="c-h3">
+				<%= link_to place_path(@event&.place), class: 'inline items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
+					<h2 class="c-h3 inline">
 						<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>
 					</h2>
 				<% end %>
+				·
+				<%= render(FollowButtonComponent.new(
+					user:       @user,
+					followable: @event&.place,
+					type:       'text'
+				)) %>
 				<div class="mt-2 text-sm leading-tight">
 					<%= helpers.limit_address_name_size @event.geographic['address'] %>
 				</div>

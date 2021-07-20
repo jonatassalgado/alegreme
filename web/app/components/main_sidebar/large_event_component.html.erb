@@ -111,11 +111,15 @@
 						</div>
 					</div>
 					<div class="py-5 px-5 border-b border-gray-100">
-						<%= link_to place_path(@event&.place), class: 'group inline-block flex items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
-							<h2 class="c-h3">
-								<%= helpers.limit_place_name_size(@event.place_details_name, 40) %>
-							</h2>
+						<%= link_to place_path(@event&.place), title: @event.place_details_name, class: 'c-h3 inline items-center space-x-2', data: { 'turbo-preserve-scroll': true } do %>
+							<%= helpers.limit_place_name_size(@event.place_details_name, 26) %>
 						<% end %>
+						·
+						<%= render(FollowButtonComponent.new(
+							user:       @user,
+							followable: @event&.place,
+							type:       'text'
+						)) %>
 						<div class="mt-2 text-sm leading-tight text-gray-600">
 							<%= helpers.limit_address_name_size @event.geographic['address'] %> ·
 							<%= link_to 'Abrir no Google Maps', helpers.google_maps_url(@event.geographic['address']), class: 'inline text-brand-600 underline text-xs', target: '_blank' %>
