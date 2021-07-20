@@ -1,5 +1,5 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'transition-opacity' do %>
-	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mt-10">
+	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mt-12">
 		<span class="c-h2 pb-2 pt-10">Minha agenda</span>
 		<div class="capitalize pt-2 flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
 			<div class="flex items-center justify-items-start">
@@ -98,8 +98,8 @@
 					Você não tem eventos salvos na sua agenda
 				</div>
 			<% elsif !@user %>
-				<div class="text-sm text-gray-600">
-					<%= link_to 'Crie uma conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'underline text-brand-500 hover:text-gray-600' %>
+				<div class="pt-2 px-12 text-gray-800 text-sm">
+					<%= link_to 'Crie uma conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'md:hover:underline text-brand-600' %>
 					para salvar seus eventos favoritos
 				</div>
 			<% end %>

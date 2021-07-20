@@ -2,39 +2,38 @@
 
 <div id="main-content" class="gap-16 mx-auto max-w-screen-lg md:grid md:grid-cols-8">
 	<section id="main-sidebar" class="pt-12 space-y-16 col-span-8 md:col-span-5">
-		<div class="space-y-16 mx-auto is-animated sm:container">
-			<% if notice %>
-				<div class="flex items-center p-3 mx-4 mt-1 mb-3 space-x-2 max-w-screen-lg text-sm font-semibold rounded-lg border bg-brand-100 border-brand-200 md:mb-0 md:mt-5 text-brand-600">
-					<div class="flex flex-shrink-0 justify-center items-center mx-auto w-12 h-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
-						<!-- Heroicon name: exclamation -->
-						<svg class="w-6 h-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-						</svg>
-					</div>
-					<div>
-						<%= notice %>
-					</div>
+
+		<% if notice %>
+			<div class="flex items-center p-3 mx-4 mt-1 mb-3 space-x-2 max-w-screen-lg text-sm font-semibold rounded-lg border bg-brand-100 border-brand-200 md:mb-0 md:mt-5 text-brand-600">
+				<div class="flex flex-shrink-0 justify-center items-center mx-auto w-12 h-12 rounded-full bg-brand-100 sm:mx-0 sm:h-10 sm:w-10">
+					<!-- Heroicon name: exclamation -->
+					<svg class="w-6 h-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+					</svg>
 				</div>
-			<% end %>
-			<% unless params[:day] || params[:category] %>
-				<% unless current_user %>
-					<div id="hero__presentation" data-turbo-permanent class="flex flex-row-reverse gap-4 items-start md:flex md:flex-row md:mx-0 md:px-5 mx-5 select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '150px' : '185px' %>">
-						<div class="my-auto">
-							<h2 class="c-h2">
-								Eventos e Cinema em Porto Alegre
-							</h2>
-							<span class="inline-block mt-2 c-span">
+				<div>
+					<%= notice %>
+				</div>
+			</div>
+		<% end %>
+		<% unless params[:day] || params[:category] %>
+			<% unless current_user %>
+				<div id="hero__presentation" data-turbo-permanent class="flex flex-row-reverse gap-4 items-start md:flex md:flex-row md:mx-0 md:px-5 mx-5 select-none tap-highlight-none" style="min-height: 150px">
+					<div class="mr-12">
+						<h2 class="c-h2">
+							Eventos e Cinema em Porto Alegre
+						</h2>
+						<span class="inline-block mt-2 c-span">
     						Descubra eventos e siga seus locais e artistas favoritos para não perder nada que acontece na cidade.
     					</span>
-						</div>
-						<%= image_pack_tag ["hero/bebendo.png", "hero/passeando.png", "hero/dancando.png", "hero/skate.png"].sample, class: 'h-32 md:h-auto md:w-44 my-auto w-32' %>
 					</div>
-				<% end %>
-				<%= render Hero::SwipableComponent.new(user: current_user) %>
+					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png"].sample, class: 'h-32 md:h-36 md:h-auto md:w-36 my-auto w-32' %>
+				</div>
 			<% end %>
+			<%= render Hero::SwipableComponent.new(user: current_user) %>
+		<% end %>
 
-			<%= render MoviesComponent.new(movies: @movies, user: current_user, id: 'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
-		</div>
+		<%= render MoviesComponent.new(movies: @movies, user: current_user, id: 'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
 
 		<div>
 			<% if @upcoming_events.present? %>
@@ -42,23 +41,27 @@
 					<% if params[:category] %>
 						<div class="flex justify-between items-center pr-5 md:pr-10">
 							<h2 class="px-5 c-h2">
-								<span class="underline text-brand-600"><%= @category&.details_display_name&.titleize %></span> em
-								Porto
-								Alegre
+								<span class="underline text-brand-600"><%= @category&.details_display_name&.titleize %></span>
+								em
+								Porto Alegre
 							</h2>
 						</div>
+					<% elsif params[:day] %>
+						<h2 class="px-5 c-h2">
+							Eventos em Porto Alegre <%= I18n.l params[:day].to_date %>
+						</h2>
 					<% else %>
 						<h2 class="px-5 c-h2">
-							Eventos em Porto Alegre <%= I18n.l params[:day].to_date if params[:day] %>
+							Eventos em Porto Alegre
 						</h2>
+						<%= render MainSidebar::FilterComponent.new(session:           session.id,
+																												params:            params,
+																												show_filter_group: nil,
+																												filters:           {
+																													categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
+																													date:       nil
+																												}) %>
 					<% end %>
-					<%= render MainSidebar::FilterComponent.new(session:           session.id,
-																											params:            params,
-																											show_filter_group: nil,
-																											filters:           {
-																												categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
-																												date:       nil
-																											}) %>
 				</div>
 			<% else %>
 				<h2 class="px-5 text-xl font-bold text-gray-900 bg-white font-display">

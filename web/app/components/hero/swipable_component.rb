@@ -11,7 +11,7 @@ class Hero::SwipableComponent < ViewComponent::Base
 	end
 
 	def render?
-		show_swipable?
+		@show_swipable
 	end
 
 	private
