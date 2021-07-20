@@ -1,3 +1,5 @@
+<% content_for :meta_title, "Busca: #{params[:q]&.capitalize} em Porto Alegre" %>
+
 <%= render Modal::SignInComponent.new(text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
 
 <div data-controller="loader"
@@ -20,8 +22,9 @@
 	</div>
 </div>
 
-<div id="main-content" class="gap-16 mx-auto max-w-screen-lg md:grid md:grid-cols-8">
-	<section id="main-sidebar" class="col-span-8 md:col-span-5">
+<div id="main-content" class="<%= class_names 'gap-16 grid-cols-8 max-w-screen-lg md:grid min-h-screen mx-auto',
+																							{ 'px-5': !@founded_events } %>">
+	<section id="main-sidebar" class="md:col-span-5">
 		<%= notice %>
 		<% if (@search_result&.suggestions.present? rescue false) %>
 			<div class="mx-auto mb-10">
@@ -36,16 +39,16 @@
 			</div>
 		<% end %>
 		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
-			<%= link_to root_path, class: 'inline-block mt-12 px-5' do %>
-				<div class="flex py-3 px-5 space-x-3 rounded-full border border-brand-300 hover:bg-brand-200 hover:border-brand-200 text-brand-600 w-content">
+			<%= link_to root_path, class: 'hidden md:inline-block mt-6 px-5' do %>
+				<div class="border border-brand-300 flex hover:bg-brand-200 hover:border-brand-200 items-center px-5 py-3 rounded-full space-x-3 text-brand-600 text-sm">
 					<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
 					</svg>
-					<div>Ver todos os eventos em <span class="font-bold">Porto Alegre</span></div>
+					<div>Ver todos os eventos em <span class="font-medium">Porto Alegre</span></div>
 				</div>
 			<% end %>
 			<% if @search_result.try { |events| events.size > 0 } %>
-				<div class="py-3 px-5 text-2xl font-bold text-gray-800 font-display">
+				<div class="py-3 px-5 c-h2">
 					<%= @founded_events&.size %> eventos encontrados para: <span class="text-brand-600"><%= params[:q] %></span>
 				</div>
 				<%= render MainSidebar::GroupByDayListComponent.new(events: @founded_events, user: current_user, open_in_sidebar: true) %>
@@ -56,12 +59,10 @@
 				<% end %>
 				<% if @categories.present? %>
 					<div class="mx-auto">
-						<div class="grid grid-cols-2 gap-3 mt-5 md:px-0">
+						<div class="flex flex-wrap md:px-0 mt-5">
 							<% @categories.each do |category| %>
-								<a href="<%= category_events_path category %>" class="inline-block flex justify-start py-1 px-4 w-full h-20 antialiased text-gray-500 bg-white rounded border transition-colors duration-200 transform cursor-pointer select-none tap-highlight-none">
-									<div class="text-lg font-semibold">
-										<%= category %>
-									</div>
+								<a href="<%= category_events_path category %>" class="c-chip">
+									<%= category %>
 								</a>
 							<% end %>
 						</div>
