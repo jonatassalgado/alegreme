@@ -15,9 +15,9 @@ import StimulusReflex from "stimulus_reflex"
 export default class extends Controller {
     connect() {
         StimulusReflex.register(this)
-        // if (!this.isPreview) {
-        //     document.addEventListener("turbo:before-cache", this.beforeCache.bind(this), {once: true})
-        // }
+        if (!this.isPreview) {
+            document.addEventListener("turbo:before-cache", this.beforeCache.bind(this), {once: true})
+        }
         // console.log('connect', this.context.controller.identifier)
     }
 
