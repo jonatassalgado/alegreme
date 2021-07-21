@@ -49,9 +49,9 @@
 			<% end %>
 			<% if @search_result.try { |events| events.size > 0 } %>
 				<div class="py-3 px-5 c-h2">
-					<%= @founded_events&.size %> eventos encontrados para: <span class="text-brand-600"><%= params[:q] %></span>
+					<%= @pagy&.vars&.dig(:count) %> eventos encontrados para: <span class="text-brand-600"><%= params[:q] %></span>
 				</div>
-				<%= render MainSidebar::GroupByDayListComponent.new(events: @founded_events, user: current_user, open_in_sidebar: true) %>
+				<%= render MainSidebar::GroupByDayListComponent.new(events: @founded_events, user: current_user, pagy: @pagy, open_in_sidebar: true) %>
 			<% else %>
 				<% if params[:q] %>
 					<h2 class="m-5 text-md">Nenhum evento

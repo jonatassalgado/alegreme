@@ -1,5 +1,3 @@
-include Pagy::Backend
-
 class FeedsController < ApplicationController
 	before_action :authorize_user, except: [:index, :today, :category, :week, :city, :day, :neighborhood]
 	before_action :authorize_current_user, only: %i[suggestions follow news]

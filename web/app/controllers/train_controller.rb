@@ -1,5 +1,3 @@
-include Pagy::Backend
-
 class TrainController < ApplicationController
 	before_action :authorize_admin
 
