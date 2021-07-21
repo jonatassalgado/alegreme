@@ -18,16 +18,16 @@
 		<% end %>
 		<% unless params[:day] || params[:category] %>
 			<% unless current_user %>
-				<div id="hero__presentation" data-turbo-permanent class="flex flex-row-reverse gap-4 items-start md:flex md:flex-row md:mx-0 md:px-5 mx-5 select-none tap-highlight-none" style="min-height: 150px">
-					<div class="mr-12">
-						<h2 class="c-h2">
+				<div id="hero__presentation" data-turbo-permanent class="-my-5 bg-brand-100 flex flex-row-reverse gap-4 items-center md:bg-transparent md:flex md:flex-row md:items-start md:mx-0 md:my-0 md:px-5 mx-5 p-3 rounded-lg select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '110px' : '150px' %>">
+					<div class="md:mr-12">
+						<h2 class="font-semibold leading-snug text-gray-800 md:font-bold md:text-3xl md:text-gray-800">
 							Eventos e Cinema em Porto Alegre
 						</h2>
-						<span class="inline-block mt-2 c-span">
+						<span class="block c-span leading-tight md:inline-block md:leading-normal md:text-base mt-2 text-xs">
     						Descubra eventos e siga seus locais e artistas favoritos para não perder nada que acontece na cidade.
     					</span>
 					</div>
-					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png"].sample, class: 'h-32 md:h-36 md:h-auto md:w-36 my-auto w-32' %>
+					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png"].sample, class: 'h-24 md:h-36 md:w-36 my-auto w-24' %>
 				</div>
 			<% end %>
 			<%= render Hero::SwipableComponent.new(user: current_user) %>
