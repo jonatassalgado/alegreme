@@ -29,6 +29,9 @@ gem 'administrate-field-enum'
 
 gem 'friendly_id', '~> 5.2.4'
 
+# Pagy
+gem 'pagy', '~> 4.10'
+
 # Push Notifications
 gem 'rpush'
 
@@ -108,8 +111,6 @@ gem 'clockwork', require: false
 gem 'daemons'
 
 gem 'sitemap_generator'
-
-gem 'pagy', '~> 3.5'
 
 # gem 'active_record_extended'
 

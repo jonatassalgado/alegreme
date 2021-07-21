@@ -39,7 +39,7 @@ class FilterReflex < ApplicationReflex
 			Rails.cache.write("#{session.id}/main-sidebar--filter/filters", @filters, { expires_in: 1.hour, skip_nil: true })
 		end
 
-		upcoming_events = Event.includes(:place, :organizers, :categories).active.valid.in_day(@filters[:date]).in_categories(@filters[:categories]).not_ml_data.order_by_date.limit(100)
+		pagy, upcoming_events = pagy(Event.includes(:place, :organizers, :categories).active.valid.in_day(@filters[:date]).in_categories(@filters[:categories]).not_ml_data.order_by_date.limit(100), { page: 1 })
 
 		morph '#main-sidebar--filter', render(MainSidebar::FilterComponent.new(
 			session:           session.id,
@@ -50,6 +50,8 @@ class FilterReflex < ApplicationReflex
 		morph '#main-sidebar--group-by-day-list', render(MainSidebar::GroupByDayListComponent.new(
 			events:          upcoming_events,
 			user:            current_user,
+			pagy:            pagy,
+			filters:         @filters,
 			open_in_sidebar: true))
 	end
 
@@ -59,7 +61,7 @@ class FilterReflex < ApplicationReflex
 			filters[:categories] = []
 			Rails.cache.write("#{session.id}/main-sidebar--filter/filters", filters, { expires_in: 1.hour, skip_nil: true })
 
-			upcoming_events = Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).in_day(filters[:date]).not_ml_data.order_by_date.limit(100)
+			pagy, upcoming_events = pagy(Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).in_day(filters[:date]).not_ml_data.order_by_date.limit(100), { page: 1 })
 
 			morph '#main-sidebar--filter', render(MainSidebar::FilterComponent.new(
 				session: session.id,
@@ -69,9 +71,11 @@ class FilterReflex < ApplicationReflex
 			morph '#main-sidebar--group-by-day-list', render(MainSidebar::GroupByDayListComponent.new(
 				events:          upcoming_events,
 				user:            current_user,
+				pagy:            pagy,
+				filters:         filters,
 				open_in_sidebar: true))
 		else
-			upcoming_events = Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).in_categories(params[:category] ? params_category : []).not_ml_data.order_by_date.limit(100)
+			pagy, upcoming_events = pagy(Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).in_categories(params[:category] ? params_category : []).not_ml_data.order_by_date.limit(100), { page: 1 })
 
 			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
 
@@ -81,6 +85,8 @@ class FilterReflex < ApplicationReflex
 				filters:           clean_filters))
 			morph '#main-sidebar--group-by-day-list', render(MainSidebar::GroupByDayListComponent.new(
 				events:          upcoming_events,
+				pagy:            pagy,
+				filters:         clean_filters,
 				user:            current_user,
 				open_in_sidebar: true))
 		end

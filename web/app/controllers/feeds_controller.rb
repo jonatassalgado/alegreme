@@ -8,14 +8,17 @@ class FeedsController < ApplicationController
 	def index
 		# Timecop.freeze("2019-09-1")
 
-		@upcoming_events = requested_events
-		@liked_events    = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
-		@movies          = CineFilm.active
+		if @stimulus_reflex.nil? && params.dig(:page).nil?
+			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
+		end
+
+		@filters                = Rails.cache.read("#{session.id}/main-sidebar--filter/filters") || { categories: [], date: nil }
+		@pagy, @upcoming_events = pagy(requested_events)
+		@liked_events           = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
+		@movies                 = CineFilm.active
 
 		if @stimulus_reflex
 			render layout: false
-		else
-			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
 		end
 	end
 
@@ -74,7 +77,7 @@ class FeedsController < ApplicationController
 			@theme = Theme.find_by_slug(params[:theme])
 			Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: @theme.id }).not_ml_data.order_by_date.limit(100)
 		else
-			Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).not_ml_data.order_by_date.limit(100)
+			Event.includes(:place, :organizers, :categories).active.valid.in_day(@filters[:date]).in_categories(@filters[:categories]).where(categories: { theme_id: 1 }).not_ml_data.order_by_date.limit(100)
 		end
 	end
 

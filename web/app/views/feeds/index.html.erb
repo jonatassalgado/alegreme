@@ -40,7 +40,7 @@
 				<div class="bg-white">
 					<% if params[:category] %>
 						<div class="flex justify-between items-center pr-5 md:pr-10">
-							<h2 class="px-5 c-h2">
+							<h2 class="px-5 c-h2 mb-3">
 								<span class="underline text-brand-600"><%= @category&.details_display_name&.titleize %></span>
 								em
 								Porto Alegre
@@ -57,10 +57,7 @@
 						<%= render MainSidebar::FilterComponent.new(session:           session.id,
 																												params:            params,
 																												show_filter_group: nil,
-																												filters:           {
-																													categories: params[:category] ? [Category::CATEGORIES.select { |hash| hash['url'] == params[:category] }.first['name']] : [],
-																													date:       nil
-																												}) %>
+																												filters:           @filters) %>
 					<% end %>
 				</div>
 			<% else %>
@@ -69,7 +66,7 @@
 					Alegre <%= I18n.l params[:day].to_date if params[:day] %> <%= "na categoria #{@category&.details_display_name&.titleize}" if params[:category] %>
 				</h2>
 			<% end %>
-			<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, open_in_sidebar: true) %>
+			<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true) %>
 		</div>
 	</section>
 	<% unless mobile_device? %>

@@ -57,11 +57,11 @@ module ApplicationHelper
 
 	def modern_browser?
 		[
-				browser.chrome?(">= 65"),
-				browser.safari?(">= 10"),
-				browser.firefox?(">= 52"),
-				browser.edge?(">= 15"),
-				browser.opera?(">= 50")
+			browser.chrome?(">= 65"),
+			browser.safari?(">= 10"),
+			browser.firefox?(">= 52"),
+			browser.edge?(">= 15"),
+			browser.opera?(">= 50")
 		].any?
 	end
 
@@ -76,7 +76,6 @@ module ApplicationHelper
 	def pwa?
 		params[:pwa]
 	end
-
 
 	def google_maps_url address
 		"https://www.google.com/maps/search/?api=1&query=#{address}"
@@ -96,21 +95,21 @@ module ApplicationHelper
 			return 'amanhã'
 		when 2..6
 			return case @current_date.wday
-			       when 0
-				       'domingo'
-			       when 1
-				       'segunda'
-			       when 2
-				       'terça'
-			       when 3
-				       'quarta'
-			       when 4
-				       'quinta'
-			       when 5
-				       'sexta'
-			       when 6
-				       'sábado'
-			       end
+						 when 0
+							 'domingo'
+						 when 1
+							 'segunda'
+						 when 2
+							 'terça'
+						 when 3
+							 'quarta'
+						 when 4
+							 'quinta'
+						 when 5
+							 'sexta'
+						 when 6
+							 'sábado'
+						 end
 		when 7..14
 			# if opts[:active_range]
 			# 	return add_to_response('próximos 30 dias', range: true, order: 8)

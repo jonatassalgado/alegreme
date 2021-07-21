@@ -1,37 +1,51 @@
 <div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list" class="pr-5 pl-3">
-	<% @events.group_by { |e| e.start_time.strftime("%Y-%m-%d") }.each do |group| %>
-		<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="border-b mb-3 ml-2 pb-6 relative">
-			<div class="<%= helpers.class_names('-ml-1 pl-1 bg-white flex-1 leading-6 md:bg-white md:leading-normal md:pb-2 pb-3 mb-3 pt-2 sticky text-gray-600 z-10',
-																					{ 'top-0 pt-5': helpers.mobile_device?,
-																						'top-0':      helpers.mobile_device? && current_page?('/minha-agenda'),
-																						'top-16':     !helpers.mobile_device? && (controller_name == 'feeds') }) %>">
-				<div class="md:pt-4">
-					<div class="text-xs">
-						<%= l(group[0]&.to_date, format: "%d/%m") %>
-						<% if group[0].to_date > Date.today + 6 %>
-							&nbsp;<%= "· daqui #{distance_of_time_in_words(group[0]&.to_date, DateTime.now)}" %>
-						<% end %>
-					</div>
-					<div class="space-x-2 flex select-none">
-						<h2 class="flex items-center text-gray-800 uppercase">
-							<%= link_to day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")), class: 'font-display text-sm font-medium', data: { 'turbo-preserve-scroll': true } do %>
-								<% if group[0].to_date.today? %>
-									Hoje, <%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
-								<% elsif group[0].to_date == Date.tomorrow %>
-									Amanhã, <%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
-								<% elsif group[0].to_date <= Date.today + 7 %>
-									<%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
-								<% else %>
-									<%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
-									, <%= I18n.l(group[0]&.to_date, format: :long).titlecase %>
-								<% end %>
+	<% if @pagy&.vars&.dig(:page)&.to_i > 1 %>
+		<div class="px-3 mb-1">
+			<%== helpers.pagy_nav @pagy %>
+		</div>
+	<% end %>
+	<div>
+		<% @events.group_by { |e| e.start_time.strftime("%Y-%m-%d") }.each do |group| %>
+			<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="border-b last:border-b-0 mb-3 ml-2 pb-6 relative">
+				<div class="<%= helpers.class_names('-ml-1 pl-1 bg-white flex-1 leading-6 md:bg-white md:leading-normal md:pb-2 pb-3 mb-3 pt-2 sticky text-gray-600 z-10',
+																						{ 'top-0 pt-5': helpers.mobile_device?,
+																							'top-0':      helpers.mobile_device? && current_page?('/minha-agenda'),
+																							'top-16':     !helpers.mobile_device? && (controller_name == 'feeds') }) %>">
+					<div class="md:pt-4">
+						<div class="text-xs">
+							<%= l(group[0]&.to_date, format: "%d/%m") %>
+							<% if group[0].to_date > Date.today + 6 %>
+								&nbsp;<%= "· daqui #{distance_of_time_in_words(group[0]&.to_date, DateTime.now)}" %>
 							<% end %>
-						</h2>
+						</div>
+						<div class="space-x-2 flex select-none">
+							<h2 class="flex items-center text-gray-800 uppercase">
+								<%= link_to day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")), class: 'font-display text-sm font-medium', data: { 'turbo-preserve-scroll': true } do %>
+									<% if group[0].to_date.today? %>
+										Hoje, <%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
+									<% elsif group[0].to_date == Date.tomorrow %>
+										Amanhã, <%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
+									<% elsif group[0].to_date <= Date.today + 7 %>
+										<%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
+									<% else %>
+										<%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
+										, <%= I18n.l(group[0]&.to_date, format: :long).titlecase %>
+									<% end %>
+								<% end %>
+							</h2>
+						</div>
 					</div>
 				</div>
+				<div class="space-y-8">
+					<%= render MainSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, open_in_sidebar: @open_in_sidebar) %>
+				</div>
 			</div>
-			<div class="space-y-8">
-				<%= render MainSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, open_in_sidebar: @open_in_sidebar) %>
+		<% end %></div>
+	<% if @pagy %>
+		<div class="mb-10 md:mx-0 mt-3 mx-auto px-3 w-content">
+			<%== helpers.pagy_nav(@pagy) %>
+			<div class="text-xs mt-2">
+				<%== helpers.pagy_info @pagy, 'eventos' %>
 			</div>
 		</div>
 	<% end %>

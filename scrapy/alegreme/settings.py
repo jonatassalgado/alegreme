@@ -120,7 +120,7 @@ LOG_ENABLED = True
 LOG_FILE = '/var/www/scrapy/log/output.log'
 
 if os.environ.get('ENV') == 'production':
-    LOG_LEVEL = 'DEBUG'
+    LOG_LEVEL = 'ERROR'
 else:
     LOG_LEVEL = 'DEBUG'
 
