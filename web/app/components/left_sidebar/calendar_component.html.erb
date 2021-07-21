@@ -1,5 +1,5 @@
-<%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'transition-opacity' do %>
-	<div data-calendar-target="calendar" class="calendar select-none tap-highlight-none mt-12">
+<%= content_tag :div, id: 'calendar', data: { controller: 'left-sidebar--calendar' }, class: 'transition-opacity', style: 'will-change: min-height;' do %>
+	<div id="calendar--inner" data-calendar-target="calendar" class="calendar select-none tap-highlight-none mt-12" style="will-change: position, transform;">
 		<span class="c-h2 pb-2 pt-10">Minha agenda</span>
 		<div class="capitalize pt-2 flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
 			<div class="flex items-center justify-items-start">
