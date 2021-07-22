@@ -14,7 +14,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 		else
 			start_date = date_range.first - 1.day
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-				events:     liked_events,
+				events:     liked_resources,
 				start_date: start_date,
 				user:       current_user,
 				filter:     false,
@@ -32,7 +32,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 		else
 			start_date = date_range.last + 1.day
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-				events:     liked_events,
+				events:     liked_resources,
 				start_date: start_date,
 				user:       current_user,
 				filter:     false,
@@ -49,7 +49,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 				opened: true))
 		else
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-				events:     liked_events.in_day(element['data-day'].to_date),
+				events:     liked_resources_in_day(element['data-day'].to_date),
 				start_date: element['data-day'].to_date,
 				user:       current_user,
 				filter:     true,
@@ -59,7 +59,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	def clear_filter
 		morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-			events:     liked_events,
+			events:     liked_resources,
 			start_date: Date.today,
 			user:       current_user,
 			filter:     false,
@@ -68,7 +68,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	def update
 		morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-			events:     liked_events,
+			events:     liked_resources,
 			start_date: Date.today,
 			user:       current_user,
 			filter:     false,
@@ -77,20 +77,23 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	def unlike
 		if current_user
-			@event = Event.find element['data-event-id'] if element['data-event-id']
+			@type     = element['data-likeable-type'].classify.safe_constantize
+			@likeable = @type.find(element['data-likeable-id']) if element['data-likeable-id']
 
-			if current_user.like_or_dislike? @event
-				current_user.unlike! @event
+			if current_user.like_or_dislike? @likeable
+				current_user.unlike! @likeable
 
 				morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-					events:     liked_events,
+					events:     liked_resources,
 					start_date: Date.today,
 					user:       current_user,
 					filter:     false,
 					indicators: indicators))
 
-				morph "#{dom_id(@event, 'main-sidebar')}", render(MainSidebar::HorizontalEventComponent.new(
-					event:           @event,
+				return if @type != Event
+
+				morph "#{dom_id(@likeable, 'main-sidebar')}", render(MainSidebar::HorizontalEventComponent.new(
+					event:           @likeable,
 					user:            current_user,
 					open_in_sidebar: true))
 			end
@@ -110,15 +113,19 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 	# end
 
 	def indicators
-		liked_events&.map(&:start_time)
+		liked_resources&.map(&:start_time)
 	end
 
 	def set_user
 		@user = current_user
 	end
 
-	def liked_events
-		@user&.liked_events&.not_ml_data&.active&.order_by_date
+	def liked_resources
+		@user&.liked_events&.not_ml_data&.active&.order_by_date + current_user.liked_screenings
+	end
+
+	def liked_resources_in_day day
+		@user&.liked_events&.not_ml_data&.active&.in_day(day)&.order_by_date + current_user.liked_screenings.where("day = ?", day)
 	end
 
 	def date_range

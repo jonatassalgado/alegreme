@@ -1,0 +1,26 @@
+<%= content_tag :div,
+								id:   helpers.dom_id(@likeable, 'likes-button'),
+								data: {
+									reflex:          "click->Likes#like",
+									'likeable-id':   @likeable.id,
+									'likeable-type': @likeable.class.table_name.singularize
+								} do %>
+	<% if @template == 'button' %>
+		<div class="<%= helpers.class_names('mr-1 cursor-pointer duration-100 ease-linear flex font-medium group hover:bg-brand-100 px-2 py-1 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform',
+																				{ 'bg-brand-100 px-2 py-1': @user&.like?(@likeable) }) %>">
+			<svg class="<%= helpers.class_names 'h-4 stroke-current group-hover:text-brand-600',
+																					{ 'text-gray-500':               !@user&.like?(@likeable),
+																						'text-brand-600 fill-current': @user&.like?(@likeable) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+			</svg>
+			<span class="<%= helpers.class_names('ml-1 group-hover:text-brand-600', { 'text-gray-500':  !@user&.like?(@likeable),
+																																								'text-brand-600': @user&.like?(@likeable) }) %>">
+			<%= @user&.like?(@likeable) ? 'Salvo' : 'Salvar' %>
+		</span>
+		</div>
+	<% elsif @template == 'remove' %>
+		<span class="text-xs font-medium text-gray-700 hover:text-red-500">
+			Remover
+		</span>
+	<% end %>
+<% end %>

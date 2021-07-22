@@ -1,35 +1,48 @@
-<%= content_tag :div, id: dom_id(@event, :left_sidebar), class: 'duration-300 transition-all bg-white', data: { controller: 'left-sidebar--horizontal-event', 'flip-key': dom_id(@event, :left_sidebar) } do %>
+<%= content_tag :div, id: dom_id(@likeable, :left_sidebar), class: 'duration-300 transition-all bg-white', data: { controller: 'left-sidebar--horizontal-event', 'flip-key': dom_id(@likeable, :left_sidebar) } do %>
 	<div class="flex relative py-4 pr-4 space-x-3 select-none group tap-highlight-none">
 		<div class="<%= helpers.class_names 'flex flex-col flex-shrink-0 justify-items-center py-1 w-9 text-xs text-center rounded h-content',
-																				{ 'bg-brand-100 text-brand-600': @event&.start_time.today?,
-																					'bg-gray-100 text-gray-800':   !@event&.start_time.today? } %>">
-			<div class="<%= helpers.class_names('font-semibold': @event&.start_time.today?) %>">
-				<%= l(@event.start_time, format: "%-d") %>
+																				{ 'bg-brand-100 text-brand-600': @likeable&.start_time.today?,
+																					'bg-gray-100 text-gray-800':   !@likeable&.start_time.today? } %>">
+			<div class="<%= helpers.class_names('font-semibold': @likeable&.start_time.today?) %>">
+				<%= l(@likeable.start_time, format: "%-d") %>
 			</div>
 			<div class="-mt-1 text-xxs">
-				<%= l(@event.start_time, format: "%^b") %>
+				<%= l(@likeable.start_time, format: "%^b") %>
 			</div>
 		</div>
-		<div class="<%= helpers.class_names({ 'text-brand-600': @event&.start_time.today?,
-																					'text-gray-800':  !@event&.start_time.today? }) %>">
+		<div class="<%= helpers.class_names({ 'text-brand-600': @likeable&.start_time.today?,
+																					'text-gray-800':  !@likeable&.start_time.today? }) %>">
 			<div class="text-xs">
-				<%= tag.span "#{helpers.format_hour(@event.start_time)}h" %>
-				· <%= helpers.day_of_week @event.start_time %>
-				· <%= "daqui #{distance_of_time_in_words(@event.start_time, DateTime.now)}" %>
+				<% if @likeable.class == Event %>
+					<%= helpers.format_hour(@likeable.start_time) %>h
+				<% else %>
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4zm2 0h1V9h-1v2zm1-4V5h-1v2h1zM5 5v2H4V5h1zm0 4H4v2h1V9zm-1 4h1v2H4v-2z" clip-rule="evenodd"/>
+					</svg>
+				<% end %>
+				· <%= helpers.day_of_week @likeable.start_time %>
+				<%= " · daqui #{distance_of_time_in_words(@likeable.start_time, DateTime.now)}" %>
 			</div>
 			<div class="mb-1 leading-snug">
-				<%= content_tag :a,
-												href:  event_path(@event),
-												data:  {
-													action:     'click->left-sidebar--horizontal-event#openEvent',
-													'event-id': @event.id
-												},
-												class: 'md:hover:underline text-sm font-medium' do %>
-					<%= @event.name %>
+				<% if @likeable.class == Event %>
+					<%= content_tag :a,
+													href:  event_path(@likeable),
+													data:  {
+														action:          'click->left-sidebar--horizontal-event#openEvent',
+														'likeable-id':   @likeable.id,
+														'likeable-type': @likeable.class.table_name.singularize
+													},
+													class: 'md:hover:underline text-sm font-medium' do %>
+						<%= @likeable.name %>
+					<% end %>
+				<% else %>
+					<%= link_to movie_path(@likeable.movie), 'data-turbo-preserve-scroll': true, class: 'md:hover:underline text-sm font-medium' do %>
+						<%= @likeable.name %>
+					<% end %>
 				<% end %>
 			</div>
 		</div>
-		<%= content_tag :div, data: { action: 'click->left-sidebar--horizontal-event#unlike', 'event-id': @event.id }, class: 'absolute hidden bottom-0 cursor-pointer group-hover:block mt-3 pl-8 text-red-500 text-xxs underline' do %>
+		<%= content_tag :div, data: { action: 'click->left-sidebar--horizontal-event#unlike', 'likeable-id': @likeable.id, 'likeable-type': @likeable.class.table_name.singularize }, class: 'absolute hidden bottom-0 cursor-pointer group-hover:block mt-3 pl-8 text-red-500 text-xxs underline' do %>
 			Remover
 		<% end %>
 	</div>

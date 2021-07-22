@@ -12,7 +12,7 @@
 				</div>
 				<% if @user&.following_cinemas&.any? %>
 					<% @user.following_cinemas.each do |cinema| %>
-						<%= link_to cinema_path cinema do %>
+						<%= link_to cinema_path cinema, 'data-turbo-preserve-scroll': true do %>
 							<div class="c-chip" title="<%= cinema.display_name %>">
 								<%= helpers.limit_name_size cinema.display_name, 24 %>
 							</div>
@@ -30,7 +30,7 @@
 				<% end %>
 			</div>
 		<% end %>
-		<div data-turbo-permanent class="relative px-1">
+		<div id="<%= @id %>--scroller" data-turbo-permanent class="relative px-1">
 			<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex bg-x-white-to-transparent">
 				<div data-slider-target="left" data-action="click->slider#left" class="hidden -ml-4 bg-brand-200 cursor-pointer duration-200 hover:bg-brand-600 hover:text-white mt-20 my-auto rounded-full shadow-md text-brand-700 transition-colors">
 					<svg class="p-2 w-10 h-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black">

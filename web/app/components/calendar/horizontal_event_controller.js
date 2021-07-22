@@ -48,18 +48,8 @@ export default class extends ApplicationController {
         }
     }
 
-    like(event) {
-        this.stimulate('Calendar#like', event.currentTarget)
-            .then(value => {
-                // this._updateCalendar()
-            })
-            .catch(reason => {
-
-            })
-    }
-
-    dislike(event) {
-        this.stimulate('Calendar#dislike', event.currentTarget)
+    unlike(event) {
+        this.stimulate('Calendar#unlike', event.currentTarget)
             .then(value => {
                 // this._updateCalendar()
             })

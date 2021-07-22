@@ -4,8 +4,8 @@ class LeftSidebar::CalendarComponent < ViewComponent::Base
 
 	def initialize(events:, start_date:, user:, indicators:, filter: false)
 		@start_date = start_date
-		@events     = events
-		@indicators = indicators&.map(&:to_date) || events&.map { |event| event.start_time.to_date }
+		@events     = events.sort_by { |e| e.start_time }
+		@indicators = indicators&.map(&:to_date) || events.map { |event| event.start_time.to_date }
 		@user       = user
 		@filter     = filter
 
@@ -27,7 +27,7 @@ class LeftSidebar::CalendarComponent < ViewComponent::Base
 		td_class << 'past-month' if start_date.month != day.month && day < start_date
 		td_class << 'next-month' if start_date.month != day.month && day > start_date # next month
 		td_class << 'text-gray-900' if today < day && start_date.month == day.month && day.to_date != start_date.to_date # current month
-		td_class << 'has-events' if sorted_events&.fetch(day, []).any?
+		td_class << 'has-events' if sorted_events&.fetch(day, [])&.any?
 
 		td_class
 	end
@@ -51,15 +51,15 @@ class LeftSidebar::CalendarComponent < ViewComponent::Base
 	end
 
 	def attribute
-		options.fetch(:attribute, :start_time).to_sym
+		options.fetch(:attribute, :start_time)&.to_sym
 	end
 
 	def end_attribute
-		options.fetch(:end_attribute, :end_time).to_sym
+		options.fetch(:end_attribute, :end_time)&.to_sym
 	end
 
 	def start_date_param
-		options.fetch(:start_date_param, :start_date).to_sym
+		options.fetch(:start_date_param, :start_date)&.to_sym
 	end
 
 	def sorted_events
@@ -90,7 +90,7 @@ class LeftSidebar::CalendarComponent < ViewComponent::Base
 		if @start_date
 			@start_date
 		elsif options.has_key?(:start_date)
-			options.fetch(:start_date).to_date
+			options.fetch(:start_date)&.to_date
 		else
 			view_context.params.fetch(start_date_param, Date.current).to_date
 		end

@@ -1,13 +1,13 @@
 class LeftSidebar::HorizontalEventComponent < ViewComponent::Base
-	with_collection_parameter :event
+	with_collection_parameter :likeable
 
-	def initialize(event:, user:, parent_key: nil)
+	def initialize(likeable:, user:, parent_key: nil)
 		@parent_key = parent_key
-		@event      = event
+		@likeable   = likeable
 		@user       = user
 	end
 
 	def collection_key
-		@event.id
+		@likeable.id
 	end
 end

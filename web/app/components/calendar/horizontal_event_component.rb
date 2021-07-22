@@ -1,15 +1,15 @@
 class Calendar::HorizontalEventComponent < ViewComponent::Base
-  with_collection_parameter :event
+	with_collection_parameter :likeable
 
-  def initialize(event:, user:, open_in_sidebar: false)
-    @event           = event
-    @user            = user
-    @open_in_sidebar = open_in_sidebar
-    @opened          = false
-  end
+	def initialize(likeable:, user:, open_in_sidebar: false)
+		@likeable        = likeable
+		@user            = user
+		@open_in_sidebar = open_in_sidebar
+		@opened          = false
+	end
 
-  def collection_key
-    @event.id
-  end
+	def collection_key
+		@likeable.id
+	end
 
 end

@@ -13,9 +13,9 @@ export default class extends ApplicationController {
         this.flipping = new FlippingWeb();
 
         requestAnimationFrame(() => {
-            this.stickySidebar = new StickySidebar('#calendar', {
-                containerSelector:    '#left-sidebar',
-                innerWrapperSelector: '#calendar--inner',
+            this.stickySidebar = new StickySidebar('#left-sidebar', {
+                containerSelector:    '#main-content',
+                innerWrapperSelector: '#calendar',
                 topSpacing:           70
             });
         })

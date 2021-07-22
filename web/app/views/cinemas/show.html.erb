@@ -54,8 +54,8 @@
 						style:   'min-height: 195px; min-width: 128px',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
-					<div class="mt-6 space-y-3 md:items-start md:mt-2">
-						<div class="flex flex-col items-center md:flex-row md:items-center md:justify-between md:w-full">
+					<div class="mt-6 space-y-3 md:items-start md:mt-0">
+						<div class="flex flex-col items-center md:flex-row md:items-start md:justify-between md:w-full">
 							<div class="text-center md:text-left">
 								<h1 class="c-h3">
 									<%= movie.title %>
@@ -66,7 +66,7 @@
 							</div>
 							<% if movie.trailer %>
 								<a href="<%= movie.trailer %>" rel="nofollow" target="_blank" class="inline-block mt-3 text-center md:mt-0">
-									<div class="flex items-center py-1 px-2 text-gray-700 rounded-full bg-gray-100 transition-transform hover:scale-105 md:transform w-content">
+									<div class="flex items-center py-1.5 px-2 text-gray-700 rounded-full bg-white-100 border transition-transform hover:scale-105 md:transform w-content">
 										<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 w-5 h-5 fill-current text-gray-600" viewBox="0 0 20 20" fill="currentColor">
 											<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
 										</svg>

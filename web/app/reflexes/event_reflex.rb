@@ -90,7 +90,7 @@ class EventReflex < ApplicationReflex
 	end
 
 	def set_event
-		@event = Event.includes(:categories, :organizers, :place).find(element['data-event-id']) if element['data-event-id']
+		@event = Event.includes(:categories, :organizers, :place).find(element['data-event-id'] || element['data-likeable-id'])
 	end
 
 end

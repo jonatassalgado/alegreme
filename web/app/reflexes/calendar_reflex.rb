@@ -11,7 +11,7 @@ class CalendarReflex < ApplicationReflex
 		else
 			start_date = date_range.first - 1.day
 			morph '#calendar', render(CalendarComponent.new(
-				events:     liked_events,
+				events:     liked_resources,
 				start_date: start_date,
 				user:       current_user,
 				filter:     false,
@@ -26,7 +26,7 @@ class CalendarReflex < ApplicationReflex
 		else
 			start_date = date_range.last + 1.day
 			morph '#calendar', render(CalendarComponent.new(
-				events:     liked_events,
+				events:     liked_resources,
 				start_date: start_date,
 				user:       current_user,
 				filter:     false,
@@ -40,7 +40,7 @@ class CalendarReflex < ApplicationReflex
 			# prevent_refresh!
 		else
 			morph '#calendar', render(CalendarComponent.new(
-				events:     liked_events.in_day(element['data-day'].to_date),
+				events:     liked_resources.in_day(element['data-day'].to_date),
 				start_date: element['data-day'].to_date,
 				user:       current_user,
 				filter:     true,
@@ -50,7 +50,7 @@ class CalendarReflex < ApplicationReflex
 
 	def clear_filter
 		morph '#calendar', render(CalendarComponent.new(
-			events:     liked_events,
+			events:     liked_resources,
 			start_date: Date.today,
 			user:       current_user,
 			filter:     false,
@@ -59,7 +59,7 @@ class CalendarReflex < ApplicationReflex
 
 	def update
 		morph '#calendar', render(CalendarComponent.new(
-			events:     liked_events,
+			events:     liked_resources,
 			start_date: Date.today,
 			user:       current_user,
 			filter:     false,
@@ -68,17 +68,17 @@ class CalendarReflex < ApplicationReflex
 
 	def like
 		if current_user
-			@event = Event.find element['data-event-id'] if element['data-event-id']
+			@likeable = element['data-likeable-type'].classify.safe_constantize.find(element['data-likeable-id']) if element['data-likeable-id']
 
-			if current_user.like? @event
-				current_user.unlike! @event
-			elsif current_user.dislike? @event
-				current_user.like! @event, action: :update
+			if current_user.like? @likeable
+				current_user.unlike! @likeable
+			elsif current_user.dislike? @likeable
+				current_user.like! @likeable, action: :update
 			else
-				current_user.like! @event
+				current_user.like! @likeable
 			end
 			morph '#calendar', render(CalendarComponent.new(
-				events:     liked_events,
+				events:     liked_resources,
 				start_date: Date.today,
 				user:       current_user,
 				filter:     false,
@@ -90,17 +90,17 @@ class CalendarReflex < ApplicationReflex
 
 	def dislike
 		if current_user
-			@event = Event.find element['data-event-id'] if element['data-event-id']
+			@likeable = element['data-likeable-type'].classify.safe_constantize.find(element['data-likeable-id']) if element['data-likeable-id']
 
-			if current_user.dislike? @event
-				current_user.unlike! @event
-			elsif current_user.like? @event
-				current_user.dislike! @event, action: :update
+			if current_user.dislike? @likeable
+				current_user.unlike! @likeable
+			elsif current_user.like? @likeable
+				current_user.dislike! @likeable, action: :update
 			else
-				current_user.dislike! @event
+				current_user.dislike! @likeable
 			end
 			morph '#calendar', render(CalendarComponent.new(
-				events:     liked_events,
+				events:     liked_resources,
 				start_date: Date.today,
 				user:       current_user,
 				filter:     false,
@@ -112,13 +112,13 @@ class CalendarReflex < ApplicationReflex
 
 	def unlike
 		if current_user
-			@event = Event.find element['data-event-id'] if element['data-event-id']
+			@likeable = element['data-likeable-type'].classify.safe_constantize.find(element['data-likeable-id']) if element['data-likeable-id']
 
-			if current_user.like_or_dislike? @event
-				current_user.unlike! @event
+			if current_user.like_or_dislike? @likeable
+				current_user.unlike! @likeable
 
 				morph '#calendar', render(CalendarComponent.new(
-					events:     liked_events,
+					events:     liked_resources,
 					start_date: Date.today,
 					user:       current_user,
 					filter:     false,
@@ -140,15 +140,15 @@ class CalendarReflex < ApplicationReflex
 	# end
 
 	def indicators
-		liked_events&.map(&:start_time)
+		liked_resources&.map(&:start_time)
 	end
 
 	def set_user
 		@user = current_user
 	end
 
-	def liked_events
-		@user&.liked_events&.not_ml_data&.active&.order_by_date
+	def liked_resources
+		current_user&.liked_events&.not_ml_data&.active&.order_by_date + current_user.liked_screenings
 	end
 
 	def date_range

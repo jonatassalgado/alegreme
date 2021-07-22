@@ -29,6 +29,10 @@ class User < ApplicationRecord
 	has_many :liked_or_disliked_events, through: :likes, source: :likeable, source_type: 'Event'
 	has_many :liked_events, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :likeable, source_type: 'Event'
 	has_many :disliked_events, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :likeable, source_type: 'Event'
+	has_many :liked_or_disliked_screenings, through: :likes, source: :likeable, source_type: 'Screening'
+	has_many :liked_movies, -> { where(likes: { sentiment: :positive }).distinct }, through: :liked_or_disliked_screenings, source: :movie
+	has_many :liked_screenings, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :likeable, source_type: 'Screening'
+	has_many :disliked_screenings, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :likeable, source_type: 'Screening'
 
 	has_many :friendships, dependent: :destroy
 	has_many :friendships_requested, -> { where(status: :requested) }, foreign_key: :user_id, class_name: 'Friendship'
@@ -85,49 +89,49 @@ class User < ApplicationRecord
 			self.like_update(resource, sentiment: :positive)
 		end
 
-		self.liked_events.reset
-		self.disliked_events.reset
-		self.liked_or_disliked_events.reset
+		self.public_send("liked_#{resource.class.table_name}").reset
+		self.public_send("disliked_#{resource.class.table_name}").reset
+		self.public_send("liked_or_disliked_#{resource.class.table_name}").reset
 
-		UpdateUserEventsSuggestionsJob.perform_later(self.id)
+		UpdateUserEventsSuggestionsJob.perform_later(self.id) if resource.class == Event
 	end
 
 	def unlike!(resource)
-		like = self.likes.find_by(likeable_id: resource.id)
+		like = self.likes.find_by(likeable_id: resource.id, likeable_type: resource.class.base_class.name.demodulize)
 		like.destroy if like
-		self.liked_events.reset
-		self.disliked_events.reset
-		self.liked_or_disliked_events.reset
+		self.public_send("liked_#{resource.class.table_name}").reset
+		self.public_send("disliked_#{resource.class.table_name}").reset
+		self.public_send("liked_or_disliked_#{resource.class.table_name}").reset
 	end
 
 	def dislike!(resource, action: :create)
 		if action == :create
-			self.likes.create!(likeable_id: resource.id, sentiment: :negative, likeable_type: resource.class.name.demodulize)
-			self.disliked_events.reset
-			self.liked_or_disliked_events.reset
+			self.likes.create!(likeable_id: resource.id, sentiment: :negative, likeable_type: resource.class.base_class.name.demodulize)
+			self.public_send("disliked_#{resouce.class.table_name}").reset
+			self.public_send("liked_or_disliked_#{resouce.class.table_name}").reset
 		elsif action == :update
 			self.like_update(resource, sentiment: :negative)
-			self.liked_events.reset
-			self.disliked_events.reset
-			self.liked_or_disliked_events.reset
+			self.public_send("liked_#{resouce.class.table_name}").reset
+			self.public_send("disliked_#{resouce.class.table_name}").reset
+			self.public_send("liked_or_disliked_#{resouce.class.table_name}").reset
 		end
 	end
 
 	def like_or_dislike?(resource)
-		self.liked_or_disliked_event_ids.include?(resource.id)
+		self.public_send("liked_or_disliked_#{resource.class.table_name.singularize}_ids").include?(resource.id)
 	end
 
 	def like_update(resource, values)
-		event_to_update = self.likes.find_by(likeable_id: resource.id, likeable_type: resource.class.name.demodulize)
-		event_to_update.update!(values) if event_to_update
+		resource_to_update = self.likes.find_by(likeable_id: resource.id, likeable_type: resource.class.base_class.name.demodulize)
+		resource_to_update.update!(values) if resource_to_update
 	end
 
 	def like?(resource)
-		self.liked_event_ids.include?(resource.id)
+		self.public_send("liked_#{resource.class.table_name.singularize}_ids").include?(resource.id)
 	end
 
 	def dislike?(resource)
-		self.disliked_event_ids.include?(resource.id)
+		self.public_send("disliked_#{resource.class.table_name.singularize}_ids").include?(resource.id)
 	end
 
 	def follow!(following)

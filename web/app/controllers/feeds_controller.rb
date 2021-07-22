@@ -12,7 +12,7 @@ class FeedsController < ApplicationController
 
 		@filters                = Rails.cache.read("#{session.id}/main-sidebar--filter/filters") || { categories: [], date: nil }
 		@pagy, @upcoming_events = pagy(requested_events)
-		@liked_events           = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
+		@liked_events           = current_user&.liked_events&.not_ml_data&.active&.order_by_date + current_user.liked_screenings
 		@movies                 = CineFilm.active
 
 		if @stimulus_reflex

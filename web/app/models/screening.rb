@@ -5,4 +5,12 @@ class Screening < ApplicationRecord
 
 	belongs_to :cinema
 	belongs_to :movie
+
+	has_many :likes, as: :likeable, dependent: :destroy
+	has_many :users, through: :likes, source: :likeable, source_type: 'Screening'
+
+	alias_attribute :start_time, :day
+
+	delegate :title, to: :movie
+	alias_method :name, :title
 end

@@ -96,7 +96,7 @@ class UsersController < ApplicationController
 	end
 
 	def agenda
-		@liked_events = current_user ? current_user&.liked_events&.not_ml_data&.active&.order_by_date : Event.none
+		@liked_events = current_user&.liked_events&.includes(:place)&.not_ml_data&.active&.order_by_date + current_user.liked_screenings
 		render layout: false if @stimulus_reflex
 	end
 
