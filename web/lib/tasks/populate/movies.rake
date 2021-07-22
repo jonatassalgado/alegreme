@@ -15,6 +15,12 @@ module PopulateMoviesRake
 
 		if movie
 			set_cover(item, movie) if ENV['update_images'] == 'true'
+			movie.update_only_if_blank({
+																	 genres:      item['genres'],
+																	 description: item['description'],
+																	 cover:       item['cover'],
+																	 trailer:     item['trailer']
+																 })
 			puts "Filme: #{item['name']} - Filme já existe (atualizado) \n".white
 		else
 			movie = CineFilm.create!(title:       item['name'],
