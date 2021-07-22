@@ -21,7 +21,7 @@ class PlaceReflex < ApplicationReflex
 	private
 
 	def show_login_modal
-		morph '#modal', render(Modal::SignInComponent.new(
+		morph '#modal', render(ModalComponent.new(
 			text:   "Crie uma conta para seguir locais",
 			opened: true))
 	end

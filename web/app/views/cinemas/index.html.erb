@@ -1,0 +1,82 @@
+<% content_for :meta_title, "Cinemas em Porto Alegre - RS" %>
+<%= notice %>
+
+<%= render(ModalComponent.new) %>
+
+<%# cache [current_user, 'cinemas', @cinemas&.map(&:id), @cinemas&.max&.updated_at&.to_i] do %>
+<section class="mx-auto mt-12 max-w-screen-lg min-h-screen px-5 mb-16">
+	<h1 class="c-h2 mb-6">Cinemas de Porto Alegre</h1>
+
+	<div class="gap-5 grid grid-cols-1 justify-self-stretch md:grid-cols-2">
+		<% @cinemas.each do |cinema| %>
+			<div class="border p-5 rounded-lg">
+				<div class="grid grid-cols-4">
+					<div class="col-span-3 pr-5 mb-3 text-sm">
+						<h2 id="<%= cinema&.slug %>" class="text-xl font-bold text-gray-800 inline">
+							<%= link_to cinema.display_name, cinema_path(cinema), class: 'hover:text-brand-600' %>
+						</h2>
+						<div class="text-xs text-gray-700">
+							<%= cinema.address %>
+							<% if cinema.neighborhood&.present? %>
+								‧
+								<span class="font-semibold">Bairro próximo:</span> <%= cinema.neighborhood %>
+							<% end %>
+							<% if cinema.reference_place&.present? %>
+								‧
+								<span class="font-semibold">Local:</span> <%= cinema.reference_place %>
+							<% end %>
+							<% if cinema.lower_price&.present? %>
+								‧
+								<span class="font-semibold">Menor preço da inteira:</span> <%= number_to_currency cinema.lower_price, locale: 'pt-BR' %>
+							<% end %>
+							<% if cinema.google_maps&.present? %>
+								‧
+								<a href="<%= cinema.google_maps %>" rel="nofollow" target="_blank" class="font-semibold">Abrir
+									no Google Maps</a>
+							<% end %>
+							<% if cinema.website&.present? %>
+								‧
+								<a href="<%= cinema.website %>" rel="nofollow" target="_blank" class="font-semibold text-brand-600">
+									Ver site oficial
+								</a>
+							<% end %>
+						</div>
+					</div>
+					<div class="flex col-span-1 justify-end items-start">
+						<%= render(FollowButtonComponent.new(
+							user:       current_user,
+							followable: cinema,
+							type:       'button'
+						)) %>
+					</div>
+				</div>
+				<div class="flex space-x-3">
+					<% cinema.movies.limit(6).each_with_index do |movie, index| %>
+						<% if index < 5 %>
+							<div class="flex flex-col w-16 transition-transform transform group md:hover:scale-105">
+								<%= link_to cine_film_path(movie), class: 'flex flex-col', data: { 'turbo-preserve-scroll': true } do %>
+									<%= image_tag shrine_image_url(movie, :small), {
+										loading: :lazy,
+										title:   movie.title,
+										alt:     "Filme #{movie.title}",
+										class:   'border shadow-sm group-hover:shadow bg-gray-100 object-center object-cover rounded',
+										style:   'min-height: 96px',
+										onerror: "this.style.opacity='0'"
+									} rescue nil %>
+									<%= tag.div limit_name_size(movie.title, 24), class: 'leading-tight mt-2 inline-block text-xxs text-center font-medium text-gray-900' %>
+								<% end %>
+							</div>
+						<% else %>
+							<%= link_to cinema_path(cinema), class: 'bg-gray-100 flex hover:bg-brand-100 hover:scale-105 hover:text-brand-600 items-center justify-center md:transform rounded transition-transform', style: 'width: 64px; height: 96px' do %>
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+								</svg>
+							<% end %>
+						<% end %>
+					<% end %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</section>
+<%# end %>

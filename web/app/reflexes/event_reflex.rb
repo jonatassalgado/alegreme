@@ -82,8 +82,10 @@ class EventReflex < ApplicationReflex
 	end
 
 	def show_login_modal
-		morph '#modal', render(Modal::SignInComponent.new(
-			text:   "Crie uma conta para salvar eventos favoritos e receber recomendações únicas",
+		morph '#modal', render(ModalComponent.new(
+			title:  'Você precisa estar logado',
+			text:   'Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas 🤙',
+			action: 'create-account',
 			opened: true))
 	end
 

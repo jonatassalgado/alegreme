@@ -21,8 +21,10 @@ class OrganizerReflex < ApplicationReflex
 	private
 
 	def show_login_modal
-		morph '#modal', render(Modal::SignInComponent.new(
-			text:   "Crie uma conta para seguir organizadores",
+		morph '#modal', render(ModalComponent.new(
+			title:  'Você precisa estar logado',
+			text:   'Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas 🤙',
+			action: 'create-account',
 			opened: true))
 	end
 

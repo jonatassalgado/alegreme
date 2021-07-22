@@ -1,6 +1,6 @@
 <% content_for :meta_title, "Busca: #{params[:q]&.capitalize} em Porto Alegre" %>
 
-<%= render Modal::SignInComponent.new(text: 'Crie uma conta para salvar eventos favoritos e receber recomendações únicas') %>
+<%= render ModalComponent.new(action: 'create-account', title: 'Você precisa estar logado', text: 'Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas 🤙') %>
 
 <div data-controller="loader"
 		 data-loader-on-loading="horizontal-event#open-event:before"
@@ -49,7 +49,8 @@
 			<% end %>
 			<% if @search_result.try { |events| events.size > 0 } %>
 				<div class="py-3 px-5 c-h2">
-					<%= @pagy&.vars&.dig(:count) %> eventos encontrados para: <span class="text-brand-600"><%= params[:q] %></span>
+					<%= @pagy&.vars&.dig(:count) %> eventos encontrados para:
+					<span class="text-brand-600"><%= params[:q] %></span>
 				</div>
 				<%= render MainSidebar::GroupByDayListComponent.new(events: @founded_events, user: current_user, pagy: @pagy, open_in_sidebar: true) %>
 			<% else %>

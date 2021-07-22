@@ -53,9 +53,11 @@ class User < ApplicationRecord
 	has_many :following_users, through: :following_relationships, source: :following, source_type: 'User'
 	has_many :following_places, through: :following_relationships, source: :following, source_type: 'Place'
 	has_many :following_organizers, through: :following_relationships, source: :following, source_type: 'Organizer'
+	has_many :following_cinemas, through: :following_relationships, source: :following, source_type: 'Cinema'
 	has_many :following_places_events, through: :following_places, source: :events
 	has_many :following_organizers_events, through: :following_organizers, source: :events
 	has_many :following_users_events, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :event
+	has_many :following_cinema_movies, -> { distinct }, through: :following_cinemas, source: :movies
 
 	has_many :places_from_liked_events, through: :liked_events, source: :place
 	has_many :organizers_from_liked_events, through: :liked_events, source: :organizers
@@ -131,16 +133,18 @@ class User < ApplicationRecord
 	def follow!(following)
 		self.follows.create!(user_id: self.id, following_id: following.id, following_type: following.class.name)
 		self.follows.reset
+		self.public_send("following_#{following.class.table_name}").reset
 	end
 
 	def unfollow!(following)
 		follow = self.follows.find_by(user_id: self.id, following_id: following.id, following_type: following.class.name)
 		follow.destroy! if follow
 		self.follows.reset
+		self.public_send("following_#{following.class.table_name}").reset
 	end
 
 	def follow?(following)
-		self.following_relationships.exists?(following_id: following.id)
+		self.following_relationships.exists?(following_id: following.id, following_type: following.class.name)
 	end
 
 	def friendship_request!(friend)

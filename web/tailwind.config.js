@@ -149,7 +149,7 @@ module.exports = {
     variants: {
         fontWeight:  ['responsive', 'hover', 'focus'],
         margin:      ['responsive', 'first'],
-        borderWidth: ['responsive', 'first'],
+        borderWidth: ['responsive', 'first', 'last'],
         aspectRatio: ['responsive'],
         textColor:   ['responsive', 'hover', 'focus', 'group-hover'],
         display:     ['responsive', 'group-hover'],

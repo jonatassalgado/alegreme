@@ -12,7 +12,7 @@
   [<%= render partial: 'layouts/json_ld', collection: @events, as: :event %>]
 	</script>
 
-<%= render Modal::SignInComponent.new( text: nil) %>
+<%= render ModalComponent.new %>
 
 <div id="main-content" class="md:grid md:grid-cols-12 max-w-screen-xl mx-auto">
 	<% unless mobile_device? %>

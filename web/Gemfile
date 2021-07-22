@@ -161,7 +161,7 @@ group :development do
 	gem 'awesome_print', require: 'ap'
 	gem 'niceql'
 	# gem 'active_record_doctor'
-	# gem 'bullet'
+	gem 'bullet'
 end
 
 group :test do

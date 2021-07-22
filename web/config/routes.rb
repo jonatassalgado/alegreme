@@ -98,6 +98,7 @@ Rails.application.routes.draw do
 			get :recent, path: 'novos'
 		end
 	end
+	resources :cinemas, path: 'porto-alegre/cinemas', as: :cinemas
 	resources :movies, path: 'porto-alegre/filmes', as: :movies
 	resources :cine_films, controller: 'movies', type: 'CineFilm', path: 'porto-alegre/cinemas/filmes', as: :cine_films
 	resources :streamings, controller: 'movies', type: 'Streaming', path: 'porto-alegre/streamings', as: :streamings

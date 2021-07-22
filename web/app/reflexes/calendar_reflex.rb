@@ -6,7 +6,7 @@ class CalendarReflex < ApplicationReflex
 
 	def prev_month
 		unless @user
-			# stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
+			# stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas"})
 			# prevent_refresh!
 		else
 			start_date = date_range.first - 1.day
@@ -21,7 +21,7 @@ class CalendarReflex < ApplicationReflex
 
 	def next_month
 		unless @user
-			# stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar eventos favoritos e receber recomendações únicas"})
+			# stimulate('Modal::SignInComponent#open', { text: "Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas"})
 			# prevent_refresh!
 		else
 			start_date = date_range.last + 1.day
@@ -125,8 +125,10 @@ class CalendarReflex < ApplicationReflex
 					indicators: indicators))
 			end
 		else
-			morph '#modal', render(Modal::SignInComponent.new(
-				text:   "Crie uma conta para salvar eventos favoritos e receber recomendações únicas",
+			morph '#modal', render(ModalComponent.new(
+				title:  'Você precisa estar logado',
+				text:   'Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas 🤙',
+				action: 'create-account',
 				opened: true))
 		end
 	end

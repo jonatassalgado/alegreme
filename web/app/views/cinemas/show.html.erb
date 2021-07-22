@@ -1,0 +1,122 @@
+<% content_for :meta_title, "Cinema #{@cinema.display_name} em Porto Alegre - RS" %>
+<%= notice %>
+
+<section class="mx-auto mt-12 max-w-screen-lg min-h-screen px-5 mb-16 space-y-5">
+	<div class="grid grid-cols-4">
+		<div class="col-span-3 pr-5 mb-3 text-sm space-y-2">
+			<h1 id="<%= @cinema&.slug %>" class="c-h2 inline">
+				<%= @cinema.display_name %>
+			</h1>
+			<div class="text-xs text-gray-700">
+				<%= @cinema.address %>
+				<% if @cinema.neighborhood&.present? %>
+					‧
+					<span class="font-semibold">Bairro próximo:</span> <%= @cinema.neighborhood %>
+				<% end %>
+				<% if @cinema.reference_place&.present? %>
+					‧
+					<span class="font-semibold">Local:</span> <%= @cinema.reference_place %>
+				<% end %>
+				<% if @cinema.lower_price&.present? %>
+					‧c
+					<span class="font-semibold">Menor preço da inteira:</span> <%= number_to_currency @cinema.lower_price, locale: 'pt-BR' %>
+				<% end %>
+				<% if @cinema.google_maps&.present? %>
+					‧
+					<a href="<%= @cinema.google_maps %>" rel="nofollow" target="_blank" class="font-semibold">Abrir
+						no Google Maps</a>
+				<% end %>
+				<% if @cinema.website&.present? %>
+					‧
+					<a href="<%= @cinema.website %>" rel="nofollow" target="_blank" class="font-semibold text-brand-600">
+						Ver site oficial
+					</a>
+				<% end %>
+			</div>
+		</div>
+		<div class="flex col-span-1 justify-end items-start">
+			<%= render(FollowButtonComponent.new(
+				user:       current_user,
+				followable: @cinema,
+				type:       'button'
+			)) %>
+		</div>
+	</div>
+	<div class="grid grid-cols-1 grid-flow-row gap-5 md:grid-cols-1">
+		<% @cinema.movies.each do |movie| %>
+			<div class="border rounded-lg p-5">
+				<div class="flex flex-col md:flex-row md:mx-auto">
+					<%= image_tag shrine_image_url(movie, :medium), {
+						loading: :lazy,
+						title:   movie.title,
+						alt:     "Filme #{movie.title}",
+						class:   'mx-auto md:mx-0 h-content bg-gray-100 md:mr-10 object-cover rounded-lg shadow-lg w-32',
+						style:   'min-height: 195px; min-width: 128px',
+						onerror: "this.style.opacity='0'"
+					} rescue nil %>
+					<div class="mt-6 space-y-3 md:items-start md:mt-2">
+						<div class="flex flex-col items-center md:flex-row md:items-center md:justify-between md:w-full">
+							<div class="text-center md:text-left">
+								<h1 class="c-h3">
+									<%= movie.title %>
+								</h1>
+								<div class="text-sm italic">
+									<%= movie.genres&.join(", ") %>
+								</div>
+							</div>
+							<% if movie.trailer %>
+								<a href="<%= movie.trailer %>" rel="nofollow" target="_blank" class="inline-block mt-3 text-center md:mt-0">
+									<div class="flex items-center py-1 px-2 text-gray-700 rounded-full bg-gray-100 transition-transform hover:scale-105 md:transform w-content">
+										<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 w-5 h-5 fill-current text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+										</svg>
+										<span class="text-sm font-medium text-gray-700">
+											Ver trailer
+										</span>
+									</div>
+								</a>
+							<% end %>
+						</div>
+						<div class="mx-auto w-11/12 text-sm leading-relaxed text-center text-gray-800 md:text-left md:w-full">
+							<%= movie.description %>
+						</div>
+						<div class="gap-2 grid grid-cols-3 md:gap-6 mt-12 w-full">
+							<% movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
+								<div class="p-3 bg-gray-100 rounded">
+									<h3 class="inline font-semibold text-gray-800">
+										<%= day_of_week(screening_day_group[0]).titleize %>
+									</h3>
+									<span class="text-xs text-gray-800"><%= screening_day_group[0].strftime('%d/%m/%y') %></span>
+									<div class="space-y-1">
+										<% screening_day_group[1].filter { |s| s.times&.any? }.each do |screening| %>
+											<div class="">
+												<div class="text-xs italic">
+													<%= screening.language %>
+													<span class="text-gray-500 text-xxs"><%= screening.screen_type %></span>
+												</div>
+												<div class="flex flex-wrap mt-1">
+													<% screening.times&.each do |time| %>
+														<div class="py-1 px-2 mr-1 mb-1 text-sm text-gray-800 bg-white rounded-full w-content">
+															<%= time %>
+														</div>
+													<% end %>
+												</div>
+											</div>
+										<% end %>
+									</div>
+								</div>
+							<% end %>
+						</div>
+						<% if movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }&.empty? %>
+							<div class="bg-brand-100 p-5 rounded-md text-sm leading-relaxed text-gray-800">
+								Sem exibições cadastradas na plataforma para este filme e cinema. Veja no <%= link_to 'site oficial', @cinema.website, class: 'text-brand-600 font-medium', rel: 'nofollow', target: '_blank' %> do <%= @cinema.display_name %> caso
+								acredite que há sessões para este filme.
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</section>
+

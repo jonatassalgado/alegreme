@@ -27,9 +27,9 @@
 @import '../stylesheets/components/me-calendar';
 
 .turbo-progress-bar {
-  height: 5px;
+  height: 6px;
   background-color: $brand-color;
-  box-shadow: 0 1px 5px #03994c8f;
+  box-shadow: 0 1px 5px $brand-color;
   // visibility: hidden;
   @include mobile-only {
     height: 3px;

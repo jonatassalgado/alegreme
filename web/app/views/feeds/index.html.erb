@@ -1,4 +1,4 @@
-<%= render Modal::SignInComponent.new(text: nil) %>
+<%= render ModalComponent.new %>
 
 <div id="main-content" class="gap-16 mx-auto max-w-screen-lg md:grid md:grid-cols-8">
 	<section id="main-sidebar" class="col-span-8 pt-12 space-y-16 md:col-span-5">
@@ -33,7 +33,10 @@
 			<%= render Hero::SwipableComponent.new(user: current_user) %>
 		<% end %>
 
-		<%= render MoviesComponent.new(movies: @movies, user: current_user, id: 'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
+		<%= render MoviesComponent.new(movies: @movies,
+																	 user:   current_user,
+																	 chips:  true,
+																	 id:     'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
 
 		<div>
 			<% if @upcoming_events.present? %>

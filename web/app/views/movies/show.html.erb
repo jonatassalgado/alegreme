@@ -4,7 +4,7 @@
 <!--<turbo-frame id="movies" target="movie">-->
 <% cache ['movies', @movies&.map(&:id), @movies&.max&.updated_at&.to_i] do %>
 	<div class="md:mt-6">
-		<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false, id: 'movies-show', selected: @movie.slug) %>
+		<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false, id: 'movies-show') %>
 	</div>
 <% end %>
 <!--</turbo-frame>-->
@@ -57,9 +57,15 @@
 							<div class="">
 								<div class="grid grid-cols-4">
 									<div class="col-span-3 pr-5 mb-3 text-sm">
-										<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="text-xl font-bold text-gray-800">
-											<%= cinema_name_group[0][0] %>
+										<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="text-xl font-bold text-gray-800 inline">
+											<%= link_to cinema_name_group[0][0], cinema_path(cinema_name_group[1][0]&.cinema), class: 'inline-block hover:text-brand-600' %>
 										</h2>
+										·
+										<%= render(FollowButtonComponent.new(
+											user:       current_user,
+											followable: cinema_name_group[1][0]&.cinema,
+											type:       'text'
+										)) %>
 										<div class="text-xs text-gray-700">
 											<%= cinema_name_group[1][0]&.cinema&.address %>
 											<% if cinema_name_group[1][0]&.cinema&.neighborhood&.present? %>
@@ -82,7 +88,7 @@
 									</div>
 									<div class="flex col-span-1 justify-end items-center">
 										<% if cinema_name_group[1][0]&.cinema&.website&.present? %>
-											<a href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="inline-block py-1 px-3 text-xs font-semibold text-center rounded-full transition-transform bg-brand-200 hover:scale-105 md:text-left md:text-sm md:transform text-brand-700">
+											<a href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="inline-block py-1 px-3 text-xs font-semibold text-center rounded-full transition-transform bg-brand-100 hover:scale-105 md:text-left md:text-sm md:transform text-brand-700">
 												Ver site oficial
 											</a>
 										<% end %>
@@ -117,6 +123,12 @@
 								</div>
 							</div>
 						<% end %>
+					<% end %>
+					<% if @movie.screenings.filter { |screening| screening&.day&.to_date >= Date.current }&.empty? %>
+						<div class="bg-brand-100 p-5 rounded-md text-sm leading-relaxed text-gray-800">
+							Sem exibições cadastradas na plataforma para este filme. Veja nos <%= link_to 'sites oficiais', cinemas_path, class: 'text-brand-600 font-medium' %> dos cinemas caso
+							acredite que há sessões para este filme.
+						</div>
 					<% end %>
 				</div>
 				<div class="hidden col-span-3 md:block">
