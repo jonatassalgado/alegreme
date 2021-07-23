@@ -121,11 +121,11 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 	end
 
 	def liked_resources
-		@user&.liked_events&.not_ml_data&.active&.order_by_date + current_user.liked_screenings
+		(@user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings || Screening.none)
 	end
 
 	def liked_resources_in_day day
-		@user&.liked_events&.not_ml_data&.active&.in_day(day)&.order_by_date + current_user.liked_screenings.where("day = ?", day)
+		(@user&.liked_events&.not_ml_data&.active&.in_day(day)&.order_by_date || Event.none) + (current_user&.liked_screenings&.where("day = ?", day) || Screening.none)
 	end
 
 	def date_range
