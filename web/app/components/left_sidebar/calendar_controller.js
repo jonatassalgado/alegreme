@@ -12,14 +12,6 @@ export default class extends ApplicationController {
         const selfEl  = this.element;
         this.flipping = new FlippingWeb();
 
-        requestAnimationFrame(() => {
-            this.stickySidebar = new StickySidebar('#left-sidebar', {
-                containerSelector:    '#main-content',
-                innerWrapperSelector: '#calendar',
-                topSpacing:           70
-            });
-        })
-
         this.element.addEventListener("cable-ready:before-morph", event => {
             if (this.hasEventsTarget) {
                 ChildMutation.read(this.eventsTarget)
@@ -54,9 +46,12 @@ export default class extends ApplicationController {
     }
 
     setup() {
-        if (this.stickySidebar) {
-            this.stickySidebar.updateSticky()
-        }
+        this.stickySidebar = new StickySidebar('#left-sidebar', {
+            containerSelector:    '#main-content',
+            innerWrapperSelector: '#calendar',
+            topSpacing:           70,
+            bottomSpacing:        60
+        });
 
         document.addEventListener('sign-in#close', () => {
             this._cleanLoadingAnimate()
@@ -82,9 +77,8 @@ export default class extends ApplicationController {
     }
 
     beforeCache() {
-        // if (!this.isPreview) {
-        //     this.stickySidebar.destroy()
-        // }
+        super.beforeCache();
+        this.teardown();
     }
 
     disconnect() {

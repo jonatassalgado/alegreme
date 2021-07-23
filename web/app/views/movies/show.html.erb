@@ -54,9 +54,9 @@
 
 		<div class="grid grid-cols-12 grid-flow-col gap-0 px-5 mt-20 max-w-screen-lg md:gap-10">
 			<div class="col-span-12 mx-auto space-y-6 md:space-y-12 md:col-span-9">
-				<% @movie.screenings&.includes(:cinema)&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
+				<% @movie.screenings&.includes(:cinema)&.sort_by { |s| s.cinema&.display_name }&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
 					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
-						<div class="bg-gray-50 p-3 rounded-md">
+						<div class="">
 							<div class="grid grid-cols-4">
 								<div class="col-span-3 pr-5 mb-3 text-sm">
 									<div class="mb-3">
@@ -98,7 +98,7 @@
 									<% end %>
 								</div>
 							</div>
-							<div class="grid grid-cols-1 grid-flow-row gap-1 md:grid-cols-3">
+							<div class="grid grid-cols-1 grid-flow-row gap-2 md:grid-cols-3">
 								<% cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
 									<div class="p-3 border rounded bg-white">
 										<h3 class="inline font-semibold text-gray-800">
