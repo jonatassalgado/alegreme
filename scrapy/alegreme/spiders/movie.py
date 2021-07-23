@@ -81,8 +81,7 @@ parse_movie_script = """
             }
         ]], 30)
 
-        assert(splash:wait(0.5))
-        splash:runjs("window.close()")
+        assert(splash:wait(3))
         return splash:html()
     end
 """
@@ -145,7 +144,7 @@ class MovieSpider(scrapy.Spider):
             'alegreme.pipelines.MoviePipeline': 400
         },
         'CLOSESPIDER_ITEMCOUNT': 50,
-        'CLOSESPIDER_PAGECOUNT': 100
+        'CLOSESPIDER_PAGECOUNT': 70
     }
 
     allowed_domains = ['google.com']
