@@ -1,4 +1,4 @@
-<div id="<%= @id %>" class="max-w-screen-lg mx-auto" data-controller="persist-horizontal-scroll slider" data-model="movie" data-slider-distance-value="400" data-persist-horizontal-scroll-value="0">
+<div id="<%= @id %>" data-turbo-permanent class="max-w-screen-lg mx-auto" data-controller="persist-horizontal-scroll slider" data-model="movie" data-slider-distance-value="400" data-persist-horizontal-scroll-value="0">
 	<% if @title %>
 		<h2 class="px-5 c-h2">
 			<%= @title %>
@@ -30,7 +30,7 @@
 				<% end %>
 			</div>
 		<% end %>
-		<div id="<%= @id %>--scroller" data-turbo-permanent class="relative px-1">
+		<div class="relative px-1">
 			<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex bg-x-white-to-transparent">
 				<div data-slider-target="left" data-action="click->slider#left" class="hidden -ml-4 bg-brand-200 cursor-pointer duration-200 hover:bg-brand-600 hover:text-white mt-20 my-auto rounded-full shadow-md text-brand-700 transition-colors">
 					<svg class="p-2 w-10 h-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black">
