@@ -1,7 +1,20 @@
 <% content_for :meta_title, "Cinema #{@cinema.display_name} em Porto Alegre - RS" %>
+<% content_for :back_button, true %>
+<% content_for :top_app_bar_title, truncate(@cinema.display_name, length: 30) %>
+
 <%= notice %>
 
-<section class="mx-auto mt-12 max-w-screen-lg min-h-screen px-5 mb-16 space-y-5">
+<%= render(ModalComponent.new) %>
+
+<section class="mx-auto mt-6 max-w-screen-lg min-h-screen px-5 mb-16 space-y-5">
+	<%= link_to cinemas_path, class: 'hidden md:inline-block' do %>
+		<div class="c-chip">
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 mr-3 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+			</svg>
+			<div>Ver todos os cinemas em <span class="font-medium">Porto Alegre</span></div>
+		</div>
+	<% end %>
 	<div class="grid grid-cols-4">
 		<div class="col-span-3 pr-5 mb-3 text-sm space-y-2">
 			<h1 id="<%= @cinema&.slug %>" class="c-h2 inline">
@@ -43,7 +56,7 @@
 		</div>
 	</div>
 	<div class="grid grid-cols-1 grid-flow-row gap-5 md:grid-cols-1">
-		<% @cinema.movies.each do |movie| %>
+		<% @cinema.movies.where("movies.created_at >= ?", DateTime.now - 30.days).order("created_at DESC").each do |movie| %>
 			<div class="border rounded-lg p-5">
 				<div class="flex flex-col md:flex-row md:mx-auto">
 					<%= image_tag shrine_image_url(movie, :medium), {
@@ -80,13 +93,16 @@
 						<div class="mx-auto w-11/12 text-sm leading-relaxed text-center text-gray-800 md:text-left md:w-full">
 							<%= movie.description %>
 						</div>
-						<div class="gap-2 grid grid-cols-3 md:gap-6 mt-12 w-full">
+						<div class="gap-2 grid grid-cols-3 md:gap-3 mt-12 w-full">
 							<% movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
-								<div class="p-3 bg-gray-100 rounded">
+								<div class="p-3 border rounded">
 									<h3 class="inline font-semibold text-gray-800">
 										<%= day_of_week(screening_day_group[0]).titleize %>
 									</h3>
 									<span class="text-xs text-gray-800"><%= screening_day_group[0].strftime('%d/%m/%y') %></span>
+									<div class="float-right w-content -mt-1 -mr-2">
+										<%= render(LikesButtonComponent.new(likeable: screening_day_group[1][0], user: current_user)) if screening_day_group[1][0] %>
+									</div>
 									<div class="space-y-1">
 										<% screening_day_group[1].filter { |s| s.times&.any? }.each do |screening| %>
 											<div class="">
@@ -109,7 +125,9 @@
 						</div>
 						<% if movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }&.empty? %>
 							<div class="bg-brand-100 p-5 rounded-md text-sm leading-relaxed text-gray-800">
-								Sem exibições cadastradas na plataforma para este filme e cinema. Veja no <%= link_to 'site oficial', @cinema.website, class: 'text-brand-600 font-medium', rel: 'nofollow', target: '_blank' %> do <%= @cinema.display_name %> caso
+								Sem exibições cadastradas na plataforma para este filme e cinema. Veja
+								no <%= link_to 'site oficial', @cinema.website, class: 'text-brand-600 font-medium', rel: 'nofollow', target: '_blank' %>
+								do <%= @cinema.display_name %> caso
 								acredite que há sessões para este filme.
 							</div>
 						<% end %>

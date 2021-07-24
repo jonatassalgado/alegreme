@@ -21,7 +21,6 @@
 					</svg>
 				<% end %>
 				· <%= helpers.day_of_week @likeable.start_time %>
-				<%= " · daqui #{distance_of_time_in_words(@likeable.start_time, DateTime.now)}" %>
 			</div>
 			<div class="mb-1 leading-snug">
 				<% if @likeable.class == Event %>

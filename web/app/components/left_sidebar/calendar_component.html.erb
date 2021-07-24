@@ -83,7 +83,7 @@
 			</div>
 			<% if @events.present? %>
 				<div id="calendar__events" data-left-sidebar--calendar-target="events" class="pb-10 mt-6">
-					<%= render LeftSidebar::GroupByDayListComponent.new(events: @events, user: @user) %>
+					<%= render LeftSidebar::GroupByDayListComponent.new(likeables: @events, user: @user) %>
 				</div>
 			<% end %>
 			<% if @user && @events&.empty? && (@start_date != Date.today) %>

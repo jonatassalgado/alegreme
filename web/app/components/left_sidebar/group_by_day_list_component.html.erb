@@ -1,3 +1,3 @@
-<% @events.group_by { |e| e.start_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
+<% @likeables.group_by { |e| e.start_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
 	<%= render LeftSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: @parent_key) %>
 <% end %>

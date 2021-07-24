@@ -12,8 +12,8 @@ class FeedsController < ApplicationController
 
 		@filters                = Rails.cache.read("#{session.id}/main-sidebar--filter/filters") || { categories: [], date: nil }
 		@pagy, @upcoming_events = pagy(requested_events)
-		@liked_events           = (current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings || Screening.none)
-		@movies                 = CineFilm.active
+		@liked_events           = (current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings&.includes(:movie) || Screening.none)
+		@movies                 = CineFilm.active.order("created_at DESC")
 
 		if @stimulus_reflex
 			render layout: false
