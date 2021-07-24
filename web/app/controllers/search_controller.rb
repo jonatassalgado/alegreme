@@ -19,7 +19,7 @@ class SearchController < ApplicationController
 			@pagy, @founded_events = pagy(Event.includes(:place, :organizers, :categories).where(id: @search_result.map(&:id)).not_ml_data)
 			@liked_events          = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
 		else
-			@categories = Event::CATEGORIES.dup.delete_if { |category| ['anúncio', 'outlier', 'protesto'].include? category }
+			@categories = Category.select("categories.id, categories.details, COUNT(events.id) as active_events_count").joins(:events).where("events.datetimes[1] > ?", DateTime.now).group("categories.id")
 		end
 
 		render layout: false if @stimulus_reflex

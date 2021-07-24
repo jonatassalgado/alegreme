@@ -43,8 +43,8 @@
 					<div class="mx-auto">
 						<div class="flex flex-wrap md:px-0 mt-5">
 							<% @categories.each do |category| %>
-								<a href="<%= category_events_path category %>" class="c-chip mb-2 mr-2">
-									<%= category %>
+								<a href="<%= category_events_path category.details_url %>" class="c-chip mb-2 mr-2">
+									<%= category.details_display_name %>
 								</a>
 							<% end %>
 						</div>
