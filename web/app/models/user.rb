@@ -107,13 +107,13 @@ class User < ApplicationRecord
 	def dislike!(resource, action: :create)
 		if action == :create
 			self.likes.create!(likeable_id: resource.id, sentiment: :negative, likeable_type: resource.class.base_class.name.demodulize)
-			self.public_send("disliked_#{resouce.class.table_name}").reset
-			self.public_send("liked_or_disliked_#{resouce.class.table_name}").reset
+			self.public_send("disliked_#{resource.class.table_name}").reset
+			self.public_send("liked_or_disliked_#{resource.class.table_name}").reset
 		elsif action == :update
 			self.like_update(resource, sentiment: :negative)
-			self.public_send("liked_#{resouce.class.table_name}").reset
-			self.public_send("disliked_#{resouce.class.table_name}").reset
-			self.public_send("liked_or_disliked_#{resouce.class.table_name}").reset
+			self.public_send("liked_#{resource.class.table_name}").reset
+			self.public_send("disliked_#{resource.class.table_name}").reset
+			self.public_send("liked_or_disliked_#{resource.class.table_name}").reset
 		end
 	end
 
