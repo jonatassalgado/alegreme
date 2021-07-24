@@ -17,7 +17,11 @@ class FilterReflex < ApplicationReflex
 	def filter
 		if Rails.cache.exist?("#{session.id}/main-sidebar--filter/filters")
 			@filters = Rails.cache.read("#{session.id}/main-sidebar--filter/filters")
+			if element['data-filter-theme']
+				@filters[:theme] = element['data-filter-theme']
+			end
 			if element['data-filter-category']
+				@filters[:theme] = nil
 				if element['data-selected'].to_boolean
 					@filters[:categories].delete(element['data-filter-category'])
 				else
@@ -30,16 +34,18 @@ class FilterReflex < ApplicationReflex
 				end
 			end
 			if element['data-filter-date']
-				@filters[:date] = element['data-selected'].to_boolean ? nil : element['data-filter-date']
+				@filters[:theme] = nil
+				@filters[:date]  = element['data-selected'].to_boolean ? nil : element['data-filter-date']
 			end
-			Rails.cache.write("#{session.id}/main-sidebar--filter/filters", @filters, { expires_in: 1.hour, skip_nil: true })
 		else
+			@filters[:theme]      = element['data-filter-theme']
 			@filters[:categories] = [element['data-filter-category']]
 			@filters[:date]       = element['data-filter-date']
-			Rails.cache.write("#{session.id}/main-sidebar--filter/filters", @filters, { expires_in: 1.hour, skip_nil: true })
 		end
 
-		pagy, upcoming_events = pagy(Event.includes(:place, :organizers, :categories).active.valid.in_day(@filters[:date]).in_categories(@filters[:categories]).not_ml_data.order_by_date.limit(100), { page: 1 })
+		Rails.cache.write("#{session.id}/main-sidebar--filter/filters", @filters, { expires_in: 1.hour, skip_nil: true })
+
+		pagy, upcoming_events = pagy(requested_resources, { page: 1 })
 
 		morph '#main-sidebar--filter', render(MainSidebar::FilterComponent.new(
 			session:           session.id,
@@ -58,6 +64,7 @@ class FilterReflex < ApplicationReflex
 	def clear_filter
 		if element['data-filter-only'] == 'category'
 			filters              = Rails.cache.read("#{session.id}/main-sidebar--filter/filters")
+			filters[:theme]      = 'entretenimento-lazer'
 			filters[:categories] = []
 			Rails.cache.write("#{session.id}/main-sidebar--filter/filters", filters, { expires_in: 1.hour, skip_nil: true })
 
@@ -112,8 +119,17 @@ class FilterReflex < ApplicationReflex
 
 	private
 
+	def requested_resources
+		if !@filters[:theme] && (@filters[:categories] || @filters[:date])
+			Event.includes(:place, :organizers, :categories).active.valid.in_day(@filters[:date]).in_categories(@filters[:categories]).not_ml_data.order_by_date.limit(100)
+		else
+			@theme = Theme.find_by_slug(@filters[:theme])
+			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.where(categories: { theme_id: @theme.id }).not_ml_data.order_by_date.limit(100)
+		end
+	end
+
 	def clean_filters
-		{ categories: params[:category] ? params_category : [], date: nil }
+		{ theme: 'entretenimento-lazer', categories: params[:category] ? params_category : [], date: nil }
 	end
 
 	def params_category
