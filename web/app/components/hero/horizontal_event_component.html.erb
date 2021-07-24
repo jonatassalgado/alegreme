@@ -1,10 +1,15 @@
-<%= content_tag :div, id: dom_id(@event, :hero), class: helpers.class_names('mt-10 transition-opacity duration-300'), data: { controller: 'hero--horizontal-event', 'hero--horizontal-event-open-in-sidebar': @open_in_sidebar, 'flip-key': dom_id(@event, :hero) } do %>
-	<div data-hero--horizontal-event-target="shadowItem" class="overflow-hidden absolute top-0 right-0 top-3 -right-3 w-32 h-20 rounded-lg opacity-0 transition-all duration-500 transform bg-brand-200 md:h-28 md:w-48 ripple ripple-white">
+<%= content_tag :div, id: dom_id(@event, :hero), class: helpers.class_names('relative mr-1 mt-6 transition-opacity duration-300'), data: { controller: 'hero--horizontal-event', 'hero--horizontal-event-open-in-sidebar': @open_in_sidebar, 'flip-key': dom_id(@event, :hero) } do %>
+	<div data-hero--horizontal-event-target="shadowItem" class="overflow-hidden absolute top-0 right-0 top-2 -right-2 w-32 h-20 rounded-md opacity-0 transition-all transform bg-gray-200 md:h-28 md:w-48">
 
 	</div>
 	<div data-hero--horizontal-event-target="currentItem"
 			 class="flex justify-between transition-opacity select-none tap-highlight-none">
-		<div class="<%= helpers.class_names('pr-6 flex-1 -mt-5', {}) %>">
+		<div class="<%= helpers.class_names('pr-6 flex-1', {}) %>">
+			<div class="mb-1.5 text-xs md:text-sm text-gray-700">
+				<%= helpers.day_of_week(@event.start_time) %> · <%= helpers.format_hour @event.start_time %>h ·
+				<%= @event.categories_primary_name.titleize %> ·
+				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline capitalize' %>
+			</div>
 			<%= content_tag :a,
 											dom_id(@event, 'hero--horizontal-event__link'),
 											href:  event_path(@event),
@@ -15,11 +20,6 @@
 											class: 'c-h3' do %>
 				<%= @event.name %>
 			<% end %>
-			<div class="mt-2 text-sm text-gray-700">
-				<%= helpers.day_of_week(@event.start_time) %> · <%= helpers.format_hour @event.start_time %>h ·
-				<%= @event.categories_primary_name.titleize %> ·
-				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline capitalize' %>
-			</div>
 			<div class="font-light hidden md:inline-block mt-2 text-gray-700 text-sm">
 				<%= helpers.limit_description_size @event.description, 120 %>
 			</div>
@@ -49,9 +49,8 @@
 			</div>
 		</div>
 		<div>
-			<div data-controller="ripple"
-					 style="background-color: <%= @event.image_dominant_color %>"
-					 class="<%= helpers.class_names('h-20 md:h-28 md:w-48 overflow-hidden relative ripple ripple-white rounded-lg w-32 shadow',
+			<div style="background-color: <%= @event.image_dominant_color %>"
+					 class="<%= helpers.class_names('h-20 md:h-28 md:w-48 overflow-hidden rounded-md border relative w-32',
 																					{}) %>">
 				<%= link_to event_path(@event),
 										id:   dom_id(@event, 'hero--horizontal-event__image'),

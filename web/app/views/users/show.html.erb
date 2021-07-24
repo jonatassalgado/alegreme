@@ -127,7 +127,7 @@
 								<% @user&.following_places.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
 									<a onclick="window.AnimateModule.animatePageHide()"
 										 href="<%= organizer_or_place_path resource %>"
-										 class="c-chip">
+										 class="c-chip mr-3 mb-3">
 										<%= resource.details_name.titleize %>
 										<% if resource.events.active.size > 0 %>
   									<span class="-mt-1.5 absolute bg-white h-4 inline-flex items-center justify-center mr-2 right-0 rounded-full text-sm top-0 w-4">
@@ -154,7 +154,7 @@
 								<% @user&.following_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
 									<a onclick="window.AnimateModule.animatePageHide()"
 										 href="<%= organizer_or_place_path resource %>"
-										 class="c-chip">
+										 class="c-chip mr-3 mb-3">
 										<%= resource.details_name.titleize %>
 										<% if resource.events.active.size > 0 %>
   									<span class="-mt-1.5 absolute bg-white h-4 inline-flex items-center justify-center mr-2 right-0 rounded-full text-sm top-0 w-4">
