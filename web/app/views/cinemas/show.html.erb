@@ -93,7 +93,7 @@
 						<div class="mx-auto w-11/12 text-sm leading-relaxed text-center text-gray-800 md:text-left md:w-full">
 							<%= movie.description %>
 						</div>
-						<div class="gap-2 grid grid-cols-3 md:gap-3 mt-12 w-full">
+						<div class="gap-2 grid grid-cols-1 md:grid-cols-3 md:gap-3 mt-12 w-full">
 							<% movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
 								<div class="p-3 border rounded">
 									<h3 class="inline font-semibold text-gray-800">
@@ -112,7 +112,7 @@
 												</div>
 												<div class="flex flex-wrap mt-1">
 													<% screening.times&.each do |time| %>
-														<div class="py-1 px-2 mr-1 mb-1 text-sm text-gray-800 bg-white rounded-full w-content">
+														<div class="py-1 px-2 mr-1 mb-1 text-sm text-gray-800 bg-gray-100 rounded-full w-content">
 															<%= time %>
 														</div>
 													<% end %>

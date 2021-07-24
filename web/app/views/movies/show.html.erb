@@ -6,6 +6,12 @@
 
 <%= render(ModalComponent.new) %>
 
+<%= link_to root_path, class: 'inline-block mt-3 px-5' do %>
+	<div class="c-chip text-xs md:hidden">
+		<div>Voltar para o feed</div>
+	</div>
+<% end %>
+
 <% cache ['movies', @movies&.map(&:id), @movies&.max&.updated_at&.to_i] do %>
 	<div class="md:mt-6">
 		<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false, id: 'movies-show') %>

@@ -5,16 +5,16 @@
 			 data-event-description-open="false"
 			 data-event-modifier="single">
 		<div class="flex px-5">
-			<div>
+			<div class="pr-3">
 				<span class="text-sm font-light text-gray-400">
-				<% if helpers.already_happened? @event %>
-					O evento ocorreu <%= I18n.l(@event.end_time) %>
-				<% else %>
-					Atualizado há <%= time_ago_in_words @event&.updated_at %>
-				<% end %>
-			</span>
-				<h1 class="inline-block mb-2 w-full text-2xl font-medium font-bold leading-tight text-gray-800 font-display md:px-0 md:text-3xl">
-					<%= @event.name %>
+					<% if helpers.already_happened? @event %>
+						O evento ocorreu <%= I18n.l(@event.end_time) %>
+					<% else %>
+						Atualizado há <%= time_ago_in_words @event&.updated_at %>
+					<% end %>
+				</span>
+				<h1 class="mb-2 c-h2 leading-tight">
+					<%= helpers.limit_name_size @event.name %>
 				</h1>
 			</div>
 			<div class="flex">

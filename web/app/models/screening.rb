@@ -11,6 +11,6 @@ class Screening < ApplicationRecord
 
 	alias_attribute :start_time, :day
 
-	delegate :title, to: :movie
+	delegate :title, :image, to: :movie
 	alias_method :name, :title
 end

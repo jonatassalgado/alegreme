@@ -52,8 +52,8 @@
 				<% end %>
 			</div>
 		</div>
-		<div>
-			<div data-controller="ripple" class="h-20 md:h-24 md:w-40 mt-3 overflow-hidden relative ripple ripple-white rounded-lg shadow w-32">
+		<div class="flex-shrink-0">
+			<% if @likeable.class == Event %>
 				<%= link_to event_path(@likeable),
 										data: {
 											'turbo-preserve-scroll': true,
@@ -66,11 +66,23 @@
 						data:    {
 							'event-id': @likeable.id
 						},
-						class:   'cursor-pointer object-center object-cover h-full w-full',
+						class:   'h-20 md:h-24 md:w-40 mt-3 overflow-hidden relative rounded-lg shadow w-32 cursor-pointer object-center object-cover',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
 				<% end %>
-			</div>
+		<% else %>
+				<%= link_to movie_path(@likeable&.movie), data: { 'turbo-preserve-scroll': true } do %>
+					<%= image_tag helpers.shrine_image_url(@likeable, :small), {
+						loading: :lazy,
+						alt:     "Cartaz do filme #{@likeable.name}",
+						data:    {
+							'movie-id': @likeable.id
+						},
+						class:   'border shadow-sm group-hover:shadow bg-gray-100 object-center object-cover rounded',
+						onerror: "this.style.opacity='0'"
+					} rescue nil %>
+				<% end %>
+		<% end %>
 		</div>
 	</div>
 <% end %>
