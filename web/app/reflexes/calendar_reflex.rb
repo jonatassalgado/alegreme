@@ -40,7 +40,7 @@ class CalendarReflex < ApplicationReflex
 			# prevent_refresh!
 		else
 			morph '#calendar', render(CalendarComponent.new(
-				events:     liked_resources.in_day(element['data-day'].to_date),
+				events:     liked_resources_in_day(element['data-day'].to_date),
 				start_date: element['data-day'].to_date,
 				user:       current_user,
 				filter:     true,
@@ -149,6 +149,10 @@ class CalendarReflex < ApplicationReflex
 
 	def liked_resources
 		(current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings || Screening.none)
+	end
+
+	def liked_resources_in_day day
+		(@user&.liked_events&.not_ml_data&.active&.in_day(day)&.order_by_date || Event.none) + (current_user&.liked_screenings&.where("day = ?", day) || Screening.none)
 	end
 
 	def date_range
