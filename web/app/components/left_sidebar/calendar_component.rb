@@ -4,7 +4,7 @@ class LeftSidebar::CalendarComponent < ViewComponent::Base
 
 	def initialize(events:, start_date:, user:, indicators:, filter: false)
 		@start_date = start_date
-		@events     = events.sort_by { |e| e.start_time }
+		@events     = events&.sort_by { |e| e&.start_time }
 		@indicators = indicators&.map(&:to_date) || events.map { |event| event.start_time.to_date }
 		@user       = user
 		@filter     = filter
