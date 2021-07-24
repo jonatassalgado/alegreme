@@ -90,7 +90,7 @@ class CalendarComponent < ViewComponent::Base
 		if @start_date
 			@start_date
 		elsif options.has_key?(:start_date)
-			options.fetch(:start_date).to_date
+			options.fetch(:start_date)&.to_date
 		else
 			view_context.params.fetch(start_date_param, Date.current).to_date
 		end

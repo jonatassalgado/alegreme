@@ -14,7 +14,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 		else
 			start_date = date_range.first - 1.day
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-				events:     liked_resources,
+				resources:  liked_resources,
 				start_date: start_date,
 				user:       current_user,
 				filter:     false,
@@ -32,7 +32,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 		else
 			start_date = date_range.last + 1.day
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-				events:     liked_resources,
+				resources:  liked_resources,
 				start_date: start_date,
 				user:       current_user,
 				filter:     false,
@@ -49,7 +49,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 				opened: true))
 		else
 			morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-				events:     liked_resources_in_day(element['data-day'].to_date),
+				resources:  liked_resources_in_day(element['data-day'].to_date),
 				start_date: element['data-day'].to_date,
 				user:       current_user,
 				filter:     true,
@@ -59,7 +59,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	def clear_filter
 		morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-			events:     liked_resources,
+			resources:  liked_resources,
 			start_date: Date.today,
 			user:       current_user,
 			filter:     false,
@@ -68,7 +68,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 
 	def update
 		morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-			events:     liked_resources,
+			resources:  liked_resources,
 			start_date: Date.today,
 			user:       current_user,
 			filter:     false,
@@ -84,7 +84,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 				current_user.unlike! @likeable
 
 				morph '#calendar', render(LeftSidebar::CalendarComponent.new(
-					events:     liked_resources,
+					resources:  liked_resources,
 					start_date: Date.today,
 					user:       current_user,
 					filter:     false,
@@ -121,7 +121,7 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 	end
 
 	def liked_resources
-		(@user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings || Screening.none)
+		(@user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings&.active || Screening.none)
 	end
 
 	def liked_resources_in_day day

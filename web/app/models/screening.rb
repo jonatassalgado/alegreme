@@ -13,4 +13,6 @@ class Screening < ApplicationRecord
 
 	delegate :title, :image, to: :movie
 	alias_method :name, :title
+
+	scope 'active', -> { where("day >= ?", DateTime.now) }
 end

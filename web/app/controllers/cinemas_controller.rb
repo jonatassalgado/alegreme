@@ -14,10 +14,10 @@ class CinemasController < ApplicationController
 
 	def set_cinema
 		if params[:id].numeric?
-			@cinema = Cinema.includes(movies: :screenings).find(params[:id])
+			@cinema = Cinema.find(params[:id])
 		else
 			if Cinema.friendly.exists_by_friendly_id? params[:id]
-				@cinema = Cinema.includes(movies: :screenings).friendly.find(params[:id])
+				@cinema = Cinema.friendly.find(params[:id])
 			else
 				redirect_to cinema_path
 			end

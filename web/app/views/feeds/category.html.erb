@@ -1,4 +1,3 @@
-
 <% content_for :canonical_url, category_events_url %>
 <% content_for :amp_url, category_events_url(format: :amp) %>
 
@@ -8,9 +7,11 @@
 <% content_for :top_app_bar_title, params[:category]&.titleize %>
 <% content_for :back_button, true %>
 
-	<script type="application/ld+json">
+<script type="application/ld+json">
   [<%= render partial: 'layouts/json_ld', collection: @events, as: :event %>]
-	</script>
+
+
+</script>
 
 <%= render ModalComponent.new %>
 
@@ -20,7 +21,7 @@
 						 id="left-sidebar"
 						 data-controller="simple-scrollbar"
 						 style="height: calc(100vh - 64px); top: 64px">
-			<%= render LeftSidebar::CalendarComponent.new(events: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
+			<%= render LeftSidebar::CalendarComponent.new(resources: @liked_events, start_date: Date.today, user: current_user, filter: false, indicators: @indicators) %>
 		</section>
 	<% end %>
 	<section id="main-sidebar" class="col-span-12 md:col-span-5">
@@ -32,7 +33,7 @@
 				<div class="flex items-center text-gray-700 md:hover:text-brand-500">
 					<%= link_to 'Ver todas as categorias', root_path, class: '' %>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current ml-2 h-4">
-						<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+						<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
 					</svg>
 				</div>
 			</div>
@@ -65,11 +66,11 @@
 		</section>
 	<% end %>
 
-<!--	<div data-controller="install" data-install-native="true" data-install-target="button" class="items-center flex select-none tap-highlight-none bottom-20 fixed transform transition-transform translate-y-32 w-full z-30">-->
-<!--		<span data-action="click->install#install" class="bg-brand-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">-->
-<!--			Instalar aplicativo-->
-<!--		</span>-->
-<!--	</div>-->
+	<!--	<div data-controller="install" data-install-native="true" data-install-target="button" class="items-center flex select-none tap-highlight-none bottom-20 fixed transform transition-transform translate-y-32 w-full z-30">-->
+	<!--		<span data-action="click->install#install" class="bg-brand-500 bg-white font-bold mx-auto px-5 py-3 rounded-full shadow-lg text-white w-content">-->
+	<!--			Instalar aplicativo-->
+	<!--		</span>-->
+	<!--	</div>-->
 
 </div>
 

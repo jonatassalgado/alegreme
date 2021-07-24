@@ -75,7 +75,7 @@
 					</svg>
 				</div>
 			</div>
-			<%= render LeftSidebar::CalendarComponent.new(events:     @liked_events,
+			<%= render LeftSidebar::CalendarComponent.new(resources:  @liked_events,
 																										start_date: Date.today,
 																										user:       current_user,
 																										filter:     false,
