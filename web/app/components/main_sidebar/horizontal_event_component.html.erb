@@ -63,21 +63,21 @@
 												action:                  'click->main-sidebar--horizontal-event#openEvent',
 												'event-id':              @event.id
 											},
-											class: 'text-sm md:text-base c-h3 inline md:hover:text-brand-600 mb-1' do %>
-				<%= @event.name %>
+											class: 'c-h3 inline md:hover:text-brand-600 mb-1' do %>
+				<%= helpers.limit_name_size @event.name, 50 %>
 			<% end %>
 			<div class="inline text-sm">
-				<span class="hidden md:inline">
+				<span class="inline">
 						·
 				</span>
-				<span class="hidden font-medium md:inline text-brand-600">
-					<%= link_to @event&.categories_display_name&.titleize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+				<span class="text-gray-700 md:font-medium md:text-brand-600">
+					<%= link_to @event&.categories_display_name&.capitalize, category_events_path(@event.categories_url), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
 				<span>
 						·
 				</span>
-				<span class="text-gray-500 md:hidden">
-					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+				<span class="text-gray-700 md:hidden">
+					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 26), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
 				<span class="hidden font-light text-gray-700 md:inline">
 					<%= helpers.limit_description_size @event.description, 80 %>

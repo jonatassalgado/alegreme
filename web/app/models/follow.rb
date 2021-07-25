@@ -9,7 +9,7 @@ class Follow < ApplicationRecord
 	private
 
 	def max_number_of_cinemas
-		if follower.following_cinemas&.size >= 2
+		if following.class.base_class == Cinema && follower.following_cinemas&.size >= 2
 			errors.add(:base, :max_number_of_following_cinemas, message: "Você só pode seguir até 2 cinemas")
 		end
 	end

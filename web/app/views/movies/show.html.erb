@@ -26,7 +26,7 @@
 				loading: :lazy,
 				title:   @movie.title,
 				alt:     "Filme #{@movie.title}",
-				class:   'h-content bg-gray-100 md:mr-10 object-cover rounded-lg shadow-lg w-32 mx-auto',
+				class:   'border h-content bg-gray-100 md:mr-10 object-cover rounded-lg shadow-lg w-32 mx-auto',
 				style:   'min-height: 195px; min-width: 128px',
 				onerror: "this.style.opacity='0'"
 			} rescue nil %>

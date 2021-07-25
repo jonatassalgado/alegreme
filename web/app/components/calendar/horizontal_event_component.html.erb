@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@likeable), data: { controller: 'calendar--horizontal-event', 'calendar--horizontal-event-open-in-sidebar': @open_in_sidebar }, class: 'relative last:z-10' do %>
-	<div class="select-none tap-highlight-none bg-white border-gray-100 flex justify-between md:border mt-2 mx-2 md:mx-0 px-3 md:px-5 py-3 rounded-lg">
+	<div class="flex justify-between py-3 px-3 mx-2 mt-2 bg-white rounded-lg border-gray-100 select-none tap-highlight-none md:border md:mx-0 md:px-5">
 		<div class="pr-6">
 			<% if @likeable.class == Event %>
 				<%= content_tag :a,
@@ -17,12 +17,13 @@
 					<%= @likeable.name %>
 				<% end %>
 			<% end %>
-			<div class="text-sm md:text-xs md:mt-2 text-gray-500">
+			·
+			<div class="text-gray-500 text-xs md:mt-2 inline">
 				<% if @likeable.class == Event %>
 					<%= helpers.day_of_week(@likeable.start_time).titlecase %> às <%= helpers.format_hour @likeable.start_time %>h
 					·
 				<% else %>
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
+					<svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
 						<path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4zm2 0h1V9h-1v2zm1-4V5h-1v2h1zM5 5v2H4V5h1zm0 4H4v2h1V9zm-1 4h1v2H4v-2z" clip-rule="evenodd"/>
 					</svg>
 					·
@@ -66,7 +67,7 @@
 						data:    {
 							'event-id': @likeable.id
 						},
-						class:   'h-20 md:h-24 md:w-40 mt-3 overflow-hidden relative rounded-lg shadow w-32 cursor-pointer object-center object-cover',
+						class:   'h-20 md:h-24 md:w-24 mt-3 overflow-hidden relative rounded-lg shadow w-20 cursor-pointer object-center object-cover',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
 				<% end %>
@@ -78,7 +79,7 @@
 						data:    {
 							'movie-id': @likeable.id
 						},
-						class:   'border shadow-sm group-hover:shadow bg-gray-100 object-center object-cover rounded',
+						class:   'h-20 md:h-24 md:w-24 w-20 border shadow-sm group-hover:shadow bg-gray-100 object-center object-cover rounded',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
 				<% end %>

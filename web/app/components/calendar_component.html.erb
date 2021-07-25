@@ -1,5 +1,5 @@
 <%= content_tag :div, id: 'calendar', data: { controller: 'calendar' }, class: 'h-full' do %>
-	<div class="h-full">
+	<div class="h-full px-1">
 		<div data-calendar-target="calendar" class="calendar bg-white mb-5 mb:bg-transparent md:mb-2 md:mx-0 md:py-3 md:rounded-lg md:shadow-none md:text-center py-2 rounded-lg select-none tap-highlight-none text-center">
 			<div class="capitalize flex font-medium items-center justify-between pb-5 rounded-t-lg text-gray-500">
 				<div class="flex items-center">
@@ -27,37 +27,39 @@
 				</div>
 			</div>
 
-			<table data-calendar-target="table" class="table-auto w-full">
-				<thead>
-				<tr>
-					<% date_range.slice(0, 7).each do |day| %>
-						<th class="pb-2 text-gray-600 uppercase text-xs font-medium"><%= t('date.abbr_day_names')[day.wday] %></th>
-					<% end %>
-				</tr>
-				</thead>
-
-				<tbody>
-				<% date_range.each_slice(7) do |week| %>
+			<div class="px-2">
+				<table data-calendar-target="table" class="table-auto w-full">
+					<thead>
 					<tr>
-						<% week.each do |day| %>
-							<%= content_tag :td, id: "calendar-#{day.strftime}", data: { action: 'click->calendar#inDay', day: day.strftime }, class: td_classes_for(day) do %>
-								<%= content_tag :div, class: helpers.class_names('relative z-10 mx-auto text-xs day-of-month',
-																																 { 'mt-1':                                               @indicators&.include?(day),
-																																	 'selected flex items-center justify-center flex-col': Date.current == day && !@filter || (day.to_date == start_date.to_date && @filter) }) do %>
-									<div class="z-20">
-										<%= day.strftime '%e' %>
-									</div>
-								<% end %>
-								<% if @indicators&.include?(day) %>
-									<div data-indicator class="<%= helpers.class_names 'h-1 mx-auto rounded-full transform translate-y-2 w-1 bg-brand-500' %>">
-								<% end %>
-								</div>
-							<% end %>
+						<% date_range.slice(0, 7).each do |day| %>
+							<th class="pb-2 text-gray-600 uppercase text-xs font-medium"><%= t('date.abbr_day_names')[day.wday] %></th>
 						<% end %>
 					</tr>
-				<% end %>
-				</tbody>
-			</table>
+					</thead>
+
+					<tbody>
+					<% date_range.each_slice(7) do |week| %>
+						<tr>
+							<% week.each do |day| %>
+								<%= content_tag :td, id: "calendar-#{day.strftime}", data: { action: 'click->calendar#inDay', day: day.strftime }, class: td_classes_for(day) do %>
+									<%= content_tag :div, class: helpers.class_names('relative z-10 mx-auto text-xs day-of-month',
+																																	 { 'mt-1':                                               @indicators&.include?(day),
+																																		 'selected flex items-center justify-center flex-col': Date.current == day && !@filter || (day.to_date == start_date.to_date && @filter) }) do %>
+										<div class="z-20">
+											<%= day.strftime '%e' %>
+										</div>
+									<% end %>
+									<% if @indicators&.include?(day) %>
+										<div data-indicator class="<%= helpers.class_names 'h-1 mx-auto rounded-full transform translate-y-2 w-1 bg-brand-500' %>">
+									<% end %>
+									</div>
+								<% end %>
+							<% end %>
+						</tr>
+					<% end %>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 
@@ -102,6 +104,6 @@
 				<%= link_to 'Crie uma conta', new_user_registration_path, data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' }, class: 'underline text-brand-500 hover:text-gray-600' %>
 				para salvar seus eventos favoritos
 			</div>
-		<% end %></div>
-
+		<% end %>
+	</div>
 <% end %>

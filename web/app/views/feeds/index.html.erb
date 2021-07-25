@@ -1,7 +1,7 @@
 <%= render ModalComponent.new %>
 
 <div id="main-content" class="gap-16 mx-auto max-w-screen-lg md:grid md:grid-cols-8">
-	<section id="main-sidebar" class="col-span-8 pt-12 space-y-16 md:col-span-5 min-h-screen">
+	<section id="main-sidebar" class="col-span-8 pt-6 md:pt-12 space-y-16 md:col-span-5 min-h-screen">
 		<% if notice %>
 			<div class="flex items-center p-3 mx-4 space-x-2 max-w-screen-lg text-sm font-semibold rounded-lg border bg-brand-100 border-brand-200 text-brand-600">
 				<div class="flex flex-shrink-0 justify-center items-center w-12 h-12 rounded-full bg-brand-100 sm:h-10 sm:w-10">
@@ -44,7 +44,7 @@
 						<div class="flex justify-between items-center pr-5 md:pr-10">
 							<h2 class="px-5 mb-3 c-h2">
 								Eventos nos próximos dias na categoria:
-								<span class="underline text-brand-600">
+								<span class="font-medium text-brand-600">
 									<%= @category&.details_display_name&.titleize %>
 								</span>
 							</h2>
