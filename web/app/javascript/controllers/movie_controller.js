@@ -1,7 +1,7 @@
 import ApplicationController from "./application_controller"
 import {AnimateModule}       from "../modules/animate-module";
 
-export default class MovieController extends ApplicationController {
+export default class extends ApplicationController {
     static targets = ["movie", "coverRipple"];
 
     connect() {

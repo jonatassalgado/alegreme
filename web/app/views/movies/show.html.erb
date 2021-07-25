@@ -59,24 +59,31 @@
 		</div>
 
 		<div class="grid grid-cols-12 grid-flow-col gap-0 px-5 mt-20 max-w-screen-lg md:gap-10">
-			<div class="col-span-12 mx-auto space-y-6 md:space-y-12 md:col-span-9">
+			<div class="w-full border col-span-12 md:border-0 md:col-span-9 md:space-y-12 mx-auto rounded-lg">
 				<% @movie.screenings&.includes(:cinema)&.sort_by { |s| s.cinema&.display_name }&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
 					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
-						<div class="">
-							<div class="grid grid-cols-4">
-								<div class="col-span-3 pr-5 mb-3 text-sm">
-									<div class="mb-3">
-										<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="text-xl font-bold text-gray-800 inline">
-											<%= link_to cinema_name_group[0][0], cinema_path(cinema_name_group[1][0]&.cinema), class: 'inline-block hover:text-brand-600' %>
+						<div data-controller="accordion" class="border-b md:border-0 md:p-0 p-4 last:border-b-0">
+							<div data-action="click->accordion#toggle" data-accordion-open-value="false" class="gap-3 grid grid-cols-4">
+								<div class="col-span-3 md:inline-block md:mb-3 md:pr-5 text-sm">
+									<div class="md:mb-3 inline">
+										<%= link_to cinema_path(cinema_name_group[1][0]&.cinema), class: 'hidden md:inline-block' do %>
+											<h2 id="md-<%= cinema_name_group[1][0]&.cinema&.slug %>" class="text-base font-medium md:text-xl md:font-bold text-gray-800 inline">
+												<%= cinema_name_group[0][0] %>
+											</h2>
+										<% end %>
+										<h2 id="sm-<%= cinema_name_group[1][0]&.cinema&.slug %>" class="text-base font-medium md:text-xl md:font-bold text-gray-800 md:hidden inline-block">
+											<%= cinema_name_group[0][0] %>
 										</h2>
+										<span data-accordion-target="hidden" class="hidden md:inline">
 										·
-										<%= render(FollowButtonComponent.new(
-											user:       current_user,
-											followable: cinema_name_group[1][0]&.cinema,
-											type:       'text'
-										)) %>
+											<%= render(FollowButtonComponent.new(
+												user:       current_user,
+												followable: cinema_name_group[1][0]&.cinema,
+												type:       'text'
+											)) %>
+										</span>
 									</div>
-									<div class="text-xs text-gray-700">
+									<div data-accordion-target="hidden" class="mt-2 mb-3 hidden md:inline-block text-xs text-gray-700">
 										<%= cinema_name_group[1][0]&.cinema&.address %>
 										<% if cinema_name_group[1][0]&.cinema&.neighborhood&.present? %>
 											‧
@@ -92,19 +99,24 @@
 										<% end %>
 										<% if cinema_name_group[1][0]&.cinema&.google_maps&.present? %>
 											‧
-											<a href="<%= cinema_name_group[1][0]&.cinema&.google_maps %>" rel="nofollow" target="_blank" class="font-semibold text-brand-600">Abrir
-												no Google Maps</a>
-										<% end %></div>
+											<a href="<%= cinema_name_group[1][0]&.cinema&.google_maps %>" rel="nofollow" target="_blank" class="font-semibold text-brand-600">
+												Abrir no Google Maps
+											</a>
+										<% end %>
+									</div>
 								</div>
 								<div class="flex col-span-1 justify-end items-start">
 									<% if cinema_name_group[1][0]&.cinema&.website&.present? %>
-										<a href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="inline-block py-1.5 px-2 text-xs font-medium text-center rounded-full transition-transform bg-brand-100 hover:scale-105 md:text-left md:text-sm md:transform text-brand-700">
+										<a data-accordion-target="hidden" href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="hidden md:inline-block py-1.5 px-2 text-xs font-medium text-center rounded-full transition-transform bg-brand-100 hover:scale-105 md:text-left md:text-sm md:transform text-brand-700">
 											Ver site oficial
 										</a>
 									<% end %>
+									<svg data-accordion-target="visible" xmlns="http://www.w3.org/2000/svg" class="md:hidden text-gray-700 float-right h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+									</svg>
 								</div>
 							</div>
-							<div class="grid grid-cols-1 grid-flow-row gap-2 md:grid-cols-3">
+							<div data-accordion-target="hidden" class="grid hidden md:grid grid-cols-1 grid-flow-row gap-2 md:grid-cols-3">
 								<% cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
 									<div class="p-3 border rounded bg-white">
 										<h3 class="inline font-semibold text-gray-800">
