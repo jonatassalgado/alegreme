@@ -7,8 +7,7 @@
 								class: 'transition-opacity group' do %>
 	<div class="flex bg-white select-none tap-highlight-none">
 		<div>
-			<div class="relative w-24 h-16 rounded-lg shadow bg-brand-100 md:h-28 md:w-48"
-					 style="background-color: <%= helpers.get_image_dominant_color(@event) %>">
+			<div class="relative w-24 h-16 bg-brand-100 md:h-28 md:w-48">
 				<%= link_to event_path(@event),
 										data: {
 											'turbo-preserve-scroll': true,
@@ -26,7 +25,7 @@
 					} rescue nil %>
 				<% end %>
 				<% if helpers.is_new_event? @event %>
-					<div title="Criado nas últimas 48 horas" class="absolute left-1 -top-2 py-1 px-2 font-semibold bg-white rounded-full border border-gray-100 shadow md:left-3 text-brand-600 text-xxs">NOVO</div>
+					<div title="Criado nas últimas 48 horas" class="absolute left-1 -top-2 py-1 px-2 font-semibold bg-white rounded-full border border-gray-100 md:shadow md:left-3 text-brand-600 text-xxs">NOVO</div>
 				<% end %>
 			</div>
 		</div>

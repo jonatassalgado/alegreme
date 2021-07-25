@@ -17,12 +17,12 @@
 		<% end %>
 		<% unless params[:day] || params[:category] %>
 			<% unless current_user %>
-				<div id="hero__presentation" data-turbo-permanent class="flex flex-row-reverse gap-4 items-center p-3 mx-5 -my-5 rounded-lg select-none bg-brand-100 md:bg-transparent md:flex md:flex-row md:items-start md:mx-0 md:my-0 md:px-5 tap-highlight-none" style="min-height: <%= mobile_device? ? '110px' : '150px' %>">
+				<div id="hero__presentation" data-turbo-permanent class="-my-5 flex gap-3 items-center md:bg-transparent md:border-0 md:flex md:flex-row md:items-start md:mx-0 md:my-0 md:px-5 mx-5 rounded-lg select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '110px' : '150px' %>">
 					<div class="md:mr-12">
-						<h2 class="text-lg font-semibold leading-snug text-gray-800 md:font-bold md:text-3xl md:text-gray-800">
+						<h2 class="c-h2">
 							Eventos e cinema em Porto Alegre
 						</h2>
-						<span class="block mt-2 text-xs leading-tight c-span md:inline-block md:leading-normal md:text-base">
+						<span class="block mt-1.5 text-xs leading-snug text-gray-800 md:text-gray-700 md:inline-block md:leading-normal md:text-base">
     						Descubra eventos e siga seus locais favoritos para não perder nada que acontece na cidade.
     					</span>
 					</div>

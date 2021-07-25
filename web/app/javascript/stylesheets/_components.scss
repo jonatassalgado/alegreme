@@ -1,6 +1,6 @@
 @layer components {
   .c-h2 {
-    @apply font-bold font-display text-2xl md:text-3xl text-gray-800;
+    @apply text-xl font-semibold leading-tight text-gray-800 md:font-bold md:leading-snug font-display md:text-3xl;
   }
 
   .c-h3 {
@@ -12,14 +12,18 @@
   }
 
   .c-header {
-    box-shadow: #00000014 0 1px 12px;
+    @apply border-b;
+    @screen md {
+      @apply border-0;
+      box-shadow: #00000014 0 1px 12px;
+    }
   }
 
   .c-chip {
-    @apply font-medium bg-gray-100 cursor-pointer duration-100 flex font-display hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block items-center justify-start px-4 py-2 rounded-full select-none tap-highlight-none text-gray-700 transform transition-all transition-colors w-content;
+    @apply inline-block flex justify-start items-center py-2 px-4 text-sm font-medium text-gray-700 bg-gray-100 rounded-full transition-all transition-colors duration-100 transform cursor-pointer select-none md:text-base font-display hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none w-content;
 
     &--active {
-      @apply font-medium bg-brand-200 cursor-pointer duration-100 flex font-display hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block items-center justify-start px-4 py-2 rounded-full select-none tap-highlight-none text-brand-700 transform transition-all transition-colors w-content;
+      @apply inline-block flex justify-start items-center py-2 px-4 text-sm font-medium rounded-full transition-all transition-colors duration-100 transform cursor-pointer select-none md:text-base bg-brand-200 font-display hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none text-brand-700 w-content;
     }
   }
 

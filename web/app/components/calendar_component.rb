@@ -20,7 +20,7 @@ class CalendarComponent < ViewComponent::Base
 
 		td_class = ['day h-14 text-center px-1 rounded-full cursor-pointer']
 		td_class << "wday-#{day.wday.to_s}"
-		td_class << 'font-semibold' if today == day
+		td_class << 'font-medium' if today == day
 		td_class << 'text-gray-300' if today > day
 		td_class << 'text-gray-900' if today < day
 		td_class << 'filter' if day.to_date == start_date.to_date && @filter

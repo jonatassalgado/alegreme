@@ -43,8 +43,7 @@
 							<%= content_tag :td, id: "calendar-#{day.strftime}", data: { action: 'click->calendar#inDay', day: day.strftime }, class: td_classes_for(day) do %>
 								<%= content_tag :div, class: helpers.class_names('relative z-10 mx-auto text-xs day-of-month',
 																																 { 'mt-1':                                               @indicators&.include?(day),
-																																	 'today flex items-center justify-center flex-col':    Date.current == day,
-																																	 'selected flex items-center justify-center flex-col': day.to_date == start_date.to_date && @filter }) do %>
+																																	 'selected flex items-center justify-center flex-col': Date.current == day && !@filter || (day.to_date == start_date.to_date && @filter) }) do %>
 									<div class="z-20">
 										<%= day.strftime '%e' %>
 									</div>
