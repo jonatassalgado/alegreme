@@ -33,7 +33,7 @@ class Movie < ApplicationRecord
 
 	validates :title, uniqueness: true
 
-	has_many :screenings
+	has_many :screenings, dependent: :destroy
 	has_many :cinemas, -> { distinct }, through: :screenings
 
 	friendly_id :title, use: :slugged
