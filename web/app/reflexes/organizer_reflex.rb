@@ -10,21 +10,25 @@ class OrganizerReflex < ApplicationReflex
 			if current_user.follow? @organizer
 				current_user.unfollow! @organizer
 			else
-				current_user.follow! @organizer
+				begin
+					current_user.follow! @organizer
+				rescue StandardError => invalid
+					show_modal 'Lá se foi sua cota', 'Você só pode seguir até 5 organizadores. Vamos manter as coisas simples por aqui 😜'
+				end
 			end
 			morph "#{dom_id(@organizer, 'follow-button')}", render(FollowButtonComponent.new(followable: @organizer, user: current_user, type: @type))
 		else
-			show_login_modal
+			show_modal 'Você precisa estar logado', 'Crie uma conta para seguir organizadores', 'create-account'
 		end
 	end
 
 	private
 
-	def show_login_modal
+	def show_modal(title, text, action = nil)
 		morph '#modal', render(ModalComponent.new(
-			title:  'Você precisa estar logado',
-			text:   'Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas 🤙',
-			action: 'create-account',
+			title:  title,
+			text:   text,
+			action: action,
 			opened: true))
 	end
 
