@@ -24,6 +24,7 @@ class MovieDashboard < Administrate::BaseDashboard
 		streamings:  Field::String.with_options(searchable: false),
 		collections: Field::String.with_options(searchable: false),
 		entries:     Field::String.with_options(searchable: false),
+		status:      Field::Enum
 	}.freeze
 
 	# COLLECTION_ATTRIBUTES
@@ -43,6 +44,7 @@ class MovieDashboard < Administrate::BaseDashboard
 	# an array of attributes that will be displayed on the model's show page.
 	SHOW_PAGE_ATTRIBUTES = %i[
     id
+    status
     title
     genres
     description
@@ -64,6 +66,7 @@ class MovieDashboard < Administrate::BaseDashboard
 	# an array of attributes that will be displayed
 	# on the model's form (`new` and `edit`) pages.
 	FORM_ATTRIBUTES = %i[
+		status
     title
     genres
     description

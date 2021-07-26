@@ -21,6 +21,14 @@ class Movie < ApplicationRecord
 								 'Guerra',
 								 'Faroeste'].freeze
 
+	enum status: {
+		pending:  0,
+		active:   1,
+		spam:     2,
+		archived: 3,
+		repeated: 4
+	}, _suffix:  true
+
 	extend FriendlyId
 
 	include MovieImageUploader::Attachment.new(:image)

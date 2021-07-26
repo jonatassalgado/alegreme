@@ -27,7 +27,8 @@ module PopulateMoviesRake
 															 genres:      item['genres'],
 															 description: item['description'],
 															 cover:       item['cover'],
-															 trailer:     item['trailer'])
+															 trailer:     item['trailer'],
+															 status:      'active')
 
 			set_cover(item, movie)
 			save_movie(movie)
