@@ -10,8 +10,9 @@ class Event < ApplicationRecord
 		pending:  0,
 		active:   1,
 		spam:     2,
-		archived: 3
-	}, _suffix: true
+		archived: 3,
+		repeated: 4
+	}, _suffix:  true
 
 	extend FriendlyId
 
