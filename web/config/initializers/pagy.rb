@@ -20,7 +20,7 @@
 # Pagy::VARS[:size]       = [1,4,4,1]                       # default
 # Pagy::VARS[:page_param] = :page                           # default
 # Pagy::VARS[:params]     = {}                              # default
-# Pagy::VARS[:fragment]   = '#fragment'                     # example
+Pagy::VARS[:fragment]   = '#main-sidebar--feed'                     # example
 # Pagy::VARS[:link_extra] = 'data-remote="true"'            # example
 # Pagy::VARS[:i18n_key]   = 'pagy.item_name'                # default
 # Pagy::VARS[:cycle]      = true                            # example
@@ -120,14 +120,14 @@
 # require 'pagy/extras/shared'
 # require 'pagy/extras/metadata'
 # For performance reason, you should explicitly set ONLY the metadata you use in the frontend
-# Pagy::VARS[:metadata] = [:scaffold_url, :count, :page, :prev, :next, :last]    # example
+Pagy::VARS[:metadata] = [:page, :last]    # example
 
 # Trim extra: Remove the page=1 param from links
 # See https://ddnexus.github.io/pagy/extras/trim
 # require 'pagy/extras/trim'
 # after requiring it will trim by default
 # set to false if you want to make :enable_trim_extra an opt-in variable
-# Pagy::VARS[:enable_trim_extra] = false # default true
+Pagy::VARS[:enable_trim_extra] = false # default true
 
 # Rails
 

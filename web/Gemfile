@@ -116,6 +116,7 @@ gem 'sitemap_generator'
 
 gem 'rack-attack'
 
+gem 'turbo-rails'
 gem 'stimulus_reflex', '~> 3.4.1'
 gem 'view_component', require: 'view_component/engine'
 # gem 'view_component_reflex'

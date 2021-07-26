@@ -38,6 +38,10 @@ export default class extends ApplicationController {
                 selfEl.classList.remove("opacity-0")
             }, 500)
         }, false)
+
+        document.addEventListener("feed#size-change:after", event => {
+            this.stickySidebar.updateSticky()
+        }, false)
     }
 
     connect() {
@@ -73,6 +77,10 @@ export default class extends ApplicationController {
             setTimeout(() => {
                 selfEl.classList.remove("opacity-0")
             }, 500)
+        }, false)
+
+        document.removeEventListener("feed#size-change:after", event => {
+            this.stickySidebar.updateSticky()
         }, false)
     }
 

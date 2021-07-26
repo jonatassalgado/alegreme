@@ -8,8 +8,6 @@ export default class extends ApplicationController {
 
     connect() {
         super.connect();
-
-
     }
 
     beforeCache() {

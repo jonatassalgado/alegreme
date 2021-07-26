@@ -37,15 +37,15 @@
 																	 chips:  true,
 																	 id:     'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
 
-		<div>
+		<div id="main-sidebar--feed">
 			<% if @upcoming_events.present? %>
 				<div class="bg-white">
 					<% if params[:category] %>
 						<div class="flex justify-between items-center pr-5 md:pr-10">
 							<h2 class="px-5 mb-3 c-h2">
 								Eventos nos próximos dias na categoria:
-								<span class="font-medium text-brand-600">
-									<%= @category&.details_display_name&.titleize %>
+								<span class="text-brand-600">
+									<%= @category&.details_display_name %>
 								</span>
 							</h2>
 						</div>
@@ -69,7 +69,9 @@
 					Alegre <%= I18n.l params[:day].to_date if params[:day] %> <%= "na categoria #{@category&.details_display_name&.titleize}" if params[:category] %>
 				</h2>
 			<% end %>
-			<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true) %>
+			<div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list">
+				<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true) %>
+			</div>
 		</div>
 	</section>
 	<% unless mobile_device? %>

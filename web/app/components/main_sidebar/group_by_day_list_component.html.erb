@@ -1,9 +1,4 @@
-<div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list" class="pr-5 pl-3">
-	<% if @pagy&.vars&.dig(:page)&.to_i > 1 %>
-		<div class="px-3 mb-1">
-			<%== helpers.pagy_nav @pagy %>
-		</div>
-	<% end %>
+<div id="<%= "main-sidebar--group-by-day-list-#{@pagy&.vars&.dig(:page)}" %>" data-controller="infinite-scroll" class="pr-5 pl-3">
 	<div>
 		<% @events.group_by { |e| e.start_time.strftime("%Y-%m-%d") }.each do |group| %>
 			<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="border-b last:border-b-0 mb-3 ml-2 pb-6 relative">
@@ -40,13 +35,11 @@
 					<%= render MainSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, open_in_sidebar: @open_in_sidebar) %>
 				</div>
 			</div>
-		<% end %></div>
-	<% if @pagy %>
-		<div class="mb-10 mt-3 px-3 w-content">
+		<% end %>
+	</div>
+	<% if @pagy && @pagy&.last != @pagy&.page %>
+		<div id="main-sidebar--group-by-day-list--pagination" data-infinite-scroll-target="pagination" class="mb-10 mt-3 px-3 w-content">
 			<%== helpers.pagy_nav(@pagy) %>
-			<div class="text-xs mt-2">
-				<%== helpers.pagy_info @pagy, 'eventos' %>
-			</div>
 		</div>
 	<% end %>
 </div>
