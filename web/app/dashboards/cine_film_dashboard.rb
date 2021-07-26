@@ -31,9 +31,11 @@ class CineFilmDashboard < Administrate::BaseDashboard
 	# Feel free to add, remove, or rearrange items.
 	COLLECTION_ATTRIBUTES = %i[
     id
+    image
     title
-    genres
+    trailer
     created_at
+    updated_at
   ].freeze
 
 	# SHOW_PAGE_ATTRIBUTES
@@ -58,7 +60,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
 	# an array of attributes that will be displayed
 	# on the model's form (`new` and `edit`) pages.
 	FORM_ATTRIBUTES = %i[
-	image
+	  image
     title
     description
     trailer

@@ -9,6 +9,7 @@ class EventDashboard < Administrate::BaseDashboard
 	# which determines how the attribute is displayed
 	# on pages throughout the dashboard.
 	ATTRIBUTE_TYPES = {
+		image:       Field::Shrine.with_options(version: :feed),
 		place:        Field::BelongsTo,
 		organizers:   Field::HasMany,
 		categories:   Field::HasMany,
@@ -36,6 +37,7 @@ class EventDashboard < Administrate::BaseDashboard
 	# Feel free to add, remove, or rearrange items.
 	COLLECTION_ATTRIBUTES = %i[
     id
+    image
     name
     created_at
     updated_at
@@ -45,6 +47,7 @@ class EventDashboard < Administrate::BaseDashboard
 	# an array of attributes that will be displayed on the model's show page.
 	SHOW_PAGE_ATTRIBUTES = %i[
   	status
+  	image
     place
     organizers
     categories
@@ -68,6 +71,7 @@ class EventDashboard < Administrate::BaseDashboard
 	# on the model's form (`new` and `edit`) pages.
 	FORM_ATTRIBUTES = %i[
     status
+    image
     place
     organizers
     categories

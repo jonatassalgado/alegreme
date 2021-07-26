@@ -2,7 +2,7 @@ module Admin
   class EventsController < Admin::ApplicationController
      
     def default_sorting_attribute
-      :created_at
+      :updated_at
     end
 
     def default_sorting_direction
