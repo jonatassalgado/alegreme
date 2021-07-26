@@ -19,7 +19,11 @@ module PopulateMoviesRake
 																	 genres:      item['genres'],
 																	 description: item['description'],
 																	 cover:       item['cover'],
-																	 trailer:     item['trailer']
+																	 trailer:     item['trailer'],
+																	 rating:      item['rating']&.to_f,
+																	 age_rating:  item['age_rating'],
+																	 cast:        item['cast'],
+																	 year:        item['year']&.to_i,
 																 })
 			puts "Filme: #{item['name']} - Filme já existe (atualizado) \n".white
 		else
@@ -28,6 +32,10 @@ module PopulateMoviesRake
 															 description: item['description'],
 															 cover:       item['cover'],
 															 trailer:     item['trailer'],
+															 rating:      item['rating']&.to_f,
+															 age_rating:  item['age_rating'],
+															 cast:        item['cast'],
+															 year:        item['year']&.to_i,
 															 status:      'active')
 
 			set_cover(item, movie)

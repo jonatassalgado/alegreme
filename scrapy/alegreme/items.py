@@ -174,6 +174,15 @@ class Movie(scrapy.Item):
         input_processor=MapCompose(get_movie_year),
         output_processor=TakeFirst()
     )
+    rating = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    cast = scrapy.Field(
+        output_processor=Identity()
+    )
+    age_rating = scrapy.Field(
+        output_processor=TakeFirst()
+    )
     screenings = scrapy.Field(
         input_processor=Identity()
     )
