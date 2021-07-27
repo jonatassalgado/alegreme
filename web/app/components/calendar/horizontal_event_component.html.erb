@@ -18,7 +18,7 @@
 				<% end %>
 			<% end %>
 			·
-			<div class="text-gray-500 text-xs md:mt-2 inline">
+			<div class="inline text-xs text-gray-500 md:mt-2">
 				<% if @likeable.class == Event %>
 					<%= helpers.day_of_week(@likeable.start_time).titlecase %> às <%= helpers.format_hour @likeable.start_time %>h
 					·
@@ -79,7 +79,7 @@
 						data:    {
 							'movie-id': @likeable.id
 						},
-						class:   'h-20 md:h-24 md:w-24 w-20 border shadow-sm group-hover:shadow bg-gray-100 object-center object-cover rounded',
+						class:   'h-20 md:h-24 md:w-24 mt-3 overflow-hidden relative rounded-lg shadow w-20 cursor-pointer object-center object-cover',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
 				<% end %>
