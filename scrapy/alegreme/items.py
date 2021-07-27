@@ -84,7 +84,7 @@ def get_movie_genres(value):
 
 def get_movie_year(value):
     year = re.search(r'(\d{4})', value)
-    return year.group(1)
+    return year.group(1) if year else None
 
 def get_movie_google_id(value):
     google_id = re.sub(r'\/g\/', '', value)

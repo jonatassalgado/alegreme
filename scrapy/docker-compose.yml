@@ -29,4 +29,4 @@ services:
       - splash_data:/var/www/splash/data
     mem_limit: 2gb
     mem_reservation: 256m
-    command: --maxrss 2048 --max-timeout 3600 --slots 2
+    command: --maxrss 1024 --max-timeout 3600 --slots 4
