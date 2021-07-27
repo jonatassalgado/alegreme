@@ -41,6 +41,7 @@ HTTP | TCP | 80 | -
 HTTPS | TCP | 443 | -
 CUSTOM | TCP | 3000 | RAILS
 CUSTOM | TCP | 3030 | API (FLASK)
+CUSTOM | TCP | 8081 | CRONTAB UI
 
 ---
 ### SECURE SSH
@@ -58,6 +59,9 @@ CUSTOM | TCP | 3030 | API (FLASK)
 
     # banned ips
     sudo zgrep 'Ban' /var/log/fail2ban.log*
+
+    # List of all ssh access
+    last -F
 
 ---
 ### Docker

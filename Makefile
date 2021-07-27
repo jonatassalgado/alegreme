@@ -29,6 +29,12 @@ up-clean-entrypoint:
 up-scrapy:
 	docker-compose -f docker-compose.development.scrapy.yml up -d
 
+up-crontab-ui:
+	docker run -e BASIC_AUTH_USER=jonataseduardo -e BASIC_AUTH_PWD=REMOVED -d -p 8001:8000 --name="crontab-ui" --restart=always --memory="512m" --cpus="1" alseambusher/crontab-ui
+
+down-crontab-ui:
+	docker stop crontab-ui
+
 restart:
 	docker-compose -f docker-compose.development.yml restart
 
