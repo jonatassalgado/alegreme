@@ -7,7 +7,7 @@
 <%= render(ModalComponent.new) %>
 
 <%= link_to root_path, class: 'inline-block mt-3 px-5' do %>
-	<div class="c-chip text-xs md:hidden">
+	<div class="text-xs c-chip md:hidden">
 		<div>Voltar para o feed</div>
 	</div>
 <% end %>
@@ -19,9 +19,9 @@
 <% end %>
 
 <%# cache [@movie, @movie&.screenings&.max, DateTime.now.day] do %>
-<section class="mx-auto mt-12 max-w-screen-lg">
+<section class="mx-auto mt-5 md:mt-12 max-w-screen-lg">
 	<div class="flex flex-col mb-32">
-		<div class="flex flex-col justify-center md:flex-row md:mx-auto md:w-8/12">
+		<div class="flex flex-col justify-center md:flex-row md:mx-auto md:px-5">
 			<%= image_tag shrine_image_url(@movie, :medium), {
 				loading: :lazy,
 				title:   @movie.title,
@@ -32,12 +32,31 @@
 			} rescue nil %>
 			<div class="flex flex-col items-center mt-6 space-y-3 md:items-start md:mt-2">
 				<div class="flex flex-col items-center md:flex-row md:items-center md:justify-between md:w-full">
-					<div class="text-center md:text-left">
-						<h1 class="c-h2">
-							<%= @movie.title %>
-						</h1>
-						<div class="text-sm italic">
-							<%= @movie&.genres&.join(", ") %>
+					<div class="text-center md:text-left space-y-1 md:pr-5">
+						<div class="flex flex-col md:flex-row justify-center md:justify-start items-center">
+							<h1 class="c-h2">
+								<%= @movie.title %>
+							</h1>
+							<% if @movie.rating %>
+								<div class="flex font-semibold items-center ml-3 space-x-0.5 text-brand-600">
+									<span><%= @movie.rating %></span>
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 fill-current" viewBox="0 0 20 20" fill="currentColor">
+										<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+									</svg>
+									<span class="text-sm text-gray-800 uppercase">imdb</span>
+								</div>
+							<% end %>
+						</div>
+						<div class="px-6 text-xs md:text-sm md:px-0">
+							<div class="space-x-1">
+								<%= tag.span @movie.age_rating, class: 'border border-gray-700 font-medium px-1 rounded-sm text-gray-800 text-xxs' if @movie.age_rating? %>
+								<%= tag.span @movie&.genres&.join(', ') if @movie.genres? %>
+								<%= tag.span " · " if @movie.genres? %>
+								<%= tag.span @movie.year&.to_i if @movie.year? %>
+							</div>
+							<%= tag.div do %>
+								<span class="font-medium">Elenco:</span> <%= @movie&.cast&.join(', ') %>
+							<% end if @movie&.cast? %>
 						</div>
 					</div>
 					<% if @movie.trailer %>
@@ -59,19 +78,19 @@
 		</div>
 
 		<div class="grid grid-cols-12 grid-flow-col gap-0 px-5 mt-20 max-w-screen-lg md:gap-10">
-			<div class="w-full border col-span-12 md:border-0 md:col-span-9 md:space-y-12 mx-auto rounded-lg">
+			<div class="col-span-12 mx-auto w-full rounded-lg border md:border-0 md:col-span-9 md:space-y-12">
 				<% @movie.screenings&.includes(:cinema)&.sort_by { |s| s.cinema&.display_name }&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
 					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
-						<div data-controller="accordion" class="border-b md:border-0 md:p-0 p-4 last:border-b-0">
-							<div data-action="click->accordion#toggle" data-accordion-open-value="false" class="gap-3 grid grid-cols-4">
-								<div class="col-span-3 md:inline-block md:mb-3 md:pr-5 text-sm">
-									<div class="md:mb-3 inline">
+						<div data-controller="accordion" class="p-4 border-b md:border-0 md:p-0 last:border-b-0">
+							<div data-action="click->accordion#toggle" data-accordion-open-value="false" class="grid grid-cols-4 gap-3">
+								<div class="col-span-3 text-sm md:inline-block md:mb-3 md:pr-5">
+									<div class="inline md:mb-3">
 										<%= link_to cinema_path(cinema_name_group[1][0]&.cinema), class: 'hidden md:inline-block' do %>
-											<h2 id="md-<%= cinema_name_group[1][0]&.cinema&.slug %>" class="text-base font-medium md:text-xl md:font-bold text-gray-800 inline">
+											<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="inline text-base font-medium text-gray-800 md:text-xl md:font-bold">
 												<%= cinema_name_group[0][0] %>
 											</h2>
 										<% end %>
-										<h2 id="sm-<%= cinema_name_group[1][0]&.cinema&.slug %>" class="text-base font-medium md:text-xl md:font-bold text-gray-800 md:hidden inline-block">
+										<h2 id="sm-<%= cinema_name_group[1][0]&.cinema&.slug %>" class="inline-block text-base font-medium text-gray-800 md:text-xl md:font-bold md:hidden">
 											<%= cinema_name_group[0][0] %>
 										</h2>
 										<span data-accordion-target="hidden" class="hidden md:inline">
@@ -83,7 +102,7 @@
 											)) %>
 										</span>
 									</div>
-									<div data-accordion-target="hidden" class="mt-2 mb-3 hidden md:inline-block text-xs text-gray-700">
+									<div data-accordion-target="hidden" class="hidden mt-2 mb-3 text-xs text-gray-700 md:inline-block">
 										<%= cinema_name_group[1][0]&.cinema&.address %>
 										<% if cinema_name_group[1][0]&.cinema&.neighborhood&.present? %>
 											‧
@@ -111,22 +130,22 @@
 											Ver site oficial
 										</a>
 									<% end %>
-									<svg data-accordion-target="visible" xmlns="http://www.w3.org/2000/svg" class="md:hidden text-gray-700 float-right h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-										<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+									<svg data-accordion-target="visible" xmlns="http://www.w3.org/2000/svg" class="float-right w-5 h-5 text-gray-700 md:hidden" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
 									</svg>
 								</div>
 							</div>
-							<div data-accordion-target="hidden" class="grid hidden md:grid grid-cols-1 grid-flow-row gap-2 md:grid-cols-3">
+							<div data-accordion-target="hidden" class="grid hidden grid-cols-1 grid-flow-row gap-2 md:grid md:grid-cols-3">
 								<% cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
-									<div class="p-3 border rounded bg-white">
-										<h3 class="inline font-semibold text-gray-800">
+									<div class="p-3 bg-white rounded border">
+										<h3 class="c-h4">
 											<%= day_of_week(screening_day_group[0]).titleize %>
 										</h3>
 										<span class="text-xs text-gray-800"><%= screening_day_group[0].strftime('%d/%m/%y') %></span>
-										<div class="float-right w-content -mt-1 -mr-2">
+										<div class="float-right -mt-1 -mr-2 w-content">
 											<%= render(LikesButtonComponent.new(likeable: screening_day_group[1][0], user: current_user)) if screening_day_group[1][0] %>
 										</div>
-										<div class="space-y-1 mt-3">
+										<div class="mt-3 space-y-1">
 											<% screening_day_group[1].filter { |s| s.times&.any? }.each do |screening| %>
 												<div class="">
 													<div class="text-xs">
@@ -150,7 +169,7 @@
 					<% end %>
 				<% end %>
 				<% if @movie.screenings.filter { |screening| screening&.day&.to_date >= Date.current }&.empty? %>
-					<div class="bg-brand-100 p-5 rounded-md text-sm leading-relaxed text-gray-800">
+					<div class="p-5 text-sm leading-relaxed text-gray-800 rounded-md bg-brand-100">
 						Sem exibições cadastradas na plataforma para este filme. Veja
 						nos <%= link_to 'sites oficiais', cinemas_path, class: 'text-brand-600 font-medium' %> dos cinemas caso
 						acredite que há sessões para este filme.

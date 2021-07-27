@@ -50,9 +50,9 @@ class Movie < ApplicationRecord
 		movie_path(self)
 	end
 
-	def update_only_if_blank(attributes = {})
+	def update_only_if_blank(attributes = {}, except: {})
 		attributes.each { |k, v| attributes.delete(k) unless read_attribute(k).blank? }
-		update_attributes(attributes)
+		update_attributes(attributes.merge!(except))
 	end
 
 end
