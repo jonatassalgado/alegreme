@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import base64
-import json
-import os
-import random
+import re
 from unidecode import unidecode
 
 from urllib.parse import urljoin
@@ -347,7 +344,7 @@ class MovieSpider(scrapy.Spider):
         loader.selector = response
         loader.add_xpath('cover', './/*[contains(@class, "js-image-detail-link")]/@href')
 
-        movie_imdb_search_link = "https://www.imdb.com/find?q=" + unidecode(movie_container_el.xpath('.//*[contains(@class, "lr_c_h")]/span/text()').get().replace(" ", "+").lower()) + "&ref_=nv_sr_sm"
+        movie_imdb_search_link = "https://www.imdb.com/find?q=" + re.sub(r'(\s(e|&|para|as|se|do|a|à)\s)|(:\s|,\s|\.\s|\s-\s|!)', ' ', unidecode(movie_container_el.xpath('.//*[contains(@class, "lr_c_h")]/span/text()').get().replace(" ", "+").lower())) + "&ref_=nv_sr_sm"
 
         if movie_imdb_search_link:
             yield SplashRequest(
