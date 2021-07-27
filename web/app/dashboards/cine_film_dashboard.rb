@@ -19,10 +19,14 @@ class CineFilmDashboard < Administrate::BaseDashboard
 		trailer:     Field::String.with_options(searchable: false),
 		created_at:  Field::DateTime,
 		updated_at:  Field::DateTime,
-		image_data:  Field::Text,
-		slug:        Field::String,
+		image_data:  Field::Text.with_options(searchable: false),
+		slug:        Field::String.with_options(searchable: false),
 		type:        Field::String,
-		status:      Field::Enum
+		status:      Field::Enum,
+		rating:      Field::Number,
+		age_rating:  Field::String.with_options(searchable: false),
+		cast:        Field::String.with_options(searchable: false),
+		year:        Field::Number
 	}.freeze
 
 	# COLLECTION_ATTRIBUTES
@@ -49,6 +53,10 @@ class CineFilmDashboard < Administrate::BaseDashboard
     genres
     description
     trailer
+    rating
+    age_rating
+    cast
+    year
     cover
     slug
     type
@@ -67,6 +75,10 @@ class CineFilmDashboard < Administrate::BaseDashboard
     title
     description
     trailer
+    rating
+    age_rating
+    cast
+    year
     cover
     slug
     type
