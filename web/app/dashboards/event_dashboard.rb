@@ -9,7 +9,7 @@ class EventDashboard < Administrate::BaseDashboard
 	# which determines how the attribute is displayed
 	# on pages throughout the dashboard.
 	ATTRIBUTE_TYPES = {
-		image:       Field::Shrine.with_options(version: :feed),
+		image:        Field::Shrine.with_options(version: :feed),
 		place:        Field::BelongsTo,
 		organizers:   Field::HasMany,
 		categories:   Field::HasMany,
@@ -19,14 +19,16 @@ class EventDashboard < Administrate::BaseDashboard
 		theme:        Field::JSONB,
 		geographic:   Field::JSONB,
 		datetimes:    Field::JSONB.with_options(blank_sign: [], transform: true),
-		name:         Field::String.with_options(searchable: false),
+		name:         Field::String.with_options(searchable: true),
 		entries:      Field::JSONB,
 		ml_data:      Field::JSONB,
 		similar_data: Field::JSONB,
 		image_data:   Field::JSONB,
 		created_at:   Field::DateTime,
 		updated_at:   Field::DateTime,
-		slug:         Field::String,
+		slug:         Field::String.with_options(searchable: false),
+		ticket_url:   Field::String.with_options(searchable: false),
+		source_url:   Field::String.with_options(searchable: true),
 		status:       Field::Enum
 	}.freeze
 
@@ -55,6 +57,8 @@ class EventDashboard < Administrate::BaseDashboard
     theme
     geographic
     datetimes
+    ticket_url
+    source_url
     entries
     ml_data
     similar_data
@@ -76,6 +80,8 @@ class EventDashboard < Administrate::BaseDashboard
     theme
     geographic
     datetimes
+    ticket_url
+    source_url
     entries
     ml_data
     similar_data
