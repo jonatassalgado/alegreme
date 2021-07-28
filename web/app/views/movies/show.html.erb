@@ -34,7 +34,7 @@
 				<div class="flex flex-col items-center md:flex-row md:items-center md:justify-between md:w-full">
 					<div class="text-center md:text-left space-y-1 md:pr-5">
 						<div class="flex flex-col md:flex-row justify-center md:justify-start items-center">
-							<h1 class="c-h2">
+							<h1 class="c-h2 px-10 md:px-0">
 								<%= @movie.title %>
 							</h1>
 							<% if @movie.rating %>
@@ -81,7 +81,7 @@
 			<div class="col-span-12 mx-auto w-full rounded-lg border md:border-0 md:col-span-9 md:space-y-12">
 				<% @movie.screenings&.active&.sort_by { |s| s.cinema&.display_name }&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
 					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
-						<div data-controller="accordion" class="p-4 border-b md:border-0 md:p-0 last:border-b-0">
+						<div data-controller="accordion" data-accordion-mobile-only-value="true" data-accordion-body-class="bg-brand-100" data-accordion-title-class="font-semibold" class="p-4 border-b md:border-0 md:p-0 last:border-b-0">
 							<div data-action="click->accordion#toggle" data-accordion-open-value="false" class="grid grid-cols-4 gap-3">
 								<div class="col-span-3 text-sm md:inline-block md:mb-3 md:pr-5">
 									<div class="inline md:mb-3">
@@ -90,7 +90,7 @@
 												<%= cinema_name_group[0][0] %>
 											</h2>
 										<% end %>
-										<h2 id="sm-<%= cinema_name_group[1][0]&.cinema&.slug %>" class="inline-block text-base font-medium text-gray-800 md:text-xl md:font-bold md:hidden">
+										<h2 data-accordion-target="title" id="sm-<%= cinema_name_group[1][0]&.cinema&.slug %>" class="inline-block font-medium text-gray-800 md:text-xl md:font-bold md:hidden">
 											<%= cinema_name_group[0][0] %>
 										</h2>
 										<span data-accordion-target="hidden" class="hidden md:inline">
