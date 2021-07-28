@@ -20,6 +20,7 @@ class CinemaDashboard < Administrate::BaseDashboard
 		neighborhood:    Field::String,
 		google_maps:     Field::String,
 		slug:            Field::String,
+		status:          Field::Enum,
 		created_at:      Field::DateTime,
 		updated_at:      Field::DateTime,
 	}.freeze
@@ -32,7 +33,7 @@ class CinemaDashboard < Administrate::BaseDashboard
 	COLLECTION_ATTRIBUTES = %i[
     id
     display_name
-	updated_at
+		updated_at
   ].freeze
 
 	# SHOW_PAGE_ATTRIBUTES
@@ -41,14 +42,15 @@ class CinemaDashboard < Administrate::BaseDashboard
     screenings
     movies
     id
+    status
     name
     display_name
     address
     website
-	reference_place
-	lower_price
-	neighborhood
-	google_maps
+		reference_place
+		lower_price
+		neighborhood
+		google_maps
     slug
     created_at
     updated_at
@@ -60,13 +62,14 @@ class CinemaDashboard < Administrate::BaseDashboard
 	FORM_ATTRIBUTES = %i[
     screenings
     movies
+    status
     name
     display_name
     website
-	reference_place
-	lower_price
-	neighborhood
-	google_maps
+		reference_place
+		lower_price
+		neighborhood
+		google_maps
     address
     slug
   ].freeze

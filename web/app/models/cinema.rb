@@ -9,4 +9,15 @@ class Cinema < ApplicationRecord
 	has_many :follows, as: :following, dependent: :destroy
 
 	friendly_id :name, use: :slugged
+
+	scope 'active', -> { where("status = 1") }
+
+	enum status: {
+		pending:  0,
+		active:   1,
+		spam:     2,
+		archived: 3,
+		repeated: 4
+	}, _suffix:  true
+
 end

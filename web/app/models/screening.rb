@@ -14,5 +14,5 @@ class Screening < ApplicationRecord
 	delegate :title, :image, to: :movie
 	alias_method :name, :title
 
-	scope 'active', -> { where("day >= ?", DateTime.now) }
+	scope 'active', -> { includes(:cinema).where("screenings.day >= ? AND cinemas.status = 1", DateTime.now).references(:cinema) }
 end

@@ -23,9 +23,7 @@ module PopulateMoviesRake
 																	 age_rating:  item['age_rating'],
 																	 cast:        item['cast'],
 																	 year:        item['year']&.to_i,
-																 },
-																 except: {
-																	 rating: item['rating']&.to_f
+																	 rating:      item['rating']&.to_f
 																 })
 			puts "Filme: #{item['name']} - Filme já existe (atualizado) \n".white
 		else
@@ -55,7 +53,8 @@ module PopulateMoviesRake
 					cinema = Cinema.create!(name:         cinema_data.dig('name'),
 																	display_name: cinema_data.dig('name'),
 																	google_id:    cinema_data.dig('google_id'),
-																	google_maps:  cinema_data.dig('google_maps'))
+																	google_maps:  cinema_data.dig('google_maps'),
+																	status:       'active')
 
 					puts "Cinema: #{cinema.id} #{cinema.name} - Cinema criado".green
 				end

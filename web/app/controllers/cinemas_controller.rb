@@ -3,7 +3,7 @@ class CinemasController < ApplicationController
 	before_action :set_cinema, only: [:show]
 
 	def index
-		@cinemas = Cinema.all.order("display_name ASC")
+		@cinemas = Cinema.active.order("display_name ASC")
 	end
 
 	def show

@@ -2,31 +2,15 @@ class MoviesController < ApplicationController
 	before_action :authorize_admin, except: [:show]
 
 	def index
-
-		@movies       = CineFilm.includes(:cinemas, :screenings).all
+		@movies       = CineFilm.includes(:cinemas, :screenings)
 		@saved_movies = current_user.try(:saved_movies)
-		@movies_group = [
-			{
-				:identifier => 'editors-choice',
-				:title      => "Escolha dos editores",
-				:items      => @movies.filter { |movie| movie.collections.include? "editors choice" }
-			}
-		]
-
-		Movie::GENRES.each_with_index do |genre, index|
-			@movies_group << {
-				:identifier => genre.parameterize,
-				:title      => genre,
-				:items      => @movies.filter { |movie| movie.details["genres"].include? genre }.sort.slice(0..16)
-			}
-		end
 	end
 
 	def show
 		model    = get_model(params[:type])
 		@movie   = model.friendly.find(params[:id])
 		@movies  = CineFilm.includes(:screenings).active
-		@cinemas = Cinema.includes(:screenings).where("screenings.movie_id = ? AND screenings.day >= ?", @movie.id, Date.current).order("cinemas.display_name ASC").references(:screenings).distinct
+		@cinemas = Cinema.includes(:screenings).active.where("screenings.movie_id = ? AND screenings.day >= ?", @movie.id, Date.current).order("cinemas.display_name ASC").references(:screenings).distinct
 
 		respond_to do |format|
 			format.html { render :show }

@@ -96,7 +96,7 @@
 						<div class="gap-2 grid grid-cols-1 md:grid-cols-3 md:gap-3 mt-12 w-full">
 							<% movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
 								<div class="p-3 border rounded">
-									<h3 class="inline font-semibold text-gray-800">
+									<h3 class="c-h4 inline">
 										<%= day_of_week(screening_day_group[0]).titleize %>
 									</h3>
 									<span class="text-xs text-gray-800"><%= screening_day_group[0].strftime('%d/%m/%y') %></span>
