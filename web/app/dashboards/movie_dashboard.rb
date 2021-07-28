@@ -14,7 +14,7 @@ class MovieDashboard < Administrate::BaseDashboard
 		title:       Field::String.with_options,
 		description: Field::Text.with_options(searchable: false),
 		cover:       Field::String.with_options(searchable: false),
-		genres:      Field::String.with_options(searchable: false),
+		genres:      Field::JSONB.with_options(blank_sign: [], transform: true),
 		trailer:     Field::String.with_options(searchable: false),
 		created_at:  Field::DateTime,
 		updated_at:  Field::DateTime,

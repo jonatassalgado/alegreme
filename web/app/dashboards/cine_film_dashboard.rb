@@ -15,7 +15,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
 		title:       Field::String.with_options,
 		description: Field::Text.with_options(searchable: false),
 		cover:       Field::String.with_options(searchable: false),
-		genres:      Field::String.with_options(searchable: false),
+		genres:      Field::JSONB.with_options(blank_sign: [], transform: true),
 		trailer:     Field::String.with_options(searchable: false),
 		created_at:  Field::DateTime,
 		updated_at:  Field::DateTime,
@@ -25,7 +25,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
 		status:      Field::Enum,
 		rating:      Field::Number,
 		age_rating:  Field::String.with_options(searchable: false),
-		cast:        Field::String.with_options(searchable: false),
+		cast:        Field::JSONB.with_options(blank_sign: [], transform: true),
 		year:        Field::Number
 	}.freeze
 
@@ -73,6 +73,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
 		status
 	  image
     title
+    genres
     description
     trailer
     rating

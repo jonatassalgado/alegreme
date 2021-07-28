@@ -18,7 +18,7 @@ class EventDashboard < Administrate::BaseDashboard
 		id:           Field::Number,
 		theme:        Field::JSONB,
 		geographic:   Field::JSONB,
-		datetimes:    Field::String,
+		datetimes:    Field::JSONB.with_options(blank_sign: [], transform: true),
 		name:         Field::String.with_options(searchable: false),
 		entries:      Field::JSONB,
 		ml_data:      Field::JSONB,
@@ -51,8 +51,6 @@ class EventDashboard < Administrate::BaseDashboard
     place
     organizers
     categories
-    likes
-    users
     id
     theme
     geographic
@@ -75,8 +73,6 @@ class EventDashboard < Administrate::BaseDashboard
     place
     organizers
     categories
-    likes
-    users
     theme
     geographic
     datetimes
