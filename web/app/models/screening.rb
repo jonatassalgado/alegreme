@@ -4,7 +4,7 @@ class Screening < ApplicationRecord
 	validates_associated :movie, :cinema
 
 	belongs_to :cinema
-	belongs_to :movie
+	belongs_to :movie, touch: true
 
 	has_many :likes, as: :likeable, dependent: :destroy
 	has_many :users, through: :likes, source: :likeable, source_type: 'Screening'
