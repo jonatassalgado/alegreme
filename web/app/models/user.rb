@@ -147,8 +147,8 @@ class User < ApplicationRecord
 		self.public_send("following_#{following.class.table_name}").reset
 	end
 
-	def follow?(following)
-		self.following_relationships.exists?(following_id: following.id, following_type: following.class.name)
+	def follow?(resource)
+		self.public_send("following_#{resource.class.table_name.singularize}_ids").include?(resource.id)
 	end
 
 	def friendship_request!(friend)
