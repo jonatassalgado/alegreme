@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import base64
-import json
-import os
 import random
-import re
-import requests
+
 
 from urllib.parse import urljoin, urlparse
-from alegreme.items import Event, EventOrganizer, EventOrganizerLoader
+from alegreme.items import Event, EventOrganizerLoader
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
 from alegreme.services.proxy_service import ProxyService
@@ -203,7 +199,7 @@ class EventSpider(scrapy.Spider):
                 event_loader.add_value('organizers', self.parse_organizer_meta(response, organizer_el))
 
         event_loader.add_xpath('description', '//*[@class="_63ew"]//span')
-        event_loader.add_xpath('prices', '//*[@id="event_summary"]//*[@class="_20zc"]/text()')
+        event_loader.add_xpath('prices', '//*[@class="_63ew"]//span/text()')
         event_loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
         event_loader.add_value('source_url', response.url)
         event_loader.load_item()

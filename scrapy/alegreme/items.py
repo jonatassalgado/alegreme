@@ -59,7 +59,7 @@ def clean_facebook_url(value):
 
 
 def get_prices(value):
-    prices = re.findall(r'(\d|\d{2}|\d{3}|\d{4})\b', value)
+    prices = re.findall(r'(?:R\$\s{0,1})(\d+)', value)
     return prices
 
 
