@@ -30,7 +30,7 @@ IS_DOCKER = 'true'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 3
+CONCURRENT_REQUESTS = 10
 # CONCURRENT_ITEMS = 50
 
 # Scrapy Proxy Pool
@@ -130,7 +130,7 @@ COOKIES_DEBUG = False
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-AUTOTHROTTLE_START_DELAY = 10
+AUTOTHROTTLE_START_DELAY = 3
 # The maximum download delay to be set in case of high latencies
 # AUTOTHROTTLE_MAX_DELAY = 60
 # The average number of requests Scrapy should be sending in parallel to
