@@ -237,9 +237,8 @@ class MovieSpider(scrapy.Spider):
                 args={
                 'timeout': 300,
                 'lua_source': search_movies_script,
-                }
-            )
-
+            }
+        )
 
     def parse_movies(self, response):
 
@@ -283,7 +282,7 @@ class MovieSpider(scrapy.Spider):
 
         movie_cover_link = "https://duckduckgo.com/?q=" + unidecode(loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower()) + "+filme&iax=images&ia=images&iaf=layout%3ATall"
 
-        if movie_cover_link:
+        if movie_cover_link is not None:
             yield SplashRequest(
                 url=movie_cover_link,
                 callback=self.parse_cover_meta,
@@ -298,8 +297,6 @@ class MovieSpider(scrapy.Spider):
                     'lua_source': parse_movie_cover_script,
                 }
             )
-        else:
-            pass
 
 
     def parse_ocurrence_meta(self, response, movie_container):
@@ -346,8 +343,8 @@ class MovieSpider(scrapy.Spider):
 
         movie_imdb_search_link = "https://www.imdb.com/find?q=" + re.sub(r'(\s(e|&|para|as|se|do|a|à)\s)|(:\s|,\s|\.\s|\s-\s|!)', ' ', unidecode(movie_container_el.xpath('.//*[contains(@class, "lr_c_h")]/span/text()').get().replace(" ", "+").lower())) + "&ref_=nv_sr_sm"
 
-        if movie_imdb_search_link:
-            yield SplashRequest(
+        if movie_imdb_search_link is not None:
+            return SplashRequest(
                 url=movie_imdb_search_link,
                 callback=self.parse_imdb_rating_meta,
                 dont_filter=True,

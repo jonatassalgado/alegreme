@@ -35,6 +35,12 @@ up-crontab-ui:
 down-crontab-ui:
 	docker stop crontab-ui
 
+up-splash:
+	cd scrapy && docker-compose up splash
+
+down-splash:
+	cd scrapy && docker-compose down
+
 restart:
 	docker-compose -f docker-compose.development.yml restart
 

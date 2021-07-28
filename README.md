@@ -97,3 +97,10 @@ Run label studio front:
 Run ml label studio:
 
     docker-compose up ls-ml-content-rules
+
+### Crontab UI
+
+https://github.com/alseambusher/crontab-ui/
+https://www.npmjs.com/package/pm2
+
+HOST=159.89.84.18 PORT=8001 BASIC_AUTH_USER=jonataseduardo BASIC_AUTH_PWD=$$$$$$$$$ crontab-ui
