@@ -133,6 +133,8 @@ module PopulateEventsRake
 	end
 
 	def get_features_of_event(event)
+		return unless event.description_changed?
+
 		puts "Evento: #{event.name} - Adicionando features".white
 		features_query  = event.text_to_ml
 		features_params = { 'query' => features_query }
@@ -154,6 +156,8 @@ module PopulateEventsRake
 	end
 
 	def classify_event(event)
+		return unless event.description_changed?
+
 		puts "Evento: #{event.name} - Adicionando classificação".white
 		label_query  = event.text_to_ml
 		label_params = { 'query' => label_query }
@@ -252,6 +256,11 @@ module PopulateEventsRake
 	def set_cover(item, event)
 		return if item['cover_url'].blank?
 
+		if event.image&.present?
+			puts "Evento: #{item['name']} - Imagem já existe imagem".white
+			return true
+		end
+
 		begin
 			event_cover_file = Down.download(item['cover_url'])
 		rescue Down::Error => e
@@ -264,16 +273,12 @@ module PopulateEventsRake
 		return unless event_cover_file
 
 		begin
-			if event&.image[:feed]&.exists?
-				puts "Evento: #{item['name']} - Imagem já existe imagem".white
+			if event.image&.present?
+				event.update(image: event_cover_file)
 			else
-				if event.image&.present?
-					event.update(image: event_cover_file)
-				else
-					event.image = event_cover_file
-				end
-				puts "Evento: #{item['name']} - Upload de imagem".white
+				event.image = event_cover_file
 			end
+			puts "Evento: #{item['name']} - Upload de imagem".white
 		rescue
 			puts "Evento: #{item['name']} - Erro no upload da image #{e}".red
 			return false
@@ -432,11 +437,11 @@ namespace :populate do
 				next
 			end
 
-			associate_event_organizers(event, organizers)
-			associate_event_place(event, place)
-			next unless set_cover(item, event)
+			set_cover(item, event)
 			get_features_of_event(event)
 			classify_event(event)
+			associate_event_organizers(event, organizers)
+			associate_event_place(event, place)
 			save_event(event)
 		end
 
