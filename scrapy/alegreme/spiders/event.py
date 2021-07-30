@@ -138,7 +138,7 @@ class EventSpider(scrapy.Spider):
         },
         'CLOSESPIDER_ITEMCOUNT': 100,
         'CLOSESPIDER_PAGECOUNT': 200,
-        'DEPTH_LIMIT': 2
+        'DEPTH_LIMIT': 1
     }
 
     allowed_domains = ['facebook.com']
@@ -291,13 +291,7 @@ class EventSpider(scrapy.Spider):
         event_loader.add_value('source_url', response.url)
         event_loader.load_item()
 
-        event = event_loader.item
-
-        if 'address' in event and "Porto Alegre" in event['address']:
-            yield event
-        else:
-            pass
-
+        yield event_loader.load_item()
 
         related_events_links = response.xpath('//div[@id="event_related_events"]//div[contains(@class, "SuggestionItem")]/a/@href')
 
