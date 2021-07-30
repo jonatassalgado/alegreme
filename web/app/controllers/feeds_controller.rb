@@ -13,7 +13,7 @@ class FeedsController < ApplicationController
 		@filters                = Rails.cache.fetch("#{session.id}/main-sidebar--filter/filters") || { theme: 'entretenimento-lazer', categories: [], date: nil }
 		@pagy, @upcoming_events = pagy(requested_events)
 		@liked_resources        = (current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings&.active&.includes(:movie, :cinema) || Screening.none) unless turbo_frame_request?
-		@movies                 = CineFilm.active.order("rating DESC NULLS LAST") unless turbo_frame_request?
+		@movies                 = CineFilm.active unless turbo_frame_request?
 
 		if @stimulus_reflex
 			render layout: false
