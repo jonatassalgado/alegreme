@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import re
-from unidecode import unidecode
+import logging
 
+from unidecode import unidecode
 from urllib.parse import urljoin
 from alegreme.items import Movie, MovieOcurrenceLoader, MoviePlaceLoader, MovieLanguageLoader
 from scrapy_splash import SplashRequest
@@ -279,24 +280,32 @@ class MovieSpider(scrapy.Spider):
         movie_dates_els = movie_container_el.xpath('.//*[contains(@class, "tb_c")]')
         for movie_date_el in movie_dates_els:
             loader.add_value('screenings', self.parse_ocurrence_meta(response, movie_date_el))
-
-        movie_cover_link = "https://duckduckgo.com/?q=" + unidecode(loader.get_xpath('.//*[contains(@class, "lr_c_h")]/span/text()', TakeFirst()).replace(" ", "+").lower()) + "+filme&iax=images&ia=images&iaf=layout%3ATall"
-
-        if movie_cover_link is not None:
-            yield SplashRequest(
-                url=movie_cover_link,
-                callback=self.parse_cover_meta,
-                dont_filter=True,
-                meta={
-                    'loader': loader, 
-                    'movie_container_el': movie_container_el
-                },
-                endpoint='execute',
-                args={
-                    'timeout': 300,
-                    'lua_source': parse_movie_cover_script,
-                }
-            )
+        
+        movie_name = loader.get_collected_values('name')
+        
+        if movie_name:
+            movie_cover_link = "https://duckduckgo.com/?q=" + unidecode(movie_name.replace(" ", "+").lower()) + "+filme&iax=images&ia=images&iaf=layout%3ATall"
+            if movie_cover_link is not None:
+                yield SplashRequest(
+                    url=movie_cover_link,
+                    callback=self.parse_cover_meta,
+                    dont_filter=True,
+                    meta={
+                        'loader': loader, 
+                        'movie_container_el': movie_container_el
+                    },
+                    endpoint='execute',
+                    args={
+                        'timeout': 300,
+                        'lua_source': parse_movie_cover_script,
+                    }
+                )
+            else:
+                logging.log(logging.WARNING, "Sem link de imagem")
+                pass
+        else:
+            logging.log(logging.WARNING, "Sem nome coletado")
+            pass
 
 
     def parse_ocurrence_meta(self, response, movie_container):
