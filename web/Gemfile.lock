@@ -56,6 +56,8 @@ GEM
     activerecord (6.0.0)
       activemodel (= 6.0.0)
       activesupport (= 6.0.0)
+    activerecord-analyze (0.9.1)
+      rails (>= 5.1.0)
     activestorage (6.0.0)
       actionpack (= 6.0.0)
       activejob (= 6.0.0)
@@ -541,6 +543,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord-analyze
   administrate
   administrate-field-enum
   administrate-field-jsonb

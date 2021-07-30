@@ -163,6 +163,7 @@ group :development do
 	gem 'niceql'
 	# gem 'active_record_doctor'
 	gem 'bullet'
+	gem 'activerecord-analyze'
 end
 
 group :test do

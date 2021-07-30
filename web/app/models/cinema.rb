@@ -10,7 +10,7 @@ class Cinema < ApplicationRecord
 
 	friendly_id :name, use: :slugged
 
-	scope 'active', -> { where("status = 1") }
+	scope 'active', -> { includes(:screenings).where("status = 1 AND screenings.day >= ?", DateTime.now).order("cinemas.display_name ASC").references(:screenings).distinct }
 
 	enum status: {
 		pending:  0,
