@@ -13,6 +13,8 @@ module PopulateEventsRake
 
 	def create_place(item)
 		return if item['deleted'] == 'true'
+		return unless item['place_name']
+		return if item['place_name'] =~ /\d{5}-\d{3}|Porto Alegre - RS/
 
 		place = Place.find_by("lower(details ->> 'name') = ?", item['place_name'].downcase)
 
@@ -289,6 +291,8 @@ module PopulateEventsRake
 	end
 
 	def associate_event_place(event, place)
+		return unless place
+
 		unless place.events.include?(event)
 			place.events << event
 			puts "Local: #{place.details_name} - Local associado".white

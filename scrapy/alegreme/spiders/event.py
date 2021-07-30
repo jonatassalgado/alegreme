@@ -243,7 +243,7 @@ class EventSpider(scrapy.Spider):
         else:
             self.log(str(title_page) + " PAGE WITH " + str(len(events_in_page)) + " EVENTS")
 
-        for event_link in events_in_page.extract():
+        for event_link in events_in_page.getall():
             if event_link is not None:
                 yield SplashRequest(
                     url=urljoin('https://www.facebook.com/', urlparse(event_link).path),
@@ -263,9 +263,13 @@ class EventSpider(scrapy.Spider):
         event_loader = ItemLoader(item=Event(), response=response)
         event_loader.add_xpath('name', '//title[1]/text()')
         event_loader.add_xpath('cover_url', '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src')
-        event_loader.add_xpath('address', '//*[@id="event_summary"]//*[contains(@class, "_5xhp fsm fwn fcg")][1]/text() | //*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
+        
+        primary_address = event_loader.get_xpath('//*[@id="event_summary"]//*[contains(@class, "_5xhp fsm fwn fcg")][1]/text()')
+        secondary_address = event_loader.get_xpath('string(//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")])')
+        event_loader.add_value('address', primary_address or secondary_address)
+        
         event_loader.add_xpath('datetimes', '//*[@id="event_time_info"]//div[@class="_2ycp _5xhk"][1]/@content')
-        event_loader.add_xpath('place_name', '//*[@id="event_summary"]//a[@class="_5xhk"][1]/text() | //*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
+        event_loader.add_xpath('place_name', '//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
         event_loader.add_xpath('place_cover_url', '//*[contains(@class, "_2xr0")]/@style')
         event_loader.add_xpath('ticket_url', '//*[contains(@data-testid, "event_ticket")]/a/@href')
         event_loader.add_xpath('latitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "latitude")]/@ajaxify')
@@ -286,7 +290,7 @@ class EventSpider(scrapy.Spider):
 
         related_events_links = response.xpath('//div[@id="event_related_events"]//div[contains(@class, "SuggestionItem")]/a/@href')
 
-        for event_link in related_events_links.extract():
+        for event_link in related_events_links.getall():
             if event_link is not None:
                 
                 yield SplashRequest(

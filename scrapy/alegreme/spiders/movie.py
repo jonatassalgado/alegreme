@@ -247,7 +247,7 @@ class MovieSpider(scrapy.Spider):
 
         self.log("PAGE WITH " + str(len(movie_links)) + " MOVIES")
 
-        for movie_link in movie_links.extract():
+        for movie_link in movie_links.getall():
             if movie_link is not None:
                 yield SplashRequest(
                     url=urljoin(response.url, movie_link),
@@ -323,7 +323,7 @@ class MovieSpider(scrapy.Spider):
         place_loader = MoviePlaceLoader(selector=place_el)
         place_loader.add_xpath('google_id', './@data-tm')
         place_loader.add_xpath('name', './/*[contains(@class, "lr-s-din")]/text()')
-        place_loader.add_value('google_maps', urljoin(response.url, place_el.xpath('.//*[contains(@class, "ObBBIf")]/a/@href')[0].extract()))
+        place_loader.add_value('google_maps', urljoin(response.url, place_el.xpath('.//*[contains(@class, "ObBBIf")]/a/@href')[0].getall()))
 
         languages_els = place_el.xpath('.//*[contains(@class, "YHR1ce")]')
 
@@ -338,9 +338,9 @@ class MovieSpider(scrapy.Spider):
 
     def parse_language_meta(self, response, place_el, index):
         language_loader = MovieLanguageLoader()
-        language_loader.add_value('name', place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()')[index].extract()) if place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()') else None
-        language_loader.add_value('screen_type', place_el.xpath('.//*[contains(@class, "lr_c_vn")]/text()')[index].extract()) if place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()') else None
-        language_loader.add_value('times', place_el.xpath('.//*[contains(@class, "lr_c_s")]')[index].xpath('.//*[contains(@class, "lr_c_fce")]//text()').extract()) if place_el.xpath('.//*[contains(@class, "lr_c_s")]') else None
+        language_loader.add_value('name', place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()')[index].getall()) if place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()') else None
+        language_loader.add_value('screen_type', place_el.xpath('.//*[contains(@class, "lr_c_vn")]/text()')[index].getall()) if place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()') else None
+        language_loader.add_value('times', place_el.xpath('.//*[contains(@class, "lr_c_s")]')[index].xpath('.//*[contains(@class, "lr_c_fce")]//text()').getall()) if place_el.xpath('.//*[contains(@class, "lr_c_s")]') else None
         return dict(language_loader.load_item())
 
     def parse_cover_meta(self, response):
