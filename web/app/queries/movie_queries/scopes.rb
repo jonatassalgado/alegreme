@@ -7,7 +7,7 @@ module MovieQueries
 		included do
 
 			scope 'active', lambda {
-				joins(:screenings, :cinemas).where("screenings.day >= ? AND movies.status = 1 AND cinemas.status = 1", DateTime.now).distinct
+				includes(:screenings, :cinemas).where("screenings.day >= ? AND movies.status = 1 AND cinemas.status = 1", DateTime.now).references(:screenings, :cinemas).distinct
 			}
 
 			scope 'with_streaming', lambda {
