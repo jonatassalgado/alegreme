@@ -57,6 +57,13 @@ def clean_facebook_url(value):
     url = re.sub(r'&h=\w+', '', url)
     return unquote(url)
 
+def get_event_latitude(value):
+    latitude = re.search(r'latitude=(.\d{2}\.\d{6,12})', value)
+    return latitude.group(1) if latitude else None
+
+def get_event_longitude(value):
+    longitude = re.search(r'longitude=(.\d{2}\.\d{6,12})', value)
+    return longitude.group(1) if longitude else None
 
 def get_prices(value):
     prices = re.findall(r'(?:R\$\s{0,1})(\d+)', value)
@@ -125,6 +132,14 @@ class Event(scrapy.Item):
     )
     ticket_url = scrapy.Field(
         input_processor=MapCompose(clean_facebook_url),
+        output_processor=TakeFirst()
+    )
+    latitude = scrapy.Field(
+        input_processor=MapCompose(get_event_latitude),
+        output_processor=TakeFirst()
+    )
+    longitude = scrapy.Field(
+        input_processor=MapCompose(get_event_longitude),
         output_processor=TakeFirst()
     )
     categories = scrapy.Field()

@@ -175,7 +175,7 @@ class EventSpider(scrapy.Spider):
             'ospabr',
             'animaleditora',
             'teatrodobourboncountry',
-            'sesccentro',
+            'SescRS',
             'Bar.Ocidente',
             'comicconrs',
             'bibliotecapublicadoestadors',
@@ -196,7 +196,7 @@ class EventSpider(scrapy.Spider):
             'feiralamovida',
             'uxconferencebr',
             'ResultadosDigitais',
-            'CODEESCOLA',
+            'CODEINTELIGENCIA',
             'Uergs',
             'forumdaliberdade',
             'SindilojasPOA',
@@ -206,7 +206,7 @@ class EventSpider(scrapy.Spider):
             'FestivaldaCervejaPOA',
             'mercadodepulgaspoa',
             'lojaprofana',
-            'casadestemperados',
+            'studiodestemperados',
             'festaacabouchorare',
             'zonaexpfm',
             'gomarec',
@@ -261,24 +261,15 @@ class EventSpider(scrapy.Spider):
 
     def parse_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
-
-#         sign_in_form = response.xpath('//*[contains(@class, "_585r _50f4") and contains(., "You must log in to continue")]')
-#         if sign_in_form:
-#             event_loader.add_value('deleted', 'true')
-#             event_loader.add_value('source_url', response.url)
-#             event_loader.load_item()
-#             event = event_loader.item
-#             self.log("EVENT DELETED: %s" % event)
-#             yield event
-#             return
-
         event_loader.add_xpath('name', '//title[1]/text()')
         event_loader.add_xpath('cover_url', '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src')
-        event_loader.add_xpath('address', '//*[@id="event_summary"]//div[@class="_5xhp fsm fwn fcg"][1]/text()')
+        event_loader.add_xpath('address', '//*[@id="event_summary"]//*[contains(@class, "_5xhp fsm fwn fcg")][1]/text() | //*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
         event_loader.add_xpath('datetimes', '//*[@id="event_time_info"]//div[@class="_2ycp _5xhk"][1]/@content')
-        event_loader.add_xpath('place_name', '//*[@id="event_summary"]//a[@class="_5xhk"][1]/text()')
+        event_loader.add_xpath('place_name', '//*[@id="event_summary"]//a[@class="_5xhk"][1]/text() | //*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
         event_loader.add_xpath('place_cover_url', '//*[contains(@class, "_2xr0")]/@style')
         event_loader.add_xpath('ticket_url', '//*[contains(@data-testid, "event_ticket")]/a/@href')
+        event_loader.add_xpath('latitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "latitude")]/@ajaxify')
+        event_loader.add_xpath('longitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "longitude")]/@ajaxify')
 
         organizers_els = response.xpath('//*[contains(@class, "_6-i")]/li')
         if organizers_els:

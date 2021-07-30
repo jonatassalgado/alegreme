@@ -20,7 +20,8 @@ module PopulateEventsRake
 			puts "Local: #{place.id} #{place.details['name']} - Lugar já existe".yellow
 			set_place_image(place, item) unless place.image_data?
 		else
-			@geocode = Geocoder.search(item['address']).first if item['address']
+			query    = search_query(item)
+			@geocode = Geocoder.search(query).first if query
 
 			place = Place.create({
 														 details:    {
@@ -338,10 +339,10 @@ module PopulateEventsRake
 
 			event.geographic.deep_merge!(
 				address:      item['address'],
-				latlon:       @geocode.try(:coordinates),
-				neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality).dig(0, "long_name") },
-				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
-				cep:          Geographic.get_cep_from_address(item['address'])
+				latlon:       get_latlon(item),
+				neighborhood: get_neighborhood,
+				city:         get_city(item),
+				cep:          get_cep(item)
 			)
 			puts "#{item['name']} - atualizado".white
 
@@ -363,10 +364,10 @@ module PopulateEventsRake
 
 			event.geographic.deep_merge!(
 				address:      item['address'],
-				latlon:       @geocode.try(:coordinates),
-				neighborhood: @geocode.try { |geo| geo.address_components_of_type(:sublocality).dig(0, "long_name") },
-				city:         item['address'] ? item['address'][/Porto Alegre/] : nil,
-				cep:          Geographic.get_cep_from_address(item['address'])
+				latlon:       get_latlon(item),
+				neighborhood: get_neighborhood,
+				city:         get_city(item),
+				cep:          get_cep(item)
 			)
 
 			event
@@ -384,6 +385,29 @@ module PopulateEventsRake
 
 		artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "events-#{timestr}.jsonl", content_type: "application/json")
 	end
+
+	private
+
+	def search_query(item)
+		item['latitude'] && item['longitude'] ? "#{item['latitude']}, #{item['longitude']}" : item['address']
+	end
+
+	def get_cep(item)
+		Geographic.get_cep_from_address(item['address']) || @geocode.try(:postal_code)
+	end
+
+	def get_city(item)
+		item['address'] ? item['address'][/Porto Alegre/] : @geocode.try(:city)
+	end
+
+	def get_neighborhood
+		@geocode.try { |geo| geo.address_components_of_type(:sublocality).dig(0, "long_name") } || @geocode.try(:neighborhood)
+	end
+
+	def get_latlon(item)
+		item['latitude'] && item['longitude'] ? [item['latitude']&.to_f, item['longitude']&.to_f] : @geocode.try(:coordinates)
+	end
+
 end
 
 namespace :populate do
