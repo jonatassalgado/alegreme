@@ -437,11 +437,11 @@ namespace :populate do
 				next
 			end
 
+			associate_event_organizers(event, organizers)
+			associate_event_place(event, place)
 			set_cover(item, event)
 			get_features_of_event(event)
 			classify_event(event)
-			associate_event_organizers(event, organizers)
-			associate_event_place(event, place)
 			save_event(event)
 		end
 

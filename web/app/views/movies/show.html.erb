@@ -81,7 +81,7 @@
 			<div class="col-span-12 mx-auto w-full rounded-lg border md:border-0 md:col-span-9 md:space-y-12">
 				<% @movie.screenings&.active&.sort_by { |s| s.cinema&.display_name }&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
 					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
-						<div data-controller="accordion" data-accordion-mobile-only-value="true" data-accordion-body-class="bg-brand-100" data-accordion-title-class="font-semibold" class="p-4 border-b md:border-0 md:p-0 last:border-b-0">
+						<div data-controller="accordion" data-accordion-mobile-only-value="true" data-accordion-body-class="bg-gray-50" data-accordion-title-class="font-semibold" class="p-4 border-b md:border-0 md:p-0 last:border-b-0">
 							<div data-action="click->accordion#toggle" data-accordion-open-value="false" class="grid grid-cols-4 gap-3">
 								<div class="col-span-3 text-sm md:inline-block md:mb-3 md:pr-5">
 									<div class="inline md:mb-3">
