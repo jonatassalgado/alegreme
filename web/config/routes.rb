@@ -62,6 +62,7 @@ Rails.application.routes.draw do
 
 	get '/privacy', to: 'pages#privacy'
 	get '/terms', to: 'pages#terms'
+	get '/content', to: 'pages#content'
 	get '/robots.:format', to: 'pages#robots'
 
 	get '/:id/sugestoes', to: 'feeds#suggestions', as: :suggestions_events
