@@ -144,7 +144,7 @@ namespace :ml do
 			include PredictEventsLabelsRake
 			puts "\n Task ml:predict:events iniciada em #{DateTime.now} \n".blue
 
-			Event.all.order("created_at DESC").each_with_index do |event, index|
+			Event.active.order("created_at DESC").each_with_index do |event, index|
 				puts "#{index}: #{event.name[0..60]} \n ---------------------------------"
 				# get_features_of_event(event)
 				classify_event(event)

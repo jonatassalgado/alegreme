@@ -78,13 +78,13 @@ parse_movie_script = """
         assert(splash:go(splash.args.url))
 
         assert(splash:wait(1))
-        splash.scroll_position = {y=500}
+        splash.scroll_position = {y=1000}
         assert(splash:wait(3))
 
         result, error = splash:wait_for_resume([[
             function main(splash) {
                 var checkExist = setInterval(function() {
-                    if (document.querySelector(".tb_c.tb_stc").innerText && document.querySelector(".kno-rdesc").innerHTML) {
+                    if (document.querySelector(".tb_c.tb_stc") && document.querySelector(".kno-rdesc")) {
                         clearInterval(checkExist);
                         splash.resume();
                     }
@@ -261,8 +261,8 @@ class MovieSpider(scrapy.Spider):
 
 
     def parse_movie(self, response):
-        movie_container_el = response.xpath('(//*[contains(@class, "fjnsEe")])[1]')
-        movie_right_card_el = response.xpath('(//*[contains(@class, "kp-wholepage")])[1]')
+        movie_container_el = response.xpath('//*[contains(@class, "fjnsEe")]')
+        movie_right_card_el = response.xpath('//*[contains(@class, "kp-wholepage")]')
 
         loader = ItemLoader(item=Movie(), selector=movie_container_el)
         loader.add_xpath('name', './/*[contains(@class, "lr_c_h")]/span/text()')
@@ -330,7 +330,6 @@ class MovieSpider(scrapy.Spider):
         if languages_els:
             for index, language_el in enumerate(languages_els):
                 place_loader.add_value('languages', self.parse_language_meta(response, place_el, index))
-
         else:
             place_loader.add_value('languages', self.parse_language_meta(response, place_el, 0))
 

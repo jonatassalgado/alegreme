@@ -72,7 +72,7 @@ parse_event_script = """
     end
 """
 
-parse_page_script = """
+parse_events_page_script = """
     function main(splash, args)
         splash.private_mode_enabled = false
         splash.images_enabled = false
@@ -126,6 +126,44 @@ parse_page_script = """
     end
 """
 
+parse_place_page_script = """
+    function main(splash, args)
+        splash.private_mode_enabled = false
+        splash.images_enabled = false
+        splash.plugins_enabled = false
+        splash.html5_media_enabled = false
+        splash.media_source_enabled = false
+        splash.resource_timeout = 60
+        splash:on_request(function(request)
+            request:set_http2_enabled(true)
+            if string.find(request.url, ".css") ~= nil then
+                request.abort()
+            end
+        end)
+
+        splash:set_custom_headers({
+            ["user-agent"] = tostring(args.ua),
+            ["cache-control"] = "max-age=0",
+            ["upgrade-insecure-requests"] = "1",
+            ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            ["accept-enconding"] = "gzip, deflate, br",
+            ["accept-language"] = "en;q=0.9",
+            ["content-language"] = "en-US",
+            ["cookie"] = "locale=en_US"
+        })
+
+        assert(splash:go(splash.args.url))
+
+        assert(splash:wait(1))
+        splash.scroll_position = {y=1000}
+        assert(splash:wait(2))
+        splash.scroll_position = {y=3000} 
+        assert(splash:wait(3))
+
+        return splash:html()
+    end
+"""
+
 class EventSpider(scrapy.Spider):
     http_user = 'alegreme'
     http_pass = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
@@ -142,76 +180,77 @@ class EventSpider(scrapy.Spider):
     }
 
     allowed_domains = ['facebook.com']
-    pages = ['araujoviannaoficial',
-            'SerenataIluminada',
-            'opiniao.produtora',
-            'casamundicultura',
-            'divinacomediapub',
-            'paraphabaiuca',
-            'Cabaretpoa',
-            'nopalcors',
-            'feiradajoao',
-            'CCMQportoalegre',
-            'agulha.poa',
-            'vilaflorespoa',
-            'cinemateca.capitolio',
-            'InstitutoLing',
-            'GoetheInstitutPortoAlegre',
-            'ksacentro',
-            'casacinepoa',
-            'picnicculturalnomuseu',
-            'noitedosmuseus',
-            'CentroCulturalUFRGS',
-            'mercadovintage',
-            'prefpoa',
-            'fundacaoiberecamargo',
-            'margsmuseu',
-            'gretacollective',
-            'coletivoarruaca',
-            'coletivoplano',
-            'baropiniao',
-            'fennnnnda',
-            'pepsionstageoficial',
-            'ospabr',
-            'animaleditora',
-            'teatrodobourboncountry',
-            'SescRS',
-            'Bar.Ocidente',
-            'comicconrs',
-            'bibliotecapublicadoestadors',
-            'somosMODAUT',
-            'GoetheInstitutPortoAlegre',
-            'tonaruamurb',
-            'aerofeira/events/?ref=page_internal',
-            'acasacc',
-            'ILEAUFRGS',
-            'cumbianarua',
-            'cccev.rs',
-            'forroderuadeportoalegre',
-            'ciarusticadeteatro',
-            'feiramegusta',
-            'MegaRevelRS',
-            'viradasustentavelpoa',
-            'feiramultipalco',
-            'feiralamovida',
-            'uxconferencebr',
-            'ResultadosDigitais',
-            'CODEINTELIGENCIA',
-            'Uergs',
-            'forumdaliberdade',
-            'SindilojasPOA',
-            'ligadesaudedesportiva',
-            'centrodeeventospucrs',
-            'revistajadore',
-            'FestivaldaCervejaPOA',
-            'mercadodepulgaspoa',
-            'lojaprofana',
-            'studiodestemperados',
-            'festaacabouchorare',
-            'zonaexpfm',
-            'gomarec',
-            'darumT',
-            'basepoa'
+    pages = [
+            'https://www.facebook.com/pages/Opini%C3%A3o/119453431446021',
+            'https://m.facebook.com/pg/araujoviannaoficial/events?ref=page_internal',
+            'https://m.facebook.com/pg/SerenataIluminada/events?ref=page_internal',
+            'https://m.facebook.com/pg/opiniao.produtora/events?ref=page_internal',
+            'https://m.facebook.com/pg/casamundicultura/events?ref=page_internal',
+            'https://m.facebook.com/pg/divinacomediapub/events?ref=page_internal',
+            'https://m.facebook.com/pg/paraphabaiuca/events?ref=page_internal',
+            'https://m.facebook.com/pg/Cabaretpoa/events?ref=page_internal',
+            'https://m.facebook.com/pg/nopalcors/events?ref=page_internal',
+            'https://m.facebook.com/pg/feiradajoao/events?ref=page_internal',
+            'https://m.facebook.com/pg/CCMQportoalegre/events?ref=page_internal',
+            'https://m.facebook.com/pg/agulha.poa/events?ref=page_internal',
+            'https://m.facebook.com/pg/vilaflorespoa/events?ref=page_internal',
+            'https://m.facebook.com/pg/cinemateca.capitolio/events?ref=page_internal',
+            'https://m.facebook.com/pg/InstitutoLing/events?ref=page_internal',
+            'https://m.facebook.com/pg/GoetheInstitutPortoAlegre/events?ref=page_internal',
+            'https://m.facebook.com/pg/ksacentro/events?ref=page_internal',
+            'https://m.facebook.com/pg/casacinepoa/events?ref=page_internal',
+            'https://m.facebook.com/pg/picnicculturalnomuseu/events?ref=page_internal',
+            'https://m.facebook.com/pg/noitedosmuseus/events?ref=page_internal',
+            'https://m.facebook.com/pg/CentroCulturalUFRGS/events?ref=page_internal',
+            'https://m.facebook.com/pg/mercadovintage/events?ref=page_internal',
+            'https://m.facebook.com/pg/prefpoa/events?ref=page_internal',
+            'https://m.facebook.com/pg/fundacaoiberecamargo/events?ref=page_internal',
+            'https://m.facebook.com/pg/margsmuseu/events?ref=page_internal',
+            'https://m.facebook.com/pg/gretacollective/events?ref=page_internal',
+            'https://m.facebook.com/pg/coletivoarruaca/events?ref=page_internal',
+            'https://m.facebook.com/pg/coletivoplano/events?ref=page_internal',
+            'https://m.facebook.com/pg/baropiniao/events?ref=page_internal',
+            'https://m.facebook.com/pg/fennnnnda/events?ref=page_internal',
+            'https://m.facebook.com/pg/pepsionstageoficial/events?ref=page_internal',
+            'https://m.facebook.com/pg/ospabr/events?ref=page_internal',
+            'https://m.facebook.com/pg/animaleditora/events?ref=page_internal',
+            'https://m.facebook.com/pg/teatrodobourboncountry/events?ref=page_internal',
+            'https://m.facebook.com/pg/SescRS/events?ref=page_internal',
+            'https://m.facebook.com/pg/Bar.Ocidente/events?ref=page_internal',
+            'https://m.facebook.com/pg/comicconrs/events?ref=page_internal',
+            'https://m.facebook.com/pg/bibliotecapublicadoestadors/events?ref=page_internal',
+            'https://m.facebook.com/pg/somosMODAUT/events?ref=page_internal',
+            'https://m.facebook.com/pg/GoetheInstitutPortoAlegre/events?ref=page_internal',
+            'https://m.facebook.com/pg/tonaruamurb/events?ref=page_internal',
+            'https://m.facebook.com/pg/aerofeira/events/?ref=page_internal/events?ref=page_internal',
+            'https://m.facebook.com/pg/acasacc/events?ref=page_internal',
+            'https://m.facebook.com/pg/ILEAUFRGS/events?ref=page_internal',
+            'https://m.facebook.com/pg/cccev.rs/events?ref=page_internal',
+            'https://m.facebook.com/pg/forroderuadeportoalegre/events?ref=page_internal',
+            'https://m.facebook.com/pg/ciarusticadeteatro/events?ref=page_internal',
+            'https://m.facebook.com/pg/feiramegusta/events?ref=page_internal',
+            'https://m.facebook.com/pg/MegaRevelRS/events?ref=page_internal',
+            'https://m.facebook.com/pg/viradasustentavelpoa/events?ref=page_internal',
+            'https://m.facebook.com/pg/feiramultipalco/events?ref=page_internal',
+            'https://m.facebook.com/pg/feiralamovida/events?ref=page_internal',
+            'https://m.facebook.com/pg/uxconferencebr/events?ref=page_internal',
+            'https://m.facebook.com/pg/ResultadosDigitais/events?ref=page_internal',
+            'https://m.facebook.com/pg/CODEINTELIGENCIA/events?ref=page_internal',
+            'https://m.facebook.com/pg/Uergs/events?ref=page_internal',
+            'https://m.facebook.com/pg/forumdaliberdade/events?ref=page_internal',
+            'https://m.facebook.com/pg/SindilojasPOA/events?ref=page_internal',
+            'https://m.facebook.com/pg/ligadesaudedesportiva/events?ref=page_internal',
+            'https://m.facebook.com/pg/centrodeeventospucrs/events?ref=page_internal',
+            'https://m.facebook.com/pg/revistajadore/events?ref=page_internal',
+            'https://m.facebook.com/pg/FestivaldaCervejaPOA/events?ref=page_internal',
+            'https://m.facebook.com/pg/mercadodepulgaspoa/events?ref=page_internal',
+            'https://m.facebook.com/pg/lojaprofana/events?ref=page_internal',
+            'https://m.facebook.com/pg/studiodestemperados/events?ref=page_internal',
+            'https://m.facebook.com/pg/festaacabouchorare/events?ref=page_internal',
+            'https://m.facebook.com/pg/zonaexpfm/events?ref=page_internal',
+            'https://m.facebook.com/pg/gomarec/events?ref=page_internal',
+            'https://m.facebook.com/pg/darumT/events?ref=page_internal',
+            'https://m.facebook.com/pg/basepoa/events?ref=page_internal'
             ]
 
     random.shuffle(pages)
@@ -219,15 +258,15 @@ class EventSpider(scrapy.Spider):
     def start_requests(self):
         self.log("INITIALIZING...")
         self.log("UA: %s" % user_agents[0])
-        
+
         for page in self.pages:
             yield SplashRequest(
-                url='https://m.facebook.com/pg/' + page + '/events?ref=page_internal',
+                url=page,
                 callback=self.parse_page,
                 endpoint='execute',
                 args={
                 'timeout': 300,
-                'lua_source': parse_page_script,
+                'lua_source': parse_events_page_script if 'm.facebook.com' in page else parse_place_page_script,
                 'ua': user_agents[0]
                 }
             )
@@ -236,7 +275,11 @@ class EventSpider(scrapy.Spider):
 
     def parse_page(self, response):
         title_page = response.xpath('//title/text()').get()
-        events_in_page = response.xpath('//*[contains(@class, "_5zma")]//*[contains(@class, "_5379")]/@href|//*[contains(@class, "_1ksp")][1]//@href')
+
+        if 'm.facebook.com' in response.url:
+            events_in_page = response.xpath('//*[contains(@class, "_5zma")]//*[contains(@class, "_5379")]/@href|//*[contains(@class, "_1ksp")][1]//@href')
+        else:
+            events_in_page = response.xpath('//a[contains(@href, "events/") and contains(@class, "profileLink")]/@href')
 
         if not events_in_page:
             self.log(str(title_page) + " PAGE WITHOUT EVENTS")
