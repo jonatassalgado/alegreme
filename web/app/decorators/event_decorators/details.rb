@@ -50,11 +50,11 @@ module EventDecorators
 			# end
 			#
 			def place_details_name
-				place.details['name'].try(:titleize)
+				place&.details&.dig('name').try(:titleize)
 			end
 
 			def place_details_name=(value)
-				place.details['name'] = value
+				place&.details['name'] = value
 			end
 		end
 
