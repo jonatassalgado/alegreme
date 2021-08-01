@@ -175,7 +175,7 @@ class EventSpider(scrapy.Spider):
             'alegreme.pipelines.EventPipeline': 400
         },
         'CLOSESPIDER_ITEMCOUNT': 100,
-        'CLOSESPIDER_PAGECOUNT': 200,
+        'CLOSESPIDER_PAGECOUNT': 300,
         'DEPTH_LIMIT': 1
     }
 

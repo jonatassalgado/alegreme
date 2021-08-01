@@ -31,7 +31,7 @@ module PredictEventsLabelsRake
 
 	def classify_event(event)
 		puts "#{event.name} #{event.id} - Adicionando classificação".white
-		label_query  = event.description
+		label_query  = event.text_to_ml
 		label_params = { 'query' => label_query }
 
 		label_uri = URI("#{ENV['API_URL']}:5000/event/label")
@@ -43,7 +43,7 @@ module PredictEventsLabelsRake
 
 		if label_response_is_success
 
-			event.ml_data = {
+			event.ml_data.deep_merge!(
 				content_rules: {
 					annotations: [],
 					predictions: label_data['classification']['content_rules']
@@ -111,7 +111,7 @@ module PredictEventsLabelsRake
 												 }
 											 ]
 				}
-			}
+			)
 
 			if label_data['classification']['categories']
 				labels           = label_data['classification']['categories']
@@ -146,7 +146,7 @@ namespace :ml do
 
 			Event.active.order("created_at DESC").each_with_index do |event, index|
 				puts "#{index}: #{event.name[0..60]} \n ---------------------------------"
-				# get_features_of_event(event)
+				get_features_of_event(event)
 				classify_event(event)
 				save_event(event)
 				puts "\n\n"

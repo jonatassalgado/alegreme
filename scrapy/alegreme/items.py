@@ -77,7 +77,7 @@ def parse_date(value):
 
 def get_image_url_from_style(value):
     url = re.search('http(s|):\/\/.+?(?=\))', value)
-    return url.group(0)
+    return url.group(0) if url else None
 
 
 def clean_movie_description(value):
@@ -86,8 +86,8 @@ def clean_movie_description(value):
 
 def get_movie_genres(value):
     genre = re.search(r'(?:(?:‧.))([\S]+)', value)
-    genre = genre.group(1)
-    return genre.split('/')
+    genre = genre.group(1) if genre else None
+    return genre.split('/') if genre else None
 
 def get_movie_year(value):
     year = re.search(r'(\d{4})', value)

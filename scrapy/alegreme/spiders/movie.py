@@ -18,7 +18,6 @@ search_movies_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
-        splash.resource_timeout = 60
         splash:on_request(function(request)
             if string.find(request.url, ".css") ~= nil or 
                string.find(request.url, ".woff2") ~= nil then
@@ -61,7 +60,6 @@ parse_movie_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
-        splash.resource_timeout = 60
         splash:on_request(function(request)
             if string.find(request.url, ".css") ~= nil or 
                string.find(request.url, ".woff2") ~= nil then
@@ -92,7 +90,7 @@ parse_movie_script = """
             }
         ]], 30)
 
-        assert(splash:wait(3))
+        assert(splash:wait(2))
         return splash:html()
     end
 """
@@ -104,7 +102,6 @@ parse_movie_cover_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
-        splash.resource_timeout = 60
         splash:on_request(function(request)
             if string.find(request.url, ".css") ~= nil or 
                string.find(request.url, ".woff2") ~= nil then
@@ -158,7 +155,6 @@ parse_imdb_rating_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
-        splash.resource_timeout = 60
         splash:on_request(function(request)
             if string.find(request.url, ".css") ~= nil or 
                string.find(request.url, ".js") ~= nil or
@@ -187,7 +183,7 @@ parse_imdb_rating_script = """
                         clearInterval(checkExist);
                         splash.resume();
                     }
-                }, 1000);
+                }, 2000);
             }
         ]], 30)
 
@@ -223,11 +219,10 @@ class MovieSpider(scrapy.Spider):
             'alegreme.pipelines.MoviePipeline': 400
         },
         'CLOSESPIDER_ITEMCOUNT': 50,
-        'CLOSESPIDER_PAGECOUNT': 70
+        'CLOSESPIDER_PAGECOUNT': 200
     }
 
-    allowed_domains = ['google.com']
-    start_urls = ['https://www.google.com/search?q=cinema+porto+alegre+programação']
+    start_urls = ['https://www.google.com/search?q=filmes+em+cartaz+porto+alegre&gbv=2&sxsrf=ALeKk03Lz2eeWGMD6-DJfARe6Xwqc30piQ%3A1627784877575&ei=rQYGYdXNIunJ5OUP-PyzwAM&oq=filmes+em+cartaz+porto+alegre&gs_lcp=Cgdnd3Mtd2l6EAMyBwgjELADECcyBwgAEEcQsAMyBwgAEEcQsAMyBwgAEEcQsAMyBwgAEEcQsAMyBwgAEEcQsAMyBwgAEEcQsAMyBwgAEEcQsAMyBwgAEEcQsAMyEAguEMcBEK8BELADEMgDEEMyEAguEMcBEK8BELADEMgDEEMyEAguEMcBEK8BELADEMgDEEMyEAguEMcBEK8BELADEMgDEEMyEAguEMcBEK8BELADEMgDEEMyEAguEMcBEK8BELADEMgDEENKBQg4EgExSgQIQRgAUABYAGCU7WBoBHACeACAAZcBiAGXAZIBAzAuMZgBAMgBD8ABAQ&sclient=gws-wiz&ved=0ahUKEwiV2Jeb447yAhXpJLkGHXj-DDgQ4dUDCA4&uact=5']
 
     def start_requests(self):
         for url in self.start_urls:
@@ -243,11 +238,12 @@ class MovieSpider(scrapy.Spider):
 
     def parse_movies(self, response):
 
-        movie_links = response.xpath('//*[contains(@class, "BVG0Nb")]/@href')
+        movie_links = response.xpath('//*[contains(text(), "Filmes perto de Porto Alegre")]/parent::div/..//*[contains(@class, "BVG0Nb")]/@href').getall()
 
-        self.log("PAGE WITH " + str(len(movie_links)) + " MOVIES")
+        logging.log(logging.INFO, "PAGE WITH " + str(len(movie_links)) + " MOVIES")
+        logging.log(logging.INFO, "LINKS " + str(movie_links))
 
-        for movie_link in movie_links.getall():
+        for movie_link in movie_links:
             if movie_link is not None:
                 yield SplashRequest(
                     url=urljoin(response.url, movie_link),

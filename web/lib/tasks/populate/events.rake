@@ -136,7 +136,7 @@ module PopulateEventsRake
 	end
 
 	def get_features_of_event(event)
-		return unless event.description_changed?
+		return unless event.saved_change_to_attribute? :description
 
 		puts "Evento: #{event.name} - Adicionando features".white
 		features_query  = event.text_to_ml
@@ -159,7 +159,7 @@ module PopulateEventsRake
 	end
 
 	def classify_event(event)
-		return unless event.description_changed?
+		return unless event.saved_change_to_attribute? :description
 
 		puts "Evento: #{event.name} - Adicionando classificação".white
 		label_query  = event.text_to_ml
