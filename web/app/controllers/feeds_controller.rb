@@ -26,7 +26,7 @@ class FeedsController < ApplicationController
 	end
 
 	def suggestions
-		@events = Event.not_ml_data.active.in_user_suggestions(current_user).order_by_date
+		@events = Event.active.in_user_suggestions(current_user).order_by_date
 	end
 
 	def follow
@@ -34,22 +34,22 @@ class FeedsController < ApplicationController
 	end
 
 	def today
-		@events ||= Event.not_ml_data.active.with_high_score.not_liked_or_disliked(current_user).in_days([DateTime.now.beginning_of_day, (DateTime.now + 1).end_of_day])
+		@events ||= Event.active.with_high_score.not_liked_or_disliked(current_user).in_days([DateTime.now.beginning_of_day, (DateTime.now + 1).end_of_day])
 	end
 
 	def week
-		@events ||= Event.not_ml_data.active.with_high_score.not_liked_or_disliked(current_user).in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8))).order_by_date
+		@events ||= Event.active.with_high_score.not_liked_or_disliked(current_user).in_days((DateTime.now.beginning_of_day..(DateTime.now.beginning_of_day + 8))).order_by_date
 	end
 
 	def category
 		@categories   = Event::CATEGORIES.dup
-		@events       = Event.not_ml_data.active.in_categories([params[:category]]).order_by_date.includes(:place, :categories)
+		@events       = Event.active.in_categories([params[:category]]).order_by_date.includes(:place, :categories)
 		@liked_events = (current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) || Event.none
 	end
 
 	def neighborhood
 		@neighborhoods ||= Event::NEIGHBORHOODS.dup
-		@events        ||= Event.not_ml_data.active.in_neighborhoods([params[:neighborhood].titleize]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
+		@events        ||= Event.active.in_neighborhoods([params[:neighborhood].titleize]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 	end
 
 	def city
@@ -58,29 +58,29 @@ class FeedsController < ApplicationController
 		@days       = @stimulus_reflex ? session[:stimulus][:days] : (JSON.parse(params[:days]) rescue [])
 		@categories = @stimulus_reflex ? session[:stimulus][:categories] : (JSON.parse(params[:categories]) rescue [])
 
-		@all_events      ||= Event.not_ml_data.active.order_by_date.includes(:place, :categories)
-		@filtered_events ||= Event.not_ml_data.active.in_days(@days).in_categories(@categories).order_by_date.includes(:place, :categories)
+		@all_events      ||= Event.active.order_by_date.includes(:place, :categories)
+		@filtered_events ||= Event.active.in_days(@days).in_categories(@categories).order_by_date.includes(:place, :categories)
 	end
 
 	def day
 		@day    ||= Date.parse params[:day]
-		@events ||= Event.not_ml_data.active.in_days([@day]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
+		@events ||= Event.active.in_days([@day]).in_categories(session[:stimulus][:categories]).order_by_date.includes(:place, :categories)
 	end
 
 	private
 
 	def requested_events
 		if params[:day]
-			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).valid.in_day(params[:day]).not_ml_data.order_by_date
+			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).valid.not_disliked(current_user).in_day(params[:day]).order_by_date
 		elsif params[:category]
 			@category = Category.find_by("(details ->> 'url') = :category", category: params[:category])
 			redirect_to root_path, notice: 'Categoria não encontrada' unless @category
-			@category.events.includes(:place, :organizers, :categories, :events_organizers, :categories_events).not_ml_data.active.valid.order_by_date
+			@category.events.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).order_by_date
 		elsif params[:theme]
 			@theme = Theme.find_by_slug(params[:theme])
-			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.where(categories: { theme_id: @theme.id }).not_ml_data.order_by_date.limit(100)
+			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).where(categories: { theme_id: @theme.id }).order_by_date
 		else
-			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.in_day(@filters[:date]).in_categories(@filters[:categories]).where(categories: { theme_id: 1 }).not_ml_data.order_by_date.limit(100)
+			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).in_day(@filters[:date]).in_categories(@filters[:categories]).where(categories: { theme_id: 1 }).order_by_date
 		end
 	end
 
@@ -88,7 +88,7 @@ class FeedsController < ApplicationController
 		if current_user&.liked_events.size <= 3
 			Event.active.not_liked_or_disliked(current_user).order_by_score.limit(2)
 		else
-			Event.not_ml_data.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date.limit(3)
+			Event.active.not_liked_or_disliked(current_user).in_user_suggestions(current_user).includes(:place).order_by_date.limit(3)
 		end
 	end
 
@@ -108,7 +108,7 @@ class FeedsController < ApplicationController
 
 	def get_swipable_items
 		# Rails.cache.fetch([current_user, 'swipable_items'], expires_in: 1.hour) do
-		# events = Event.not_ml_data.active.not_liked_or_disliked(current_user).not_disliked(current_user).in_categories(Event::CATEGORIES, {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(12)
+		# events = Event.active.not_liked_or_disliked(current_user).not_disliked(current_user).in_categories(Event::CATEGORIES, {group_by: 2, not_in: %w(anúncio slam protesto experiência outlier)}).order_by_score.limit(12)
 		events = Event.order_by_score.limit(10)
 
 		events.map do |event|

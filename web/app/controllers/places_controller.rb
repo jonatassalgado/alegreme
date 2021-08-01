@@ -12,8 +12,8 @@ class PlacesController < ApplicationController
 	# GET /places/1
 	# GET /places/1.json
 	def show
-		@pagy, @upcoming_events = pagy(@place.events.includes(:organizers, :events_organizers).not_ml_data.active.order_by_date)
-		@past_events            = @place.events.not_ml_data.past.order_by_date(direction: :desc)
+		@pagy, @upcoming_events = pagy(@place.events.includes(:organizers, :events_organizers).active.order_by_date)
+		@past_events            = @place.events.past.order_by_date(direction: :desc)
 	end
 
 	# GET /places/new

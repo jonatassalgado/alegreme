@@ -77,6 +77,9 @@ db-drop:
 db-create:
 	$(RUN) bash -c "bundle exec rake db:migrate && bundle exec rake db:seed"
 
+db-restore-backup:
+	$(RUN) bash -c "bundle exec rake restore:backup"
+
 credentials:
 	$(EXEC) bash -c "EDITOR=nano rails credentials:edit"
 
@@ -85,9 +88,6 @@ restart-docker-service:
 
 test:
 	$(RUN) bash -c "rails test"
-
-restore-backup:
-	$(RUN) bash -c "bundle exec rake restore:backup"
 
 cloud:
 	ssh root@159.89.84.18

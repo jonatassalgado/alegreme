@@ -91,9 +91,9 @@ class TrainReflex < ApplicationReflex
 
 		current_user.liked_or_disliked_events.reset
 		if current_user.swipable['events']['finished_at'].blank? && current_user.liked_event_ids.size < @min_events_to_train
-			@events_to_train = Event.not_ml_data.active.not_liked_or_disliked(current_user).order_by_date.limit(3)
+			@events_to_train = Event.active.not_liked_or_disliked(current_user).order_by_date.limit(3)
 		else
-			@events_suggestions = Event.not_ml_data.active.in_user_suggestions(current_user).not_liked_or_disliked(current_user).limit(3)
+			@events_suggestions = Event.active.in_user_suggestions(current_user).not_liked_or_disliked(current_user).limit(3)
 		end
 	end
 end

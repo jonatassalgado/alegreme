@@ -14,7 +14,7 @@ class EventsController < ApplicationController
 	# GET /events/1
 	# GET /events/1.json
 	def show
-		@similar_events = Event.not_ml_data.active.where(id: @event.similar_data).order_by_ids(@event.similar_data).limit(8)
+		@similar_events = Event.active.where(id: @event.similar_data).order_by_ids(@event.similar_data).limit(8)
 
 		respond_to do |format|
 			format.html { render :show }
@@ -90,7 +90,7 @@ class EventsController < ApplicationController
 	end
 
 	def recent
-		@recent_events ||= Event.not_ml_data.active.not_liked_or_disliked(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
+		@recent_events ||= Event.active.not_liked_or_disliked(current_user).where("created_at > ?", DateTime.now - 24.hours).includes(:place)
 	end
 
 	def retrain

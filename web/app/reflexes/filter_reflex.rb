@@ -68,7 +68,7 @@ class FilterReflex < ApplicationReflex
 			filters[:categories] = []
 			Rails.cache.write("#{session.id}/main-sidebar--filter/filters", filters, { expires_in: 1.hour, skip_nil: true })
 
-			pagy, upcoming_events = pagy(Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).in_day(filters[:date]).not_ml_data.order_by_date.limit(100), { page: 1 })
+			pagy, upcoming_events = pagy(Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).in_day(filters[:date]).order_by_date.limit(100), { page: 1 })
 
 			morph '#main-sidebar--filter', render(MainSidebar::FilterComponent.new(
 				session: session.id,
@@ -82,7 +82,7 @@ class FilterReflex < ApplicationReflex
 				filters:         filters,
 				open_in_sidebar: true))
 		else
-			pagy, upcoming_events = pagy(Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).in_categories(params[:category] ? params_category : []).not_ml_data.order_by_date.limit(100), { page: 1 })
+			pagy, upcoming_events = pagy(Event.includes(:place, :organizers, :categories).active.valid.where(categories: { theme_id: 1 }).in_categories(params[:category] ? params_category : []).order_by_date.limit(100), { page: 1 })
 
 			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
 
@@ -121,10 +121,10 @@ class FilterReflex < ApplicationReflex
 
 	def requested_resources
 		if !@filters[:theme] && (@filters[:categories] || @filters[:date])
-			Event.includes(:place, :organizers, :categories).active.valid.in_day(@filters[:date]).in_categories(@filters[:categories]).not_ml_data.order_by_date.limit(100)
+			Event.includes(:place, :organizers, :categories).active.valid.in_day(@filters[:date]).in_categories(@filters[:categories]).order_by_date.limit(100)
 		else
 			@theme = Theme.find_by_slug(@filters[:theme])
-			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.where(categories: { theme_id: @theme.id }).not_ml_data.order_by_date.limit(100)
+			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.where(categories: { theme_id: @theme.id }).order_by_date.limit(100)
 		end
 	end
 
