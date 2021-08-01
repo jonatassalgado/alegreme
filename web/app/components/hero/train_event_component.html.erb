@@ -36,7 +36,7 @@
 			<% end %>
 		</div>
 		<div>
-			<div data-controller="ripple" class="overflow-hidden relative mt-5 w-32 h-20 rounded-lg shadow md:h-28 md:w-48 ripple ripple-white">
+			<div class="overflow-hidden relative mt-5 w-32 h-20 rounded-lg border bg-gray-100 md:h-28 md:w-48">
 				<%= link_to event_path(@event),
 										data: {
 											action:     'click->hero--train-event#openEvent',
@@ -48,7 +48,7 @@
 							action:     'click->hero--train-event#openEvent',
 							'event-id': @event.id
 						},
-						class:   'cursor-pointer h-full object-center object-cover w-full overflow-hidden',
+						class:   'cursor-pointer h-full object-center rounded-lg object-cover w-full overflow-hidden',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
 				<% end %>

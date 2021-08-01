@@ -16,7 +16,7 @@
 								que você curte.
 							</div>
 						</div>
-						<div id="train-events">
+						<div id="train-events" class="h-36 md:h-40">
 							<div data-controller="loader"
 									 data-loader-on-loading="swipable#train-event:before"
 									 data-loader-on-loaded="swipable#train-event:success">
@@ -24,7 +24,7 @@
 									<%= render Hero::TrainEventComponent.with_collection(@events_to_train, user: @user, open_in_sidebar: true) %>
 								</div>
 								<div
-									class="flex font-bold items-center text-brand-500 text-md text-2xl hidden"
+									class="flex font-bold items-center text-brand-600 text-md text-2xl hidden"
 									data-loader-target="loading">
 									Carregando
 									<svg data-loader-target="onIcon" class="w-5 h-5 ml-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
