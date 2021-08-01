@@ -34,13 +34,16 @@
 					<% end %>
 				</div>
 
-				<div class="border-b border-brand-600 font-black h-1 my-10 text-center"></div>
+				<div class="mt-4 px-5 text-xs">
+					Ao criar um conta você aceita os <%= link_to 'Termos de uso', terms_path, class: 'text-brand-600 underline' %> e <%= link_to 'Política de privacidade', privacy_path, class: 'text-brand-600 underline' %>.
+				</div>
+
+				<div class="border-b font-black h-1 my-10 text-center"></div>
 
 				<div class="border border-brand-600 inline-block mb-10 overflow-hidden rounded-lg shadow-lg space-y-3 text-gray-800 w-full">
 					<h2 class="bg-brand-100 font-bold py-3 text-brand-600 text-center">
 						Criar conta com email
 					</h2>
-
 					<div class="px-5 pb-5">
 						<div class="text-sm text-gray-800">
 							<%= f.label :name, "Nome", { class: 'font-bold inline-block mb-1 mt-3 text-gray-800' } %>
@@ -62,11 +65,18 @@
 							<%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, class: 'h-12 md:h-10 border border-brand-200 focus:border-brand-500 focus:outline-none focus:ring focus:ring-brand-500 px-2 py-2 rounded shadow-sm w-full' %>
 						</div>
 
-						<% if Rails.env.production? %>
-							<%= recaptcha_v3(action: 'sign_up') %>
-						<% end %>
+						<div class="mt-5">
+							<% if Rails.env.production? %>
+								<%= recaptcha_tags %>
+							<% end %>
+						</div>
+
 						<div class="select-none">
 							<%= f.submit "Criar conta", class: 'my-5 antialiased bg-brand-600 float-right font-semibold px-5 py-2 rounded-full cursor-pointer text-white hover:bg-brand-500', data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Fazer login com email' } %>
+						</div>
+
+						<div class="mt-4 text-xs">
+							Ao criar uma conta você aceita os <%= link_to 'Termos de uso', terms_path, class: 'text-brand-600 underline' %> e <%= link_to 'Política de privacidade', privacy_path, class: 'text-brand-600 underline' %>.
 						</div>
 					</div>
 				</div>

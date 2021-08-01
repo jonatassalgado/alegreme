@@ -18,6 +18,7 @@ search_movies_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
+        splash.resource_timeout = 60
         splash:on_request(function(request)
             if string.find(request.url, ".css") ~= nil or 
                string.find(request.url, ".woff2") ~= nil then
@@ -60,6 +61,7 @@ parse_movie_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
+        splash.resource_timeout = 60
         splash:on_request(function(request)
             if string.find(request.url, ".css") ~= nil or 
                string.find(request.url, ".woff2") ~= nil then
@@ -102,6 +104,7 @@ parse_movie_cover_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
+        splash.resource_timeout = 60
         splash:on_request(function(request)
             if string.find(request.url, ".css") ~= nil or 
                string.find(request.url, ".woff2") ~= nil then
@@ -155,6 +158,7 @@ parse_imdb_rating_script = """
         splash.plugins_enabled = false
         splash.html5_media_enabled = false
         splash.media_source_enabled = false
+        splash.resource_timeout = 60
         splash:on_request(function(request)
             if string.find(request.url, ".css") ~= nil or 
                string.find(request.url, ".js") ~= nil or
