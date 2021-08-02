@@ -228,7 +228,7 @@ pt-BR:
   time:
     am: ''
     formats:
-      default: "%A, %d de %B de %Y, %H:%M"
+      default: "%A, %d de %B de %Y, às %H:%Mh"
       long: "%d de %B de %Y, %H:%M"
       short: "%d de %B, %H:%M"
     pm: ''

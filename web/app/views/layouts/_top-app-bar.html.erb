@@ -110,7 +110,7 @@
 		<div class="flex justify-end items-center h-full">
 			<% unless current_page?('/users/sign_up') || current_page?('/users/sign_in') %>
 				<% if current_user %>
-					<% unless controller_name == 'users' && action_name == 'show' %>
+					<% if controller_name == 'feeds' %>
 						<% if current_user&.picture %>
 							<%= link_to user_path(current_user) do %>
 								<%= image_tag(current_user.picture, { class: "w-7 h-7 md:w-8 md:h-8 border rounded-full", alt: current_user&.name, onerror: "this.style.opacity='0'" }) rescue nil %>
