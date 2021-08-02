@@ -32,10 +32,11 @@
 			<%= render Hero::SwipableComponent.new(user: current_user) %>
 		<% end %>
 
-		<%= render MoviesComponent.new(movies: @movies,
-																	 user:   current_user,
-																	 chips:  true,
-																	 id:     'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
+		<%= render MoviesComponent.new(movies:    @movies,
+																	 user:      current_user,
+																	 chips:     true,
+																	 hovercard: true,
+																	 id:        'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
 
 		<div id="main-sidebar--feed">
 			<% if @upcoming_events.present? %>

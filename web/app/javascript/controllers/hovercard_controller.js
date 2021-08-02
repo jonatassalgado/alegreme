@@ -8,7 +8,8 @@ export default class extends ApplicationController {
         position:       String,
         preserve:       Boolean,
         hideMouseenter: Boolean,
-        timer:          Number
+        timer:          Number,
+        active:         Boolean
     };
 
     initialize() {
@@ -17,6 +18,7 @@ export default class extends ApplicationController {
         if (this.positionValue == null) this.positionValue = 'append'
         if (this.preserveValue == null) this.preserveValue = true
         if (this.hideMouseenterValue == null) this.hideMouseenterValue = false
+        if (this.activeValue == null) this.activeValue = false
     }
 
     connect() {
@@ -45,11 +47,15 @@ export default class extends ApplicationController {
     }
 
     show(event) {
-        if (MobileDetector.mobile()) return
+        if (!this.activeValue) return
 
         const currentTarget = event.currentTarget
 
-        this.clearTimer();
+        if (MobileDetector.mobile() && event.type === 'click') {
+            event.preventDefault()
+        } else {
+            this.clearTimer();
+        }
 
         if (this.preserveValue && this.hasCardTarget) {
             this.cardTarget.classList.remove("hidden");
@@ -77,8 +83,8 @@ export default class extends ApplicationController {
         }
     }
 
-    hide() {
-        if (MobileDetector.mobile()) return
+    hide(event) {
+        if (!this.activeValue) return
 
         if (this.preserveValue && this.hasCardTarget) {
             requestAnimationFrame(() => {
@@ -89,7 +95,7 @@ export default class extends ApplicationController {
             })
         }
 
-        if (this.timerValue) {
+        if (!MobileDetector.mobile() && !event.type === 'click' && this.timerValue) {
             let timer = setTimeout(() => {
                 requestAnimationFrame(() => {
                     this.cardTargets?.forEach(card => card.classList.add("opacity-0"))
@@ -98,12 +104,17 @@ export default class extends ApplicationController {
                     }, 300)
                 })
             }, this.timerValue)
-            this.timers.unshift(timer)
+            this.timers.append(timer)
+        } else {
+            this.cardTargets?.forEach(card => card.classList.add("opacity-0"))
+            setTimeout(() => {
+                this.cardTargets?.forEach(el => el.remove())
+            }, 300)
         }
     }
 
     clearTimer() {
-        if (MobileDetector.mobile()) return
+        if (!this.activeValue) return
 
         if (this.timers?.length > 0) this.timers.forEach(timer => clearTimeout(timer))
     }

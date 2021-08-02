@@ -33,6 +33,7 @@
 			</div>
 		<% end %>
 		<div data-controller="hovercard"
+				 data-hovercard-active-value="<%= @hovercard %>"
 				 data-hovercard-position-value="prepend"
 				 data-hovercard-preserve-value="false"
 				 data-hovercard-hide-mouseenter-value="true"
@@ -69,7 +70,7 @@
 									</svg>
 								</div>
 							<% end %>
-							<%= link_to cine_film_path(movie), class: 'flex flex-col', data: { 'turbo-preserve-scroll': true } do %>
+							<%= link_to cine_film_path(movie), class: 'flex flex-col', data: { url: hovercard_movie_path(movie), action: 'click->hovercard#show', 'turbo-preserve-scroll': true } do %>
 								<%= image_tag helpers.shrine_image_url(movie, :medium), {
 									loading: :lazy,
 									title:   movie.title,
