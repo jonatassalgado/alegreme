@@ -1,5 +1,10 @@
 module EventsHelper
 
+	def prices_average prices
+		return unless prices
+		prices.sum&.fdiv(prices.size)&.floor
+	end
+
 	def is_new_event? event
 		event.created_at > (DateTime.now - 48.hours)
 	end

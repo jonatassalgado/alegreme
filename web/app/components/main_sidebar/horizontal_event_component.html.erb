@@ -76,9 +76,15 @@
 				<span>
 						·
 				</span>
+				<% if @event.prices&.present? %>
+					<span class="md:hidden" title="Preço médio informado na descrição do evento"><%= number_to_currency helpers.prices_average(@event.prices), locale: 'pt-BR' %> · </span>
+				<% end %>
 				<span class="text-gray-700 md:hidden">
 					<%= link_to helpers.limit_place_name_size(@event.place_details_name, 26), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 				</span>
+				<% if @event.prices&.present? %>
+					<span class="hidden md:inline-block" title="Preço médio informado na descrição do evento"><%= number_to_currency helpers.prices_average(@event.prices), locale: 'pt-BR' %> · </span>
+				<% end %>
 				<span class="hidden font-light text-gray-700 md:inline">
 					<%= helpers.limit_description_size @event.description, 80 %>
 				</span>
