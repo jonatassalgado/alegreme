@@ -14,11 +14,11 @@
 
 %>
 
-<header class="<%= class_names('h-14 px-5 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
+<header class="<%= class_names('flex justify-between h-14 px-5 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
 															 { 'h-14':           !current_page?('/busca'),
 																 'h-content py-1': current_page?('/busca') }) %>"
 				id="top-bar">
-	<div class="<%= class_names 'flex md:relative md:col-span-2 h-full',
+	<div class="<%= class_names 'flex md:relative md:col-span-2 h-full w-full',
 															'space-x-4': content_for?(:top_app_bar_title) %>">
 		<% if mobile_device? %>
 			<div class="my-auto text-gray-800 md:hidden">
@@ -67,8 +67,8 @@
 		</div>
 		<% if !current_user && controller_name == 'feeds' %>
 			<%= link_to new_user_session_path, class: 'md:hidden my-auto w-8' do %>
-				<svg class="float-right w-6 text-gray-600 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+				<svg class="float-right w-6 text-gray-800 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
 				</svg>
 			<% end %>
 		<% end %>
@@ -104,31 +104,33 @@
 			</form>
 		</div>
 	<% else %>
-	<div class="hidden md:col-span-3 md:inline-block"></div>
+		<div class="hidden md:col-span-3 md:inline-block"></div>
 	<% end %>
-	<div class="hidden md:inline-block md:col-span-3">
+	<div class="md:col-span-3 flex-shrink-0">
 		<div class="flex justify-end items-center h-full">
 			<% unless current_page?('/users/sign_up') || current_page?('/users/sign_in') %>
 				<% if current_user %>
 					<% unless controller_name == 'users' && action_name == 'show' %>
 						<% if current_user&.picture %>
 							<%= link_to user_path(current_user) do %>
-								<%= image_tag(current_user.picture, { class: "w-8 h-8 rounded-full", alt: current_user&.name, onerror: "this.style.opacity='0'" }) rescue nil %>
+								<%= image_tag(current_user.picture, { class: "w-7 h-7 md:w-8 md:h-8 border rounded-full", alt: current_user&.name, onerror: "this.style.opacity='0'" }) rescue nil %>
 							<% end %>
 						<% else %>
-							<div class="mr-2 w-8 h-8 bg-gray-100 rounded-full"></div>
+							<%= link_to user_path(current_user) do %>
+								<div class="mr-2 w-8 h-8 bg-gray-100 rounded-full"></div>
+							<% end %>
 						<% end %>
 					<% end %>
 					<%#= link_to('Sair', destroy_user_session_path, method: :delete, class: 'hidden md:inline-block text-gray-500 font-sm') %>
 				<% else %>
-					<%= link_to 'Entrar', new_user_session_path, class: 'hover:text-brand-600 px-6 text-gray-800 text-sm' %>
+					<%= link_to 'Entrar', new_user_session_path, class: 'hidden md:inline-block hover:text-brand-600 px-6 text-gray-800 text-sm' %>
 					<%= link_to 'Criar conta',
 											new_user_registration_path,
 											data:     {
 												'gtm-action':   'click',
 												'gtm-category': 'Funil',
 												'gtm-label':    'Criar meu perfil'
-											}, class: 'bg-brand-600 border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-500 inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm text-white' %>
+											}, class: 'hidden md:inline-block bg-brand-600 border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-500 inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm text-white' %>
 				<% end %>
 			<% end %>
 		</div>
