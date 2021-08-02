@@ -93,7 +93,10 @@ module.exports = {
             purple:      colors.purple
         },
         extend:      {
-            fontSize: {
+            boxShadow:    {
+                't-2xl': '0px -10px 12px 0px rgb(0 0 0 / 30%)',
+            },
+            fontSize:     {
                 xxs: ".60rem"
             },
             width:        {

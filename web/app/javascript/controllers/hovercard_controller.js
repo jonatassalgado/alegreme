@@ -51,7 +51,7 @@ export default class extends ApplicationController {
 
         const currentTarget = event.currentTarget
 
-        if (MobileDetector.mobile() && event.type === 'click') {
+        if (event.type === 'click') {
             event.preventDefault()
         } else {
             this.clearTimer();
@@ -95,7 +95,12 @@ export default class extends ApplicationController {
             })
         }
 
-        if (!MobileDetector.mobile() && !event.type === 'click' && this.timerValue) {
+        if (event.type === 'click') {
+            this.cardTargets?.forEach(card => card.classList.add("opacity-0"))
+            setTimeout(() => {
+                this.cardTargets?.forEach(el => el.remove())
+            }, 300)
+        } else if (event.type !== 'click' && this.timerValue) {
             let timer = setTimeout(() => {
                 requestAnimationFrame(() => {
                     this.cardTargets?.forEach(card => card.classList.add("opacity-0"))
@@ -104,12 +109,7 @@ export default class extends ApplicationController {
                     }, 300)
                 })
             }, this.timerValue)
-            this.timers.append(timer)
-        } else {
-            this.cardTargets?.forEach(card => card.classList.add("opacity-0"))
-            setTimeout(() => {
-                this.cardTargets?.forEach(el => el.remove())
-            }, 300)
+            this.timers.push(timer)
         }
     }
 

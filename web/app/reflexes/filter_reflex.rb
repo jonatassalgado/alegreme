@@ -16,7 +16,7 @@ class FilterReflex < ApplicationReflex
 
 	def filter
 		if Rails.cache.exist?("#{session.id}/main-sidebar--filter/filters")
-			@filters = Rails.cache.read("#{session.id}/main-sidebar--filter/filters")
+			@filters = Rails.cache.fetch("#{session.id}/main-sidebar--filter/filters") { {} }
 			if element['data-filter-theme']
 				@filters[:theme] = element['data-filter-theme']
 			end
