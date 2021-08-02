@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-	before_action :authorize_admin, except: [:show]
+	before_action :authorize_admin, except: [:show, :hovercard]
 
 	def index
 		@movies       = CineFilm.includes(:cinemas, :screenings)
@@ -76,6 +76,11 @@ class MoviesController < ApplicationController
 			format.html { redirect_to movies_url, notice: 'Movie was successfully destroyed.' }
 			format.json { head :no_content }
 		end
+	end
+
+	def hovercard
+		@movie = CineFilm.friendly.find(params[:id])
+		render layout: false
 	end
 
 	private

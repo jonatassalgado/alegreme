@@ -100,7 +100,11 @@ Rails.application.routes.draw do
 		end
 	end
 	resources :cinemas, path: 'porto-alegre/cinemas', as: :cinemas
-	resources :movies, path: 'porto-alegre/filmes', as: :movies
+	resources :movies, path: 'porto-alegre/filmes', as: :movies do
+		member do
+			get :hovercard
+		end
+	end
 	resources :cine_films, controller: 'movies', type: 'CineFilm', path: 'porto-alegre/cinemas/filmes', as: :cine_films
 	resources :streamings, controller: 'movies', type: 'Streaming', path: 'porto-alegre/streamings', as: :streamings
 

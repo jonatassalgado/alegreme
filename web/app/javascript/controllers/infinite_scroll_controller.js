@@ -6,7 +6,7 @@ export default class extends ApplicationController {
 
     initialize() {
         let options = {
-            rootMargin: '200px',
+            rootMargin: '600px',
         }
 
         this.intersectionObserver = new IntersectionObserver(entries => this.processIntersectionEntries(entries), options)

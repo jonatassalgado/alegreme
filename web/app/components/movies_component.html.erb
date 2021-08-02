@@ -32,7 +32,13 @@
 				</div>
 			</div>
 		<% end %>
-		<div class="relative px-1">
+		<div data-controller="hovercard"
+				 data-hovercard-position-value="prepend"
+				 data-hovercard-preserve-value="false"
+				 data-hovercard-hide-mouseenter-value="true"
+				 data-hovercard-timer-value="3500"
+				 data-action="mouseleave->hovercard#hide"
+				 class="relative px-1">
 			<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex bg-x-white-to-transparent">
 				<div data-slider-target="left" data-action="click->slider#left" class="hidden my-auto mt-20 -ml-4 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700">
 					<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
@@ -52,7 +58,9 @@
 					 class="py-2 rounded-lg md:border md:px-3 md:py-3 scrollx">
 				<div class="grid grid-flow-col gap-2.5 px-5 md:px-0 w-content grid-after-margin">
 					<% @movies.each do |movie| %>
-						<div class="flex flex-col w-24 transition-transform transform group md:hover:scale-105">
+						<div data-url="<%= hovercard_movie_path(movie) %>"
+								 data-action="mouseenter->hovercard#show"
+								 class="flex flex-col w-24 transition-transform transform group md:hover:scale-105">
 							<% if movie.rating %>
 								<div class="absolute bg-white flex font-semibold items-center left-0 ml-1 mt-1 p-1 rounded space-x-0.5 text-gray-700 group-hover:text-brand-600 text-xs top-0" title="votação de usuário do IMDB">
 									<span><%= movie.rating %></span>
@@ -71,7 +79,9 @@
 									onerror: "this.style.opacity='0'"
 								} rescue nil %>
 								<%= tag.div helpers.limit_name_size(movie.title, 30), class: 'group-hover:text-brand-600 text-xs font-medium inline-block leading-tight mt-2 pl-0.5 text-gray-900' %>
-								<div class="group-hover:text-brand-600 mt-1 leading-tight text-gray-700 text-xxs"><%= movie.genres&.join(", ") %></div>
+								<div class="group-hover:text-brand-600 mt-1 leading-tight text-gray-700 text-xxs">
+									<%= movie.genres&.join(", ") %>
+								</div>
 							<% end %>
 						</div>
 					<% end %>
