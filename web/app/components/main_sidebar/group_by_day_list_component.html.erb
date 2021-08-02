@@ -1,11 +1,8 @@
 <div id="<%= "main-sidebar--group-by-day-list-#{@pagy&.vars&.dig(:page)}" %>" data-controller="infinite-scroll" class="pr-5 pl-3">
 	<div>
 		<% @events.group_by { |e| e.start_time.strftime("%Y-%m-%d") }.each do |group| %>
-			<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="border-b last:border-b-0 mb-3 ml-2 pb-6 relative">
-				<div class="<%= helpers.class_names('-ml-1 pl-1 bg-white flex-1 leading-6 md:bg-white md:leading-normal md:pb-2 pb-3 mb-3 pt-2 sticky text-gray-600 z-10',
-																						{ 'top-0 pt-5': helpers.mobile_device?,
-																							'top-0':      helpers.mobile_device? && current_page?('/minha-agenda'),
-																							'top-16':     !helpers.mobile_device? && (controller_name == 'feeds') }) %>">
+			<div id="<%= "main-sidebar--group-#{group[0]}" %>" class="relative pb-6 mb-3 ml-2 border-b last:border-b-0">
+				<div class="sticky top-0 z-10 flex-1 pt-3 pb-3 pl-1 mb-3 -ml-1 leading-6 text-gray-600 bg-white md:top-16 md:bg-white md:leading-normal md:pb-2">
 					<div class="md:pt-4">
 						<div class="text-xs">
 							<%= l(group[0]&.to_date, format: "%d/%m") %>
@@ -13,7 +10,7 @@
 								&nbsp;<%= "· daqui #{distance_of_time_in_words(group[0]&.to_date, DateTime.now)}" %>
 							<% end %>
 						</div>
-						<div class="space-x-2 flex select-none">
+						<div class="flex space-x-2 select-none">
 							<h2 class="flex items-center text-gray-800 uppercase">
 								<%= link_to day_events_path(day: group[0].to_date.strftime("%d-%m-%Y")), class: 'font-display text-sm font-medium', data: { 'turbo-preserve-scroll': true } do %>
 									<% if group[0].to_date.today? %>
@@ -38,7 +35,7 @@
 		<% end %>
 	</div>
 	<% if @pagy && @pagy&.last != @pagy&.page %>
-		<div id="main-sidebar--group-by-day-list--pagination" data-infinite-scroll-target="pagination" class="mb-10 mt-3 px-3 w-content">
+		<div id="main-sidebar--group-by-day-list--pagination" data-infinite-scroll-target="pagination" class="px-3 mt-3 mb-10 w-content">
 			<%== helpers.pagy_nav(@pagy) %>
 		</div>
 	<% end %>
