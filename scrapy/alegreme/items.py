@@ -35,6 +35,7 @@ def clean_description(value):
     description = re.sub(r'data-lynx-mode="hover"', '', description)
     description = re.sub(r'&amp', '', description)
     description = re.sub(r'<(\/|)span>', '', description)
+    description = re.sub(r'(<br\/>){3,}', '<br/><br/>', description)
     description = unquote(description)
     description = BeautifulSoup(description, 'html.parser')
     hashtags = description.select("a[href*=hashtag]")

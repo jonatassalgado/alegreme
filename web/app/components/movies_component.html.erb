@@ -79,7 +79,7 @@
 									style:   'min-height: 145px',
 									onerror: "this.style.opacity='0'"
 								} rescue nil %>
-								<%= tag.div helpers.limit_name_size(movie.title, 30), class: 'group-hover:text-brand-600 text-xs font-medium inline-block leading-tight mt-2 pl-0.5 text-gray-900' %>
+								<%= tag.div helpers.limit_name_size(movie.title, 30), class: 'group-hover:text-brand-600 text-xs font-medium inline-block leading-tight mt-2 text-gray-900' %>
 								<div class="group-hover:text-brand-600 mt-1 leading-tight text-gray-700 text-xxs">
 									<%= movie.genres&.join(", ") %>
 								</div>
