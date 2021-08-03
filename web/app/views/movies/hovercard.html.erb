@@ -1,5 +1,5 @@
-<div class="relative transition-opacity" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimer mouseleave->hovercard#hide">
-	<div data-tooltip-arrow class="fixed bottom-0 left-0 z-50 p-6 mx-0 space-y-2 bg-white rounded-lg rounded-t-xl border md:-mx-2 md:absolute md:bottom-3 min-w-max-content shadow-t-2xl md:shadow-xl">
+<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimer mouseleave->hovercard#hide">
+	<div data-hovercard-target="inner" class="transition-all transform fixed bottom-0 left-0 z-50 p-6 mx-0 space-y-3 bg-white rounded-lg rounded-t-xl border md:-mx-2 md:absolute md:bottom-3 min-w-max-content shadow-t-2xl md:shadow-xl">
 		<div class="flex items-start items-center space-x-2 justify-between md:flex-row md:items-center md:mb-0">
 			<h3 class="text-lg c-h3 text-brand-600"><%= @movie.title %></h3>
 			<% if @movie.trailer %>
@@ -18,7 +18,7 @@
 				</svg>
 			</div>
 		</div>
-		<div class="flex flex-row space-x-2 md:hidden">
+		<div class="my-1 flex flex-row space-x-2 md:hidden">
 			<a href="<%= @movie.trailer %>" rel="nofollow" target="_blank" class="c-chip">
 				Ver trailer
 			</a>

@@ -16,7 +16,7 @@ class FilterReflex < ApplicationReflex
 
 	def filter
 		if Rails.cache.exist?("#{session.id}/main-sidebar--filter/filters")
-			@filters = Rails.cache.fetch("#{session.id}/main-sidebar--filter/filters") { {} }
+			@filters = Rails.cache.read("#{session.id}/main-sidebar--filter/filters")
 			if element['data-filter-theme']
 				@filters[:theme] = element['data-filter-theme']
 			end
@@ -38,6 +38,7 @@ class FilterReflex < ApplicationReflex
 				@filters[:date]  = element['data-selected'].to_boolean ? nil : element['data-filter-date']
 			end
 		else
+			@filters              = {}
 			@filters[:theme]      = element['data-filter-theme']
 			@filters[:categories] = [element['data-filter-category']]
 			@filters[:date]       = element['data-filter-date']

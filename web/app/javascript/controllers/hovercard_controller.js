@@ -2,7 +2,7 @@ import ApplicationController from "./application_controller"
 import {MobileDetector}      from "../modules/mobile-detector-module";
 
 export default class extends ApplicationController {
-    static targets = ['card'];
+    static targets = ['card', 'inner'];
     static values  = {
         url:            String,
         position:       String,
@@ -51,7 +51,7 @@ export default class extends ApplicationController {
 
         const currentTarget = event.currentTarget
 
-        if (event.type === 'click') {
+        if (MobileDetector.mobile() && event.type === 'click') {
             event.preventDefault()
         } else {
             this.clearTimer();
@@ -95,11 +95,13 @@ export default class extends ApplicationController {
             })
         }
 
-        if (event.type === 'click') {
-            this.cardTargets?.forEach(card => card.classList.add("opacity-0"))
-            setTimeout(() => {
-                this.cardTargets?.forEach(el => el.remove())
-            }, 300)
+        if (MobileDetector.mobile() && event.type === 'click') {
+            requestAnimationFrame(() => {
+                this.innerTargets?.forEach(card => card.classList.add("opacity-0", "translate-y-10"))
+                setTimeout(() => {
+                    this.cardTargets?.forEach(el => el.remove())
+                }, 500)
+            })
         } else if (event.type !== 'click' && this.timerValue) {
             let timer = setTimeout(() => {
                 requestAnimationFrame(() => {
