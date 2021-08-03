@@ -14,7 +14,7 @@
 
 %>
 
-<header class="<%= class_names('gap-16 justify-between h-14 px-5 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
+<header class="<%= class_names('md:gap-16 justify-between h-14 px-5 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
 															 { 'flex h-14':      !current_page?('/busca'),
 																 'h-content py-2': current_page?('/busca') }) %>"
 				id="top-bar">
@@ -112,7 +112,7 @@
 						<% else %>
 							<div class="mr-2 w-7 h-7 bg-gray-100 rounded-full"></div>
 						<% end %>
-						<div class="pl-2"><%= truncate(current_user&.name, length: 15) %></div>
+						<div class="pl-2 text-sm md:text-base hidden md:inline-block"><%= truncate(current_user&.name, length: 15) %></div>
 					<% end %>
 				<% else %>
 					<%= link_to 'Entrar', new_user_session_path, class: 'hidden md:inline-block hover:text-brand-600 px-6 text-gray-800 text-sm' %>

@@ -50,7 +50,7 @@ export default class extends ApplicationController {
                            {resolveLate: true}
             ).then(payload => {
                 this.openValue = true
-                this._updateUrl(this._linkEl(event))
+                // this._updateUrl(this._linkEl(event))
                 document.dispatchEvent(this.endEvent)
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
@@ -62,10 +62,10 @@ export default class extends ApplicationController {
 
             })
         } else if (!MobileDetector.mobile() && !this.openInSidebarValue) {
-            event.preventDefault()
-            event.stopPropagation()
-            this._cleanUrl()
-            Turbo.visit(this._linkEl(event).href)
+            // event.preventDefault()
+            // event.stopPropagation()
+            // this._cleanUrl()
+            // Turbo.visit(this._linkEl(event).href)
         }
     }
 

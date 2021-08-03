@@ -159,8 +159,9 @@
 											 class="flex px-5">
 										<%= link_to event_path(similar_event),
 																data:     {
-																	action:     'click->main-sidebar--horizontal-event#openEvent',
-																	'event-id': similar_event.id
+																	'turbo-preserve-scroll': true,
+																	action:                  'click->main-sidebar--horizontal-event#openEvent',
+																	'event-id':              similar_event.id
 																}, class: 'flex-shrink-0 h-16 mr-4 overflow-hidden w-16' do %>
 											<%= image_tag helpers.shrine_image_url(similar_event, :feed), {
 												loading: :lazy,
@@ -171,8 +172,9 @@
 										<%= content_tag :a,
 																		href:  event_path(similar_event),
 																		data:  {
-																			action:     'click->main-sidebar--horizontal-event#openEvent',
-																			'event-id': similar_event.id
+																			'turbo-preserve-scroll': true,
+																			action:                  'click->main-sidebar--horizontal-event#openEvent',
+																			'event-id':              similar_event.id
 																		},
 																		class: 'text-sm inline text-sm leading-snug md:hover:text-brand-500 text-gray-800' do %>
 											<%= similar_event.name %>
