@@ -14,9 +14,9 @@
 
 %>
 
-<header class="<%= class_names('flex justify-between h-14 px-5 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
-															 { 'h-14':           !current_page?('/busca'),
-																 'h-content py-1': current_page?('/busca') }) %>"
+<header class="<%= class_names('justify-between h-14 px-5 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
+															 { 'flex h-14':           !current_page?('/busca'),
+																 'h-content py-2': current_page?('/busca') }) %>"
 				id="top-bar">
 	<div class="<%= class_names 'flex md:relative md:col-span-2 h-full w-full',
 															'space-x-4': content_for?(:top_app_bar_title) %>">
@@ -77,7 +77,7 @@
 		<div class="<%= class_names('col-span-12 md:col-span-3 md:px-3',
 																{ 'hidden md:block': controller_name != 'search' }) %>">
 			<form
-				class="flex items-center px-2 h-full rounded md:px-0"
+				class="flex items-center h-full rounded"
 				data-controller="search"
 				data-search-target="search"
 				data-reflex-permanent
