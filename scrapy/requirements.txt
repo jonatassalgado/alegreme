@@ -6,3 +6,4 @@ scrapy_proxy_pool
 extruct
 requests
 unidecode
+tldextract

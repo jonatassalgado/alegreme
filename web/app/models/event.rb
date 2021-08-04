@@ -121,7 +121,7 @@ class Event < ApplicationRecord
 	end
 
 	def start_time
-		datetimes.first&.to_datetime rescue nil
+		datetimes&.find{|d| d.to_date >= DateTime.now.to_date }&.to_datetime || datetimes&.last&.to_datetime rescue nil
 	end
 
 	def end_time

@@ -5,8 +5,12 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+import logging
 from scrapy import signals
+from scrapy.http import Request
+import tldextract
 
+logger = logging.getLogger(__name__)
 
 class AlegremeSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -101,3 +105,46 @@ class AlegremeDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+# https://stackoverflow.com/questions/27805952/scrapy-set-depth-limit-per-allowed-domains
+class DomainDepthMiddleware:
+    def __init__(self, domain_depths, default_depth):
+        self.domain_depths = domain_depths
+        self.default_depth = default_depth
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        settings = crawler.settings
+        domain_depths = settings.getdict('DOMAIN_DEPTHS', default={})
+        default_depth = settings.getint('DEPTH_LIMIT', 1)
+
+        return cls(domain_depths, default_depth)
+    
+    def process_spider_output(self, response, result, spider):
+        def _filter(request):
+            if isinstance(request, Request):
+                # get max depth per domain
+                domain = tldextract.extract(request.url).registered_domain
+                maxdepth = self.domain_depths.get(domain, self.default_depth)
+                depth = response.meta.get('depth', 0) + 1
+                request.meta['depth'] = depth
+
+                if maxdepth and depth > maxdepth:
+                    logger.debug(
+                        "Ignoring link (depth > %(maxdepth)d): %(requrl)s ",
+                        {'maxdepth': maxdepth, 'requrl': request.url},
+                        extra={'spider': spider}
+                    )
+                    return False
+                
+            return True
+
+        # base case (depth=0)
+        if 'depth' not in response.meta:
+            response.meta['depth'] = 0
+
+        return (r for r in result or () if _filter(r))
+
+
+    

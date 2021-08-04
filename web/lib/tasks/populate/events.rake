@@ -335,10 +335,11 @@ module PopulateEventsRake
 		if event
 			puts "#{@events_create_counter}: #{item['name']} - Evento já existe".yellow
 
-			event.name        = item['name']
-			event.description = item['description']
-			event.ticket_url  = item['ticket_url']
-			event.prices      = item['prices']
+			event.name           = item['name']
+			event.description    = item['description']
+			event.ticket_url     = item['ticket_url']
+			event.prices         = item['prices']
+			event.multiple_hours = item['multiple_hours'] if item['multiple_hours']
 			event.datetimes = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 
 			event.geographic.deep_merge!(
@@ -357,12 +358,13 @@ module PopulateEventsRake
 
 			puts "#{@events_create_counter}: #{item['name']} - Evento criado".white
 
-			event.name        = item['name']
-			event.description = item['description']
-			event.ticket_url  = item['ticket_url']
-			event.prices      = item['prices']
-			event.source_url  = item['source_url']
-			event.status      = 'active'
+			event.name           = item['name']
+			event.description    = item['description']
+			event.ticket_url     = item['ticket_url']
+			event.prices         = item['prices']
+			event.source_url     = item['source_url']
+			event.multiple_hours = item['multiple_hours'] if item['multiple_hours']
+			event.status         = 'active'
 
 			event.datetimes = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 

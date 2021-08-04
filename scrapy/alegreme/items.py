@@ -33,8 +33,10 @@ def clean_description(value):
     description = re.sub(r';h=.+?(?=")', '', description)
     description = re.sub(r'target="_blank"', '', description)
     description = re.sub(r'data-lynx-mode="hover"', '', description)
-    description = re.sub(r'&amp', '', description)
-    description = re.sub(r'<(\/|)span>', '', description)
+    description = re.sub(r'\n', '</br>', description)
+    description = re.sub(r'(&amp|\xa0)', '', description)
+    description = re.sub(r'&nbsp;', ' ', description)
+    description = re.sub(r'(class|style|align)="[a-zA-Z0-9:;\.\s\(\)\-\,]*"', '', description)
     description = re.sub(r'(<br\/>){3,}', '<br/><br/>', description)
     description = unquote(description)
     description = BeautifulSoup(description, 'html.parser')
@@ -42,7 +44,10 @@ def clean_description(value):
     for hashtag in hashtags:
         hashtag.decompose()
 
-    return str(description)
+    description = str(description)
+    description = re.sub(r'</p>', '</p></br>', description)
+    description = re.sub(r'<(\/|)(span|strong|div|p)>', '', description)
+    return description
 
 
 def remove_trail_slash(value):
@@ -146,6 +151,9 @@ class Event(scrapy.Item):
     categories = scrapy.Field()
     organizers = scrapy.Field(
         input_processor=Identity()
+    )
+    multiple_hours = scrapy.Field(
+        output_processor=TakeFirst()
     )
     deleted = scrapy.Field(
         output_processor=TakeFirst()

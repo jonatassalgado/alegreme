@@ -41,6 +41,9 @@
 								class:   'border border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6',
 								onerror: "this.style.opacity='0'"
 							} rescue nil %>
+							<% unless organizer.image %>
+								<div class="border border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6"></div>
+							<% end %>
 						<% end %>
 					<% end %>
 				</span>

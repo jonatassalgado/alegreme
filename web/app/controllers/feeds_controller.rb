@@ -4,7 +4,7 @@ class FeedsController < ApplicationController
 	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 
 	def index
-		# Timecop.freeze("2019-09-1")
+		# Timecop.freeze("2021-08-04")
 
 		if @stimulus_reflex.nil? && params.dig(:page).nil?
 			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")

@@ -63,15 +63,17 @@ CONCURRENT_REQUESTS = 5
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
    # 'alegreme.middlewares.AlegremeSpiderMiddleware': 543,
+   'alegreme.middlewares.DomainDepthMiddleware': 900,
+   'scrapy.spidermiddlewares.depth.DepthMiddleware': None,
    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
 }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-#    'alegreme.middlewares.AlegremeDownloaderMiddleware': 543,
-#    'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
-#    'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
+#   'alegreme.middlewares.AlegremeDownloaderMiddleware': 543,
+#   'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+#   'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
     'scrapy_splash.SplashCookiesMiddleware': 723,
     'scrapy_splash.SplashMiddleware': 725,
     'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810
@@ -85,19 +87,6 @@ RETRY_TIMES = 1
 #     'scrapy_useragents.downloadermiddlewares.useragents.UserAgentsMiddleware': 500,
 # })
 
-# USER_AGENTS = [
-#     ('Mozilla/5.0 (X11; Linux x86_64) '
-#      'AppleWebKit/537.36 (KHTML, like Gecko) '
-#      'Chrome/57.0.2987.110 '
-#      'Safari/537.36'),  # chrome
-#     ('Mozilla/5.0 (X11; Linux x86_64) '
-#      'AppleWebKit/537.36 (KHTML, like Gecko) '
-#      'Chrome/61.0.3163.79 '
-#      'Safari/537.36'),  # chrome
-#     ('Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) '
-#      'Gecko/20100101 '
-#      'Firefox/55.0')  # firefox
-# ]
 
 # DEPTH_LIMIT = 4
 # CLOSESPIDER_ITEMCOUNT = 2
