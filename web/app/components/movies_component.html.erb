@@ -58,7 +58,7 @@
 					 data-persist-horizontal-scroll-target="scroller"
 					 class="py-2 rounded-lg md:border md:px-3 md:py-3 scrollx">
 				<div class="grid grid-flow-col gap-2.5 px-5 md:px-0 w-content grid-after-margin">
-					<% @movies.each do |movie| %>
+					<% @movies.reverse.each do |movie| %>
 						<div data-url="<%= hovercard_movie_path(movie) %>"
 								 data-action="mouseenter->hovercard#show"
 								 class="flex flex-col w-24 transition-transform transform group md:hover:scale-105">
