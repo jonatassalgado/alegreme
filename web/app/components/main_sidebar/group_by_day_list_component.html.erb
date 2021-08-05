@@ -6,8 +6,8 @@
 					<div class="md:pt-4">
 						<div class="text-xs">
 							<%= l(group[0]&.to_date, format: "%d/%m") %>
-							<% if group[0].to_date > Date.today + 6 %>
-								&nbsp;<%= "· daqui #{distance_of_time_in_words(group[0]&.to_date, DateTime.now)}" %>
+							<% if group[0].to_date > Date.today + 2 %>
+								&nbsp;<%= "· daqui #{distance_of_time_in_words(group[0]&.to_datetime, DateTime.now, false, highest_measure_only: true)}" %>
 							<% end %>
 						</div>
 						<div class="flex space-x-2 select-none">
