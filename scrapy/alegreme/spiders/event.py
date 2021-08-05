@@ -435,9 +435,10 @@ class EventSpider(scrapy.Spider):
         event_loader.add_xpath('name', '//title[1]/text()')
         event_loader.add_xpath('cover_url', '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src')
         
-        primary_address = event_loader.get_xpath('//*[@id="event_summary"]//*[contains(@class, "_5xhp fsm fwn fcg")][1]/text()')
+        primary_address = event_loader.get_xpath('//*[@id="event_summary"]//u[contains(text(), "pin")]/ancestor::tr//*[contains(@class, "_5xhp")]/text()')
         secondary_address = event_loader.get_xpath('string(//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")])')
-        event_loader.add_value('address', primary_address or secondary_address)
+        tertiary_address = event_loader.get_xpath('//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
+        event_loader.add_value('address', primary_address or secondary_address or tertiary_address)
         
         event_loader.add_xpath('datetimes', '//*[@id="event_time_info"]//div[@class="_2ycp _5xhk"][1]/@content')
         event_loader.add_xpath('place_name', '//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
