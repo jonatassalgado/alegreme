@@ -37,7 +37,7 @@ def clean_description(value):
     description = re.sub(r'(&amp|\xa0)', '', description)
     description = re.sub(r'&nbsp;', ' ', description)
     description = re.sub(r'(class|style|align)="[a-zA-Z0-9:;\.\s\(\)\-\,]*"', '', description)
-    description = re.sub(r'(<br\/>){3,}', '<br/><br/>', description)
+    description = re.sub(r'(<br>){3,}', '<br><br>', description)
     description = unquote(description)
     description = BeautifulSoup(description, 'html.parser')
     hashtags = description.select("a[href*=hashtag]")
@@ -45,7 +45,7 @@ def clean_description(value):
         hashtag.decompose()
 
     description = str(description)
-    description = re.sub(r'</p>', '</p></br>', description)
+    description = re.sub(r'</p>', '</p><br>', description)
     description = re.sub(r'<(\/|)(span|strong|div|p)>', '', description)
     return description
 
