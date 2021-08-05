@@ -41,7 +41,7 @@
 			<% end if @movie&.cast? %>
 		</div>
 		<div class="text-xs md:text-sm">
-			<%= @movie.description %>
+			<%= truncate(@movie.description, length: 400, separator: ' ') { link_to 'continua', movie_path(@movie), class: 'text-brand-600 text-medium' } rescue nil %>
 		</div>
 	</div>
 </div>
