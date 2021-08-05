@@ -9,14 +9,9 @@ const TurboModule = (function () {
 
     module.backHistory = () => {
         try {
-            let referrer = Turbo.navigator.currentVisit.referrer.absoluteURL;
-            if (referrer) {
-                window.history.back()
-            } else {
-                Turbo.visit('/')
-            }
+            window.history.back()
         } catch {
-            Turbo.visit('/')
+            Turbo.visit('/', {action: 'restore'})
         }
     }
 
