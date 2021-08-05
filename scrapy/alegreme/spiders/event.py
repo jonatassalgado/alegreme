@@ -559,10 +559,11 @@ class EventSpider(scrapy.Spider):
 
         elif 'presentations' in body['data']:
             event_loader.add_value('datetimes',  list(map(lambda item: item['presentation_local_date_time'], body['data']['presentations']['items'])))
-            if len(body['data']['presentations']['items']) > 1:
-                event_loader.add_value('multiple_hours', 'true')
-            else:
-                event_loader.add_value('multiple_hours', 'false')
+            event_loader.add_value('multiple_hours', 'false')
+            #if len(body['data']['presentations']['items']) > 1:
+            #    event_loader.add_value('multiple_hours', 'true')
+            #else:
+            #    event_loader.add_value('multiple_hours', 'false')
 
         else:
             event_loader.add_value('datetimes',  [])
