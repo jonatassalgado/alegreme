@@ -9,27 +9,29 @@ class EventDashboard < Administrate::BaseDashboard
 	# which determines how the attribute is displayed
 	# on pages throughout the dashboard.
 	ATTRIBUTE_TYPES = {
-		image:        Field::Shrine.with_options(version: :feed),
-		place:        Field::BelongsTo,
-		organizers:   Field::HasMany,
-		categories:   Field::HasMany,
-		likes:        Field::HasMany,
-		users:        Field::HasMany,
-		id:           Field::Number,
-		theme:        Field::JSONB,
-		geographic:   Field::JSONB,
-		datetimes:    Field::JSONB.with_options(blank_sign: [], transform: true),
-		name:         Field::String.with_options(searchable: true),
-		entries:      Field::JSONB,
-		ml_data:      Field::JSONB,
-		similar_data: Field::JSONB,
-		image_data:   Field::JSONB,
-		created_at:   Field::DateTime,
-		updated_at:   Field::DateTime,
-		slug:         Field::String.with_options(searchable: false),
-		ticket_url:   Field::String.with_options(searchable: false),
-		source_url:   Field::String.with_options(searchable: true),
-		status:       Field::Enum
+		image:          Field::Shrine.with_options(version: :feed),
+		place:          Field::BelongsTo,
+		organizers:     Field::HasMany,
+		categories:     Field::HasMany,
+		likes:          Field::HasMany,
+		users:          Field::HasMany,
+		id:             Field::Number,
+		description:    TrixField,
+		theme:          Field::JSONB,
+		geographic:     Field::JSONB,
+		datetimes:      Field::JSONB.with_options(blank_sign: [], transform: true),
+		name:           Field::String.with_options(searchable: true),
+		entries:        Field::JSONB,
+		ml_data:        Field::JSONB,
+		similar_data:   Field::JSONB,
+		image_data:     Field::JSONB,
+		created_at:     Field::DateTime,
+		updated_at:     Field::DateTime,
+		slug:           Field::String.with_options(searchable: false),
+		ticket_url:     Field::String.with_options(searchable: false),
+		source_url:     Field::String.with_options(searchable: true),
+		multiple_hours: Field::Boolean,
+		status:         Field::Enum
 	}.freeze
 
 	# COLLECTION_ATTRIBUTES
@@ -50,10 +52,12 @@ class EventDashboard < Administrate::BaseDashboard
 	SHOW_PAGE_ATTRIBUTES = %i[
   	status
   	image
+  	multiple_hours
     place
     organizers
     categories
     id
+    description
     theme
     geographic
     datetimes
@@ -74,10 +78,11 @@ class EventDashboard < Administrate::BaseDashboard
 	FORM_ATTRIBUTES = %i[
     status
     image
+    multiple_hours
     place
     organizers
     categories
-    theme
+    description
     geographic
     datetimes
     ticket_url
