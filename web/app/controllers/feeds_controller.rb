@@ -133,7 +133,7 @@ class FeedsController < ApplicationController
 
 	# add Rails.cache wrapper around the count call
 	def cache_count(collection)
-		cache_key = "pagy-#{collection&.table_name}:#{controller_name}-#{action_name}-#{current_user&.cache_key}"
+		cache_key = "pagy-#{collection&.table_name}/#{controller_name}/#{action_name}/#{session.id}"
 		Rails.cache.fetch(cache_key, expires_in: 20 * 60) do
 			collection.count(:all)
 		end
