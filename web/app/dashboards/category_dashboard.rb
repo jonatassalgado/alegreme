@@ -12,6 +12,7 @@ class CategoryDashboard < Administrate::BaseDashboard
     id: Field::Number,
     details: Field::JSONB,
     details_name: Field::String,
+    theme: Field::BelongsTo,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -33,6 +34,7 @@ class CategoryDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     events
     id
+    theme
     details
     created_at
     updated_at
@@ -43,6 +45,7 @@ class CategoryDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     events
+    theme
     details
   ].freeze
 

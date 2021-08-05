@@ -169,6 +169,10 @@ class Category < ApplicationRecord
 								}
 	].freeze
 
+	def details=(value)
+		self[:details] = value.is_a?(String) ? JSON.parse(value) : value
+	end
+
 	def details_name
 		details['name']
 	end
