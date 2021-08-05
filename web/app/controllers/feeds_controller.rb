@@ -124,6 +124,21 @@ class FeedsController < ApplicationController
 		# end
 	end
 
+	# Pagy
+	def pagy_get_vars(collection, vars)
+		vars[:count] ||= cache_count(collection)
+		vars[:page]  ||= params[ vars[:page_param] || Pagy::VARS[:page_param] ]
+		vars
+	end
+
+	# add Rails.cache wrapper around the count call
+	def cache_count(collection)
+		cache_key = "pagy-#{collection&.table_name}:#{controller_name}-#{action_name}-#{current_user&.cache_key}"
+		Rails.cache.fetch(cache_key, expires_in: 20 * 60) do
+			collection.count(:all)
+		end
+	end
+
 	protected
 
 	def search_params

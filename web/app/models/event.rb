@@ -46,6 +46,8 @@ class Event < ApplicationRecord
 
 	validate :uniq_details_name, on: :create
 	before_validation :parse_datetimes
+	after_create { Rails.cache.delete_matched /^pagy-#{self.class.table_name}:/ }
+	after_destroy { Rails.cache.delete_matched /^pagy-#{self.class.table_name}:/ }
 
 	belongs_to :place
 	has_and_belongs_to_many :organizers, -> { distinct }
@@ -121,7 +123,7 @@ class Event < ApplicationRecord
 	end
 
 	def start_time
-		datetimes&.find{|d| d.to_date >= DateTime.now.to_date }&.to_datetime || datetimes&.last&.to_datetime rescue nil
+		datetimes&.find { |d| d.to_date >= DateTime.now.to_date }&.to_datetime || datetimes&.last&.to_datetime rescue nil
 	end
 
 	def end_time
