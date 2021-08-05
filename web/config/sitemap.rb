@@ -35,8 +35,11 @@ SitemapGenerator::Sitemap.create do
 		add organizer_path(organizer), {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.8}
 	end
 
-	categories = Event::CATEGORIES.dup
-	categories.delete_if{|category| ['anúncio', 'outlier'].include? category}.each do |category|
-		add category_events_path(category), {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.9}
+	CineFilm.find_each do |movie|
+		add movie_path(movie), {:lastmod => movie.updated_at, :changefreq => 'daily', :priority => 0.8}
+	end
+
+	Cinema.find_each do |cinema|
+		add cinema_path(cinema), {:lastmod => DateTime.now, :changefreq => 'daily', :priority => 0.8}
 	end
 end
