@@ -14,7 +14,7 @@
 																					'text-gray-800':  !@likeable&.start_time.today? }) %>">
 			<div class="text-xs">
 				<% if @likeable.class == Event %>
-					<%= helpers.format_hour(@likeable.start_time) %>h
+					<%= @likeable.multiple_hours? ? '+1 horários' : "#{helpers.format_hour(@likeable.start_time)}h" %>
 					· <%= helpers.day_of_week @likeable.start_time %>
 				<% else %>
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -32,11 +32,11 @@
 														'likeable-id':   @likeable.id,
 														'likeable-type': @likeable.class.table_name.singularize
 													},
-													class: 'md:hover:underline text-sm font-medium' do %>
+													class: 'md:hover:text-brand-600 text-sm font-medium' do %>
 						<%= @likeable.name %>
 					<% end %>
 				<% else %>
-					<%= link_to movie_path(@likeable.movie), 'data-turbo-preserve-scroll': true, class: 'md:hover:underline text-sm font-medium' do %>
+					<%= link_to movie_path(@likeable.movie), 'data-turbo-preserve-scroll': true, class: 'md:hover:text-brand-600 text-sm font-medium' do %>
 						<%= @likeable.name %>
 					<% end %>
 				<% end %>

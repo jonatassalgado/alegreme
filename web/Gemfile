@@ -29,6 +29,9 @@ gem 'administrate-field-enum'
 
 gem 'friendly_id', '~> 5.2.4'
 
+# distance_of_time_in_words
+gem 'dotiw'
+
 # Pagy
 gem 'pagy', '~> 4.10'
 

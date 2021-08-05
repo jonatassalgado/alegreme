@@ -375,7 +375,7 @@ class EventSpider(scrapy.Spider):
         self.log("INITIALIZING...")
         self.log("UA: %s" % user_agents[0])
 
-        """ for page in self.facebook_pages:
+        for page in self.facebook_pages:
             yield SplashRequest(
                 url=page,
                 callback=self.parse_facebook_page,
@@ -385,7 +385,7 @@ class EventSpider(scrapy.Spider):
                 'lua_source': parse_facebook_events_page_script if 'm.facebook.com' in page else parse_facebook_place_page_script,
                 'ua': user_agents[0]
                 }
-            ) """
+            )
         
         for page in self.sympla_pages:
             yield SplashRequest(

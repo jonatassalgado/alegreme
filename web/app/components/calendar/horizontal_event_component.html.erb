@@ -20,7 +20,7 @@
 			·
 			<div class="inline text-sm font-light text-gray-500 md:mt-2">
 				<% if @likeable.class == Event %>
-					<%= helpers.day_of_week(@likeable.start_time).titlecase %> às <%= helpers.format_hour @likeable.start_time %>h
+					<%= helpers.day_of_week(@likeable.start_time).titlecase %> <%= @likeable.multiple_hours? ? '+1 horários' : "às #{helpers.format_hour(@likeable.start_time)}h" %>
 					·
 				<% else %>
 					<svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -29,7 +29,7 @@
 					·
 					<%= helpers.day_of_week(@likeable.start_time).titlecase %> · <%= @likeable&.cinema&.display_name %>
 				<% end %>
-				<%= link_to helpers.limit_place_name_size(@likeable.place_details_name, 24), place_path(@likeable.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:underline' if @likeable.class == Event %>
+				<%= link_to helpers.limit_place_name_size(@likeable.place_details_name, 24), place_path(@likeable.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' if @likeable.class == Event %>
 			</div>
 			<div class="flex mt-2">
 				<%= content_tag :div,

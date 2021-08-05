@@ -103,10 +103,17 @@
 								<%= l(@event.start_time, format: "%^b") %>
 							</div>
 						</div>
-						<div class="pr-10 my-auto text-xs text-gray-800">
-							<%= I18n.l(@event.day_of_week['date'], format: :default).capitalize %>,
-							às <%= helpers.format_hour(@event.start_time) %> horas,
-							daqui <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now %>
+						<div class="my-auto text-xs text-gray-800">
+							<% if @event.multiple_hours? %>
+								<%= I18n.l(@event.day_of_week['date'], format: :default).capitalize %>,
+								em múltiplos horários,
+								em <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now, false, only: ['days'] %>.
+								<%= link_to 'Confirmar horários', @event.source_url, class: 'text-brand-600', rel: 'nofollow', target: '_blank' rescue nil %>
+							<% else %>
+								<%= I18n.l(@event.day_of_week['date'], format: :default).capitalize %>,
+								às <%= helpers.format_hour(@event.start_time) %> horas,
+								daqui <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now, false, only: ['days', 'hours'] %>
+							<% end %>
 						</div>
 					</div>
 					<div class="py-5 px-5 border-b border-gray-100">
