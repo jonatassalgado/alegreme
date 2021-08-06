@@ -12,7 +12,7 @@
 	</div>
 <% end %>
 
-<% cache "movies/show/movies-component" do %>
+<% cache @movies&.cache_version do %>
 	<div class="md:mt-6">
 		<%= render MoviesComponent.new(movies: @movies, user: current_user, title: false, id: 'movies-show') %>
 	</div>
