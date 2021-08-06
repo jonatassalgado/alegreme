@@ -5,7 +5,6 @@ export default class extends ApplicationController {
     static targets = ['card', 'inner'];
     static values  = {
         url:            String,
-        position:       String,
         preserve:       Boolean,
         hideMouseenter: Boolean,
         timer:          Number,
@@ -15,7 +14,6 @@ export default class extends ApplicationController {
     initialize() {
         this.timers = []
 
-        if (this.positionValue == null) this.positionValue = 'append'
         if (this.preserveValue == null) this.preserveValue = true
         if (this.hideMouseenterValue == null) this.hideMouseenterValue = false
         if (this.activeValue == null) this.activeValue = false
@@ -42,7 +40,7 @@ export default class extends ApplicationController {
 
     teardown() {
         if (this.hasCardTarget) {
-            this.cardTargets.forEach(el => el.remove())
+            this.cardTarget.innerHTML = ""
         }
     }
 
@@ -69,14 +67,10 @@ export default class extends ApplicationController {
                     requestAnimationFrame(() => {
                         setTimeout(() => {
                             if (this.hideMouseenterValue) {
-                                this.cardTargets?.forEach(el => el.remove())
+                                this.cardTarget.innerHTML = ""
                             }
-
-                            if (this.positionValue === 'prepend') {
-                                this.element.prepend(fragment);
-                            } else {
-                                this.element.appendChild(fragment);
-                            }
+                            this.cardTarget.appendChild(fragment)
+                            this.cardTarget.classList.remove("opacity-0");
                         }, 310)
                     })
                 });
@@ -99,15 +93,15 @@ export default class extends ApplicationController {
             requestAnimationFrame(() => {
                 this.innerTargets?.forEach(card => card.classList.add("opacity-0", "translate-y-10"))
                 setTimeout(() => {
-                    this.cardTargets?.forEach(el => el.remove())
+                    this.cardTarget.innerHTML = ""
                 }, 500)
             })
         } else if (event.type !== 'click' && this.timerValue) {
             let timer = setTimeout(() => {
                 requestAnimationFrame(() => {
-                    this.cardTargets?.forEach(card => card.classList.add("opacity-0"))
+                    this.cardTarget.classList.add("opacity-0")
                     setTimeout(() => {
-                        this.cardTargets?.forEach(el => el.remove())
+                        this.cardTarget.innerHTML = ""
                     }, 300)
                 })
             }, this.timerValue)
