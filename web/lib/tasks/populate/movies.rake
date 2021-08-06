@@ -61,12 +61,12 @@ module PopulateMoviesRake
 
 				cinema_data.dig('languages').each do |language_data|
 					screening = Screening.find_by(day:         screening_data.dig('date'),
-																				times:       language_data.dig('times'),
 																				language:    language_data.dig('name'),
 																				screen_type: language_data.dig('screen_type'),
 																				cinema_id:   cinema.id,
 																				movie_id:    movie.id)
 					if screening
+						screening.update(times: language_data.dig('times'))
 						puts "Exibição: #{screening.id} - Exibição já existe".white
 					else
 						screening = Screening.create!(day:         screening_data.dig('date'),
