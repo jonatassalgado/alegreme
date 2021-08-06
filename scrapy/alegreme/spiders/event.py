@@ -295,6 +295,12 @@ class EventSpider(scrapy.Spider):
     allowed_domains = ['facebook.com', 'sympla.com.br']
     facebook_pages = [
             'https://www.facebook.com/pages/Opini%C3%A3o/119453431446021',
+            'https://m.facebook.com/pg/BrickDeDesapegos/events/?ref=page_internal',
+            'https://m.facebook.com/pg/revolucao.mar/events/?ref=page_internal',
+            'https://m.facebook.com/pg/AIMEC.Poa/events/?ref=page_internal',
+            'https://m.facebook.com/pg/Espaco373/events/?ref=page_internal',
+            'https://m.facebook.com/pg/zaffari/events/?ref=page_internal',
+            'https://m.facebook.com/pg/profisomprodutora/events/?ref=page_internal',
             'https://m.facebook.com/pg/araujoviannaoficial/events?ref=page_internal',
             'https://m.facebook.com/pg/SerenataIluminada/events?ref=page_internal',
             'https://m.facebook.com/pg/opiniao.produtora/events?ref=page_internal',
