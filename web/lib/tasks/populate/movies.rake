@@ -11,7 +11,7 @@ require_relative '../../../app/uploaders/movie_image_uploader'
 module PopulateMoviesRake
 
 	def create_screenings(item)
-		movie = CineFilm.find_by("lower(title) LIKE ?", "%#{item['name']&.downcase}%")
+		movie = CineFilm.find_by("lower(title) LIKE ?", "#{item['name']&.downcase}%")
 
 		if movie
 			set_cover(item, movie) if ENV['update_images'] == 'true'
