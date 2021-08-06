@@ -20,7 +20,7 @@
 			·
 			<div class="inline text-sm font-light text-gray-500 md:mt-2">
 				<% if @likeable.class == Event %>
-					<%= helpers.day_of_week(@likeable.start_time).titlecase %> <%= @likeable.multiple_hours? ? '+1 horários' : "às #{helpers.format_hour(@likeable.start_time)}h" %>
+					<%= helpers.day_of_week(@likeable.start_time).titlecase %> <%= @likeable.multiple_hours? ? '+1 horário' : "às #{helpers.format_hour(@likeable.start_time)}h" %>
 					·
 				<% else %>
 					<svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 h-4" viewBox="0 0 20 20" fill="currentColor">

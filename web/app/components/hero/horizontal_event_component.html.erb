@@ -16,7 +16,7 @@
 				<%= @event.name %>
 			<% end %>
 			<div class="pl-2 inline text-xs md:text-sm text-gray-700">
-				<%= helpers.day_of_week(@event.start_time) %> · <%= @event.multiple_hours? ? '+1 horários' : "#{helpers.format_hour(@event.start_time)}h" %> ·
+				<%= helpers.day_of_week(@event.start_time) %> · <%= @event.multiple_hours? ? '+1 horário' : "#{helpers.format_hour(@event.start_time)}h" %> ·
 				<%= @event&.categories_display_name&.capitalize %> ·
 				<%= link_to helpers.limit_place_name_size(@event.place_details_name, 24), place_path(@event.place), class: 'md:hover:underline capitalize' %>
 			</div>

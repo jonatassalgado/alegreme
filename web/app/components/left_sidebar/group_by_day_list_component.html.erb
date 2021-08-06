@@ -1,3 +1,21 @@
-<% @likeables.group_by { |e| e.start_time.to_date.strftime("%Y-%m-%d") }.each do |group| %>
-	<%= render LeftSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: @parent_key) %>
+<% @likeables.group_by { |e| e.start_time.to_date }.each do |group| %>
+	<div class="relative duration-300 transition-all bg-white">
+		<% if group[0].today? || group[0] == Date.current.tomorrow %>
+			<div class="absolute border break-all flex flex-shrink-0 h-9 items-center justify-center leading-tight py-1 rounded rounded-lg text-center text-xxs top-0 w-9">
+				<%= group[0].today? ? 'HOJE' : 'AMANHÃ' %>
+			</div>
+		<% else %>
+			<div class="absolute border flex flex-col flex-shrink-0 h-9 items-center justify-center py-1 rounded rounded-lg text-xs top-0 w-9">
+				<div class="">
+					<%= l(group[0], format: "%-d") %>
+				</div>
+				<div class="-mt-1 text-xxs">
+					<%= l(group[0], format: "%^b") %>
+				</div>
+			</div>
+		<% end %>
+		<div data-left-sidebar--calendar-target="events" class="space-y-5">
+			<%= render LeftSidebar::HorizontalEventComponent.with_collection(group[1], user: @user, parent_key: @parent_key) %>
+		</div>
+	</div>
 <% end %>

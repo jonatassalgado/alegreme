@@ -32,19 +32,20 @@ export default class extends ApplicationController {
             event.preventDefault()
             event.stopPropagation()
 
-            this.beginEvent = new Event("horizontal-event#open-event:before")
-            this.endEvent   = new Event("horizontal-event#open-event:success");
+            const currentTarget = event.currentTarget
+            this.beginEvent     = new Event("horizontal-event#open-event:before")
+            this.endEvent       = new Event("horizontal-event#open-event:success");
 
             document.dispatchEvent(this.beginEvent)
 
-            this.stimulate("Event#open", event.target, {resolveLate: true})
+            this.stimulate("Event#open", currentTarget, {resolveLate: true})
                 .then(payload => {
                     document.dispatchEvent(this.endEvent)
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                                               event:     "virtualPageview",
-                                              pageUrl:   event.target.pathname,
-                                              pageTitle: event.target.innerText
+                                              pageUrl:   currentTarget.pathname,
+                                              pageTitle: currentTarget.title
                                           });
                 }).catch(payload => {
 

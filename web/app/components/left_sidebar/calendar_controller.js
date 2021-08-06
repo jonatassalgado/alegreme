@@ -1,5 +1,5 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
-import {ChildMutation}       from "../../javascript/modules/child-mutation-module";
+// import {ChildMutation}       from "../../javascript/modules/child-mutation-module";
 import FlippingWeb           from "flipping/lib/adapters/web";
 import StickySidebar         from "sticky-sidebar";
 import "./calendar_component.scss"
@@ -14,18 +14,20 @@ export default class extends ApplicationController {
 
         this.element.addEventListener("cable-ready:before-morph", event => {
             if (this.hasEventsTarget) {
-                ChildMutation.read(this.eventsTarget)
+                // ChildMutation.read(this.eventsTarget)
                 this.flipping.read()
             }
         })
 
         this.element.addEventListener("cable-ready:after-morph", event => {
             if (this.hasEventsTarget) {
-                this.flipping.flip()
-                ChildMutation.diff(this.eventsTarget)
-                             .then(els => {
-                                 els.forEach(el => el.classList.add("animate-added"))
-                             })
+                requestAnimationFrame(() => {
+                    this.flipping.flip()
+                    // ChildMutation.diff(this.eventsTarget)
+                    //              .then(els => {
+                    //                  els.forEach(el => el.classList.add("animate-added"))
+                    //              })
+                })
             }
         })
 
