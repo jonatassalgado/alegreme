@@ -68,32 +68,4 @@ class TrainReflex < ApplicationReflex
 		current_user.save
 	end
 
-	def show_swipable?
-		if @user
-			@show_swipable = (DateTime.now - @suggestion_hours_interval.hours) > @user.swipable.dig('events', 'hidden_at').to_datetime rescue true
-			update_last_view_at if @show_swipable
-		else
-			@show_swipable = false
-		end
-	end
-
-	def update_last_view_at
-		current_user.swipable.deep_merge!({
-																				'events' => {
-																					'last_view_at' => DateTime.now
-																				}
-																			})
-		current_user.save
-	end
-
-	def events_to_train_or_suggestions
-		return unless current_user
-
-		current_user.liked_or_disliked_events.reset
-		if current_user.swipable['events']['finished_at'].blank? && current_user.liked_event_ids.size < @min_events_to_train
-			@events_to_train = Event.active.not_liked_or_disliked(current_user).order_by_date.limit(3)
-		else
-			@events_suggestions = Event.active.in_user_suggestions(current_user).not_liked_or_disliked(current_user).limit(3)
-		end
-	end
 end

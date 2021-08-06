@@ -17,7 +17,7 @@ class Hero::SwipableComponent < ViewComponent::Base
 	private
 
 	def get_suggestions_viewed
-		@user ? Rails.cache.fetch("#{@user.cache_key}/hero--swipable/suggestions_viewed", { expires_in: 1.hour, skip_nil: true, raw: true }) { 0 } : 0
+		@user ? Rails.cache.fetch("#{@user&.cache_key}/hero--swipable/suggestions_viewed", { expires_in: 1.hour, skip_nil: true, raw: true }) { 0 } : 0
 	end
 
 	def events_trained
@@ -44,7 +44,7 @@ class Hero::SwipableComponent < ViewComponent::Base
 	def show_swipable?
 		return true unless @user
 		show_swipable = (DateTime.now - @suggestion_hours_interval.hours) > @user.swipable.dig('events', 'hidden_at').to_datetime rescue true
-		update_last_view_at if show_swipable
+		# update_last_view_at if show_swipable
 		show_swipable
 	end
 

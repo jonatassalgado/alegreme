@@ -29,7 +29,9 @@
 					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png"].sample, class: 'h-24 md:h-36 md:w-36 my-auto w-24' %>
 				</div>
 			<% end %>
-			<%= render Hero::SwipableComponent.new(user: current_user) %>
+			<% cache "#{current_user&.cache_key_with_version}/#{current_user&.liked_or_disliked_event_ids&.size}/hero--swipable" do %>
+				<%= render Hero::SwipableComponent.new(user: current_user) %>
+			<% end %>
 		<% end %>
 
 		<%= render MoviesComponent.new(movies:    @movies,

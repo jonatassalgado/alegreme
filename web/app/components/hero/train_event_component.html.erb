@@ -24,7 +24,7 @@
 												'event-id': @event.id
 											},
 											class: 'c-h3 block md:hover:text-brand-600 mb-1' do %>
-				<%= @event.name %>
+				<%= helpers.limit_name_size @event.name %>
 			<% end %>
 			<div class="mt-2 text-gray-800 text-sm">
 				<%= @event&.categories_display_name %> em <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
