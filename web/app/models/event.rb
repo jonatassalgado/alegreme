@@ -46,8 +46,12 @@ class Event < ApplicationRecord
 
 	validate :uniq_details_name, on: :create
 	before_validation :parse_datetimes
-	after_create { Rails.cache.delete_matched "pagy-#{self.class.table_name}*" }
-	after_destroy { Rails.cache.delete_matched "pagy-#{self.class.table_name}*" }
+	after_create do |event|
+		Rails.cache.delete_matched "pagy-#{self.table_name}*"
+	end
+	after_destroy do |event|
+		Rails.cache.delete_matched "pagy-#{self.table_name}*"
+	end
 
 	belongs_to :place
 	has_and_belongs_to_many :organizers, -> { distinct }
