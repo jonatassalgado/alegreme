@@ -339,7 +339,7 @@ class MovieSpider(scrapy.Spider):
         language_loader = MovieLanguageLoader()
         language_loader.add_value('name', place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()')[index].get()) if place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()') else None
         language_loader.add_value('screen_type', place_el.xpath('.//*[contains(@class, "lr_c_vn")]/text()')[index].get()) if place_el.xpath('.//*[contains(@class, "YHR1ce")]/text()') else None
-        language_loader.add_value('times', place_el.xpath('.//*[contains(@class, "lr_c_s")]')[index].xpath('.//*[contains(@class, "lr_c_fce")]//text()').get()) if place_el.xpath('.//*[contains(@class, "lr_c_s")]') else None
+        language_loader.add_value('times', place_el.xpath('.//*[contains(@class, "lr_c_s")]')[index].xpath('.//*[contains(@class, "lr_c_fce")]//text()').getall()) if place_el.xpath('.//*[contains(@class, "lr_c_s")]') else None
         return dict(language_loader.load_item())
 
     def parse_cover_meta(self, response):
