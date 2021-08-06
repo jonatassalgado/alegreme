@@ -40,6 +40,8 @@ class Movie < ApplicationRecord
 	include MovieQueries::Scopes
 
 	validates :title, uniqueness: true
+	after_save { Rails.cache.delete_matched "movies/show/movies-component" }
+	after_destroy { Rails.cache.delete_matched "movies/show/movies-component" }
 
 	has_many :screenings, dependent: :destroy
 	has_many :cinemas, -> { distinct }, through: :screenings
