@@ -33,20 +33,29 @@
 			<div class="inline items-center text-sm md:flex md:space-x-2">
 				<span class="hidden -space-x-2 md:flex">
 					<% @event.organizers[0...1].each do |organizer| %>
-						<%= link_to organizer_path(organizer), class: 'inline-block', 'data-turbo-preserve-scroll': true do %>
-							<%= image_tag helpers.shrine_image_url(organizer, :sm), {
-								loading: :lazy,
-								title:   organizer.details_name,
-								alt:     "Organizador #{organizer.details_name}",
-								class:   'border border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6',
-								onerror: "this.style.opacity='0'"
-							} rescue nil %>
-							<% unless organizer.image %>
-								<img src="<%= "https://ui-avatars.com/api/?size=24&background=random&name=#{organizer.details_name}" %>" alt="<%= "Organizador #{organizer.details_name}" %>" class="border border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6">
+						<div data-controller="hovercard"
+								 data-hovercard-active-value="true"
+								 data-hovercard-preserve-value="false"
+								 data-hovercard-hide-mouseenter-value="true"
+								 data-hovercard-timer-value="600">
+							<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimer mouseleave->hovercard#hide"></div>
+							<%= link_to organizer_path(organizer), class: 'inline-block', data: { 'turbo-preserve-scroll': true,
+																																										url:                     hovercard_organizer_path(organizer),
+																																										action:                  "mouseenter->hovercard#show mouseleave->hovercard#hide" } do %>
+								<%= image_tag helpers.shrine_image_url(organizer, :sm), {
+									loading: :lazy,
+									title:   organizer.details_name,
+									alt:     "Organizador #{organizer.details_name}",
+									class:   'border border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6',
+									onerror: "this.style.opacity='0'"
+								} rescue nil %>
+								<% unless organizer.image %>
+									<img src="<%= "https://ui-avatars.com/api/?size=24&background=random&name=#{organizer.details_name}" %>" alt="<%= "Organizador #{organizer.details_name}" %>" class="border border-brand-100 bg-brand-100 h-6 object-center object-cover rounded-full w-6">
+								<% end %>
 							<% end %>
-						<% end %>
+						</div>
 					<% end %>
-				</span>
+					</span>
 				<span class="hidden text-gray-700 md:inline">·</span>
 				<span class="inline text-gray-700 md:inline-block">
 					<% if @event.multiple_hours? %>

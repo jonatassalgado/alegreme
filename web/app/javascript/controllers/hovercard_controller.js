@@ -55,8 +55,8 @@ export default class extends ApplicationController {
             this.clearTimer();
         }
 
-        if (this.preserveValue && this.hasCardTarget) {
-            this.cardTarget.classList.remove("hidden");
+        if (this.preserveValue && this.cardTarget?.innerHTML?.length > 0) {
+            this.cardTarget.classList.remove("hidden", "opacity-0");
         } else {
             fetch(currentTarget.dataset.url)
                 .then((r) => r.text())
@@ -70,7 +70,7 @@ export default class extends ApplicationController {
                                 this.cardTarget.innerHTML = ""
                             }
                             this.cardTarget.appendChild(fragment)
-                            this.cardTarget.classList.remove("opacity-0");
+                            this.cardTarget.classList.remove("hidden", "opacity-0");
                         }, 310)
                     })
                 });
@@ -80,33 +80,38 @@ export default class extends ApplicationController {
     hide(event) {
         if (!this.activeValue) return
 
-        if (this.preserveValue && this.hasCardTarget) {
-            requestAnimationFrame(() => {
-                this.cardTarget.classList.add("opacity-0");
-                setTimeout(() => {
-                    this.cardTarget.classList.add("hidden");
-                }, 300)
-            })
-        }
-
-        if (MobileDetector.mobile() && event.type === 'click') {
-            requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            if (this.preserveValue && this.cardTarget?.innerHTML?.length > 0) {
+                if (this.timerValue) {
+                    let timer = setTimeout(() => {
+                        this.cardTarget.classList.add("opacity-0");
+                        setTimeout(() => {
+                            this.cardTarget.classList.add("hidden");
+                        }, 300)
+                    }, this.timerValue)
+                    this.timers.push(timer)
+                } else {
+                    this.cardTarget.classList.add("opacity-0");
+                    setTimeout(() => {
+                        this.cardTarget.classList.add("hidden");
+                    }, 300)
+                }
+            } else if (MobileDetector.mobile() && event.type === 'click') {
                 this.innerTargets?.forEach(card => card.classList.add("opacity-0", "translate-y-10"))
                 setTimeout(() => {
                     this.cardTarget.innerHTML = ""
                 }, 500)
-            })
-        } else if (event.type !== 'click' && this.timerValue) {
-            let timer = setTimeout(() => {
-                requestAnimationFrame(() => {
+            } else if (event.type !== 'click' && this.timerValue) {
+                let timer = setTimeout(() => {
                     this.cardTarget.classList.add("opacity-0")
                     setTimeout(() => {
                         this.cardTarget.innerHTML = ""
                     }, 300)
-                })
-            }, this.timerValue)
-            this.timers.push(timer)
-        }
+
+                }, this.timerValue)
+                this.timers.push(timer)
+            }
+        })
     }
 
     clearTimer() {

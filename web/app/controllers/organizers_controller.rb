@@ -1,7 +1,7 @@
 class OrganizersController < ApplicationController
-	before_action :authorize_admin, except: [:show, :follow, :unfollow]
-	before_action :authorize_user, only: [:follow, :unfollow]
-	before_action :set_organizer, only: [:show, :edit, :update, :destroy]
+	before_action :authorize_admin, except: [:show, :hovercard]
+	before_action :authorize_user, only: []
+	before_action :set_organizer, only: [:show, :edit, :update, :destroy, :hovercard]
 
 	# GET /organizers
 	# GET /organizers.json
@@ -72,6 +72,10 @@ class OrganizersController < ApplicationController
 
 	def unfollow
 		@association = FollowServices::AssociationCreator.new(current_user, params[:id], controller_name).call(destroy: true)
+		render layout: false
+	end
+
+	def hovercard
 		render layout: false
 	end
 

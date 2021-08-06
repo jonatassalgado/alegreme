@@ -77,8 +77,7 @@ Rails.application.routes.draw do
 	resources :categories
 	resources :organizers, path: 'organizadores' do
 		member do
-			post :follow
-			post :unfollow
+			get :hovercard
 		end
 	end
 	resources :places, path: 'porto-alegre/locais' do
