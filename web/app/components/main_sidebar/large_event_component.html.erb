@@ -105,12 +105,12 @@
 						</div>
 						<div class="my-auto text-xs text-gray-800">
 							<% if @event.multiple_hours? %>
-								<%= I18n.l(@event.day_of_week['date'], format: :default).capitalize %>,
+								<%= I18n.l(@event.start_time, format: :default).capitalize %>,
 								em múltiplos horários,
 								em <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now, false, only: ['days'] %>.
 								<%= link_to 'Confirmar horários', @event.source_url, class: 'text-brand-600', rel: 'nofollow', target: '_blank' rescue nil %>
 							<% else %>
-								<%= I18n.l(@event.day_of_week['date'], format: :default).capitalize %>,
+								<%= I18n.l(@event.start_time, format: :default).capitalize %>,
 								às <%= helpers.format_hour(@event.start_time) %> horas,
 								daqui <%= helpers.distance_of_time_in_words @event&.start_time, DateTime.now, false, only: ['days', 'hours'] %>
 							<% end %>

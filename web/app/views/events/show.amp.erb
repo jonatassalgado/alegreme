@@ -88,7 +88,7 @@
             <%= "#{@event.day_of_week['decorator']} #{format_hour @event.start_time }" %>
           </div>
           <span>
-              <%= I18n.l(@event.day_of_week['date'], format: :long) %>
+              <%= I18n.l(@event.start_time, format: :long) %>
           </span>
         </div>
       <% end %>

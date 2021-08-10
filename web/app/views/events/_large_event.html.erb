@@ -8,7 +8,7 @@
 <!--		<div class="space-x-1">-->
 			<%#= link_to "Porto Alegre", city_events_url, class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 			<%#= link_to event.categories_primary_name.try(:capitalize), category_events_url(event.categories_primary_name), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
-			<%#= link_to I18n.l(event.day_of_week['date'], format: :long), day_events_url(event.day_of_week['date'].strftime('%d-%m-%Y')), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
+			<%#= link_to I18n.l(event.start_time, format: :long), day_events_url(event.start_time.strftime('%d-%m-%Y')), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 			<%#= link_to limit_place_name_size(event.place_details_name, 30), place_path(event.place), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 <!--		</div>-->
 	<%# end %>
@@ -64,10 +64,10 @@
 	<div class="flex p-5 border-t border-b border-gray-100">
 		<div class="flex flex-col justify-center px-3 py-2 my-auto mr-3 text-center text-brand-500 bg-brand-100 h-content rounded-xl w-content">
 			<div class="font-bold leading-tight text-sm uppercase">
-				<% if event.day_of_week['date'] < Date.today + 7 %>
-					<%= I18n.l(event.day_of_week['date'], format: :week) %>
+				<% if event.start_time < Date.today + 7 %>
+					<%= I18n.l(event.start_time, format: :week) %>
 				<% else %>
-					<%= I18n.l(event.day_of_week['date'], format: :long) %>
+					<%= I18n.l(event.start_time, format: :long) %>
 				<% end %>
 			</div>
 			<div class="text-sm"><%= format_hour event.start_time %></div>
@@ -75,7 +75,7 @@
 		<div class="my-auto text-sm leading-snug text-gray-800">
 			O evento acontecerá
 			<span class="font-semibold">daqui <%= distance_of_time_in_words event&.start_time, DateTime.now %></span>
-			em uma <span class="font-semibold"><%= I18n.l(event.day_of_week['date'], format: :week) %></span>. <%= link_to('Ver minha agenda neste dia', my_agenda_path(start_date: event.day_of_week['date']), class: 'text-brand-500 font-semibold') %>
+			em uma <span class="font-semibold"><%= I18n.l(event.start_time, format: :week) %></span>. <%= link_to('Ver minha agenda neste dia', my_agenda_path(start_date: event.start_time), class: 'text-brand-500 font-semibold') %>
 		</div>
 	</div>
 	<div class="px-5 py-5 border-b border-gray-100">

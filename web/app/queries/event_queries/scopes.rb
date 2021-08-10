@@ -4,6 +4,10 @@ module EventQueries
 
 		included do
 
+			scope 'active', lambda {
+				where("? <= ANY (datetimes) AND status = 1", DateTime.now)
+			}
+
 			scope 'not_liked_or_disliked', lambda { |user|
 				return Event.all unless user
 				where.not(id: user.liked_or_disliked_event_ids)
@@ -311,10 +315,6 @@ module EventQueries
 				else
 					all
 				end
-			}
-
-			scope 'active', lambda {
-				where("? <= ANY (datetimes) AND status = 1", DateTime.now)
 			}
 
 			scope 'valid', lambda {
