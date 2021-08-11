@@ -38,7 +38,7 @@
 								 data-hovercard-preserve-value="false"
 								 data-hovercard-hide-mouseenter-value="true"
 								 data-hovercard-timer-value="600">
-							<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimer mouseleave->hovercard#hide"></div>
+							<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimerHide mouseleave->hovercard#hide"></div>
 							<%= link_to organizer_path(organizer), class: 'inline-block', data: { 'turbo-preserve-scroll': true,
 																																										url:                     hovercard_organizer_path(organizer),
 																																										action:                  "mouseenter->hovercard#show mouseleave->hovercard#hide" } do %>
