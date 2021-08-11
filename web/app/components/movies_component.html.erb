@@ -39,16 +39,16 @@
 				 data-hovercard-timer-value="1000"
 				 data-action="mouseleave->hovercard#hide"
 				 class="relative px-1">
-			<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimer mouseleave->hovercard#hide"></div>
+			<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimerHide mouseleave->hovercard#hide"></div>
 			<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex bg-x-white-to-transparent">
-				<div data-slider-target="left" data-action="click->slider#left" class="hidden my-auto mt-20 -ml-4 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700">
+				<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="hidden my-auto mt-20 -ml-4 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700">
 					<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
 						<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
 					</svg>
 				</div>
 			</div>
 			<div class="hidden absolute top-0 right-0 z-20 items-center w-3 h-full select-none md:flex bg-x-transparent-to-white">
-				<div data-slider-target="right" data-action="click->slider#right" class="my-auto mt-20 -ml-3 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700">
+				<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="my-auto mt-20 -ml-3 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700">
 					<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
 						<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
 					</svg>
@@ -60,7 +60,7 @@
 				<div class="grid grid-flow-col gap-2.5 px-5 md:px-0 w-content grid-after-margin">
 					<% @movies.reverse.each do |movie| %>
 						<div data-url="<%= hovercard_movie_path(movie) %>"
-								 data-action="mouseenter->hovercard#show"
+								 data-action="mouseenter->hovercard#show mouseleave->hovercard#clearTimerShow"
 								 class="flex flex-col w-24 transition-transform transform group md:hover:scale-105">
 							<% if movie.rating %>
 								<div class="absolute bg-white flex font-semibold items-center left-0 ml-1 mt-1 p-1 rounded space-x-0.5 text-gray-700 group-hover:text-brand-600 text-xs top-0" title="votação de usuário do IMDB">

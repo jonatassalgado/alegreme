@@ -12,7 +12,8 @@ export default class extends ApplicationController {
     };
 
     initialize() {
-        this.timers = []
+        this.timersHide = []
+        this.timersShow = []
 
         if (this.preserveValue == null) this.preserveValue = true
         if (this.hideMouseenterValue == null) this.hideMouseenterValue = false
@@ -52,33 +53,38 @@ export default class extends ApplicationController {
         if (MobileDetector.mobile() && event.type === 'click') {
             event.preventDefault()
         } else {
-            this.clearTimer();
+            this.clearTimerHide();
         }
 
         if (this.preserveValue && this.cardTarget?.innerHTML?.length > 0) {
             this.cardTarget.classList.remove("hidden", "opacity-0");
         } else {
-            fetch(currentTarget.dataset.url)
-                .then((r) => r.text())
-                .then((html) => {
-                    const fragment = document
-                        .createRange()
-                        .createContextualFragment(html);
-                    requestAnimationFrame(() => {
-                        setTimeout(() => {
-                            if (this.hideMouseenterValue) {
-                                this.cardTarget.innerHTML = ""
-                            }
-                            this.cardTarget.appendChild(fragment)
-                            this.cardTarget.classList.remove("hidden", "opacity-0");
-                        }, 310)
-                    })
-                });
+            let timer = setTimeout(() => {
+                fetch(currentTarget.dataset.url)
+                    .then((r) => r.text())
+                    .then((html) => {
+                        const fragment = document
+                            .createRange()
+                            .createContextualFragment(html);
+                        requestAnimationFrame(() => {
+                            setTimeout(() => {
+                                if (this.hideMouseenterValue) {
+                                    this.cardTarget.innerHTML = ""
+                                }
+                                this.cardTarget.appendChild(fragment)
+                                this.cardTarget.classList.remove("hidden", "opacity-0");
+                            }, 310)
+                        })
+                    });
+            }, 200)
+            this.timersShow.push(timer)
         }
     }
 
     hide(event) {
         if (!this.activeValue) return
+
+        this.clearTimerShow()
 
         requestAnimationFrame(() => {
             if (this.preserveValue && this.cardTarget?.innerHTML?.length > 0) {
@@ -89,7 +95,7 @@ export default class extends ApplicationController {
                             this.cardTarget.classList.add("hidden");
                         }, 300)
                     }, this.timerValue)
-                    this.timers.push(timer)
+                    this.timersHide.push(timer)
                 } else {
                     this.cardTarget.classList.add("opacity-0");
                     setTimeout(() => {
@@ -109,15 +115,19 @@ export default class extends ApplicationController {
                     }, 300)
 
                 }, this.timerValue)
-                this.timers.push(timer)
+                this.timersHide.push(timer)
             }
         })
     }
 
-    clearTimer() {
+    clearTimerShow() {
+        if (this.timersShow?.length > 0) this.timersShow.forEach(timer => clearTimeout(timer))
+    }
+
+    clearTimerHide() {
         if (!this.activeValue) return
 
-        if (this.timers?.length > 0) this.timers.forEach(timer => clearTimeout(timer))
+        if (this.timersHide?.length > 0) this.timersHide.forEach(timer => clearTimeout(timer))
     }
 
 
