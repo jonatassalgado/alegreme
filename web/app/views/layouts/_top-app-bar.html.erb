@@ -10,7 +10,7 @@
 			user_menu:    ['feeds', 'movies'].include?(controller_name) && action_name != 'show' && current_user,
 			sign_up:      !current_user
 		}
-	}.deep_merge!(props || {})
+	}
 
 %>
 
@@ -104,26 +104,24 @@
 	<% end %>
 	<div class="md:col-span-3 flex-shrink-0">
 		<div class="flex justify-end items-center h-full">
-			<% unless current_page?('/users/sign_up') || current_page?('/users/sign_in') %>
-				<% if current_user && controller_name == 'feeds' %>
-					<%= link_to user_path(current_user), class: 'flex items-center' do %>
-						<% if current_user&.picture %>
-							<%= image_tag(current_user.picture, { class: "w-7 h-7 border rounded-full", alt: current_user&.name, onerror: "this.style.opacity='0'" }) rescue nil %>
-						<% else %>
-							<div class="mr-2 w-7 h-7 bg-gray-100 rounded-full"></div>
-						<% end %>
-						<div class="pl-2 text-sm md:text-base hidden md:inline-block"><%= truncate(current_user&.name, length: 15) %></div>
+			<% if current_user %>
+				<%= link_to user_path(current_user), class: 'flex items-center' do %>
+					<% if current_user&.picture %>
+						<%= image_tag(current_user.picture, { class: "w-7 h-7 border rounded-full", alt: current_user&.name, onerror: "this.style.opacity='0'" }) rescue nil %>
+					<% else %>
+						<div class="mr-2 w-7 h-7 bg-gray-100 rounded-full"></div>
 					<% end %>
-				<% else %>
-					<%= link_to 'Entrar', new_user_session_path, class: 'hidden md:inline-block hover:text-brand-600 px-6 text-gray-800 text-sm' %>
-					<%= link_to 'Criar conta',
-											new_user_registration_path,
-											data:     {
-												'gtm-action':   'click',
-												'gtm-category': 'Funil',
-												'gtm-label':    'Criar meu perfil'
-											}, class: 'hidden md:inline-block bg-brand-600 border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-500 inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm text-white' %>
+					<div class="pl-2 text-sm md:text-base hidden md:inline-block"><%= truncate(current_user&.name, length: 15) %></div>
 				<% end %>
+			<% else %>
+				<%= link_to 'Entrar', new_user_session_path, class: 'hidden md:inline-block hover:text-brand-600 px-6 text-gray-800 text-sm' %>
+				<%= link_to 'Criar conta',
+										new_user_registration_path,
+										data:     {
+											'gtm-action':   'click',
+											'gtm-category': 'Funil',
+											'gtm-label':    'Criar meu perfil'
+										}, class: 'hidden md:inline-block bg-brand-600 border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-500 inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm text-white' %>
 			<% end %>
 		</div>
 	</div>
