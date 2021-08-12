@@ -69,9 +69,10 @@ module PopulateEventsRake
 	def create_organizers(item)
 		return if item['deleted'] == 'true'
 		return if item['organizers'].blank?
+		return if item['organizers'].all? { |o| o['name'].blank? }
 
 		item['organizers'].map do |organizer_data|
-			organizer = Organizer.find_by("lower(details ->> 'name') = ?", organizer_data['name'].downcase)
+			organizer = Organizer.find_by("lower(details ->> 'name') = ?", organizer_data['name']&.downcase)
 
 			if organizer.present?
 				puts "Organizador: #{organizer.details['name']} - já existe".yellow
