@@ -74,7 +74,7 @@ class FeedsController < ApplicationController
 			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).valid.not_disliked(current_user).in_day(params[:day]).order_by_date
 		elsif params[:category]
 			@category = Category.find_by("(details ->> 'url') = :category", category: params[:category])
-			redirect_to root_path, notice: 'Categoria não encontrada' unless @category
+			redirect_to(root_path, notice: 'Categoria não encontrada') and return unless @category
 			@category.events.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).order_by_date
 		elsif params[:theme]
 			@theme = Theme.find_by_slug(params[:theme])
