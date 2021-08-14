@@ -1,16 +1,16 @@
 <%= content_tag :div, id: dom_id(@event, :hero), class: 'transition-opacity duration-300', data: { controller: 'hero--train-event', 'hero--train-event-open-in-sidebar': @open_in_sidebar } do %>
 	<div class="flex justify-between py-3 mt-2 bg-white rounded-lg select-none tap-highlight-none">
-		<div class="flex flex-col mr-5 space-y-2 h-28 md:w-auto">
-			<%= content_tag :div, data: { action: 'click->hero--train-event#like', 'event-id': @event.id }, class: 'w-12 h-12 h-full bg-brand-100 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-green-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-green-500 text-sm transform transition-transform' do %>
+		<div class="flex flex-col mr-3 md:mr-5 space-y-2 h-28 md:w-auto">
+			<%= content_tag :div, data: { action: 'click->hero--train-event#like', 'event-id': @event.id }, class: 'w-10 h-10 md:w-12 md:h-12 bg-brand-100 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-green-400 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-green-500 text-sm transform transition-transform' do %>
 
-				<svg class="w-6 h-6 stroke-current group text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg class="w-5 h-5 md:w-6 w-5 h-5 md:h-6 stroke-current group text-brand-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
 				</svg>
 
 			<% end %>
-			<%= content_tag :div, data: { action: 'click->hero--train-event#dislike', 'event-id': @event.id }, class: 'w-12 h-12 h-full bg-gray-50 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-gray-400 text-sm transform transition-transform' do %>
+			<%= content_tag :div, data: { action: 'click->hero--train-event#dislike', 'event-id': @event.id }, class: 'w-10 h-10 md:w-12 md:h-12 bg-gray-50 cursor-pointer duration-100 ease-linear flex font-medium hover:px-3 hover:scale-105 hover:text-gray-500 items-center justify-center p-2 rounded-lg select-none tap-highlight-none text-gray-400 text-sm transform transition-transform' do %>
 
-				<svg class="w-6 h-6 stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg class="w-5 h-5 md:w-6 w-5 h-5 md:h-6 stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/>
 				</svg>
 			<% end %>
@@ -23,20 +23,20 @@
 												action:     'click->hero--train-event#openEvent',
 												'event-id': @event.id
 											},
-											class: 'c-h3 block md:hover:text-brand-600 mb-1' do %>
+											class: 'c-h3 inline md:hover:text-brand-600 mb-1' do %>
 				<%= helpers.limit_name_size @event.name %>
 			<% end %>
-			<div class="mt-2 text-gray-800 text-sm">
-				<%= @event&.categories_display_name %> em <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
+			<div class="inline mt-2 text-gray-800 text-sm">
+				· <%= @event&.categories_display_name %> em <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
 			</div>
 			<% unless helpers.mobile_device? %>
-				<div class="font-light mt-2 text-gray-700 text-sm">
+				<div class="hidden md:inline-block font-light mt-2 text-gray-700 text-sm">
 					<%= helpers.limit_description_size @event.description, 120 %>
 				</div>
 			<% end %>
 		</div>
-		<div>
-			<div class="overflow-hidden relative mt-5 w-32 h-20 rounded-lg border bg-gray-100 md:h-28 md:w-48">
+		<div class="">
+			<div class="overflow-hidden relative md:mt-5 bg-gray-100">
 				<%= link_to event_path(@event),
 										data: {
 											action:     'click->hero--train-event#openEvent',
@@ -48,7 +48,7 @@
 							action:     'click->hero--train-event#openEvent',
 							'event-id': @event.id
 						},
-						class:   'cursor-pointer h-full object-center rounded-lg object-cover w-full overflow-hidden',
+						class:   'rounded md:rounded-lg border cursor-pointer h-full w-24 h-18 md:w-48 md:h-28 object-center object-cover overflow-hidden',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
 				<% end %>

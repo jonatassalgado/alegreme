@@ -6,7 +6,7 @@ class User < ApplicationRecord
 	include DeviseTokenAuth::Concerns::User
 	devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
-	validates :name, :length => { :in => 3..60 }
+	validates :name, :length => { :in => 3..60 }, if: -> (u) { !u.admin? }
 	validates :email, uniqueness: true, format: { without: /\.(ru|ua)|yandex|buy\.com|@mail.com/,
 																								message: "invalido" }
 	validates :slug, uniqueness: true
