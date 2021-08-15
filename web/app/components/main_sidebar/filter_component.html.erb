@@ -4,7 +4,7 @@
 			<div data-reflex="click->Filter#open"
 					 data-filter-group="category"
 					 class="<%= helpers.class_names('bg-brand-200 text-brand-600 items-center cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content') %>">
-				<%= @filters[:categories].map { |category| Category::CATEGORIES.select { |hash| hash['name'] == category }&.first['display_name'] }.join(', ') %>
+				<%= @filters[:categories]&.map { |category| Category::CATEGORIES.select { |hash| hash['name'] == category }&.first['display_name'] }.join(', ') %>
 				<div data-reflex="click->Filter#clear_filter"
 						 data-filter-only="category">
 					<svg xmlns="http://www.w3.org/2000/svg" class="-mr-1.5 fill-current h-5 hover:text-red-400 ml-1.5 w-5" viewBox="0 0 20 20" fill="currentColor">
