@@ -7,7 +7,7 @@ class CinemasController < ApplicationController
 	end
 
 	def show
-
+		@movies = Movie.active.where(id: @cinema.movie_ids)
 	end
 
 	private
