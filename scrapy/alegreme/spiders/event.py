@@ -289,7 +289,7 @@ class EventSpider(scrapy.Spider):
         'CLOSESPIDER_ITEMCOUNT': 100,
         'CLOSESPIDER_PAGECOUNT': 300,
         'DEPTH_LIMIT': 3,
-        'DOMAIN_DEPTHS': {'facebook.com': 2, 'sympla.com.br': 3}
+        'DOMAIN_DEPTHS': {'facebook.com': 1, 'sympla.com.br': 3}
     }
 
     allowed_domains = ['facebook.com', 'sympla.com.br']

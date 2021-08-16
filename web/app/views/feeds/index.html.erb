@@ -1,7 +1,7 @@
 <%= render ModalComponent.new %>
 
 <div id="main-content" class="gap-20 mx-auto max-w-screen-lg md:grid md:grid-cols-8">
-	<section id="main-sidebar" class="col-span-8 pt-6 md:pt-12 space-y-10 md:space-y-16 md:col-span-5 min-h-screen">
+	<section id="main-sidebar" class="col-span-8 pt-6 space-y-10 min-h-screen md:pt-12 md:space-y-16 md:col-span-5">
 		<% if notice %>
 			<div class="flex items-center p-3 mx-4 space-x-2 max-w-screen-lg text-sm font-semibold rounded-lg border bg-brand-100 border-brand-200 text-brand-600">
 				<div class="flex flex-shrink-0 justify-center items-center w-12 h-12 rounded-full bg-brand-100 sm:h-10 sm:w-10">
@@ -17,16 +17,19 @@
 		<% end %>
 		<% unless params[:day] || params[:category] %>
 			<% unless current_user %>
-				<div id="hero__presentation" data-turbo-permanent class="flex gap-3 inline-flex items-center mb-5 md:bg-transparent md:border-0 md:flex md:flex-row md:items-start md:mx-0 md:my-0 md:px-5 mx-5 rounded-lg select-none tap-highlight-none" style="min-height: <%= mobile_device? ? '110px' : '150px' %>">
-					<div class="md:mr-12">
-						<h2 class="c-h2">
+				<div id="hero__presentation" data-turbo-permanent="" class="overflow-hidden overflow-x-hidden relative gap-3 items-center mx-5 mb-5 mb-16 h-56 rounded-lg border select-none md:mb-24 md:h-72 md:items-start tap-highlight-none" style="min-height: 200px">
+					<div class="relative z-20 px-3 pt-3 -mb-5 md:pt-5 md:px-5">
+						<h2 class="hidden md:inline-block c-h2 text-brand-600">
 							Eventos e cinema em Porto Alegre
 						</h2>
-						<span class="block mt-1.5 text-xs leading-snug text-gray-800 md:text-gray-700 md:inline-block md:leading-normal md:text-base">
-    						Descubra eventos e siga seus locais favoritos para não perder nada que acontece na cidade.
-    					</span>
+						<h2 class="text-center md:hidden c-h2 text-brand-600">
+							Eventos e cinema em <br> Porto Alegre
+						</h2>
+						<span class="text-center md:text-left block leading-snug md:inline-block md:leading-normal md:text-base mt-1.5 text-brand-600 text-xs">
+    					Descubra eventos e siga seus locais favoritos para não perder nada que acontece na cidade.
+						</span>
 					</div>
-					<%= image_pack_tag ["hero/bebendo.png", "hero/dancando.png", "hero/skate.png"].sample, class: 'h-24 md:h-36 md:w-36 my-auto w-24' %>
+					<%= image_pack_tag 'media/images/welcome/experiences.jpg', class: 'absolute top-24 w-auto' %>
 				</div>
 			<% end %>
 			<% cache "#{current_user&.cache_key_with_version}/#{current_user&.liked_or_disliked_event_ids&.size}/hero--swipable" do %>
@@ -89,7 +92,7 @@
 					<%= render MainSidebar::LargeEventComponent.new(user: current_user, event: nil) %>
 				</div>
 				<div
-					class="bg-gray-50 flex hidden overscroll-contain left-0 justify-center items-center mt-10 w-96 text-2xl text-gray-800 rounded-xl border font-display h-screen-8/10"
+					class="flex hidden overscroll-contain left-0 justify-center items-center mt-10 w-96 text-2xl text-gray-800 bg-gray-50 rounded-xl border font-display h-screen-8/10"
 					data-loader-target="loading"
 					style="">
 					Carregando
