@@ -45,17 +45,17 @@
 				 data-hovercard-hide-mouseenter-value="true"
 				 data-hovercard-timer-value="1000"
 				 data-action="mouseleave->hovercard#hide"
-				 class="relative px-1">
+				 class="relative">
 			<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimerHide mouseleave->hovercard#hide"></div>
-			<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex bg-x-white-to-transparent">
-				<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="<%= helpers.class_names('hidden my-auto -ml-4 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700', { 'mt-20': @template == 'default', 'mt-8': @template == 'small' }) %> ">
+			<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex">
+				<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="<%= helpers.class_names('hidden my-auto -ml-5 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700', { 'mt-20': @template == 'default', 'mt-8': @template == 'small' }) %> ">
 					<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
 						<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
 					</svg>
 				</div>
 			</div>
-			<div class="hidden absolute top-0 right-0 z-20 items-center w-3 h-full select-none md:flex bg-x-transparent-to-white">
-				<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="<%= helpers.class_names('my-auto -ml-3 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700', { 'mt-20': @template == 'default', 'mt-8': @template == 'small' }) %> ">
+			<div class="hidden absolute top-0 right-0 z-20 items-center w-3 h-full select-none md:flex">
+				<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="<%= helpers.class_names('my-auto -ml-2 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700', { 'mt-20': @template == 'default', 'mt-8': @template == 'small' }) %> ">
 					<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
 						<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
 					</svg>
@@ -63,7 +63,7 @@
 			</div>
 			<div data-slider-target="scroller"
 					 data-persist-horizontal-scroll-target="scroller"
-					 class="py-2 rounded-lg md:border md:px-3 md:py-3 scrollx">
+					 class="py-2 rounded-lg md:px-2 md:py-2 scrollx">
 				<div class="<%= helpers.class_names('grid grid-flow-col px-5 md:px-0 w-content grid-after-margin', { 'gap-2.5': @template == 'default', 'gap-1.5': @template == 'small' }) %> ">
 					<% @movies.reverse.each do |movie| %>
 						<div data-url="<%= hovercard_movie_path(movie) %>"
@@ -82,7 +82,7 @@
 									loading: :lazy,
 									title:   movie.title,
 									alt:     "Filme #{movie.title}",
-									class:   helpers.class_names('border shadow-sm group-hover:shadow bg-gray-100 object-center object-cover rounded-md', { 'h-36': @template == 'default', 'h-24': @template == 'small' }),
+									class:   helpers.class_names('border group-hover:shadow bg-gray-100 object-center object-cover rounded-md', { 'h-36': @template == 'default', 'h-24': @template == 'small' }),
 									onerror: "this.style.opacity='0'"
 								} rescue nil %>
 								<%= tag.div helpers.limit_name_size(movie.title, 30), class: 'group-hover:text-brand-600 text-xs font-medium inline-block leading-tight mt-2 text-gray-900' if @template == 'default' %>
