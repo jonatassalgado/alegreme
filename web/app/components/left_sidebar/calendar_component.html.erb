@@ -64,8 +64,8 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="calendar__list" class="" data-left-sidebar--calendar-target="list" style="<%= helpers.class_names 'hidden': @events&.empty? %>">
-			<div class="flex justify-between items-baseline bg-white sticky top-0 z-20">
+		<div id="calendar__list" class="pr-8 mt-5" data-left-sidebar--calendar-target="list" style="<%= helpers.class_names 'hidden': @events&.empty? %>">
+			<div class="flex justify-between items-baseline bg-white top-0 z-20">
 				<%= content_tag :div,
 												data:  {
 													reflex: 'click->LeftSidebar::Calendar#clear_filter'
