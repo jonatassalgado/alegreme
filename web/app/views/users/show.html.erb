@@ -1,209 +1,260 @@
-<% content_for :meta_title, "#{@user.first_name} | Alegreme.com" %>
+<% content_for :meta_title, "#{@user.first_name} - Alegreme.com" %>
 <% content_for :top_app_bar_title, truncate(@user.slug, length: 20) %>
 <% content_for :back_button, true %>
 
-<section id="page"
-				 data-controller="page"
-				 data-page-target="page"
-				 class="grid grid-cols-8 max-w-screen-lg md:min-h-screen mx-auto gap-8">
+<div class="md:min-h-screen">
 	<%= notice %>
-
-	<div class="col-span-full md:col-span-3 md:mt-12 text-gray-800">
-		<div class="md:border p-5 rounded-lg">
-			<div class="flex flex-col items-center">
-				<div class="rounded-lg flex-shrink-0 mb-3">
-					<% if @user&.picture %>
-						<%= image_tag(@user.picture, { class: "w-16 h-16 mx-auto rounded-full border", alt: @user.name, onerror: "this.style.opacity='0'" }) rescue nil %>
-					<% else %>
-						<div class="absolute top-0 left-0 w-full h-full"></div>
-					<% end %>
-				</div>
-				<h1 class="c-h2">
-					<%= @user.first_name %>
+	<div class="md:max-w-screen-lg mb-6 md:mt-12 mt-6 mx-5 md:mx-auto text-gray-800">
+		<div class="flex gap-5 mx-auto w-full">
+			<div class="flex-shrink-0 rounded-lg">
+				<% if @user&.picture %>
+					<%= image_tag(@user.picture, { class: "w-16 h-16 mx-auto rounded-full border", alt: @user.name, onerror: "this.src='https://ui-avatars.com/api/?size=24&background=random&name=#{@user.name}'" }) rescue nil %>
+				<% else %>
+					<%= image_tag "https://ui-avatars.com/api/?size=24&background=random&name=#{@user.name}", class: "w-16 h-16 mx-auto rounded-full border", alt: @user.name %>
+				<% end %>
+			</div>
+			<div class="flex flex-wrap items-center justify-between w-full">
+				<div>
+					<h1 class="leading-tight c-h2">
+					<%= @user.name %>
 				</h1>
-				<div class="">
-					<% if current_user == @user %>
-						<div class="space-x-1">
-							<%= link_to "Editar perfil", edit_user_path(@user), class: 'bg-white inline-block px-2 py-1 rounded text-sm' %>
-							<%= link_to "Sair", destroy_user_session_path, class: 'bg-white inline-block px-2 py-1 rounded text-sm', method: :delete %>
-						</div>
-					<% end %>
 					<% if current_user != @user %>
-						<%= render(FriendshipButtonComponent.new(user: current_user, friend: @user)) %>
+						<%= render FollowButtonComponent.new(followable: @user, user: current_user) %>
 					<% end %>
 				</div>
+				<% if current_user == @user %>
+					<div class="space-x-5 text-sm">
+						<%= link_to "Editar perfil", edit_user_path(@user), class: 'inline-block text-sm' %>
+						<%= link_to "Sair", destroy_user_session_path, class: 'inline-block text-sm', method: :delete %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="scrollx">
+		<div class="flex grid-cols-9 md:max-w-screen-lg md:gap-5 md:grid mx-auto px-5 md:px-0 space-x-5 md:space-x-0 w-content">
+			<div class="w-64 md:w-auto flex-1 md:w-auto border col-span-full h-content is-animated md:col-span-3 md:mx-0 md:p-4 md:pb-3 md:rounded-lg overflow-hidden p-3 rounded sm:container space-y-5">
+
+
+				<!--		<div class="py-6 bg-white">-->
+				<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+				<!--				Notificações-->
+				<!--			</h2>-->
+				<%# if @user.friendships_request_received.present? %>
+				<!--				<div class="px-5 mt-3 leading-none">-->
+				<!--  			<span class="pt-5 text-sm text-gray-500">-->
+				<!--  				Pedidos de amizade que você recebeu.-->
+				<!--  			</span>-->
+				<!--					<span class="text-sm text-gray-500">-->
+				<!--  				Você pode ter até 10 amigos e eles podem ver sua agenda, por isso os escolha bem.-->
+				<!--  			</span>-->
+				<!--				</div>-->
+				<%# end %>
+				<%# if @user.friendships_request_received.present? %>
+				<!--				<div class="px-5 mt-3 space-y-2">-->
+				<%#= render(FriendshipRequestComponent.with_collection(@user.friends_requested_received, user: @user)) %>
+				<!--				</div>-->
+				<%# else %>
+				<!--				<div class="px-5 text-sm text-gray-500">-->
+				<!--					Você não possui notificações-->
+				<!--				</div>-->
+				<%# end %>
+				<!--		</div>-->
+				<!--		<div id="friends-list" class="py-6 bg-white">-->
+				<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+				<!--				Amigos (<%#= @user.friends_accepted.size rescue 0 %>)-->
+				<!--			</h2>-->
+				<%# if @user.friends_accepted.present? %>
+				<!--				<div class="flex flex-wrap px-5 mt-3 w-screen">-->
+				<%#= render(UserChipComponent.with_collection(@user.friends_accepted, user: @user)) %>
+				<!--				</div>-->
+				<%# else %>
+				<!--				<div class="px-5 text-sm text-gray-500">-->
+				<!--					Você ainda não adicionou nenhum amigo-->
+				<!--				</div>-->
+				<%# end %>
+				<!--		</div>-->
+				<!--		<div class="py-6 bg-white">-->
+				<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
+				<!--				Pessoas que sigo-->
+				<!--			</h2>-->
+				<%# if @user.following_users.present? %>
+				<!--				<div class="mt-3 w-screen md:w-full">-->
+				<!--					<div class="flex flex-wrap px-5 pl-5 space-y-2">-->
+				<%# @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
+				<!--							<a href="<%#= organizer_or_place_path resource %>" class="inline-block relative py-2 px-3 mt-2 mr-2 text-sm font-medium rounded-full border-2 cursor-pointer text-brand-600 bg-brand-100 border-brand-200 h-content hover:bg-purple-300">-->
+				<%#= resource.details_name.titleize %>
+				<%# if resource.events.active.size > 0 %>
+				<!--  									<span class="inline-flex absolute right-0 justify-center items-center mr-2 -mt-4 w-4 h-4 text-sm font-bold bg-white rounded-full">-->
+				<%#= resource.events.active.size %>
+				<!--  									</span>-->
+				<%# end %>
+				<!--							</a>-->
+				<%# end %>
+				<!--					</div>-->
+				<!--				</div>-->
+				<%# else %>
+				<!--				<div class="px-5 text-sm text-gray-500">-->
+				<!--					Você não segue nenhuma pessoa ainda-->
+				<!--				</div>-->
+				<%# end %>
+				<!--		</div>-->
+
+				<h2 class="c-h3">
+					Locais
+				</h2>
+				<% if @user.following_places.present? %>
+					<div class="mt-5 md:w-auto">
+						<div class="flex flex-wrap">
+							<% @user&.following_places.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
+								<a href="<%= organizer_or_place_path resource %>"
+									 class="mr-3 mb-3 text-sm c-chip">
+									<%= resource.details_name.titleize %>
+									<%# if resource.events.active.size > 0 %>
+									<!--	  									<span class="-mt-1.5 absolute bg-white h-4 inline-flex items-center justify-center mr-2 right-0 rounded-full text-sm top-0 w-4">-->
+									<%#= resource.events.active.size %>
+									<!--	  									</span>-->
+									<%# end %>
+								</a>
+							<% end %>
+						</div>
+					</div>
+				<% else %>
+					<div class="mt-3 text-sm text-gray-500">
+						<%= user_is_current_user?(@user) ? 'Você não segue nenhum local ainda' : "#{@user.name} não segue nenhum local ainda" %>
+					</div>
+				<% end %>
+
+				<% if current_user.friendship_accepted? @user %>
+					<div class="pt-2 mx-auto space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
+						<%#= month_calendar events: @upcoming_events do |date, events| %>
+						<!--				<a href="<%#= my_agenda_path start_date: date %>" class="mx-auto text-sm day-of-month">-->
+						<%#= date.strftime '%e' %>
+						<!--				</a>-->
+
+						<%# events.each_with_index do |event, index| %>
+						<%# if event && index == 0 %>
+						<!--						<div class="mx-auto w-1 h-1 rounded-full bg-brand-500">-->
+						<!--						</div>-->
+						<%# end %>
+						<%# end %>
+						<%# end %>
+					</div>
+
+					<div class="pt-2 mx-auto space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
+						<%= render partial: 'events/group_by_day_list', locals: {
+							events: @upcoming_events,
+							user:   current_user
+						} %>
+					</div>
+				<% end %>
+
+				<%#= render partial: 'sheets/friendships/edit',
+							 locals:  {
+									 user:   current_user,
+									 friend: @friend,
+									 sheet:  @sheet
+							 } %>
+			</div>
+
+			<div class="w-64 md:w-auto flex-1 md:w-auto border col-span-full h-content is-animated md:col-span-3 md:mx-0 md:p-4 md:pb-3 md:rounded-lg overflow-hidden p-3 rounded sm:container space-y-5">
+				<h2 class="c-h3">
+					Organizadores
+				</h2>
+				<% if @user.following_organizers.present? %>
+					<div class="md:w-auto">
+						<div class="flex flex-wrap">
+							<% @user&.following_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
+								<a href="<%= organizer_or_place_path resource %>"
+									 class="mr-3 mb-3 text-sm c-chip">
+									<%= truncate resource.details_name.titleize, length: 24 %>
+									<%# if resource.events.active.size > 0 %>
+									<!--	  									<span class="-mt-1.5 absolute bg-white h-4 inline-flex items-center justify-center mr-2 right-0 rounded-full text-sm top-0 w-4">-->
+									<%#= resource.events.active.size %>
+									<!--	  									</span>-->
+									<%# end %>
+								</a>
+							<% end %>
+						</div>
+					</div>
+				<% else %>
+					<div class="mt-3 text-sm text-gray-500">
+						<%= user_is_current_user?(@user) ? 'Você não segue nenhum organizador ainda' : "#{@user.name} não segue nenhum organizador ainda" %>
+					</div>
+				<% end %>
+			</div>
+			<div class="w-64 md:w-auto flex-1 md:w-auto border col-span-full h-content is-animated md:col-span-3 md:mx-0 md:p-4 md:pb-3 md:rounded-lg overflow-hidden p-3 rounded sm:container space-y-5">
+				<h2 class="c-h3">
+					Pessoas
+				</h2>
+				<% if @user.following_users.present? %>
+					<div class="mt-3 md:w-full">
+						<div class="flex flex-wrap">
+							<% @user&.following_users&.each do |user| %>
+								<%= link_to profile_path(user), class: 'c-chip pl-2 pr-3 text-sm mr-3 mb-3' do %>
+									<%= image_tag(user.picture(:small), { class: "w-5 h-5 rounded-full mr-2", alt: @user.name, onerror: "this.src='https://ui-avatars.com/api/?size=24&background=random&name=#{user.name}'" }) rescue nil %>
+									<span><%= user.name %></span>
+								<% end %>
+							<% end %>
+						</div>
+					</div>
+				<% else %>
+					<div class="text-sm text-gray-600">
+						<%= user_is_current_user?(@user) ? 'Você não segue nenhuma pessoa ainda' : "#{@user.name} não segue nenhuma pessoa ainda" %>
+					</div>
+				<% end %>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-span-full md:col-span-5 h-content is-animated mb-24 md:border md:mt-12 md:pb-5 md:rounded-lg mx-auto overflow-hidden p-6 sm:container space-y-2">
-
-
-		<%# if current_user.admin? %>
-		<!--		<div class="py-6 bg-white">-->
-		<!--			<div class="px-5 md:px-0">-->
-		<!--				<div class=inline-flex">-->
-		<%#= link_to 'Dashboard', dashboard_path, class: 'inline-block bg-gray-50 px-3 py-2 rounded-full text-gray-800 text-sm' %>
-		<%#= link_to 'Usuários', admin_users_path, class: 'inline-block bg-gray-50 px-3 py-2 rounded-full text-gray-800 text-sm' %>
-		<%#= link_to 'Treinar', train_path, class: 'inline-block bg-gray-50 px-3 py-2 rounded-full text-gray-800 text-sm' %>
-		<!--				</div>-->
-		<!--			</div>-->
-		<!--		</div>-->
-		<%# end %>
-
-		<% if current_user == @user %>
-			<!--		<div class="py-6 bg-white">-->
-			<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
-			<!--				Notificações-->
-			<!--			</h2>-->
-			<%# if @user.friendships_request_received.present? %>
-			<!--				<div class="px-5 leading-none mt-3">-->
-			<!--  			<span class="pt-5 text-sm text-gray-500">-->
-			<!--  				Pedidos de amizade que você recebeu.-->
-			<!--  			</span>-->
-			<!--					<span class="text-sm  text-gray-500">-->
-			<!--  				Você pode ter até 10 amigos e eles podem ver sua agenda, por isso os escolha bem.-->
-			<!--  			</span>-->
-			<!--				</div>-->
-			<%# end %>
-			<%# if @user.friendships_request_received.present? %>
-			<!--				<div class="w-screen px-5 mt-3 space-y-2">-->
-			<%#= render(FriendshipRequestComponent.with_collection(@user.friends_requested_received, user: @user)) %>
-			<!--				</div>-->
-			<%# else %>
-			<!--				<div class="px-5 text-sm text-gray-500">-->
-			<!--					Você não possui notificações-->
-			<!--				</div>-->
-			<%# end %>
-			<!--		</div>-->
-			<!--		<div id="friends-list" class="py-6 bg-white">-->
-			<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
-			<!--				Amigos (<%#= @user.friends_accepted.size rescue 0 %>)-->
-			<!--			</h2>-->
-			<%# if @user.friends_accepted.present? %>
-			<!--				<div class="flex flex-wrap mt-3 px-5 w-screen">-->
-			<%#= render(UserChipComponent.with_collection(@user.friends_accepted, user: @user)) %>
-			<!--				</div>-->
-			<%# else %>
-			<!--				<div class="px-5 text-sm text-gray-500">-->
-			<!--					Você ainda não adicionou nenhum amigo-->
-			<!--				</div>-->
-			<%# end %>
-			<!--		</div>-->
-			<!--		<div class="py-6 bg-white">-->
-			<!--			<h2 class="flex-1 pl-5 font-semibold leading-6 text-gray-800 group-hover:text-brand-500 md:leading-normal md:pl-0 md:text-5xl text-md">-->
-			<!--				Pessoas que sigo-->
-			<!--			</h2>-->
-			<%# if @user.following_users.present? %>
-			<!--				<div class="w-screen mt-3 md:w-full">-->
-			<!--					<div class="flex flex-wrap px-5 pl-5 space-y-2">-->
-			<%# @user&.following_places_and_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-			<!--							<a onclick="window.AnimateModule.animatePageHide()" href="<%#= organizer_or_place_path resource %>" class="relative inline-block px-3 py-2 mt-2 mr-2 text-sm font-medium text-brand-600 bg-brand-100 border-2 border-brand-200 rounded-full cursor-pointer h-content hover:bg-purple-300">-->
-			<%#= resource.details_name.titleize %>
-			<%# if resource.events.active.size > 0 %>
-			<!--  									<span class="absolute right-0 inline-flex items-center justify-center w-4 h-4 mr-2 -mt-4 text-sm font-bold bg-white rounded-full">-->
-			<%#= resource.events.active.size %>
-			<!--  									</span>-->
-			<%# end %>
-			<!--							</a>-->
-			<%# end %>
-			<!--					</div>-->
-			<!--				</div>-->
-			<%# else %>
-			<!--				<div class="px-5 text-sm text-gray-500">-->
-			<!--					Você não segue nenhuma pessoa ainda-->
-			<!--				</div>-->
-			<%# end %>
-			<!--		</div>-->
-
-			<div class="space-y-10">
-				<div class="">
-					<h2 class="c-h3">
-						Locais que sigo
-					</h2>
-					<% if @user.following_places.present? %>
-						<div class="w-screen md:w-auto mt-2">
-							<div class="flex flex-wrap">
-								<% @user&.following_places.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-									<a onclick="window.AnimateModule.animatePageHide()"
-										 href="<%= organizer_or_place_path resource %>"
-										 class="c-chip mr-3 mb-3">
-										<%= resource.details_name.titleize %>
-										<% if resource.events.active.size > 0 %>
-  									<span class="-mt-1.5 absolute bg-white h-4 inline-flex items-center justify-center mr-2 right-0 rounded-full text-sm top-0 w-4">
-  										<%= resource.events.active.size %>
-  									</span>
-										<% end %>
-									</a>
-								<% end %>
-							</div>
-						</div>
-					<% else %>
-						<div class="text-sm text-gray-500 mt-3">
-							Você não segue nenhum local ainda
-						</div>
-					<% end %>
-				</div>
-				<div class="">
-					<h2 class="c-h3 ">
-						Organizadores que sigo
-					</h2>
-					<% if @user.following_organizers.present? %>
-						<div class="w-screen md:w-auto mt-2">
-							<div class="flex flex-wrap">
-								<% @user&.following_organizers.sort_by { |f| f.events.active.size }.reverse!.each do |resource| %>
-									<a onclick="window.AnimateModule.animatePageHide()"
-										 href="<%= organizer_or_place_path resource %>"
-										 class="c-chip mr-3 mb-3">
-										<%= resource.details_name.titleize %>
-										<% if resource.events.active.size > 0 %>
-  									<span class="-mt-1.5 absolute bg-white h-4 inline-flex items-center justify-center mr-2 right-0 rounded-full text-sm top-0 w-4">
-  										<%= resource.events.active.size %>
-  									</span>
-										<% end %>
-									</a>
-								<% end %>
-							</div>
-						</div>
-					<% else %>
-						<div class="px-5 text-sm text-gray-500 mt-3">
-							Você não segue nenhum organizador ainda
-						</div>
-					<% end %>
-				</div>
-		<% end %>
-
-		<% if current_user.friendship_accepted? @user %>
-			<div class="pt-2 mx-auto space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
-				<%#= month_calendar events: @upcoming_events do |date, events| %>
-				<!--				<a href="<%#= my_agenda_path start_date: date %>" class="mx-auto text-sm day-of-month">-->
-				<%#= date.strftime '%e' %>
-				<!--				</a>-->
-
-				<%# events.each_with_index do |event, index| %>
-				<%# if event && index == 0 %>
-				<!--						<div class="w-1 h-1 mx-auto bg-brand-500 rounded-full">-->
-				<!--						</div>-->
-				<%# end %>
-				<%# end %>
-				<%# end %>
+	<div id="main-content" class="gap-24 mt-5 mx-auto max-w-screen-lg md:grid md:grid-cols-8">
+		<section id="main-sidebar" class="mx-5 md:mx-0 col-span-8 pt-8 space-y-10 md:pt-16 md:space-y-16 md:col-span-5">
+			<div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list">
+				<h2 class="c-h2">
+					<%= user_is_current_user?(@user) ? "Minha agenda" : "Agenda de #{@user.name}" %>
+				</h2>
+				<% if @upcoming_events.present? %>
+					<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true) %>
+				<% else %>
+					<div class="flex justify-center items-center p-3 w-full h-72 bg-gray-50 rounded-lg">
+						<h2 class="my-auto mx-auto c-h3">
+							<%= "#{@user.name} ainda não agendou nenhum evento 😞" %>
+						</h2>
+					</div>
+				<% end %>
 			</div>
-
-			<div class="pt-2 mx-auto mb-24 space-y-2 bg-gray-50 is-animated lg:w-9/12 md:mt-40 sm:container">
-				<%= render partial: 'events/group_by_day_list', locals: {
-					events: @upcoming_events,
-					user:   current_user
-				} %>
-			</div>
+		</section>
+		<% unless mobile_device? %>
+			<section id="left-sidebar" class="mt-20 hidden md:inline-block md:col-span-3 md:bg-white">
+				<div data-controller="loader"
+						 data-loader-on-loading="horizontal-event#open-event:before"
+						 data-loader-on-loaded="horizontal-event#open-event:success"
+						 class="sticky top-28 z-10">
+					<div id="open-event"
+							 data-loader-target="loaded"
+							 class="relative z-20 w-96 bg-white">
+						<%= render MainSidebar::LargeEventComponent.new(user: @user, event: nil) %>
+					</div>
+					<div
+						class="flex hidden overscroll-contain left-0 justify-center items-center w-96 text-2xl text-gray-800 bg-gray-50 rounded-xl border font-display h-screen-8/10"
+						data-loader-target="loading"
+						style="">
+						Carregando
+						<svg data-loader-target="onIcon" class="ml-2 w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path fill="none" d="M0 0h24v24H0V0z"/>
+							<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
+						</svg>
+					</div>
+				</div>
+				<% if user_is_current_user?(@user) %>
+					<%= render LeftSidebar::CalendarComponent.new(resources:  @upcoming_events,
+																												start_date: Date.today,
+																												user:       current_user,
+																												title:      nil,
+																												filter:     false) %>
+				<% end %>
+			</section>
 		<% end %>
-
-		</div>
-		<%#= render partial: 'sheets/friendships/edit',
-						 locals:  {
-								 user:   current_user,
-								 friend: @friend,
-								 sheet:  @sheet
-						 } %></div>
-
-</section>
+	</div>
+</div>
 

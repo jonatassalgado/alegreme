@@ -7,7 +7,7 @@
 %>
 
 <div data-controller="slider" class="<%= html.dig(:container, :css) || 'mb-12 md:mt-0 mt-8' %>">
-	<%= link_to user_path(user), class: 'flex justify-between' do %>
+	<%= link_to profile_path(user), class: 'flex justify-between' do %>
 		<h2 class="<%= html.dig(:title, :css) || 'flex-1 font-medium group-hover:text-brand-500 leading-6 md:leading-normal md:pl-0 md:text-lg pl-5 text-gray-600' %>">
 			Salvos
 		</h2>

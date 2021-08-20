@@ -12,8 +12,8 @@ class Follow < ApplicationRecord
 	private
 
 	def max_number_of_users
-		if following.class.base_class == User && follower.following_users&.size >= 5
-			errors.add(:base, :max_number_of_following_users, message: "Você só pode seguir até 5 pessoas")
+		if following.class.base_class == User && follower.following_users&.size >= 10
+			errors.add(:base, :max_number_of_following_users, message: "Você só pode seguir até 10 pessoas")
 		end
 	end
 

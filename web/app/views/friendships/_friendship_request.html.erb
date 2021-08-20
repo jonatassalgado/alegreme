@@ -6,7 +6,7 @@
 		<div class="bg-cover bg-gray-100 h-8 rounded-full w-8"></div>
 	<% end %>
 	<div class="flex-1 font-medium px-2 text-brand-500 text-sm">
-		<%= link_to friend.first_name, user_path(friend) %>
+		<%= link_to friend.first_name, profile_path(friend) %>
 	</div>
 	<div class="flex space-x-1">
 		<% if user.friendship_request_received? friend %>

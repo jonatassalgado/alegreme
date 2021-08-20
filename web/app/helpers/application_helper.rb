@@ -81,6 +81,10 @@ module ApplicationHelper
 		"https://www.google.com/maps/search/?api=1&query=#{address}"
 	end
 
+	def user_is_current_user? user
+		user == current_user
+	end
+
 	def day_of_week(day, opts = {})
 		return if day.blank?
 

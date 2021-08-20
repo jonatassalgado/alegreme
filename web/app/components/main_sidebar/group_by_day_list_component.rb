@@ -4,7 +4,7 @@ class MainSidebar::GroupByDayListComponent < ViewComponent::Base
 		@events          = events
 		@user            = user
 		@open_in_sidebar = open_in_sidebar
-		@filters         = filters || Rails.cache.read("#{session.id}/main-sidebar--filter/filters")
+		@filters         = filters || Rails.cache.read("#{session.id}/main-sidebar--filter/filters") rescue {}
 		@pagy            = pagy
 	end
 

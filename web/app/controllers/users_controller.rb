@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_action :set_user, only: [:show, :edit, :update, :destroy]
-	before_action :authorize_user, only: [:index, :show]
+	# before_action :authorize_user, only: [:index, :show]
 	before_action :authorize_admin, only: [:admin, :destroy]
 	before_action :authorize_current_user, only: [:update, :edit]
 
@@ -29,12 +29,8 @@ class UsersController < ApplicationController
 	# GET /users/1
 	# GET /users/1.json
 	def show
-		@upcoming_events = @user&.liked_events&.not_ml_data&.active&.order_by_date
-		@past_events     = @user&.liked_events&.not_ml_data&.past&.order("updated_at DESC")
-		@current_user    = current_user
-
-		@friend ||= nil
-		@sheet  ||= nil
+		@pagy, @upcoming_events = pagy(@user&.liked_events&.includes(:place, :organizers, :categories, :events_organizers, :categories_events)&.not_ml_data&.active&.order_by_date || Event.none) unless turbo_frame_request?
+		@past_events            = @user&.liked_events&.not_ml_data&.past&.order("updated_at DESC")
 
 		render layout: false if @stimulus_reflex
 	end
@@ -69,7 +65,7 @@ class UsersController < ApplicationController
 	def update
 		respond_to do |format|
 			if @user.update(user_params)
-				format.html { redirect_to root_path, notice: 'User was successfully updated.' }
+				format.html { redirect_to root_path, notice: 'Seu perfil foi atualizado 🤙' }
 				format.json { render json: @user, status: :ok }
 			else
 				format.html { render :edit }
@@ -104,11 +100,15 @@ class UsersController < ApplicationController
 
 	# Use callbacks to share common setup or constraints between actions.
 	def set_user
-		@user = if params[:id]
-							User.friendly.find(params[:id])
-						else
-							current_user
-						end
+		if params[:id].numeric?
+			@user = User.find(params[:id])
+		else
+			if User.friendly.exists_by_friendly_id? params[:id]
+				@user = User.friendly.find(params[:id])
+			else
+				redirect_to search_index_path(q: params[:id].gsub("-", " "))
+			end
+		end
 	end
 
 	# TODO: separar params de usuário para edição de conta sem inserir senha

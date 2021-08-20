@@ -1,8 +1,9 @@
+<% content_for :meta_title, "Editar perfil" %>
 <% content_for :back_button, true %>
 <% content_for :top_app_bar_title, 'Editar perfil' %>
 
 <div class="md:px-0 md:w-3/12 min-h-screen mx-auto px-3">
-	<div class="bg-white inline-block w-full p-3 mt-5 space-y-3 text-gray-800 rounded shadow-sm">
+	<div class="bg-white border inline-block md:mt-24 mt-12 p-5 rounded-lg space-y-3 text-gray-800 w-full">
 		<%= render 'form', user: @user %>
 	</div>
 </div>

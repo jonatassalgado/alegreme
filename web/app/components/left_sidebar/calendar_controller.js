@@ -56,7 +56,7 @@ export default class extends ApplicationController {
             containerSelector:    '#main-content',
             innerWrapperSelector: '#calendar',
             topSpacing:           70,
-            bottomSpacing:        60
+            bottomSpacing:        300
         });
 
         document.addEventListener('sign-in#close', () => {

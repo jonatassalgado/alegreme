@@ -43,9 +43,11 @@ Rails.application.routes.draw do
 
 	get '/porto-alegre', to: 'feeds#index', as: :feed
 	get '/porto-alegre/eventos', to: 'feeds#index', as: :city_events
-	get '/minha-agenda', to: 'users#agenda', as: :my_agenda
 
-	resources :users, path: 'u'
+	# users
+	resources :users, only: [:edit, :update]
+	get '/minha-agenda', to: 'users#agenda', as: :my_agenda
+	get '/@:id', to: 'users#show', as: :profile
 
 	get '/porto-alegre/eventos/:day', to: 'feeds#index', as: :day_events, constraints: { day: /(\d{2})-(\d{2})-(\d{4})/ }
 	get '/porto-alegre/eventos/categoria(/:category)', to: 'feeds#index', as: :category_events
@@ -126,7 +128,6 @@ Rails.application.routes.draw do
 			resources :cinemas
 			resources :screenings
 			resources :categories
-
 
 			root to: "events#index"
 		end

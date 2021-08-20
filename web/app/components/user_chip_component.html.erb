@@ -7,7 +7,7 @@
 		<% end %>
 
 		<div class="text-sm font-medium text-brand-600">
-			<%= link_to @friend.first_name, user_path(@friend), {id: dom_id(@friend, :friendship_accepted)} %>
+			<%= link_to @friend.first_name, profile_path(@friend), {id: dom_id(@friend, :friendship_accepted)} %>
 		</div>
 		<%= reflex_tag :begin_edit,
 									 :div do %>

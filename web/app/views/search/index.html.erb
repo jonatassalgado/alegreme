@@ -78,8 +78,8 @@
 			<%= render LeftSidebar::CalendarComponent.new(resources:  @liked_events,
 																										start_date: Date.today,
 																										user:       current_user,
-																										filter:     false,
-																										indicators: @indicators) %>
+																										title:      'Minha agenda',
+																										filter:     false) %>
 		</section>
 	<% end %>
 </div>

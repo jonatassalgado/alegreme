@@ -17,8 +17,8 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 				resources:  liked_resources,
 				start_date: start_date,
 				user:       current_user,
-				filter:     false,
-				indicators: indicators))
+				title:      element['data-title'],
+				filter:     false))
 		end
 	end
 
@@ -35,8 +35,8 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 				resources:  liked_resources,
 				start_date: start_date,
 				user:       current_user,
-				filter:     false,
-				indicators: indicators))
+				title:      element['data-title'],
+				filter:     false))
 		end
 	end
 
@@ -52,8 +52,8 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 				resources:  liked_resources_in_day(element['data-day'].to_date),
 				start_date: element['data-day'].to_date,
 				user:       current_user,
-				filter:     true,
-				indicators: indicators))
+				title:      element['data-title'],
+				filter:     true))
 		end
 	end
 
@@ -62,8 +62,8 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 			resources:  liked_resources,
 			start_date: Date.today,
 			user:       current_user,
-			filter:     false,
-			indicators: indicators))
+			title:      element['data-title'],
+			filter:     false))
 	end
 
 	def update
@@ -71,8 +71,8 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 			resources:  liked_resources,
 			start_date: Date.today,
 			user:       current_user,
-			filter:     false,
-			indicators: indicators))
+			title:      element['data-title'],
+			filter:     false))
 	end
 
 	def unlike
@@ -87,8 +87,8 @@ class LeftSidebar::CalendarReflex < ApplicationReflex
 					resources:  liked_resources,
 					start_date: Date.today,
 					user:       current_user,
-					filter:     false,
-					indicators: indicators))
+					title:      element['data-title'],
+					filter:     false))
 
 				return if @type != Event
 

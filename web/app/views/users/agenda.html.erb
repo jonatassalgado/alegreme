@@ -2,5 +2,5 @@
 <% content_for :back_button, true %>
 
 <section data-controller="page" data-page-target="page" class="mx-auto is-animated lg:w-9/12 md:mt-20 sm:container min-h-screen">
-	<%= render CalendarComponent.new(events: @liked_events, start_date: @start_date, user: current_user, filter: @filter, indicators: @indicators) %>
+	<%= render CalendarComponent.new(events: @liked_events, start_date: @start_date, user: current_user, filter: @filter) %>
 </section>

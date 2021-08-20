@@ -6,7 +6,7 @@
 	<% end %>
 
 	<div class="text-sm font-medium text-brand-600">
-		<%= link_to friend.first_name, user_path(friend), {id: dom_id(friend, :friendship_accepted)} %>
+		<%= link_to friend.first_name, profile_path(friend), {id: dom_id(friend, :friendship_accepted)} %>
 	</div>
 	<div data-reflex="click->Sheet#edit_sheets_friendships"
 			 data-reflex-root="#page"

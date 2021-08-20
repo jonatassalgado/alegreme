@@ -2,10 +2,10 @@ class CalendarComponent < ViewComponent::Base
 
 	attr_accessor :view_context, :options
 
-	def initialize(events:, start_date:, user:, indicators:, filter: false)
+	def initialize(events:, start_date:, user:, title: '', filter: false)
 		@start_date = start_date
 		@events     = events&.sort_by { |e| e&.start_time }
-		@indicators = indicators&.map(&:to_date) || events&.map { |event| event.start_time.to_date }
+		@indicators = events&.map { |event| event.start_time.to_date }
 		@user       = user
 		@filter     = filter
 

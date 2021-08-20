@@ -14,7 +14,7 @@
 
 %>
 
-<header class="<%= class_names('md:gap-16 justify-between h-14 px-5 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
+<header class="<%= class_names('md:gap-16 md:px-0 px-5 justify-between h-14 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
 															 { 'flex h-14':      !current_page?('/busca'),
 																 'h-content py-2': current_page?('/busca') }) %>"
 				id="top-bar">
@@ -88,7 +88,7 @@
 				style="width: 100%">
 				<input autocomplete="false"
 							 name="q"
-							 class="border focus:bg-white focus:border-transparent focus:outline-none focus:placeholder-brand-600 focus:ring focus:ring-brand-500 font-light h-10 mx-auto placeholder-gray-400 px-4 py-1 rounded-full text-xs w-full"
+							 class="border focus:bg-white focus:border-transparent focus:outline-none focus:placeholder-brand-600 focus:ring focus:ring-brand-500 font-light h-11 mx-auto placeholder-gray-400 px-4 py-1 rounded-full text-xs w-full"
 							 id="text-field-shape-one"
 							 placeholder="Busque por rock, feira de rua, samba, standup..."
 							 type="text"
@@ -103,17 +103,20 @@
 		<div class="hidden md:col-span-3 md:inline-block"></div>
 	<% end %>
 	<div class="md:col-span-3 flex-shrink-0">
-		<div class="flex justify-end items-center h-full">
-			<% if current_user %>
-				<%= link_to user_path(current_user), class: 'flex items-center' do %>
+		<div class="flex h-full items-center justify-end">
+			<% if current_user && !current_page?(controller: 'search', action: 'index') %>
+				<%= link_to profile_path(current_user), class: 'c-chip border-0 md:border p-0 md:p-2' do %>
 					<% if current_user&.picture %>
 						<%= image_tag(current_user.picture, { class: "w-7 h-7 border rounded-full", alt: current_user&.name, onerror: "this.style.opacity='0'" }) rescue nil %>
 					<% else %>
 						<div class="mr-2 w-7 h-7 bg-gray-100 rounded-full"></div>
 					<% end %>
-					<div class="pl-2 text-sm md:text-base hidden md:inline-block"><%= truncate(current_user&.name, length: 15) %></div>
+					<div class="font-semibold text-gray-800 pl-2 text-sm md:text-base hidden md:inline-block">
+						<%= truncate(current_user&.name, length: 15) %>
+					</div>
 				<% end %>
-			<% else %>
+			<% end %>
+			<% unless current_user %>
 				<%= link_to 'Entrar', new_user_session_path, class: 'hidden md:inline-block hover:text-brand-600 px-6 text-gray-800 text-sm' %>
 				<%= link_to 'Criar conta',
 										new_user_registration_path,

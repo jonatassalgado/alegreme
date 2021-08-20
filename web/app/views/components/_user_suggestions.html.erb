@@ -12,7 +12,7 @@
   <div class="me-user-suggestions">
     <div class="me-user-suggestions__inner">
       <% data[:following_users].each do |user| %>
-        <%= link_to user_path user do %>
+        <%= link_to profile_path user do %>
           <div class="me-user-suggestions__user">
             <div class="me-user-suggestions__picture" style="background-image: url('<%= user.picture :small %>')">
             </div>

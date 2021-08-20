@@ -14,8 +14,7 @@ class CalendarReflex < ApplicationReflex
 				events:     liked_resources,
 				start_date: start_date,
 				user:       current_user,
-				filter:     false,
-				indicators: indicators))
+				filter:     false))
 		end
 	end
 
@@ -29,8 +28,7 @@ class CalendarReflex < ApplicationReflex
 				events:     liked_resources,
 				start_date: start_date,
 				user:       current_user,
-				filter:     false,
-				indicators: indicators))
+				filter:     false))
 		end
 	end
 
@@ -43,8 +41,7 @@ class CalendarReflex < ApplicationReflex
 				events:     liked_resources_in_day(element['data-day'].to_date),
 				start_date: element['data-day'].to_date,
 				user:       current_user,
-				filter:     true,
-				indicators: indicators))
+				filter:     true))
 		end
 	end
 
@@ -53,8 +50,7 @@ class CalendarReflex < ApplicationReflex
 			events:     liked_resources,
 			start_date: Date.today,
 			user:       current_user,
-			filter:     false,
-			indicators: indicators))
+			filter:     false))
 	end
 
 	def update
@@ -62,8 +58,7 @@ class CalendarReflex < ApplicationReflex
 			events:     liked_resources,
 			start_date: Date.today,
 			user:       current_user,
-			filter:     false,
-			indicators: indicators))
+			filter:     false))
 	end
 
 	def like
@@ -81,8 +76,7 @@ class CalendarReflex < ApplicationReflex
 				events:     liked_resources,
 				start_date: Date.today,
 				user:       current_user,
-				filter:     false,
-				indicators: indicators))
+				filter:     false))
 		else
 			show_login_modal
 		end
@@ -103,8 +97,7 @@ class CalendarReflex < ApplicationReflex
 				events:     liked_resources,
 				start_date: Date.today,
 				user:       current_user,
-				filter:     false,
-				indicators: indicators))
+				filter:     false))
 		else
 			show_login_modal
 		end
@@ -121,8 +114,7 @@ class CalendarReflex < ApplicationReflex
 					events:     liked_resources,
 					start_date: Date.today,
 					user:       current_user,
-					filter:     false,
-					indicators: indicators))
+					filter:     false))
 			end
 		else
 			morph '#modal', render(ModalComponent.new(
