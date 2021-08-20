@@ -3,7 +3,7 @@
 <%= render ModalComponent.new(action: 'create-account', title: 'Você precisa estar logado', text: 'Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas 🤙') %>
 
 
-<div id="main-content" class="<%= class_names 'gap-16 grid-cols-8 max-w-screen-lg md:grid min-h-screen mx-auto',
+<div id="main-content" class="<%= class_names 'gap-24 grid-cols-8 max-w-screen-lg md:grid min-h-screen mx-auto',
 																							{ 'px-5': !@founded_events } %>">
 	<section id="main-sidebar" class="md:col-span-5">
 		<%= notice %>
@@ -20,7 +20,7 @@
 			</div>
 		<% end %>
 		<div class="mx-auto mb-24 space-y-2 is-animated sm:container">
-			<%= link_to root_path, class: 'hidden md:inline-block mt-6 px-5' do %>
+			<%= link_to root_path, class: 'hidden md:inline-block mt-6 px-5 md:px-0' do %>
 				<div class="c-chip">
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 mr-3 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -29,7 +29,7 @@
 				</div>
 			<% end %>
 			<% if @search_result.try { |events| events.size > 0 } %>
-				<div class="py-3 px-5 c-h2">
+				<div class="py-3 px-5 md:px-0 c-h2">
 					<%= @pagy&.vars&.dig(:count) %> eventos encontrados para:
 					<span class="text-brand-600"><%= params[:q] %></span>
 				</div>

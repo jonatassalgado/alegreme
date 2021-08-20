@@ -266,36 +266,37 @@ module EventQueries
 			}
 
 			scope 'in_categories', lambda { |categories, opts = {}|
-				opts = { 'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': [] }.merge(opts)
-
+				# opts = { 'turn_on': true, 'group_by': nil, 'active': true, 'personas': Event::PERSONAS, 'not_in': [] }.merge(opts)
+				#
 				return all if categories.blank?
 
-				if opts[:group_by]
-					raise ArgumentError, "categorias precisa ser um array" unless categories.is_a? Array
-					raise ArgumentError, "group_by precisa ser numérico" unless opts[:group_by].is_a? Numeric
-
-					categories_query_array = categories.map { |category| "'#{category}'" }.join(', ')
-
-					from(
-						<<~SQL
-						  (SELECT events.* from (
-						      SELECT *,
-						         (p.ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric AS score,
-						         row_number()  OVER (
-						             PARTITION BY p.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0
-						             ORDER BY (p.ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric DESC
-						             ) AS rank
-						      FROM events AS p
-						      ) AS events
-						  WHERE events.score IS NOT NULL
-						    AND rank::numeric <= #{ActiveRecord::Base::sanitize_sql(opts[:group_by])}
-						    AND (events.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0) IN (#{ActiveRecord::Base::sanitize_sql(categories_query_array)})
-						  ORDER BY events.rank) events
-					SQL
-					)
-				elsif opts[:group_by].blank?
-					where("(ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0) IN (:categories)", categories: categories)
-				end
+				raise ArgumentError, "#{categories}: categorias precisa ser um array de números" unless categories.map(&:to_i).any? { |c| c.is_a?(Numeric) }
+				#
+				# if opts[:group_by]
+				# 	raise ArgumentError, "group_by precisa ser numérico" unless opts[:group_by].is_a? Numeric
+				#
+				# 	categories_query_array = categories.map { |category| "'#{category}'" }.join(', ')
+				#
+				# 	from(
+				# 		<<~SQL
+				# 		  (SELECT events.* from (
+				# 		      SELECT *,
+				# 		         (p.ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric AS score,
+				# 		         row_number()  OVER (
+				# 		             PARTITION BY p.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0
+				# 		             ORDER BY (p.ml_data -> 'categories' -> 'predictions' -> 0 ->> 'score')::numeric DESC
+				# 		             ) AS rank
+				# 		      FROM events AS p
+				# 		      ) AS events
+				# 		  WHERE events.score IS NOT NULL
+				# 		    AND rank::numeric <= #{ActiveRecord::Base::sanitize_sql(opts[:group_by])}
+				# 		    AND (events.ml_data -> 'categories' -> 'predictions' -> 0 -> 'result' -> 0 -> 'value' -> 'choices' ->> 0) IN (#{ActiveRecord::Base::sanitize_sql(categories_query_array)})
+				# 		  ORDER BY events.rank) events
+				# 	SQL
+				# 	)
+				# elsif opts[:group_by].blank?
+				joins(:categories).where("categories.id IN (:categories)", categories: categories)
+				# end
 			}
 
 			scope 'in_organizers', lambda { |organizers, opts = {}|

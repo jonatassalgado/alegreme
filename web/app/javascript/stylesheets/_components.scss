@@ -24,10 +24,10 @@
   }
 
   .c-chip {
-    @apply border inline-block flex justify-start items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-full transition-all transition-colors duration-100 transform cursor-pointer select-none md:text-base font-display hover:bg-brand-100 hover:border-brand-100 hover:text-gray-700 tap-highlight-none w-content;
+    @apply border inline-block flex justify-start items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white rounded-full transition-all transition-colors duration-100 transform cursor-pointer select-none md:text-base font-display md:hover:bg-brand-100 md:hover:border-brand-100 md:hover:text-gray-700 tap-highlight-none w-content;
 
     &--active {
-      @apply inline-block flex justify-start items-center py-2 px-4 text-sm font-medium rounded-full transition-all transition-colors duration-100 transform cursor-pointer select-none md:text-base bg-brand-600 font-display hover:bg-brand-500 hover:border-brand-500 hover:text-white tap-highlight-none text-white w-content;
+      @apply inline-block flex justify-start items-center py-2 px-4 text-sm font-medium rounded-full transition-all transition-colors duration-100 transform cursor-pointer select-none md:text-base bg-brand-600 font-display md:hover:bg-brand-500 md:hover:border-brand-500 md:hover:text-white tap-highlight-none text-white w-content;
     }
   }
 

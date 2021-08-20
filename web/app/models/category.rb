@@ -128,6 +128,11 @@ class Category < ApplicationRecord
 									'url'          => 'hackaton'
 								},
 								{
+									'name'         => 'kids_young',
+									'display_name' => 'Crianças e jovens',
+									'url'          => 'infantil-criancas-adolescentes'
+								},
+								{
 									'name'         => 'meetup',
 									'display_name' => 'Meetup',
 									'url'          => 'meetup'

@@ -10,7 +10,7 @@ class FeedsController < ApplicationController
 			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
 		end
 
-		@filters                = Rails.cache.fetch("#{session.id}/main-sidebar--filter/filters") || { theme: 'entretenimento-lazer', categories: [], date: nil }
+		@filters                = Rails.cache.fetch("#{session.id}/main-sidebar--filter/filters") || { theme: 1, categories: [], date: nil }
 		@pagy, @upcoming_events = pagy(requested_events)
 		@liked_resources        = (current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings&.active&.includes(:movie, :cinema) || Screening.none) unless turbo_frame_request?
 		@movies                 = CineFilm.active unless turbo_frame_request?
@@ -80,7 +80,7 @@ class FeedsController < ApplicationController
 			@theme = Theme.find_by_slug(params[:theme])
 			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).where(categories: { theme_id: @theme.id }).order_by_date
 		else
-			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).in_day(@filters[:date]).in_categories(@filters[:categories]).where(categories: { theme_id: 1 }).order_by_date
+			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).in_day(@filters[:date]).in_categories(@filters[:categories]).where(categories: { theme_id: @filters[:theme] }).order_by_date
 		end
 	end
 
@@ -125,19 +125,19 @@ class FeedsController < ApplicationController
 	end
 
 	# Pagy
-	def pagy_get_vars(collection, vars)
-		vars[:count] ||= cache_count(collection)
-		vars[:page]  ||= params[ vars[:page_param] || Pagy::VARS[:page_param] ]
-		vars
-	end
-
-	# add Rails.cache wrapper around the count call
-	def cache_count(collection)
-		cache_key = "pagy-#{collection&.table_name}/#{controller_name}/#{action_name}/#{session.id}"
-		Rails.cache.fetch(cache_key, expires_in: 20 * 60) do
-			collection.count(:all)
-		end
-	end
+	# def pagy_get_vars(collection, vars)
+	# 	vars[:count] ||= cache_count(collection)
+	# 	vars[:page]  ||= params[vars[:page_param] || Pagy::VARS[:page_param]]
+	# 	vars
+	# end
+	#
+	# # add Rails.cache wrapper around the count call
+	# def cache_count(collection)
+	# 	cache_key = "pagy-#{collection&.table_name}/#{controller_name}/#{action_name}/#{session.id}"
+	# 	Rails.cache.fetch(cache_key, expires_in: 20 * 60) do
+	# 		collection.count(:all)
+	# 	end
+	# end
 
 	protected
 
