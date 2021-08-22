@@ -6,28 +6,28 @@
 
 <%= render(ModalComponent.new) %>
 
-<section class="mx-auto mt-6 max-w-screen-lg min-h-screen px-5 mb-16 space-y-5">
-	<div class="">
-		<%= link_to root_path, class: 'hidden md:inline-block' do %>
+<section class="px-5 mx-auto mt-6 mb-16 space-y-5 max-w-screen-lg min-h-screen md:px-0">
+	<div class="flex space-x-2">
+		<%= link_to root_path, class: 'md:inline-block' do %>
 			<div class="c-chip">
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 mr-3 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+				<svg xmlns="http://www.w3.org/2000/svg" class="mr-3 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
 				</svg>
 				<div>Ir para o feed</div>
 			</div>
 		<% end %>
 		<%= link_to cinemas_path, class: 'md:inline-block' do %>
 			<div class="c-chip">
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 mr-3 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+				<svg xmlns="http://www.w3.org/2000/svg" class="mr-3 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
 				</svg>
-				<div>Ver todos os cinemas em <span class="font-medium">Porto Alegre</span></div>
+				<div>Cinemas</div>
 			</div>
 		<% end %>
 	</div>
 	<div class="grid grid-cols-4">
-		<div class="col-span-3 pr-5 mb-3 text-sm space-y-2">
-			<h1 id="<%= @cinema&.slug %>" class="c-h2 inline">
+		<div class="col-span-3 pr-5 mb-3 space-y-2 text-sm">
+			<h1 id="<%= @cinema&.slug %>" class="inline c-h2">
 				<%= @cinema.display_name %>
 			</h1>
 			<div class="text-xs text-gray-700">
@@ -66,8 +66,8 @@
 		</div>
 	</div>
 	<div class="grid grid-cols-1 grid-flow-row gap-5 md:grid-cols-1">
-		<% @movies.each do |movie| %>
-			<div class="border rounded-lg p-5">
+		<% @movies.reverse.each do |movie| %>
+			<div class="p-5 rounded-lg border">
 				<div class="flex flex-col md:flex-row md:mx-auto">
 					<%= image_tag shrine_image_url(movie, :medium), {
 						loading: :lazy,
@@ -90,7 +90,7 @@
 							<% if movie.trailer %>
 								<a href="<%= movie.trailer %>" rel="nofollow" target="_blank" class="inline-block mt-3 text-center md:mt-0">
 									<div class="flex items-center py-1.5 px-2 text-gray-700 rounded-full bg-white-100 border transition-transform hover:scale-105 md:transform w-content">
-										<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 w-5 h-5 fill-current text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+										<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 w-5 h-5 text-gray-600 fill-current" viewBox="0 0 20 20" fill="currentColor">
 											<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
 										</svg>
 										<span class="text-sm font-medium text-gray-700">
@@ -103,14 +103,14 @@
 						<div class="mx-auto w-11/12 text-sm leading-relaxed text-center text-gray-800 md:text-left md:w-full">
 							<%= movie.description %>
 						</div>
-						<div class="gap-2 grid grid-cols-1 md:grid-cols-3 md:gap-3 mt-12 w-full">
+						<div class="grid grid-cols-1 gap-2 mt-12 w-full md:grid-cols-3 md:gap-3">
 							<% movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
-								<div class="p-3 border rounded">
-									<h3 class="c-h4 inline">
+								<div class="p-3 rounded border">
+									<h3 class="inline c-h4">
 										<%= day_of_week(screening_day_group[0]).titleize %>
 									</h3>
 									<span class="text-xs text-gray-800"><%= screening_day_group[0].strftime('%d/%m/%y') %></span>
-									<div class="float-right w-content -mt-1 -mr-2">
+									<div class="float-right -mt-1 -mr-2 w-content">
 										<%= render(LikesButtonComponent.new(likeable: screening_day_group[1][0], user: current_user)) if screening_day_group[1][0] %>
 									</div>
 									<div class="space-y-1">
@@ -134,7 +134,7 @@
 							<% end %>
 						</div>
 						<% if movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }&.empty? %>
-							<div class="bg-brand-100 p-5 rounded-md text-sm leading-relaxed text-gray-800">
+							<div class="p-5 text-sm leading-relaxed text-gray-800 rounded-md bg-brand-100">
 								Sem exibições cadastradas na plataforma para este filme e cinema. Veja
 								no <%= link_to 'site oficial', @cinema.website, class: 'text-brand-600 font-medium', rel: 'nofollow', target: '_blank' %>
 								do <%= @cinema.display_name %> caso
