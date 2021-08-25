@@ -35,7 +35,7 @@
 		<% end %>
 	</div>
 	<% if @pagy && @pagy&.last != @pagy&.page %>
-		<div id="main-sidebar--group-by-day-list--pagination" data-infinite-scroll-target="pagination" class="px-3 mt-3 mb-10 w-content">
+		<div id="main-sidebar--group-by-day-list--pagination" data-infinite-scroll-target="pagination" class="mt-3 mb-10 w-content">
 			<%== helpers.pagy_nav(@pagy) %>
 		</div>
 	<% end %>

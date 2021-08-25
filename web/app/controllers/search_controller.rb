@@ -15,7 +15,7 @@ class SearchController < ApplicationController
 				body_options:  { min_score: 10 },
 				scope_results: ->(r) { r.active }
 			})
-			# @search_result         = Event.active.includes(:place).order_by_date
+			# @search_result         = Event.active.includes(:place).limit(42)
 			@pagy, @founded_events = pagy(Event.includes(:place, :organizers, :categories).where(id: @search_result.map(&:id)).not_ml_data)
 			@liked_events          = current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none
 		else
@@ -23,6 +23,11 @@ class SearchController < ApplicationController
 		end
 
 		render layout: false if @stimulus_reflex
+
+		respond_to do |format|
+			format.turbo_stream
+			format.html
+		end
 	end
 
 	private
