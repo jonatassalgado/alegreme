@@ -43,7 +43,7 @@ parse_facebook_events_page_script = """
         end)
 
         splash:set_custom_headers({
-            ["user-agent"] = tostring(args.ua),
+            ["user-agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
             ["cache-control"] = "max-age=0",
             ["upgrade-insecure-requests"] = "1",
             ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -97,7 +97,7 @@ parse_facebook_place_page_script = """
         end)
 
         splash:set_custom_headers({
-            ["user-agent"] = tostring(args.ua),
+            ["user-agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
             ["cache-control"] = "max-age=0",
             ["upgrade-insecure-requests"] = "1",
             ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -137,7 +137,7 @@ parse_facebook_event_script = """
         end)
 
         splash:set_custom_headers({
-                ["user-agent"] = tostring(args.ua),
+                ["user-agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
                 ["cache-control"] = "max-age=0",
                 ["upgrade-insecure-requests"] = "1",
                 ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -192,7 +192,7 @@ parse_sympla_events_page_script = """
         end)
 
         splash:set_custom_headers({
-            ["user-agent"] = tostring(args.ua),
+            ["user-agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
             ["cache-control"] = "no-cache",
             ["upgrade-insecure-requests"] = "1",
             ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -392,7 +392,7 @@ class EventSpider(scrapy.Spider):
             }
         )
         
-        for page in self.sympla_pages:
+        """ for page in self.sympla_pages:
             yield SplashRequest(
                 url=page,
                 callback=self.parse_sympla_iframe,
@@ -402,7 +402,7 @@ class EventSpider(scrapy.Spider):
                 'lua_source': parse_sympla_events_page_script,
                 'ua': user_agents[0]
                 }
-            )
+            ) """
 
 
     def parse_facebook_page(self, response):

@@ -45,7 +45,7 @@ module Api
 		def liked
 			begin
 				@user         = current_user
-				@liked_events = @user.liked_events.includes(:place, :organizers, :categories).active.valid.order_by_date.limit(100)
+				@liked_events = @user.liked_events.includes(:place, :categories).active.valid.order_by_date.limit(100)
 			rescue StandardError => e
 				render json: {
 					error:  "Failed request liked events. Error: #{e}",
@@ -57,7 +57,7 @@ module Api
 		def suggestions
 			begin
 				@user               = current_user
-				@events_suggestions = Event.includes(:place, :categories, :organizers).active.valid.in_user_suggestions(@user).not_liked_or_disliked(@user).limit(5)
+				@events_suggestions = Event.includes(:place, :categories).active.valid.in_user_suggestions(@user).not_liked_or_disliked(@user).limit(5)
 			rescue StandardError => e
 				render json: {
 					error:  "Failed request suggestions events. Error: #{e}",
@@ -69,7 +69,7 @@ module Api
 		def show
 			begin
 				@user           = current_user
-				@similar_events = Event.includes(:place, :categories).active.where(id: @event.similar_data).order_by_ids(@event.similar_data).limit(8)
+				@similar_events = Event.includes(:categories).active.where(id: @event.similar_data).order_by_ids(@event.similar_data).limit(8)
 			rescue StandardError => e
 				render json: {
 					error:  "Failed request event. Error: #{e}",
@@ -82,10 +82,10 @@ module Api
 
 		def set_event
 			if params[:id].numeric?
-				@event = Event.includes(:likes).find(params[:id])
+				@event = Event.find(params[:id])
 			else
 				if Event.friendly.exists_by_friendly_id? params[:id]
-					@event = Event.includes(:likes).friendly.find(params[:id])
+					@event = Event.friendly.find(params[:id])
 				end
 			end
 		end
