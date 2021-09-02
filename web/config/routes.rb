@@ -37,6 +37,10 @@ Rails.application.routes.draw do
 		get 'porto-alegre/eventos/category/:category', to: 'events#category', as: :category_events
 		post 'events/:id/like', to: 'events#like'
 
+		# movies
+		get 'movies', to: 'movies#index'
+		get 'movies/:id', to: 'movies#show'
+
 		# post 'collections', to: 'collections#index', as: :collections
 		# post 'taste/:resource/:id/:taste', to: 'taste#update', as: :taste
 	end
