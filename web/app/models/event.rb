@@ -161,7 +161,7 @@ class Event < ApplicationRecord
 
 	def parse_datetimes
 		if attribute_present?(:datetimes)
-			self.datetimes = datetimes.map { |date| Time.zone.parse(date).to_datetime }
+			self.datetimes = datetimes.reject(&:blank?).map { |date| Time.zone.parse(date).to_datetime unless date.blank?}
 		end
 	end
 

@@ -1,0 +1,170 @@
+<style>
+    select.hourselect {
+        display: inline-block;
+    }
+</style>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+
+<div class="field-unit__label">
+	<%= f.label field.attribute %>
+</div>
+<div class="field-unit__field">
+	<%= f.text_field field.attribute %>
+	<div class="container mt-20" id="main">
+		<div class="jumbotron">
+			<h1 class="text-center">
+				<a id="left" class="cursor-pointer">
+					<i class="fa fa-chevron-left"><-</i>
+				</a>
+				<span>&nbsp;</span>
+				<span id="month"></span>
+				<span>&nbsp;</span>
+				<span id="year"></span>
+				<span>&nbsp;</span>
+				<a id="right" class="cursor-pointer">
+					<i class="fa fa-chevron-right"> -> </i>
+				</a>
+			</h1>
+		</div>
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<table id="calendar-table"></table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+    var enumerateDaysBetweenDates = function (startDate, endDate, dates = []) {
+        var currDate = moment(startDate);
+        var lastDate = moment(endDate);
+
+        while (currDate <= lastDate) {
+            dates.push(currDate.format());
+            currDate = moment(currDate).add(1, 'days');
+        }
+
+        return dates;
+    };
+
+    $('input[name="event[datetimes]"]').daterangepicker({
+                                                            timePicker:          true,
+                                                            timePicker24Hour:    true,
+                                                            timePickerIncrement: 5,
+                                                            startDate:           moment().startOf('hour'),
+                                                            endDate:             moment().startOf('hour').add(32, 'hour'),
+                                                            autoUpdateInput:     false,
+                                                            locale:              {
+                                                                format: 'M/DD hh:mm A'
+                                                            }
+                                                        });
+
+
+    var currentDate = new Date();
+
+    function getSelectedDates() {
+        return $('input[name="event[datetimes]"]').val().split(" ").map(date => moment(date).startOf('day').toISOString());
+    }
+
+    function generateCalendar(initialDate, dates) {
+
+        function monthDays(month, year) {
+            var result = [];
+            var days   = new Date(year, month, 0).getDate();
+            for (var i = 1; i <= days; i++) {
+                result.push(i);
+            }
+            return result;
+        }
+
+        Date.prototype.monthDays = function () {
+            var d = new Date(this.getFullYear(), this.getMonth() + 1, 0);
+            return d.getDate();
+        };
+
+        var details = {
+            // totalDays: monthDays(d.getMonth(), d.getFullYear()),
+            totalDays: initialDate.monthDays(),
+            weekDays:  ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            months:    ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Augosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        };
+        var start   = new Date(initialDate.getFullYear(), initialDate.getMonth()).getDay();
+        var cal     = [];
+        var day     = 1;
+        var current = moment(new Date(initialDate.getFullYear(), initialDate.getMonth(), day)).startOf('day');
+        for (var i = 0; i <= 6; i++) {
+            cal.push(['<tr>']);
+            for (var j = 0; j < 7; j++) {
+                if (i === 0) {
+                    cal[i].push('<td class="text-center">' + details.weekDays[j] + '</td>');
+                } else if (day > details.totalDays) {
+                    cal[i].push('<td>&nbsp;</td>');
+                } else {
+                    if (i === 1 && j < start) {
+                        cal[i].push('<td>&nbsp;</td>');
+                    } else {
+                        cal[i].push(
+                            `<td class="day text-center">
+                                ${day}
+                                ${dates.includes(current.toISOString()) ? '<div class="w-2 h-2 bg-brand-600 rounded-full mt-1 mx-auto"></div>' : ''}
+                                </td>`
+                        );
+
+                        day++;
+                        current.add(1, 'days');
+                    }
+                }
+            }
+            cal[i].push('</tr>');
+        }
+        cal = cal.reduce(function (a, b) {
+            return a.concat(b);
+        }, []).join('');
+        $('#calendar-table').append(cal);
+        $('#month').text(details.months[initialDate.getMonth()]);
+        $('#year').text(initialDate.getFullYear());
+        $('td.day').mouseover(function () {
+            $(this).addClass('hover');
+        }).mouseout(function () {
+            $(this).removeClass('hover');
+        });
+    }
+
+    $('#left').click(function () {
+        $('#calendar-table').text('');
+        if (currentDate.getMonth() === 0) {
+            currentDate = new Date(currentDate.getFullYear() - 1, 11);
+            generateCalendar(currentDate, getSelectedDates());
+        } else {
+            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
+            generateCalendar(currentDate, getSelectedDates());
+        }
+    });
+
+    $('#right').click(function () {
+        $('#calendar-table').html('<tr></tr>');
+        if (currentDate.getMonth() === 11) {
+            currentDate = new Date(currentDate.getFullYear() + 1, 0);
+            generateCalendar(currentDate, getSelectedDates());
+        } else {
+            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
+            generateCalendar(currentDate, getSelectedDates());
+        }
+    });
+
+    generateCalendar(currentDate, getSelectedDates());
+
+    $('input[name="event[datetimes]"]').on('apply.daterangepicker', function (ev, picker) {
+        const dateRanges = enumerateDaysBetweenDates(picker.startDate, picker.endDate, $('input[name="event[datetimes]"]').val().split(" "));
+        $('input[name="event[datetimes]"]').val(dateRanges.join(" "));
+        $('#calendar-table').html('<tr></tr>');
+        generateCalendar(currentDate, getSelectedDates());
+    });
+
+</script>

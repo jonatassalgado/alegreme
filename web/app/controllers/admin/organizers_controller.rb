@@ -1,5 +1,14 @@
 module Admin
   class OrganizersController < Admin::ApplicationController
+
+    def default_sorting_attribute
+      :updated_at
+    end
+
+    def default_sorting_direction
+      :desc
+    end
+
     # Overwrite any of the RESTful controller actions to implement custom behavior
     # For example, you may want to send an email after a foo is updated.
     #
@@ -12,9 +21,13 @@ module Admin
     # This will be used to set the resource for the `show`, `edit`, and `update`
     # actions.
     #
-    # def find_resource(param)
-    #   Foo.find_by!(slug: param)
-    # end
+    def find_resource(param)
+      if params[:id].numeric?
+        Organizer.find(params[:id])
+      else
+        Organizer.friendly.find(params[:id])
+      end
+    end
 
     # The result of this lookup will be available as `requested_resource`
 

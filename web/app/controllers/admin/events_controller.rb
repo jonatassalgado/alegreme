@@ -12,10 +12,17 @@ module Admin
 		# Overwrite any of the RESTful controller actions to implement custom behavior
 		# For example, you may want to send an email after a foo is updated.
 		#
-		# def update
-		#   super
-		#   send_foo_updated_email(requested_resource)
-		# end
+		def create
+			super
+			PredictEventLabels.predict(requested_resource)
+			PredictSimilarEvents.predict(requested_resource)
+		end
+
+		def update
+			super
+			PredictEventLabels.predict(requested_resource)
+			PredictSimilarEvents.predict(requested_resource)
+		end
 
 		# Override this method to specify custom lookup behavior.
 		# This will be used to set the resource for the `show`, `edit`, and `update`
@@ -48,7 +55,7 @@ module Admin
 		# and `dashboard`:
 		#
 		def resource_params
-			params["event"]["datetimes"] = JSON.parse(params["event"]["datetimes"])
+			params["event"]["datetimes"] = params["event"]["datetimes"].split(" ")
 			params.require(resource_class.model_name.param_key).permit(*dashboard.permitted_attributes, datetimes: [])
 		end
 

@@ -19,7 +19,7 @@ class EventDashboard < Administrate::BaseDashboard
 		description:    TrixField,
 		theme:          Field::JSONB,
 		geographic:     Field::JSONB,
-		datetimes:      Field::JSONB.with_options(blank_sign: [], transform: true),
+		datetimes:      CalendarField,
 		name:           Field::String.with_options(searchable: true),
 		entries:        Field::JSONB,
 		ml_data:        Field::JSONB,
@@ -57,6 +57,7 @@ class EventDashboard < Administrate::BaseDashboard
     organizers
     categories
     id
+    name
     description
     theme
     geographic
@@ -82,12 +83,12 @@ class EventDashboard < Administrate::BaseDashboard
     place
     organizers
     categories
+    name
     description
     geographic
     datetimes
     ticket_url
     source_url
-    entries
     ml_data
     similar_data
     slug
