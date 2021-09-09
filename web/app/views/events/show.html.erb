@@ -41,7 +41,7 @@
     "item":
      {
        "@id": "<%= day_events_url(@event.start_time.strftime('%d-%m-%Y')) %>",
-       "name": "<%= "Eventos em Porto Alegre dia #{I18n.l(@event.start_time, format: :long)}" %>"
+       "name": "<%= "Eventos em Porto Alegre dia #{I18n.l(@event.start_time, format: :date)}" %>"
      }
   },
   {

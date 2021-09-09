@@ -18,35 +18,35 @@ pt-BR:
           has_many: Não é possível excluir o registro pois existem %{record} dependentes
   date:
     abbr_day_names:
-    - dom
-    - seg
-    - ter
-    - qua
-    - qui
-    - sex
-    - sáb
+      - dom
+      - seg
+      - ter
+      - qua
+      - qui
+      - sex
+      - sáb
     abbr_month_names:
-    -
-    - jan
-    - fev
-    - mar
-    - abr
-    - mai
-    - jun
-    - jul
-    - ago
-    - set
-    - out
-    - nov
-    - dez
+      -
+      - jan
+      - fev
+      - mar
+      - abr
+      - mai
+      - jun
+      - jul
+      - ago
+      - set
+      - out
+      - nov
+      - dez
     day_names:
-    - domingo
-    - segunda
-    - terça
-    - quarta
-    - quinta
-    - sexta
-    - sábado
+      - domingo
+      - segunda
+      - terça
+      - quarta
+      - quinta
+      - sexta
+      - sábado
     formats:
       default: "%A, %d de %B de %Y"
       full: "%d de %B de %Y"
@@ -54,34 +54,34 @@ pt-BR:
       short: "%-d %b"
       week: "%A"
     month_names:
-    -
-    - janeiro
-    - fevereiro
-    - março
-    - abril
-    - maio
-    - junho
-    - julho
-    - agosto
-    - setembro
-    - outubro
-    - novembro
-    - dezembro
+      -
+      - janeiro
+      - fevereiro
+      - março
+      - abril
+      - maio
+      - junho
+      - julho
+      - agosto
+      - setembro
+      - outubro
+      - novembro
+      - dezembro
     order:
-    - :day
-    - :month
-    - :year
+      - :day
+      - :month
+      - :year
   datetime:
     distance_in_words:
       about_x_hours:
-        one:  "1 hora"
-        other:  "%{count} horas"
+        one: "1 hora"
+        other: "%{count} horas"
       about_x_months:
-        one:  "1 mês"
-        other:  "%{count} meses"
+        one: "1 mês"
+        other: "%{count} meses"
       about_x_years:
-        one:  "1 ano"
-        other:  "%{count} anos"
+        one: "1 ano"
+        other: "%{count} anos"
       almost_x_years:
         one: quase 1 ano
         other: quase %{count} anos
@@ -229,6 +229,6 @@ pt-BR:
     am: ''
     formats:
       default: "%A, %d de %B de %Y, às %H:%Mh"
-      long: "%d de %B de %Y, %H:%M"
-      short: "%d de %B, %H:%M"
+      date: "%A, %d de %B de %Y"
+      hour: "às %H:%Mh"
     pm: ''
