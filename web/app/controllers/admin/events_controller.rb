@@ -13,15 +13,36 @@ module Admin
 		# For example, you may want to send an email after a foo is updated.
 		#
 		def create
-			super
-			PredictEventLabels.predict(requested_resource)
-			PredictSimilarEvents.predict(requested_resource)
+			resource = resource_class.new(resource_params)
+			authorize_resource(resource)
+
+			if resource.save
+				PredictEventLabels.predict(resource)
+				PredictSimilarEvents.predict(resource)
+				redirect_to(
+					[namespace, resource],
+					notice: translate_with_resource("create.success"),
+				)
+			else
+				render :new, locals: {
+					page: Administrate::Page::Form.new(dashboard, resource),
+				}, status:           :unprocessable_entity
+			end
 		end
 
 		def update
-			super
-			PredictEventLabels.predict(requested_resource)
-			PredictSimilarEvents.predict(requested_resource)
+			if requested_resource.update(resource_params)
+				PredictEventLabels.predict(requested_resource)
+				PredictSimilarEvents.predict(requested_resource)
+				redirect_to(
+				[namespace, requested_resource],
+				notice: translate_with_resource("update.success"),
+				)
+			else
+				render :edit, locals: {
+				page: Administrate::Page::Form.new(dashboard, requested_resource),
+				}, status: :unprocessable_entity
+			end
 		end
 
 		# Override this method to specify custom lookup behavior.

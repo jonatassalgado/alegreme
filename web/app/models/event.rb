@@ -134,6 +134,10 @@ class Event < ApplicationRecord
 		start_time
 	end
 
+	def similar_data
+		read_attribute(:similar_data).blank? ? [''] : read_attribute(:similar_data)
+	end
+
 	def image_dominant_color
 		if self&.image_data['feed']
 			self.image_data.dig('feed', 'metadata', 'dominant_color')
