@@ -45,7 +45,7 @@ module Api
 		def liked
 			begin
 				@user         = current_user
-				@liked_events = @user.liked_events.includes(:place, :categories).active.valid.order_by_date.limit(100)
+				@liked_events = @user.liked_events.includes(:place, :categories).active.valid.order_by_date
 			rescue StandardError => e
 				render json: {
 					error:  "Failed request liked events. Error: #{e}",

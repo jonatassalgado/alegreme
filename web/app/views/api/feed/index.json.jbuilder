@@ -11,6 +11,7 @@ json.feed @grouped_events do |group, events|
 		json.categories event.categories.pluck(:details)
 		json.place limit_place_name_size event.place_details_name
 		json.origin_url event_url(event, format: :html)
+		json.multiple_hours event.multiple_hours
 		json.created_at event.created_at
 		json.updated_at event.updated_at
 		json.is_new is_new_event?(event)
