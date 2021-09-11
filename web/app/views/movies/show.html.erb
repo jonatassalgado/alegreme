@@ -1,4 +1,7 @@
 <% content_for :meta_title, "Filme #{@movie.title} nos cinemas de Porto Alegre - RS" %>
+<% content_for :meta_description, strip_tags(limit_description_size(@movie.description, 160)) %>
+<% content_for :meta_image, @movie.image[:medium].try { |image| image.url(public: true) } %>
+
 <% content_for :back_button, true %>
 <% content_for :top_app_bar_title, truncate(@movie.title, length: 30) %>
 
