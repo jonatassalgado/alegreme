@@ -20,8 +20,7 @@
 									<% elsif group[0].to_date <= Date.today + 7 %>
 										<%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
 									<% else %>
-										<%= I18n.l(group[0]&.to_date, format: :week).titlecase %>
-										, <%= I18n.l(group[0]&.to_date, format: :long).titlecase %>
+										<%= I18n.l(group[0]&.to_date, format: :week).titlecase %>, <%= I18n.l(group[0]&.to_date, format: :long).titlecase %>
 									<% end %>
 								<% end %>
 							</h2>

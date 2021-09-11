@@ -229,6 +229,7 @@ pt-BR:
     am: ''
     formats:
       default: "%A, %d de %B de %Y, às %H:%Mh"
-      date: "%A, %d de %B de %Y"
-      hour: "às %H:%Mh"
+      week_day_month_year: "%A, %d de %B de %Y"
+      day_month_year: "%d de %B de %Y"
+      hour: "%H:%Mh"
     pm: ''

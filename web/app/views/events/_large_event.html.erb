@@ -8,7 +8,7 @@
 <!--		<div class="space-x-1">-->
 			<%#= link_to "Porto Alegre", city_events_url, class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 			<%#= link_to event.categories_primary_name.try(:capitalize), category_events_url(event.categories_primary_name), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
-			<%#= link_to I18n.l(event.start_time, format: :long), day_events_url(event.start_time.strftime('%d-%m-%Y')), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
+			<%#= link_to I18n.l(event.start_time), day_events_url(event.start_time.strftime('%d-%m-%Y')), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 			<%#= link_to limit_place_name_size(event.place_details_name, 30), place_path(event.place), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 <!--		</div>-->
 	<%# end %>
@@ -67,7 +67,7 @@
 				<% if event.start_time < Date.today + 7 %>
 					<%= I18n.l(event.start_time, format: :week) %>
 				<% else %>
-					<%= I18n.l(event.start_time, format: :long) %>
+					<%= I18n.l(event.start_time, format: :day_month_year) %>
 				<% end %>
 			</div>
 			<div class="text-sm"><%= format_hour event.start_time %></div>
