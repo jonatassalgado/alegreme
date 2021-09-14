@@ -21,12 +21,12 @@
 			<% unless current_user %>
 				<div id="hero__presentation" data-turbo-permanent="" class="overflow-hidden overflow-x-hidden relative gap-3 items-center mx-5 md:mx-0 mb-5 mb-16 h-56 rounded-lg border select-none md:mb-24 md:h-72 md:items-start tap-highlight-none" style="min-height: 200px">
 					<div class="relative z-20 px-3 pt-3 -mb-5 md:pt-5">
-						<h2 class="hidden md:inline-block c-h2 text-brand-600">
+						<h1 class="hidden md:inline-block c-h2 text-brand-600">
 							Eventos e cinema em Porto Alegre
-						</h2>
-						<h2 class="text-center md:hidden c-h2 text-brand-600">
+						</h1>
+						<h1 class="text-center md:hidden c-h2 text-brand-600">
 							Eventos e cinema em <br> Porto Alegre
-						</h2>
+						</h1>
 						<span class="text-center md:text-left block leading-snug md:inline-block md:leading-normal md:text-base mt-1.5 text-brand-600 text-xs">
     					Descubra eventos e siga seus locais favoritos para não perder nada que acontece na cidade.
 						</span>
@@ -50,21 +50,21 @@
 				<div class="bg-white">
 					<% if params[:category] %>
 						<div class="flex justify-between items-center pr-5 md:pr-10">
-							<h2 class="mb-3 c-h2">
+							<h1 class="mb-3 c-h2">
 								Eventos nos próximos dias na categoria:
 								<span class="text-brand-600">
 									<%= @category&.details_display_name %>
 								</span>
-							</h2>
+							</h1>
 						</div>
 					<% elsif params[:day] %>
-						<h2 class="c-h2">
+						<h1 class="c-h2">
 							Eventos no dia <%= I18n.l params[:day].to_date %>
-						</h2>
+						</h1>
 					<% else %>
-						<h2 class="c-h2">
+						<h1 class="c-h2">
 							Eventos nos próximos dias
-						</h2>
+						</h1>
 						<%= render MainSidebar::FilterComponent.new(session:           session.id,
 																												params:            params,
 																												show_filter_group: nil,

@@ -3,7 +3,7 @@
 		<div class="<%= class_names('sticky bg-white z-10 flex-1 px-5 pt-4 pb-2 leading-6 text-gray-600 md:leading-normal md:px-5',
 																{'top-0':  mobile_device?,
 																 'top-16': !mobile_device?}) %>">
-			<h2 class="text-xl font-semibold md:text-4xl"><%= day_of_week(group[0].to_date).titlecase %></h2>
+			<div class="text-xl font-semibold md:text-4xl"><%= day_of_week(group[0].to_date).titlecase %></div>
 			<% if group[0].to_date == Date.today || group[0].to_date == Date.tomorrow %>
 				<div class="-mt-1 border-b-2 border-brand-500  text-sm w-content"><%= "#{I18n.l(group[0].to_date, format: :week)} · #{I18n.l(group[0].to_date, format: :long)}" %></div>
 			<% elsif group[0].to_date < Date.today + 7 %>
