@@ -51,10 +51,9 @@
 					<% if params[:category] %>
 						<div class="flex justify-between items-center pr-5 md:pr-10">
 							<h1 class="mb-3 c-h2">
-								Eventos nos próximos dias na categoria:
 								<span class="text-brand-600">
 									<%= @category&.details_display_name %>
-								</span>
+								</span> em Porto Alegre
 							</h1>
 						</div>
 					<% elsif params[:day] %>

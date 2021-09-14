@@ -174,6 +174,10 @@ class Category < ApplicationRecord
 								}
 	].freeze
 
+	scope 'active', -> {
+		all.reject{|category| ['outlier', 'protest'].include?(category&.details['name'])}
+	}
+
 	def details=(value)
 		self[:details] = value.is_a?(String) ? JSON.parse(value) : value
 	end

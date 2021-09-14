@@ -1,9 +1,21 @@
-<section class="antialiased bg-gray-50 flex flex-col font-light md:px-0 md:text-base mt-10 md:mt-5 px-5 py-6 space-y-1 text-center text-gray-600 text-sm w-full pb-24 md:pb-6 <%= "me-footer--#{params[:controller]}" if params[:controller] %>">
+<section class="bg-gray-50 flex flex-col font-light md:px-0 md:text-base mt-10 md:mt-5 px-5 py-6 space-y-1 text-center text-gray-600 text-sm w-full pb-24 md:pb-6 <%= "me-footer--#{params[:controller]}" if params[:controller] %>">
 
 	<a class="inline-block mx-auto w-content" href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
 		<img alt='Disponível no Google Play' width="200" src='https://play.google.com/intl/en_us/badges/static/images/badges/pt-br_badge_web_generic.png'/>
 	</a>
 
+	<% if !current_user || (current_user && controller_name == 'feeds') %>
+		<div class="py-20">
+			<h3 class="font-semibold mb-6 md:max-w-screen-lg mx-auto md:text-left text-xl">Categorias</h3>
+			<div class="gap-y-1.5 gap-x-4 md:gap-x-2 md:gap-y-2 grid grid-cols-2 md:grid-cols-3 md:max-w-screen-lg mx-auto text-left">
+				<% Category.active.each do |category| %>
+					<a href="<%= category_events_path category.details_url %>" class="text-xs hover:text-brand-600 cursor-pointer">
+						<%= category.details_display_name %> <span class="hidden md:inline-block">em Porto Alegre</span>
+					</a>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
 
 	<div class="font-semibold text-brand-600">
 		oi@alegreme.com
@@ -18,7 +30,8 @@
 		</div>
 		<span class="px-2">·</span>
 		<div class="text-brand-600">
-			<a href="https://en.wikipedia.org/wiki/Perpetual_beta" title="release early and release often (even with bugs \o/)" rel="nofollow" target="_blank">Always in beta 🤙</a>
+			<a href="https://en.wikipedia.org/wiki/Perpetual_beta" title="release early and release often (even with bugs \o/)" rel="nofollow" target="_blank">Always
+				in beta 🤙</a>
 		</div>
 	</div>
 	<!-- <div class="me-footer__vamodale">
@@ -30,7 +43,9 @@
 		</a>
 		<a rel="nofollow" class="md:hover:text-brand-600 transition-colors duration-150" href="/privacy">Política de
 			privacidade</a> ·
-		<a rel="nofollow" class="md:hover:text-brand-600 transition-colors duration-150" href="/terms">Termos de serviço</a> ·
-		<a href="/content" class="md:hover:text-brand-600 transition-colors duration-150" rel="nofollow">Política de propriedade intelectual</a>
+		<a rel="nofollow" class="md:hover:text-brand-600 transition-colors duration-150" href="/terms">Termos de serviço</a>
+		·
+		<a href="/content" class="md:hover:text-brand-600 transition-colors duration-150" rel="nofollow">Política de
+			propriedade intelectual</a>
 	</div>
 </section>
