@@ -1,6 +1,6 @@
 <%= notice %>
 
-<% content_for :meta_title, "Evento #{@event.name.gsub(/[^[$][-]\p{L}\p{M}*+ ]|[+]/i, '')} em Porto Alegre | Alegreme.com" %>
+<% content_for :meta_title, "Evento #{@event.name} em Porto Alegre | Alegreme.com" %>
 <% content_for :meta_description, strip_tags(limit_description_size(@event.description, 160)) %>
 <% content_for :meta_image, @event.image[:original].try { |image| image.url(public: true) } %>
 <% content_for :canonical_url, event_url(@event, format: :html) %>

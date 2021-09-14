@@ -1,4 +1,5 @@
 <% content_for :meta_title, "Cinema #{@cinema.display_name} em Porto Alegre - RS" %>
+<% content_for :meta_description, "Filmes em cartaz no cinema #{@cinema.display_name} em Porto Alegre" %>
 <% content_for :back_button, true %>
 <% content_for :top_app_bar_title, truncate(@cinema.display_name, length: 30) %>
 
