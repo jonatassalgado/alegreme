@@ -48,7 +48,7 @@
 				<% if current_stage == :suggestions %>
 					<div class="md:mb-5">
 						<div class="c-h2">
-							Sugestões para você
+							Sugestões para <%= truncate(@user.first_name, length: 20) %>
 						</div>
 					</div>
 					<div data-controller="loader"

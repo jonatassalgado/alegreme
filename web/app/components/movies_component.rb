@@ -1,5 +1,5 @@
 class MoviesComponent < ViewComponent::Base
-	def initialize(movies:, user:, title: 'Filmes em cartaz', id: 'movies', chips: false, hovercard: false, template: 'default')
+	def initialize(movies:, user:, title: 'Filmes em Porto Alegre', id: 'movies', chips: false, hovercard: false, template: 'default')
 		@movies    = movies
 		@user      = user
 		@title     = title
