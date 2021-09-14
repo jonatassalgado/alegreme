@@ -30,7 +30,7 @@ services:
       PGUSER: jon
       API_URL: http://api
       IS_DOCKER: 'true'
-      HTTP_HOST: 'www.alegreme.com'
+      HTTP_HOST: 'alegreme.com'
       NODE_ENV: production
       WEB_CONCURRENCY: 2
       RAILS_MAX_THREADS: 4
@@ -65,7 +65,7 @@ services:
       PGUSER: jon
       API_URL: http://api
       IS_DOCKER: 'true'
-      HTTP_HOST: 'www.alegreme.com'
+      HTTP_HOST: 'alegreme.com'
       NODE_ENV: production
       WEB_CONCURRENCY: 2
       RAILS_MAX_THREADS: 4

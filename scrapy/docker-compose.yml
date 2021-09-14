@@ -10,7 +10,7 @@ services:
     environment:
       IS_DOCKER: 'true'
       ENV: 'production'
-      DOMAIN: 'www.alegreme.com'
+      DOMAIN: 'alegreme.com'
     volumes:
       - ./alegreme:/var/www/scrapy/alegreme
       - ./data:/var/www/scrapy/data

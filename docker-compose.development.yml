@@ -29,7 +29,7 @@ services:
       PGUSER: postgres
       API_URL: http://api
       IS_DOCKER: 'true'
-      HTTP_HOST: 'www.alegreme.com'
+      HTTP_HOST: 'alegreme.com'
       NODE_ENV: development
       JOB_WORKER_URL: redis://redis:6379/0
       RAILS_MAX_THREADS: 3
