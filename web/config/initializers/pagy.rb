@@ -12,7 +12,7 @@
 # Instance variables
 # See https://ddnexus.github.io/pagy/api/pagy#instance-variables
 # Pagy::VARS[:page]   = 1                                  # default
-# Pagy::VARS[:items]  = 20                                 # default
+Pagy::VARS[:items] = 16 # default
 # Pagy::VARS[:outset] = 0                                  # default
 
 # Other Variables
@@ -20,7 +20,7 @@
 # Pagy::VARS[:size]       = [1,4,4,1]                       # default
 # Pagy::VARS[:page_param] = :page                           # default
 # Pagy::VARS[:params]     = {}                              # default
-Pagy::VARS[:fragment]   = '#main-sidebar--feed'                     # example
+Pagy::VARS[:fragment] = '#main-sidebar--feed' # example
 # Pagy::VARS[:link_extra] = 'data-remote="true"'            # example
 # Pagy::VARS[:i18n_key]   = 'pagy.item_name'                # default
 # Pagy::VARS[:cycle]      = true                            # example
@@ -120,7 +120,7 @@ Pagy::VARS[:fragment]   = '#main-sidebar--feed'                     # example
 # require 'pagy/extras/shared'
 # require 'pagy/extras/metadata'
 # For performance reason, you should explicitly set ONLY the metadata you use in the frontend
-Pagy::VARS[:metadata] = [:page, :last]    # example
+Pagy::VARS[:metadata] = [:page, :last] # example
 
 # Trim extra: Remove the page=1 param from links
 # See https://ddnexus.github.io/pagy/extras/trim
