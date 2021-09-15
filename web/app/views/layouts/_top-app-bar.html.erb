@@ -63,7 +63,11 @@
 						</g>
 					</svg>
 				</a>
-				<h1 class="text-center md:text-left absolute bottom-1 font-light left-0 text-xxs w-full">Eventos e cinema em Porto Alegre</h1>
+				<% if controller_name != 'feeds' %>
+					<h1 class="text-center md:text-left absolute bottom-1 font-light left-0 text-xxs w-full">Eventos e cinema em
+						Porto Alegre
+					</h1>
+				<% end %>
 			<% end %>
 		</div>
 		<% if !current_user && controller_name == 'feeds' %>

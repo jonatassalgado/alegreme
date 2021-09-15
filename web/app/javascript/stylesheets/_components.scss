@@ -1,5 +1,9 @@
 @layer components {
   .c-h2 {
+    @apply text-2xl font-semibold leading-tight text-gray-800 md:font-bold md:leading-snug font-display md:text-4xl;
+  }
+
+  .c-h2 {
     @apply text-xl font-semibold leading-tight text-gray-800 md:font-bold md:leading-snug font-display md:text-3xl;
   }
 
