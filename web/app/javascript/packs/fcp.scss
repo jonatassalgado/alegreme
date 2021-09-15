@@ -1,708 +1,708 @@
-@import '../stylesheets/variables';
-@import '../stylesheets/mixins';
-@import '../stylesheets/template';
-
-//@import "@material/layout-grid/mdc-layout-grid";
-//@import "@material/button/mdc-button";
-@import "../stylesheets/components/me-button";
-@import "../stylesheets/components/me-text-field";
-@import "../stylesheets/welcome/media-queries";
-
-
-$mdc-typography-font-family: $font-secondary-family;
-$mdc-theme-primary: $brand-color;
-
-$font-primary-family: "Montserrat", sans-serif;
-$font-secondary-color: #4f4f4f;
-$font-tertiary-color: #828282;
-$wrapper-width: 1280px;
-$background-color: #f3f5f7;
-
-body {
-  letter-spacing: -0.5px;
-  font-family: $font-primary-family;
-  @include mobile-only {
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    -webkit-touch-callout: none;
-  }
-}
-
-a {
-  text-decoration: none;
-}
-
-.template__container {
-  font-family: $font-primary-family;
-  color: $font-secondary-color;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  //background-image: url('welcome/bg-top.jpg');
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: contain;
-  padding: 0 0 150px 0;
-  @include mobile-only {
-    //background-image: url('welcome/bg-top-mobile.jpg');
-    background-repeat: no-repeat;
-    background-position: top center;
-    max-width: 100vw;
-    &.is-pwa {
-      min-height: 100vh;
-      background-size: auto;
-      padding: 0;
-    }
-  }
-
-}
-
-section {
-  min-height: 50px;
-}
-
-.menu {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 24px 0 0;
-
-  & a {
-    color: $brand-color;
-    padding: 0 10px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .is-pwa & {
-    @include mobile-only {
-      align-self: stretch;
-      padding: 0 24px 0 0;
-    }
-  }
-}
-
-.brand {
-  display: flex;
-  margin: 0 0 0 24px;
-  min-height: auto;
-  align-items: center;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-  & img {
-    //max-width: 200px;
-    position: relative;
-  }
-
-  @include mobile-only {
-    margin: 0 0 0 24px;
-  }
-
-  .is-pwa & {
-    @include mobile-only {
-      //margin: 30px 24px 15px 24px;
-    }
-  }
-
-  &__logo {
-    position: relative;
-  }
-
-  &__pimba {
-    text-transform: uppercase;
-    width: 20px;
-    height: 15px;
-    position: absolute;
-    font-size: 12px;
-    left: -30px;
-    top: -15px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
-  & > div {
-    padding: 0 5px;
-  }
-}
-
-.headline {
-  margin: 35px 24px 0 24px;
-
-  @include mobile-only {
-    margin: 24px 24px 0 24px;
-  }
-
-  &.is-initial-state {
-    margin: 50px 24px 0 24px;
-    max-width: 85%;
-    @include mobile-only {
-      margin: 24px 24px 0 24px;
-      max-width: 100%;
-    }
-  }
-
-  .is-pwa & {
-    margin: 50px 24px 0 24px;
-  }
-
-  & h1 {
-    font-family: $font-primary-family;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 34px;
-    line-height: 120%;
-
-    @include mobile-only {
-      font-size: 22px;
-      line-height: 26px;
-      text-align: left;
-      max-width: 90%;
-      margin: 0 0 12px 0;
-    }
-
-    .is-pwa {
-      margin: 0 0 24px 0;
-    }
-  }
-
-  & h2 {
-    font-family: $font-primary-family;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 26px;
-    margin: 0 0 0 0;
-    max-width: 1080px;
-    @include mobile-only {
-      font-size: 14px;
-      text-align: left;
-      line-height: 1.6em;
-    }
-  }
-}
-
-.invite {
-  margin: 25px 0 0 0;
-  position: relative;
-  width: 100%;
-  user-select: none;
-  transition: transform 350ms ease;
-  @include mobile-only {
-    margin: 25px auto 0 auto;
-    padding-bottom: 45px;
-    flex-direction: column;
-    .is-pwa & {
-      margin: 16px auto 0 auto;
-    }
-  }
-
-  &__playstore-link {
-    color: $font-tertiary-color;
-    font-weight: 500;
-    margin: 15px 0 0 12px;
-    @include mobile-only {
-      margin: 16px 0 0 0;
-    }
-
-    & a {
-      font-weight: 800;
-      color: $font-secondary-color;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  &__status {
-    display: none;
-    opacity: 0;
-    padding: 0 24px;
-    transition: transform 0.8s ease, opacity 0.8s ease;
-  }
-
-  &.is-invited {
-    .invite__status {
-      display: block;
-      opacity: 1;
-      background: #08994c26;
-      padding: 12px;
-      margin: 0 24px;
-      border-radius: 6px;
-    }
-
-    .invite__cta {
-      opacity: 0;
-    }
-
-    .invite__google-details {
-      opacity: 0;
-    }
-
-    .invite__share {
-      opacity: 1 !important;
-    }
-
-    .invite__email {
-      opacity: 0 !important;
-      display: none !important;
-    }
-
-    .invite__loginButtons {
-      opacity: 0 !important;
-    }
-  }
-
-  &__counter {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 27px;
-    margin: 6px 0 0 0;
-    @include mobile-only {
-      font-size: 16px;
-      line-height: 21px;
-      padding: 0;
-    }
-  }
-
-  &__details {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 21px;
-    color: rgba(12, 15, 9, 0.7);
-    margin: 0 0 0 0;
-    transition: opacity 0.4s ease;
-    @include mobile-only {
-      display: none;
-      font-size: 12px;
-      line-height: 16px;
-      margin: 6px auto 0 auto;
-      max-width: 50%;
-    }
-  }
-
-  &__cta-group {
-    display: flex;
-    padding: 0 24px;
-    @include mobile-only {
-      flex-wrap: wrap;
-    }
-  }
-
-  &__cta {
-    width: 204px;
-    height: 50px;
-    font-family: $font-primary-family;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    background: $brand-color;
-    color: $surface-color;
-    justify-content: center;
-    //box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
-    border-radius: 60px;
-    margin: 0 12px 0 0;
-    cursor: pointer;
-    transition: box-shadow 250ms ease, transform 250ms ease, opacity 250ms ease;
-    will-change: transform;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    -webkit-user-select: none;
-    @include mobile-only {
-      width: 196px;
-      height: 62px;
-      font-size: 18px;
-      font-weight: 600;
-      margin: 0 12px 12px 0;
-      .invite-float & {
-        width: calc(100vw - 48px);
-      }
-    }
-
-    &:hover {
-      transform: scale(1.03);
-      background: lighten($brand-color, 3%);
-
-      &.invite__cta span {
-        transform: translateX(6px);
-      }
-    }
-
-    &:active {
-      transform: scale(0.95);
-      background: darken($brand-color, 3%);
-    }
-
-    &--signin {
-      background: $surface-color;
-      color: $font-secondary-color;
-      width: 130px;
-      margin: 0 0 0 0;
-      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.16);
-
-      &:hover {
-        color: $font-secondary-color;
-        background: $surface-color;
-      }
-
-      &:active {
-        background: darken($surface-color, 3%);
-      }
-
-      .invite-float & {
-        display: none;
-      }
-
-      @include mobile-only {
-        margin: 0 0 6px 0;
-        width: 116px;
-      }
-    }
-  }
-
-  &__loginButtons {
-    margin: 24px 30px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    display: none;
-    flex-wrap: wrap;
-    border-top: 1px solid #e3e8ed;
-    padding: 24px 0 0 0;
-    @include mobile-only {
-      justify-content: center;
-      margin: 30px auto;
-      flex-direction: column;
-    }
-  }
-
-  &__email {
-    padding: 0 24px;
-    justify-content: space-between;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    @include mobile-only {
-      padding: 0 18px;
-      flex-direction: column;
-    }
-
-    & .me-text-field {
-      width: 50%;
-      margin: 0 6px;
-      @include mobile-only {
-        width: calc(100% - 12px);
-        margin: 6px 6px;
-      }
-    }
-
-    & .me-button {
-      height: auto;
-      min-height: 50px;
-      @include mobile-only {
-        margin: 6px 0 0 0;
-      }
-    }
-  }
-
-  &__button {
-    margin: 0 6px;
-    padding: 12px 16px;
-    border-radius: 36px;
-    color: $surface-color;
-    font-family: $font-primary-family;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    @include mobile-only {
-      margin: 5px 24px;
-      text-align: center;
-      padding: 18px 0;
-    }
-
-    & svg {
-      height: 18px;
-      margin: 0 10px 0 0;
-    }
-
-    &-gmail {
-      color: #d44a3d;
-      box-shadow: $surface-z10-box-shadow;
-    }
-
-    &-facebook {
-      color: #4267b2;
-      box-shadow: $surface-z10-box-shadow;
-    }
-
-    &-instagram {
-      color: $font-secondary-color;
-      //width: 90vw;
-      text-align: center;
-      margin: 0 auto;
-      line-height: 1.35em;
-      font-size: 13px;
-      display: none;
-      @include mobile-only {
-        display: none;
-      }
-
-      & a {
-        color: #C13584;
-        border-bottom: 1px solid;
-      }
-    }
-  }
-
-  &__google-details {
-    text-align: center;
-    margin: 20px auto 0 auto;
-    // width: 406px;
-    // height: 35px;
-    // background-image: url("welcome/google-details.png");
-    // background-repeat: no-repeat;
-    // background-position: center;
-    transition: opacity 0.4s ease;
-    @include mobile-only {
-      // width: 220px;
-      // height: 51px;
-      // background-image: url("welcome/google-details-mobile.png");
-      // background-repeat: no-repeat;
-      // background-position: center;
-    }
-  }
-
-  &__share {
-    opacity: 0 !important;
-    width: 100%;
-    margin: 25px 0 0 0;
-    text-align: center;
-    transition: opacity 0.4s ease;
-  }
-
-  & .people {
-    margin: auto;
-    position: relative;
-    width: 100%;
-    height: 30px;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 300ms ease;
-    @include mobile-only {
-      width: 100vw;
-      height: 40px;
-    }
-
-    &__person-face {
-      width: 25px;
-      height: 25px;
-      border: 3px solid #FFFFFF;
-      border-radius: 100%;
-      position: absolute;
-      left: 0;
-      background-color: #f3f3f3;
-      background-size: 106% 106%;
-      background-position: center;
-      //transition: transform 2s ease;
-      @include mobile-only {
-        border: 2px solid #FFFFFF;
-      }
-    }
-  }
-}
-
-.invite-float {
-  position: fixed;
-  bottom: 0;
-  background: linear-gradient(0deg, $surface-color 60%, rgba(255, 255, 255, 0));
-  width: 100vw;
-  z-index: 3;
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(150px);
-  transition: opacity 250ms ease, transform 250ms ease;
-
-  & .invite {
-    display: flex;
-    justify-content: center;
-    padding: 55px 0 12px 0;
-    margin: 0;
-  }
-
-  & .invite__cta {
-    margin: 0;
-  }
-}
-
-.shareBtn {
-  position: relative;
-  margin: 0 auto;
-  background: white;
-  transition: opacity 250ms ease, transform 300ms ease;
-  border: 0;
-  display: flex;
-  align-items: center;
-  font-family: $font-primary-family;
-  padding: 14px 18px;
-  box-shadow: 0 0 30px #0000004d;
-  border-radius: 35px;
-  z-index: 5;
-  will-change: opacity, transform;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  -webkit-user-select: none;
-  @include desktop-only {
-    display: none;
-  }
-
-  & i {
-    margin: 0 6px 0 0;
-  }
-
-  &.is-invited {
-    opacity: 1;
-    display: flex;
-    transform: translateY(0);
-  }
-
-  &--invite {
-    opacity: 0;
-    display: none;
-    transform: translateY(50px);
-  }
-}
-
-.hero {
-  --y: 0;
-  display: flex;
-  width: 100%;
-  margin: auto;
-  max-width: $wrapper-width;
-  min-height: 860px;
-  overflow: hidden;
-  @include mobile-only {
-    height: 100vh;
-    min-height: 780px;
-  }
-
-  &__wrapper {
-    background: lighten($background-color, 1%);
-    width: 100%;
-  }
-
-  &-left, &-right {
-    width: 50%;
-  }
-
-  &-left {
-    background: $surface-color;
-    margin: 40px 0 50px 26px;
-    background-image: url("../images/welcome/experiences.jpg");
-    background-repeat: no-repeat;
-    background-position-y: bottom;
-    background-size: contain;
-    @include mobile-only {
-      background-size: 160%;
-      margin: 0;
-      width: 100%;
-      background-position: center bottom;
-    }
-
-    .is-pwa & {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      flex-direction: column;
-      padding: 24px 0;
-    }
-  }
-
-  &-right {
-    @include mobile-only {
-      display: none;
-    }
-  }
-
-  &__device {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    top: 0;
-  }
-
-  &__banner {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    top: 40px;
-    width: fit-content;
-    margin: auto;
-    z-index: 3;
-    transition: opacity 850ms ease 150ms;
-  }
-}
-
-.android {
-  $android-resize: 1;
-  $android-width: 536;
-  $android-height: 790;
-  width: unquote($android-width + 'px');
-  height: unquote($android-height + 'px');
-  background-image: url("../images/welcome/hero-device.png");
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: auto;
-  margin: 0;
-  z-index: 2;
-  position: relative;
-  transition: transform 850ms ease;
-  will-change: transform;
-  display: flex;
-  justify-content: center;
-  @include mobile-only {
-    width: unquote($android-width * $android-resize + 'px');
-    height: unquote($android-height * $android-resize + 'px');
-    position: relative;
-    top: 0;
-    right: 0;
-    //transform: scale(1.8);
-    margin: 86px auto 0 auto;
-  }
-
-  &__screen {
-    background: #ffffff;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    $android-screen-left: 121;
-    $android-screen-height: 521;
-    $android-screen-width: 295;
-    $android-screen-top: 143;
-    width: unquote($android-screen-width + 'px');
-    height: unquote($android-screen-height + 'px');
-    top: unquote($android-screen-top + 'px');
-    //left: unquote($android-screen-left + 'px');
-
-
-    & img, picture, video {
-      width: inherit;
-    }
-
-    @include mobile-only {
-      top: unquote($android-screen-top * $android-resize + 'px');
-      left: unquote($android-screen-left * $android-resize + 'px');
-      width: unquote($android-screen-width * $android-resize + 'px');
-      height: unquote($android-screen-height * $android-resize + 'px');
-    }
-  }
-}
+//@import '../stylesheets/variables';
+//@import '../stylesheets/mixins';
+//@import '../stylesheets/template';
+//
+////@import "@material/layout-grid/mdc-layout-grid";
+////@import "@material/button/mdc-button";
+//@import "../stylesheets/components/me-button";
+//@import "../stylesheets/components/me-text-field";
+//@import "../stylesheets/welcome/media-queries";
+//
+//
+//$mdc-typography-font-family: $font-secondary-family;
+//$mdc-theme-primary: $brand-color;
+//
+//$font-primary-family: "Montserrat", sans-serif;
+//$font-secondary-color: #4f4f4f;
+//$font-tertiary-color: #828282;
+//$wrapper-width: 1280px;
+//$background-color: #f3f5f7;
+//
+//body {
+//  letter-spacing: -0.5px;
+//  font-family: $font-primary-family;
+//  @include mobile-only {
+//    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+//    -webkit-touch-callout: none;
+//  }
+//}
+//
+//a {
+//  text-decoration: none;
+//}
+//
+//.template__container {
+//  font-family: $font-primary-family;
+//  color: $font-secondary-color;
+//  display: flex;
+//  flex-direction: column;
+//  align-items: center;
+//  //background-image: url('welcome/bg-top.jpg');
+//  background-repeat: no-repeat;
+//  background-position: top center;
+//  background-size: contain;
+//  padding: 0 0 150px 0;
+//  @include mobile-only {
+//    //background-image: url('welcome/bg-top-mobile.jpg');
+//    background-repeat: no-repeat;
+//    background-position: top center;
+//    max-width: 100vw;
+//    &.is-pwa {
+//      min-height: 100vh;
+//      background-size: auto;
+//      padding: 0;
+//    }
+//  }
+//
+//}
+//
+//section {
+//  min-height: 50px;
+//}
+//
+//.menu {
+//  display: flex;
+//  align-items: center;
+//  justify-content: space-between;
+//  padding: 24px 24px 0 0;
+//
+//  & a {
+//    color: $brand-color;
+//    padding: 0 10px;
+//
+//    &:hover {
+//      text-decoration: underline;
+//    }
+//  }
+//
+//  .is-pwa & {
+//    @include mobile-only {
+//      align-self: stretch;
+//      padding: 0 24px 0 0;
+//    }
+//  }
+//}
+//
+//.brand {
+//  display: flex;
+//  margin: 0 0 0 24px;
+//  min-height: auto;
+//  align-items: center;
+//  -webkit-user-select: none;
+//  -moz-user-select: none;
+//  -ms-user-select: none;
+//  user-select: none;
+//
+//  & img {
+//    //max-width: 200px;
+//    position: relative;
+//  }
+//
+//  @include mobile-only {
+//    margin: 0 0 0 24px;
+//  }
+//
+//  .is-pwa & {
+//    @include mobile-only {
+//      //margin: 30px 24px 15px 24px;
+//    }
+//  }
+//
+//  &__logo {
+//    position: relative;
+//  }
+//
+//  &__pimba {
+//    text-transform: uppercase;
+//    width: 20px;
+//    height: 15px;
+//    position: absolute;
+//    font-size: 12px;
+//    left: -30px;
+//    top: -15px;
+//    -webkit-user-select: none;
+//    -moz-user-select: none;
+//    -ms-user-select: none;
+//    user-select: none;
+//  }
+//
+//  & > div {
+//    padding: 0 5px;
+//  }
+//}
+//
+//.headline {
+//  margin: 35px 24px 0 24px;
+//
+//  @include mobile-only {
+//    margin: 24px 24px 0 24px;
+//  }
+//
+//  &.is-initial-state {
+//    margin: 50px 24px 0 24px;
+//    max-width: 85%;
+//    @include mobile-only {
+//      margin: 24px 24px 0 24px;
+//      max-width: 100%;
+//    }
+//  }
+//
+//  .is-pwa & {
+//    margin: 50px 24px 0 24px;
+//  }
+//
+//  & h1 {
+//    font-family: $font-primary-family;
+//    font-style: normal;
+//    font-weight: bold;
+//    font-size: 34px;
+//    line-height: 120%;
+//
+//    @include mobile-only {
+//      font-size: 22px;
+//      line-height: 26px;
+//      text-align: left;
+//      max-width: 90%;
+//      margin: 0 0 12px 0;
+//    }
+//
+//    .is-pwa {
+//      margin: 0 0 24px 0;
+//    }
+//  }
+//
+//  & h2 {
+//    font-family: $font-primary-family;
+//    font-weight: normal;
+//    font-size: 18px;
+//    line-height: 26px;
+//    margin: 0 0 0 0;
+//    max-width: 1080px;
+//    @include mobile-only {
+//      font-size: 14px;
+//      text-align: left;
+//      line-height: 1.6em;
+//    }
+//  }
+//}
+//
+//.invite {
+//  margin: 25px 0 0 0;
+//  position: relative;
+//  width: 100%;
+//  user-select: none;
+//  transition: transform 350ms ease;
+//  @include mobile-only {
+//    margin: 25px auto 0 auto;
+//    padding-bottom: 45px;
+//    flex-direction: column;
+//    .is-pwa & {
+//      margin: 16px auto 0 auto;
+//    }
+//  }
+//
+//  &__playstore-link {
+//    color: $font-tertiary-color;
+//    font-weight: 500;
+//    margin: 15px 0 0 12px;
+//    @include mobile-only {
+//      margin: 16px 0 0 0;
+//    }
+//
+//    & a {
+//      font-weight: 800;
+//      color: $font-secondary-color;
+//      &:hover {
+//        text-decoration: underline;
+//      }
+//    }
+//  }
+//
+//  &__status {
+//    display: none;
+//    opacity: 0;
+//    padding: 0 24px;
+//    transition: transform 0.8s ease, opacity 0.8s ease;
+//  }
+//
+//  &.is-invited {
+//    .invite__status {
+//      display: block;
+//      opacity: 1;
+//      background: #08994c26;
+//      padding: 12px;
+//      margin: 0 24px;
+//      border-radius: 6px;
+//    }
+//
+//    .invite__cta {
+//      opacity: 0;
+//    }
+//
+//    .invite__google-details {
+//      opacity: 0;
+//    }
+//
+//    .invite__share {
+//      opacity: 1 !important;
+//    }
+//
+//    .invite__email {
+//      opacity: 0 !important;
+//      display: none !important;
+//    }
+//
+//    .invite__loginButtons {
+//      opacity: 0 !important;
+//    }
+//  }
+//
+//  &__counter {
+//    font-style: normal;
+//    font-weight: 400;
+//    font-size: 16px;
+//    line-height: 27px;
+//    margin: 6px 0 0 0;
+//    @include mobile-only {
+//      font-size: 16px;
+//      line-height: 21px;
+//      padding: 0;
+//    }
+//  }
+//
+//  &__details {
+//    font-style: normal;
+//    font-weight: normal;
+//    font-size: 14px;
+//    line-height: 21px;
+//    color: rgba(12, 15, 9, 0.7);
+//    margin: 0 0 0 0;
+//    transition: opacity 0.4s ease;
+//    @include mobile-only {
+//      display: none;
+//      font-size: 12px;
+//      line-height: 16px;
+//      margin: 6px auto 0 auto;
+//      max-width: 50%;
+//    }
+//  }
+//
+//  &__cta-group {
+//    display: flex;
+//    padding: 0 24px;
+//    @include mobile-only {
+//      flex-wrap: wrap;
+//    }
+//  }
+//
+//  &__cta {
+//    width: 204px;
+//    height: 50px;
+//    font-family: $font-primary-family;
+//    font-weight: 600;
+//    font-size: 18px;
+//    line-height: 22px;
+//    display: flex;
+//    align-items: center;
+//    text-align: center;
+//    background: $brand-color;
+//    color: $surface-color;
+//    justify-content: center;
+//    //box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
+//    border-radius: 60px;
+//    margin: 0 12px 0 0;
+//    cursor: pointer;
+//    transition: box-shadow 250ms ease, transform 250ms ease, opacity 250ms ease;
+//    will-change: transform;
+//    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+//    -webkit-user-select: none;
+//    @include mobile-only {
+//      width: 196px;
+//      height: 62px;
+//      font-size: 18px;
+//      font-weight: 600;
+//      margin: 0 12px 12px 0;
+//      .invite-float & {
+//        width: calc(100vw - 48px);
+//      }
+//    }
+//
+//    &:hover {
+//      transform: scale(1.03);
+//      background: lighten($brand-color, 3%);
+//
+//      &.invite__cta span {
+//        transform: translateX(6px);
+//      }
+//    }
+//
+//    &:active {
+//      transform: scale(0.95);
+//      background: darken($brand-color, 3%);
+//    }
+//
+//    &--signin {
+//      background: $surface-color;
+//      color: $font-secondary-color;
+//      width: 130px;
+//      margin: 0 0 0 0;
+//      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.16);
+//
+//      &:hover {
+//        color: $font-secondary-color;
+//        background: $surface-color;
+//      }
+//
+//      &:active {
+//        background: darken($surface-color, 3%);
+//      }
+//
+//      .invite-float & {
+//        display: none;
+//      }
+//
+//      @include mobile-only {
+//        margin: 0 0 6px 0;
+//        width: 116px;
+//      }
+//    }
+//  }
+//
+//  &__loginButtons {
+//    margin: 24px 30px;
+//    opacity: 0;
+//    transition: opacity 0.4s ease;
+//    display: none;
+//    flex-wrap: wrap;
+//    border-top: 1px solid #e3e8ed;
+//    padding: 24px 0 0 0;
+//    @include mobile-only {
+//      justify-content: center;
+//      margin: 30px auto;
+//      flex-direction: column;
+//    }
+//  }
+//
+//  &__email {
+//    padding: 0 24px;
+//    justify-content: space-between;
+//    display: none;
+//    opacity: 0;
+//    transition: opacity 0.4s ease;
+//    @include mobile-only {
+//      padding: 0 18px;
+//      flex-direction: column;
+//    }
+//
+//    & .me-text-field {
+//      width: 50%;
+//      margin: 0 6px;
+//      @include mobile-only {
+//        width: calc(100% - 12px);
+//        margin: 6px 6px;
+//      }
+//    }
+//
+//    & .me-button {
+//      height: auto;
+//      min-height: 50px;
+//      @include mobile-only {
+//        margin: 6px 0 0 0;
+//      }
+//    }
+//  }
+//
+//  &__button {
+//    margin: 0 6px;
+//    padding: 12px 16px;
+//    border-radius: 36px;
+//    color: $surface-color;
+//    font-family: $font-primary-family;
+//    font-size: 14px;
+//    font-weight: 500;
+//    line-height: 22px;
+//    cursor: pointer;
+//    display: flex;
+//    align-items: center;
+//    justify-content: center;
+//    @include mobile-only {
+//      margin: 5px 24px;
+//      text-align: center;
+//      padding: 18px 0;
+//    }
+//
+//    & svg {
+//      height: 18px;
+//      margin: 0 10px 0 0;
+//    }
+//
+//    &-gmail {
+//      color: #d44a3d;
+//      box-shadow: $surface-z10-box-shadow;
+//    }
+//
+//    &-facebook {
+//      color: #4267b2;
+//      box-shadow: $surface-z10-box-shadow;
+//    }
+//
+//    &-instagram {
+//      color: $font-secondary-color;
+//      //width: 90vw;
+//      text-align: center;
+//      margin: 0 auto;
+//      line-height: 1.35em;
+//      font-size: 13px;
+//      display: none;
+//      @include mobile-only {
+//        display: none;
+//      }
+//
+//      & a {
+//        color: #C13584;
+//        border-bottom: 1px solid;
+//      }
+//    }
+//  }
+//
+//  &__google-details {
+//    text-align: center;
+//    margin: 20px auto 0 auto;
+//    // width: 406px;
+//    // height: 35px;
+//    // background-image: url("welcome/google-details.png");
+//    // background-repeat: no-repeat;
+//    // background-position: center;
+//    transition: opacity 0.4s ease;
+//    @include mobile-only {
+//      // width: 220px;
+//      // height: 51px;
+//      // background-image: url("welcome/google-details-mobile.png");
+//      // background-repeat: no-repeat;
+//      // background-position: center;
+//    }
+//  }
+//
+//  &__share {
+//    opacity: 0 !important;
+//    width: 100%;
+//    margin: 25px 0 0 0;
+//    text-align: center;
+//    transition: opacity 0.4s ease;
+//  }
+//
+//  & .people {
+//    margin: auto;
+//    position: relative;
+//    width: 100%;
+//    height: 30px;
+//    z-index: 2;
+//    opacity: 0;
+//    transition: opacity 300ms ease;
+//    @include mobile-only {
+//      width: 100vw;
+//      height: 40px;
+//    }
+//
+//    &__person-face {
+//      width: 25px;
+//      height: 25px;
+//      border: 3px solid #FFFFFF;
+//      border-radius: 100%;
+//      position: absolute;
+//      left: 0;
+//      background-color: #f3f3f3;
+//      background-size: 106% 106%;
+//      background-position: center;
+//      //transition: transform 2s ease;
+//      @include mobile-only {
+//        border: 2px solid #FFFFFF;
+//      }
+//    }
+//  }
+//}
+//
+//.invite-float {
+//  position: fixed;
+//  bottom: 0;
+//  background: linear-gradient(0deg, $surface-color 60%, rgba(255, 255, 255, 0));
+//  width: 100vw;
+//  z-index: 3;
+//  visibility: hidden;
+//  opacity: 0;
+//  transform: translateY(150px);
+//  transition: opacity 250ms ease, transform 250ms ease;
+//
+//  & .invite {
+//    display: flex;
+//    justify-content: center;
+//    padding: 55px 0 12px 0;
+//    margin: 0;
+//  }
+//
+//  & .invite__cta {
+//    margin: 0;
+//  }
+//}
+//
+//.shareBtn {
+//  position: relative;
+//  margin: 0 auto;
+//  background: white;
+//  transition: opacity 250ms ease, transform 300ms ease;
+//  border: 0;
+//  display: flex;
+//  align-items: center;
+//  font-family: $font-primary-family;
+//  padding: 14px 18px;
+//  box-shadow: 0 0 30px #0000004d;
+//  border-radius: 35px;
+//  z-index: 5;
+//  will-change: opacity, transform;
+//  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+//  -webkit-user-select: none;
+//  @include desktop-only {
+//    display: none;
+//  }
+//
+//  & i {
+//    margin: 0 6px 0 0;
+//  }
+//
+//  &.is-invited {
+//    opacity: 1;
+//    display: flex;
+//    transform: translateY(0);
+//  }
+//
+//  &--invite {
+//    opacity: 0;
+//    display: none;
+//    transform: translateY(50px);
+//  }
+//}
+//
+//.hero {
+//  --y: 0;
+//  display: flex;
+//  width: 100%;
+//  margin: auto;
+//  max-width: $wrapper-width;
+//  min-height: 860px;
+//  overflow: hidden;
+//  @include mobile-only {
+//    height: 100vh;
+//    min-height: 780px;
+//  }
+//
+//  &__wrapper {
+//    background: lighten($background-color, 1%);
+//    width: 100%;
+//  }
+//
+//  &-left, &-right {
+//    width: 50%;
+//  }
+//
+//  &-left {
+//    background: $surface-color;
+//    margin: 40px 0 50px 26px;
+//    background-image: url("../images/welcome/experiences.jpg");
+//    background-repeat: no-repeat;
+//    background-position-y: bottom;
+//    background-size: contain;
+//    @include mobile-only {
+//      background-size: 160%;
+//      margin: 0;
+//      width: 100%;
+//      background-position: center bottom;
+//    }
+//
+//    .is-pwa & {
+//      display: flex;
+//      justify-content: flex-start;
+//      align-items: center;
+//      flex-direction: column;
+//      padding: 24px 0;
+//    }
+//  }
+//
+//  &-right {
+//    @include mobile-only {
+//      display: none;
+//    }
+//  }
+//
+//  &__device {
+//    display: flex;
+//    justify-content: center;
+//    position: relative;
+//    top: 0;
+//  }
+//
+//  &__banner {
+//    position: relative;
+//    display: flex;
+//    justify-content: center;
+//    top: 40px;
+//    width: fit-content;
+//    margin: auto;
+//    z-index: 3;
+//    transition: opacity 850ms ease 150ms;
+//  }
+//}
+//
+//.android {
+//  $android-resize: 1;
+//  $android-width: 536;
+//  $android-height: 790;
+//  width: unquote($android-width + 'px');
+//  height: unquote($android-height + 'px');
+//  background-image: url("../images/welcome/hero-device.png");
+//  background-position: center top;
+//  background-repeat: no-repeat;
+//  background-size: auto;
+//  margin: 0;
+//  z-index: 2;
+//  position: relative;
+//  transition: transform 850ms ease;
+//  will-change: transform;
+//  display: flex;
+//  justify-content: center;
+//  @include mobile-only {
+//    width: unquote($android-width * $android-resize + 'px');
+//    height: unquote($android-height * $android-resize + 'px');
+//    position: relative;
+//    top: 0;
+//    right: 0;
+//    //transform: scale(1.8);
+//    margin: 86px auto 0 auto;
+//  }
+//
+//  &__screen {
+//    background: #ffffff;
+//    position: relative;
+//    overflow: hidden;
+//    border-radius: 10px;
+//    $android-screen-left: 121;
+//    $android-screen-height: 521;
+//    $android-screen-width: 295;
+//    $android-screen-top: 143;
+//    width: unquote($android-screen-width + 'px');
+//    height: unquote($android-screen-height + 'px');
+//    top: unquote($android-screen-top + 'px');
+//    //left: unquote($android-screen-left + 'px');
+//
+//
+//    & img, picture, video {
+//      width: inherit;
+//    }
+//
+//    @include mobile-only {
+//      top: unquote($android-screen-top * $android-resize + 'px');
+//      left: unquote($android-screen-left * $android-resize + 'px');
+//      width: unquote($android-screen-width * $android-resize + 'px');
+//      height: unquote($android-screen-height * $android-resize + 'px');
+//    }
+//  }
+//}
