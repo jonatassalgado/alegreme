@@ -51,6 +51,8 @@ export default class extends ApplicationController {
         if (!next_page) return
         let url = next_page.href
 
+        document.dispatchEvent(new Event('feed#load-more:loading'))
+
         fetch(url, {
             method:      "get",
             headers:     {
@@ -62,9 +64,7 @@ export default class extends ApplicationController {
           .then(html => {
               this.loading = false
               Turbo.renderStreamMessage(html);
-              setTimeout(() => {
-                  document.dispatchEvent(new Event('feed#size-change:after'))
-              }, 150)
+              document.dispatchEvent(new Event('feed#load-more:loaded'))
           })
             // .then(_ => history.replaceState(history.state, "", href))
           .catch(err => {

@@ -41,7 +41,7 @@ export default class extends ApplicationController {
             }, 500)
         }, false)
 
-        document.addEventListener("feed#size-change:after", event => {
+        document.addEventListener("feed#load-more:loaded", event => {
             this.stickySidebar.updateSticky()
         }, false)
     }
@@ -81,7 +81,7 @@ export default class extends ApplicationController {
             }, 500)
         }, false)
 
-        document.removeEventListener("feed#size-change:after", event => {
+        document.removeEventListener("feed#load-more:loaded", event => {
             this.stickySidebar.updateSticky()
         }, false)
     }

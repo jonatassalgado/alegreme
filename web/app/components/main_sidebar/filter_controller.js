@@ -49,7 +49,7 @@ export default class extends ApplicationController {
 
     afterReflex(element) {
         this._endAnimate()
-        document.dispatchEvent(new Event('feed#size-change:after'))
+        document.dispatchEvent(new Event('feed#load-more:loaded'))
     }
 
     _startAnimate() {
