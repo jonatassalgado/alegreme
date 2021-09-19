@@ -20,11 +20,12 @@ class UserImageUploader < Shrine
 	process(:store) do |io, context|
 		io.download do |original|
 			pipeline = ImageProcessing::MiniMagick.source(original)
+																						.convert('jpeg')
 
-      {
-				small: pipeline.resize_to_fill!(36, 36),
-        medium: pipeline.resize_to_fill!(100, 100)
-      }
+			{
+				small:  pipeline.resize_to_fill!(36, 36),
+				medium: pipeline.resize_to_fill!(100, 100)
+			}
 		end
 	end
 

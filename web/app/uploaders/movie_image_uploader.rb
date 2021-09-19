@@ -20,11 +20,13 @@ class MovieImageUploader < Shrine
 	process(:store) do |io, context|
 		io.download do |original|
 			pipeline = ImageProcessing::MiniMagick.source(original)
+																						.convert('jpeg')
+																						.saver(quality: 95)
 
-      {
-          medium: pipeline.resize_to_fill!(200, 305),
-          small: pipeline.resize_to_fill!(80,122)
-      }
+			{
+				medium: pipeline.resize_to_fill!(126, 192),
+				small:  pipeline.resize_to_fill!(62, 95)
+			}
 		end
 	end
 
