@@ -38,7 +38,7 @@
 <%# cache [@movie, @movie&.screenings&.max, DateTime.now.day] do %>
 <section class="mx-auto mt-5 max-w-screen-lg md:mt-12">
 	<div class="flex flex-col mb-32">
-		<div class="flex flex-col justify-center md:flex-row md:mx-auto md:px-5">
+		<div class="flex flex-col justify-center md:flex-row md:mx-auto px-5 md:px-0">
 			<%= image_tag shrine_image_url(@movie, :medium), {
 				loading: :lazy,
 				title:   @movie.title,
@@ -95,7 +95,7 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-12 grid-flow-col gap-0 px-5 mt-10 max-w-screen-lg md:mt-20 md:gap-10">
+		<div class="grid grid-cols-12 grid-flow-col gap-0 px-5 md:px-0 mt-10 max-w-screen-lg md:mt-20 md:gap-10">
 			<div class="col-span-12 mx-auto w-full rounded-lg border md:border-0 md:col-span-9 md:space-y-12">
 				<% @movie.screenings&.active&.sort_by { |s| s.cinema&.display_name }&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
 					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
