@@ -55,7 +55,7 @@
 																					{}) %>">
 				<%= link_to event_path(@event),
 										id:           dom_id(@event, 'hero--horizontal-event__image'),
-										'aria-label': "Ver evento #{@event&.title}",
+										'aria-label': "Ver evento #{@event&.name}",
 										data:         {
 											action:     'click->hero--horizontal-event#openEvent',
 											'event-id': @event.id

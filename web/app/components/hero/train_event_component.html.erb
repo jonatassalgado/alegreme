@@ -38,7 +38,7 @@
 		<div class="">
 			<div class="overflow-hidden relative md:mt-5 bg-gray-100">
 				<%= link_to event_path(@event),
-										'aria-label': "Ver evento #{@event&.title}",
+										'aria-label': "Ver evento #{@event&.name}",
 										data:         {
 											action:     'click->hero--train-event#openEvent',
 											'event-id': @event.id

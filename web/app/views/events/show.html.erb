@@ -57,6 +57,9 @@
 }
 
 
+
+
+
 </script>
 
 <script type="application/ld+json">
@@ -99,6 +102,9 @@
   }
 }
 
+
+
+
 </script>
 
 <%= render ModalComponent.new %>
@@ -124,14 +130,14 @@
 	<div class="mt-5 md:col-span-3 md:mb-0 md:mt-28">
 		<% if will_happen? @event %>
 			<div class="flex hidden relative bottom-auto items-center p-3 space-y-2 w-auto text-sm text-gray-600 rounded-xl cursor-pointer md:block">
-				<a href="<%= @event.source_url %>" target="_blank" rel="nofollow" class="inline-block flex justify-start items-center py-2 px-4 mr-3 mb-3 text-gray-600 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none group duration-50 group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none w-content">
+				<a href="<%= @event.source_url %>" target="_blank" rel="nofollow noreferrer" class="inline-block flex justify-start items-center py-2 px-4 mr-3 mb-3 text-gray-600 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none group duration-50 group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none w-content">
 					<svg class="mr-3 h-5 text-gray-400 transition-colors stroke-current group-hover:text-brand-700" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
 					</svg>
 					<div>Abrir página oficial</div>
 				</a>
 				<% if @event&.ticket_url %>
-					<a href="<%= @event.ticket_url %>" target="_blank" rel="nofollow" class="inline-block flex justify-start items-center py-2 px-4 mr-3 mb-3 text-gray-600 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none group duration-50 group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none w-content">
+					<a href="<%= @event.ticket_url %>" target="_blank" rel="nofollow noreferrer" class="inline-block flex justify-start items-center py-2 px-4 mr-3 mb-3 text-gray-600 bg-gray-100 rounded-full transition-all transition-colors transform cursor-pointer select-none group duration-50 group-hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 tap-highlight-none w-content">
 						<svg class="mr-3 h-5 text-gray-400 transition-colors fill-current group-hover:text-brand-700" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M0 0h24v24H0V0z" fill="none"/>
 							<path d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM9.07 16L12 14.12 14.93 16l-.89-3.36 2.69-2.2-3.47-.21L12 7l-1.27 3.22-3.47.21 2.69 2.2z"/>
@@ -184,12 +190,14 @@
 							<div>
 								<div class="overflow-hidden relative w-16 h-16 rounded">
 									<%= link_to event_path(similar_event),
-															data: {
+															'aria-label': "Ver evento #{similar_event&.name}",
+															data:         {
 																action:     'click->main-sidebar--horizontal-event#openEvent',
 																'event-id': similar_event.id
 															} do %>
 										<%= image_tag shrine_image_url(similar_event, :feed), {
 											loading: :lazy,
+											alt:     similar_event.name,
 											class:   'bg-gray-100 cursor-pointer h-full object-center object-cover w-full overflow-hidden',
 											onerror: "this.style.opacity='0'"
 										} rescue nil %>
@@ -234,7 +242,7 @@
 	</div>
 
 	<div class="flex fixed bottom-0 py-3 px-3 space-x-2 w-screen text-sm font-medium text-gray-500 bg-white border-t cursor-pointer select-none md:hidden tap-highlight-none">
-		<a href="<%= @event.source_url %>" target="_blank" rel="nofollow" class="flex-1 justify-center space-x-2 select-none c-chip">
+		<a href="<%= @event.source_url %>" target="_blank" rel="nofollow noreferrer" class="flex-1 justify-center space-x-2 select-none c-chip">
 			<div>Site oficial</div>
 			<svg class="h-5 stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
@@ -254,11 +262,11 @@
 		</div>
 	</div>
 
-<!--	<div data-controller="install" data-install-native="true" data-install-target="button" class="flex fixed bottom-20 z-30 items-center w-full transition-transform transform translate-y-32 select-none tap-highlight-none">-->
-<!--		<span data-action="click->install#install" class="py-3 px-5 mx-auto font-bold text-white bg-white rounded-full shadow-lg bg-brand-500 w-content">-->
-<!--			Instalar aplicativo-->
-<!--		</span>-->
-<!--	</div>-->
+	<!--	<div data-controller="install" data-install-native="true" data-install-target="button" class="flex fixed bottom-20 z-30 items-center w-full transition-transform transform translate-y-32 select-none tap-highlight-none">-->
+	<!--		<span data-action="click->install#install" class="py-3 px-5 mx-auto font-bold text-white bg-white rounded-full shadow-lg bg-brand-500 w-content">-->
+	<!--			Instalar aplicativo-->
+	<!--		</span>-->
+	<!--	</div>-->
 
 </section>
 
