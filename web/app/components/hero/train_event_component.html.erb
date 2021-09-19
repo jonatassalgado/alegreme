@@ -38,7 +38,8 @@
 		<div class="">
 			<div class="overflow-hidden relative md:mt-5 bg-gray-100">
 				<%= link_to event_path(@event),
-										data: {
+										'aria-label': "Ver evento #{@event&.title}",
+										data:         {
 											action:     'click->hero--train-event#openEvent',
 											'event-id': @event.id
 										} do %>
@@ -48,7 +49,7 @@
 							action:     'click->hero--train-event#openEvent',
 							'event-id': @event.id
 						},
-						alt: @event&.name,
+						alt:     @event&.name,
 						class:   'rounded md:rounded-lg border cursor-pointer h-full w-24 h-18 md:w-48 md:h-28 object-center object-cover overflow-hidden',
 						onerror: "this.style.opacity='0'"
 					} rescue nil %>
