@@ -63,9 +63,11 @@ module UserDecorators
 						fbId:     nil,
 						googleId: nil,
 						name:     nil,
-						picture:  nil
+						picture:  nil,
+						provider: nil
 					})
 
+				user.provider = args[:provider].presence || 'email'
 				user.features.deep_merge!({
 																		'demographic' => {
 																			'name'    => args[:name],
@@ -85,12 +87,14 @@ module UserDecorators
 						fbId:     nil,
 						googleId: nil,
 						name:     nil,
-						picture:  nil
+						picture:  nil,
+						provider: nil
 					})
 
 				user = User.new(email:    args[:email],
 												password: Devise.friendly_token[0, 20])
 
+				user.provider = args[:provider].presence || 'email'
 				user.features.deep_merge!({
 																		'demographic' => {
 																			'name'    => args[:name],
