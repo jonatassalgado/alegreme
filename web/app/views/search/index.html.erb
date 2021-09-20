@@ -7,10 +7,10 @@
 																							{} %>">
 	<section id="main-sidebar" class="md:col-span-5">
 		<%= notice %>
-		<% if (@search_result&.suggestions.present? rescue false) %>
+		<% if (@founded_events&.suggestions.present? rescue false) %>
 			<div class="mx-auto mt-10 mb-5">
 				<h2 class="font-semibold text-gray-800">Você quis dizer?</h2>
-				<% @search_result&.suggestions&.each do |suggestion| %>
+				<% @founded_events&.suggestions&.each do |suggestion| %>
 					<a href="<%= search_index_path({ q: suggestion }) %>" class="me-chip mdc-chip">
 						<span class="inline-block p-2 mt-2 mr-2 text-sm text-gray-800 rounded-full border hover:bg-gray-100">
 							<%= suggestion %>
@@ -28,7 +28,7 @@
 					<div>Ver todos os eventos em <span class="font-medium">Porto Alegre</span></div>
 				</div>
 			<% end %>
-			<% if @search_result.try { |events| events.size > 0 } %>
+			<% if @founded_events.try { |events| events.size > 0 } %>
 				<div class="py-3 md:px-0 c-h2">
 					<%= @pagy&.vars&.dig(:count) %> eventos encontrados para:
 					<span class="text-brand-600"><%= params[:q] %></span>

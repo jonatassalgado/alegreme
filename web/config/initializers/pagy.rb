@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'pagy/extras/searchkick'
+
 
 # Pagy initializer file (4.10.1)
 # Customize only what you really need and notice that Pagy works also without any of the following lines.
