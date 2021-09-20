@@ -52,6 +52,7 @@ export default class extends ApplicationController {
 
         if (MobileDetector.mobile() && event.type === 'click') {
             event.preventDefault()
+            this.element.scrollIntoView({behavior: 'smooth'})
         } else {
             this.clearTimerHide();
         }
