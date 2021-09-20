@@ -33,6 +33,10 @@
     &--active {
       @apply inline-block flex justify-start items-center py-2 px-4 text-sm font-medium rounded-full transition-all transition-colors duration-100 transform cursor-pointer select-none md:text-base bg-brand-600 font-display md:hover:bg-brand-500 md:hover:border-brand-500 md:hover:text-white tap-highlight-none text-white w-content;
     }
+
+    &--highlight {
+      @apply inline-block flex justify-start items-center py-2 px-4 text-sm font-medium rounded-full transition-all transition-colors duration-100 transform cursor-pointer select-none md:text-base bg-white font-display border-brand-600 md:hover:bg-brand-500 md:hover:border-brand-500 md:hover:text-brand-500 tap-highlight-none text-brand-600 w-content;
+    }
   }
 
 }
