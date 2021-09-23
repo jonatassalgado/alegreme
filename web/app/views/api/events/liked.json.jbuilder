@@ -13,6 +13,6 @@ json.events @liked_events do |resource|
 	json.multiple_hours resource.multiple_hours
 	json.updated_at resource.updated_at
 	json.is_new resource.is_a?(Screening) ? is_new_screening?(resource) : is_new_event?(resource)
-	json.liked @user.like?(resource) rescue false
+	json.liked @user ? @user.like?(resource) : false
 	json.type resource.class.name.underscore
 end

@@ -9,5 +9,5 @@ json.array! @events_suggestions do |event|
 	json.place event.place_details_name
 	json.origin_url event_url(event, format: :html)
 	json.is_new is_new_event?(event)
-	json.liked @user.like?(event) rescue false
+	json.liked @user ? @user.like?(event) : false
 end

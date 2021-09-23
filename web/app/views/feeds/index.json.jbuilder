@@ -14,6 +14,6 @@ json.feed grouped_events do |group, events|
 		json.origin_url event_url(event, format: :html)
 		json.updated_at event.updated_at
 		json.is_new is_new_event?(event)
-		json.liked current_user.like?(event) rescue false
+		json.liked current_user ? current_user.like?(event) : false
 	end
 end

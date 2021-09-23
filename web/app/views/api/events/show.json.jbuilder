@@ -14,7 +14,7 @@ json.multiple_hours @event.multiple_hours
 json.created_at @event.created_at
 json.updated_at @event.updated_at
 json.is_new is_new_event?(@event)
-json.liked @user.like?(@event) rescue false
+json.liked @user ? @user.like?(@event) : false
 json.similar @similar_events do |similar|
 	json.id similar.id
 	json.cover_url shrine_image_url(similar, :feed)

@@ -10,5 +10,5 @@ json.array! @movies do |movie|
 	json.dominant_color movie.image&.dig(:medium)&.metadata&.dig('dominant_color')
 	json.origin_url movie_url(movie, format: :html)
 	json.is_new is_new_movie?(movie) rescue false
-	json.liked @user.like?(movie) rescue false
+	json.liked @user ? @user.like?(movie) : false
 end

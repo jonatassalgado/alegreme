@@ -8,7 +8,7 @@ json.rating @movie.rating
 json.age_rating @movie.age_rating
 json.dominant_color @movie&.image&.dig(:medium)&.metadata&.dig('dominant_color')
 json.origin_url movie_url(@movie, format: :html)
-json.liked @user.like?(@movie) rescue false
+json.liked @user ? @user.like?(@movie) : false
 json.cinemas @movie.screenings&.active&.sort_by { |s| s.cinema&.display_name }&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] } do |cinema_name_group|
 	json.name cinema_name_group[0][0]
 	json.address cinema_name_group[1][0]&.cinema&.address
@@ -20,7 +20,7 @@ json.cinemas @movie.screenings&.active&.sort_by { |s| s.cinema&.display_name }&.
 		json.day screening_day_group[0]
 		json.screenings screening_day_group[1].filter { |s| s.times&.any? }.each do |screening|
 			json.id screening.id
-			json.liked @user.like?(screening) rescue false
+			json.liked @user ? @user.like?(screening) : false
 			json.language screening.language
 			json.screen_type screening.screen_type == 'Nenhuma exibição' ? '2D' : screening.screen_type
 			json.times screening.times
