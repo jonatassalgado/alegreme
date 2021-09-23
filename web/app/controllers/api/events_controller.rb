@@ -1,6 +1,6 @@
 module Api
 	class EventsController < ApplicationController
-		before_action :authenticate_user!, only: [:like, :liked, :suggestions]
+		before_action :authenticate_user!, except: [:index, :similar_events, :today, :category, :week, :show]
 		before_action :set_event, only: [:like, :show]
 
 		def index
@@ -23,21 +23,34 @@ module Api
 
 		end
 
+		def show
+			begin
+				@user           = current_user
+				@similar_events = Event.includes(:categories).active.where(id: @event.similar_data).order_by_ids(@event.similar_data).limit(8)
+			rescue StandardError => e
+				render json: {
+					message: e,
+					status:  400
+				}, status:   :unprocessable_entity
+			end
+		end
+
 		def like
 			begin
 				if current_user.like? @event
 					current_user.unlike! @event
+					render json: { message: 'Evento removido da sua agenda', status: 200 }, status: :created
 				elsif current_user.dislike? @event
 					current_user.like! @event, action: :update
+					render json: { message: 'Evento adicionado na sua agenda', status: 200 }, status: :created
 				else
 					current_user.like! @event
+					render json: { message: 'Evento adicionado na sua agenda', status: 200 }, status: :created
 				end
-
-				render json: { event: @event.id, status: 200 }, status: :created
 			rescue StandardError => e
 				render json: {
-					error:  "Failed in like event. Error: #{e}",
-					status: 400
+					message: e,
+					status:  400
 				}, status:   :unprocessable_entity
 			end
 		end
@@ -45,11 +58,11 @@ module Api
 		def liked
 			begin
 				@user         = current_user
-				@liked_events = @user.liked_events.includes(:place, :categories).active.valid.order_by_date
+				@liked_events = @user.liked_events_and_screenings&.sort_by { |resource| resource&.start_time }
 			rescue StandardError => e
 				render json: {
-					error:  "Failed request liked events. Error: #{e}",
-					status: 400
+					message: e,
+					status:  400
 				}, status:   :unprocessable_entity
 			end
 		end
@@ -60,20 +73,8 @@ module Api
 				@events_suggestions = Event.includes(:place, :categories).active.valid.in_user_suggestions(@user).not_liked_or_disliked(@user).limit(5)
 			rescue StandardError => e
 				render json: {
-					error:  "Failed request suggestions events. Error: #{e}",
-					status: 400
-				}, status:   :unprocessable_entity
-			end
-		end
-
-		def show
-			begin
-				@user           = current_user
-				@similar_events = Event.includes(:categories).active.where(id: @event.similar_data).order_by_ids(@event.similar_data).limit(8)
-			rescue StandardError => e
-				render json: {
-					error:  "Failed request event. Error: #{e}",
-					status: 400
+					message: e,
+					status:  400
 				}, status:   :unprocessable_entity
 			end
 		end

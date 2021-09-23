@@ -55,4 +55,29 @@ class Movie < ApplicationRecord
 		update_attributes(attributes.merge!(except))
 	end
 
+	def cover_url(type = :medium)
+		image[type].url if image && image[type].exists?
+	end
+	alias_method :cover, :cover_url
+
+	def prices
+		nil
+	end
+
+	def geographic
+		nil
+	end
+
+	def categories
+		nil
+	end
+
+	def place_details_name
+		nil
+	end
+
+	def multiple_hours
+		nil
+	end
+
 end

@@ -31,6 +31,8 @@ class User < ApplicationRecord
 	has_many :disliked_events, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :likeable, source_type: 'Event'
 	has_many :liked_or_disliked_screenings, through: :likes, source: :likeable, source_type: 'Screening'
 	has_many :liked_movies, -> { where(likes: { sentiment: :positive }).distinct }, through: :liked_or_disliked_screenings, source: :movie
+	# has_many :disliked_movies, -> { where(likes: { sentiment: :negative }).distinct }, through: :liked_or_disliked_screenings, source: :movie
+	# has_many :liked_or_disliked_movies, through: :liked_or_disliked_screenings, source: :movie
 	has_many :liked_screenings, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :likeable, source_type: 'Screening'
 	has_many :disliked_screenings, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :likeable, source_type: 'Screening'
 
@@ -66,6 +68,18 @@ class User < ApplicationRecord
 	has_many :places_from_liked_events, through: :liked_events, source: :place
 	has_many :organizers_from_liked_events, through: :liked_events, source: :organizers
 
+	scope 'recents', lambda {
+		where("last_sign_in_at > ?", Date.today - 60.days).order("last_sign_in_at DESC")
+	}
+
+	scope 'with_saved_events', lambda {
+		where("jsonb_array_length(taste -> 'events' -> 'saved') > 0")
+	}
+
+	scope 'with_notifications_actived', lambda {
+		where("(notifications -> 'topics' -> 'all' ->> 'active')::boolean")
+	}
+
 	def following
 		following_users + following_places + following_organizers
 	end
@@ -89,9 +103,9 @@ class User < ApplicationRecord
 			self.like_update(resource, sentiment: :positive)
 		end
 
-		self.public_send("liked_#{resource.class.table_name}").reset
-		self.public_send("disliked_#{resource.class.table_name}").reset
-		self.public_send("liked_or_disliked_#{resource.class.table_name}").reset
+		self.public_send("liked_#{resource.class.table_name}").reset rescue nil
+		self.public_send("disliked_#{resource.class.table_name}").reset rescue nil
+		self.public_send("liked_or_disliked_#{resource.class.table_name}").reset rescue nil
 
 		UpdateUserEventsSuggestionsJob.perform_later(self.id) if resource.class == Event
 	end
@@ -99,21 +113,21 @@ class User < ApplicationRecord
 	def unlike!(resource)
 		like = self.likes.find_by(likeable_id: resource.id, likeable_type: resource.class.base_class.name.demodulize)
 		like.destroy if like
-		self.public_send("liked_#{resource.class.table_name}").reset
-		self.public_send("disliked_#{resource.class.table_name}").reset
-		self.public_send("liked_or_disliked_#{resource.class.table_name}").reset
+		self.public_send("liked_#{resource.class.table_name}").reset rescue nil
+		self.public_send("disliked_#{resource.class.table_name}").reset rescue nil
+		self.public_send("liked_or_disliked_#{resource.class.table_name}").reset rescue nil
 	end
 
 	def dislike!(resource, action: :create)
 		if action == :create
 			self.likes.create!(likeable_id: resource.id, sentiment: :negative, likeable_type: resource.class.base_class.name.demodulize)
-			self.public_send("disliked_#{resource.class.table_name}").reset
-			self.public_send("liked_or_disliked_#{resource.class.table_name}").reset
+			self.public_send("disliked_#{resource.class.table_name}").reset rescue nil
+			self.public_send("liked_or_disliked_#{resource.class.table_name}").reset rescue nil
 		elsif action == :update
 			self.like_update(resource, sentiment: :negative)
-			self.public_send("liked_#{resource.class.table_name}").reset
-			self.public_send("disliked_#{resource.class.table_name}").reset
-			self.public_send("liked_or_disliked_#{resource.class.table_name}").reset
+			self.public_send("liked_#{resource.class.table_name}").reset rescue nil
+			self.public_send("disliked_#{resource.class.table_name}").reset rescue nil
+			self.public_send("liked_or_disliked_#{resource.class.table_name}").reset rescue nil
 		end
 	end
 
@@ -187,17 +201,9 @@ class User < ApplicationRecord
 		Friendship.exists?(user_id: friend.id, friend_id: self.id, friend_type: 'Friend', status: :requested)
 	end
 
-	scope 'recents', lambda {
-		where("last_sign_in_at > ?", Date.today - 60.days).order("last_sign_in_at DESC")
-	}
-
-	scope 'with_saved_events', lambda {
-		where("jsonb_array_length(taste -> 'events' -> 'saved') > 0")
-	}
-
-	scope 'with_notifications_actived', lambda {
-		where("(notifications -> 'topics' -> 'all' ->> 'active')::boolean")
-	}
+	def liked_events_and_screenings
+		(self&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (self&.liked_screenings&.active&.includes(:movie, :cinema) || Screening.none)
+	end
 
 	def remember_me
 		true

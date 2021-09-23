@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 		# movies
 		get 'movies', to: 'movies#index'
 		get 'movies/:id', to: 'movies#show'
+		post 'movies/:id/like', to: 'movies#like'
 
 		# post 'collections', to: 'collections#index', as: :collections
 		# post 'taste/:resource/:id/:taste', to: 'taste#update', as: :taste

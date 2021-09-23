@@ -9,7 +9,7 @@ class Like < ApplicationRecord
 
 	def max_number_of_likes_per_movie
 		if user.liked_screenings.where(movie_id: likeable.movie.id).exists?
-			errors.add(:base, :max_number_of_likes_per_movie, message: "Você só pode salvar 1 horário por filme")
+			errors.add(:base, :max_number_of_likes_per_movie, message: "Você só pode salvar uma sessão por filme")
 		end
 	end
 end

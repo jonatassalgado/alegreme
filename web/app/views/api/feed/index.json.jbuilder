@@ -16,5 +16,6 @@ json.feed @grouped_events do |group, events|
 		json.updated_at event.updated_at
 		json.is_new is_new_event?(event)
 		json.liked current_user.like?(event) rescue false
+		json.type event.class.name.underscore
 	end
 end

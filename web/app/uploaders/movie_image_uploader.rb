@@ -24,6 +24,7 @@ class MovieImageUploader < Shrine
 																						.saver(quality: 95)
 
 			{
+				# large: pipeline.resize_to_fill!(315, 480),
 				medium: pipeline.resize_to_fill!(126, 192),
 				small:  pipeline.resize_to_fill!(62, 95)
 			}

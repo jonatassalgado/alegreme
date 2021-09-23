@@ -4,7 +4,7 @@ class FeedsController < ApplicationController
 	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 
 	def index
-		# Timecop.freeze("2021-08-04")
+		# Timecop.freeze("2021-08-15")
 
 		if @stimulus_reflex.nil? && params.dig(:page).nil?
 			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
@@ -12,7 +12,7 @@ class FeedsController < ApplicationController
 
 		@filters                = Rails.cache.fetch("#{session.id}/main-sidebar--filter/filters") || { theme: 1, categories: [], date: nil }
 		@pagy, @upcoming_events = pagy(requested_events)
-		@liked_resources        = (current_user&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings&.active&.includes(:movie, :cinema) || Screening.none) unless turbo_frame_request?
+		@liked_resources        = current_user&.liked_events_and_screenings unless turbo_frame_request?
 		@movies                 = CineFilm.active unless turbo_frame_request?
 
 		if @stimulus_reflex

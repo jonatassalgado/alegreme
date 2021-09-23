@@ -7,7 +7,8 @@ json.array! @movies do |movie|
 	json.trailer movie.trailer
 	json.rating movie.rating
 	json.age_rating movie.age_rating
-	json.dominant_color movie&.image&.dig(:medium)&.metadata&.dig('dominant_color')
+	json.dominant_color movie.image&.dig(:medium)&.metadata&.dig('dominant_color')
 	json.origin_url movie_url(movie, format: :html)
+	json.is_new is_new_movie?(movie) rescue false
 	json.liked @user.like?(movie) rescue false
 end

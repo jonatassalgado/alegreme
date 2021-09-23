@@ -9,10 +9,14 @@ class Screening < ApplicationRecord
 	has_many :likes, as: :likeable, dependent: :destroy
 	has_many :users, through: :likes, source: :likeable, source_type: 'Screening'
 
-	alias_attribute :start_time, :day
 
-	delegate :title, :image, to: :movie
+	delegate :title, :image, :prices, :geographic, :categories, :place_details_name, :multiple_hours, to: :movie
 	alias_method :name, :title
 
 	scope 'active', -> { includes(:cinema).where("screenings.day >= ? AND cinemas.status = 1", DateTime.now).references(:cinema) }
+
+	def start_time
+		day.to_datetime.midday.in_time_zone rescue nil
+	end
+
 end

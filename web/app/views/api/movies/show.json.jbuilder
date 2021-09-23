@@ -19,6 +19,8 @@ json.cinemas @movie.screenings&.active&.sort_by { |s| s.cinema&.display_name }&.
 	json.set! 'session_days', cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.sort_by { |screening | screening.day }.group_by { |screening| screening.day } do |screening_day_group|
 		json.day screening_day_group[0]
 		json.screenings screening_day_group[1].filter { |s| s.times&.any? }.each do |screening|
+			json.id screening.id
+			json.liked @user.like?(screening) rescue false
 			json.language screening.language
 			json.screen_type screening.screen_type == 'Nenhuma exibição' ? '2D' : screening.screen_type
 			json.times screening.times
