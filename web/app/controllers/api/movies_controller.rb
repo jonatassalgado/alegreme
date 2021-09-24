@@ -1,6 +1,6 @@
 module Api
 	class MoviesController < ApplicationController
-		before_action :authenticate_user!, except: [:index, :show]
+		# before_action :authenticate_user!, except: [:index, :show]
 		before_action :set_movie, only: [:show]
 		before_action :set_screening, only: [:like]
 
@@ -21,24 +21,31 @@ module Api
 		end
 
 		def like
-			begin
-				if current_user.like? @screening
-					current_user.unlike! @screening
-					render json: { message: 'Filme removido da sua agenda', status: 200 }, status: :created
-				elsif current_user.dislike? @screening
-					current_user.like! @screening, action: :update
-					render json: { message: 'Filme adicionado na sua agenda', status: 200 }, status: :created
-				else
-					current_user.like! @screening
-					render json: { message: 'Filme adicionado na sua agenda', status: 200 }, status: :created
-				end
-			rescue StandardError => e
-				logger.debug e
+			if current_user
+				begin
+					if current_user.like? @screening
+						current_user.unlike! @screening
+						render json: { message: 'Filme removido da sua agenda', status: 200 }, status: :created
+					elsif current_user.dislike? @screening
+						current_user.like! @screening, action: :update
+						render json: { message: 'Filme adicionado na sua agenda', status: 200 }, status: :created
+					else
+						current_user.like! @screening
+						render json: { message: 'Filme adicionado na sua agenda', status: 200 }, status: :created
+					end
+				rescue StandardError => e
+					logger.debug e
 
+					render json: {
+						message: e,
+						status:  422
+					}, status:   :unprocessable_entity
+				end
+			else
 				render json: {
-					message: e,
-					status:  422
-				}, status:   :unprocessable_entity
+					message: 'Você precisa entrar para salvar filmes',
+					status:  401
+				}, status:   :unauthorized
 			end
 		end
 
