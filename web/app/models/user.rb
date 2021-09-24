@@ -202,7 +202,7 @@ class User < ApplicationRecord
 	end
 
 	def liked_events_and_screenings
-		(self&.liked_events&.not_ml_data&.active&.order_by_date || Event.none) + (self&.liked_screenings&.active&.includes(:movie, :cinema) || Screening.none)
+		(self&.liked_events&.not_ml_data&.active&.includes(:place, :categories)&.order_by_date || Event.none) + (self&.liked_screenings&.active&.includes(:movie, :cinema) || Screening.none)
 	end
 
 	def remember_me
