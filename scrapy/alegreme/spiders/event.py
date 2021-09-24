@@ -392,7 +392,7 @@ class EventSpider(scrapy.Spider):
             }
         )
         
-        """ for page in self.sympla_pages:
+        for page in self.sympla_pages:
             yield SplashRequest(
                 url=page,
                 callback=self.parse_sympla_iframe,
@@ -402,7 +402,7 @@ class EventSpider(scrapy.Spider):
                 'lua_source': parse_sympla_events_page_script,
                 'ua': user_agents[0]
                 }
-            ) """
+            )
 
 
     def parse_facebook_page(self, response):
