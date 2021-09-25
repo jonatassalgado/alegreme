@@ -166,6 +166,7 @@
 				<%= link_to organizer_path(organizer), class: 'flex items-center space-x-3' do %>
 					<%= image_tag organizer.image[:sm].try { |image| image.url(public: true) },
 												loading: :lazy,
+												alt:     organizer.details_name,
 												class:   'border w-8 h-8 rounded-full shadow-sm',
 												onerror: "this.style.opacity='0'" rescue nil %>
 					<div>
