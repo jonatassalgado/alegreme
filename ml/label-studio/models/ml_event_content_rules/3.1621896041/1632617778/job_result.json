@@ -1,0 +1,1 @@
+{"status": "ok", "train_output": {"labels": ["Invalid", "Valid"], "model_file": "./ml_backend/3.1621896041/1632617778/model.pkl"}, "project": "3.1621896041", "workdir": "./ml_backend/3.1621896041/1632617778", "version": "1632617778", "job_id": null, "time": 111.37391924858093}
