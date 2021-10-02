@@ -19,8 +19,10 @@ def get_date(value):
     datetimes = re.findall('\d{4}-\d{2}-\d{2}\w+:\d+:\w+-\w+:\w+', value)
     parsed_datetimes = []
     if datetimes:
-        for datetime in datetimes:
-            parsed_datetimes.append(dateparser.parse(datetime, settings={'TIMEZONE': '-0300'}))
+        # Get only start_time of facebook events 
+        # for datetime in datetimes:
+        #    parsed_datetimes.append(dateparser.parse(datetime, settings={'TIMEZONE': '-0300'}))
+        parsed_datetimes.append(dateparser.parse(datetimes[0], settings={'TIMEZONE': '-0300'}))
 
     return parsed_datetimes
 

@@ -197,10 +197,10 @@ parse_sympla_events_page_script = """
             ["upgrade-insecure-requests"] = "1",
             ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             ["accept-enconding"] = "gzip, deflate, br",
-            ["cookie"] = '_ga=GA1.3.869050002.1628010327; _gid=GA1.3.492902586.1628010327; _gat_gtag_UA_24958859_7=1; _gcl_au=1.1.1359478704.1628010328; _gat_UA-24958859-7=1; __trf.src=encoded_eyJmaXJzdF9zZXNzaW9uIjp7InZhbHVlIjoiaHR0cHM6Ly9zaXRlLmJpbGV0by5zeW1wbGEuY29tLmJyLyIsImV4dHJhX3BhcmFtcyI6e319LCJjdXJyZW50X3Nlc3Npb24iOnsidmFsdWUiOiJodHRwczovL3NpdGUuYmlsZXRvLnN5bXBsYS5jb20uYnIvIiwiZXh0cmFfcGFyYW1zIjp7fX0sImNyZWF0ZWRfYXQiOjE2MjgwMTAzMjc4MzN9; _fbp=fb.2.1628010328029.603235374; pxcts=004519b1-f47d-11eb-a0d6-efe0bc58b32f; _pxvid=0044cbfc-f47d-11eb-901e-0242ac120008; _pxde=510301da31c3d21fda909e7a04ed23a7f3810f3cf793ceba71391ab8fdbeb530:eyJ0aW1lc3RhbXAiOjE2MjgwMTAzMjg2NDB9; rdtrk={"id":"912f7e43-4c07-4156-a0a4-794f6ee97c1f"}'
+            ["cookie"] = "_ga=GA1.3.1192868265.1633133384; _gid=GA1.3.1537327894.1633133384; _gcl_au=1.1.1374548467.1633133387; _rd_wa_id.9f9e=a422556f-f593-5c26-b48a-556ef3a31ea5.1633133389.1.1633133389.1633133389.6fb970ee-d89d-52c0-a1bc-4cd6a8ba1933; _rd_wa_ses.9f9e=*; _rd_wa_first_session.9f9e=https%3A%2F%2Fsite.bileto.sympla.com.br%2F; pxcts=0f0d0680-2315-11ec-aebf-6bc6061c1bf7; _pxvid=0f0cbcde-2315-11ec-a1a3-4a6142556e4e; __trf.src=encoded_eyJmaXJzdF9zZXNzaW9uIjp7InZhbHVlIjoiaHR0cHM6Ly9zaXRlLmJpbGV0by5zeW1wbGEuY29tLmJyLyIsImV4dHJhX3BhcmFtcyI6e319LCJjdXJyZW50X3Nlc3Npb24iOnsidmFsdWUiOiJodHRwczovL3NpdGUuYmlsZXRvLnN5bXBsYS5jb20uYnIvIiwiZXh0cmFfcGFyYW1zIjp7fX0sImNyZWF0ZWRfYXQiOjE2MzMxMzMzODk3NTB9; _gat_UA-24958859-7=1; _px3=9d62d5e5e7fc27545a39aca656ee2a27623b1437b354274d015c49aaf236de3e:MEAyjjbt4Psa1bLOIAiaejG32DTCYL3v29hefWBscrqeQyz7iU7WoyuOPep8zDuylYLfB/gRvD9HYD3XHr2myw==:1000:d0DfrwNc+F1quq5L5CtWvahiAlsJgmu5FD79Hy1e/e8NrYldyR/W7JhPqdTMca3chGfWuNT8onoVGcN5bC8f2Q2SyKKCRN95nuWSE9tRxXsmWvRN++h6AaA6ODmWFmZcHA0BV+mn/Fyaue/G1L7INmzg002uZCiFIEJZYcXL9ncrta7AgCo5cNtWDAiskpaT1CfrwZiuf8oqcGLmnZ4CuQ==; _fbp=fb.2.1633133390503.835090510; _pxde=21567e955a475eed81a0a614493076cbf8308a4b8206e205851611a8c53ebe50:eyJ0aW1lc3RhbXAiOjE2MzMxMzM0MTM4Nzh9"
         })
 
-        assert(splash:go(splash.args.url))
+        splash:go(splash.args.url)
         assert(splash:wait(5))
 
         return splash:html()
@@ -286,10 +286,10 @@ class EventSpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'alegreme.pipelines.EventPipeline': 400
         },
-        'CLOSESPIDER_ITEMCOUNT': 100,
-        'CLOSESPIDER_PAGECOUNT': 300,
+        'CLOSESPIDER_ITEMCOUNT': 300,
+        'CLOSESPIDER_PAGECOUNT': 600,
         'DEPTH_LIMIT': 3,
-        'DOMAIN_DEPTHS': {'facebook.com': 1, 'sympla.com.br': 3}
+        'DOMAIN_DEPTHS': {'facebook.com': 2, 'sympla.com.br': 3}
     }
 
     allowed_domains = ['facebook.com', 'sympla.com.br']
@@ -372,7 +372,10 @@ class EventSpider(scrapy.Spider):
             'https://m.facebook.com/basepoa'
             ]
     
-    sympla_pages = ['https://site.bileto.sympla.com.br/farolsantanderpoa']
+    sympla_pages = [
+                    'https://site.bileto.sympla.com.br/farolsantanderpoa',
+                    'https://site.bileto.sympla.com.br/opiniao'
+                    ]
 
     random.shuffle(facebook_pages)
     random.shuffle(sympla_pages)
@@ -382,7 +385,7 @@ class EventSpider(scrapy.Spider):
         self.log("UA: %s" % user_agents[0])
 
         yield SplashRequest(
-            url='https://m.facebook.com/events/discovery/?city_id=264859',
+            url='https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D',
             callback=self.parse_facebook_page,
             endpoint='execute',
             args={
