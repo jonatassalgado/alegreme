@@ -17,8 +17,10 @@ module Admin
 			authorize_resource(resource)
 
 			if resource.save
-				PredictEventLabels.predict(resource)
-				PredictSimilarEvents.predict(resource)
+				if resource.active_status
+					PredictEventLabels.predict(resource)
+					PredictSimilarEvents.predict(resource)
+				end
 				redirect_to(
 					[namespace, resource],
 					notice: translate_with_resource("create.success"),
@@ -32,8 +34,10 @@ module Admin
 
 		def update
 			if requested_resource.update(resource_params)
-				PredictEventLabels.predict(requested_resource)
-				PredictSimilarEvents.predict(requested_resource)
+				if requested_resource.active_status
+					PredictEventLabels.predict(requested_resource)
+					PredictSimilarEvents.predict(requested_resource)
+				end
 				redirect_to(
 				[namespace, requested_resource],
 				notice: translate_with_resource("update.success"),
