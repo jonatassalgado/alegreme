@@ -48,29 +48,22 @@
 																	 hovercard: true,
 																	 id:        'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
 
-		<div id="main-sidebar--feed" class="px-5 md:px-0">
+
+		<turbo-frame id="main-sidebar--feed" target="_top" class="px-5 md:px-0 inline-block w-full">
 			<% if @upcoming_events.present? %>
 				<div class="bg-white">
-					<% if params[:category] %>
+
+					<% if current_page? "/porto-alegre/eventos/categoria/#{params[:category]}" %>
 						<div class="flex justify-between items-center pr-5 md:pr-10">
 							<h1 class="mb-3 c-h2">
-								<span class="text-brand-600">
-									<%= @category&.details_display_name %>
-								</span> em Porto Alegre
+								<span class="text-brand-600"><%= @category&.details_display_name %></span> em Porto Alegre
 							</h1>
 						</div>
-					<% elsif params[:day] %>
-						<h1 class="c-h2">
-							Eventos no dia <%= I18n.l params[:day].to_date %>
-						</h1>
 					<% else %>
 						<h1 class="c-h2">
 							Eventos em Porto Alegre
 						</h1>
-						<%= render MainSidebar::FilterComponent.new(session:           session.id,
-																												params:            params,
-																												show_filter_group: nil,
-																												filters:           @filters) %>
+						<%= render partial: 'feeds/filter', open: false %>
 					<% end %>
 				</div>
 			<% else %>
@@ -82,7 +75,8 @@
 			<div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list">
 				<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true) %>
 			</div>
-		</div>
+		</turbo-frame>
+
 	</section>
 	<% unless mobile_device? %>
 		<section id="left-sidebar" class="hidden md:inline-block md:col-span-3 md:bg-white">

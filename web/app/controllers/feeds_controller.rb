@@ -10,10 +10,14 @@ class FeedsController < ApplicationController
 			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
 		end
 
-		@filters                = Rails.cache.fetch("#{session.id}/main-sidebar--filter/filters") || { theme: 1, categories: [], date: nil }
-		@pagy, @upcoming_events = pagy(requested_events)
 		@liked_resources        = current_user&.liked_events_and_screenings unless turbo_frame_request?
 		@movies                 = CineFilm.active unless turbo_frame_request?
+		@pagy, @upcoming_events = pagy(requested_events)
+
+		@open                = false
+		@categories          = Category.select("categories.id, categories.details, COUNT(events.id) as active_events_count").joins(:events).where("events.datetimes[1] > ?", DateTime.now).group("categories.id")
+		@show_filter_group   = params[:filter_group]
+		@themes              = Theme.all
 
 		if @stimulus_reflex
 			render layout: false
@@ -23,6 +27,18 @@ class FeedsController < ApplicationController
 			format.turbo_stream
 			format.html
 		end
+	end
+
+	def filter
+		@open              = true
+		@show_filter_group = params[:filter_group]
+
+		@categories          = Category.select("categories.id, categories.details, COUNT(events.id) as active_events_count").joins(:events).where("events.datetimes[1] > ?", DateTime.now).group("categories.id")
+		@themes              = Theme.all
+
+		@pagy, @upcoming_events = pagy(requested_events)
+
+		render partial: 'feeds/filter'
 	end
 
 	def suggestions
@@ -80,7 +96,7 @@ class FeedsController < ApplicationController
 			@theme = Theme.find_by_slug(params[:theme])
 			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).where(categories: { theme_id: @theme.id }).order_by_date
 		else
-			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).in_day(@filters[:date]).in_categories(@filters[:categories]).where(categories: { theme_id: @filters[:theme] }).order_by_date
+			Event.includes(:place, :organizers, :categories, :events_organizers, :categories_events).active.valid.not_disliked(current_user).in_categories(params[:category]).where(categories: { theme_id: 1 }).order_by_date
 		end
 	end
 
@@ -126,7 +142,7 @@ class FeedsController < ApplicationController
 
 	# Pagy
 	# def pagy_get_vars(collection, vars)
-	# 	vars[:count] ||= cache_count(collection)
+	# 	vars[:count] ||= collection.count(:all)
 	# 	vars[:page]  ||= params[vars[:page_param] || Pagy::VARS[:page_param]]
 	# 	vars
 	# end

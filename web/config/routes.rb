@@ -48,6 +48,7 @@ Rails.application.routes.draw do
 
 	get '/porto-alegre', to: 'feeds#index', as: :feed
 	get '/porto-alegre/eventos', to: 'feeds#index', as: :city_events
+	get '/porto-alegre/filter', to: 'feeds#filter', as: :feed_filter
 
 	# users
 	resources :users, only: [:edit, :update]
