@@ -17,7 +17,7 @@ module Admin
 			authorize_resource(resource)
 
 			if resource.save
-				if resource.active_status
+				if resource.active_status?
 					PredictEventLabels.predict(resource)
 					PredictSimilarEvents.predict(resource)
 				end
@@ -34,7 +34,7 @@ module Admin
 
 		def update
 			if requested_resource.update(resource_params)
-				if requested_resource.active_status
+				if requested_resource.active_status?
 					PredictEventLabels.predict(requested_resource)
 					PredictSimilarEvents.predict(requested_resource)
 				end

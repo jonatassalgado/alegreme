@@ -100,6 +100,7 @@ Rails.application.routes.draw do
 		member do
 			post :like
 			post :unlike
+			get :similar
 		end
 		collection do
 			get :saves

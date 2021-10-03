@@ -71,6 +71,13 @@ class EventsController < ApplicationController
 		end
 	end
 
+	def similar
+		@event          = Event.friendly.find(params[:id])
+		@similar_events = Event.active.where(id: @event.similar_data).order_by_ids(@event.similar_data).limit(8)
+
+		render partial: 'events/similar_events', locals: { event: @event, similar_events: @similar_events }
+	end
+
 	def like
 		@user  = current_user
 		@event = Event.find(params[:event_id])

@@ -1,0 +1,18 @@
+<%= turbo_frame_tag dom_id(event, 'similar'), target: '_top', src: local_assigns[:src].presence, loading: local_assigns[:loading].presence do %>
+	<h2 class="px-5 c-h3">Similares</h2>
+	<div class="md:space-y-2">
+		<% if local_assigns[:src].present? %>
+			<div class="px-5 mt-4">
+				Carregando eventos similares...
+			</div>
+		<% else %>
+			<% if similar_events.present? %>
+				<%= render partial: 'events/similar_event', collection: similar_events %>
+			<% else %>
+				<div class="px-5 mt-4">
+					Sem eventos similares
+				</div>
+			<% end %>
+		<% end %>
+	</div>
+<% end %>
