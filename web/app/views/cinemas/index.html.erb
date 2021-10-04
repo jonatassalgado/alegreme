@@ -57,7 +57,7 @@
 					<% cinema.movies.limit(mobile_device? ? 4 : 6).reverse.each_with_index do |movie, index| %>
 						<% if index < (mobile_device? ? 3 : 5) %>
 							<div class="flex flex-col w-16 transition-transform transform group md:hover:scale-105">
-								<%= link_to cine_film_path(movie), class: 'flex flex-col', data: { 'turbo-preserve-scroll': true } do %>
+								<%= link_to movie_path(movie), class: 'flex flex-col', data: { 'turbo-preserve-scroll': true } do %>
 									<%= image_tag shrine_image_url(movie, :small), {
 										loading: :lazy,
 										title:   movie.title,

@@ -74,7 +74,7 @@
 						<div data-url="<%= hovercard_movie_path(movie) %>"
 								 data-action="mouseenter->hovercard#show mouseleave->hovercard#clearTimerShow"
 								 class="<%= helpers.class_names('flex flex-col transition-transform transform group md:hover:scale-105', { 'w-24': @template == 'default', 'w-16': @template == 'small' }) %>">
-							<%= link_to cine_film_path(movie), class: 'flex flex-col', data: { url: hovercard_movie_path(movie), action: 'click->hovercard#show', 'turbo-preserve-scroll': true } do %>
+							<%= link_to movie_path(movie), class: 'flex flex-col', data: { url: hovercard_movie_path(movie), action: 'click->hovercard#show', 'turbo-preserve-scroll': true } do %>
 								<% if movie.rating %>
 									<div class="<%= helpers.class_names('absolute flex rounded-lg font-semibold h-16 items-stretch left-0 space-x-0.5 text-white text-xs top-0 w-16 z-20', { 'py-0.5 px-1': @template == 'small', 'py-1 px-2': @template == 'default' }) %> " style="background: radial-gradient(circle at 0% 0%,  #000000bf 20%,  transparent 50%);" title="votação de usuário do IMDB">
 										<span class="<%= helpers.class_names({ 'text-xxs': @template == 'small' }) %>"><%= movie.rating %></span>

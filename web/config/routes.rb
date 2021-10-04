@@ -113,8 +113,8 @@ Rails.application.routes.draw do
 			get :hovercard
 		end
 	end
-	resources :cine_films, controller: 'movies', type: 'CineFilm', path: 'porto-alegre/cinemas/filmes', as: :cine_films
-	resources :streamings, controller: 'movies', type: 'Streaming', path: 'porto-alegre/streamings', as: :streamings
+	# resources :cine_films, controller: 'movies', type: 'CineFilm', path: 'porto-alegre/cinemas/filmes', as: :cine_films
+	# resources :streamings, controller: 'movies', type: 'Streaming', path: 'porto-alegre/streamings', as: :streamings
 
 	get '/send_request_invite_confirmation/:user_id', to: 'emails#send_request_invite_confirmation', as: :send_request_invite_confirmation
 	get '/send_invite_activation_link/:user_id', to: 'emails#send_invite_activation_link', as: :send_invite_activation_link
