@@ -1,0 +1,112 @@
+<%= turbo_frame_tag id, target: 'selected-movie' do %>
+	<div class="select-none mx-auto max-w-screen-lg"
+			 data-controller="hovercard persist-horizontal-scroll slider"
+			 data-hovercard-active-value="<%= local_assigns.fetch(:hovercard, false) %>"
+			 data-hovercard-hide-mouseenter-value="true"
+			 data-hovercard-preserve-value="false"
+			 data-hovercard-timer-value="1000"
+			 data-model="movie"
+			 data-persist-horizontal-scroll-value="0"
+			 data-slider-distance-value="400"
+			 id="<%= id %>">
+		<% if title %>
+			<h1 class="px-5 md:px-0 c-h2">
+				<%= title %>
+			</h1>
+		<% end %>
+		<div class="relative mt-3">
+			<% if local_assigns.fetch(:chips, false) %>
+				<div class="scrollx">
+					<div class="flex px-5 w-content md:flex-wrap md:px-0 md:mb-2">
+						<div class="mr-3 mb-3 text-sm cursor-default md:text-base c-chip--active">
+							Todos os filmes
+						</div>
+						<% if user&.following_cinemas&.any? %>
+							<% user.following_cinemas.each do |cinema| %>
+								<%= link_to cinema_path(cinema), 'data-turbo-preserve-scroll': true do %>
+									<div class="mr-3 mb-3 c-chip" title="<%= cinema.display_name %>">
+										<%= truncate cinema.display_name, length: 16 %>
+									</div>
+								<% end %>
+							<% end %>
+							<%= link_to cinemas_path do %>
+								<div class="mr-3 mb-3 text-sm md:text-base c-chip" title="Ver todos os cinemas">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+									</svg>
+								</div>
+							<% end %>
+						<% else %>
+							<%= link_to cinemas_path do %>
+								<div class="mr-3 mb-3 text-sm md:text-base c-chip" title="Siga cinemas para vê-los aqui">
+									Ver cinemas
+									<svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 md:w-5" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+									</svg>
+								</div>
+							<% end %>
+						<% end %>
+					</div>
+				</div>
+			<% end %>
+			<div data-action="mouseleave->hovercard#hide"
+					 class="relative">
+				<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimerHide mouseleave->hovercard#hide"></div>
+				<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex">
+					<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="<%= class_names('hidden my-auto -ml-5 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700', { 'mt-20': template == 'default', 'mt-8': template == 'small' }) %> ">
+						<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+						</svg>
+					</div>
+				</div>
+				<div class="hidden absolute top-0 right-0 z-20 items-center w-3 h-full select-none md:flex">
+					<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="<%= class_names('my-auto -ml-2 rounded-full shadow-md transition-colors duration-200 cursor-pointer bg-brand-200 hover:bg-brand-600 hover:text-white text-brand-700', { 'mt-20': template == 'default', 'mt-8': template == 'small' }) %> ">
+						<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+						</svg>
+					</div>
+				</div>
+				<div data-slider-target="scroller"
+						 data-persist-horizontal-scroll-target="scroller"
+						 class="py-2 rounded-lg md:px-2 md:py-2 scrollx">
+					<div data-controller="turbo" data-turbo-history-action-value="replace" class="<%= class_names('grid grid-flow-col px-5 md:px-0 w-content grid-after-margin', { 'gap-2.5': template == 'default', 'gap-1.5': template == 'small' }) %> ">
+						<% movies.reverse.each do |movie| %>
+							<div data-slider-target="item"
+									 data-url="<%= hovercard_movie_path(movie) %>"
+									 data-action="mouseenter->hovercard#show mouseleave->hovercard#clearTimerShow"
+									 class="<%= class_names('flex flex-col transition-transform transform group md:hover:scale-105', { 'w-24': template == 'default', 'w-10 md:w-16': template == 'small' }) %>">
+								<%= link_to movie_path(movie), class: 'flex flex-col', data: { url: hovercard_movie_path(movie), action: 'click->turbo#stream click->hovercard#show', 'turbo-preserve-scroll': true } do %>
+									<% if movie.rating %>
+										<div class="<%= class_names('absolute flex font-semibold items-stretch left-0 space-x-0.5 text-white text-xs top-0 z-20', { 'py-0.5 px-1 w-10 md:w-16 rounded-md h-10': template == 'small', 'py-1 px-2 w-16 rounded-lg h-20': template == 'default' }) %> " style="background: radial-gradient(circle at 0% 0%,  #000000bf 20%,  transparent 50%);" title="votação de usuário do IMDB">
+											<span class="<%= class_names({ 'text-xxs': template == 'small' }) %>"><%= movie.rating %></span>
+											<svg xmlns="http://www.w3.org/2000/svg" class="<%= class_names('fill-current', { 'h-3.5': template == 'default', 'h-3': template == 'small' }) %>" viewBox="0 0 20 20" fill="currentColor">
+												<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+											</svg>
+										</div>
+									<% end %>
+									<div class="relative z-10">
+										<% if template != 'small' && is_new_movie?(movie) %>
+											<div title="Criado nos últimos 5 dias" class="absolute bg-white border border-brand-100 bottom-1 font-semibold left-1 md:bottom-2 md:left-2 md:shadow px-1 py-0.5 rounded text-brand-600 text-white text-xxs">NOVO</div>
+										<% end %>
+										<%= image_tag shrine_image_url(movie, :medium), {
+											loading: :lazy,
+											title:   movie.title,
+											alt:     "Filme #{movie.title}",
+											class:   class_names('border group-hover:shadow bg-gray-100 object-center object-cover', { 'h-36 rounded-lg': template == 'default', 'h-16 md:h-24 rounded-md': template == 'small' }),
+											onerror: "this.style.opacity='0'"
+										} rescue nil %>
+									</div>
+									<%= tag.div limit_name_size(movie.title, 30), class: 'group-hover:text-brand-600 text-xs font-medium inline-block leading-tight mt-2 text-gray-900' if template == 'default' %>
+									<%= tag.div class: 'group-hover:text-brand-600 mt-1 leading-tight text-gray-700 text-xxs' do %>
+										<%= movie.genres&.join(", ") %>
+									<% end if template == 'default' %>
+								<% end %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>
+

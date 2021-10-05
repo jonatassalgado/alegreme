@@ -48,9 +48,9 @@
 		<div class="<%= class_names 'h-full inline-flex items-center flex-auto md:pr-0',
 																'hidden': !props[:visible][:logo] %>">
 			<% if mobile_device? && content_for?(:top_app_bar_title) %>
-				<div class="font-semibold text-gray-800">
+				<turbo-frame id="top-app-bar--title" class="font-semibold text-gray-800">
 					<%= content_for(:top_app_bar_title) %>
-				</div>
+				</turbo-frame>
 			<% elsif props[:visible][:logo] %>
 				<a class="inline-block relative mx-auto transition-transform md:transform md:hover:scale-105 md:ml-0"
 					 aria-label="Página inicial"

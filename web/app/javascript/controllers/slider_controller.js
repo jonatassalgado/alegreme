@@ -1,7 +1,7 @@
 import ApplicationController from "./application_controller"
 
 export default class extends ApplicationController {
-    static targets = ["left", "right", "scroller"];
+    static targets = ['left', 'right', 'scroller', 'item'];
     static values  = {
         distance: Number
     }
@@ -48,6 +48,17 @@ export default class extends ApplicationController {
             })
             this.handleLeftRightButtons();
         }, 100)
+    }
+
+    select(event) {
+        if (this.hasItemTarget) {
+            this.itemTargets.forEach((item) => {
+                item.classList.remove('border-2', 'border-brand-600', 'rounded-lg', 'scale-105');
+                if (event.detail.url === item.querySelector('a').href) {
+                    item.classList.add('border-2', 'border-brand-600', 'rounded-lg', 'scale-105');
+                }
+            })
+        }
     }
 
     handleLeftRightButtons() {

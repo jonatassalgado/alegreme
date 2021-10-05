@@ -14,6 +14,7 @@ class MoviesController < ApplicationController
 
 		respond_to do |format|
 			format.html { render :show }
+			format.turbo_stream
 		end
 	end
 
