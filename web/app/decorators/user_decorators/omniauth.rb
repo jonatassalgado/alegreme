@@ -43,6 +43,7 @@ module UserDecorators
 						googleId: googleId,
 						name:     name,
 						picture:  picture,
+						uid:      email,
 						provider: provider
 					})
 				else
@@ -52,6 +53,7 @@ module UserDecorators
 						googleId: googleId,
 						name:     name,
 						picture:  picture,
+						uid:      email,
 						provider: provider
 					)
 				end
@@ -64,9 +66,11 @@ module UserDecorators
 						googleId: nil,
 						name:     nil,
 						picture:  nil,
+						uid:      nil,
 						provider: nil
 					})
 
+				user.uid      = args[:uid].presence
 				user.provider = args[:provider].presence || 'email'
 				user.features.deep_merge!({
 																		'demographic' => {
@@ -88,12 +92,14 @@ module UserDecorators
 						googleId: nil,
 						name:     nil,
 						picture:  nil,
+						uid:      nil,
 						provider: nil
 					})
 
 				user = User.new(email:    args[:email],
 												password: Devise.friendly_token[0, 20])
 
+				user.uid      = args[:uid].presence
 				user.provider = args[:provider].presence || 'email'
 				user.features.deep_merge!({
 																		'demographic' => {
