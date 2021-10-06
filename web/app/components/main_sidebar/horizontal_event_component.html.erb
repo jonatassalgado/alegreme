@@ -9,7 +9,8 @@
 		<div>
 			<div class="relative w-24 h-16 bg-gray-100 rounded md:rounded-lg md:h-28 md:w-48">
 				<%= link_to event_path(@event),
-										data: {
+										title: "Preview: #{@event.name}",
+										data:  {
 											'turbo-preserve-scroll': true,
 											action:                  'click->main-sidebar--horizontal-event#openEvent',
 											'event-id':              @event.id
@@ -73,14 +74,14 @@
 							</span>
 						</span>
 			</div>
-			<%= content_tag :a,
-											href:  event_path(@event),
-											data:  {
-												'turbo-preserve-scroll': true,
-												action:                  'click->main-sidebar--horizontal-event#openEvent',
-												'event-id':              @event.id
-											},
-											class: 'c-h3 inline md:hover:text-brand-600 mb-1' do %>
+			<%= link_to event_path(@event),
+									title: "Preview: #{@event.name}",
+									data:  {
+										'turbo-preserve-scroll': true,
+										action:                  'click->main-sidebar--horizontal-event#openEvent',
+										'event-id':              @event.id
+									},
+									class: 'c-h3 inline md:hover:text-brand-600 mb-1' do %>
 				<%= helpers.limit_name_size @event.name, 50 %>
 			<% end %>
 			<span class="text-gray-700 md:font-medium md:text-brand-600">

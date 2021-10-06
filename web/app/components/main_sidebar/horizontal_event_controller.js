@@ -38,6 +38,8 @@ export default class extends ApplicationController {
 
     openEvent(event) {
         if (!MobileDetector.mobile() && this.openInSidebarValue) {
+            const currentTarget = event.currentTarget
+
             event.preventDefault()
             event.stopPropagation()
             this.beginEvent = new Event("horizontal-event#open-event:before")
@@ -55,8 +57,8 @@ export default class extends ApplicationController {
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                                           event:     "virtualPageview",
-                                          pageUrl:   event.target.pathname,
-                                          pageTitle: event.target.innerText
+                                          pageUrl:   currentTarget.href,
+                                          pageTitle: currentTarget.title
                                       });
             }).catch(payload => {
 
