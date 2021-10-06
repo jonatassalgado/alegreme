@@ -98,6 +98,9 @@ Run ml label studio:
 
     docker-compose up ls-ml-content-rules
 
+* When create nem model, dont forget to rename class names
+* To connect ML use http://service-name:9090
+
 ### Crontab UI
 
 https://github.com/alseambusher/crontab-ui/
