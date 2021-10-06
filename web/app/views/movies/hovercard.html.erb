@@ -24,14 +24,7 @@
 					<span class="font-medium">Elenco:</span> <%= @movie&.cast&.join(', ') %>
 				<% end if @movie&.cast? %>
 			</div>
-<!--			<a href="<%#= @movie.trailer %>" rel="nofollow" target="_blank" class="flex hidden flex-shrink-0 items-center px-1 mt-1 text-sm text-center text-gray-600 rounded-full border transition-transform md:flex md:mt-0 md:text-base md:py-1 md:px-2 hover:scale-105 md:transform border-brand-300 w-content">-->
-<!--				<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 w-4 fill-current md:w-5 text-brand-600" viewBox="0 0 20 20" fill="currentColor">-->
-<!--					<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>-->
-<!--				</svg>-->
-<!--				<span class="font-medium md:font-semibold text-brand-600">-->
-<!--					Ver no youtube-->
-<!--				</span>-->
-<!--			</a>-->
+
 		</div>
 	</div>
 	<div class="my-1 flex flex-row space-x-2 md:hidden">
@@ -45,17 +38,7 @@
 			</svg>
 		</a>
 	</div>
-<!--	<div class="text-xs">-->
-<!--		<div class="space-x-1">-->
-			<%#= tag.span @movie.age_rating, class: 'border border-gray-700 font-medium px-1 rounded-sm text-gray-800 text-xxs' if @movie.age_rating? %>
-			<%#= tag.span @movie&.genres&.join(', ') if @movie.genres? %>
-			<%#= tag.span " · " if @movie.genres? %>
-			<%#= tag.span @movie.year&.to_i if @movie.year? %>
-<!--		</div>-->
-		<%#= tag.div do %>
-<!--			<span class="font-medium">Elenco:</span> <%#= @movie&.cast&.join(', ') %>-->
-		<%# end if @movie&.cast? %>
-<!--	</div>-->
+
 	<div class="text-xs md:text-sm">
 		<%= truncate(@movie.description, length: 400, separator: ' ') { link_to 'continua', movie_path(@movie), class: 'text-brand-600 text-medium' } rescue nil %>
 	</div>

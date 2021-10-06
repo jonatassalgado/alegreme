@@ -57,8 +57,12 @@ export default class extends ApplicationController {
             this.clearTimerHide();
         }
 
+        if (this.loading) return
+        this.loading = true
+
         if (this.preserveValue && this.cardTarget?.innerHTML?.length > 0) {
             this.cardTarget.classList.remove("hidden", "opacity-0");
+            this.loading = false
         } else {
             let timer = setTimeout(() => {
                 fetch(currentTarget.dataset.url)
@@ -76,6 +80,15 @@ export default class extends ApplicationController {
                                 this.cardTarget.classList.remove("hidden", "opacity-0");
                             }, 310)
                         })
+
+                        this.loading = false
+
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                                                  event:     "virtualPageview",
+                                                  pageUrl:   currentTarget.dataset.url,
+                                                  pageTitle: currentTarget.dataset.title
+                                              });
                     });
             }, 200)
             this.timersShow.push(timer)
@@ -122,13 +135,18 @@ export default class extends ApplicationController {
     }
 
     clearTimerShow() {
-        if (this.timersShow?.length > 0) this.timersShow.forEach(timer => clearTimeout(timer))
+        if (this.timersShow?.length > 0) {
+            this.timersShow.forEach(timer => clearTimeout(timer))
+            this.loading = false
+        }
     }
 
     clearTimerHide() {
         if (!this.activeValue) return
-
-        if (this.timersHide?.length > 0) this.timersHide.forEach(timer => clearTimeout(timer))
+        if (this.timersHide?.length > 0) {
+            this.timersHide.forEach(timer => clearTimeout(timer))
+            this.loading = false
+        }
     }
 
 

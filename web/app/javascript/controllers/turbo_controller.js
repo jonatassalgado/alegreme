@@ -35,13 +35,13 @@ export default class extends ApplicationController {
 
     stream(event) {
         event.preventDefault()
-        const self = this
-        const href = event.currentTarget.href
+        const self          = this
+        const currentTarget = event.currentTarget
 
         if (self.loading) return
         self.loading = true
 
-        fetch(href, {
+        fetch(currentTarget.href, {
             method:      "get",
             headers:     {
                 "Accept":       "text/vnd.turbo-stream.html",
@@ -52,8 +52,15 @@ export default class extends ApplicationController {
           .then(html => {
               self.loading = false
               Turbo.renderStreamMessage(html);
-              if (self.historyActionValue === 'replace') history.replaceState(history.state, "", href)
-              if (self.historyActionValue === 'push') history.pushState(history.state, "", href)
+              if (self.historyActionValue === 'replace') history.replaceState(history.state, "", currentTarget.href)
+              if (self.historyActionValue === 'push') history.pushState(history.state, "", currentTarget.href)
+
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({
+                                        event:     "virtualPageview",
+                                        pageUrl:   currentTarget.href,
+                                        pageTitle: currentTarget.dataset.title
+                                    });
           })
           .catch(err => {
 

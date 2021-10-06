@@ -42,11 +42,15 @@
 			<% end %>
 		<% end %>
 
-		<%= render MoviesComponent.new(movies:    @movies,
-																	 user:      current_user,
-																	 chips:     true,
-																	 hovercard: true,
-																	 id:        'movies-index') if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
+		<%= render partial: 'movies/movies', locals: { movies:         @movies,
+																									 selected_movie: @movie,
+																									 user:           current_user,
+																									 title:          'Filmes em Porto Alegre',
+																									 chips:          false,
+																									 hovercard:      true,
+																									 template:       'default',
+																									 target:         '_top',
+																									 id:             'movies-index' } if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
 
 
 		<turbo-frame id="main-sidebar--feed" target="_top" class="px-5 md:px-0 inline-block w-full">
