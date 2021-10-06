@@ -4,7 +4,12 @@
 <script>
     window.dataLayer = window.dataLayer || [];
 
-    if (window.location.pathname === "/") {
+    document.addEventListener("turbo:load", function (event) {
+        <% if current_user %>
+        window.dataLayer.push({
+                                  userId: <%= current_user.try(:id) %>
+                              })
+        <% end %>
         window.dataLayer.push({
                                   event: "pageview",
                                   page:  {
@@ -12,23 +17,8 @@
                                       title: document.title
                                   }
                               });
-    } else {
-        document.addEventListener("turbo:load", function (event) {
-            <% if current_user %>
-            window.dataLayer.push({
-                                      userId: <%= current_user.try(:id) %>
-                                  })
-            <% end %>
-            window.dataLayer.push({
-                                      event: "pageview",
-                                      page:  {
-                                          path:  window.location.pathname,
-                                          title: document.title
-                                      }
-                                  });
 
-        });
-    }
+    });
 
     (function (w, d, s, l, i) {
         w[l] = w[l] || [];
