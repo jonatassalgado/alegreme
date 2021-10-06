@@ -57,7 +57,7 @@ export default class extends ApplicationController {
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                                           event:     "virtualPageview",
-                                          pageUrl:   currentTarget.href,
+                                          pageUrl:   currentTarget.pathname,
                                           pageTitle: currentTarget.title
                                       });
             }).catch(payload => {
