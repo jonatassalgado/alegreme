@@ -14,29 +14,30 @@ module PopulateEventsRake
 	def create_place(item)
 		return if item['deleted'] == 'true'
 		return unless item['place_name']
-		return if item['place_name'] =~ /\d{5}-\d{3}|Porto Alegre - RS/
+		return if item['place_name'] =~ /\d{5}-\d{3}|Porto Alegre/
 
 		place = Place.find_by("lower(details ->> 'name') = ?", item['place_name'].downcase)
 
 		if place
-			puts "Local: #{place.id} #{place.details['name']} - Lugar já existe".yellow
+			puts "Local: #{place.id} #{place.name} - Lugar já existe".yellow
 			set_place_image(place, item) unless place.image_data?
 		else
 			query    = search_query(item)
-			@geocode = Geocoder.search(query).first if query
+			@geocode = Geocoder.search(query, params: { countrycodes: 'br' }).first if query
 
-			place = Place.create({
-														 details:    {
-															 name: item['place_name']
-														 },
-														 geographic: {
-															 address: item['address']
-														 }
-													 })
+			place = Place.create(
+				name:         item['place_name'],
+				address:      item['address'],
+				cep:          get_cep(item),
+				city:         get_city(item),
+				neighborhood: get_neighborhood,
+				latitude:     get_latitude(item),
+				longitude:    get_longitude(item)
+			)
 
-			SetGeolocationJob.perform_later(place.id)
+			# SetGeolocationJob.perform_later(place.id)
 			set_place_image(place, item)
-			puts "Local: #{place.id} #{place.details_name} - Lugar criado".white
+			puts "Local: #{place.id} #{place.name} - Lugar criado".white
 		end
 
 		place
@@ -296,7 +297,7 @@ module PopulateEventsRake
 
 		unless place.events.include?(event)
 			place.events << event
-			puts "Local: #{place.details_name} - Local associado".white
+			puts "Local: #{place.name} - Local associado".white
 		end
 	end
 
@@ -343,13 +344,6 @@ module PopulateEventsRake
 			event.multiple_hours = item['multiple_hours'] if item['multiple_hours']
 			event.datetimes = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 
-			event.geographic.deep_merge!(
-				address:      item['address'],
-				latlon:       get_latlon(item),
-				neighborhood: get_neighborhood,
-				city:         get_city(item),
-				cep:          get_cep(item)
-			)
 			puts "#{item['name']} - atualizado".white
 
 			event
@@ -368,14 +362,6 @@ module PopulateEventsRake
 			event.status         = 'active'
 
 			event.datetimes = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
-
-			event.geographic.deep_merge!(
-				address:      item['address'],
-				latlon:       get_latlon(item),
-				neighborhood: get_neighborhood,
-				city:         get_city(item),
-				cep:          get_cep(item)
-			)
 
 			event
 		end
@@ -411,8 +397,12 @@ module PopulateEventsRake
 		@geocode.try { |geo| geo.address_components_of_type(:sublocality).dig(0, "long_name") } || @geocode.try(:neighborhood)
 	end
 
-	def get_latlon(item)
-		item['latitude'] && item['longitude'] ? [item['latitude']&.to_f, item['longitude']&.to_f] : @geocode.try(:coordinates)
+	def get_latitude(item)
+		item['latitude'] ? item['latitude']&.to_f : @geocode.try(:coordinates)[0] rescue nil
+	end
+
+	def get_longitude(item)
+		item['longitude'] ? item['longitude']&.to_f : @geocode.try(:coordinates)[1] rescue nil
 	end
 
 end

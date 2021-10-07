@@ -38,9 +38,9 @@ namespace :ml do
 
 				csv << [
 						event.name,
-						event.geographic['address'],
+						event.place_address,
 						event.datetimes,
-						event.place_details_name,
+						event.place_name,
 						event.organizers.pluck("details ->> 'name'"),
 						event.details.description,
 						nil,

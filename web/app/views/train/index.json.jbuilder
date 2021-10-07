@@ -6,7 +6,7 @@ if params[:feature].present?
 			json.ref_id event.id
 			json.name event.name || ""
 			json.description event.description || ""
-			json.place event.place_details_name
+			json.place event.place_name
 			json.cover_url shrine_image_url(event, :feed)
 			json.created_at event.created_at
 		end
@@ -19,7 +19,7 @@ else
 			json.ref_id event.id
 			json.name event.name || ""
 			json.description event.description || ""
-			json.place event.place_details_name
+			json.place event.place_name
 			json.cover_url shrine_image_url(event, :feed)
 			json.created_at event.created_at
 		end

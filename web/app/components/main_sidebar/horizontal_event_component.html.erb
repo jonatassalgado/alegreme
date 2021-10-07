@@ -70,7 +70,7 @@
 				<span class="hidden md:inline">
 							<span class="text-gray-700">·</span>
 							<span class="text-gray-700">
-								<%= link_to helpers.limit_place_name_size(@event.place_details_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
+								<%= link_to helpers.limit_place_name_size(@event.place_name, 30), place_path(@event.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' %>
 							</span>
 						</span>
 			</div>
@@ -167,7 +167,7 @@
 				</div>
 				<span>·</span>
 				<div class="inline text-sm text-gray-700">
-					<%= helpers.limit_place_name_size(@event.place_details_name, 26) %>
+					<%= helpers.limit_place_name_size(@event.place_name, 26) %>
 				</div>
 			<% end %>
 		</div>

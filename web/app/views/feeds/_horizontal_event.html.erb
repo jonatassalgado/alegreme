@@ -7,7 +7,7 @@
 			<%= link_to event.name, event_path(event), class: 'md:hover:underline' %>
 		</div>
 		<div class="text-sm  text-gray-600">
-			<%= link_to limit_place_name_size(event.place_details_name, 24), place_path(event.place), class: 'md:hover:underline' %>
+			<%= link_to limit_place_name_size(event.place_name, 24), place_path(event.place), class: 'md:hover:underline' %>
 		</div>
 		<div class="flex my-1 -ml-2">
 			<%= render partial: 'components/taste_button',

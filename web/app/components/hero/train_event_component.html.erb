@@ -27,7 +27,7 @@
 				<%= helpers.limit_name_size @event.name %>
 			<% end %>
 			<div class="inline mt-2 text-gray-800 text-sm">
-				· <%= @event&.categories_display_name %> em <%= helpers.limit_place_name_size(@event.place_details_name, 24) %>
+				· <%= @event&.categories_display_name %> em <%= helpers.limit_place_name_size(@event.place_name, 24) %>
 			</div>
 			<% unless helpers.mobile_device? %>
 				<div class="hidden md:inline-block font-light mt-2 text-gray-700 text-sm">

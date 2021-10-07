@@ -9,7 +9,7 @@
 			<%#= link_to "Porto Alegre", city_events_url, class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 			<%#= link_to event.categories_primary_name.try(:capitalize), category_events_url(event.categories_primary_name), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 			<%#= link_to I18n.l(event.start_time), day_events_url(event.start_time.strftime('%d-%m-%Y')), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
-			<%#= link_to limit_place_name_size(event.place_details_name, 30), place_path(event.place), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
+			<%#= link_to limit_place_name_size(event.place_name, 30), place_path(event.place), class: 'border hover:bg-gray-50 hover:border-gray-100 inline-block px-2 py-1 rounded-full text-gray-600 text-sm' %>
 <!--		</div>-->
 	<%# end %>
 
@@ -79,9 +79,9 @@
 		</div>
 	</div>
 	<div class="px-5 py-5 border-b border-gray-100">
-		<h2 class="font-bold text-gray-600 uppercase"><%= limit_place_name_size(event.place_details_name, 40) %></h2>
+		<h2 class="font-bold text-gray-600 uppercase"><%= limit_place_name_size(event.place_name, 40) %></h2>
 		<div class="mt-2 text-sm  leading-tight text-gray-600">
-			<%= limit_address_name_size event.geographic['address'] %>
+			<%= limit_address_name_size event.place_address %>
 		</div>
 		<div>
 
@@ -91,7 +91,7 @@
 						<path d="M0 0h24v24H0z" fill="none"/>
 						<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
 					</svg>
-					<%= link_to 'Abrir no Google Maps', google_maps_url(event.geographic['address']), class: 'text-gray-600 text-sm' %>
+					<%= link_to 'Abrir no Google Maps', google_maps_url(event.place_address), class: 'text-gray-600 text-sm' %>
 				</div>
 			</div>
 

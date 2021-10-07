@@ -29,7 +29,7 @@
 					·
 					<%= helpers.day_of_week(@likeable.start_time).titlecase %> · <%= @likeable&.cinema&.display_name %>
 				<% end %>
-				<%= link_to helpers.limit_place_name_size(@likeable.place_details_name, 24), place_path(@likeable.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' if @likeable.class == Event %>
+				<%= link_to helpers.limit_place_name_size(@likeable.place_name, 24), place_path(@likeable.place), data: { 'turbo-preserve-scroll': true }, class: 'md:hover:text-brand-600' if @likeable.class == Event %>
 			</div>
 			<div class="flex mt-2">
 				<%= content_tag :div,

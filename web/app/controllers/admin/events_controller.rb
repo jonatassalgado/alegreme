@@ -16,6 +16,8 @@ module Admin
 			resource = resource_class.new(resource_params)
 			authorize_resource(resource)
 
+			resource.slug = nil if resource.slug.blank?
+
 			if resource.save
 				if resource.active_status?
 					PredictEventLabels.predict(resource)

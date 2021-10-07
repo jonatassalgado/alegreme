@@ -4,7 +4,7 @@ json.name @event.name
 json.description @event.description
 json.start_time @event.start_time
 json.price @event.prices.try(:min)
-json.place @event.place_details_name
+json.place @event.place_name
 json.geographic @event.geographic
 json.categories @event.categories.pluck(:details)
 json.source_url @event.source_url
@@ -20,7 +20,7 @@ json.similar @similar_events do |similar|
 	json.cover_url shrine_image_url(similar, :feed)
 	json.name similar.name&.titleize
 	json.start_time similar.start_time
-	json.place similar.place_details_name
+	json.place similar.place_name
 	json.geographic similar.geographic
 	json.categories similar.categories.pluck(:details)
 	json.multiple_hours similar.multiple_hours

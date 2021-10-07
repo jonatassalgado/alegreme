@@ -11,10 +11,10 @@
         "endDate":     "<%= event.ld_json.end_date %>",
         "location":    {
             "@type":   "Place",
-            "name":    "<%= event.place_details_name %>",
+            "name":    "<%= event.place_name %>",
             "address": {
                 "@type":           "PostalAddress",
-                "streetAddress":   "<%= event.geographic['address'] %>",
+                "streetAddress":   "<%= event.place_address %>",
                 "addressLocality": "<%= event.geographic['city'] %>",
                 "postalCode":      "<%= event.geographic['cep'] %>",
                 "addressRegion":   "RS",

@@ -10,6 +10,8 @@ class Place < ApplicationRecord
 	has_many :events
 	has_many :follows, as: :following
 
+	reverse_geocoded_by :latitude, :longitude
+
 	def details=(value)
 		self[:details] = value.is_a?(String) ? JSON.parse(value) : value
 	end
@@ -26,9 +28,9 @@ class Place < ApplicationRecord
 		self[:geographic] = value.is_a?(String) ? JSON.parse(value) : value
 	end
 
-	def geographic_address
-		self.geographic['address']
-	end
+	# def geographic_address
+	# 	self.geographic['address']
+	# end
 
 	private
 

@@ -10,7 +10,7 @@ class Screening < ApplicationRecord
 	has_many :users, through: :likes, source: :likeable, source_type: 'Screening'
 
 
-	delegate :title, :image, :prices, :geographic, :categories, :trailer, :rating, :age_rating, :genres, :place_details_name, :multiple_hours, to: :movie
+	delegate :title, :image, :prices, :geographic, :categories, :trailer, :rating, :age_rating, :genres, :place_name, :multiple_hours, to: :movie
 	alias_method :name, :title
 
 	delegate :display_name, to: :cinema, prefix: true

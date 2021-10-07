@@ -49,13 +49,13 @@ module EventDecorators
 			# 	details['source_url'] = value
 			# end
 			#
-			def place_details_name
-				place&.details&.dig('name').try(:titleize)
-			end
-
-			def place_details_name=(value)
-				place&.details['name'] = value
-			end
+			# def place_details_name
+			# 	place&.details&.dig('name').try(:titleize)
+			# end
+			#
+			# def place_details_name=(value)
+			# 	place&.details['name'] = value
+			# end
 		end
 
 		module ClassMethods

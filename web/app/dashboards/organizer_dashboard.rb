@@ -12,7 +12,7 @@ class OrganizerDashboard < Administrate::BaseDashboard
 		events:     Field::HasMany,
 		follows:    Field::HasMany,
 		id:         Field::Number,
-		details:    Field::JSONB,
+		details:    Field::JSONB.with_options(blank_sign: {}, transform: true),
 		created_at: Field::DateTime,
 		updated_at: Field::DateTime,
 		slug:       Field::String,
@@ -26,7 +26,7 @@ class OrganizerDashboard < Administrate::BaseDashboard
 	COLLECTION_ATTRIBUTES = %i[
 		image
     id
-    created_at
+    details
     updated_at
   ].freeze
 

@@ -10,7 +10,7 @@ json.feed grouped_events do |group, events|
 		json.price event.prices.try(:min)
 		json.geographic event.geographic
 		json.categories event.categories.pluck(:details)
-		json.place event.place_details_name
+		json.place event.place_name
 		json.origin_url event_url(event, format: :html)
 		json.updated_at event.updated_at
 		json.is_new is_new_event?(event)

@@ -9,7 +9,7 @@ class SetGeolocationJob < ApplicationJob
 
 	def perform(place_id)
 		place   = Place.find place_id
-		address = place.geographic['address']
+		address = place.address
 		geocode = Geocoder.search(Geographic.get_cep_from_address(address)).first
 
 		place.geographic.deep_merge!({

@@ -6,7 +6,7 @@ json.events @liked_events do |resource|
 	json.price resource.prices&.min
 	json.geographic resource.geographic
 	json.categories resource.categories&.pluck(:details)
-	json.place resource.place_details_name
+	json.place resource.place_name
 	json.origin_url event_url(resource, format: :html)
 	json.multiple_hours resource.multiple_hours
 	json.updated_at resource.updated_at

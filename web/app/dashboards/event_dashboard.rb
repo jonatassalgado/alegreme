@@ -18,7 +18,6 @@ class EventDashboard < Administrate::BaseDashboard
 		id:             Field::Number,
 		description:    TrixField,
 		theme:          Field::JSONB,
-		geographic:     Field::JSONB,
 		datetimes:      CalendarField,
 		name:           Field::String.with_options(searchable: true),
 		entries:        Field::JSONB,
@@ -43,7 +42,7 @@ class EventDashboard < Administrate::BaseDashboard
     id
     image
     name
-    created_at
+    status
     updated_at
   ].freeze
 
@@ -60,7 +59,6 @@ class EventDashboard < Administrate::BaseDashboard
     name
     description
     theme
-    geographic
     datetimes
     ticket_url
     source_url
@@ -85,7 +83,6 @@ class EventDashboard < Administrate::BaseDashboard
     categories
     name
     description
-    geographic
     datetimes
     ticket_url
     source_url

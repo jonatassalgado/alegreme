@@ -50,7 +50,7 @@
     "item":
      {
        "@id": "<%= place_path(@event.place) %>",
-       "name": "<%= "Eventos em #{limit_place_name_size(@event.place_details_name, 30)}" %>"
+       "name": "<%= "Eventos em #{limit_place_name_size(@event.place_name, 30)}" %>"
      }
   }
  ]
@@ -76,10 +76,10 @@
   "url": "<%= event_path(@event, format: :html) %>",
   "location": {
     "@type": "Place",
-    "name": "<%= @event.place_details_name %>",
+    "name": "<%= @event.place_name %>",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "<%= @event.geographic['address'] %>",
+      "streetAddress": "<%= @event.place_address %>",
       "addressLocality": "<%= @event.geographic['city'] %>",
       "postalCode": "<%= @event.geographic['cep'] %>",
       "addressRegion": "RS",

@@ -29,7 +29,7 @@ class Event < ApplicationRecord
 	include Rails.application.routes.url_helpers
 
 	include EventDecorators::Details
-	include EventDecorators::Geographic
+	# include EventDecorators::Geographic
 	include EventDecorators::Ocurrences
 	include EventDecorators::Theme
 	include EventDecorators::Personas
@@ -58,11 +58,10 @@ class Event < ApplicationRecord
 	has_and_belongs_to_many :categories, -> { distinct }
 	has_many :likes, as: :likeable, dependent: :destroy
 	has_many :users, through: :likes, source: :likeable, source_type: 'Event'
-	# has_and_belongs_to_many :kinds
 
 	accepts_nested_attributes_for :place, :organizers
 
-	# delegate :name, to: :place, prefix: true, allow_nil: true
+	delegate :address, :name, to: :place, prefix: true
 
 	searchkick(word:        [:name, :description, :category, :place, :organizers],
 						 word_start:  [:name, :place, :organizers],
@@ -105,13 +104,13 @@ class Event < ApplicationRecord
 			name:        name,
 			description: ml_data_stemmed,
 			category:    categories_primary_name,
-			place:       place_details_name,
+			place:       place_name,
 			organizers:  organizers.map(&:details_name)
 		}
 	end
 
 	def text_to_ml
-		"#{name} #{description} #{place_details_name}"
+		"#{name} #{description} #{place_name}"
 	end
 
 	def cover(size: :feed)
@@ -165,7 +164,7 @@ class Event < ApplicationRecord
 
 	def parse_datetimes
 		if attribute_present?(:datetimes)
-			self.datetimes = datetimes.reject(&:blank?).map { |date| Time.zone.parse(date).to_datetime unless date.blank?}
+			self.datetimes = datetimes.reject(&:blank?).map { |date| Time.zone.parse(date).to_datetime unless date.blank? }
 		end
 	end
 

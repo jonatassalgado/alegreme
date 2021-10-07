@@ -72,7 +72,7 @@ class Movie < ApplicationRecord
 		nil
 	end
 
-	def place_details_name
+	def place_name
 		nil
 	end
 

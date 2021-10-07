@@ -8,14 +8,23 @@ class PlaceDashboard < Administrate::BaseDashboard
 	# which determines how the attribute is displayed
 	# on pages throughout the dashboard.
 	ATTRIBUTE_TYPES = {
-		events:     Field::HasMany,
-		follows:    Field::HasMany,
-		id:         Field::Number,
-		details:    Field::JSONB,
-		geographic: Field::JSONB,
-		created_at: Field::DateTime,
-		updated_at: Field::DateTime,
-		slug:       Field::String,
+		events:       Field::HasMany,
+		follows:      Field::HasMany,
+		id:           Field::Number,
+		google_id:    Field::String,
+		description:  Field::Text,
+		phone_number: Field::String,
+		website:      Field::String,
+		name:         Field::String,
+		address:      Field::String,
+		cep:          Field::String,
+		city:         Field::String,
+		neighborhood: Field::String,
+		latitude:     Field::Number,
+		longitude:    Field::Number,
+		created_at:   Field::DateTime,
+		updated_at:   Field::DateTime,
+		slug:         Field::String,
 	}.freeze
 
 	# COLLECTION_ATTRIBUTES
@@ -25,8 +34,8 @@ class PlaceDashboard < Administrate::BaseDashboard
 	# Feel free to add, remove, or rearrange items.
 	COLLECTION_ATTRIBUTES = %i[
     id
-    details
-    created_at
+    name
+    address
     updated_at
   ].freeze
 
@@ -36,8 +45,17 @@ class PlaceDashboard < Administrate::BaseDashboard
     events
     follows
     id
-    details
-    geographic
+    google_id
+		description
+		phone_number
+		website
+		name
+		address
+		cep
+		city
+		neighborhood
+		latitude
+		longitude
     created_at
     updated_at
     slug
@@ -48,9 +66,17 @@ class PlaceDashboard < Administrate::BaseDashboard
 	# on the model's form (`new` and `edit`) pages.
 	FORM_ATTRIBUTES = %i[
     events
-    follows
-    details
-    geographic
+    google_id
+		description
+		phone_number
+		website
+		name
+		address
+		cep
+		city
+		neighborhood
+		latitude
+		longitude
     slug
   ].freeze
 
@@ -70,6 +96,6 @@ class PlaceDashboard < Administrate::BaseDashboard
 	# across all pages of the admin dashboard.
 	#
 	def display_resource(place)
-		"#{place.id} #{place.details_name}"
+		"#{place.id} #{place.name}"
 	end
 end
