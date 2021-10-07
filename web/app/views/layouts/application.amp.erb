@@ -16,18 +16,6 @@
 
 	<!-- Google Analytics-->
 	<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
-	<amp-analytics type="gtag" data-credentials="include">
-		<script type="application/json">
-			{
-				"vars" : {
-					"gtag_id": "<GA_MEASUREMENT_ID>",
-					"config" : {
-						"<%= Rails.env.development? ? 'UA-144190547-1' : 'UA-144190547-1' %>": { "groups": "default" }
-					}
-				}
-			}
-		</script>
-	</amp-analytics>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -197,6 +185,19 @@
 <div class="me-footer">
 	<span>Feito com ♥ no Centro Histórico de Porto Alegre</span>
 </div>
+
+<amp-analytics type="gtag" data-credentials="include">
+	<script type="application/json">
+			{
+				"vars" : {
+					"gtag_id": "<%= Rails.env.development? ? 'UA-144190547-1' : 'UA-144190547-1' %>",
+					"config" : {
+						"<%= Rails.env.development? ? 'UA-144190547-1' : 'UA-144190547-1' %>": { "groups": "default" }
+					}
+				}
+			}
+		</script>
+</amp-analytics>
 
 </body>
 </html>
