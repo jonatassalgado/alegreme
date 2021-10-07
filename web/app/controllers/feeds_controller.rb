@@ -1,5 +1,5 @@
 class FeedsController < ApplicationController
-	before_action :authorize_user, except: [:index, :today, :category, :week, :city, :day, :neighborhood]
+	before_action :authorize_user, except: [:index, :today, :category, :week, :city, :day, :neighborhood, :filter]
 	before_action :authorize_current_user, only: %i[suggestions follow news]
 	# before_action :completed_swipable, except: [:index, :today, :category, :week, :city, :day]
 
