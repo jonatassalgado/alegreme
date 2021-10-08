@@ -1,5 +1,5 @@
 <%= turbo_frame_tag dom_id(event, 'similar'), target: '_top', src: local_assigns[:src].presence, loading: local_assigns[:loading].presence do %>
-	<h2 class="px-5 c-h3">Similares</h2>
+	<h2 class="px-5 c-h3 uppercase mb-2">Similares</h2>
 	<div class="md:space-y-2">
 		<% if local_assigns[:src].present? %>
 			<div class="px-5 mt-4">
