@@ -12,17 +12,19 @@ export default class extends ApplicationController {
         this.setup();
     }
 
-
-    async setup() {
+    setup() {
 
     }
 
     teardown() {
-
+        if (this.hasModalTarget) {
+            this.modalTarget.classList.add('hidden')
+            this.element.src = null
+        }
     }
 
     beforeCache() {
-
+        this.teardown();
     }
 
     disconnect() {
@@ -35,7 +37,10 @@ export default class extends ApplicationController {
     }
 
     close() {
-        if (this.hasModalTarget) this.modalTarget.classList.add('hidden')
+        if (this.hasModalTarget) {
+            this.modalTarget.classList.add('hidden')
+            this.element.src = null
+        }
     }
 
     clear() {
