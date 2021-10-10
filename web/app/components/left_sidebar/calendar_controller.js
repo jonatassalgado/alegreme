@@ -1,16 +1,12 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
-// import {ChildMutation}       from "../../javascript/modules/child-mutation-module";
-import FlippingWeb           from "flipping/lib/adapters/web";
-import StickySidebar         from "sticky-sidebar";
-import "./calendar_component.scss"
-
 
 export default class extends ApplicationController {
     static targets = ['loadingIcon', 'table', 'list', 'events'];
 
-    initialize() {
-        const selfEl  = this.element;
-        this.flipping = new FlippingWeb();
+    async initialize() {
+        const FlippingWeb = await import('flipping/lib/adapters/web');
+        const selfEl      = this.element;
+        this.flipping     = new FlippingWeb.default;
 
         this.element.addEventListener("cable-ready:before-morph", event => {
             if (this.hasEventsTarget) {
@@ -51,8 +47,11 @@ export default class extends ApplicationController {
         this.setup();
     }
 
-    setup() {
-        this.stickySidebar = new StickySidebar('#left-sidebar', {
+    async setup() {
+        await import('./calendar_component.scss')
+        const StickySidebar = await import("sticky-sidebar/dist/sticky-sidebar")
+
+        this.stickySidebar = new StickySidebar.default('#left-sidebar', {
             containerSelector:    '#main-content',
             innerWrapperSelector: '#calendar',
             topSpacing:           70,

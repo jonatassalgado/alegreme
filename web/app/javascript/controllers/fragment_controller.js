@@ -1,5 +1,4 @@
 import ApplicationController from "./application_controller"
-import morphdom              from "morphdom";
 
 export default class FragmentController extends ApplicationController {
     static targets = [];
@@ -26,10 +25,12 @@ export default class FragmentController extends ApplicationController {
         this.teardown()
     }
 
-    load() {
+    async load() {
+        const morphdom = await import('morphdom')
+
         fetch(`${location.origin}${this.path}`, {
-            method:      "get",
-            headers:     {
+            method:  "get",
+            headers: {
                 "X-Requested-With": "XMLHttpRequest",
                 "Content-type":     "application/json; charset=UTF-8",
                 "Accept":           "text/html; charset=utf-8",

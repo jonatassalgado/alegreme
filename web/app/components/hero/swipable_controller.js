@@ -1,11 +1,11 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
-import FlippingWeb           from "flipping/lib/adapters/web";
 
 export default class extends ApplicationController {
     static targets = [];
 
-    initialize() {
-        this.flipping = new FlippingWeb();
+    async initialize() {
+        const FlippingWeb = await import('flipping/lib/adapters/web')
+        this.flipping     = new FlippingWeb.default();
 
         this.element.addEventListener("cable-ready:before-morph", event => {
             this.flipping.read()

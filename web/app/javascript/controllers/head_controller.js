@@ -1,5 +1,4 @@
 import ApplicationController from "./application_controller"
-import {debounce}            from "../utilities";
 
 export default class HeadController extends ApplicationController {
     static targets = ["head", "tabBar", "backButton", "backButtonRipple"];

@@ -1,5 +1,4 @@
 import ApplicationController from "./application_controller"
-import {debounce}            from "../utilities";
 
 export default class BottomNavigationController extends ApplicationController {
     static targets = [];

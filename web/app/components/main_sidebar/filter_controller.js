@@ -1,5 +1,4 @@
 import ApplicationController from "../../javascript/controllers/application_controller"
-import {Transition}          from "../../javascript/modules/transition-module";
 
 export default class extends ApplicationController {
     static targets = ["loadingIcon", "filters"];
