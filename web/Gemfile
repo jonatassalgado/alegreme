@@ -53,7 +53,7 @@ gem 'geocoder'
 
 gem 'gon'
 
-gem 'picture_tag'
+# gem 'picture_tag'
 
 # Google Cloud
 gem 'google-cloud-vision', require: false

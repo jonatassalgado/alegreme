@@ -38,12 +38,20 @@
 				<% end %>
 			</div>
 		</div>
-		<%= image_tag @event.image[:original].try { |image| image.url(public: true) },
-									alt:   @event.name,
-									class: 'md:border border-gray-100 md:my-5 object-cover object-center w-full h-60 bg-gray-50 md:h-80 md:rounded-xl md:shadow-sm' %>
+		<%= helpers.webp_image_tag @event.image[:medium].try { |image| image.url(public: true) },
+															 @event.image[:original].try { |image| image.url(public: true) },
+															 alt:   @event.name,
+															 class: 'md:border border-gray-100 md:my-5 object-cover object-center w-full h-60 bg-gray-50 md:h-80 md:rounded-xl md:shadow-sm' %>
 		<div class="relative md:hidden">
-			<div class="flex justify-between items-center py-3 px-5 border-b border-gray-100">
+			<div class="flex justify-between items-center py-2 px-5 border-b border-gray-100">
 				<div class="flex justify-between items-center mt-1 space-x-2 w-full md:hidden">
+					<div class="text-xs font-light text-gray-600">
+						<% if helpers.already_happened? @event %>
+							O evento ocorreu <%= I18n.l(@event.end_time) %>
+						<% else %>
+							Atualizado há <%= time_ago_in_words @event&.updated_at %>
+						<% end %>
+					</div>
 					<% unless @user&.dislike?(@event) %>
 						<%= content_tag :div,
 														id:    dom_id(@event, :like),
@@ -60,19 +68,12 @@
 							</svg>
 						<% end %>
 					<% end %>
-					<div class="text-xs font-light text-gray-600">
-						<% if helpers.already_happened? @event %>
-							O evento ocorreu <%= I18n.l(@event.end_time) %>
-						<% else %>
-							Atualizado há <%= time_ago_in_words @event&.updated_at %>
-						<% end %>
-					</div>
 				</div>
 			</div>
 		</div>
 		<% unless helpers.already_happened? @event %>
 			<div class="flex py-5 px-5 border-b border-gray-100 md:px-0 text-brand-600">
-				<div class="flex flex-col justify-center py-2 px-3 my-auto mr-5 text-center rounded-lg bg-brand-50 h-15 w-content">
+				<div class="flex flex-col justify-center py-2 px-3 my-auto mr-5 text-center rounded-lg bg-brand-100 h-15 w-content">
 					<div class="text-sm font-bold leading-tight uppercase">
 						<% if @event.start_time < Date.today + 7 %>
 							<%= I18n.l(@event&.start_time&.to_date, format: :week) %>

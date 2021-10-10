@@ -20,12 +20,11 @@ class EventImageUploader < Shrine
 	process(:store) do |io, context|
 		io.download do |original|
 			pipeline = ImageProcessing::MiniMagick.source(original)
-																						.convert('jpeg')
-																						.saver(quality: 95)
 
 			{
-				original: pipeline.resize_to_fill!(625, 352, sharpen: { radius: 0.25, sigma: 0.25 }),
-				feed:     pipeline.resize_to_fill!(200, 113, sharpen: { radius: 0.25, sigma: 0.25 })
+				original: pipeline.resize_to_fill(625, 352).convert('jpg').saver!(quality: 70),
+				medium:   pipeline.resize_to_fill(412, 240).convert('webp').saver!(quality: 50),
+				feed:     pipeline.resize_to_fill(200, 113).convert('jpg').saver!(quality: 70)
 			}
 		end
 	end
