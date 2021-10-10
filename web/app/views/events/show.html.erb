@@ -7,9 +7,15 @@
 <% content_for :amp_url, event_url(@event, format: :amp) %>
 
 <% content_for :back_button, true %>
-<% content_for :top_app_bar_title, truncate(@event.name, length: 30) %>
+<% content_for :top_app_bar_title, truncate(@event.name, length: 26) %>
 
-<%= content_for :preload_image, @event.image[:original].try { |image| image.url(public: true) } %>
+<%
+	if mobile_device? && @event.image[:medium]
+		content_for :preload_image, @event.image[:medium].try { |image| image.url(public: true) }
+	else
+		content_for :preload_image, @event.image[:original].try { |image| image.url(public: true) }
+	end
+%>
 
 <script type="application/ld+json">
 {

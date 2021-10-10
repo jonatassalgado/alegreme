@@ -38,7 +38,7 @@
 				<% end %>
 			</div>
 		</div>
-		<%= helpers.webp_image_tag @event.image[:medium].try { |image| image.url(public: true) },
+		<%= helpers.webp_image_tag @event.image[helpers.mobile_device? ? :medium : :original].try { |image| image.url(public: true) },
 															 @event.image[:original].try { |image| image.url(public: true) },
 															 alt:   @event.name,
 															 class: 'md:border border-gray-100 md:my-5 object-cover object-center w-full h-60 bg-gray-50 md:h-80 md:rounded-xl md:shadow-sm' %>

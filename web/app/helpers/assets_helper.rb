@@ -13,7 +13,7 @@ module AssetsHelper
 		content_tag(:picture) do
 			concat content_tag(:source, nil, srcset: image_path(image)) if image
 			concat content_tag(:source, nil, srcset: image_path(fallback)) if fallback
-			concat image_tag fallback, alt: opts[:alt], title: opts[:title], loading: opts[:lazy], class: opts[:class]
+			concat image_tag fallback, alt: opts[:alt], title: opts[:title], loading: opts[:lazy], class: opts[:class], onerror: "this.style.opacity='0'" rescue nil
 		end
 	end
 
