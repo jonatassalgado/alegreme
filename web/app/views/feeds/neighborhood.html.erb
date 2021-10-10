@@ -12,34 +12,31 @@
 
 
 
+
+
+
+
 	</script>
 
 
 	<section class="md:w-9/12 mx-auto">
-		<div class="scrollx"
-				 data-controller="scroll-on-clicked"
-				 data-scroll-on-clicked-init-selected-value="<%= params[:neighborhood] %>"
-				 data-scroll-on-clicked-offset-left-value="24"
-				 data-scroll-on-clicked-target="scroller">
-			<div data-controller="toggle-style go-to"
-					 data-go-to-delay="250"
+		<div class="scrollx">
+			<div data-controller="toggle-style"
 					 data-toggle-style-init-selected="<%= params[:neighborhood] %>"
 					 data-toggle-style-current-selected="<%= params[:neighborhood] %>"
 					 data-toggle-style-inactive-class='["bg-gray-50","text-gray-800"]'
 					 data-toggle-style-active-class='["bg-brand-200","border-brand-400","text-brand-800"]'
 					 class="flex flex-wrap md:pl-0 md:pr-0 md:w-full pl-5 pr-5 w-content">
 				<% @neighborhoods.each do |neighborhood| %>
-					<div data-action="click->scroll-on-clicked#scroll click->toggle-style#toggle click->go-to#url"
-							 data-toggle-style-target="toggle"
-							 data-toggle-style-identifier="<%= neighborhood.try(:parameterize_with_accents) %>"
-							 data-scroll-on-clicked-target="item"
-							 data-scroll-on-clicked-selected="<%= params[:neighborhood] == neighborhood.try(:parameterize_with_accents) %>"
-							 data-go-to-url="<%= neighborhood_events_path neighborhood.try(:parameterize_with_accents) %>"
-							 class="<%= class_names 'tap-highlight-none w-content user select-none antialiased bg-gray-50 border md:mb-3 mr-2 md:mr-3 px-4 py-1 rounded-full cursor-pointer transform transition-colors duration-200',
-																			{'bg-brand-200 text-brand-800 border-brand-400': params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents)),
-																			 'text-gray-800':                                                        !params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents))} %>">
+					<a href="<%= neighborhood_events_path neighborhood.try(:parameterize_with_accents) %>"
+						 data-action="click->toggle-style#toggle"
+						 data-toggle-style-target="toggle"
+						 data-toggle-style-identifier="<%= neighborhood.try(:parameterize_with_accents) %>"
+						 class="<%= class_names 'tap-highlight-none w-content user select-none antialiased bg-gray-50 border md:mb-3 mr-2 md:mr-3 px-4 py-1 rounded-full cursor-pointer transform transition-colors duration-200',
+																		{ 'bg-brand-200 text-brand-800 border-brand-400': params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents)),
+																			'text-gray-800':                                !params[:neighborhood]&.include?(neighborhood.try(:parameterize_with_accents)) } %>">
 						<%= neighborhood %>
-					</div>
+					</a>
 				<% end %>
 			</div>
 		</div>
@@ -50,22 +47,22 @@
 		<div class="md:w-9/12 mx-auto mt-5">
 			<%= render partial: "components/collection/events/collection",
 								 locals:  {
-										 identifier:       'neighborhood',
-										 user:             current_user,
-										 items:            @events.limit(session[:stimulus][:limit]),
-										 total_count:      @events.size,
-										 title:            {
-												 principal: "Eventos no bairro #{params[:neighborhood].titleize}",
-												 secondary: "Explore os #{@events.size} eventos do bairro #{params[:neighborhood].titleize} em Porto Alegre - RS"
-										 },
-										 infinite_scroll_vertical:  true,
-										 display_if_empty: true,
-										 show_similar_to:  session[:stimulus][:show_similar_to],
-										 html: {
-												 grid: {
-														 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:gap-y-16 md:space-y-0 pb-2 px-5 space-y-5'
-												 }
+									 identifier:               'neighborhood',
+									 user:                     current_user,
+									 items:                    @events.limit(session[:stimulus][:limit]),
+									 total_count:              @events.size,
+									 title:                    {
+										 principal: "Eventos no bairro #{params[:neighborhood].titleize}",
+										 secondary: "Explore os #{@events.size} eventos do bairro #{params[:neighborhood].titleize} em Porto Alegre - RS"
+									 },
+									 infinite_scroll_vertical: true,
+									 display_if_empty:         true,
+									 show_similar_to:          session[:stimulus][:show_similar_to],
+									 html:                     {
+										 grid: {
+											 css: 'md:gap-5 md:grid md:grid-cols-4 md:grid-flow-row md:overflow-x-visible md:pl-0 md:gap-y-16 md:space-y-0 pb-2 px-5 space-y-5'
 										 }
+									 }
 								 } %>
 		</div>
 	<% end %>

@@ -14,7 +14,9 @@ export default class extends ApplicationController {
     }
 
     setup() {
-
+        document.addEventListener('sign-in#close', () => {
+            this._cleanLoadingAnimate()
+        }, false)
     }
 
     teardown() {
@@ -74,6 +76,13 @@ export default class extends ApplicationController {
         this.loadingIconTarget.classList.add("animate-spin")
         this.tableTarget.classList.add("animate-pulse")
         this.listTarget.classList.add("animate-pulse")
+    }
+
+    _cleanLoadingAnimate() {
+        this.loadingIconTarget.classList.add("opacity-0")
+        this.loadingIconTarget.classList.remove("animate-spin")
+        this.tableTarget.classList.remove("animate-pulse")
+        this.listTarget.classList.remove("animate-pulse")
     }
 
 }

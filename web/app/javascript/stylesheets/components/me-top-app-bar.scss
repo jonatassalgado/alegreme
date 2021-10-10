@@ -1,292 +1,292 @@
-
-//@import "@material/top-app-bar/_mixins";
-
-$fill-color: #ffffff;
-$font-color: $font-primary-color;
-$border-color: #e0e0e0;
-
-.me-top-app-bar {
-  background-color: $surface-color;
-  color: $font-color;
-  top: 0;
-  user-select: none;
-  z-index: 10;
-  position: relative;
-  @include desktop-only {
-
-  }
-  @include mobile-only {
-    position: relative;
-  }
-
-  [data-controller="registrations"] & {
-    & .me-search-field {
-      display: none;
-    }
-  }
-
-  [data-controller="sessions"] & {
-    & .me-search-field {
-      display: none;
-    }
-  }
-
-  [data-controller="search"] & {
-    box-shadow: none;
-    & .mdc-top-app-bar__row {
-      @include mobile-only {
-        height: 70px;
-      }
-    }
-  }
-
-  [data-controller="events"][data-action="show"] &,
-  [data-controller="movies"] &,
-  [data-controller="places"][data-action="show"] &,
-  [data-controller="organizers"][data-action="show"] &,
-  [data-controller="feeds"][data-action="neighborhood"] &,
-  [data-controller="feeds"][data-action="follow"] &,
-  [data-controller="feeds"][data-action="week"] &,
-  [data-controller="feeds"][data-action="suggestions"] &,
-  [data-controller="users"] & {
-    @include mobile-only {
-      // position: fixed;
-      // box-shadow: 0 0 6px 0 #00000030;
-    }
-  }
-
-  [data-action="search"] & {
-    box-shadow: none;
-    & .mdc-top-app-bar__row {
-      @include mobile-only {
-        padding: 0 12px;
-      }
-    }
-  }
-
-  // &.mdc-top-app-bar--fixed-scrolled {
-  //   border-bottom: 1px solid $border-color;
-  //   box-shadow: unset;
-  // }
-
-  &__fake-size {
-    height: 64px;
-    width: 100%;
-    @include mobile-only {
-      height: 56px;
-    }
-  }
-
-
-  &__logo {
-    display: flex;
-
-    &-icon {
-
-    }
-
-    &-text{
-    }
-
-  }
-
-  &__name {
-    font-size: 14px;
-    width: 100%;
-    @include mobile-only {
-      color: $font-tertiary-color;
-      font-weight: 500;
-    }
-    [data-controller="search"] &, [data-controller="events"] &, [data-controller="places"] &, [data-controller="users"] & {
-      @include mobile-only {
-        display: none;
-      }
-    }
-  }
-
-  &__picture {
-    border-radius: 100%;
-    width: 35px;
-    height: 35px;
-    margin: 0 8px 0 0;
-    background-color: $surface-secondary-color;
-    background-size: cover;
-    background-repeat: no-repeat;
-    @include mobile-only {
-      margin: 2px 6px 0 0;
-      width: 26px;
-      height: 26px;
-
-      [data-controller="search"] &, [data-controller="events"] &, [data-controller="places"] &, [data-controller="users"] & {
-        display: none;
-      }
-    }
-  }
-
-  &__logout {
-    color: $font-tertiary-color;
-    font-size: 12px;
-    @include mobile-only {
-      display: none;
-    }
-  }
-
-  &__logo {
-    display: inherit;
-  }
-
-  &__back-button {
-    display: none;
-    @include mobile-only {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      margin: 0px 12px 0px -12px;
-      color: $font-tertiary-color;
-      background: whitesmoke;
-      border-radius: 24px;
-      height: 40px;
-      width: 40px;
-      border: 0;
-      overflow: hidden;
-      position: relative;
-      outline: none;
-      justify-content: center;
-    }
-    &-ripple {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      //@include mdc-ripple-surface;
-      //@include mdc-ripple-radius-bounded;
-      //@include mdc-states;
-    }
-    & svg {
-      fill: $icon-color;
-      height: -webkit-fill-available;
-    }
-  }
-
-  &__section {
-     flex: 1 1 0;
-    // padding: 0 12px;
-    @include mobile-only {
-      padding: 0;
-    }
-
-    &--left {
-      & span {
-        color: #4b4b4b;
-        padding: 0px 12px;
-        position: relative;
-        top: -3px;
-        font-size: 13px;
-        font-weight: 300;
-      }
-      @include mobile-only {
-        & span {
-          display: none;
-        }
-        [data-controller="search"] & {
-          display: none;
-        }
-      }
-    }
-
-    &--middle {
-      display: flex;
-      flex: auto;
-
-      @include mobile-only {
-        display: none;
-
-        [data-controller="search"] & {
-          display: block;
-          width: 100%;
-        }
-      }
-    }
-
-    &--right {
-      & .me-top-app-bar__signin-link {
-        display: none;
-      }
-      @include mobile-only {
-        & .me-top-app-bar__signin-link {
-          display: inline;
-        }
-        & .g-signin2 {
-          display: none;
-        }
-      }
-
-      [data-controller="search"] & {
-        @include mobile-only {
-          display: none;
-        }
-      }
-    }
-  }
-
-  &.mdc-top-app-bar--fixed-scrolled {
-    //box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  }
-
-  & .mdc-top-app-bar__row {
-    padding: 0 12px;
-    @include desktop-only {
-      //max-width: 1080px;
-      margin: auto;
-    }
-    @include mobile-only {
-      height: 56px;
-      display: flex;
-      align-items: center;
-      padding: 0 $section-padding-phone;
-    }
-  }
-
-  & .mdc-top-app-bar__navigation-icon {
-    color: $font-color;
-  }
-
-  & .mdc-text-field:not(.mdc-text-field--disabled) {
-    background-color: $surface-secondary-color;
-
-    @include mobile-only {
-      background-color: $surface-color;
-    }
-
-    & .mdc-text-field--focused {
-      box-shadow: none;
-    }
-  }
-
-  &--events {
-    @include mobile-only {
-      background-color: $fill-color;
-      height: 55px;
-      border-bottom: 1px solid $border-color;
-    }
-
-    & .me-top-app-bar__section--middle {
-      @include mobile-only {
-        padding: 0px 12px;
-      }
-    }
-
-    & .me-top-app-bar__title {
-      & object {
-        height: 26px;
-      }
-
-      @include mobile-only {
-        // position: relative;
-        // margin: auto;
-        // justify-self: center;
-        // left: -24px;
-      }
-    }
-  }
-
-}
+//
+////@import "@material/top-app-bar/_mixins";
+//
+//$fill-color: #ffffff;
+//$font-color: $font-primary-color;
+//$border-color: #e0e0e0;
+//
+//.me-top-app-bar {
+//  background-color: $surface-color;
+//  color: $font-color;
+//  top: 0;
+//  user-select: none;
+//  z-index: 10;
+//  position: relative;
+//  @include desktop-only {
+//
+//  }
+//  @include mobile-only {
+//    position: relative;
+//  }
+//
+//  [data-controller="registrations"] & {
+//    & .me-search-field {
+//      display: none;
+//    }
+//  }
+//
+//  [data-controller="sessions"] & {
+//    & .me-search-field {
+//      display: none;
+//    }
+//  }
+//
+//  [data-controller="search"] & {
+//    box-shadow: none;
+//    & .mdc-top-app-bar__row {
+//      @include mobile-only {
+//        height: 70px;
+//      }
+//    }
+//  }
+//
+//  [data-controller="events"][data-action="show"] &,
+//  [data-controller="movies"] &,
+//  [data-controller="places"][data-action="show"] &,
+//  [data-controller="organizers"][data-action="show"] &,
+//  [data-controller="feeds"][data-action="neighborhood"] &,
+//  [data-controller="feeds"][data-action="follow"] &,
+//  [data-controller="feeds"][data-action="week"] &,
+//  [data-controller="feeds"][data-action="suggestions"] &,
+//  [data-controller="users"] & {
+//    @include mobile-only {
+//      // position: fixed;
+//      // box-shadow: 0 0 6px 0 #00000030;
+//    }
+//  }
+//
+//  [data-action="search"] & {
+//    box-shadow: none;
+//    & .mdc-top-app-bar__row {
+//      @include mobile-only {
+//        padding: 0 12px;
+//      }
+//    }
+//  }
+//
+//  // &.mdc-top-app-bar--fixed-scrolled {
+//  //   border-bottom: 1px solid $border-color;
+//  //   box-shadow: unset;
+//  // }
+//
+//  &__fake-size {
+//    height: 64px;
+//    width: 100%;
+//    @include mobile-only {
+//      height: 56px;
+//    }
+//  }
+//
+//
+//  &__logo {
+//    display: flex;
+//
+//    &-icon {
+//
+//    }
+//
+//    &-text{
+//    }
+//
+//  }
+//
+//  &__name {
+//    font-size: 14px;
+//    width: 100%;
+//    @include mobile-only {
+//      color: $font-tertiary-color;
+//      font-weight: 500;
+//    }
+//    [data-controller="search"] &, [data-controller="events"] &, [data-controller="places"] &, [data-controller="users"] & {
+//      @include mobile-only {
+//        display: none;
+//      }
+//    }
+//  }
+//
+//  &__picture {
+//    border-radius: 100%;
+//    width: 35px;
+//    height: 35px;
+//    margin: 0 8px 0 0;
+//    background-color: $surface-secondary-color;
+//    background-size: cover;
+//    background-repeat: no-repeat;
+//    @include mobile-only {
+//      margin: 2px 6px 0 0;
+//      width: 26px;
+//      height: 26px;
+//
+//      [data-controller="search"] &, [data-controller="events"] &, [data-controller="places"] &, [data-controller="users"] & {
+//        display: none;
+//      }
+//    }
+//  }
+//
+//  &__logout {
+//    color: $font-tertiary-color;
+//    font-size: 12px;
+//    @include mobile-only {
+//      display: none;
+//    }
+//  }
+//
+//  &__logo {
+//    display: inherit;
+//  }
+//
+//  &__back-button {
+//    display: none;
+//    @include mobile-only {
+//      cursor: pointer;
+//      display: flex;
+//      align-items: center;
+//      margin: 0px 12px 0px -12px;
+//      color: $font-tertiary-color;
+//      background: whitesmoke;
+//      border-radius: 24px;
+//      height: 40px;
+//      width: 40px;
+//      border: 0;
+//      overflow: hidden;
+//      position: relative;
+//      outline: none;
+//      justify-content: center;
+//    }
+//    &-ripple {
+//      width: 100%;
+//      height: 100%;
+//      position: absolute;
+//      //@include mdc-ripple-surface;
+//      //@include mdc-ripple-radius-bounded;
+//      //@include mdc-states;
+//    }
+//    & svg {
+//      fill: $icon-color;
+//      height: -webkit-fill-available;
+//    }
+//  }
+//
+//  &__section {
+//     flex: 1 1 0;
+//    // padding: 0 12px;
+//    @include mobile-only {
+//      padding: 0;
+//    }
+//
+//    &--left {
+//      & span {
+//        color: #4b4b4b;
+//        padding: 0px 12px;
+//        position: relative;
+//        top: -3px;
+//        font-size: 13px;
+//        font-weight: 300;
+//      }
+//      @include mobile-only {
+//        & span {
+//          display: none;
+//        }
+//        [data-controller="search"] & {
+//          display: none;
+//        }
+//      }
+//    }
+//
+//    &--middle {
+//      display: flex;
+//      flex: auto;
+//
+//      @include mobile-only {
+//        display: none;
+//
+//        [data-controller="search"] & {
+//          display: block;
+//          width: 100%;
+//        }
+//      }
+//    }
+//
+//    &--right {
+//      & .me-top-app-bar__signin-link {
+//        display: none;
+//      }
+//      @include mobile-only {
+//        & .me-top-app-bar__signin-link {
+//          display: inline;
+//        }
+//        & .g-signin2 {
+//          display: none;
+//        }
+//      }
+//
+//      [data-controller="search"] & {
+//        @include mobile-only {
+//          display: none;
+//        }
+//      }
+//    }
+//  }
+//
+//  &.mdc-top-app-bar--fixed-scrolled {
+//    //box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+//  }
+//
+//  & .mdc-top-app-bar__row {
+//    padding: 0 12px;
+//    @include desktop-only {
+//      //max-width: 1080px;
+//      margin: auto;
+//    }
+//    @include mobile-only {
+//      height: 56px;
+//      display: flex;
+//      align-items: center;
+//      padding: 0 $section-padding-phone;
+//    }
+//  }
+//
+//  & .mdc-top-app-bar__navigation-icon {
+//    color: $font-color;
+//  }
+//
+//  & .mdc-text-field:not(.mdc-text-field--disabled) {
+//    background-color: $surface-secondary-color;
+//
+//    @include mobile-only {
+//      background-color: $surface-color;
+//    }
+//
+//    & .mdc-text-field--focused {
+//      box-shadow: none;
+//    }
+//  }
+//
+//  &--events {
+//    @include mobile-only {
+//      background-color: $fill-color;
+//      height: 55px;
+//      border-bottom: 1px solid $border-color;
+//    }
+//
+//    & .me-top-app-bar__section--middle {
+//      @include mobile-only {
+//        padding: 0px 12px;
+//      }
+//    }
+//
+//    & .me-top-app-bar__title {
+//      & object {
+//        height: 26px;
+//      }
+//
+//      @include mobile-only {
+//        // position: relative;
+//        // margin: auto;
+//        // justify-self: center;
+//        // left: -24px;
+//      }
+//    }
+//  }
+//
+//}

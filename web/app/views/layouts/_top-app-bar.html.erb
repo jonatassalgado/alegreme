@@ -23,8 +23,7 @@
 		<% if mobile_device? %>
 			<div class="my-auto text-gray-800 md:hidden">
 				<% if props[:visible][:back_button] %>
-					<a data-controller="ripple"
-						 onclick="TurboModule.backHistory()"
+					<a onclick="TurboModule.backHistory()"
 						 class="relative select-none ripple ripple-black tap-highlight-none"
 						 tabindex="0"
 						 role="button"
@@ -87,7 +86,6 @@
 																{ 'hidden md:block': controller_name != 'search' }) %>">
 			<form
 				class="flex items-center h-full rounded"
-				data-controller="search"
 				data-search-target="search"
 				data-reflex-permanent
 				data-turbo-permanent

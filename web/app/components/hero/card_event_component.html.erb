@@ -1,7 +1,7 @@
 <%= component_controller do %>
   <div class="md:w-48 md:border md:border-gray-200 bg-white flex flex-col group h-content relative rounded-lg shadow tap-highlight-none w-56"
        id="<%= dom_id @event %>">
-    <div data-controller="ripple" class="relative overflow-hidden ripple ripple-white">
+    <div class="relative overflow-hidden">
       <div class="bg-gray-50 rounded-t-lg aspect-ratio-16/9"></div>
       <%= image_tag helpers.shrine_image_url(@event, :feed), {
           loading: :lazy,
