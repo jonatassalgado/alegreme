@@ -14,11 +14,11 @@
 
 %>
 
-<header class="<%= class_names('md:gap-16 md:px-0 px-5 justify-between h-14 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none ',
+<header class="<%= class_names('md:px-0 px-5 justify-between h-14 md:h-16 max-w-screen-lg md:grid md:grid-cols-12 mx-auto my-auto select-none ',
 															 { 'flex h-14':      !current_page?('/busca'),
 																 'h-content py-2': current_page?('/busca') }) %>"
 				id="top-bar">
-	<div class="<%= class_names 'flex md:relative md:col-span-2 h-full w-full',
+	<div class="<%= class_names 'flex md:relative md:col-span-3 h-full w-full',
 															'space-x-4': content_for?(:top_app_bar_title) && request.headers['Referer']&.start_with?(root_url) %>">
 		<% if mobile_device? %>
 			<div class="my-auto text-gray-800 md:hidden">
@@ -73,7 +73,7 @@
 		<% end %>
 	</div>
 	<% if props[:visible][:search] %>
-		<div class="<%= class_names('col-span-12 md:col-span-3',
+		<div class="<%= class_names('col-span-12 md:col-span-6',
 																{ 'hidden md:block': controller_name != 'search' }) %>">
 			<form
 				class="flex items-center h-full rounded"
@@ -86,7 +86,7 @@
 				style="width: 100%">
 				<input autocomplete="false"
 							 name="q"
-							 class="border focus:bg-white focus:border-transparent focus:outline-none focus:placeholder-brand-600 focus:ring focus:ring-brand-500 font-light h-11 mx-auto placeholder-gray-400 px-4 py-1 rounded-full text-xs w-full"
+							 class="bg-gray-100 focus:bg-white focus:border-transparent focus:outline-none focus:placeholder-brand-600 focus:ring focus:ring-brand-500 font-light h-11 mx-auto placeholder-gray-500 px-4 py-1 rounded-full text-xs w-full"
 							 id="text-field-shape-one"
 							 placeholder="Busque por rock, feira de rua, samba, standup..."
 							 type="text"

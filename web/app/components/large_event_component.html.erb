@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@event), data: { controller: 'large-event' } do %>
-	<div class="overflow-hidden bg-white md:border md:border-gray-100 md:p-6 md:rounded-2xl md:shadow-2xl"
+	<div class="overflow-hidden bg-white md:border md:p-6 md:rounded-2xl md:shadow-2xl"
 			 data-event-favorited="<%= @user and @user.like?(@event) if @user and @user %>"
 			 data-event-identifier="<%= @event.id %>"
 			 data-event-description-open="false"
