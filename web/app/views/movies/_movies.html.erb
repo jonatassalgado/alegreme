@@ -85,7 +85,7 @@
 											</svg>
 										</div>
 									<% end %>
-									<div class="relative z-10">
+									<div class="<%= class_names 'relative z-10 bg-gray-100', { 'rounded-lg': template == 'default', 'rounded-md': template == 'small' } %>">
 										<% if template != 'small' && is_new_movie?(movie) %>
 											<div title="Criado nos últimos 5 dias" class="absolute bg-white border border-brand-100 bottom-1 font-semibold left-1 md:bottom-2 md:left-2 md:shadow px-1 py-0.5 rounded text-brand-600 text-white text-xxs">NOVO</div>
 										<% end %>
@@ -93,7 +93,7 @@
 											loading: :lazy,
 											title:   movie.title,
 											alt:     "Filme #{movie.title}",
-											class:   class_names('border group-hover:shadow bg-gray-100 object-center object-cover', { 'h-36 rounded-lg': template == 'default', 'h-16 md:h-24 rounded-md': template == 'small' }),
+											class:   class_names('border group-hover:shadow object-center object-cover', { 'h-36 rounded-lg': template == 'default', 'h-16 md:h-24 rounded-md': template == 'small' }),
 											onerror: "this.style.opacity='0'"
 										} rescue nil %>
 									</div>
