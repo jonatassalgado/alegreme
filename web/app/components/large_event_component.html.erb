@@ -26,7 +26,7 @@
 														'event-id': @event.id,
 														component:  'large-event'
 													},
-													class: helpers.class_names('cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform',
+													class: helpers.class_names('cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 items-center justify-center rounded-full select-none  transform transition-transform',
 																										 { 'text-brand-600 hover:text-brand-500': @user&.like?(@event),
 																											 'text-gray-300 hover:text-brand-600':  !@user&.like?(@event) }) do %>
 
@@ -60,7 +60,7 @@
 															'event-id': @event.id,
 															component:  'large-event'
 														},
-														class: helpers.class_names('cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 items-center justify-center rounded-full select-none tap-highlight-none transform transition-transform',
+														class: helpers.class_names('cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 items-center justify-center rounded-full select-none  transform transition-transform',
 																											 { 'text-brand-600': @user&.like?(@event),
 																												 'text-gray-300':  !@user&.like?(@event) }) do %>
 							<svg class="<%= helpers.class_names 'group w-5 fill-current stroke-current', { 'fill-current': @user&.like?(@event) } %>" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 12.04 13.31">

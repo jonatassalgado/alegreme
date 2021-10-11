@@ -3,7 +3,7 @@
 		<% if @filters[:categories].present? %>
 			<div data-reflex="click->Filter#open"
 					 data-filter-group="category"
-					 class="<%= helpers.class_names('bg-brand-200 text-brand-600 items-center cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content') %>">
+					 class="<%= helpers.class_names('bg-brand-200 text-brand-600 items-center cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none  transform transition-colors transition-all w-content') %>">
 				<%= @categories_filtered&.map { |c| c.details['display_name'] }.join(', ') %>
 				<div data-reflex="click->Filter#clear_filter"
 						 data-filter-only="category">
@@ -23,7 +23,7 @@
 		<% if @filters[:date].present? %>
 			<div data-reflex="click->Filter#open"
 					 data-filter-group="date"
-					 class="<%= helpers.class_names('bg-brand-200 text-brand-600 items-center cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content') %>">
+					 class="<%= helpers.class_names('bg-brand-200 text-brand-600 items-center cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-3 mr-3 px-4 py-2 rounded-full select-none  transform transition-colors transition-all w-content') %>">
 				<%= @filters[:date]&.to_date&.strftime("%d/%m/%y") %>
 				<div data-reflex="click->Filter#filter"
 						 data-filter-group="date"
@@ -139,7 +139,7 @@
 								<div class="flex flex-wrap lowercase">
 									<% @categories.each do |category| %>
 										<% if @params&.dig(:category) %>
-											<%= link_to category.details_display_name, category_events_path(category.details_url), class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none tap-highlight-none transform transition-colors transition-all w-content',
+											<%= link_to category.details_display_name, category_events_path(category.details_url), class: helpers.class_names('border cursor-pointer duration-50 flex font-semibold hover:bg-brand-200 hover:border-brand-200 hover:text-brand-600 inline-block justify-start mb-2 mr-2 px-4 py-1 rounded-full select-none  transform transition-colors transition-all w-content',
 																																																																				{ 'bg-brand-200 border-brand-200 text-brand-600': @filters[:categories]&.include?(category.id.to_s),
 																																																																					'text-gray-500':                                !@filters[:categories]&.include?(category.id.to_s) }) %>
 										<% else %>

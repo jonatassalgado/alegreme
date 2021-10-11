@@ -108,7 +108,7 @@
 														'event-id': @event.id,
 														component:  'horizontal-event'
 													},
-													class: helpers.class_names('mr-1 cursor-pointer duration-100 ease-linear flex font-medium group hover:bg-brand-100 px-2 py-1 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform',
+													class: helpers.class_names('mr-1 cursor-pointer duration-100 ease-linear flex font-medium group hover:bg-brand-100 px-2 py-1 items-center justify-center rounded-full select-none text-sm transform transition-transform',
 																										 { 'bg-brand-100 px-2 py-1': @user&.like?(@event) }) do %>
 						<svg class="<%= helpers.class_names 'h-4 stroke-current group-hover:text-brand-600',
 																								{ 'text-gray-500':               !@user&.like?(@event),
@@ -121,7 +121,7 @@
 						</span>
 					<% end %>
 				<% end %>
-				<div class="<%= helpers.class_names('hidden md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1',
+				<div class="<%= helpers.class_names('hidden md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1',
 																						{ 'ml-2': !@user&.like?(@event) }) %>"
 						 data-controller="share-button"
 						 data-share-button-text="<%= strip_tags(helpers.limit_description_size(@event.description)) %>"
@@ -136,7 +136,7 @@
 				</div>
 				<% if @user&.admin? %>
 					<div class="flex-grow"></div>
-					<%= link_to 'Editar', edit_admin_event_path(@event), class: 'md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none tap-highlight-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1 jus' %>
+					<%= link_to 'Editar', edit_admin_event_path(@event), class: 'md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1 jus' %>
 				<% end %>
 			</div>
 		</div>

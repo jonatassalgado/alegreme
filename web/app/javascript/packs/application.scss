@@ -36,3 +36,7 @@
     top: 0;
   }
 }
+
+body {
+  -webkit-tap-highlight-color: transparentize($brand-color, 0.9);
+}

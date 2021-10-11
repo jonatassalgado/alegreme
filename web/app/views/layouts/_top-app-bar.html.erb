@@ -14,7 +14,7 @@
 
 %>
 
-<header class="<%= class_names('md:gap-16 md:px-0 px-5 justify-between h-14 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none tap-highlight-none',
+<header class="<%= class_names('md:gap-16 md:px-0 px-5 justify-between h-14 md:h-16 max-w-screen-lg md:grid md:grid-cols-8 mx-auto my-auto select-none ',
 															 { 'flex h-14':      !current_page?('/busca'),
 																 'h-content py-2': current_page?('/busca') }) %>"
 				id="top-bar">
@@ -24,7 +24,7 @@
 			<div class="my-auto text-gray-800 md:hidden">
 				<% if props[:visible][:back_button] %>
 					<a onclick="TurboModule.backHistory()"
-						 class="relative select-none ripple ripple-black tap-highlight-none"
+						 class="relative select-none ripple ripple-black "
 						 tabindex="0"
 						 role="button"
 						 aria-label="Voltar">

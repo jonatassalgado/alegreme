@@ -1,5 +1,5 @@
 <%= content_tag :div, id: dom_id(@followable, 'follow-button'), class: 'inline' do %>
-	<div class="<%= helpers.class_names('cursor-pointer duration-100 font-medium h-content items-center md:hover:text-brand-600 select-none tap-highlight-none text-sm transform transition-transform',
+	<div class="<%= helpers.class_names('cursor-pointer duration-100 font-medium h-content items-center md:hover:text-brand-600 select-none  text-sm transform transition-transform',
 																			{ 'text-brand-600':                                                                                               @user&.follow?(@followable) || (!@user&.follow?(@followable) && @type == 'text'),
 																				'bg-brand-100':                                                                                                 @user&.follow?(@followable) && @type == 'button',
 																				'text-gray-800 border':                                                                                         !@user&.follow?(@followable) && @type == 'button',

@@ -62,7 +62,7 @@
 						<div data-controller="accordion" data-accordion-mobile-only-value="true" data-accordion-body-class="bg-gray-50" data-accordion-title-class="font-semibold" class="p-4 border-b md:border-0 md:p-0 last:border-b-0">
 							<div data-action="click->accordion#toggle" data-accordion-open-value="false" class="grid grid-cols-4 gap-3">
 								<div class="col-span-3 text-sm md:inline-block md:mb-3 md:pr-5">
-									<div class="inline select-none tap-highlight-none md:mb-3">
+									<div class="inline select-none  md:mb-3">
 										<%= link_to cinema_path(cinema_name_group[1][0]&.cinema), class: 'hidden md:inline-block' do %>
 											<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="inline text-base font-medium text-gray-800 md:text-xl md:font-bold">
 												<%= cinema_name_group[0][0] %>

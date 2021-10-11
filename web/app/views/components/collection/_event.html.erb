@@ -24,7 +24,7 @@
 
 %>
 
-<div class="<%= html.dig(:container, :css) || class_names('flex flex-col group h-full relative rounded-lg shadow tap-highlight-none',
+<div class="<%= html.dig(:container, :css) || class_names('flex flex-col group h-full relative rounded-lg shadow ',
 																													{'w-full':         disposition == :vertical,
 																													 'w-56 md:w-auto': size == :medium,
 																													 'w-40':           size == :small}) %>"
@@ -68,7 +68,7 @@
 														 type: :dislike,
 														 html: {
 																 container: {
-																		 css: 'select-none tap-highlight-none mt-2 mb-2 w-content mx-auto bg-white border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-600 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-600 text-sm transform transition-transform'
+																		 css: 'select-none  mt-2 mb-2 w-content mx-auto bg-white border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-600 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-600 text-sm transform transition-transform'
 																 },
 																 icon:      {
 																		 css: 'fill-current h-3 hover:scale-125 w-3'
@@ -102,7 +102,7 @@
 										 parent_id:       "cell-#{section_identifier}-#{dom_id event}",
 										 html:            {
 												 container: {
-														 css: 'select-none tap-highlight-none mt-2 mb-2 w-content mx-auto bg-white border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-600 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-600 text-sm transform transition-transform'
+														 css: 'select-none  mt-2 mb-2 w-content mx-auto bg-white border border-gray-100 cursor-pointer duration-100 ease-linear flex font-medium group hover:scale-105 hover:shadow-md hover:text-gray-600 items-center mdc-ripple-upgraded--unbounded px-2 hover:px-3 py-2 rounded-full shadow-sm text-gray-600 text-sm transform transition-transform'
 												 },
 												 icon:      {
 														 css: 'fill-current h-3 hover:scale-125 w-3'

@@ -27,7 +27,7 @@
 					 data-go-to-url="<%= root_path %>"
 					 class="<%= class_string('border-b-2 border-brand-600 font-bold text-brand-600':                                                                                                 controller_name == 'feeds' && action_name == 'index',
 																	 'text-gray-800':                                                                                                                                        controller_name != 'feeds',
-																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
+																	 ' outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
 				Para você
 			</div>
 			<div data-action="click->toggle-style#toggle click->go-to#url"
@@ -36,7 +36,7 @@
 					 data-go-to-url="<%= category_events_path %>"
 					 class="<%= class_string('border-b-2 border-brand-600 font-bold text-brand-600':                                                                                                 action_name == 'category',
 																	 'text-gray-800':                                                                                                                                        action_name != 'category',
-																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
+																	 ' outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
 				Categorias
 			</div>
 			<div data-action="click->toggle-style#toggle click->go-to#url"
@@ -45,7 +45,7 @@
 					 data-go-to-url="<%= city_events_path %>"
 					 class="<%= class_string('border-b-2 border-brand-600 font-bold text-brand-600':                                                                                                 action_name == 'city',
 																	 'text-gray-800':                                                                                                                                        action_name != 'city',
-																	 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
+																	 ' outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
 				Explorar tudo
 			</div>
 			<% unless mobile_device? %>
@@ -55,7 +55,7 @@
 						 data-go-to-url="<%= movies_path %>"
 						 class="<%= class_string('border-b-2 border-brand-600 font-bold text-brand-600':                                                                                                 controller_name == 'movies',
 																		 'text-gray-800':                                                                                                                                        controller_name != 'movies',
-																		 'tap-highlight-none outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
+																		 ' outline-none pb-2 px-4 w-content cursor-pointer select-none transform transition-colors duration-200 hover:text-brand-500': true) %>">
 					Filmes
 				</div>
 			<% end %>
