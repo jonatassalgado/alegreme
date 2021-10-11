@@ -80,6 +80,10 @@ module.exports = {
             display: ['Poppins', 'system-ui', 'sans-serif'],
             body:    ['Roboto', 'system-ui', 'sans-serif'],
         },
+        borderColor: theme => ({
+            ...theme('colors'),
+            DEFAULT: theme('colors.gray.300', 'currentColor'),
+        }),
         colors:      {
             transparent: 'transparent',
             current:     'currentColor',

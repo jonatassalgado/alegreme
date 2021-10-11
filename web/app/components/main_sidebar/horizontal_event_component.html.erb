@@ -6,29 +6,28 @@
 									'main-sidebar--horizontal-event-open-value':            false },
 								class: 'transition-opacity group' do %>
 	<div class="flex bg-white select-none">
-		<div>
-			<div class="relative w-24 h-16 bg-gray-100 rounded md:rounded-lg md:h-28 md:w-48">
-				<%= link_to event_path(@event),
-										title: "Preview: #{@event.name}",
-										data:  {
-											'turbo-preserve-scroll': true,
-											action:                  'click->main-sidebar--horizontal-event#openEvent',
-											'event-id':              @event.id
-										} do %>
-					<%= image_tag helpers.shrine_image_url(@event, :feed), {
-						loading: :lazy,
-						alt:     "Cartaz do evento #{@event.name}",
-						data:    {
-							'event-id': @event.id
-						},
-						class:   'border cursor-pointer object-center object-cover h-full w-full rounded-md md:rounded-lg',
-						onerror: "this.style.opacity='0'"
-					} rescue nil %>
-				<% end %>
-				<% if helpers.is_new_event? @event %>
-					<div title="Criado nas últimas 48 horas" class="absolute bg-white border border-brand-100 bottom-1 font-semibold left-1 md:bottom-2 md:left-2 md:shadow px-1 py-0.5 rounded text-brand-600 text-white text-xxs">NOVO</div>
-				<% end %>
-			</div>
+		<div class="flex-none relative w-32 h-20 bg-gray-100 rounded md:rounded-lg md:h-28 md:w-48">
+			<%= link_to event_path(@event),
+									title: "Preview: #{@event.name}",
+									class: 'inline-block w-full h-full',
+									data:  {
+										'turbo-preserve-scroll': true,
+										action:                  'click->main-sidebar--horizontal-event#openEvent',
+										'event-id':              @event.id
+									} do %>
+				<%= image_tag helpers.shrine_image_url(@event, :feed), {
+					loading: :lazy,
+					alt:     "Cartaz do evento #{@event.name}",
+					data:    {
+						'event-id': @event.id
+					},
+					class:   'border cursor-pointer object-center object-cover h-full w-full rounded-md md:rounded-lg',
+					onerror: "this.style.opacity='0'"
+				} rescue nil %>
+			<% end %>
+			<% if helpers.is_new_event? @event %>
+				<div title="Criado nas últimas 48 horas" class="absolute bg-white border border-brand-100 bottom-1 font-semibold left-1 md:bottom-2 md:left-2 md:shadow px-1 py-0.5 rounded text-brand-600 text-white text-xxs">NOVO</div>
+			<% end %>
 		</div>
 		<div class="hidden pl-6 md:inline-block">
 			<div class="hidden items-center text-sm md:flex md:space-x-2">
@@ -149,7 +148,7 @@
 												'event-id':              @event.id
 											},
 											class: 'inline-block' do %>
-				<%= tag.div helpers.limit_name_size(@event.name, 50), class: 'c-h3 inline' %>
+				<%= tag.div helpers.limit_name_size(@event.name, 40), class: 'c-h3 inline' %>
 
 				<span>·</span>
 				<div class="inline text-sm text-gray-700">
@@ -162,12 +161,12 @@
 					<% end %>
 				</div>
 				<span>·</span>
-				<div class="inline text-sm text-gray-700 md:font-medium md:text-brand-600">
+				<div class="inline text-sm text-brand-600 md:font-medium md:text-brand-600">
 					<%= @event&.categories_display_name&.capitalize %>
 				</div>
 				<span>·</span>
 				<div class="inline text-sm text-gray-700">
-					<%= helpers.limit_place_name_size(@event.place_name, 26) %>
+					<%= helpers.limit_place_name_size(@event.place_name, 20)&.titleize %>
 				</div>
 			<% end %>
 		</div>

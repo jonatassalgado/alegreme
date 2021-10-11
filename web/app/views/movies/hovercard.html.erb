@@ -40,6 +40,6 @@
 	</div>
 
 	<div class="text-xs md:text-sm">
-		<%= truncate(@movie.description, length: 400, separator: ' ') { link_to 'continua', movie_path(@movie), class: 'text-brand-600 text-medium' } rescue nil %>
+		<%= truncate(@movie.description, length: 300, separator: ' ') { link_to 'continua', movie_path(@movie), class: 'text-brand-600 text-medium' } rescue nil %>
 	</div>
 </div>
