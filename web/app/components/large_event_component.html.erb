@@ -43,13 +43,16 @@
 															 alt:   @event.name,
 															 class: 'md:border border-gray-100 md:my-5 object-cover object-center w-full h-60 bg-gray-50 md:h-80 md:rounded-xl md:shadow-sm' %>
 		<div class="relative md:hidden">
+			<h1 class="c-h2 leading-8 pt-2 px-5">
+				<%= helpers.limit_name_size @event.name %>
+			</h1>
 			<div class="flex justify-between items-center py-2 px-5 border-b border-gray-100">
 				<div class="flex justify-between items-center mt-1 space-x-2 w-full md:hidden">
 					<div class="text-xs font-light text-gray-600">
 						<% if helpers.already_happened? @event %>
 							O evento ocorreu <%= I18n.l(@event.end_time) %>
 						<% else %>
-							Atualizado há <%= time_ago_in_words @event&.updated_at %>
+							Atualizado há <%= distance_of_time_in_words_to_now @event&.updated_at, except: ['minutes'] %>
 						<% end %>
 					</div>
 					<% unless @user&.dislike?(@event) %>

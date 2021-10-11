@@ -3,7 +3,7 @@
 	props = {
 		visible: {
 			logo:         (!mobile_device? && ['search'].include?(controller_name)) || !['search'].include?(controller_name),
-			back_button:  content_for?(:back_button),
+			back_button:  content_for?(:back_button) && request.headers['Referer']&.start_with?(root_url),
 			search:       (['feeds', 'events', 'organizers', 'places', 'movies', 'dashboard'].include?(controller_name) && !mobile_device?) ||
 											['search', 'pages'].include?(controller_name),
 			share_button: content_for?(:share_button_url) && action_name == 'show' && mobile_device?,
@@ -19,7 +19,7 @@
 																 'h-content py-2': current_page?('/busca') }) %>"
 				id="top-bar">
 	<div class="<%= class_names 'flex md:relative md:col-span-2 h-full w-full',
-															'space-x-4': content_for?(:top_app_bar_title) %>">
+															'space-x-4': content_for?(:top_app_bar_title) && request.headers['Referer']&.start_with?(root_url) %>">
 		<% if mobile_device? %>
 			<div class="my-auto text-gray-800 md:hidden">
 				<% if props[:visible][:back_button] %>
@@ -35,9 +35,9 @@
 				<% end %>
 			</div>
 		<% end %>
-		<div class="<%= class_names 'h-full inline-flex items-center flex-auto md:pr-0',
+		<div class="<%= class_names 'relative h-full inline-flex items-center flex-auto md:pr-0',
 																'hidden': !props[:visible][:logo] %>">
-			<% if mobile_device? && content_for?(:top_app_bar_title) %>
+			<% if mobile_device? && request.headers['Referer']&.start_with?(root_url) && content_for?(:top_app_bar_title) %>
 				<turbo-frame id="top-app-bar--title" class="font-semibold text-gray-800">
 					<%= content_for(:top_app_bar_title) %>
 				</turbo-frame>
@@ -58,8 +58,8 @@
 					</svg>
 				</a>
 				<% if controller_name != 'feeds' %>
-					<h1 class="text-center md:text-left absolute bottom-0 font-light left-0 text-xxs w-full">Eventos e cinema em
-						Porto Alegre
+					<h1 class="absolute bottom-1 font-light left-8 text-left text-xxs w-full">
+						Eventos e cinema em Porto Alegre
 					</h1>
 				<% end %>
 			<% end %>
