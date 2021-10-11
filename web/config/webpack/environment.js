@@ -23,13 +23,13 @@ environment.loaders.keys().forEach(loaderName => {
 environment.config.merge({
 	module: {
 		rules: [
-			{
-				test: require.resolve('morphdom/dist/morphdom-esm.js'),
-				use: [{
-					loader: 'expose-loader',
-					options: 'morphdom'
-				}]
-			}
+			// {
+			// 	test: require.resolve('morphdom/dist/morphdom-esm.js'),
+			// 	use: [{
+			// 		loader: 'expose-loader',
+			// 		options: 'morphdom'
+			// 	}]
+			// }
 		]
 	}
 });
