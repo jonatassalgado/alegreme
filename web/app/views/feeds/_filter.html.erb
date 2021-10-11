@@ -79,29 +79,49 @@
 						<path d="M17.65 6.35c-1.63-1.63-3.94-2.57-6.48-2.31-3.67.37-6.69 3.35-7.1 7.02C3.52 15.91 7.27 20 12 20c3.19 0 5.93-1.87 7.21-4.56.32-.67-.16-1.44-.9-1.44-.37 0-.72.2-.88.53-1.13 2.43-3.84 3.97-6.8 3.31-2.22-.49-4.01-2.3-4.48-4.52C5.31 9.44 8.26 6 12 6c1.66 0 3.14.69 4.22 1.78l-1.51 1.51c-.63.63-.19 1.71.7 1.71H19c.55 0 1-.45 1-1V6.41c0-.89-1.08-1.34-1.71-.71l-.64.65z"/>
 					</svg>
 				</div>
-				<div data-filter-target="filters" class="space-y-6">
+				<div data-filter-target="filters" class="">
 					<% if @show_filter_group == 'category' %>
-						<div class="flex flex-wrap lowercase">
-							<% @categories.each do |category| %>
+						<div class="c-h3 mt-3">Principais categorias</div>
+						<div class="gap-3 grid grid-cols-2 md:text-base text-sm mt-3">
+							<% @categories.select { |cat| ['show', 'party', 'theatrical_show', 'street_fair'].include?(cat.details_name) }.sort_by { |cat| cat.details_display_name }.each do |category| %>
 
 								<%= link_to root_path(category: category.details_url, filter_group: 'category'),
 														data:  { 'turbo-frame': 'main-sidebar--feed' },
-														class: class_names('mb-2 mr-2 text-sm',
-																							 { 'c-chip--active': @category == category,
-																								 'c-chip':         @category != category }) do %>
-									<%= category.details_display_name %>
+														class: class_names('w-full h-24 rounded-lg border p-3',
+																							 { 'text-brand-600 bg-brand-100 border-brand-300': @category == category,
+																								 'text-gray-700':                                @category != category }) do %>
+									<div class="space-y-1">
+										<div class="text-lg"><%= category.details_emoji %></div>
+										<div><%= category.details_display_name %></div>
+									</div>
+								<% end %>
+							<% end %>
+						</div>
+						<div class="c-h3 mt-8">Mais categorias</div>
+						<div class="gap-3 grid grid-cols-2 md:text-base text-sm mt-3">
+							<% @categories.reject { |cat| ['show', 'party', 'theatrical_show', 'street_fair'].include?(cat.details_name) }.sort_by { |cat| cat.details_display_name }.each do |category| %>
+
+								<%= link_to root_path(category: category.details_url, filter_group: 'category'),
+														data:  { 'turbo-frame': 'main-sidebar--feed' },
+														class: class_names('w-full h-24 rounded-lg border p-3',
+																							 { 'text-brand-600 bg-brand-100 border-brand-300': @category == category,
+																								 'text-gray-700':                                @category != category }) do %>
+									<div class="space-y-1">
+										<div class="text-lg"><%= category.details_emoji %></div>
+										<div><%= category.details_display_name %></div>
+									</div>
 								<% end %>
 							<% end %>
 						</div>
 					<% end %>
 					<% if @show_filter_group == 'theme' %>
-						<div class="flex flex-wrap lowercase">
+						<div class="gap-3 grid grid-cols-2 md:text-base text-sm">
 							<% @themes.each do |theme| %>
 								<%= link_to root_path(theme: theme.slug, filter_group: 'theme'),
 														data:  { 'turbo-frame': 'main-sidebar--feed' },
-														class: class_names('mb-2 mr-2 text-sm',
-																							 { 'c-chip--active': @theme == theme,
-																								 'c-chip':         !@theme != theme }) do %>
+														class: class_names('w-full h-24 rounded-lg border p-3',
+																							 { 'text-brand-600 bg-brand-100 border-brand-300': @theme == theme,
+																								 'text-gray-700':                                !@theme != theme }) do %>
 									<%= theme.display_name %>
 								<% end %>
 							<% end %>

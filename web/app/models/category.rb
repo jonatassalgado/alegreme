@@ -175,7 +175,7 @@ class Category < ApplicationRecord
 	].freeze
 
 	scope 'active', -> {
-		all.reject{|category| ['outlier', 'protest'].include?(category&.details['name'])}
+		all.reject { |category| ['outlier', 'protest'].include?(category&.details['name']) }
 	}
 
 	def details=(value)
@@ -188,6 +188,10 @@ class Category < ApplicationRecord
 
 	def details_display_name
 		details['display_name']
+	end
+
+	def details_emoji
+		details['emoji']
 	end
 
 	def details_url
