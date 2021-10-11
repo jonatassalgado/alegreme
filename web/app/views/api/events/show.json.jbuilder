@@ -1,6 +1,6 @@
 json.id @event.id
 json.cover_url shrine_image_url(@event, :original)
-json.name @event.name
+json.name limit_name_size(@event.name)
 json.description @event.description
 json.start_time @event.start_time
 json.price @event.prices.try(:min)
