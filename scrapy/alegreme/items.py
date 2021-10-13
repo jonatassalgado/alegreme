@@ -16,21 +16,42 @@ from bs4 import BeautifulSoup
 
 
 def get_date(value):
-    datetimes = re.findall('\d{4}-\d{2}-\d{2}\w+:\d+:\w+-\w+:\w+', value)
     parsed_datetimes = []
+    
+    datetimes = re.findall('\d{4}-\d{2}-\d{2}\w+:\d+:\w+-\w+:\w+', value)
     if datetimes:
         # Get only start_time of facebook events 
         # for datetime in datetimes:
         #    parsed_datetimes.append(dateparser.parse(datetime, settings={'TIMEZONE': '-0300'}))
         parsed_datetimes.append(dateparser.parse(datetimes[0], settings={'TIMEZONE': '-0300'}))
+        return parsed_datetimes
 
-    return parsed_datetimes
+    datetimes = re.search('(\d{2}).+?([A-z]{4,}).+?(\d{4}).+?(\d{2}h\d{0,2}|\d{2})', value) 
+    if datetimes:
+        day = datetimes.group(1)
+        month = datetimes.group(2)
+        year = datetimes.group(3)
+        hour = re.sub(r'h', ':', datetimes.group(4)) if datetimes.group(4) else ''
+        hour = re.sub(r'(:-|:[^\d]|(?!\d{1,2}):$)', ':00', hour)
+        formatted_datetime = ' '.join([day, month, year, hour])
+        parsed_datetimes.append(dateparser.parse(formatted_datetime, settings={'TIMEZONE': '-0300'})) 
+        return parsed_datetimes
+
 
 def clean_name(value):
     name = re.sub(r'●', '-', value)
     return name
 
+def handle_image_url(value):
+    if 'background' in value:
+        image = re.search(r'((http[s]?:\/\/(www\\.)?|www.){1}.+(jpg|png|webp))', value)
+        return image.group(1) if image else None
+    else:
+        return value
+
 def clean_description(value):
+    REMOVE_ATTRIBUTES = ['data-saferedirecturl']
+
     description = re.sub(r'http(s|):\/\/l.facebook?.+?u=', '', value)
     description = re.sub(r';h=.+?(?=")', '', description)
     description = re.sub(r'target="_blank"', '', description)
@@ -45,10 +66,20 @@ def clean_description(value):
     hashtags = description.select("a[href*=hashtag]")
     for hashtag in hashtags:
         hashtag.decompose()
+    
+    for attribute in REMOVE_ATTRIBUTES:
+        for tag in description.find_all(attrs={attribute: True}):
+            del tag[attribute]
+
+    links = description.findAll('a')
+    for link in links:
+        link.attrs['rel'] = 'nofollow'
+        link.attrs['target'] = '_blank'
 
     description = str(description)
     description = re.sub(r'</p>', '</p><br>', description)
     description = re.sub(r'<(\/|)(span|strong|div|p)>', '', description)
+    description = description.strip()
     return description
 
 
@@ -74,7 +105,7 @@ def get_event_longitude(value):
     return longitude.group(1) if longitude else None
 
 def get_prices(value):
-    prices = re.findall(r'(?:R\$\s{0,1})(\d+)', value)
+    prices = re.findall(r'(?:R\$\s{0,1})(\d{0,4})(?:\d{0,2}.+taxa)', value)
     return prices
 
 
@@ -112,6 +143,7 @@ class Event(scrapy.Item):
         output_processor=TakeFirst()
     )
     cover_url = scrapy.Field(
+        input_processor=MapCompose(handle_image_url),
         output_processor=TakeFirst()
     )
     address = scrapy.Field(
@@ -164,6 +196,7 @@ class Event(scrapy.Item):
 
 class EventOrganizer(scrapy.Item):
     cover_url = scrapy.Field(
+        input_processor=MapCompose(handle_image_url),
         output_processor=TakeFirst()
     )
     name = scrapy.Field(

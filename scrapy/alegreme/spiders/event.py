@@ -7,6 +7,7 @@ from urllib.parse import urljoin, urlparse
 from alegreme.items import Event, EventOrganizerLoader
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
+from itemloaders.processors import Join
 from alegreme.services.proxy_service import ProxyService
 
 user_agents = [
@@ -201,6 +202,8 @@ parse_sympla_events_page_script = """
         })
 
         splash:go(splash.args.url)
+        splash.scroll_position = {y=2000}
+    
         assert(splash:wait(5))
 
         return splash:html()
@@ -372,30 +375,32 @@ class EventSpider(scrapy.Spider):
             'https://m.facebook.com/basepoa'
             ]
     
-    sympla_pages = [
-                    'https://site.bileto.sympla.com.br/farolsantanderpoa',
-                    'https://site.bileto.sympla.com.br/opiniao'
-                    ]
+    start_pages = [
+        'https://www.sympla.com.br/eventos/porto-alegre-rs',
+        'https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D',
+        'https://site.bileto.sympla.com.br/farolsantanderpoa',
+        'https://site.bileto.sympla.com.br/opiniao'
+    ]
 
-    random.shuffle(facebook_pages)
-    random.shuffle(sympla_pages)
+    # random.shuffle(start_pages)
     
     def start_requests(self):
         self.log("INITIALIZING...")
         self.log("UA: %s" % user_agents[0])
 
-        yield SplashRequest(
-            url='https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D',
-            callback=self.parse_facebook_page,
-            endpoint='execute',
-            args={
-            'timeout': 300,
-            'lua_source': parse_facebook_place_page_script,
-            'ua': user_agents[0]
-            }
-        )
-        
-        for page in self.sympla_pages:
+        for page in self.start_pages:
+            if 'discovery' in page:
+                yield SplashRequest(
+                    url=page,
+                    callback=self.parse_facebook_page,
+                    endpoint='execute',
+                    args={
+                    'timeout': 300,
+                    'lua_source': parse_facebook_place_page_script,
+                    'ua': user_agents[0]
+                    }
+                )
+            
             yield SplashRequest(
                 url=page,
                 callback=self.parse_sympla_iframe,
@@ -407,6 +412,16 @@ class EventSpider(scrapy.Spider):
                 }
             )
 
+            yield SplashRequest(
+                url=page,
+                callback=self.parse_sympla_page,
+                endpoint='execute',
+                args={
+                'timeout': 300,
+                'lua_source': parse_sympla_events_page_script,
+                'ua': user_agents[0]
+                }
+            )
 
     def parse_facebook_page(self, response):
         title_page = response.xpath('//title/text()').get()
@@ -455,7 +470,7 @@ class EventSpider(scrapy.Spider):
         organizers_els = response.xpath('//*[contains(@class, "_6-i")]/li')
         if organizers_els:
             for organizer_el in organizers_els:
-                event_loader.add_value('organizers', self.parse_organizer_meta(response, organizer_el))
+                event_loader.add_value('organizers', self.parse_facebook_organizer_meta(response, organizer_el))
 
         event_loader.add_xpath('description', '//*[@class="_63ew"]//span')
         event_loader.add_xpath('prices', '//*[@class="_63ew"]//span/text()')
@@ -508,7 +523,7 @@ class EventSpider(scrapy.Spider):
     def parse_sympla_page(self, response):
         title_page = response.xpath('//title/text()').get()
 
-        events_in_page = response.xpath('//a[contains(@class, "sympla-card w-inline-block")]/@href')
+        events_in_page = response.xpath('//a[contains(@class, "sympla-card w-inline-block") or contains(@class, "CardLink")]/@href')
 
         if not events_in_page:
             self.log(str(title_page) + " PAGE WITHOUT EVENTS")
@@ -516,14 +531,25 @@ class EventSpider(scrapy.Spider):
             self.log(str(title_page) + " PAGE WITH " + str(len(events_in_page)) + " EVENTS")
 
         for event_link in events_in_page.getall():
-            if event_link is not None:
+            if event_link is not None and 'bileto' in event_link:
                 yield SplashRequest(
                     url=event_link,
-                    callback=self.parse_sympla_api_event,
+                    callback=self.parse_bileto_api_event,
                     endpoint='execute',
                     args={
                     'timeout': 600,
                     'lua_source': parse_sympla_event_api_script,
+                    'ua': user_agents[0]
+                    }
+                )
+            elif event_link is not None and 'bileto' not in event_link:
+                yield SplashRequest(
+                    url=event_link,
+                    callback=self.parse_sympla_event,
+                    endpoint='execute',
+                    args={
+                    'timeout': 600,
+                    'lua_source': parse_sympla_events_page_script,
                     'ua': user_agents[0]
                     }
                 )
@@ -532,7 +558,7 @@ class EventSpider(scrapy.Spider):
 
 
 
-    def parse_sympla_api_event(self, response):
+    def parse_bileto_api_event(self, response):
         if 'api_key' in response.data: 
             api_key = response.data['api_key']
             api_url = response.data['api_url']
@@ -541,7 +567,7 @@ class EventSpider(scrapy.Spider):
             self.log("API URL: " + api_url)
 
             yield scrapy.Request(api_url, 
-                            callback=self.parse_sympla_event,
+                            callback=self.parse_bileto_event,
                             cb_kwargs=dict(source_url=response.url),
                             headers={
                                 'x-api-key': api_key,
@@ -553,7 +579,7 @@ class EventSpider(scrapy.Spider):
 
 
 
-    def parse_sympla_event(self, response, source_url):
+    def parse_bileto_event(self, response, source_url):
         body = json.loads(response.body)
         event_loader = ItemLoader(item=Event())
 
@@ -592,12 +618,49 @@ class EventSpider(scrapy.Spider):
         
         return event_loader.load_item()
 
+    def parse_sympla_event(self, response):
+        event_loader = ItemLoader(item=Event(), response=response)
+        event_loader.add_xpath('name', 'normalize-space(//h1[contains(@class, "event-name")]/text())')
+        event_loader.add_xpath('cover_url', '//img[contains(@class, "event-banner-img")]/@style')
+        
+        event_loader.add_xpath('address', '//*[contains(@class, "event-location-text")]//span[2]/text()', Join())
+        # secondary_address = event_loader.get_xpath('string(//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")])')
+        # tertiary_address = event_loader.get_xpath('//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
+        # event_loader.add_value('address', primary_address)
+        
+        event_loader.add_xpath('datetimes', '//*[contains(@class, "event-info-calendar")]/text()')
+        event_loader.add_xpath('place_name', 'normalize-space(//*[contains(@class, "event-location-name")]//text())')
+        # event_loader.add_xpath('place_cover_url', '//*[contains(@class, "_2xr0")]/@style')
+        event_loader.add_value('ticket_url', response.url)
+        # event_loader.add_xpath('latitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "latitude")]/@ajaxify')
+        # event_loader.add_xpath('longitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "longitude")]/@ajaxify')
+
+        organizers_els = response.xpath('//*[contains(@id, "produtor")]')
+        if organizers_els:
+            for organizer_el in organizers_els:
+                event_loader.add_value('organizers', self.parse_sympla_organizer_meta(response, organizer_el))
+
+        event_loader.add_xpath('description', '//*[contains(@id, "event-description")]//text()', Join())
+        event_loader.add_xpath('prices', '//*[contains(@id, "ticket-form")]//text()', Join())
+        # event_loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
+        event_loader.add_value('source_url', response.url)
+        event_loader.load_item()
+
+        yield event_loader.load_item()
 
 
-    def parse_organizer_meta(self, response, organizer_el):
+    def parse_facebook_organizer_meta(self, response, organizer_el):
         organizer_loader = EventOrganizerLoader(selector=organizer_el)
         organizer_loader.add_xpath('name', './/*[contains(@class, "_50f7")]//text()')
         organizer_loader.add_xpath('cover_url', './/*[contains(@class, "_rw")]/@src')
         organizer_loader.add_xpath('source_url', './/*[contains(@class, "_ohe")]/@href')
+
+        return dict(organizer_loader.load_item())
+
+    def parse_sympla_organizer_meta(self, response, organizer_el):
+        organizer_loader = EventOrganizerLoader(selector=organizer_el)
+        organizer_loader.add_xpath('name', 'normalize-space(.//h4//text())')
+        organizer_loader.add_xpath('cover_url', './/*[contains(@class, "organizer-image")]//@style')
+        organizer_loader.add_xpath('source_url', './/a[contains(text(), "Mais eventos")]/@href')
 
         return dict(organizer_loader.load_item())
