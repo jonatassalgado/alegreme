@@ -5,7 +5,7 @@ json.description @event.description
 json.start_time @event.start_time
 json.price @event.prices.try(:min)
 json.place @event.place_name
-json.geographic @event.geographic
+json.geographic({ "address": @event.place_address })
 json.categories @event.categories.pluck(:details)
 json.source_url @event.source_url
 json.origin_url event_url(@event, format: :html)
