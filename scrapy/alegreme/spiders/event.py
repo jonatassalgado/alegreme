@@ -289,8 +289,8 @@ class EventSpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'alegreme.pipelines.EventPipeline': 400
         },
-        'CLOSESPIDER_ITEMCOUNT': 300,
-        'CLOSESPIDER_PAGECOUNT': 600,
+        'CLOSESPIDER_ITEMCOUNT': 100,
+        'CLOSESPIDER_PAGECOUNT': 300,
         'DEPTH_LIMIT': 3,
         'DOMAIN_DEPTHS': {'facebook.com': 2, 'sympla.com.br': 3}
     }
@@ -401,27 +401,29 @@ class EventSpider(scrapy.Spider):
                     }
                 )
             
-            yield SplashRequest(
-                url=page,
-                callback=self.parse_sympla_iframe,
-                endpoint='execute',
-                args={
-                'timeout': 300,
-                'lua_source': parse_sympla_events_page_script,
-                'ua': user_agents[0]
-                }
-            )
+            if 'bileto.sympla' in page:
+                yield SplashRequest(
+                    url=page,
+                    callback=self.parse_sympla_iframe,
+                    endpoint='execute',
+                    args={
+                    'timeout': 300,
+                    'lua_source': parse_sympla_events_page_script,
+                    'ua': user_agents[0]
+                    }
+                )
 
-            yield SplashRequest(
-                url=page,
-                callback=self.parse_sympla_page,
-                endpoint='execute',
-                args={
-                'timeout': 300,
-                'lua_source': parse_sympla_events_page_script,
-                'ua': user_agents[0]
-                }
-            )
+            if 'www.sympla' in page:
+                yield SplashRequest(
+                    url=page,
+                    callback=self.parse_sympla_page,
+                    endpoint='execute',
+                    args={
+                    'timeout': 300,
+                    'lua_source': parse_sympla_events_page_script,
+                    'ua': user_agents[0]
+                    }
+                )
 
     def parse_facebook_page(self, response):
         title_page = response.xpath('//title/text()').get()
@@ -640,7 +642,7 @@ class EventSpider(scrapy.Spider):
             for organizer_el in organizers_els:
                 event_loader.add_value('organizers', self.parse_sympla_organizer_meta(response, organizer_el))
 
-        event_loader.add_xpath('description', '//*[contains(@id, "event-description")]//text()', Join())
+        event_loader.add_xpath('description', '//*[contains(@id, "event-description")]')
         event_loader.add_xpath('prices', '//*[contains(@id, "ticket-form")]//text()', Join())
         # event_loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
         event_loader.add_value('source_url', response.url)

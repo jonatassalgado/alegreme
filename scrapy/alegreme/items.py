@@ -66,6 +66,10 @@ def clean_description(value):
     hashtags = description.select("a[href*=hashtag]")
     for hashtag in hashtags:
         hashtag.decompose()
+
+    divs = description.select("div")
+    for div in divs:
+        div.unwrap()
     
     for attribute in REMOVE_ATTRIBUTES:
         for tag in description.find_all(attrs={attribute: True}):
@@ -78,7 +82,7 @@ def clean_description(value):
 
     description = str(description)
     description = re.sub(r'</p>', '</p><br>', description)
-    description = re.sub(r'<(\/|)(span|strong|div|p)>', '', description)
+    description = re.sub(r'<(\/|)(span|strong|div|p|o|o:p)>', '', description)
     description = description.strip()
     return description
 
