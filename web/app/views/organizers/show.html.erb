@@ -22,6 +22,7 @@
 					<div class="flex items-center space-x-5">
 						<%= image_tag shrine_image_url(@organizer, :sm), {
 							loading: :lazy,
+							alt:     @organizer.details_name,
 							class:   'border border-gray-100 flex-shrink-0 h-12 max-w-xs mx-auto rounded-full shadow-sm w-12',
 							onerror: "this.style.opacity='0'"
 						} if @organizer.image_data? %>
@@ -39,21 +40,19 @@
 			</div>
 		</div>
 		<div class="col-span-12 space-y-12 md:col-span-8">
-			<div class="px-5 md:px-0 border-b md:border-0 overflow-hidden mx-auto space-y-3 is-animated md:max-w-screen-sm sm:container">
+			<div class="px-5 md:px-0 pb-5 border-b md:border-0 overflow-hidden mx-auto space-y-3 is-animated md:max-w-screen-sm sm:container">
 				<h2 class="md:pb-2 c-h2">Próximos eventos</h2>
 				<% if @upcoming_events.present? %>
 					<%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user, pagy: @pagy %>
 				<% else %>
-					<div class="">
-						Sem eventos para os próximos dias
-					</div>
+					Sem eventos para os próximos dias
 				<% end %>
 			</div>
 
 			<% if @past_events.present? %>
-				<div class="overflow-hidden mx-auto space-y-3 is-animated md:rounded-2xl md:max-w-screen-sm sm:container">
-					<h2 class="px-5 md:pb-2 c-h2">Eventos passados</h2>
-					<div class="grid grid-cols-12 gap-6 px-5">
+				<div class="mx-auto space-y-3 is-animate md:max-w-screen-sm sm:container">
+					<h2 class="px-5 md:px-0 md:pb-2 c-h2">Eventos passados</h2>
+					<div class="grid grid-cols-12 gap-6 px-5 md:px-0">
 						<% @past_events.each do |event| %>
 							<div class="flex col-span-12 justify-between py-3 md:col-span-6 md:border-0">
 								<div class="pr-6">
@@ -69,13 +68,15 @@
 									<% end %>
 								</div>
 								<%= link_to event_path(event),
-														data:  {
+														data:         {
 															action:     'click->main-sidebar--horizontal-event#openEvent',
 															'event-id': event.id
 														},
-														class: 'inline-block flex-shrink-0 cursor-pointer w-12 h-12 md:h-16 md:w-16' do %>
+														'aria-label': event.details_name,
+														class:        'inline-block flex-shrink-0 cursor-pointer w-12 h-12 md:h-16 md:w-16' do %>
 									<%= image_tag shrine_image_url(event, :feed), {
 										loading: :lazy,
+										alt:     @organizer.details_name,
 										class:   'h-full object-center object-cover overflow-hidden rounded-lg w-full',
 										onerror: "this.style.opacity='0'"
 									} rescue nil %>

@@ -24,6 +24,7 @@
 					<div class="flex items-center space-x-5">
 						<%= image_tag shrine_image_url(@place, :sm), {
 							loading: :lazy,
+							alt:     @place.details_name,
 							class:   'border border-gray-100 flex-shrink-0 h-12 max-w-xs mx-auto rounded-full shadow-sm w-12',
 							onerror: "this.style.opacity='0'"
 						} if @place.image_data? %>
@@ -86,6 +87,7 @@
 														class: 'inline-block flex-shrink-0 cursor-pointer h-16 w-16' do %>
 									<%= image_tag shrine_image_url(event, :feed), {
 										loading: :lazy,
+										alt:     event.details_name,
 										class:   'h-full object-center object-cover overflow-hidden rounded-lg w-full',
 										onerror: "this.style.opacity='0'"
 									} rescue nil %>
