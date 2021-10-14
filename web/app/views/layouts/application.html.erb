@@ -53,7 +53,7 @@
 	<%= javascript_pack_tag 'application', 'data-turbo-track': 'reload', defer: true %>
 
 </head>
-<body class="overflow-x-hidden antialiased text-gray-600 bg-white font-display md:bg-white " data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
+<body class="overflow-x-hidden antialiased text-gray-600 bg-white font-display md:bg-white" data-user-type="<%= current_user ? "logged-user" : "guest-user" %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
 <!-- Google Tag Manager (noscript) -->
 <noscript>
@@ -63,17 +63,17 @@
 <!-- End Google Tag Manager (noscript) -->
 
 <% if !current_user && controller_name == 'events' && action_name == 'show' %>
-	<div class="md:hidden bg-brand-600 flex items-center justify-center px-5 py-3 space-x-2 text-center text-white text-xs">
-		<a href="<%= new_user_registration_path %>" class="font-bold leading-tight px-1">Crie uma conta</a>
+	<div class="flex justify-center items-center py-3 px-5 space-x-2 text-xs text-center text-white md:hidden bg-brand-600">
+		<a href="<%= new_user_registration_path %>" class="px-1 font-bold leading-tight">Crie uma conta</a>
 		<span class="">ou</span>
-		<a aria-label="Baixar aplicativo para android" rel="noreferrer" target="_blank" class="font-bold  leading-tight px-1" href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+		<a aria-label="Baixar aplicativo para android" rel="noreferrer" target="_blank" class="px-1 font-bold leading-tight" href='https://play.google.com/store/apps/details?id=com.alegreme.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
 			instale o aplicativo para android
 		</a>
 	</div>
 <% end %>
 
 
-<div class="border-b md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white md:py-2 z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
+<div class="sticky top-0 border-b md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white md:py-2 z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
 		 data-controller="head"
 		 data-reflex-permanent
 		 data-head-target="head">

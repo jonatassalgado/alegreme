@@ -43,16 +43,18 @@
 			<% end %>
 		<% end %>
 
-		<% cache @movies&.cache_version do %>
-			<%= render partial: 'movies/movies', locals: { movies:         @movies,
-																										 selected_movie: @movie,
-																										 user:           current_user,
-																										 title:          'Filmes em Porto Alegre',
-																										 chips:          true,
-																										 hovercard:      true,
-																										 template:       'default',
-																										 target:         '_top',
-																										 id:             'movies-index' } if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
+		<% unless params[:category] %>
+			<% cache @movies&.cache_version do %>
+				<%= render partial: 'movies/movies', locals: { movies:         @movies,
+																											 selected_movie: @movie,
+																											 user:           current_user,
+																											 title:          'Filmes em Porto Alegre',
+																											 chips:          true,
+																											 hovercard:      true,
+																											 template:       'default',
+																											 target:         '_top',
+																											 id:             'movies-index' } if @movies.present? && controller_name == 'feeds' && action_name == 'index' && params[:category].blank? %>
+			<% end %>
 		<% end %>
 
 		<turbo-frame id="main-sidebar--feed" target="_top" class="px-5 md:px-0 inline-block w-full">
