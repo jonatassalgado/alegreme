@@ -15,6 +15,7 @@ class Event < ApplicationRecord
 	}, _suffix:  true
 
 	extend FriendlyId
+	extend Pagy::Searchkick
 
 	include PgSearch::Model
 	pg_search_scope :kinda_spelled_like,
