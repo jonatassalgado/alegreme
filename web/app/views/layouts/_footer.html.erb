@@ -7,7 +7,7 @@
 	<% if !current_user || (current_user && controller_name == 'feeds') %>
 		<div class="py-20">
 			<h3 class="font-semibold mb-6 md:max-w-screen-lg mx-auto md:text-left text-xl">Categorias</h3>
-			<div class="gap-y-1.5 gap-x-4 md:gap-x-2 md:gap-y-2 grid grid-cols-2 md:grid-cols-3 md:max-w-screen-lg mx-auto text-left">
+			<div class="gap-y-1.5 gap-x-4 md:gap-x-2 md:gap-y-3 grid grid-cols-2 md:grid-cols-3 md:max-w-screen-lg mx-auto text-left">
 				<% Category.active.each do |category| %>
 					<a href="<%= category_events_path category.details_url %>" class="text-xs hover:text-brand-600 cursor-pointer">
 						<%= category.details_display_name %> <span class="hidden md:inline-block">em Porto Alegre</span>
