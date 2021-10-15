@@ -1,0 +1,32 @@
+<div class="c-h3 mt-3">Principais categorias</div>
+<div class="gap-3 grid grid-cols-2 md:text-base text-sm mt-3">
+	<% @categories.select { |cat| ['show', 'party', 'theatrical_show', 'street_fair'].include?(cat.details_name) }.sort_by { |cat| cat.details_display_name }.each do |category| %>
+
+		<%= link_to root_path(category: category.details_url, filter_group: 'category'),
+								data:  { 'turbo-frame': 'main-sidebar--feed' },
+								class: class_names('w-full h-24 rounded-lg border p-3',
+																	 { 'text-brand-600 bg-brand-100 border-brand-300': @category == category,
+																		 'text-gray-700':                                @category != category }) do %>
+			<div class="space-y-1">
+				<div class="text-lg"><%= category.details_emoji %></div>
+				<div><%= category.details_display_name %></div>
+			</div>
+		<% end %>
+	<% end %>
+</div>
+<div class="c-h3 mt-8">Mais categorias</div>
+<div class="gap-3 grid grid-cols-2 md:text-base text-sm mt-3">
+	<% @categories.reject { |cat| ['show', 'party', 'theatrical_show', 'street_fair'].include?(cat.details_name) }.sort_by { |cat| cat.details_display_name }.each do |category| %>
+
+		<%= link_to root_path(category: category.details_url, filter_group: 'category'),
+								data:  { 'turbo-frame': 'main-sidebar--feed' },
+								class: class_names('w-full h-24 rounded-lg border p-3',
+																	 { 'text-brand-600 bg-brand-100 border-brand-300': @category == category,
+																		 'text-gray-700':                                @category != category }) do %>
+			<div class="space-y-1">
+				<div class="text-lg"><%= category.details_emoji %></div>
+				<div><%= category.details_display_name %></div>
+			</div>
+		<% end %>
+	<% end %>
+</div>
