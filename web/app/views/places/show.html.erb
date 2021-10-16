@@ -13,8 +13,6 @@
   [
     <%= render partial: 'layouts/json_ld', collection: @upcoming_events, as: :event %>
   ]
-
-
 	</script>
 
 	<div class="grid grid-cols-12 gap-0 mx-auto max-w-screen-lg md:gap-10">
@@ -53,7 +51,7 @@
 			<div class="px-5 md:px-0 mx-auto space-y-3 md:max-w-screen-sm sm:container">
 				<h2 class="pb-2 c-h2">Próximos eventos</h2>
 				<% if @upcoming_events.present? %>
-					<%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user, pagy: @pagy %>
+					<%= render partial: 'events/group_by_day_list', locals: { events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: false } %>
 				<% else %>
 					<div class="">
 						Sem eventos para os próximos dias

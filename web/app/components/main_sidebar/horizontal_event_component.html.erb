@@ -6,7 +6,7 @@
 									'main-sidebar--horizontal-event-open-value':            false },
 								class: 'transition-opacity group' do %>
 	<div class="flex bg-white select-none">
-		<div class="flex-none relative w-32 h-20 bg-gray-100 rounded md:rounded-lg md:h-28 md:w-48">
+		<div class="relative flex-none w-32 h-20 bg-gray-100 rounded md:rounded-lg md:h-28 md:w-48">
 			<%= link_to event_path(@event),
 									title: "Preview: #{@event.name}",
 									class: 'inline-block w-full h-full',
@@ -31,7 +31,7 @@
 		</div>
 		<div class="hidden pl-6 md:inline-block">
 			<div class="hidden items-center text-sm md:flex md:space-x-2">
-				<div class="hidden md:flex h-6">
+				<div class="hidden h-6 md:flex">
 					<% @event.organizers[0...1].each do |organizer| %>
 						<div data-controller="hovercard"
 								 data-hovercard-active-value="true"
@@ -93,33 +93,13 @@
 					·
 				</span>
 			<% end %>
-			<span class="hidden text-sm font-light text-gray-700 md:inline">
-				<%= helpers.limit_description_size(@event.description, 80)&.capitalize %>
-			</span>
+			<!--			<span class="hidden text-sm font-light text-gray-700 md:inline">-->
+			<%#= helpers.limit_description_size(@event.description, 80)&.capitalize %>
+			<!--			</span>-->
 			<div class="<%= helpers.class_names('flex transition-opacity duration-150',
 																					{ 'mt-1 -ml-3 md:group-hover:opacity-100  md:opacity-0': !@user&.like_or_dislike?(@event),
 																						'mt-2':                                                @user&.like_or_dislike?(@event) }) %>">
-				<% unless @user&.dislike?(@event) %>
-					<%= content_tag :div,
-													id:    dom_id(@event, :like),
-													data:  {
-														action:     'click->main-sidebar--horizontal-event#like',
-														'event-id': @event.id,
-														component:  'horizontal-event'
-													},
-													class: helpers.class_names('mr-1 cursor-pointer duration-100 ease-linear flex font-medium group hover:bg-brand-100 px-2 py-1 items-center justify-center rounded-full select-none text-sm transform transition-transform',
-																										 { 'bg-brand-100 px-2 py-1': @user&.like?(@event) }) do %>
-						<svg class="<%= helpers.class_names 'h-4 stroke-current group-hover:text-brand-600',
-																								{ 'text-gray-500':               !@user&.like?(@event),
-																									'text-brand-600 fill-current': @user&.like?(@event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
-						</svg>
-						<span class="<%= helpers.class_names('ml-1 group-hover:text-brand-600', { 'text-gray-500':  !@user&.like?(@event),
-																																											'text-brand-600': @user&.like?(@event) }) %>">
-							<%= @user&.like?(@event) ? 'Salvo' : 'Salvar' %>
-						</span>
-					<% end %>
-				<% end %>
+				<%= render partial: 'layouts/save_button', locals: { user: @user, event: @event } %>
 				<div class="<%= helpers.class_names('hidden md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1',
 																						{ 'ml-2': !@user&.like?(@event) }) %>"
 						 data-controller="share-button"
@@ -139,7 +119,7 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="-mt-1 pl-6 md:hidden">
+		<div class="flex pl-6 -mt-1 md:hidden">
 			<%= content_tag :a,
 											href:  event_path(@event),
 											data:  {
@@ -169,6 +149,7 @@
 					<%= helpers.limit_place_name_size(@event.place_name, 20)&.titleize %>
 				</div>
 			<% end %>
+			<%= render partial: 'layouts/save_button', locals: { user: @user, event: @event, text: false } %>
 		</div>
 	</div>
 <% end %>

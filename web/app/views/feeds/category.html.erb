@@ -37,7 +37,7 @@
 					</svg>
 				</div>
 			</div>
-			<%= render MainSidebar::GroupByDayListComponent.new(events: @events, user: current_user, open_in_sidebar: true) %>
+			<%= render partial: 'events/group_by_day_list', locals: { events: @events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true } %>
 		</div>
 	</section>
 	<% unless mobile_device? %>

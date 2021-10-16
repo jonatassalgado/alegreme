@@ -43,7 +43,7 @@
 			<div class="px-5 md:px-0 pb-5 border-b md:border-0 overflow-hidden mx-auto space-y-3 is-animated md:max-w-screen-sm sm:container">
 				<h2 class="md:pb-2 c-h2">Próximos eventos</h2>
 				<% if @upcoming_events.present? %>
-					<%= render MainSidebar::GroupByDayListComponent.new events: @upcoming_events, user: current_user, pagy: @pagy %>
+					<%= render partial: 'events/group_by_day_list', locals: { events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: false } %>
 				<% else %>
 					Sem eventos para os próximos dias
 				<% end %>

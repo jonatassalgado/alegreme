@@ -3,6 +3,8 @@ class EventsController < ApplicationController
 	before_action :set_event, only: [:show, :edit, :update, :destroy]
 	before_action :authorize_user, only: [:saves]
 
+	include ActionView::RecordIdentifier
+
 	# include CableReady::Broadcaster
 
 	# GET /events
@@ -79,16 +81,36 @@ class EventsController < ApplicationController
 	end
 
 	def like
-		@user  = current_user
-		@event = Event.find(params[:event_id])
-		@user.like!(@event)
+		@event = Event.friendly.find(params[:id])
+
+		if current_user
+			if current_user.like? @event
+				current_user.unlike! @event
+			elsif current_user.dislike? @event
+				current_user.like! @event, action: :update
+			else
+				current_user.like! @event
+			end
+			render turbo_stream: turbo_stream.replace(dom_id(@event, 'horizontal-event'),
+																								partial: 'events/horizontal_event',
+																								locals:  {
+																									event:           @event,
+																									user:            current_user,
+																									open_in_sidebar: params[:open_in_sidebar] || false
+																								})
+		else
+			render turbo_stream: turbo_stream.replace('modal',
+																								partial: 'layouts/modal',
+																								locals:  {
+																									title:  'Você precisa estar logado',
+																									text:   'Crie uma conta para salvar seus eventos favoritos e receber recomendações únicas 🤙',
+																									action: 'create-account',
+																									opened: true })
+		end
 	end
 
 	def unlike
-		@user  = current_user
-		@like  = @user.likes.find_by_event_id(params[:event_id])
-		@event = Event.find(params[:event_id])
-		@like.destroy!
+
 	end
 
 	def saves

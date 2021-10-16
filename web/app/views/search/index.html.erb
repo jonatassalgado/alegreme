@@ -34,7 +34,7 @@
 					<span class="text-brand-600"><%= params[:q] %></span>
 				</div>
 				<div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list">
-					<%= render MainSidebar::GroupByDayListComponent.new(events: @founded_events, user: current_user, pagy: @pagy, open_in_sidebar: true) %>
+					<%= render partial: 'events/group_by_day_list', locals: { events: @founded_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true } %>
 				</div>
 			<% else %>
 				<% if params[:q] %>

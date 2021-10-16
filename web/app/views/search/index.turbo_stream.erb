@@ -1,8 +1,8 @@
 <%= turbo_stream.after "main-sidebar--group-by-day-list-#{@pagy&.vars&.dig(:page)&.to_i - 1}" do %>
-	<%= render MainSidebar::GroupByDayListComponent.new(events:          @founded_events,
-																											user:            current_user,
-																											pagy:            @pagy,
-																											open_in_sidebar: true) %>
+	<%= render partial: 'events/group_by_day_list', locals: { events:          @founded_events,
+																														user:            current_user,
+																														pagy:            @pagy,
+																														open_in_sidebar: true } %>
 
 <% end %>
 

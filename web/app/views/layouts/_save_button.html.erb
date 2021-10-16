@@ -1,0 +1,16 @@
+<% unless user&.dislike?(event) %>
+	<%= button_to like_event_path(event),
+								class: 'focus:outline-none cursor-pointer duration-100 ease-linear flex font-medium group hover:bg-brand-100 items-center justify-center rounded-full select-none text-sm transform transition-transform' do %>
+		<svg class="<%= class_names 'h-5 stroke-current group-hover:text-brand-600',
+																{ 'text-gray-500':               !user&.like?(event),
+																	'text-brand-600 fill-current': user&.like?(event) } %>" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+		</svg>
+		<% if local_assigns.fetch(:text, false) %>
+			<span class="<%= class_names('ml-1 group-hover:text-brand-600', { 'text-gray-500':  !user&.like?(event),
+																																				'text-brand-600': user&.like?(event) }) %>">
+			<%= user&.like?(event) ? text[1] : text[0] %>
+			</span>
+		<% end %>
+	<% end %>
+<% end %>

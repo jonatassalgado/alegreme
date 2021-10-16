@@ -81,7 +81,7 @@
 				</h2>
 			<% end %>
 			<div id="main-sidebar--group-by-day-list" data-controller="main-sidebar--group-by-day-list">
-				<%= render MainSidebar::GroupByDayListComponent.new(events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true) %>
+				<%= render partial: 'events/group_by_day_list', locals: { events: @upcoming_events, user: current_user, pagy: @pagy, filters: @filters, open_in_sidebar: true } %>
 			</div>
 		</turbo-frame>
 
