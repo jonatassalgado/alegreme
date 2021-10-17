@@ -91,7 +91,10 @@
 														class: class_names('w-full h-24 rounded-lg border p-3',
 																							 { 'text-brand-600 bg-brand-100 border-brand-300': @theme == theme,
 																								 'text-gray-700':                                !@theme != theme }) do %>
-									<%= theme.display_name %>
+									<div class="space-y-1">
+										<div class="text-lg"><%= theme.name == 'entretenimento-lazer' ? '🍺🍔🎉🎭' : '📚💻💼🏫' %></div>
+										<div><%= theme.display_name %></div>
+									</div>
 								<% end %>
 							<% end %>
 						</div>
