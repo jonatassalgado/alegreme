@@ -6,7 +6,7 @@ module Api
 
 		def index
 			@user   = current_user
-			@movies = CineFilm.select("movies.*, COUNT(screenings.id) as screenings_count").joins(:screenings).group('movies.id').order('screenings_count ASC')
+			@movies = CineFilm.select("movies.*, COUNT(screenings.id) as screenings_count").joins(:screenings).group('movies.id').order('screenings_count DESC')
 		end
 
 		def show
