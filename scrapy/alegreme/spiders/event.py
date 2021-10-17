@@ -289,8 +289,8 @@ class EventSpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'alegreme.pipelines.EventPipeline': 400
         },
-        'CLOSESPIDER_ITEMCOUNT': 100,
-        'CLOSESPIDER_PAGECOUNT': 300,
+        'CLOSESPIDER_ITEMCOUNT': 200,
+        'CLOSESPIDER_PAGECOUNT': 400,
         'DEPTH_LIMIT': 3,
         'DOMAIN_DEPTHS': {'facebook.com': 2, 'sympla.com.br': 3}
     }
