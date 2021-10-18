@@ -59,7 +59,7 @@ def clean_description(value):
     description = re.sub(r'\n', '</br>', description)
     description = re.sub(r'(&amp|\xa0)', '', description)
     description = re.sub(r'&nbsp;', ' ', description)
-    description = re.sub(r'(class|style|align)="[a-zA-Z0-9:;\.\s\(\)\-\,]*"', '', description)
+    description = re.sub(r'(class|style|align)=".+"', '', description)
     description = re.sub(r'(<br>){3,}', '<br><br>', description)
     description = unquote(description)
     description = BeautifulSoup(description, 'html.parser')
@@ -70,6 +70,10 @@ def clean_description(value):
     divs = description.select("div")
     for div in divs:
         div.unwrap()
+
+    spans = description.select("span")
+    for span in spans:
+        span.unwrap()
     
     for attribute in REMOVE_ATTRIBUTES:
         for tag in description.find_all(attrs={attribute: True}):
