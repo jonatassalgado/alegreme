@@ -131,21 +131,24 @@ parse_movie_cover_script = """
                     }
                 }, 2000);
             }
-        ]], 30)
+        ]], 60)
 
         local cover = splash:select('.tile--img__media')
-        cover:mouse_click()
+        
+        if cover then
+            cover:mouse_click()
 
-        result, error = splash:wait_for_resume([[
-            function main(splash) {
-                var checkExist = setInterval(function() {
-                    if (document.querySelector('.detail__pane .c-detail__desc .c-detail__btn').innerText) {
-                        clearInterval(checkExist);
-                        splash.resume();
-                    }
-                }, 2000);
-            }
-        ]], 30)
+            result, error = splash:wait_for_resume([[
+                function main(splash) {
+                    var checkExist = setInterval(function() {
+                        if (document.querySelector('.detail__pane .c-detail__desc .c-detail__btn').innerText) {
+                            clearInterval(checkExist);
+                            splash.resume();
+                        }
+                    }, 2000);
+                }
+            ]], 30)
+        end
 
         return splash:html()
     end
@@ -191,22 +194,23 @@ parse_imdb_rating_script = """
             }
         ]], 30)
 
-       
         local first_result = splash:select('.result_text a')
-	    first_result:mouse_click()
-        
-        assert(splash:wait(3))
 
-        result, error = splash:wait_for_resume([[
-            function main(splash) {
-                var checkExist = setInterval(function() {
-                    if (document.querySelector('span[class*="AggregateRatingButton__RatingScore"]').innerText) {
-                        clearInterval(checkExist);
-                        splash.resume();
-                    }
-                }, 1000);
-            }
-        ]], 30)
+        if first_result then
+	        first_result:mouse_click()
+            assert(splash:wait(3))
+
+            result, error = splash:wait_for_resume([[
+                function main(splash) {
+                    var checkExist = setInterval(function() {
+                        if (document.querySelector('span[class*="AggregateRatingButton__RatingScore"]').innerText) {
+                            clearInterval(checkExist);
+                            splash.resume();
+                        }
+                    }, 1000);
+                }
+            ]], 30)
+        end
 
         return splash:html()
     end
