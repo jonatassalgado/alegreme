@@ -15,7 +15,8 @@ module Api
 													Event.includes(:place, :categories).active.valid.where(categories: { theme_id: 1 }).order_by_date.limit(100)
 												end
 
-			@grouped_events = upcoming_events.includes(:categories, :place, :categories_events).limit(200).group_by { |e| e.start_time.to_date }
+			@pagy, events   = pagy(upcoming_events.includes(:categories, :place, :categories_events), page: params.fetch(:page, 1))
+			@grouped_events = events.group_by { |e| e.start_time.to_date }
 		end
 	end
 end

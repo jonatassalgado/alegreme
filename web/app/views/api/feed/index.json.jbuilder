@@ -1,4 +1,5 @@
 json.current_user current_user
+json.pagy @pagy
 json.feed @grouped_events do |group, events|
 	json.date group
 	json.events events do |event|
