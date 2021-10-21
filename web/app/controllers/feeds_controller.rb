@@ -11,7 +11,7 @@ class FeedsController < ApplicationController
 		end
 
 		@liked_resources        = current_user&.liked_events_and_screenings unless turbo_frame_request?
-		@movies                 = CineFilm.select("movies.*, COUNT(screenings.id) as screenings_count").joins(:screenings).group('movies.id').order('screenings_count ASC') unless turbo_frame_request?
+		@movies                 = CineFilm.active unless turbo_frame_request?
 		@pagy, @upcoming_events = pagy(requested_events)
 
 		@open              = false

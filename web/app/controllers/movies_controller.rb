@@ -9,7 +9,7 @@ class MoviesController < ApplicationController
 	def show
 		model    = get_model(params[:type])
 		@movie   = model.friendly.find(params[:id])
-		@movies  = CineFilm.select("movies.*, COUNT(screenings.id) as screenings_count").joins(:screenings).group('movies.id').order('screenings_count ASC')
+		@movies  = CineFilm.active
 		@cinemas = Cinema.active.where("screenings.movie_id = ?", @movie.id)
 
 		respond_to do |format|

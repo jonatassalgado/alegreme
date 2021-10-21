@@ -71,7 +71,7 @@
 						 data-persist-horizontal-scroll-target="scroller"
 						 class="py-2 rounded-lg md:px-2 md:py-2 scrollx">
 					<div data-controller="turbo" data-turbo-history-action-value="<%= local_assigns[:history_action].presence %>" class="<%= class_names('grid grid-flow-col px-5 md:px-0 w-content grid-after-margin', { 'gap-2.5': template == 'default', 'gap-1.5': template == 'small' }) %> ">
-						<% movies.reverse.each do |movie| %>
+						<% movies.each do |movie| %>
 							<div data-slider-target="item"
 									 data-url="<%= hovercard_movie_path(movie) %>"
 									 data-title="<%= "Hovercard: #{movie.title}" %>"
