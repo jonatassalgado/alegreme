@@ -175,7 +175,7 @@ parse_facebook_event_script = """
 
 parse_sympla_events_page_script = """
     function main(splash, args)
-        splash.js_enabled = false
+        splash.js_enabled = true
         splash.private_mode_enabled = false
         splash.images_enabled = false
         splash.plugins_enabled = false
@@ -289,7 +289,7 @@ class EventSpider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'alegreme.pipelines.EventPipeline': 400
         },
-        'CLOSESPIDER_ITEMCOUNT': 200,
+        'CLOSESPIDER_ITEMCOUNT': 250,
         'CLOSESPIDER_PAGECOUNT': 400,
         'DEPTH_LIMIT': 3,
         'DOMAIN_DEPTHS': {'facebook.com': 2, 'sympla.com.br': 3}
@@ -377,6 +377,7 @@ class EventSpider(scrapy.Spider):
     
     start_pages = [
         'https://www.sympla.com.br/eventos/porto-alegre-rs',
+        'https://www.sympla.com.br/produtor/ksacentro',
         'https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D',
         'https://site.bileto.sympla.com.br/farolsantanderpoa',
         'https://site.bileto.sympla.com.br/opiniao'
