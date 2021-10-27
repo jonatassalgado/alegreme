@@ -2,6 +2,9 @@
 import scrapy
 import random
 import json
+import sentry_sdk
+from sentry_sdk import capture_message
+import warnings
 
 from urllib.parse import urljoin, urlparse
 from alegreme.items import Event, EventOrganizerLoader
@@ -9,6 +12,12 @@ from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
 from itemloaders.processors import Join
 from alegreme.services.proxy_service import ProxyService
+
+sentry_sdk.init(
+    "https://REMOVED@o259251.ingest.sentry.io/1454550",
+    traces_sample_rate=1.0,
+)
+
 
 user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
@@ -376,6 +385,7 @@ class EventSpider(scrapy.Spider):
 
         if not events_in_page:
             self.log(str(title_page) + " PAGE WITHOUT EVENTS")
+            capture_message(str(title_page) + " PAGE WITHOUT EVENTS")
         else:
             self.log(
                 str(title_page) + " PAGE WITH " + str(len(events_in_page)) + " EVENTS"
@@ -505,6 +515,7 @@ class EventSpider(scrapy.Spider):
 
         if not events_in_page:
             self.log(str(title_page) + " PAGE WITHOUT EVENTS")
+            capture_message(str(title_page) + " PAGE WITHOUT EVENTS")
         else:
             self.log(
                 str(title_page) + " PAGE WITH " + str(len(events_in_page)) + " EVENTS"

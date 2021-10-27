@@ -59,3 +59,4 @@ urllib3==1.26.5
 w3lib==1.22.0
 webencodings==0.5.1
 zope.interface==5.4.0
+sentry-sdk==1.4.3
