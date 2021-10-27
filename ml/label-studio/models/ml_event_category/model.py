@@ -1,3 +1,4 @@
+from label_studio_ml.model import LabelStudioMLBase
 import os
 import re
 import pickle
@@ -13,6 +14,8 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import RSLPStemmer
 from nltk.corpus import stopwords
 
+from bs4 import BeautifulSoup
+
 from sklearn import preprocessing
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
@@ -22,133 +25,69 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import accuracy_score
 
-download('stopwords')
-download('punkt')
-download('rslp')
-download('mac_morpho')
+download("stopwords")
+download("punkt")
+download("rslp")
+download("mac_morpho")
 
-stopwords = stopwords.words('portuguese')
-stopwords.extend([
-    '01', 'r', 'º', 'r$', '2009', 'abertura', 'abril', 'aceitos', 'acesso',
-    'acontece', 'acréscimo', 'agenda', 'agora', 'agosto', 'ainda', 'ajuda',
-    'ajudar', 'alegre', 'algo', 'alguns', 'alimento', 'além', 'ambiente',
-    'ambientes', 'amigos', 'amor', 'amp', 'andar', 'andradas', 'ano', 'anos',
-    'antecipado', 'antecipados', 'antes', 'ao', 'aos', 'apenas', 'apoio',
-    'aprender', 'apresenta', 'apresentar', 'apresentação', 'após', 'aqui',
-    'arte', 'artes', 'as', 'assim', 'atenção', 'através', 'atual',
-    'atualmente', 'até', 'atéh', 'aulas', 'autorais', 'av', 'avenida',
-    'bairro', 'baixa', 'baixo', 'bar', 'barra', 'belas', 'bem', 'ben',
-    'benefício', 'bilheteria', 'bit', 'boa', 'bom', 'bora', 'bourbon', 'br',
-    'brasil', 'brasileira', 'breve', 'cada', 'canoas', 'carlos', 'carteira',
-    'cartão', 'casa', 'caso', 'categoria', 'centro', 'chega', 'chegou',
-    'cheia', 'cheio', 'chuva', 'cidade', 'claro', 'classificação', 'com',
-    'começa', 'como', 'compartilhar', 'comunicação', 'confiança', 'conflitos',
-    'conhecer', 'conhecido', 'conhecimento', 'consulta', 'consumo', 'conta',
-    'contato', 'conteúdo', 'conveniência', 'convidados', 'corpo', 'criação',
-    'crédito', 'curtir', 'da', 'dar', 'das', 'dash', 'data', 'de', 'dekg',
-    'demais', 'depois', 'desconto', 'desde', 'dessa', 'desse', 'deste',
-    'deverão', 'dezembro', 'dia', 'dias', 'diferentes', 'dinheiro',
-    'disponível', 'diversas', 'diversos', 'divulgação', 'do', 'doação',
-    'documento', 'documentos', 'dois', 'domingo', 'dos', 'duas', 'dupla',
-    'durante', 'duração', 'débito', 'edição', 'ela', 'ele', 'eles', 'em',
-    'emocional', 'empresa', 'empresas', 'encontro', 'energia', 'entrada',
-    'entre', 'entregues', 'então', 'enviar', 'esgotado', 'espaço', 'especial',
-    'essa', 'esse', 'esta', 'estado', 'estar', 'estarão', 'este', 'estudantes',
-    'está', 'estão', 'eu', 'evento', 'eventos', 'experiência', 'experiências',
-    'facebook', 'fazer', 'federal', 'feira', 'fernando', 'ferramentas',
-    'fevereiro', 'fica', 'ficar', 'ficha', 'fila', 'fim', 'final', 'foi',
-    'fone', 'fora', 'foram', 'forma', 'formada', 'formas', 'formação', 'foto',
-    'free', 'frente', 'funcionamento', 'gaúcha', 'gente', 'geral', 'gmail',
-    'graduada', 'grande', 'grandes', 'grupo', 'grupos', 'gt', 'h', 'história',
-    'hoje', 'hora', 'horas', 'horário', 'horários', 'http', 'https', 'humano',
-    'há', 'i', 'ideias', 'identidade', 'identificação', 'idosos', 'importantes',
-    'in', 'inclui', 'informações', 'ingresso', 'ingressos', 'inscrição',
-    'inscrições', 'instagram', 'inteira', 'interna', 'internacional',
-    'internet', 'investimento', 'início', 'ir', 'irá', 'isso', 'itens',
-    'j', 'janeiro', 'joão', 'julho', 'junho', 'já', 'la', 'lado', 'lei',
-    'limitadas', 'lista', 'livre', 'locais', 'local', 'loja', 'lojas', 'lote',
-    'lugar', 'ly', 'mail', 'maio', 'maior', 'maiores', 'mais', 'marca',
-    'marcas', 'março', 'mas', 'me', 'mediante', 'meia', 'meio', 'melhor',
-    'melhores', 'mesmo', 'mestre', 'meu', 'momento', 'muita', 'muito',
-    'mulheres', 'multisom', 'mundo', 'mãe', 'mês', 'na', 'nacional', 'nas',
-    'necessária', 'nessa', 'nesta', 'neste', 'no', 'nome', 'nomes', 'nos',
-    'nossa', 'nossas', 'nosso', 'nossos', 'nova', 'novembro', 'novidades',
-    'novo', 'num', 'numa', 'não', 'nós', 'número', 'objetivo', 'obra',
-    'obrigatória', 'of', 'oficial', 'onde', 'online', 'organização', 'os',
-    'ou', 'outras', 'outros', 'outubro', 'pagamento', 'palco', 'para', 'parte',
-    'participante', 'participantes', 'participação', 'participe', 'partir',
-    'patrocínio', 'paulo', 'país', 'pedro', 'pela', 'pelo', 'pequeno',
-    'perecível', 'pesquisa', 'pessoa', 'pessoais', 'pessoal', 'pessoas',
-    'planejamento', 'poa', 'pode', 'podem', 'poder', 'pontos', 'por', 'porto',
-    'possam', 'possui', 'possuir', 'pra', 'praia', 'precisa', 'presença',
-    'prestigiar', 'primeira', 'primeiro', 'principais', 'problema', 'processo',
-    'processos', 'produção', 'produções', 'programa', 'programação', 'projeto',
-    'projetos', 'promo', 'promocional', 'promove', 'propõe', 'prática',
-    'práticas', 'pré', 'próprio', 'próximo', 'página', 'pós', 'público',
-    'públicos', 'qual', 'qualquer', 'quando', 'quatro', 'que', 'quem', 'quer',
-    'quinta', 'reais', 'real', 'realiza', 'realizar', 'realização', 'receber',
-    'reduzido', 'região', 'relações', 'resultados', 'rg', 'rio', 'rs', 'rua',
-    'ré', 'saldanha', 'se', 'segunda', 'segundo', 'seja', 'sem', 'semana',
-    'sempre', 'sendo', 'ser', 'serviço', 'será', 'serão', 'setembro', 'seu',
-    'seus', 'sexta', 'shopping', 'si', 'siga', 'site', 'sob', 'sobre',
-    'social', 'solidário', 'som', 'somente', 'sou', 'sua', 'suas', 'sucesso',
-    'sujeito', 'sul', 'super', 'sympla', 'sábado', 'são', 'só', 'também',
-    'taxa', 'te', 'teatro', 'telefone', 'tem', 'tempo', 'ter', 'teremos',
-    'the', 'toda', 'todas', 'todo', 'todos', 'total', 'trabalho', 'trabalhos',
-    'tribo', 'três', 'tudo', 'técnica', 'um', 'uma', 'uso', 'vagas', 'vai',
-    'valor', 'valores', 'vamos', 'vem', 'venda', 'venha', 'verão', 'vez',
-    'vida', 'violenta', 'vista', 'vivo', 'você', 'volta', 'voz', 'vão',
-    'whats', 'whatsapp', 'www', 'ª', '°', 'às', 'àsh', 'água', 'área', 'áreas',
-    'é', 'último', '—', '‘', '’', '“', '”', '•', '↓', '⇨'
-])
-
-from label_studio_ml.model import LabelStudioMLBase
+stopwords = stopwords.words("portuguese")
+custom_stopwords = [
+    "01", "r", "º", "r$", "2009", "abertura", "abril", "aceitos", "acesso", "acontece", "acréscimo", "agenda", "agora", "agosto", "ainda", "ajuda", "ajudar", "alegre", "algo", "alguns", "alimento", "além", "ambiente", "ambientes", "amigos", "amor", "amp", "andar", "andradas", "ano", "anos", "antecipado", "antecipados", "antes", "ao", "aos", "apenas", "apoio", "aprender", "apresenta", "apresentar", "apresentação", "após", "aqui", "arte", "artes", "as", "assim", "atenção", "através", "atual", "atualmente", "até", "atéh", "aulas", "autorais", "av", "avenida", "bairro", "baixa", "baixo", "bar", "barra", "belas", "bem", "ben", "benefício", "bilheteria", "bit", "boa", "bom", "bora", "bourbon", "br", "brasil", "brasileira", "breve", "cada", "canoas", "carlos", "carteira", "cartão", "casa", "caso", "categoria", "centro", "chega", "chegou", "cheia", "cheio", "chuva", "cidade", "claro", "classificação", "com", "começa", "como", "compartilhar", "comunicação", "confiança", "conflitos", "conhecer", "conhecido", "conhecimento", "consulta", "consumo", "conta", "contato", "conteúdo", "conveniência", "convidados", "corpo", "criação", "crédito", "curtir", "da", "dar", "das", "dash", "data", "de", "dekg", "demais", "depois", "desconto", "desde", "dessa", "desse", "deste", "deverão", "dezembro", "dia", "dias", "diferentes", "dinheiro", "disponível", "diversas", "diversos", "divulgação", "do", "doação", "documento", "documentos", "dois", "domingo", "dos", "duas", "dupla", "durante", "duração", "débito", "edição", "ela", "ele", "eles", "em", "emocional", "empresa", "empresas", "encontro", "energia", "entrada", "entre", "entregues", "então", "enviar", "esgotado", "espaço", "especial", "essa", "esse", "esta", "estado", "estar", "estarão", "este", "estudantes", "está", "estão", "eu", "evento", "eventos", "experiência", "experiências", "facebook", "fazer", "federal", "feira", "fernando", "ferramentas", "fevereiro", "fica", "ficar", "ficha", "fila", "fim", "final", "foi", "fone", "fora", "foram", "forma", "formada", "formas", "formação", "foto", "free", "frente", "funcionamento", "gaúcha", "gente", "geral", "gmail", "graduada", "grande", "grandes", "grupo", "grupos", "gt", "h", "história", "hoje", "hora", "horas", "horário", "horários", "http", "https", "humano", "há", "i", "ideias", "identidade", "identificação", "idosos", "importantes", "in", "inclui", "informações", "ingresso", "ingressos", "inscrição", "inscrições", "instagram", "inteira", "interna", "internacional", "internet", "investimento", "início", "ir", "irá", "isso", "itens", "j", "janeiro", "joão", "julho", "junho", "já", "la", "lado", "lei", "limitadas", "lista", "livre", "locais", "local", "loja", "lojas", "lote", "lugar", "ly", "mail", "maio", "maior", "maiores", "mais", "marca", "marcas", "março", "mas", "me", "mediante", "meia", "meio", "melhor", "melhores", "mesmo", "mestre", "meu", "momento", "muita", "muito", "mulheres", "multisom", "mundo", "mãe", "mês", "na", "nacional", "nas", "necessária", "nessa", "nesta", "neste", "no", "nome", "nomes", "nos", "nossa", "nossas", "nosso", "nossos", "nova", "novembro", "novidades", "novo", "num", "numa", "não", "nós", "número", "objetivo", "obra", "obrigatória", "of", "oficial", "onde", "online", "organização", "os", "ou", "outras", "outros", "outubro", "pagamento", "palco", "para", "parte", "participante", "participantes", "participação", "participe", "partir", "patrocínio", "paulo", "país", "pedro", "pela", "pelo", "pequeno", "perecível", "pesquisa", "pessoa", "pessoais", "pessoal", "pessoas", "planejamento", "poa", "pode", "podem", "poder", "pontos", "por", "porto", "possam", "possui", "possuir", "pra", "praia", "precisa", "presença", "prestigiar", "primeira", "primeiro", "principais", "problema", "processo", "processos", "produção", "produções", "programa", "programação", "projeto", "projetos", "promo", "promocional", "promove", "propõe", "prática", "práticas", "pré", "próprio", "próximo", "página", "pós", "público", "públicos", "qual", "qualquer", "quando", "quatro", "que", "quem", "quer", "quinta", "reais", "real", "realiza", "realizar", "realização", "receber", "reduzido", "região", "relações", "resultados", "rg", "rio", "rs", "rua", "ré", "saldanha", "se", "segunda", "segundo", "seja", "sem", "semana", "sempre", "sendo", "ser", "serviço", "será", "serão", "setembro", "seu", "seus", "sexta", "shopping", "si", "siga", "site", "sob", "sobre", "social", "solidário", "som", "somente", "sou", "sua", "suas", "sucesso", "sujeito", "sul", "super", "sympla", "sábado", "são", "só", "também", "taxa", "te", "teatro", "telefone", "tem", "tempo", "ter", "teremos", "the", "toda", "todas", "todo", "todos", "total", "trabalho", "trabalhos", "tribo", "três", "tudo", "técnica", "um", "uma", "uso", "vagas", "vai", "valor", "valores", "vamos", "vem", "venda", "venha", "verão", "vez", "vida", "violenta", "vista", "vivo", "você", "volta", "voz", "vão", "whats", "whatsapp", "www", "ª", "°", "às", "àsh", "água", "área", "áreas", "é", "último", "—", "‘", "’", "“", "”", "•", "↓", "⇨", "articula ", "integra ", "documenta", "difunde", "produzida", "dentro", "propor", "extensões", "confira", "encontrar", "gaúcho", "instigante", "capaz", "acionar", "segundas", "sextasfeiras", "permanente", "outro", "moeda", "permanente", "confira", "completa", "terçafeira", "domingos", "feriados", "descontos", "clientes", "benefícios", "meiaentrada", "comprovante", "pertencentes", "famílias", "renda", "idade", "deficiência", "acompanhante", "necessário", "doadores", "sangue", "saiba", "comprovar", "acessando", "importante", "limitados", "sujeitos", "disponibilidade", "dê", "preferência", "compras", "vacinação", "operando", "capacidade", "lotação", "reduzida", "lugares", "ocupados", "ordem", "chegada", "cedo", "escolher", "regras", "obrigatório", "máscara", "obrigatório", "cumprimento", "regras", "protocolos", "segurança", "vetada", "menores", "vetada", "responsável", "algum", "sintoma", "suspeita", "covid", "evite", "vir", "convivência", "direta", "parentes", "risco", "mantenha", "distanciamento", "pega", "mandar", "levar", "sextafeira", "novos", "vier", "cabeça", "comprou", "ganha", "mostrar", "garante", "via", "preço", "circular", "proibido", "disponibilizadas", "mesas", "cadeiras", "álcool", "gel", "estratégicos", "aceitamos", "cartões", "bandeiras", "visa", "master", "elo", "criado", "arrecadar", "fundos", "envolvidos", "doaram", "arrecadado", "revertido", "organizado", "apresentadoras", "juntamente", "diretora", "polícia", "web", "tv", "gentilmente", "cedeu", "seguirá", "conforme", "decreto", "governamental",
+]
+stopwords.extend(custom_stopwords)
 
 
 class EventCategoryClassifier(LabelStudioMLBase):
-
     def __init__(self, **kwargs):
         # don't forget to initialize base class...
         super(EventCategoryClassifier, self).__init__(**kwargs)
 
         self.label_encoder = preprocessing.LabelEncoder()
-        
+
         # then collect all keys from config which will be used to extract data from task and to form prediction
         # Parsed label config contains only one output of <Choices> type
         assert len(self.parsed_label_config) == 1
         self.from_name, self.info = list(self.parsed_label_config.items())[0]
-        assert self.info['type'] == 'Choices'
+        assert self.info["type"] == "Choices"
 
         # the model has only one textual input
-        assert len(self.info['to_name']) == 1
-        assert len(self.info['inputs']) == 1
-        assert self.info['inputs'][0]['type'] == 'Text'
-        self.to_name = self.info['to_name'][0]
-        self.value = self.info['inputs'][0]['value']
-        
+        assert len(self.info["to_name"]) == 1
+        assert len(self.info["inputs"]) == 1
+        assert self.info["inputs"][0]["type"] == "Text"
+        self.to_name = self.info["to_name"][0]
+        self.value = self.info["inputs"][0]["value"]
 
         if not self.train_output:
-            self.label_encoder.fit(self.info['labels'])
+            self.label_encoder.fit(self.info["labels"])
             # If there is no trainings, define cold-started the simple TF-IDF text classifier
             self.reset_model()
             # This is an array of <Choice> labels
-            self.labels = self.info['labels']
+            self.labels = self.info["labels"]
             # make some dummy initialization
             self.model.fit(X=self.labels, y=list(range(len(self.labels))))
-            print('Initialized with from_name={from_name}, to_name={to_name}, labels={labels}'.format(
-                from_name=self.from_name, to_name=self.to_name, labels=str(self.labels)
-            ))
+            print(
+                "Initialized with from_name={from_name}, to_name={to_name}, labels={labels}".format(
+                    from_name=self.from_name,
+                    to_name=self.to_name,
+                    labels=str(self.labels),
+                )
+            )
         else:
-            self.label_encoder.fit(self.train_output['labels'])
+            self.label_encoder.fit(self.train_output["labels"])
             # otherwise load the model from the latest training results
-            self.model_file = self.train_output['model_file']
-            with open(self.model_file, mode='rb') as f:
+            self.model_file = self.train_output["model_file"]
+            with open(self.model_file, mode="rb") as f:
                 self.model = pickle.load(f)
             # and use the labels from training outputs
-            self.labels = self.train_output['labels']
-            print('Loaded from train output with model_file={model_file} from_name={from_name}, to_name={to_name}, labels={labels}'.format(
-                model_file=self.model_file, from_name=self.from_name, to_name=self.to_name, labels=str(self.labels)
-            ))
+            self.labels = self.train_output["labels"]
+            print(
+                "Loaded from train output with model_file={model_file} from_name={from_name}, to_name={to_name}, labels={labels}".format(
+                    model_file=self.model_file,
+                    from_name=self.from_name,
+                    to_name=self.to_name,
+                    labels=str(self.labels),
+                )
+            )
 
     def __cleanning_text(self, text):
         def __downcase(text):
@@ -173,19 +112,24 @@ class EventCategoryClassifier(LabelStudioMLBase):
             return text.encode('latin-1', 'ignore').decode('latin-1')
 
         def __remove_html_tags(text):
-            cleaner = re.compile('<.*?>')
-            clean_text = re.sub(cleaner, ' ', text)
-            return clean_text
+            text = BeautifulSoup(text, "html.parser")
+            links = text.select("a")
+            for link in links:
+                link.decompose()
 
-        text = __downcase(text)
+            cleaner = re.compile('<.*?>')
+            text = re.sub(cleaner, ' ', str(text))
+            text = re.sub(r'htt(s|)\S+', '', text, flags=re.MULTILINE)
+            return text
+
         text = __remove_html_tags(text)
+        text = __downcase(text)
         text = __remove_digits(text)
         text = __remove_ponctuation(text)
         text = __remove_emojis(text)
         text = __remove_stopwords(text)
         text = __remove_white_spaces(text)
         return text
-
 
     def __stemming_text(self, text):
         text_tokenized = word_tokenize(text)
@@ -195,20 +139,25 @@ class EventCategoryClassifier(LabelStudioMLBase):
             if word not in stopwords:
                 text_stemmed.append(stemmer.stem(word))
                 pass
-        return ' '.join(text_stemmed)
-
+        return " ".join(text_stemmed)
 
     def reset_model(self):
-        self.model = Pipeline([
-            ('tfidf', TfidfVectorizer(ngram_range=(1, 1))),
-            ('clf-svm', SGDClassifier(alpha=0.001, loss='modified_huber', penalty='l2'))
-        ])
-        
+        self.model = Pipeline(
+            [
+                ("tfidf", TfidfVectorizer(ngram_range=(1, 1))),
+                (
+                    "clf-svm",
+                    SGDClassifier(
+                        alpha=0.001, loss="modified_huber", penalty="l2"),
+                ),
+            ]
+        )
+
     def predict(self, tasks, **kwargs):
         # collect input texts
         input_texts = []
         for task in tasks:
-            text = task['data'][self.value]
+            text = task["data"][self.value]
             text = self.__cleanning_text(text)
             text = self.__stemming_text(text)
             input_texts.append(text)
@@ -216,54 +165,62 @@ class EventCategoryClassifier(LabelStudioMLBase):
         # get model predictions
         probabilities = self.model.predict_proba(input_texts)
         predicted_label_indices = np.argmax(probabilities, axis=1)
-        predicted_scores = probabilities[np.arange(len(predicted_label_indices)), predicted_label_indices]
+        predicted_scores = probabilities[
+            np.arange(len(predicted_label_indices)), predicted_label_indices
+        ]
         predictions = []
 
         for idx, score in zip(predicted_label_indices, predicted_scores):
             predicted_label = list(self.label_encoder.inverse_transform([idx]))
             # prediction result for the single task
-            result = [{
-                'from_name': self.from_name,
-                'to_name': self.to_name,
-                'type': 'choices',
-                'value': {'choices': predicted_label}
-            }]
+            result = [
+                {
+                    "from_name": self.from_name,
+                    "to_name": self.to_name,
+                    "type": "choices",
+                    "value": {"choices": predicted_label},
+                }
+            ]
 
             # expand predictions with their scores for all tasks
-            predictions.append({'result': result, 'score': score})
+            predictions.append({"result": result, "score": score})
 
         return predictions
 
     def fit(self, completions, workdir=None, **kwargs):
         input_texts = []
         output_labels = []
-        
+
         for completion in completions:
             # get input text from task data
 
-            if completion['annotations'][0].get('skipped') or completion['annotations'][0].get('was_cancelled'):
+            if completion["annotations"][0].get("skipped") or completion["annotations"][
+                0
+            ].get("was_cancelled"):
                 continue
 
-            input_text = completion['data'][self.value]
+            input_text = completion["data"][self.value]
             input_text = self.__cleanning_text(input_text)
             input_text = self.__stemming_text(input_text)
             input_texts.append(input_text)
 
             # get an annotation
-            output_label = completion['annotations'][0]['result'][0]['value']['choices'][0]
+            output_label = completion["annotations"][0]["result"][0]["value"][
+                "choices"
+            ][0]
             output_labels.append(output_label)
-    
+
         # train the model
         self.reset_model()
         self.model.fit(input_texts, output_labels)
 
         # save output resources
-        model_file = os.path.join(workdir, 'model.pkl')
-        with open(model_file, mode='wb') as fout:
+        model_file = os.path.join(workdir, "model.pkl")
+        with open(model_file, mode="wb") as fout:
             pickle.dump(self.model, fout)
 
         train_output = {
-            'labels': pd.Series(output_labels).drop_duplicates().tolist(),
-            'model_file': model_file
+            "labels": pd.Series(output_labels).drop_duplicates().tolist(),
+            "model_file": model_file,
         }
         return train_output
