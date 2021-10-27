@@ -11,20 +11,19 @@ from itemloaders.processors import Join
 from alegreme.services.proxy_service import ProxyService
 
 user_agents = [
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0",
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36",
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15",
-  "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0",
-  "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15",
+    "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
 ]
 
 random.shuffle(user_agents)
-
 
 # Facebook scripts
 
@@ -170,12 +169,11 @@ parse_facebook_event_script = """
     end
 """
 
-
 # Sympla scripts
 
 parse_sympla_events_page_script = """
     function main(splash, args)
-        splash.js_enabled = true
+        splash.js_enabled = false
         splash.private_mode_enabled = false
         splash.images_enabled = false
         splash.plugins_enabled = false
@@ -278,392 +276,417 @@ parse_sympla_event_api_script = """
 """
 
 
-
 class EventSpider(scrapy.Spider):
-    http_user = 'alegreme'
-    http_pass = 've97K8bCwNkNgQSqvMkYRryMG4MQuQGU'
+    http_user = "alegreme"
+    http_pass = "ve97K8bCwNkNgQSqvMkYRryMG4MQuQGU"
 
-    name = 'event'
+    name = "event"
 
     custom_settings = {
-        'ITEM_PIPELINES': {
-            'alegreme.pipelines.EventPipeline': 400
-        },
-        'CLOSESPIDER_ITEMCOUNT': 250,
-        'CLOSESPIDER_PAGECOUNT': 400,
-        'DEPTH_LIMIT': 3,
-        'DOMAIN_DEPTHS': {'facebook.com': 2, 'sympla.com.br': 3}
+        "ITEM_PIPELINES": {"alegreme.pipelines.EventPipeline": 400},
+        "CLOSESPIDER_ITEMCOUNT": 250,
+        "CLOSESPIDER_PAGECOUNT": 400,
+        "DEPTH_LIMIT": 3,
+        "DOMAIN_DEPTHS": {"facebook.com": 2, "sympla.com.br": 3},
     }
 
-    allowed_domains = ['facebook.com', 'sympla.com.br']
-    facebook_pages = [
-            'https://m.facebook.com/pages/Opini%C3%A3o/119453431446021',
-            'https://m.facebook.com/BrickDeDesapegos',
-            'https://m.facebook.com/revolucao.mar',
-            'https://m.facebook.com/AIMEC.Poa',
-            'https://m.facebook.com/Espaco373',
-            'https://m.facebook.com/zaffari',
-            'https://m.facebook.com/profisomprodutora',
-            'https://m.facebook.com/araujoviannaoficial',
-            'https://m.facebook.com/SerenataIluminada',
-            'https://m.facebook.com/opiniao.produtora',
-            'https://m.facebook.com/casamundicultura',
-            'https://m.facebook.com/divinacomediapub',
-            'https://m.facebook.com/paraphabaiuca',
-            'https://m.facebook.com/Cabaretpoa',
-            'https://m.facebook.com/nopalcors',
-            'https://m.facebook.com/feiradajoao',
-            'https://m.facebook.com/CCMQportoalegre',
-            'https://m.facebook.com/agulha.poa',
-            'https://m.facebook.com/vilaflorespoa',
-            'https://m.facebook.com/cinemateca.capitolio',
-            'https://m.facebook.com/InstitutoLing',
-            'https://m.facebook.com/GoetheInstitutPortoAlegre',
-            'https://m.facebook.com/ksacentro',
-            'https://m.facebook.com/casacinepoa',
-            'https://m.facebook.com/picnicculturalnomuseu',
-            'https://m.facebook.com/noitedosmuseus',
-            'https://m.facebook.com/CentroCulturalUFRGS',
-            'https://m.facebook.com/mercadovintage',
-            'https://m.facebook.com/prefpoa',
-            'https://m.facebook.com/fundacaoiberecamargo',
-            'https://m.facebook.com/margsmuseu',
-            'https://m.facebook.com/gretacollective',
-            'https://m.facebook.com/coletivoarruaca',
-            'https://m.facebook.com/coletivoplano',
-            'https://m.facebook.com/baropiniao',
-            'https://m.facebook.com/fennnnnda',
-            'https://m.facebook.com/pepsionstageoficial',
-            'https://m.facebook.com/ospabr',
-            'https://m.facebook.com/animaleditora',
-            'https://m.facebook.com/teatrodobourboncountry',
-            'https://m.facebook.com/SescRS',
-            'https://m.facebook.com/Bar.Ocidente',
-            'https://m.facebook.com/comicconrs',
-            'https://m.facebook.com/bibliotecapublicadoestadors',
-            'https://m.facebook.com/somosMODAUT',
-            'https://m.facebook.com/GoetheInstitutPortoAlegre',
-            'https://m.facebook.com/tonaruamurb',
-            'https://m.facebook.com/aerofeira',
-            'https://m.facebook.com/acasacc',
-            'https://m.facebook.com/ILEAUFRGS',
-            'https://m.facebook.com/cccev.rs',
-            'https://m.facebook.com/forroderuadeportoalegre',
-            'https://m.facebook.com/ciarusticadeteatro',
-            'https://m.facebook.com/feiramegusta',
-            'https://m.facebook.com/MegaRevelRS',
-            'https://m.facebook.com/viradasustentavelpoa',
-            'https://m.facebook.com/feiramultipalco',
-            'https://m.facebook.com/feiralamovida',
-            'https://m.facebook.com/uxconferencebr',
-            'https://m.facebook.com/ResultadosDigitais',
-            'https://m.facebook.com/CODEINTELIGENCIA',
-            'https://m.facebook.com/Uergs',
-            'https://m.facebook.com/forumdaliberdade',
-            'https://m.facebook.com/SindilojasPOA',
-            'https://m.facebook.com/ligadesaudedesportiva',
-            'https://m.facebook.com/centrodeeventospucrs',
-            'https://m.facebook.com/revistajadore',
-            'https://m.facebook.com/FestivaldaCervejaPOA',
-            'https://m.facebook.com/mercadodepulgaspoa',
-            'https://m.facebook.com/lojaprofana',
-            'https://m.facebook.com/studiodestemperados',
-            'https://m.facebook.com/festaacabouchorare',
-            'https://m.facebook.com/zonaexpfm',
-            'https://m.facebook.com/gomarec',
-            'https://m.facebook.com/darumT',
-            'https://m.facebook.com/basepoa'
-            ]
-    
+    allowed_domains = ["facebook.com", "sympla.com.br"]
+
     start_pages = [
-        'https://www.sympla.com.br/eventos/porto-alegre-rs',
-        'https://www.sympla.com.br/produtor/ksacentro',
-        'https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D',
-        'https://site.bileto.sympla.com.br/farolsantanderpoa',
-        'https://site.bileto.sympla.com.br/opiniao'
+        "https://www.sympla.com.br/eventos/porto-alegre-rs",
+        "https://www.sympla.com.br/api/v1/search",
+        "https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D",
+        "https://site.bileto.sympla.com.br/farolsantanderpoa",
+        "https://site.bileto.sympla.com.br/opiniao",
     ]
 
-    # random.shuffle(start_pages)
-    
+    organizers_ids = [
+        ["ksacentro", "4569602"],
+        ["doneadventuredone", "9290306"],
+        ["CHCSantaCasa", "2984476"],
+    ]
+
     def start_requests(self):
         self.log("INITIALIZING...")
         self.log("UA: %s" % user_agents[0])
 
         for page in self.start_pages:
-            if 'discovery' in page:
-                yield SplashRequest(
-                    url=page,
-                    callback=self.parse_facebook_page,
-                    endpoint='execute',
-                    args={
-                    'timeout': 300,
-                    'lua_source': parse_facebook_place_page_script,
-                    'ua': user_agents[0]
+
+            if "api/v1/search" in page:
+                for organizer_id in self.organizers_ids:
+                    data = {
+                        "service": "/v5/search",
+                        "params": {
+                            "organizer_id": organizer_id[1],
+                            "sort": "date",
+                            "limit": "24",
+                            "page": 1,
+                        },
                     }
-                )
-            
-            if 'bileto.sympla' in page:
+                    yield scrapy.Request(
+                        "https://www.sympla.com.br/api/v1/search",
+                        method="POST",
+                        callback=self.parse_search_api_event,
+                        body=json.dumps(data),
+                        headers={"Content-Type": "application/json"},
+                    )
+
+            if "bileto.sympla" in page:
                 yield SplashRequest(
                     url=page,
                     callback=self.parse_sympla_iframe,
-                    endpoint='execute',
+                    endpoint="execute",
                     args={
-                    'timeout': 300,
-                    'lua_source': parse_sympla_events_page_script,
-                    'ua': user_agents[0]
-                    }
+                        "timeout": 300,
+                        "lua_source": parse_sympla_events_page_script,
+                        "ua": user_agents[0],
+                    },
                 )
 
-            if 'www.sympla' in page:
+            if "/eventos/porto-alegre-rs" in page:
                 yield SplashRequest(
                     url=page,
                     callback=self.parse_sympla_page,
-                    endpoint='execute',
+                    endpoint="execute",
                     args={
-                    'timeout': 300,
-                    'lua_source': parse_sympla_events_page_script,
-                    'ua': user_agents[0]
-                    }
+                        "timeout": 300,
+                        "lua_source": parse_sympla_events_page_script,
+                        "ua": user_agents[0],
+                    },
+                )
+
+            if "discovery" in page:
+                yield SplashRequest(
+                    url=page,
+                    callback=self.parse_facebook_page,
+                    endpoint="execute",
+                    args={
+                        "timeout": 300,
+                        "lua_source": parse_facebook_place_page_script,
+                        "ua": user_agents[0],
+                    },
                 )
 
     def parse_facebook_page(self, response):
-        title_page = response.xpath('//title/text()').get()
+        title_page = response.xpath("//title/text()").get()
 
-        events_in_page = response.xpath('//a[contains(@href, "events/") and contains(@class, "_49z0")]/@href')
+        events_in_page = response.xpath(
+            '//a[contains(@href, "events/") and contains(@class, "_49z0")]/@href'
+        )
 
         if not events_in_page:
             self.log(str(title_page) + " PAGE WITHOUT EVENTS")
         else:
-            self.log(str(title_page) + " PAGE WITH " + str(len(events_in_page)) + " EVENTS")
+            self.log(
+                str(title_page) + " PAGE WITH " + str(len(events_in_page)) + " EVENTS"
+            )
 
         for event_link in events_in_page.getall():
             if event_link is not None:
                 yield SplashRequest(
-                    url=urljoin('https://www.facebook.com/', urlparse(event_link).path),
+                    url=urljoin("https://www.facebook.com/", urlparse(event_link).path),
                     callback=self.parse_facebook_event,
-                    endpoint='execute',
+                    endpoint="execute",
                     args={
-                    'timeout': 600,
-                    'lua_source': parse_facebook_event_script,
-                    'ua': user_agents[0]
-                    }
+                        "timeout": 600,
+                        "lua_source": parse_facebook_event_script,
+                        "ua": user_agents[0],
+                    },
                 )
             else:
                 pass
-    
-
 
     def parse_facebook_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
-        event_loader.add_xpath('name', '//title[1]/text()')
-        event_loader.add_xpath('cover_url', '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src')
-        
-        primary_address = event_loader.get_xpath('//*[@id="event_summary"]//u[contains(text(), "pin")]/ancestor::tr//*[contains(@class, "_5xhp")]/text()')
-        secondary_address = event_loader.get_xpath('string(//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")])')
-        tertiary_address = event_loader.get_xpath('//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
-        event_loader.add_value('address', primary_address or secondary_address or tertiary_address)
-        
-        event_loader.add_xpath('datetimes', '//*[@id="event_time_info"]//div[@class="_2ycp _5xhk"][1]/@content')
-        event_loader.add_xpath('place_name', '//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
-        event_loader.add_xpath('place_cover_url', '//*[contains(@class, "_2xr0")]/@style')
-        event_loader.add_xpath('ticket_url', '//*[contains(@data-testid, "event_ticket")]/a/@href')
-        event_loader.add_xpath('latitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "latitude")]/@ajaxify')
-        event_loader.add_xpath('longitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "longitude")]/@ajaxify')
+        event_loader.add_xpath("name", "//title[1]/text()")
+        event_loader.add_xpath(
+            "cover_url",
+            '//*[contains(@class, "uiScaledImageContainer")]//*[contains(@class, "scaledImageFit")]/@src',
+        )
+
+        primary_address = event_loader.get_xpath(
+            '//*[@id="event_summary"]//u[contains(text(), "pin")]/ancestor::tr//*[contains(@class, "_5xhp")]/text()'
+        )
+        secondary_address = event_loader.get_xpath(
+            'string(//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")])'
+        )
+        tertiary_address = event_loader.get_xpath(
+            '//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()'
+        )
+        event_loader.add_value(
+            "address", primary_address or secondary_address or tertiary_address
+        )
+
+        event_loader.add_xpath(
+            "datetimes",
+            '//*[@id="event_time_info"]//div[@class="_2ycp _5xhk"][1]/@content',
+        )
+        event_loader.add_xpath(
+            "place_name",
+            '//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()',
+        )
+        event_loader.add_xpath(
+            "place_cover_url", '//*[contains(@class, "_2xr0")]/@style'
+        )
+        event_loader.add_xpath(
+            "ticket_url", '//*[contains(@data-testid, "event_ticket")]/a/@href'
+        )
+        event_loader.add_xpath(
+            "latitude",
+            '//*[@id="event_summary"]//*[contains(@ajaxify, "latitude")]/@ajaxify',
+        )
+        event_loader.add_xpath(
+            "longitude",
+            '//*[@id="event_summary"]//*[contains(@ajaxify, "longitude")]/@ajaxify',
+        )
 
         organizers_els = response.xpath('//*[contains(@class, "_6-i")]/li')
         if organizers_els:
             for organizer_el in organizers_els:
-                event_loader.add_value('organizers', self.parse_facebook_organizer_meta(response, organizer_el))
+                event_loader.add_value(
+                    "organizers",
+                    self.parse_facebook_organizer_meta(response, organizer_el),
+                )
 
-        event_loader.add_xpath('description', '//*[@class="_63ew"]//span')
-        event_loader.add_xpath('prices', '//*[@class="_63ew"]//span/text()')
-        event_loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
-        event_loader.add_value('source_url', response.url)
+        event_loader.add_xpath("description", '//*[@class="_63ew"]//span')
+        event_loader.add_xpath("prices", '//*[@class="_63ew"]//span/text()')
+        event_loader.add_xpath("categories", '//li[@class="_63ep _63eq"]/a/text()')
+        event_loader.add_value("source_url", response.url)
         event_loader.load_item()
 
         yield event_loader.load_item()
 
-        related_events_links = response.xpath('//div[@id="event_related_events"]//div[contains(@class, "SuggestionItem")]/a/@href')
+        related_events_links = response.xpath(
+            '//div[@id="event_related_events"]//div[contains(@class, "SuggestionItem")]/a/@href'
+        )
 
         for event_link in related_events_links.getall():
             if event_link is not None:
-                
+
                 yield SplashRequest(
                     url=urljoin(response.url, urlparse(event_link).path),
                     callback=self.parse_facebook_event,
-                    endpoint='execute',
+                    endpoint="execute",
                     args={
-                        'timeout': 600,
-                        'lua_source': parse_facebook_event_script,
-                        'ua': user_agents[0]
-                    }
+                        "timeout": 600,
+                        "lua_source": parse_facebook_event_script,
+                        "ua": user_agents[0],
+                    },
                 )
                 pass
             else:
                 pass
 
-
     def parse_sympla_iframe(self, response):
         iframe_src = response.xpath('//*[contains(@id, "symplaw2")]/@src').get()
-        
+
         self.log("FOLLOW IFRAME " + str(iframe_src))
 
         if iframe_src is not None:
             yield SplashRequest(
                 url=iframe_src,
                 callback=self.parse_sympla_page,
-                endpoint='execute',
+                endpoint="execute",
                 args={
-                'timeout': 600,
-                'lua_source': parse_sympla_events_page_script,
-                'ua': user_agents[0]
-                }
+                    "timeout": 600,
+                    "lua_source": parse_sympla_events_page_script,
+                    "ua": user_agents[0],
+                },
             )
         else:
             pass
 
-    
     def parse_sympla_page(self, response):
-        title_page = response.xpath('//title/text()').get()
+        title_page = response.xpath("//title/text()").get()
 
-        events_in_page = response.xpath('//a[contains(@class, "sympla-card w-inline-block") or contains(@class, "CardLink")]/@href')
+        events_in_page = response.xpath(
+            '//a[contains(@class, "sympla-card w-inline-block") or contains(@class, "CardLink")]/@href'
+        )
 
         if not events_in_page:
             self.log(str(title_page) + " PAGE WITHOUT EVENTS")
         else:
-            self.log(str(title_page) + " PAGE WITH " + str(len(events_in_page)) + " EVENTS")
+            self.log(
+                str(title_page) + " PAGE WITH " + str(len(events_in_page)) + " EVENTS"
+            )
 
         for event_link in events_in_page.getall():
-            if event_link is not None and 'bileto' in event_link:
+            if event_link is not None and "bileto" in event_link:
                 yield SplashRequest(
                     url=event_link,
                     callback=self.parse_bileto_api_event,
-                    endpoint='execute',
+                    endpoint="execute",
                     args={
-                    'timeout': 600,
-                    'lua_source': parse_sympla_event_api_script,
-                    'ua': user_agents[0]
-                    }
+                        "timeout": 600,
+                        "lua_source": parse_sympla_event_api_script,
+                        "ua": user_agents[0],
+                    },
                 )
-            elif event_link is not None and 'bileto' not in event_link:
+            elif event_link is not None and "bileto" not in event_link:
                 yield SplashRequest(
                     url=event_link,
                     callback=self.parse_sympla_event,
-                    endpoint='execute',
+                    endpoint="execute",
                     args={
-                    'timeout': 600,
-                    'lua_source': parse_sympla_events_page_script,
-                    'ua': user_agents[0]
-                    }
+                        "timeout": 600,
+                        "lua_source": parse_sympla_events_page_script,
+                        "ua": user_agents[0],
+                    },
                 )
             else:
                 pass
 
-
-
     def parse_bileto_api_event(self, response):
-        if 'api_key' in response.data: 
-            api_key = response.data['api_key']
-            api_url = response.data['api_url']
+        if "api_key" in response.data:
+            api_key = response.data["api_key"]
+            api_url = response.data["api_url"]
 
             self.log("API KEY: " + api_key)
             self.log("API URL: " + api_url)
 
-            yield scrapy.Request(api_url, 
-                            callback=self.parse_bileto_event,
-                            cb_kwargs=dict(source_url=response.url),
-                            headers={
-                                'x-api-key': api_key,
-                                'user-agent': user_agents[0]
-                            })
+            yield scrapy.Request(
+                api_url,
+                callback=self.parse_bileto_event,
+                cb_kwargs=dict(source_url=response.url),
+                headers={"x-api-key": api_key, "user-agent": user_agents[0]},
+            )
         else:
             pass
-       
 
+    def parse_search_api_event(self, response):
+        body = json.loads(response.body)
 
+        for event_data in body["data"]:
+            yield SplashRequest(
+                url=event_data["url"],
+                callback=self.parse_sympla_event,
+                endpoint="execute",
+                args={
+                    "timeout": 600,
+                    "lua_source": parse_sympla_events_page_script,
+                    "ua": user_agents[0],
+                },
+            )
 
     def parse_bileto_event(self, response, source_url):
         body = json.loads(response.body)
         event_loader = ItemLoader(item=Event())
 
-        event_loader.add_value('name', body['data']['name'])
-        event_loader.add_value('cover_url', body['data']['notification_image'])
-        event_loader.add_value('address', body['data']['venue']['locale']['address'])
-        event_loader.add_value('place_name', body['data']['venue']['name'])
-        
-        if 'exhibitions' in body['data']:
-            event_loader.add_value('datetimes',  list(map(lambda item: item['local_date_time'], body['data']['exhibitions']['items'])))
-            event_loader.add_value('multiple_hours', 'true')
+        event_loader.add_value("name", body["data"]["name"])
+        event_loader.add_value("cover_url", body["data"]["notification_image"])
+        event_loader.add_value("address", body["data"]["venue"]["locale"]["address"])
+        event_loader.add_value("place_name", body["data"]["venue"]["name"])
 
-        elif 'presentations' in body['data']:
-            event_loader.add_value('datetimes',  list(map(lambda item: item['presentation_local_date_time'], body['data']['presentations']['items'])))
-            event_loader.add_value('multiple_hours', 'false')
-            #if len(body['data']['presentations']['items']) > 1:
+        if "exhibitions" in body["data"]:
+            event_loader.add_value(
+                "datetimes",
+                list(
+                    map(
+                        lambda item: item["local_date_time"],
+                        body["data"]["exhibitions"]["items"],
+                    )
+                ),
+            )
+            event_loader.add_value("multiple_hours", "true")
+
+        elif "presentations" in body["data"]:
+            event_loader.add_value(
+                "datetimes",
+                list(
+                    map(
+                        lambda item: item["presentation_local_date_time"],
+                        body["data"]["presentations"]["items"],
+                    )
+                ),
+            )
+            event_loader.add_value("multiple_hours", "false")
+            # if len(body['data']['presentations']['items']) > 1:
             #    event_loader.add_value('multiple_hours', 'true')
-            #else:
+            # else:
             #    event_loader.add_value('multiple_hours', 'false')
 
         else:
-            event_loader.add_value('datetimes',  [])
+            event_loader.add_value("datetimes", [])
 
-        event_loader.add_value('ticket_url', source_url)
-        
-        event_loader.add_value('latitude', str(body['data']['venue']['locale']['lat']))
-        event_loader.add_value('longitude', str(body['data']['venue']['locale']['lon']))
+        event_loader.add_value("ticket_url", source_url)
+
+        event_loader.add_value("latitude", str(body["data"]["venue"]["locale"]["lat"]))
+        event_loader.add_value("longitude", str(body["data"]["venue"]["locale"]["lon"]))
 
         organizer_loader = EventOrganizerLoader()
-        organizer_loader.add_value('name',  body['data']['venue']['name'])
-        event_loader.add_value('organizers', dict(organizer_loader.load_item()))
+        organizer_loader.add_value("name", body["data"]["venue"]["name"])
+        event_loader.add_value("organizers", dict(organizer_loader.load_item()))
 
-        event_loader.add_value('description', body['data']['description']['raw'])
-        event_loader.add_value('prices', body['data']['description']['raw'])
-        event_loader.add_value('source_url', source_url)
-        
+        event_loader.add_value("description", body["data"]["description"]["raw"])
+        event_loader.add_value("prices", body["data"]["description"]["raw"])
+        event_loader.add_value("source_url", source_url)
+
         return event_loader.load_item()
 
     def parse_sympla_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
-        event_loader.add_xpath('name', 'normalize-space(//h1[contains(@class, "event-name")]/text())')
-        event_loader.add_xpath('cover_url', '//img[contains(@class, "event-banner-img")]/@style')
-        
-        event_loader.add_xpath('address', '//*[contains(@class, "event-location-text")]//span[2]/text()', Join())
+        event_loader.add_xpath(
+            "name", 'normalize-space(//h1[contains(@class, "event-name")]/text())'
+        )
+        event_loader.add_xpath(
+            "cover_url", '//img[contains(@class, "event-banner-img")]/@style'
+        )
+
+        event_loader.add_xpath(
+            "address",
+            '//*[contains(@class, "event-location-text")]//span[2]/text()',
+            Join(),
+        )
         # secondary_address = event_loader.get_xpath('string(//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")])')
         # tertiary_address = event_loader.get_xpath('//*[@id="event_summary"]//*[contains(@class, "_3xd0 _3slj")]//*[contains(@class, "_5xhk")]/text()')
         # event_loader.add_value('address', primary_address)
-        
-        event_loader.add_xpath('datetimes', '//*[contains(@class, "event-info-calendar")]/text()')
-        event_loader.add_xpath('place_name', 'normalize-space(//*[contains(@class, "event-location-name")]//text())')
+
+        event_loader.add_xpath(
+            "datetimes", '//*[contains(@class, "event-info-calendar")]/text()'
+        )
+        event_loader.add_xpath(
+            "place_name",
+            'normalize-space(//*[contains(@class, "event-location-name")]//text())',
+        )
         # event_loader.add_xpath('place_cover_url', '//*[contains(@class, "_2xr0")]/@style')
-        event_loader.add_value('ticket_url', response.url)
+        event_loader.add_value("ticket_url", response.url)
         # event_loader.add_xpath('latitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "latitude")]/@ajaxify')
         # event_loader.add_xpath('longitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "longitude")]/@ajaxify')
 
         organizers_els = response.xpath('//*[contains(@id, "produtor")]')
         if organizers_els:
             for organizer_el in organizers_els:
-                event_loader.add_value('organizers', self.parse_sympla_organizer_meta(response, organizer_el))
+                event_loader.add_value(
+                    "organizers",
+                    self.parse_sympla_organizer_meta(response, organizer_el),
+                )
 
-        event_loader.add_xpath('description', '//*[contains(@id, "event-description")]')
-        event_loader.add_xpath('prices', '//*[contains(@id, "ticket-form")]//text()', Join())
+        event_loader.add_xpath("description", '//*[contains(@id, "event-description")]')
+        event_loader.add_xpath(
+            "prices", '//*[contains(@id, "ticket-form")]//text()', Join()
+        )
         # event_loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
-        event_loader.add_value('source_url', response.url)
+        event_loader.add_value("source_url", response.url)
         event_loader.load_item()
 
         yield event_loader.load_item()
 
-
     def parse_facebook_organizer_meta(self, response, organizer_el):
         organizer_loader = EventOrganizerLoader(selector=organizer_el)
-        organizer_loader.add_xpath('name', './/*[contains(@class, "_50f7")]//text()')
-        organizer_loader.add_xpath('cover_url', './/*[contains(@class, "_rw")]/@src')
-        organizer_loader.add_xpath('source_url', './/*[contains(@class, "_ohe")]/@href')
+        organizer_loader.add_xpath("name", './/*[contains(@class, "_50f7")]//text()')
+        organizer_loader.add_xpath("cover_url", './/*[contains(@class, "_rw")]/@src')
+        organizer_loader.add_xpath("source_url", './/*[contains(@class, "_ohe")]/@href')
 
         return dict(organizer_loader.load_item())
 
     def parse_sympla_organizer_meta(self, response, organizer_el):
         organizer_loader = EventOrganizerLoader(selector=organizer_el)
-        organizer_loader.add_xpath('name', 'normalize-space(.//h4//text())')
-        organizer_loader.add_xpath('cover_url', './/*[contains(@class, "organizer-image")]//@style')
-        organizer_loader.add_xpath('source_url', './/a[contains(text(), "Mais eventos")]/@href')
+        organizer_loader.add_xpath("name", "normalize-space(.//h4//text())")
+        organizer_loader.add_xpath(
+            "cover_url", './/*[contains(@class, "organizer-image")]//@style'
+        )
+        organizer_loader.add_xpath(
+            "source_url", './/a[contains(text(), "Mais eventos")]/@href'
+        )
 
         return dict(organizer_loader.load_item())
