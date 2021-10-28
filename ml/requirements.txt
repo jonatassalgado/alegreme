@@ -8,3 +8,4 @@ sklearn
 joblib
 nltk
 flask-cors
+bs4

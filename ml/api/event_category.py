@@ -14,6 +14,8 @@ from nltk.stem import RSLPStemmer
 from nltk.corpus import stopwords
 from spacy.matcher import Matcher
 
+from bs4 import BeautifulSoup
+
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
@@ -27,80 +29,11 @@ download('punkt')
 download('rslp')
 download('mac_morpho')
 
-stopwords = stopwords.words('portuguese')
-stopwords.extend([
-    '01', 'r', 'º', 'r$', '2009', 'abertura', 'abril', 'aceitos', 'acesso',
-    'acontece', 'acréscimo', 'agenda', 'agora', 'agosto', 'ainda', 'ajuda',
-    'ajudar', 'alegre', 'algo', 'alguns', 'alimento', 'além', 'ambiente',
-    'ambientes', 'amigos', 'amor', 'amp', 'andar', 'andradas', 'ano', 'anos',
-    'antecipado', 'antecipados', 'antes', 'ao', 'aos', 'apenas', 'apoio',
-    'aprender', 'apresenta', 'apresentar', 'apresentação', 'após', 'aqui',
-    'arte', 'artes', 'as', 'assim', 'atenção', 'através', 'atual',
-    'atualmente', 'até', 'atéh', 'aulas', 'autorais', 'av', 'avenida',
-    'bairro', 'baixa', 'baixo', 'bar', 'barra', 'belas', 'bem', 'ben',
-    'benefício', 'bilheteria', 'bit', 'boa', 'bom', 'bora', 'bourbon', 'br',
-    'brasil', 'brasileira', 'breve', 'cada', 'canoas', 'carlos', 'carteira',
-    'cartão', 'casa', 'caso', 'categoria', 'centro', 'chega', 'chegou',
-    'cheia', 'cheio', 'chuva', 'cidade', 'claro', 'classificação', 'com',
-    'começa', 'como', 'compartilhar', 'comunicação', 'confiança', 'conflitos',
-    'conhecer', 'conhecido', 'conhecimento', 'consulta', 'consumo', 'conta',
-    'contato', 'conteúdo', 'conveniência', 'convidados', 'corpo', 'criação',
-    'crédito', 'curtir', 'da', 'dar', 'das', 'dash', 'data', 'de', 'dekg',
-    'demais', 'depois', 'desconto', 'desde', 'dessa', 'desse', 'deste',
-    'deverão', 'dezembro', 'dia', 'dias', 'diferentes', 'dinheiro',
-    'disponível', 'diversas', 'diversos', 'divulgação', 'do', 'doação',
-    'documento', 'documentos', 'dois', 'domingo', 'dos', 'duas', 'dupla',
-    'durante', 'duração', 'débito', 'edição', 'ela', 'ele', 'eles', 'em',
-    'emocional', 'empresa', 'empresas', 'encontro', 'energia', 'entrada',
-    'entre', 'entregues', 'então', 'enviar', 'esgotado', 'espaço', 'especial',
-    'essa', 'esse', 'esta', 'estado', 'estar', 'estarão', 'este', 'estudantes',
-    'está', 'estão', 'eu', 'evento', 'eventos', 'experiência', 'experiências',
-    'facebook', 'fazer', 'federal', 'feira', 'fernando', 'ferramentas',
-    'fevereiro', 'fica', 'ficar', 'ficha', 'fila', 'fim', 'final', 'foi',
-    'fone', 'fora', 'foram', 'forma', 'formada', 'formas', 'formação', 'foto',
-    'free', 'frente', 'funcionamento', 'gaúcha', 'gente', 'geral', 'gmail',
-    'graduada', 'grande', 'grandes', 'grupo', 'grupos', 'gt', 'h', 'história',
-    'hoje', 'hora', 'horas', 'horário', 'horários', 'http', 'https', 'humano',
-    'há', 'i', 'ideias', 'identidade', 'identificação', 'idosos', 'importantes',
-    'in', 'inclui', 'informações', 'ingresso', 'ingressos', 'inscrição',
-    'inscrições', 'instagram', 'inteira', 'interna', 'internacional',
-    'internet', 'investimento', 'início', 'ir', 'irá', 'isso', 'itens',
-    'j', 'janeiro', 'joão', 'julho', 'junho', 'já', 'la', 'lado', 'lei',
-    'limitadas', 'lista', 'livre', 'locais', 'local', 'loja', 'lojas', 'lote',
-    'lugar', 'ly', 'mail', 'maio', 'maior', 'maiores', 'mais', 'marca',
-    'marcas', 'março', 'mas', 'me', 'mediante', 'meia', 'meio', 'melhor',
-    'melhores', 'mesmo', 'mestre', 'meu', 'momento', 'muita', 'muito',
-    'mulheres', 'multisom', 'mundo', 'mãe', 'mês', 'na', 'nacional', 'nas',
-    'necessária', 'nessa', 'nesta', 'neste', 'no', 'nome', 'nomes', 'nos',
-    'nossa', 'nossas', 'nosso', 'nossos', 'nova', 'novembro', 'novidades',
-    'novo', 'num', 'numa', 'não', 'nós', 'número', 'objetivo', 'obra',
-    'obrigatória', 'of', 'oficial', 'onde', 'online', 'organização', 'os',
-    'ou', 'outras', 'outros', 'outubro', 'pagamento', 'palco', 'para', 'parte',
-    'participante', 'participantes', 'participação', 'participe', 'partir',
-    'patrocínio', 'paulo', 'país', 'pedro', 'pela', 'pelo', 'pequeno',
-    'perecível', 'pesquisa', 'pessoa', 'pessoais', 'pessoal', 'pessoas',
-    'planejamento', 'poa', 'pode', 'podem', 'poder', 'pontos', 'por', 'porto',
-    'possam', 'possui', 'possuir', 'pra', 'praia', 'precisa', 'presença',
-    'prestigiar', 'primeira', 'primeiro', 'principais', 'problema', 'processo',
-    'processos', 'produção', 'produções', 'programa', 'programação', 'projeto',
-    'projetos', 'promo', 'promocional', 'promove', 'propõe', 'prática',
-    'práticas', 'pré', 'próprio', 'próximo', 'página', 'pós', 'público',
-    'públicos', 'qual', 'qualquer', 'quando', 'quatro', 'que', 'quem', 'quer',
-    'quinta', 'reais', 'real', 'realiza', 'realizar', 'realização', 'receber',
-    'reduzido', 'região', 'relações', 'resultados', 'rg', 'rio', 'rs', 'rua',
-    'ré', 'saldanha', 'se', 'segunda', 'segundo', 'seja', 'sem', 'semana',
-    'sempre', 'sendo', 'ser', 'serviço', 'será', 'serão', 'setembro', 'seu',
-    'seus', 'sexta', 'shopping', 'si', 'siga', 'site', 'sob', 'sobre',
-    'social', 'solidário', 'som', 'somente', 'sou', 'sua', 'suas', 'sucesso',
-    'sujeito', 'sul', 'super', 'sympla', 'sábado', 'são', 'só', 'também',
-    'taxa', 'te', 'teatro', 'telefone', 'tem', 'tempo', 'ter', 'teremos',
-    'the', 'toda', 'todas', 'todo', 'todos', 'total', 'trabalho', 'trabalhos',
-    'tribo', 'três', 'tudo', 'técnica', 'um', 'uma', 'uso', 'vagas', 'vai',
-    'valor', 'valores', 'vamos', 'vem', 'venda', 'venha', 'verão', 'vez',
-    'vida', 'violenta', 'vista', 'vivo', 'você', 'volta', 'voz', 'vão',
-    'whats', 'whatsapp', 'www', 'ª', '°', 'às', 'àsh', 'água', 'área', 'áreas',
-    'é', 'último', '—', '‘', '’', '“', '”', '•', '↓', '⇨'
-])
+stopwords = stopwords.words("portuguese")
+custom_stopwords = [
+    "01", "r", "º", "r$", "2009", "abertura", "abril", "aceitos", "acesso", "acontece", "acréscimo", "agenda", "agora", "agosto", "ainda", "ajuda", "ajudar", "alegre", "algo", "alguns", "alimento", "além", "ambiente", "ambientes", "amigos", "amor", "amp", "andar", "andradas", "ano", "anos", "antecipado", "antecipados", "antes", "ao", "aos", "apenas", "apoio", "aprender", "apresenta", "apresentar", "apresentação", "após", "aqui", "arte", "artes", "as", "assim", "atenção", "através", "atual", "atualmente", "até", "atéh", "aulas", "autorais", "av", "avenida", "bairro", "baixa", "baixo", "bar", "barra", "belas", "bem", "ben", "benefício", "bilheteria", "bit", "boa", "bom", "bora", "bourbon", "br", "brasil", "brasileira", "breve", "calendário", "cada", "canoas", "carlos", "carteira", "cartão", "casa", "caso", "categoria", "centro", "chega", "chegou", "cheia", "cheio", "chuva", "cidade", "claro", "classificação", "com", "começa", "como", "compartilhar", "comunicação", "confiança", "conflitos", "conhecer", "conhecido", "conhecimento", "consulta", "consumo", "conta", "contato", "conteúdo", "conveniência", "convidados", "corpo", "criação", "crédito", "curtir", "da", "dar", "das", "dash", "data", "de", "dekg", "demais", "depois", "desconto", "desde", "dessa", "desse", "deste", "deverão", "dezembro", "dia", "dias", "diferentes", "dinheiro", "disponível", "diversas", "diversos", "divulgação", "do", "doação", "documento", "documentos", "dois", "domingo", "dos", "dose", "duas", "dupla", "durante", "duração", "débito", "edição", "ela", "ele", "eles", "em", "emocional", "empresa", "empresas", "encontro", "energia", "entrada", "entre", "entregues", "então", "enviar", "esgotado", "espaço", "esquema", "especial", "essa", "esse", "esta", "estado", "estadual", "estar", "estarão", "este", "estudantes", "está", "estão", "eu", "evento", "eventos", "experiência", "experiências", "facebook", "fazer", "federal", "feira", "fernando", "ferramentas", "fevereiro", "fica", "ficar", "ficha", "fila", "fim", "final", "foi", "fone", "fora", "foram", "forma", "formada", "formas", "formação", "foto", "free", "frente", "funcionamento", "gaúcha", "gente", "geral", "gmail", "graduada", "grande", "grandes", "grupo", "grupos", "gt", "h", "história", "hoje", "hora", "horas", "horário", "horários", "http", "https", "humano", "há", "i", "ideias", "identidade", "identificação", "idosos", "importantes", "in", "inclui", "informações", "ingresso", "ingressos", "inscrição", "inscrições", "instagram", "inteira", "interna", "internacional", "internet", "investimento", "início", "ir", "irá", "isso", "itens", "j", "janeiro", "joão", "julho", "junho", "já", "la", "lado", "lei", "limitadas", "lista", "livre", "locais", "local", "loja", "lojas", "lote", "lugar", "ly", "mail", "maio", "maior", "maiores", "mais", "marca", "marcas", "março", "mas", "me", "mediante", "meia", "meio", "melhor", "melhores", "mesmo", "mestre", "meu", "momento", "muita", "muito", "mulheres", "multisom", "mundo", "mãe", "mês", "na", "nacional", "nas", "necessária", "nessa", "nesta", "neste", "no", "nome", "nomes", "nos", "nossa", "nossas", "nosso", "nossos", "nova", "novembro", "novidades", "novo", "num", "numa", "não", "nós", "número", "objetivo", "obra", "obrigatória", "of", "oficial", "onde", "online", "organização", "os", "ou", "outras", "outros", "outubro", "pagamento", "palco", "para", "parte", "participante", "participantes", "participação", "participe", "partir", "patrocínio", "paulo", "país", "pedro", "pela", "pelo", "pequeno", "perecível", "pesquisa", "pessoa", "pessoais", "pessoal", "pessoas", "planejamento", "poa", "pode", "podem", "poder", "pontos", "por", "porto", "possam", "possui", "possuir", "pra", "praia", "precisa", "presença", "prestigiar", "primeira", "primeiro", "principais", "problema", "processo", "processos", "produção", "produções", "programa", "programação", "projeto", "projetos", "promo", "promocional", "promove", "propõe", "prática", "práticas", "pré", "próprio", "próximo", "página", "pós", "público", "públicos", "qual", "qualquer", "quando", "quatro", "que", "quem", "quer", "quinta", "reais", "real", "realiza", "realizar", "realização", "receber", "reduzido", "região", "relações", "resultados", "rg", "rio", "rs", "rua", "ré", "saldanha", "se", "segunda", "segundo", "seja", "sem", "semana", "sempre", "sendo", "ser", "serviço", "será", "serão", "setembro", "seu", "seus", "sexta", "shopping", "si", "siga", "site", "sob", "sobre", "social", "solidário", "som", "somente", "sou", "sua", "suas", "sucesso", "sujeito", "sul", "super", "sympla", "sábado", "são", "só", "também", "taxa", "te", "teatro", "telefone", "tem", "tempo", "ter", "teremos", "the", "toda", "todas", "todo", "todos", "total", "trabalho", "trabalhos", "tribo", "três", "tudo", "técnica", "um", "uma", "uso", "vagas", "vai", "valor", "valores", "vamos", "vem", "venda", "venha", "verão", "vez", "vida", "violenta", "vista", "vivo", "você", "volta", "voz", "vão", "whats", "whatsapp", "www", "ª", "°", "às", "àsh", "água", "área", "áreas", "é", "último", "—", "‘", "’", "“", "”", "•", "↓", "⇨", "articula ", "integra ", "documenta", "difunde", "produzida", "dentro", "propor", "extensões", "confira", "encontrar", "gaúcho", "instigante", "capaz", "acionar", "segundas", "sextasfeiras", "permanente", "outro", "moeda", "permanente", "confira", "completa", "terçafeira", "domingos", "feriados", "descontos", "clientes", "benefícios", "meiaentrada", "comprovante", "pertencentes", "famílias", "renda", "idade", "deficiência", "acompanhante", "necessário", "doadores", "sangue", "saiba", "comprovar", "acessando", "importante", "limitados", "sujeitos", "disponibilidade", "dê", "preferência", "compras", "vacinação", "vacinalcompleto", "operando", "capacidade", "lotação", "reduzida", "lugares", "ocupados", "ordem", "chegada", "cedo", "escolher", "regras", "obrigatório", "máscara", "obrigatório", "cumprimento", "regras", "protocolos", "segurança", "vetada", "menores", "vetada", "responsável", "algum", "sintoma", "suspeita", "covid", "evite", "vir", "convivência", "direta", "parentes", "risco", "mantenha", "distanciamento", "pega", "mandar", "levar", "sextafeira", "novos", "vier", "cabeça", "comprou", "ganha", "mostrar", "garante", "via", "preço", "circular", "proibido", "disponibilizadas", "mesas", "cadeiras", "álcool", "gel", "estratégicos", "aceitamos", "cartões", "bandeiras", "visa", "master", "elo", "criado", "arrecadar", "fundos", "envolvidos", "doaram", "arrecadado", "revertido", "organizado", "apresentadoras", "juntamente", "diretora", "polícia", "web", "tv", "gentilmente", "cedeu", "seguirá", "conforme", "decreto", "governamental",
+]
+stopwords.extend(custom_stopwords)
 
 
 class EventCategoryPrediction(object):
@@ -149,12 +82,18 @@ class EventCategoryPrediction(object):
             return text.encode('latin-1', 'ignore').decode('latin-1')
 
         def __remove_html_tags(text):
-            cleaner = re.compile('<.*?>')
-            clean_text = re.sub(cleaner, ' ', text)
-            return clean_text
+            text = BeautifulSoup(text, "html.parser")
+            links = text.select("a")
+            for link in links:
+                link.decompose()
 
-        text = __downcase(text)
+            cleaner = re.compile('<.*?>')
+            text = re.sub(cleaner, ' ', str(text))
+            text = re.sub(r'htt(s|)\S+', '', text, flags=re.MULTILINE)
+            return text
+
         text = __remove_html_tags(text)
+        text = __downcase(text)
         text = __remove_digits(text)
         text = __remove_ponctuation(text)
         text = __remove_emojis(text)
