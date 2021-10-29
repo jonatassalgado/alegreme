@@ -51,7 +51,7 @@
 					</div>
 					<div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
 						<% if action == 'create-account' %>
-							<%= content_tag :a, href: new_user_registration_path, class: 'bg-brand-600 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-500 inline-flex justify-center mt-3 px-4 py-2 rounded-md shadow-sm sm:ml-3 sm:mt-0 sm:text-sm sm:w-auto text-base text-white w-full', data: { 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' } do %>
+							<%= link_to new_user_registration_path, class: 'bg-brand-600 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-500 inline-flex justify-center mt-3 px-4 py-2 rounded-md shadow-sm sm:ml-3 sm:mt-0 sm:text-sm sm:w-auto text-base text-white w-full', data: { 'turbo': false, 'gtm-action': 'click', 'gtm-category': 'Funil', 'gtm-label': 'Criar meu perfil' } do %>
 								Criar conta
 							<% end %>
 						<% else %>
