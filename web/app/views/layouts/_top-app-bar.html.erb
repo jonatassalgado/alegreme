@@ -109,7 +109,7 @@
 	<% end %>
 	<div class="md:col-span-3 flex-shrink-0">
 		<div class="flex h-full items-center justify-end">
-			<% if current_user && controller_name == 'feeds' && action_name == 'index' %>
+			<% if current_user %>
 				<%= link_to search_index_path, class: 'md:hidden mr-3', 'aria-label': 'Buscar' do %>
 					<svg class="w-6 h-auto fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 						<path fill="none" d="M0 0h24v24H0V0z"/>
