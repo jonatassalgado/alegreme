@@ -18,6 +18,7 @@ class FeedsController < ApplicationController
 		@categories        = Category.select("categories.id, categories.details, COUNT(events.id) as active_events_count").joins(:events).where("events.datetimes[1] > ?", DateTime.now).group("categories.id")
 		@show_filter_group = params[:filter_group]
 		@themes            = Theme.all
+		@users             = User.all.limit(16).order('created_at DESC')
 
 		if @stimulus_reflex
 			render layout: false

@@ -1,5 +1,19 @@
-<section class="bg-white grid grid-cols-1 is-animated max-w-screen-lg md:grid-cols-2 md:items-center md:py-12 mx-auto">
-	<div class="px-5 md:mx-auto ">
+<section class="bg-white grid grid-cols-1 is-animated max-w-screen-lg md:grid-cols-2 md:py-12 mx-auto">
+	<div class="md:hidden mt-6 flex flex-col items-center space-y-3 md:items-start">
+		<div class="flex justify-center mx-12 -space-x-3 md:mx-0">
+			<% cache @users.cache_version do %>
+				<% @users.each do |user| %>
+					<%= image_tag(user.picture, { class: "w-8 h-8 rounded-full border-white border-2 bg-gray-200", style: 'filter: grayscale(0.9)', alt: user.name, onerror: "this.src='https://ui-avatars.com/api/?size=24&background=random&name=#{user.name}'" }) rescue nil %>
+				<% end %>
+			<% end %>
+		</div>
+		<span class="px-6 md:px-0 md:w-8/12 text-center md:text-left block leading-snug md:inline-block md:leading-normal md:text-base mt-1.5 text-xs">
+					Junte-se a mais de 10.000 pessoas e aproveite
+					shows, festas, cinema, feiras de rua... Crie sua conta, é grátis 🤙
+		</span>
+	</div>
+
+	<div class="px-5 md:mx-auto">
 		<div class="antialiased inline-block md:mx-0 md:rounded-lg md:w-full p-5 text-gray-800 text-sm w-screen">
 			Já tem uma
 			conta? <%= link_to 'Faça login', new_user_session_path, class: "cursor-pointer font-bold inline-block ml-1 px-2 py-1 rounded-full text-brand-600" %>
@@ -83,9 +97,20 @@
 			</div>
 		<% end %>
 	</div>
-	<div class="px-5 md:mx-auto ">
-		<%= image_pack_tag ["hero/bebendo.png", "hero/passeando.png", "hero/dancando.png", "hero/skate.png"].sample,
-											 class: 'mb-10 h-32 md:h-auto md:w-52 my-auto w-32 mx-auto' %>
+	<div class="space-y-6 px-5 md:mx-auto md:pt-12">
+		<div class="hidden md:inline-block mt-6 flex flex-col items-center space-y-3 md:items-start">
+			<div class="flex mx-12 -space-x-3 md:mx-0">
+				<% cache @users.cache_version do %>
+					<% @users.each do |user| %>
+						<%= image_tag(user.picture, { class: "w-8 h-8 rounded-full border-white border-2 bg-gray-200", style: 'filter: grayscale(0.9)', alt: user.name, onerror: "this.src='https://ui-avatars.com/api/?size=24&background=random&name=#{user.name}'" }) rescue nil %>
+					<% end %>
+				<% end %>
+			</div>
+			<span class="px-6 md:px-0 md:w-8/12 text-center md:text-left block leading-snug md:inline-block md:leading-normal md:text-base mt-1.5 text-xs">
+					Junte-se a mais de 10.000 pessoas e aproveite
+					shows, festas, cinema, feiras de rua... Crie sua conta, é grátis 🤙
+		</span>
+		</div>
 		<div class="space-y-1 leading-loose text-gray-800">
 			<p>
 				<b>Crie uma conta para:</b>

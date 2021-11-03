@@ -135,14 +135,24 @@
 						</svg>
 					</a>
 				<% end %>
-				<%= link_to 'Entrar', new_user_session_path, class: 'hidden md:inline-block hover:text-brand-600 px-6 text-gray-800 text-sm' %>
-				<%= link_to 'Criar conta',
-										new_user_registration_path,
-										data:     {
-											'gtm-action':   'click',
-											'gtm-category': 'Funil',
-											'gtm-label':    'Criar meu perfil'
-										}, class: 'hidden md:inline-block bg-brand-600 border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-500 inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm text-white' %>
+				<%= link_to 'Entrar', new_user_session_path, class: 'hidden md:inline-block hover:text-brand-600 px-3 text-gray-800 text-sm' %>
+				<% if controller_name == 'feeds' && action_name == 'index' %>
+					<%= link_to 'Criar conta',
+											new_user_registration_path,
+											data:     {
+												'gtm-action':   'click',
+												'gtm-category': 'Funil',
+												'gtm-label':    'Criar meu perfil'
+											}, class: 'hidden md:inline-block hover:text-brand-600 px-3 text-gray-800 text-sm' %>
+				<% else %>
+					<%= link_to 'Criar conta',
+											new_user_registration_path,
+											data:     {
+												'gtm-action':   'click',
+												'gtm-category': 'Funil',
+												'gtm-label':    'Criar meu perfil'
+											}, class: 'hidden md:inline-block bg-brand-600 border border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 font-medium hover:bg-brand-500 inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm text-white' %>
+				<% end %>
 			<% end %>
 		</div>
 	</div>
