@@ -35,7 +35,6 @@
 		 data-event-identifier="<%= event.id %>"
 		 data-event-similar-loading="false"
 		 data-event-similar-open="<%= is_similar_open %>"
-		 data-toggle-style-target="event"
 		 id="<%= "cell-#{section_identifier}-#{dom_id event}" %>"
 		 style="order: <%= event_counter + 1 %>">
 	<div class="relative overflow-hidden ripple ripple-white">
@@ -47,8 +46,7 @@
 				onerror: "this.style.opacity='0'"
 		} if event.image[:feed] %>
 	</div>
-	<div class="inline-flex pt-1 px-2 quinta text-gray-600 <%= event.day_of_week['decorator'].parameterize %>"
-			 data-toggle-style-target="date">
+	<div class="inline-flex pt-1 px-2 quinta text-gray-600 <%= event.day_of_week['decorator'].parameterize %>">
 		<div class="mt-2 mr-3">
 			<%#= render partial: 'components/taste_buttons',
 								 locals:  {
@@ -148,7 +146,6 @@
 			<div
 				class="flex justify-center px-2 py-2 text-sm text-gray-600 bg-gray-50 rounded-b-lg cursor-pointer hover:bg-gray-50 hover:border-none"
 				data-action="click->event#showSimilar click->loader#toggle"
-				data-toggle-style-target="similar"
 				data-loader-target="loaded"
 				title="Mostrar eventos parecidos">
 				Similares

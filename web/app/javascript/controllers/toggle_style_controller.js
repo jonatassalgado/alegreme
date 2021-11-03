@@ -1,12 +1,14 @@
 import ApplicationController from "./application_controller"
 
 export default class ToggleStyleController extends ApplicationController {
-    static targets = ["toggle"];
+    static targets = ["toggle", "activeButton", "disableButton"];
     static values  = {
-        initSelected:    String,
-        currentSelected: String,
-        activeClass:     Array,
-        inactiveClass:   Array
+        status:      Boolean,
+        toggleClass: Array,
+    }
+
+    initialize() {
+        if (this.statusValue == null) this.statusValue = false
     }
 
     connect() {
@@ -29,19 +31,21 @@ export default class ToggleStyleController extends ApplicationController {
     }
 
     toggle(event) {
-        this._toggleChip(event.currentTarget);
         this._updateStyle();
-    }
-
-    _toggleChip(currentTarget) {
-        this.currentSelectedValue = currentTarget.dataset.toggleStyleIdentifier;
     }
 
     _updateStyle() {
         this.toggleTargets.forEach(toggle => {
-            this.inactiveClassValue.forEach(cl => toggle.classList.toggle(cl, toggle.dataset.toggleStyleIdentifier !== this.currentSelectedValue))
-            this.activeClassValue.forEach(cl => toggle.classList.toggle(cl, toggle.dataset.toggleStyleIdentifier === this.currentSelectedValue))
+            this.toggleClassValue.forEach(cl => toggle.classList.toggle(cl))
         })
+        if (this.statusValue) {
+            this.activeButtonTarget.classList.remove('hidden')
+            this.disableButtonTarget.classList.add('hidden')
+        } else {
+            this.activeButtonTarget.classList.add('hidden')
+            this.disableButtonTarget.classList.remove('hidden')
+        }
+        this.statusValue = !this.statusValue;
     }
 
 }

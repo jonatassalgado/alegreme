@@ -18,7 +18,7 @@ export default class extends ApplicationController {
         //     this.element.innerHTML = null;
         // })
         //
-        this.element.addEventListener("cable-ready:after-morph", event => {
+        document.addEventListener("horizontal-event#open-event:success", event => {
             this._initSimpleScrollbar()
         })
 
@@ -56,6 +56,7 @@ export default class extends ApplicationController {
     _initSimpleScrollbar() {
         if (this.hasScrollContentTarget) {
             this.element.classList.remove("hidden")
+            this.scrollContentTarget.scrollTo(0, 0)
             // this.SimpleScrollbar.initEl(this.scrollContentTarget);
         }
     }

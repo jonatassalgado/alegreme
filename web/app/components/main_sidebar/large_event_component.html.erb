@@ -134,8 +134,17 @@
 					</div>
 					<div class="py-5 px-5">
 						<h2 class="c-h3">Sobre o evento</h2>
-						<div class="mt-2 text-sm leading-relaxed text-gray-600 break-words text-with-html">
-							<%= @event.description.html_safe %>
+						<div data-controller="toggle-style"
+								 data-toggle-style-toggle-class-value='["h-48"]'
+								 class="mt-2 text-sm leading-relaxed text-gray-600 break-words text-with-html">
+							<div data-toggle-style-target="toggle" class="h-48 overflow-hidden">
+								<%= @event.description.html_safe %>
+							</div>
+							<div data-toggle-style-target="activeButton" data-action="click->toggle-style#toggle" class="cursor-pointer -mt-12 pt-12 relative text-brand-600 z-20" style="background: linear-gradient(0deg, white 50%, transparent);">Mostrar mais
+							</div>
+							<div data-toggle-style-target="disableButton" data-action="click->toggle-style#toggle" class="cursor-pointer hidden mt-6 py-2 relative text-brand-600 z-20" style="background: linear-gradient(0deg, white 50%, transparent);">Mostrar
+								menos
+							</div>
 						</div>
 					</div>
 					<% if @event&.organizers.present? %>
