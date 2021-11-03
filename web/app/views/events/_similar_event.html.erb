@@ -1,31 +1,16 @@
-<div class="flex justify-start py-3 px-5 md:border-0">
+<%= link_to event_path(similar_event),
+						class: 'flex justify-start py-3 px-5 md:border-0' do %>
 	<div>
-		<div class="overflow-hidden relative w-24 h-16 rounded">
-			<%= link_to event_path(similar_event),
-									'aria-label': "Ver evento #{similar_event&.name}",
-									data:         {
-										action:     'click->main-sidebar--horizontal-event#openEvent',
-										'event-id': similar_event.id
-									} do %>
-				<%= image_tag shrine_image_url(similar_event, :feed), {
-					loading: :lazy,
-					alt:     similar_event.name,
-					class:   'bg-gray-100 cursor-pointer h-full object-center object-cover w-full overflow-hidden',
-					onerror: "this.style.opacity='0'"
-				} rescue nil %>
-			<% end %>
+		<div class="overflow-hidden relative w-24 h-16 rounded bg-gray-100">
+			<%= image_tag shrine_image_url(similar_event, :feed), {
+				loading: :lazy,
+				alt:     similar_event.name,
+				class:   'bg-gray-100 cursor-pointer h-full object-center object-cover w-full overflow-hidden',
+				onerror: "this.style.opacity='0'"
+			} rescue nil %>
 		</div>
 	</div>
-	<div class="pl-6">
-		<%= content_tag :a,
-										href:  event_path(similar_event),
-										data:  {
-											action:     'click->main-sidebar--horizontal-event#openEvent',
-											url:        event_path(similar_event),
-											'event-id': similar_event.id
-										},
-										class: 'md:hover:underline inline-block md:text-sm mb-1 leading-snug text-gray-700' do %>
-			<%= similar_event.name %>
-		<% end %>
+	<div class="pl-6 inline-block md:text-sm mb-1 leading-snug text-gray-700">
+		<%= limit_name_size similar_event.name %>
 	</div>
-</div>
+<% end %>
