@@ -58,14 +58,18 @@
 				</div>
 			</div>
 		<% end %>
-		<% unless params[:day] || params[:category] %>
+		<% unless params[:day] || params[:category] || params[:theme] %>
 			<% cache "#{current_user&.cache_key_with_version}/#{current_user&.liked_or_disliked_event_ids&.size}/hero--swipable" do %>
 				<%= render Hero::SwipableComponent.new(user: current_user) %>
 			<% end %>
 		<% end %>
-
-		<% unless params[:category] %>
-			<% cache @movies&.cache_version do %>
+		<% unless params[:theme] || params[:category] %>
+			<% cache @upcoming_events&.cache_version do %>
+				<%= render partial: 'feeds/horizontal_filter_categories', categories: @categories %>
+			<% end %>
+		<% end %>
+		<% unless params[:category] || params[:theme] %>
+			<% cache [@movies&.cache_version, current_user] do %>
 				<%= render partial: 'movies/movies', locals: { movies:         @movies,
 																											 selected_movie: @movie,
 																											 user:           current_user,
@@ -80,14 +84,25 @@
 
 		<turbo-frame id="main-sidebar--feed" target="_top" class="inline-block px-5 w-full md:px-0">
 			<% if @upcoming_events.present? %>
-				<div class="bg-white">
-
+				<div>
 					<% if current_page? "/porto-alegre/eventos/categoria/#{params[:category]}" %>
-						<div class="flex justify-between items-center pr-5 md:pr-10">
-							<h1 class="mb-3 c-h2">
-								<span class="text-brand-600"><%= @category&.details_display_name %></span> em Porto Alegre
-							</h1>
+						<% content_for :back_button, true %>
+						<% content_for :top_app_bar_title, @category&.details_display_name %>
+						<div class="-mx-5 md:mx-0 mb-10">
+							<%= render partial: 'feeds/horizontal_filter_categories', categories: @categories %>
 						</div>
+						<h1 class="mb-3 c-h2">
+							<span class="text-brand-600"><%= @category&.details_display_name %></span> em Porto Alegre
+						</h1>
+					<% elsif current_page? "/porto-alegre/eventos/tema/#{params[:theme]}" %>
+						<% content_for :back_button, true %>
+						<% content_for :top_app_bar_title, 'Educação e trabalho' %>
+						<div class="-mx-5 md:mx-0 mb-10">
+							<%= render partial: 'feeds/horizontal_filter_categories', categories: @categories %>
+						</div>
+						<h1 class="mb-3 c-h2">
+							<span class="text-brand-600">Educação e trabalho</span> em Porto Alegre
+						</h1>
 					<% else %>
 						<h1 class="c-h2">
 							Eventos em Porto Alegre

@@ -29,7 +29,7 @@
 	<% end %>
 </div>
 
-<% cache @movies&.cache_version do %>
+<% cache [@movies&.cache_version, current_user] do %>
 	<div class="md:mt-6">
 		<%= render partial: 'movies/movies', locals: { movies:         @movies,
 																									 selected_movie: @movie,

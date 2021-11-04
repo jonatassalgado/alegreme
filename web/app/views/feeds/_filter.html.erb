@@ -2,7 +2,7 @@
 										id:    'main-sidebar--filter',
 										data:  { controller: 'filter', action: 'turbo:before-fetch-request@document->filter#loading turbo:frame-render@document->filter#loaded' },
 										class: 'inline-block -mx-5 duration-300 md:overflow-x-auto px-5 scrollx transition-all translate-x-32' do %>
-	<div class="flex flex-wrap md:w-auto pt-4 w-content space-x-4">
+	<div class="items-start flex flex-wrap md:w-auto pt-4 w-content space-x-4">
 		<% if @category.blank? %>
 			<% if @theme.present? %>
 				<%= content_tag :div,

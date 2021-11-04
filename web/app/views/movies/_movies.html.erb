@@ -18,9 +18,14 @@
 			<% if local_assigns.fetch(:chips, false) %>
 				<div class="scrollx">
 					<div class="flex px-5 w-content md:flex-wrap md:px-0 md:mb-2">
-						<div class="mr-3 mb-3 text-sm md:text-base c-chip--active">
-							Todos os filmes
-						</div>
+						<%= link_to cinemas_path,
+												class: 'mr-3 mb-3 text-sm md:text-base c-chip',
+												title: 'Siga cinemas para vê-los aqui' do %>
+							Ver cinemas
+							<svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 md:w-5" viewBox="0 0 20 20" fill="currentColor">
+								<path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+							</svg>
+						<% end %>
 						<% if user&.following_cinemas&.any? %>
 							<% user.following_cinemas.each do |cinema| %>
 								<%= link_to cinema_path(cinema),
@@ -29,22 +34,6 @@
 														'data-turbo-preserve-scroll': true do %>
 									<%= truncate cinema.display_name, length: 16 %>
 								<% end %>
-							<% end %>
-							<%= link_to cinemas_path,
-													class: 'mr-3 mb-3 text-sm md:text-base c-chip text-gray-500',
-													title: 'Ver todos os cinemas' do %>
-								<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-								</svg>
-							<% end %>
-						<% else %>
-							<%= link_to cinemas_path,
-													class: 'mr-3 mb-3 text-sm md:text-base c-chip',
-													title: 'Siga cinemas para vê-los aqui' do %>
-								Ver cinemas
-								<svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 md:w-5" viewBox="0 0 20 20" fill="currentColor">
-									<path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-								</svg>
 							<% end %>
 						<% end %>
 					</div>
