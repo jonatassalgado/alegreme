@@ -18,7 +18,7 @@
 			<div class="w-80 md:w-128">
 				<div class="sticky left-0 c-h2 w-content">Principais categorias</div>
 				<div class="grid grid-cols-3 gap-3 mt-3 text-sm md:text-base">
-					<% @categories.select { |cat| ['show', 'party', 'theatrical_show', 'street_fair'].include?(cat.details_name) }.sort_by { |cat| cat.details_display_name }.each do |category| %>
+					<% @categories.select { |cat| ['show', 'party', 'theatrical_show', 'street_fair', 'return_trip'].include?(cat.details_name) }.sort_by { |cat| cat.details_display_name }.each do |category| %>
 
 						<%= link_to category_events_path(category: category.details_url),
 												data:  { 'slider-target': 'item' },
@@ -41,15 +41,6 @@
 						<div class="space-y-1">
 							<div class="text-lg">🎥🎬</div>
 							<div>Cinemas</div>
-						</div>
-					<% end %>
-					<%= link_to theme_events_path(theme: 'trabalho-educacao'),
-											class: class_names('w-full rounded-lg border p-3 text-gray-700 hover:text-brand-600 hover:bg-brand-100 hover:border-brand-300',
-																				 { 'text-brand-600 bg-brand-100 border-brand-300':                                 current_page?("/porto-alegre/eventos/tema/#{params[:theme]}") && @theme.slug == 'trabalho-educacao',
-																					 'text-gray-700': current_page?("/porto-alegre/eventos/tema/#{params[:theme]}") && @theme.slug != 'trabalho-educacao' }) do %>
-						<div class="space-y-1">
-							<div class="text-lg">📚💼</div>
-							<div>Educação e trabalho</div>
 						</div>
 					<% end %>
 				</div>
