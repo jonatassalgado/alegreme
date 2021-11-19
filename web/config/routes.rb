@@ -57,6 +57,7 @@ Rails.application.routes.draw do
 
 	get '/porto-alegre/eventos/:day', to: 'feeds#index', as: :day_events, constraints: { day: /(\d{2})-(\d{2})-(\d{4})/ }
 	get '/porto-alegre/eventos/categoria(/:category)', to: 'feeds#index', as: :category_events
+	get '/porto-alegre/eventos/categoria/grupo(/:categories_group)', to: 'feeds#index', as: :categories_group_events
 	get '/porto-alegre/eventos/tema(/:theme)', to: 'feeds#index', as: :theme_events
 	get '/porto-alegre/eventos/hoje', to: 'feeds#today', as: :today_events
 	get '/porto-alegre/eventos/semana', to: 'feeds#week', as: :week_events
@@ -136,6 +137,7 @@ Rails.application.routes.draw do
 			resources :cinemas
 			resources :screenings
 			resources :categories
+			resources :categories_groups
 
 			root to: "events#index"
 		end

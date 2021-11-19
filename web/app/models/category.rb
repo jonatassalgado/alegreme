@@ -1,6 +1,7 @@
 class Category < ApplicationRecord
 	has_and_belongs_to_many :events
 	belongs_to :theme
+	belongs_to :categories_group
 
 	CATEGORIES = [{
 									'name'         => 'adventure_activities',

@@ -16,6 +16,7 @@ class FeedsController < ApplicationController
 
 		@open              = false
 		@categories        = Category.select("categories.id, categories.details, COUNT(events.id) as active_events_count").joins(:events).where("events.datetimes[1] > ? AND events.status = 1", DateTime.now).group("categories.id")
+		@categories_group  = CategoriesGroup.select("categories_groups.*, COUNT(events.id) as active_events_count").joins(:events).where("events.datetimes[1] > ? AND events.status = 1", DateTime.now).group("categories_groups.id")
 		@show_filter_group = params[:filter_group]
 		@themes            = Theme.all
 		@users             = User.all.limit(16).order('created_at DESC')
@@ -89,6 +90,10 @@ class FeedsController < ApplicationController
 	def requested_events
 		if params[:day]
 			Event.includes(:categories).valid.not_disliked(current_user).in_day(params[:day]).order_by_date
+		elsif params[:categories_group]
+			@categories_group = CategoriesGroup.find_by_url(params[:categories_group])
+			redirect_to(root_path, notice: 'Categoria não encontrada') and return unless @categories_group
+			@categories_group.events.includes(:categories).active.valid.not_disliked(current_user).order_by_date
 		elsif params[:category]
 			@category = Category.find_by("(details ->> 'url') = :category", category: params[:category])
 			redirect_to(root_path, notice: 'Categoria não encontrada') and return unless @category
