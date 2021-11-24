@@ -27,6 +27,6 @@ services:
     restart: on-failure
     volumes:
       - splash_data:/var/www/splash/data
-    mem_limit: 1gb
+    mem_limit: 4gb
     mem_reservation: 256m
-    command: --maxrss 1024 --max-timeout 3600
+    command: --maxrss 4096 --max-timeout 3600
