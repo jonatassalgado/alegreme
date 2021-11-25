@@ -64,7 +64,8 @@ export default class extends ApplicationController {
           .then(html => {
               this.loading = false
               Turbo.renderStreamMessage(html);
-              document.dispatchEvent(new Event('feed#load-more:loaded'))
+              document.dispatchEvent(new Event('feed#load-more:loaded'));
+              (window.adsbygoogle = window.adsbygoogle || []).push({});
           })
             // .then(_ => history.replaceState(history.state, "", href))
           .catch(err => {
