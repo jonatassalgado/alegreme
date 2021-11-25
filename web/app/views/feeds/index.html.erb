@@ -4,7 +4,7 @@
 <%= render ModalComponent.new %>
 
 <% unless current_user || params[:day] || params[:category] %>
-	<div id="hero__presentation" data-turbo-permanent="" class="overflow-hidden relative gap-3 items-center mb-6 h-96 bg-gray-100 select-none md:h-64 md:items-start md:mb-12 md:mx-0" style="min-height: 200px;background: linear-gradient(0deg, #f9f9f9, transparent); ">
+	<div id="hero__presentation" data-turbo-permanent="" class="overflow-hidden relative gap-3 items-center mb-6 h-96 bg-gray-100 select-none md:h-64 md:items-start md:mb-12 md:mx-0" style="min-height: 200px;background: -webkit-gradient(linear, left bottom, left top, from(#f9f9f9), to(transparent)); background: -o-linear-gradient(bottom, #f9f9f9, transparent);background: linear-gradient(0deg, #f9f9f9, transparent)">
 		<div class="relative z-20 mx-auto max-w-screen-lg h-full">
 			<%= image_tag 'https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner.png', class: 'md:-top-24 h-48 md:absolute md:right-0 md:w-4/12 object-cover top-0 w-full z-10' %>
 			<div class="flex hidden relative z-20 flex-col justify-end items-center px-5 pb-5 md:px-0 md:justify-center md:items-baseline md:w-7/12">

@@ -128,7 +128,7 @@
 					 data-share-button-url="<%= event_url(@event, format: :html) %>"
 					 data-action="click->share-button#share"
 					 class="flex flex-col items-center flex-1">
-				<input class="absolute opacity-0" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
+				<input class="absolute opacity-0 hidden" style="bottom: -30px" data-share-button-target="input" type="text" value="<%= event_url(@event, format: :html) %>">
 				<div class="<%= helpers.class_names('w-12 h-12 mb-1 border cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 items-center justify-center rounded-full select-none  transform transition-transform text-gray-600') %>">
 					<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
