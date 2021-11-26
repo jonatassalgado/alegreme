@@ -27,7 +27,7 @@
 			<% @cinemas.sort_by { |c| c.display_name }.each do |cinema| %>
 				<div class="relative p-3 pb-14 rounded-lg border md:pt-5 md:pl-5 md:pr-5 md:pb-5">
 					<div class="flex justify-between mb-3 space-x-3">
-						<h2 id="<%= cinema&.slug %>" class="mb-2 c-h2 text-brand-600 hover:text-brand-500">
+						<h2 id="<%= cinema&.slug %>" class="c-h2 text-brand-600 hover:text-brand-500">
 							<%= link_to cinema.display_name, cinema_path(cinema) %>
 						</h2>
 					</div>
@@ -76,15 +76,20 @@
 						</div>
 						<div data-slider-target="scroller" class="-m-3 space-x-3 md:-mx-5 scrollx">
 							<div class="grid grid-flow-col gap-2 py-2 px-3 md:px-5 w-content">
-								<% cinema.movies.reverse.each_with_index do |movie, index| %>
+								<% cinema.movies.sort_by { |m| m.created_at }.reverse.each_with_index do |movie, index| %>
 									<%= link_to movie_path(movie, cinema: cinema), class: 'flex flex-col w-24 md:w-18 transition-transform transform group md:hover:scale-105', data: { 'turbo-preserve-scroll': true } do %>
-										<%= image_tag shrine_image_url(movie, :medium), {
-											loading: :lazy,
-											title:   movie.title,
-											alt:     "Filme #{movie.title}",
-											class:   'border shadow-sm group-hover:shadow w-24 h-36 md:w-18 md:h-36 bg-gray-100 object-center rounded-lg',
-											onerror: "this.style.opacity='0'"
-										} rescue nil %>
+										<div class="relative z-10 bg-gray-100">
+											<% if is_new_movie?(movie) %>
+												<div title="Criado nos últimos 5 dias" class="absolute bg-white border border-brand-100 bottom-1 font-semibold left-1 md:bottom-2 md:left-2 md:shadow px-1 py-0.5 rounded text-brand-600 text-white text-xxs">NOVO</div>
+											<% end %>
+											<%= image_tag shrine_image_url(movie, :medium), {
+												loading: :lazy,
+												title:   movie.title,
+												alt:     "Filme #{movie.title}",
+												class:   'border shadow-sm group-hover:shadow w-24 h-36 md:w-18 md:h-36 bg-gray-100 object-center rounded-lg',
+												onerror: "this.style.opacity='0'"
+											} rescue nil %>
+										</div>
 										<%= tag.div limit_name_size(movie.title, 24), class: 'leading-tight mt-2 inline-block text-xs font-medium text-gray-900' %>
 									<% end %>
 								<% end %>
