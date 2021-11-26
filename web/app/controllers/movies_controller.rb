@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
 		model    = get_model(params[:type])
 		@movie   = model.friendly.find(params[:id])
 		@movies  = CineFilm.active
-		@cinemas = Cinema.active.where("screenings.movie_id = ?", @movie.id)
+		@cinemas = params[:cinema].present? ? Cinema.active.where("screenings.movie_id = ? AND cinemas.slug = ?", @movie.id, params[:cinema]) : Cinema.active.where("screenings.movie_id = ?", @movie.id)
 
 		respond_to do |format|
 			format.html { render :show }

@@ -6,27 +6,33 @@
 
 <%= render(ModalComponent.new) %>
 
-<% cache [@cinemas&.cache_version, current_user&.following_cinemas] do %>
-	<section class="px-5 mx-auto mt-6 mb-16 max-w-screen-lg min-h-screen md:mt-12 md:px-0">
-		<h1 class="hidden mb-6 md:inline-block c-h2">Cinemas em Porto Alegre</h1>
+<div class="px-5 mx-auto mb-6 max-w-screen-lg text-center md:mt-5 md:px-0">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8286231373119724"
+					crossorigin="anonymous"></script>
+	<!-- ad cinemas#show -->
+	<ins class="adsbygoogle"
+			 style="display:inline-block;width:728px;height:90px"
+			 data-ad-client="ca-pub-8286231373119724"
+			 data-ad-slot="5999052743"></ins>
+	<script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</div>
 
-		<div class="grid grid-cols-1 gap-5 justify-self-stretch md:grid-cols-2">
+<% cache [@cinemas&.cache_version, mobile_device? ? 'mobile' : 'desktop'] do %>
+	<section class="px-5 mx-auto mt-6 mb-16 max-w-screen-lg min-h-screen md:mt-12 md:px-0">
+		<h1 class="mb-6 c-h1">Cinemas em Porto Alegre</h1>
+
+		<div class="grid grid-cols-1 gap-5 justify-self-stretch">
 			<% @cinemas.sort_by { |c| c.display_name }.each do |cinema| %>
-				<div class="overflow-hidden p-3 rounded-lg border md:pt-5 md:pl-5 md:pr-5 relative pb-14">
+				<div class="relative p-3 pb-14 rounded-lg border md:pt-5 md:pl-5 md:pr-5 md:pb-5">
 					<div class="flex justify-between mb-3 space-x-3">
-						<h2 id="<%= cinema&.slug %>" class="mb-2 c-h2">
-							<%= link_to cinema.display_name, cinema_path(cinema), class: 'hover:text-brand-600' %>
+						<h2 id="<%= cinema&.slug %>" class="mb-2 c-h2 text-brand-600 hover:text-brand-500">
+							<%= link_to cinema.display_name, cinema_path(cinema) %>
 						</h2>
-						<div class="flex col-span-1 justify-end items-start">
-							<%= render(FollowButtonComponent.new(
-								user:       current_user,
-								followable: cinema,
-								type:       'button'
-							)) %>
-						</div>
 					</div>
-					<div class="col-span-3 pr-5 mb-3 text-sm">
-						<div class="leading-snug text-gray-700 text-xxs md:text-xs">
+					<div class="col-span-3 pr-5 mb-5 text-sm">
+						<div class="leading-snug text-gray-700 text-xxs md:text-sm">
 							<%= cinema.address %>
 							<% if cinema.neighborhood&.present? %>
 								‧
@@ -53,31 +59,39 @@
 							<% end %>
 						</div>
 					</div>
-					<div class="flex space-x-3">
-						<% cinema.movies.limit(mobile_device? ? 4 : 6).reverse.each_with_index do |movie, index| %>
-							<% if index < (mobile_device? ? 3 : 5) %>
-								<div class="flex flex-col w-16 transition-transform transform group md:hover:scale-105">
-									<%= link_to movie_path(movie), class: '', data: { 'turbo-preserve-scroll': true } do %>
-										<%= image_tag shrine_image_url(movie, :small), {
+					<div data-controller="slider" data-slider-distance-value="400" class="relative px-5 -mx-5">
+						<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex">
+							<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="hidden my-auto -ml-5 bg-white rounded-full border shadow-lg transition-colors duration-200 cursor-pointer hover:bg-brand-200 hover:border-brand-200 text-brand-700">
+								<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+								</svg>
+							</div>
+						</div>
+						<div class="hidden absolute top-0 right-0 z-20 items-center w-3 h-full select-none md:flex">
+							<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="my-auto -ml-2 bg-white rounded-full border shadow-lg transition-colors duration-200 cursor-pointer hover:bg-brand-200 hover:border-brand-200 text-brand-700">
+								<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+								</svg>
+							</div>
+						</div>
+						<div data-slider-target="scroller" class="-m-3 space-x-3 md:-mx-5 scrollx">
+							<div class="grid grid-flow-col gap-2 py-2 px-3 md:px-5 w-content">
+								<% cinema.movies.reverse.each_with_index do |movie, index| %>
+									<%= link_to movie_path(movie, cinema: cinema), class: 'flex flex-col w-24 md:w-18 transition-transform transform group md:hover:scale-105', data: { 'turbo-preserve-scroll': true } do %>
+										<%= image_tag shrine_image_url(movie, :medium), {
 											loading: :lazy,
 											title:   movie.title,
 											alt:     "Filme #{movie.title}",
-											class:   'border shadow-sm group-hover:shadow w-full h-24 bg-gray-100 object-center rounded-lg',
+											class:   'border shadow-sm group-hover:shadow w-24 h-36 md:w-18 md:h-36 bg-gray-100 object-center rounded-lg',
 											onerror: "this.style.opacity='0'"
 										} rescue nil %>
-										<%= tag.div limit_name_size(movie.title, 24), class: 'leading-tight mt-2 inline-block text-xxs font-medium text-gray-900' %>
+										<%= tag.div limit_name_size(movie.title, 24), class: 'leading-tight mt-2 inline-block text-xs font-medium text-gray-900' %>
 									<% end %>
-								</div>
-							<% else %>
-								<%= link_to cinema_path(cinema), class: 'bg-gray-100 flex hover:bg-brand-100 hover:scale-105 hover:text-brand-600 items-center justify-center md:transform rounded-lg transition-transform', style: 'width: 64px; height: 96px' do %>
-									<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-										<path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
-									</svg>
 								<% end %>
-							<% end %>
-						<% end %>
+							</div>
+						</div>
 					</div>
-					<%= link_to cinema_path(cinema), class: 'absolute bottom-0 left-0 py-2 w-full text-sm font-semibold text-center bg-brand-100 text-brand-600 inline-block' do %>
+					<%= link_to cinema_path(cinema), class: 'md:hidden absolute bottom-0 left-0 py-2 w-full text-sm font-semibold text-center bg-brand-100 text-brand-600 inline-block' do %>
 						Ver filmes em <%= cinema.display_name %>
 					<% end %>
 				</div>

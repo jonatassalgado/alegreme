@@ -1,6 +1,6 @@
-<%= turbo_frame_tag 'movie' do %>
+<%= turbo_frame_tag 'movie', target: '_top' do %>
 	<div class="flex flex-col mb-32">
-		<div class="md:w-full flex flex-row justify-center md:mx-auto px-5 md:px-0">
+		<div class="flex flex-row justify-center px-5 md:w-full md:mx-auto md:px-0">
 			<%= image_tag shrine_image_url(movie, :medium), {
 				loading: :lazy,
 				title:   movie.title,
@@ -8,7 +8,7 @@
 				class:   'bg-gray-100 border h-36 md:h-48 md:mr-10 md:w-32 mr-5 mx-auto object-cover rounded-lg shadow-lg w-28',
 				onerror: "this.style.opacity='0'"
 			} rescue nil %>
-			<div class="md:flex-1 flex flex-col space-y-3 md:mt-2">
+			<div class="flex flex-col flex-1 space-y-3 md:mt-2">
 				<div class="flex flex-col md:justify-between md:w-full">
 					<div class="space-y-1 md:text-left md:pr-5">
 						<div class="flex flex-col md:flex-row md:px-0">
@@ -43,7 +43,7 @@
 								<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 w-5 h-5 fill-current text-brand-600" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
 								</svg>
-								<span class="md:text-base text-xs font-semibold text-brand-600">
+								<span class="text-xs font-semibold md:text-base text-brand-600">
   								Ver trailer
   							</span>
 							</div>
@@ -52,17 +52,25 @@
 				</div>
 			</div>
 		</div>
-		<div class="leading-relaxed md:px-0 md:w-full mt-6 mx-auto px-5 text-gray-800 text-sm">
+		<div class="px-5 mx-auto mt-6 text-sm leading-relaxed text-gray-800 md:px-0 md:w-full md:text-base">
 			<%= movie.description %>
 		</div>
-		<div class="grid grid-cols-12 grid-flow-col gap-0 px-5 md:px-0 mt-10 max-w-screen-lg md:mt-20 md:gap-10">
+		<% if params[:cinema] %>
+			<div class="flex inline-flex items-center px-5 mt-10 space-x-3 md:px-0 md:-mb-10">
+				<div>Exibindo apenas o cinema <span class="font-semibold"><%= @cinemas.first.display_name %></span></div>
+				<%= link_to movie_path(@movie), class: 'c-chip' do %>
+					Ver todos os cinemas
+				<% end %>
+			</div>
+		<% end %>
+		<div class="grid grid-cols-12 grid-flow-col gap-0 px-5 mt-10 max-w-screen-lg md:px-0 md:mt-20 md:gap-10">
 			<div class="overflow-hidden col-span-12 mx-auto w-full rounded-lg border md:border-0 md:col-span-9 md:space-y-12">
 				<% movie.screenings&.active&.sort_by { |s| s.cinema&.display_name }&.group_by { |s| [s.cinema&.display_name, s.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
-					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } %>
+					<% if cinema_name_group[1].any? { |s| s.day.to_date >= Date.current } && (params[:cinema].blank? ? true : cinema_name_group[1][0]&.cinema&.slug == params[:cinema]) %>
 						<div data-controller="accordion" data-accordion-mobile-only-value="true" data-accordion-body-class="bg-white" data-accordion-title-class="font-semibold" class="p-4 border-b md:border-0 md:p-0 last:border-b-0">
 							<div data-action="click->accordion#toggle" data-accordion-open-value="false" class="grid grid-cols-4 gap-3">
 								<div class="col-span-3 text-sm md:inline-block md:mb-3 md:pr-5">
-									<div class="inline select-none  md:mb-3">
+									<div class="inline select-none md:mb-3">
 										<%= link_to cinema_path(cinema_name_group[1][0]&.cinema), class: 'hidden md:inline-block' do %>
 											<h2 id="<%= cinema_name_group[1][0]&.cinema&.slug %>" class="inline text-base font-medium text-gray-800 md:text-xl md:font-bold">
 												<%= cinema_name_group[0][0] %>
@@ -102,19 +110,14 @@
 										<% end %>
 									</div>
 								</div>
-								<div class="flex col-span-1 justify-end items-start">
-									<% if cinema_name_group[1][0]&.cinema&.website&.present? %>
-										<a data-accordion-target="hidden" href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="hidden md:inline-block py-1.5 px-2 text-xs font-medium text-center rounded-full transition-transform bg-brand-100 hover:scale-105 md:text-left md:text-sm md:transform text-brand-700">
-											Ver site oficial
-										</a>
-									<% end %>
+								<div class="flex justify-end">
 									<svg data-accordion-target="visible" xmlns="http://www.w3.org/2000/svg" class="float-right w-5 h-5 text-gray-700 md:hidden" viewBox="0 0 20 20" fill="currentColor">
 										<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
 									</svg>
 								</div>
 							</div>
-							<div class="scrollx -mx-5 md:mx-0">
-								<div data-accordion-target="hidden" class="hidden px-5 md:px-0 gap-2 grid grid-flow-col md:grid-flow-row md:w-auto md:grid md:grid-cols-3 w-content">
+							<div class="-mx-5 scrollx md:mx-0">
+								<div data-accordion-target="hidden" class="grid hidden grid-flow-col gap-2 px-5 md:px-0 md:grid-flow-row md:w-auto md:grid md:grid-cols-3 w-content">
 									<% cinema_name_group[1].filter { |screening| screening.day.to_date >= Date.current }.sort_by { |screening| screening.day.to_date }.group_by { |screening| screening.day }.each do |screening_day_group| %>
 										<div class="p-3 bg-white rounded border">
 											<h3 class="inline c-h4">
@@ -144,6 +147,13 @@
 										</div>
 									<% end %>
 								</div>
+							</div>
+							<div data-accordion-target="hidden" class="hidden mt-3 w-full h-8 md:inline-block">
+								<% if cinema_name_group[1][0]&.cinema&.website&.present? %>
+									<a data-accordion-target="hidden" href="<%= cinema_name_group[1][0]&.cinema&.website %>" rel="nofollow" target="_blank" class="float-right py-1.5 px-2 text-xs font-medium text-center rounded-full transition-transform bg-brand-100 hover:scale-105 md:text-left md:text-sm md:transform text-brand-700 inline-block">
+										Ver site oficial
+									</a>
+								<% end %>
 							</div>
 						</div>
 					<% end %>
