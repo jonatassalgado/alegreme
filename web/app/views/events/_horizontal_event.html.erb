@@ -112,7 +112,7 @@
 						<span class="<%= class_names('ml-1 group-hover:text-brand-600', { 'text-gray-500':  !user&.like?(event),
 																																							'text-brand-600': user&.like?(event) }) %>">
 								<%= user&.like?(event) ? 'Salvo' : 'Salvar' %>
-							</span>
+						</span>
 					<% end %>
 				<% end %>
 				<div class="<%= class_names('hidden md:flex md:group-hover:opacity-100 md:opacity-0 cursor-pointer duration-100 ease-linear flex font-medium group hover:px-3 text-gray-500 hover:text-brand-600 items-center justify-center rounded-full select-none text-sm transform transition-transform hover:bg-brand-100 px-2 py-1',

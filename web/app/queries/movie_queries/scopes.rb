@@ -7,7 +7,7 @@ module MovieQueries
 		included do
 
 			scope 'active', lambda {
-				where('screenings.day >= ? AND movies.status = 1 AND cinemas.status = 1', DateTime.now).select("movies.*, COUNT(screenings.id) as screenings_count").joins(:screenings, :cinemas).group('movies.id').order('screenings_count DESC')
+				where('screening_groups.date >= ? AND movies.status = 1 AND cinemas.status = 1', DateTime.now).select("movies.*, COUNT(screening_groups.id) as screenings_count").joins(:screening_groups, :cinemas).group('movies.id').order('screenings_count DESC')
 			}
 
 			scope 'with_streaming', lambda {

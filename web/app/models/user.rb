@@ -29,12 +29,12 @@ class User < ApplicationRecord
 	has_many :liked_or_disliked_events, through: :likes, source: :likeable, source_type: 'Event'
 	has_many :liked_events, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :likeable, source_type: 'Event'
 	has_many :disliked_events, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :likeable, source_type: 'Event'
-	has_many :liked_or_disliked_screenings, through: :likes, source: :likeable, source_type: 'Screening'
-	has_many :liked_movies, -> { where(likes: { sentiment: :positive }).distinct }, through: :liked_or_disliked_screenings, source: :movie
-	# has_many :disliked_movies, -> { where(likes: { sentiment: :negative }).distinct }, through: :liked_or_disliked_screenings, source: :movie
-	# has_many :liked_or_disliked_movies, through: :liked_or_disliked_screenings, source: :movie
-	has_many :liked_screenings, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :likeable, source_type: 'Screening'
-	has_many :disliked_screenings, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :likeable, source_type: 'Screening'
+	has_many :liked_or_disliked_screening_groups, through: :likes, source: :likeable, source_type: 'ScreeningGroup'
+	has_many :liked_movies, -> { where(likes: { sentiment: :positive }).distinct }, through: :liked_or_disliked_screening_groups, source: :movie
+	# has_many :disliked_movies, -> { where(likes: { sentiment: :negative }).distinct }, through: :liked_or_disliked_screening_groups, source: :movie
+	# has_many :liked_or_disliked_movies, through: :liked_or_disliked_screening_groups, source: :movie
+	has_many :liked_screening_groups, -> { where(likes: { sentiment: :positive }) }, through: :likes, source: :likeable, source_type: 'ScreeningGroup'
+	has_many :disliked_screening_groups, -> { where(likes: { sentiment: :negative }) }, through: :likes, source: :likeable, source_type: 'ScreeningGroup'
 
 	has_many :friendships, dependent: :destroy
 	has_many :friendships_requested, -> { where(status: :requested) }, foreign_key: :user_id, class_name: 'Friendship'
@@ -97,11 +97,15 @@ class User < ApplicationRecord
 	end
 
 	def like!(resource, action: :create)
-		if action == :create
-			self.likes.create!(likeable_id: resource.id, sentiment: :positive, likeable_type: resource.class.name.demodulize)
-		elsif action == :update
-			self.like_update(resource, sentiment: :positive)
-		end
+		# begin
+			if action == :create
+				self.likes.create!(likeable_id: resource.id, sentiment: :positive, likeable_type: resource.class.name.demodulize)
+			elsif action == :update
+				self.like_update(resource, sentiment: :positive)
+			end
+		# rescue StandardError => invalid
+		# 	return invalid
+		# end
 
 		self.public_send("liked_#{resource.class.table_name}").reset rescue nil
 		self.public_send("disliked_#{resource.class.table_name}").reset rescue nil
@@ -201,8 +205,8 @@ class User < ApplicationRecord
 		Friendship.exists?(user_id: friend.id, friend_id: self.id, friend_type: 'Friend', status: :requested)
 	end
 
-	def liked_events_and_screenings
-		(self&.liked_events&.not_ml_data&.active&.includes(:place, :categories)&.order_by_date || Event.none) + (self&.liked_screenings&.active&.includes(:movie, :cinema) || Screening.none)
+	def liked_events_and_screening_groups
+		(self&.liked_events&.not_ml_data&.active&.includes(:place, :categories)&.order_by_date || Event.none) + (self&.liked_screening_groups&.active&.includes(:movie, :cinema) || ScreeningGroup.none)
 	end
 
 	def remember_me

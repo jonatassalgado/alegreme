@@ -66,7 +66,7 @@ module Api
 			if current_user
 				begin
 					@user         = current_user
-					@liked_events = @user.liked_events_and_screenings&.sort_by { |resource| resource&.start_time }
+					@liked_events = @user.liked_events_and_screening_groups&.sort_by { |resource| resource&.start_time }
 				rescue StandardError => e
 					render json: {
 						message: e,

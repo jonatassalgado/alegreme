@@ -92,7 +92,7 @@ class UsersController < ApplicationController
 	end
 
 	def agenda
-		@liked_events = (current_user&.liked_events&.includes(:place)&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screenings&.active&.includes(:movie) || Screening.none)
+		@liked_events = (current_user&.liked_events&.includes(:place)&.not_ml_data&.active&.order_by_date || Event.none) + (current_user&.liked_screening_groups&.active&.includes(:movie) || ScreeningGroup.none)
 		render layout: false if @stimulus_reflex
 	end
 

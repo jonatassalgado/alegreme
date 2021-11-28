@@ -105,17 +105,17 @@
 							<%= movie.description %>
 						</div>
 						<div class="grid grid-cols-1 gap-2 mt-12 w-full md:grid-cols-3 md:gap-3">
-							<% movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }.group_by { |screening| screening.day }.each do |screening_day_group| %>
+							<% movie.screening_groups.includes(:screenings).filter { |sg| sg.cinema_id == @cinema.id && sg.date.to_date >= Date.current }.each do |screening_group| %>
 								<div class="p-3 rounded border">
 									<h3 class="inline c-h4">
-										<%= day_of_week(screening_day_group[0]).titleize %>
+										<%= day_of_week(screening_group.date).titleize %>
 									</h3>
-									<span class="text-xs text-gray-800"><%= screening_day_group[0].strftime('%d/%m/%y') %></span>
+									<span class="text-xs text-gray-800"><%= screening_group.date.strftime('%d/%m/%y') %></span>
 									<div class="float-right -mt-1 -mr-2 w-content">
-										<%= render(LikesButtonComponent.new(likeable: screening_day_group[1][0], user: current_user)) if screening_day_group[1][0] %>
+										<%= render(LikesButtonComponent.new(likeable: screening_group, user: current_user)) if screening_group %>
 									</div>
 									<div class="space-y-1">
-										<% screening_day_group[1].filter { |s| s.times&.any? }.each do |screening| %>
+										<% screening_group.screenings.filter { |s| s.times&.any? }.each do |screening| %>
 											<div class="">
 												<div class="text-xs italic">
 													<%= screening.language %>
@@ -134,7 +134,7 @@
 								</div>
 							<% end %>
 						</div>
-						<% if movie.screenings.filter { |screening| screening.cinema_id == @cinema.id && screening.day.to_date >= Date.current }&.empty? %>
+						<% if movie.screening_groups.includes(:screenings).filter { |sg| sg.cinema_id == @cinema.id && sg.date.to_date >= Date.current }&.empty? %>
 							<div class="p-5 text-sm leading-relaxed text-gray-800 rounded-md bg-brand-100">
 								Sem exibições cadastradas na plataforma para este filme e cinema. Veja
 								no <%= link_to 'site oficial', @cinema.website, class: 'text-brand-600 font-medium', rel: 'nofollow', target: '_blank' %>

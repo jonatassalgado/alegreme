@@ -2,7 +2,7 @@ class MoviesController < ApplicationController
 	before_action :authorize_admin, except: [:show, :hovercard]
 
 	def index
-		@movies       = CineFilm.includes(:cinemas, :screenings)
+		@movies       = CineFilm.includes(:cinemas, :screening_groups)
 		@saved_movies = current_user.try(:saved_movies)
 	end
 
@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
 		model    = get_model(params[:type])
 		@movie   = model.friendly.find(params[:id])
 		@movies  = CineFilm.active
-		@cinemas = params[:cinema].present? ? Cinema.active.where("screenings.movie_id = ? AND cinemas.slug = ?", @movie.id, params[:cinema]) : Cinema.active.where("screenings.movie_id = ?", @movie.id)
+		@cinemas = params[:cinema].present? ? Cinema.active.where("screening_groups.movie_id = ? AND cinemas.slug = ?", @movie.id, params[:cinema]) : Cinema.active.where("screening_groups.movie_id = ?", @movie.id)
 
 		respond_to do |format|
 			format.html { render :show }

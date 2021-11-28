@@ -2,7 +2,7 @@ module Api
 	class MoviesController < ApplicationController
 		# before_action :authenticate_user!, except: [:index, :show]
 		before_action :set_movie, only: [:show]
-		before_action :set_screening, only: [:like]
+		before_action :set_screening_group, only: [:like]
 
 		def index
 			@user   = current_user
@@ -23,14 +23,14 @@ module Api
 		def like
 			if current_user
 				begin
-					if current_user.like? @screening
-						current_user.unlike! @screening
+					if current_user.like? @screening_group
+						current_user.unlike! @screening_group
 						render json: { message: 'Filme removido da sua agenda', status: 200 }, status: :created
-					elsif current_user.dislike? @screening
-						current_user.like! @screening, action: :update
+					elsif current_user.dislike? @screening_group
+						current_user.like! @screening_group, action: :update
 						render json: { message: 'Filme adicionado na sua agenda', status: 200 }, status: :created
 					else
-						current_user.like! @screening
+						current_user.like! @screening_group
 						render json: { message: 'Filme adicionado na sua agenda', status: 200 }, status: :created
 					end
 				rescue StandardError => e
@@ -73,14 +73,8 @@ module Api
 			end
 		end
 
-		def set_screening
-			if params[:id].numeric?
-				@screening = Screening.find(params[:id])
-			else
-				if Screening.friendly.exists_by_friendly_id? params[:id]
-					@screening = Screening.friendly.find(params[:id])
-				end
-			end
+		def set_screening_group
+			@screening_group = ScreeningGroup.find(params[:id])
 		end
 
 	end

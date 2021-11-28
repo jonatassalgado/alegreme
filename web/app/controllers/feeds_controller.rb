@@ -10,7 +10,7 @@ class FeedsController < ApplicationController
 			Rails.cache.delete_matched("#{session.id}/main-sidebar--filter/filters")
 		end
 
-		@liked_resources        = current_user&.liked_events_and_screenings unless turbo_frame_request?
+		@liked_resources        = current_user&.liked_events_and_screening_groups unless turbo_frame_request?
 		@movies                 = CineFilm.active unless turbo_frame_request?
 		@pagy, @upcoming_events = pagy(requested_events)
 
@@ -89,20 +89,20 @@ class FeedsController < ApplicationController
 
 	def requested_events
 		if params[:day]
-			Event.includes(:categories).valid.not_disliked(current_user).in_day(params[:day]).order_by_date
+			Event.includes(:categories, :organizers, :place).valid.not_disliked(current_user).in_day(params[:day]).order_by_date
 		elsif params[:categories_group]
 			@categories_group = CategoriesGroup.find_by_url(params[:categories_group])
 			redirect_to(root_path, notice: 'Categoria não encontrada') and return unless @categories_group
-			@categories_group.events.includes(:categories).active.valid.not_disliked(current_user).order_by_date
+			@categories_group.events.includes(:categories, :organizers, :place).active.valid.not_disliked(current_user).order_by_date
 		elsif params[:category]
 			@category = Category.find_by("(details ->> 'url') = :category", category: params[:category])
 			redirect_to(root_path, notice: 'Categoria não encontrada') and return unless @category
-			@category.events.includes(:categories).active.valid.not_disliked(current_user).order_by_date
+			@category.events.includes(:categories, :organizers, :place).active.valid.not_disliked(current_user).order_by_date
 		elsif params[:theme]
 			@theme = Theme.find_by_slug(params[:theme])
-			Event.includes(:categories).active.valid.not_disliked(current_user).where(categories: { theme_id: @theme.id }).order_by_date
+			Event.includes(:categories, :organizers, :place).active.valid.not_disliked(current_user).where(categories: { theme_id: @theme.id }).order_by_date
 		else
-			Event.includes(:categories).active.valid.not_disliked(current_user).in_categories(params[:category]).where(categories: { theme_id: 1 }).order_by_date
+			Event.includes(:categories, :organizers, :place).active.valid.not_disliked(current_user).in_categories(params[:category]).where(categories: { theme_id: 1 }).order_by_date
 		end
 	end
 

@@ -4,13 +4,13 @@ class Cinema < ApplicationRecord
 
 	validates :google_maps, uniqueness: true
 
-	has_many :screenings, dependent: :destroy
-	has_many :movies, -> { distinct }, through: :screenings, dependent: :destroy
+	has_many :screening_groups, dependent: :destroy
+	has_many :movies, -> { distinct }, through: :screening_groups, dependent: :destroy
 	has_many :follows, as: :following, dependent: :destroy
 
 	friendly_id :name, use: :slugged
 
-	scope 'active', -> { includes(:screenings).where("status = 1 AND screenings.day >= ?", DateTime.now).order("cinemas.display_name ASC").references(:screenings).distinct }
+	scope 'active', -> { includes(:screening_groups).where("status = 1 AND screening_groups.date >= ?", DateTime.now).order("cinemas.display_name ASC").references(:screening_groups).distinct }
 
 	enum status: {
 		pending:  0,

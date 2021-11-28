@@ -59,24 +59,26 @@ module PopulateMoviesRake
 					puts "Cinema: #{cinema.id} #{cinema.name} - Cinema criado".green
 				end
 
+				screening_group = ScreeningGroup.find_or_create_by(date:      screening_data.dig('date'),
+																													 cinema_id: cinema.id,
+																													 movie_id:  movie.id)
+
 				cinema_data.dig('languages').each do |language_data|
-					screening = Screening.find_by(day:         screening_data.dig('date'),
-																				language:    language_data.dig('name'),
-																				screen_type: language_data.dig('screen_type'),
-																				cinema_id:   cinema.id,
-																				movie_id:    movie.id)
+					screening = Screening.find_by(language:           language_data.dig('name'),
+																				screen_type:        handle_empty_screen(language_data),
+																				screening_group_id: screening_group.id)
+					puts "Grupo: #{screening_group.id} - Grupo #{screening_group.new_record? ? 'criado' : 'já existe'}".green
+
 					if screening
 						screening.update(times: language_data.dig('times'))
-						puts "Exibição: #{screening.id} - Exibição já existe".white
+						puts "Exibição: #{screening.id} #{screening.language} - Exibição já existe - atualizando times #{screening.times}".green
 					else
-						screening = Screening.create!(day:         screening_data.dig('date'),
-																					times:       language_data.dig('times'),
-																					language:    language_data.dig('name'),
-																					screen_type: language_data.dig('screen_type'),
-																					cinema_id:   cinema.id,
-																					movie_id:    movie.id)
+						screening = Screening.create!(times:              language_data.dig('times'),
+																					language:           language_data.dig('name'),
+																					screen_type:        handle_empty_screen(language_data),
+																					screening_group_id: screening_group.id)
 
-						puts "Exibição: #{screening.id} #{screening.language} - Exibição criada".green
+						puts "Exibição: #{screening.id} #{screening.language} - Exibição criada - Adicionando ao grupo #{screening.times}".green
 					end
 
 				end
@@ -148,6 +150,12 @@ module PopulateMoviesRake
 			}
 		)
 		artifact.file.attach(io: File.open("#{@current_file_name}"), filename: "movies-#{timestr}.jsonl", content_type: "application/json")
+	end
+
+	private
+
+	def handle_empty_screen(language_data)
+		language_data.dig('screen_type') == 'Nenhuma exibição' ? '2D' : language_data.dig('screen_type')
 	end
 
 end
