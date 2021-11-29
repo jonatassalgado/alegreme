@@ -129,19 +129,9 @@
 		<%= render(LargeEventComponent.new(event: @event, user: current_user)) %>
 	</div>
 	<div class="mt-5 md:col-span-3 md:mb-0 md:mt-28">
-		<div class="hidden relative p-3 md:block">
-			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8286231373119724"
-							crossorigin="anonymous"></script>
+		<div class="hidden relative p-3 md:block" style="min-height: 250px">
 			<!-- ad events#show sidebar -->
-			<ins class="adsbygoogle"
-					 style="display:block"
-					 data-ad-client="ca-pub-8286231373119724"
-					 data-ad-slot="4750400318"
-					 data-ad-format="auto"
-					 data-full-width-responsive="true"></ins>
-			<script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
+			<%= render partial: 'adsense/square', locals: { id: 'events-show', src: square_adsense_index_path, loading: 'lazy' }  unless mobile_device? %>
 		</div>
 		<div class="flex hidden relative bottom-auto items-center p-3 space-y-2 w-auto text-sm text-gray-600 rounded-xl cursor-pointer md:block">
 			<a href="<%= @event.source_url %>" target="_blank" rel="nofollow noreferrer" class="c-chip--active">
@@ -215,51 +205,11 @@
 			</svg>
 		<% end %>
 
-		<div class="border-t m-5 relative md:hidden">
-			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8286231373119724"
-							crossorigin="anonymous"></script>
+		<div class="border-t m-5 relative md:hidden" style="min-height: 250px">
 			<!-- ad events#show main -->
-
-			<div class="relative">
-				<ins class="adsbygoogle"
-						 style="display:block"
-						 data-ad-client="ca-pub-8286231373119724"
-						 data-ad-slot="9265904980"
-						 data-ad-format="auto"
-						 data-full-width-responsive="true"></ins>
-			</div>
-			<script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
+			<%= render partial: 'adsense/square', locals: { id: 'events-show', src: square_adsense_index_path, loading: 'lazy' } %>
 		</div>
 	</div>
-
-<!--	<div class="flex fixed bottom-0 py-3 px-3 space-x-2 w-screen text-sm font-medium text-gray-500 bg-white border-t cursor-pointer select-none md:hidden ">-->
-<!--		<a href="<%#= @event.source_url %>" target="_blank" rel="nofollow noreferrer" class="flex-1 justify-center space-x-2 select-none c-chip">-->
-<!--			<div>Site oficial</div>-->
-<!--			<svg class="h-5 stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>-->
-<!--			</svg>-->
-<!--		</a>-->
-<!--		<div class="flex-1 justify-center space-x-2 select-none c-chip"-->
-<!--				 data-controller="share-button"-->
-<!--				 data-share-button-text="<%#= strip_tags(limit_description_size(@event.description, 160)) %>"-->
-<!--				 data-share-button-title="<%#= @event.name %>"-->
-<!--				 data-share-button-url="<%#= event_url(@event, format: :html) %>"-->
-<!--				 data-action="click->share-button#share">-->
-<!--			<input class="absolute opacity-0 hidden" style="bottom: -30px" data-share-button-target="input" type="text" value="<%#= event_url(@event, format: :html) %>">-->
-<!--			<div>Compartilhar</div>-->
-<!--			<svg class="h-4 fill-current" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--				<path d="M15 14.08C14.24 14.08 13.56 14.38 13.04 14.85L5.91 10.7C5.96 10.47 6 10.24 6 10C6 9.76 5.96 9.53 5.91 9.3L12.96 5.19C13.5 5.69 14.21 6 15 6C16.66 6 18 4.66 18 3C18 1.34 16.66 0 15 0C13.34 0 12 1.34 12 3C12 3.24 12.04 3.47 12.09 3.7L5.04 7.81C4.5 7.31 3.79 7 3 7C1.34 7 0 8.34 0 10C0 11.66 1.34 13 3 13C3.79 13 4.5 12.69 5.04 12.19L12.16 16.35C12.11 16.56 12.08 16.78 12.08 17C12.08 18.61 13.39 19.92 15 19.92C16.61 19.92 17.92 18.61 17.92 17C17.92 15.39 16.61 14.08 15 14.08Z"/>-->
-<!--			</svg>-->
-<!--		</div>-->
-<!--	</div>-->
-
-	<!--	<div data-controller="install" data-install-native="true" data-install-target="button" class="flex fixed bottom-20 z-30 items-center w-full transition-transform transform translate-y-32 select-none ">-->
-	<!--		<span data-action="click->install#install" class="py-3 px-5 mx-auto font-bold text-white bg-white rounded-full shadow-lg bg-brand-500 w-content">-->
-	<!--			Instalar aplicativo-->
-	<!--		</span>-->
-	<!--	</div>-->
 
 </section>
 

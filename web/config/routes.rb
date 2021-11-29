@@ -115,9 +115,14 @@ Rails.application.routes.draw do
 			get :hovercard
 		end
 	end
-	resources :screening_groups, only: nil do
+	resources :screening_groups, only: [] do
 		member do
 			post :like
+		end
+	end
+	resources :adsense, only: [] do
+		collection do
+			get :square
 		end
 	end
 	# resources :cine_films, controller: 'movies', type: 'CineFilm', path: 'porto-alegre/cinemas/filmes', as: :cine_films

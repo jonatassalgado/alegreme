@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "adsense-square-#{id}", target: '_top', src: local_assigns[:src].presence, loading: local_assigns[:loading].presence do %>
+	<div class="relative">
+		<ins class="adsbygoogle"
+				 style="display:block"
+				 data-ad-client="ca-pub-8286231373119724"
+				 data-ad-slot="9265904980"
+				 data-ad-format="auto"
+				 data-full-width-responsive="true"></ins>
+	</div>
+	<script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+<% end %>
