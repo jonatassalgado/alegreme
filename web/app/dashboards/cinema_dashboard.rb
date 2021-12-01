@@ -90,6 +90,6 @@ class CinemaDashboard < Administrate::BaseDashboard
 	# across all pages of the admin dashboard.
 	#
 	def display_resource(cinema)
-		"##{cinema.id} #{cinema.name}"
+		"##{cinema.id} #{cinema.display_name}"
 	end
 end

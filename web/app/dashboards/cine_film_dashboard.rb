@@ -8,25 +8,25 @@ class CineFilmDashboard < Administrate::BaseDashboard
 	# which determines how the attribute is displayed
 	# on pages throughout the dashboard.
 	ATTRIBUTE_TYPES = {
-		id:          Field::Number,
-		cinemas:     Field::HasMany,
-		screenings:  Field::HasMany,
-		image:       Field::Shrine.with_options(version: :small),
-		title:       Field::String.with_options,
-		description: Field::Text.with_options(searchable: false),
-		cover:       Field::String.with_options(searchable: false),
-		genres:      Field::JSONB.with_options(blank_sign: [], transform: true),
-		trailer:     Field::String.with_options(searchable: false),
-		created_at:  Field::DateTime,
-		updated_at:  Field::DateTime,
-		image_data:  Field::Text.with_options(searchable: false),
-		slug:        Field::String.with_options(searchable: false),
-		type:        Field::String,
-		status:      Field::Enum,
-		rating:      Field::Number,
-		age_rating:  Field::String.with_options(searchable: false),
-		cast:        Field::JSONB.with_options(blank_sign: [], transform: true),
-		year:        Field::Number
+		id:               Field::Number,
+		cinemas:          Field::HasMany,
+		screening_groups: Field::HasMany,
+		image:            Field::Shrine.with_options(version: :small),
+		title:            Field::String.with_options,
+		description:      Field::Text.with_options(searchable: false),
+		cover:            Field::String.with_options(searchable: false),
+		genres:           Field::JSONB.with_options(blank_sign: [], transform: true),
+		trailer:          Field::String.with_options(searchable: false),
+		created_at:       Field::DateTime,
+		updated_at:       Field::DateTime,
+		image_data:       Field::Text.with_options(searchable: false),
+		slug:             Field::String.with_options(searchable: false),
+		type:             Field::String,
+		status:           Field::Enum,
+		rating:           Field::Number,
+		age_rating:       Field::String.with_options(searchable: false),
+		cast:             Field::JSONB.with_options(blank_sign: [], transform: true),
+		year:             Field::Number
 	}.freeze
 
 	# COLLECTION_ATTRIBUTES
@@ -61,7 +61,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
     slug
     type
     cinemas
-    screenings
+    screening_groups
     created_at
     updated_at
   ].freeze
@@ -84,7 +84,7 @@ class CineFilmDashboard < Administrate::BaseDashboard
     slug
     type
     cinemas
-    screenings
+    screening_groups
   ].freeze
 
 	# COLLECTION_FILTERS

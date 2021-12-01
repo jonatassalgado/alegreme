@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class ScreeningDashboard < Administrate::BaseDashboard
+class ScreeningGroupDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,11 +8,11 @@ class ScreeningDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
+    cinema: Field::BelongsTo,
+    movie: Field::BelongsTo,
+    screenings: Field::HasMany,
     id: Field::Number,
-    screening_group: Field::BelongsTo,
-    times: Field::Text,
-    language: Field::String,
-    screen_type: Field::String,
+    date: Field::Date,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -24,18 +24,19 @@ class ScreeningDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    times
-    language
+    date
+    movie
+    cinema
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
+    cinema
+    movie
     id
-    times
-    language
-    screen_type
-    screening_group
+    date
+    screenings
     created_at
     updated_at
   ].freeze
@@ -44,10 +45,10 @@ class ScreeningDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    times
-    language
-    screen_type
-    screening_group
+    cinema
+    movie
+    date
+    screenings
   ].freeze
 
   # COLLECTION_FILTERS
@@ -65,7 +66,7 @@ class ScreeningDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how screenings are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(screening)
-    "##{screening.id} #{screening.times} - #{screening.language} - #{screening.screen_type}"
+  def display_resource(screening_group)
+    "#{screening_group.date.strftime('%d/%m/%Y')} - #{screening_group.cinema&.name} - #{screening_group.movie&.title}"
   end
 end

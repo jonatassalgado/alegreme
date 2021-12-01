@@ -146,6 +146,7 @@ Rails.application.routes.draw do
 			resources :cine_films
 			resources :cinemas
 			resources :screenings
+			resources :screening_groups
 			resources :categories
 			resources :categories_groups
 
