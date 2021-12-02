@@ -30,7 +30,7 @@ IS_DOCKER = 'true'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 3
+CONCURRENT_REQUESTS = 6
 # CONCURRENT_ITEMS = 50
 
 # Scrapy Proxy Pool
@@ -90,8 +90,8 @@ RETRY_TIMES = 1
 
 # DEPTH_LIMIT = 4
 # CLOSESPIDER_ITEMCOUNT = 2
-CLOSESPIDER_ERRORCOUNT = 30
-CLOSESPIDER_PAGECOUNT = 100
+CLOSESPIDER_ERRORCOUNT = 50
+CLOSESPIDER_PAGECOUNT = 500
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html

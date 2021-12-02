@@ -293,8 +293,8 @@ class EventSpider(scrapy.Spider):
 
     custom_settings = {
         "ITEM_PIPELINES": {"alegreme.pipelines.EventPipeline": 400},
-        "CLOSESPIDER_ITEMCOUNT": 250,
-        "CLOSESPIDER_PAGECOUNT": 400,
+        "CLOSESPIDER_ITEMCOUNT": 400,
+        "CLOSESPIDER_PAGECOUNT": 800,
         "DEPTH_LIMIT": 3,
         "DOMAIN_DEPTHS": {"facebook.com": 2, "sympla.com.br": 3},
     }
