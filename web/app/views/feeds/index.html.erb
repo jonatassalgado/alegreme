@@ -4,49 +4,44 @@
 <%= render ModalComponent.new %>
 
 <% unless current_user || params[:day] || params[:category] %>
-	<div id="hero__presentation" data-turbo-permanent="" class="overflow-hidden relative gap-3 items-center mb-6 h-96 bg-gray-100 select-none md:h-64 md:items-start md:mb-12 md:mx-0" style="min-height: 200px;background: -webkit-gradient(linear, left bottom, left top, from(#f9f9f9), to(transparent)); background: -o-linear-gradient(bottom, #f9f9f9, transparent);background: linear-gradient(0deg, #f9f9f9, transparent)">
-		<div class="relative z-20 mx-auto max-w-screen-lg h-full">
-			<%= image_tag 'https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner.png', class: 'md:-top-24 h-48 md:absolute md:right-0 md:w-4/12 object-cover top-0 w-full z-10' %>
-			<div class="flex hidden relative z-20 flex-col justify-end items-center px-5 pb-5 md:px-0 md:justify-center md:items-baseline md:w-7/12">
-				<h1 class="hidden md:inline-block c-h2">
+	<div id="hero__presentation" data-turbo-permanent="" class="overflow-hidden relative gap-3 items-center mb-6 select-none md:items-start md:mb-12 md:mt-10 md:mx-0" style="">
+		<div class="relative z-20 mx-auto max-w-screen-xl h-full md:flex items-center">
+			<div class="flex flex-1 flex-col items-center md:items-start md:mt-0 mt-40 space-y-5">
+				<h1 class="hidden md:inline-block c-h1">
 					Eventos e cinema em Porto Alegre
 				</h1>
-				<h1 class="text-center md:hidden c-h2">
-					Eventos e cinema em Porto Alegre
-				</h1>
-				<span class="px-6 md:px-0 md:w-8/12 text-center md:text-left block leading-snug md:inline-block md:leading-normal md:text-base mt-1.5 text-xs">
-    			Shows, festas, cinema, feiras de rua... quase tudo que acontece em Porto Alegre está aqui 🤙
-				</span>
-			</div>
-			<div class="flex flex-col items-center space-y-3 md:items-start">
-				<h1 class="hidden md:inline-block mt-8 c-h2">
-					Eventos e cinema em Porto Alegre
-				</h1>
-				<h1 class="text-center md:hidden c-h2">
-					Eventos e cinema em Porto Alegre
+				<h1 class="text-center md:hidden c-h1">
+					Eventos e cinema <br> em Porto Alegre
 				</h1>
 				<div class="flex justify-center mx-12 -space-x-3 md:mx-0">
 					<% cache @users.cache_version do %>
 						<% @users.each do |user| %>
-							<%= image_tag(user.picture, { class: "w-8 h-8 rounded-full border-white border-2 bg-gray-200", style: 'filter: grayscale(0.8)', alt: user.name, onerror: "this.src='https://ui-avatars.com/api/?size=24&background=random&name=#{user.name}'" }) rescue nil %>
+							<%= image_tag(user.picture, { class: "w-8 h-8 rounded-full border-white border-2 bg-gray-200", alt: user.name, onerror: "this.style.display='none'" }) rescue nil %>
 						<% end %>
 					<% end %>
 				</div>
-				<span class="px-6 md:px-0 md:w-8/12 text-center md:text-left block leading-snug md:inline-block md:leading-normal md:text-base mt-1.5 text-xs">
+				<span class="px-6 md:px-0 text-center md:text-left block leading-snug md:inline-block md:leading-normal md:text-base mt-1.5 text-xs">
 					Junte-se a mais de 10.000 pessoas e aproveite
 					shows, festas, cinema, feiras de rua... Crie sua conta, é grátis 🤙
 				</span>
-				<a href="<%= new_user_registration_path %>" class="inline-flex items-center py-2 px-4 text-sm font-medium text-white rounded-md border border-transparent shadow-sm md:inline-block bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 hover:bg-brand-500">Criar
-					conta</a>
+				<a href="<%= new_user_registration_path %>" class="inline-flex items-center py-2 px-4 text-sm font-medium md:text-base text-white rounded-md border border-transparent shadow-sm md:inline-block bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 hover:bg-brand-500">
+					Criar conta
+				</a>
+			</div>
+			<div class="hidden md:inline-block ml-12 w-7/12">
+				<%= image_tag 'https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner.png' %>
+			</div>
+			<div class="md:hidden -left-14 -top-10 -top-72 absolute left-0 md:ml-12 w-128">
+				<%= image_tag 'https://alegreme.sfo2.cdn.digitaloceanspaces.com/stable-images/banner.png' %>
 			</div>
 		</div>
 	</div>
 <% end %>
 
-<div id="main-content" class="gap-24 mx-auto max-w-screen-lg md:grid md:grid-cols-8">
+<div id="main-content" class="gap-24 mx-auto max-w-screen-xl md:grid md:grid-cols-8">
 	<section id="main-sidebar" class="col-span-8 pt-8 space-y-16 min-h-screen md:pt-12 md:col-span-5">
 		<% if notice %>
-			<div class="flex items-center p-3 space-x-2 max-w-screen-lg text-sm font-semibold rounded-lg border bg-brand-100 border-brand-200 text-brand-600">
+			<div class="flex items-center p-3 space-x-2 max-w-screen-xl text-sm font-semibold rounded-lg border bg-brand-100 border-brand-200 text-brand-600">
 				<div class="flex flex-shrink-0 justify-center items-center w-12 h-12 rounded-full bg-brand-100 sm:h-10 sm:w-10">
 					<!-- Heroicon name: exclamation -->
 					<svg class="w-6 h-6 text-brand-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -88,7 +83,7 @@
 					<% if current_page?("/porto-alegre/eventos/categoria/#{params[:category]}") || current_page?("/porto-alegre/eventos/categoria/grupo/#{params[:categories_group]}") %>
 						<% content_for :back_button, true %>
 						<% content_for :top_app_bar_title, @category&.details_display_name %>
-						<div class="-mx-5 md:mx-0 mb-10">
+						<div class="-mx-5 mb-10 md:mx-0">
 							<%= render partial: 'feeds/horizontal_filter_categories', categories: @categories %>
 						</div>
 						<h1 class="mb-3 c-h2">
@@ -98,7 +93,7 @@
 					<% elsif current_page? "/porto-alegre/eventos/tema/#{params[:theme]}" %>
 						<% content_for :back_button, true %>
 						<% content_for :top_app_bar_title, 'Educação e trabalho' %>
-						<div class="-mx-5 md:mx-0 mb-10">
+						<div class="-mx-5 mb-10 md:mx-0">
 							<%= render partial: 'feeds/horizontal_filter_categories', categories: @categories %>
 						</div>
 						<h1 class="mb-3 c-h2">
