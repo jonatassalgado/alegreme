@@ -19,7 +19,7 @@
 							<path d="M0 0h24v24H0z" fill="none"/>
 							<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 						</svg>
-					<% end if start_date&.month > DateTime.now.month %>
+					<% end if start_date > DateTime.now %>
 					<%= content_tag :button, id: 'calendar-next', data: { reflex: 'click->LeftSidebar::Calendar#next_month', start_date: start_date, 'reflex-dataset': 'combined' }, class: 'cursor-pointer flex focus:outline-none h-8 items-center justify-center md:hover:bg-brand-600 md:hover:text-white mx-1 rounded-full w-8' do %>
 						<svg class="h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 							<path d="M0 0h24v24H0z" fill="none"/>
