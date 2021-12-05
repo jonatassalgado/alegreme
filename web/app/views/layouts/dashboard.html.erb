@@ -1,37 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-	<% unless modern_browser? %>
-		<script crossorigin="anonymous" rel="preload" src="https://polyfill.io/v3/polyfill.min.js?flags=gated&rum=true&features=Element.prototype.closest%2CIntersectionObserverEntry%2CIntersectionObserver%2CMutationObserver%2Cfetch%2CrequestAnimationFrame%2CrequestIdleCallback%2CArray.prototype.forEach"></script>
-	<% end %>
 
-	<title><%= meta_title %></title>
+	<title>Dashboard</title>
 
 	<meta name="theme-color" content="#ffffff"/>
 	<meta name="viewport"
 				content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
-	<%= render partial: 'layouts/meta-tags' %>
-
-	<%= canonical_url %>
-	<%= amp_url %>
 
 	<%= csrf_meta_tags %>
 	<%= csp_meta_tag %>
 
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-	<meta name="apple-mobile-web-app-title" content="Alegreme">
-	<link rel="apple-touch-icon" href="<%= image_url 'icons/launcher-icon-180x180.png' %>">
-
-	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-48x48.png', {sizes: "48x48", type: "image/png"} %>
-	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-96x96.png', {sizes: "96x96", type: "image/png"} %>
-	<%= favicon_link_tag 'https://alegreme.sfo2.digitaloceanspaces.com/stable-images/favicon-144x144.png', {sizes: "144x144", type: "image/png"} %>
-
 	<link rel="manifest" href="<%= asset_url 'manifest.json' %>"/>
 	<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Varela+Round|Roboto:300,400,500,700&display=swap">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300;400;500;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 	<%= Gon::Base.render_data %>
 
@@ -39,13 +23,6 @@
 	<%= javascript_pack_tag 'dashboard', 'data-turbo-track': 'reload', defer: true %>
 </head>
 <body>
-
-<div class="md:shadow-lg md:sticky md:top-0 w-full mx-auto transition-transform duration-100 transform bg-white shadow-sm z-50 <%= class_names('sticky top-0': content_for?(:top_app_bar_title)) %>"
-		 data-controller="head"
-		 data-reflex-permanent
-		 data-head-target="head">
-	<%= render partial: 'layouts/top-app-bar' %>
-</div>
 
 <section class="max-w-screen-xl mx-auto my-5">
 	<%= yield %>

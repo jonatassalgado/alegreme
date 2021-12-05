@@ -150,6 +150,8 @@ Rails.application.routes.draw do
 			resources :categories
 			resources :categories_groups
 
+			get 'dashboard', to: 'dashboard#index'
+
 			root to: "events#index"
 		end
 	end

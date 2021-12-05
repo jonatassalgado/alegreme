@@ -1,0 +1,42 @@
+<p id="notice">
+	<%= notice %>
+</p>
+
+<h1 class="c-h1 mb-10">
+	Dashboard
+</h1>
+
+<div class="space-y-20">
+	<div class="">
+		<h2 class="font-semibold text-lg">Novos usuários</h2>
+		<div class="mt-6">
+			<%= line_chart(User.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
+		</div>
+	</div>
+
+	<div class="">
+		<h2 class="font-semibold text-lg">Novos eventos</h2>
+		<div class="mt-6">
+			<%= line_chart(Event.where("created_at > ?", Date.today - 14).group_by_day(:created_at, time_zone: 'UTC').count, defer: true) %>
+		</div>
+	</div>
+
+	<div>
+		<h2 class="font-semibold text-lg">Eventos por site</h2>
+		<div class="gap-10 grid grid-cols-6 mt-6">
+			<% Event.select(:source_url, :created_at, :id).where("created_at > ?", Date.today - 14).group_by { |e| e.created_at.to_date }.sort_by { |g| g[0] }.reverse.each do |date_event_group| %>
+				<div>
+					<div>
+						<b><%= date_event_group[0] %></b>
+						<% if date_event_group[0].today? %>
+							<span class="bg-gray-200 p-1 rounded text-xs">HOJE</span>
+						<% end %>
+					</div>
+					<% date_event_group[1].map { |e| /facebook|sympla|bileto/.match(e.source_url)[0] rescue nil }.compact.tally.each do |k, v| %>
+						<span class="text-sm block"><%= k %>: <%= v %></span>
+					<% end %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

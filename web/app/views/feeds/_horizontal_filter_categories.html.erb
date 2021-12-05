@@ -22,7 +22,7 @@
 	<div data-slider-target="scroller" class="px-5 md:px-0 scrollx">
 		<div class="flex space-x-5 w-content">
 			<div class="w-80 md:w-128">
-				<div class="sticky left-0 c-h2 w-content">Principais categorias</div>
+				<div class="sticky left-0 c-h2 w-content z-20">Principais categorias</div>
 				<div class="grid grid-cols-3 gap-3 mt-3 text-sm md:text-base">
 					<% @categories_group&.each do |cg| %>
 						<%= link_to categories_group_events_path(categories_group: cg.url),
@@ -71,7 +71,7 @@
 				</div>
 			</div>
 			<div>
-				<div class="sticky left-0 c-h2 w-content">Mais categorias</div>
+				<div class="sticky left-0 c-h2 w-content z-20">Mais categorias</div>
 				<div class="grid grid-rows-4 grid-flow-col gap-3 pr-5 mt-3 text-sm md:text-base">
 					<% @categories.reject { |cat| ['show', 'party', 'theatrical_show', 'street_fair'].include?(cat.details_name) }.sort_by { |cat| cat.details_display_name }.each do |category| %>
 
