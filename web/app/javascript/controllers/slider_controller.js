@@ -1,7 +1,7 @@
 import ApplicationController from "./application_controller"
 
 export default class extends ApplicationController {
-    static targets = ['left', 'right', 'scroller', 'item'];
+    static targets = ['left', 'right', 'leftGradient', 'rightGradient', 'scroller', 'item'];
     static values  = {
         distance: Number
     }
@@ -68,14 +68,18 @@ export default class extends ApplicationController {
             let scrollWidth = this.scrollerTarget.scrollWidth;
 
             if (scrollLeft === 0) {
-                this.leftTarget.classList.add('hidden')
+                if (this.hasLeftGradientTarget) this.leftGradientTarget.classList.add('hidden')
+                if (this.hasLeftTarget) this.leftTarget.classList.add('hidden')
             } else {
-                this.leftTarget.classList.remove('hidden')
+                if (this.hasLeftGradientTarget) this.leftGradientTarget.classList.remove('hidden')
+                if (this.hasLeftTarget) this.leftTarget.classList.remove('hidden')
             }
             if (scrollLeft + offsetWidth >= scrollWidth - 10) {
-                this.rightTarget.classList.add('hidden')
+                if (this.hasRightGradientTarget) this.rightGradientTarget.classList.add('hidden')
+                if (this.hasRightTarget) this.rightTarget.classList.add('hidden')
             } else {
-                this.rightTarget.classList.remove('hidden')
+                if (this.hasRightGradientTarget) this.rightGradientTarget.classList.remove('hidden')
+                if (this.hasRightTarget) this.rightTarget.classList.remove('hidden')
             }
         }, 350)
     }

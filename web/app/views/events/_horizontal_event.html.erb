@@ -7,7 +7,7 @@
 										},
 										class:  'inline-block transition-opacity group' do %>
 	<div class="flex bg-white select-none">
-		<div class="relative flex-none w-32 h-20 bg-gray-100 rounded md:rounded-lg md:h-28 md:w-48">
+		<div class="relative flex-none w-32 h-20 bg-gray-100 rounded-lg md:rounded-xl md:h-28 md:w-48">
 			<%= link_to event_path(event),
 									title: "Preview: #{event.name}",
 									class: 'inline-block w-full h-full',
@@ -22,7 +22,7 @@
 					data:    {
 						'event-id': event.id
 					},
-					class:   'border cursor-pointer object-center object-cover h-full w-full rounded-md md:rounded-lg',
+					class:   'border cursor-pointer object-center object-cover h-full w-full rounded-lg md:rounded-xl',
 					onerror: "this.style.opacity='0'"
 				} rescue nil %>
 			<% end %>

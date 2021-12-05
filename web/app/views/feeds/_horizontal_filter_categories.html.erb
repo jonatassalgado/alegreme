@@ -1,16 +1,22 @@
 <div data-controller="slider" data-slider-distance-value="400" class="relative">
-	<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex">
-		<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="hidden my-auto -ml-5 bg-white rounded-full border shadow-lg transition-colors duration-200 cursor-pointer hover:bg-brand-200 hover:border-brand-200 text-brand-700">
-			<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
-				<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
-			</svg>
+	<div class="hidden md:block">
+		<div data-slider-target="leftGradient" class="pointer-events-none hidden flex absolute top-0 left-0 z-20 items-center w-3/12 h-full select-none" style="background: linear-gradient(90deg, white, transparent);">
 		</div>
-	</div>
-	<div class="hidden absolute top-0 right-0 z-20 items-center w-3 h-full select-none md:flex">
-		<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="my-auto -ml-2 bg-white rounded-full border shadow-lg transition-colors duration-200 cursor-pointer hover:bg-brand-200 hover:border-brand-200 text-brand-700">
-			<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
-				<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-			</svg>
+		<div class="flex absolute top-0 left-0 z-20 items-center h-full select-none">
+			<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="hidden my-auto -ml-5 bg-gray-900 rounded-full transition-colors duration-200 cursor-pointer hover:bg-brand-600 text-white">
+				<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
+					<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+				</svg>
+			</div>
+		</div>
+		<div data-slider-target="rightGradient" class="pointer-events-none flex absolute top-0 right-0 z-20 justify-end items-center w-3/12 h-full select-none" style="background: linear-gradient(270deg, white, transparent);">
+		</div>
+		<div class="flex absolute top-0 right-0 z-20 justify-end items-center h-full">
+			<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="my-auto -ml-2 bg-gray-900 rounded-full transition-colors duration-200 cursor-pointer hover:bg-brand-600 text-white">
+				<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
+					<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+				</svg>
+			</div>
 		</div>
 	</div>
 	<div data-slider-target="scroller" class="px-5 md:px-0 scrollx">
@@ -20,7 +26,7 @@
 				<div class="grid grid-cols-3 gap-3 mt-3 text-sm md:text-base">
 					<% @categories_group&.each do |cg| %>
 						<%= link_to categories_group_events_path(categories_group: cg.url),
-												class: class_names('group relative w-full rounded-lg border p-3 break-words',
+												class: class_names('group relative w-full rounded-xl border p-3 break-words',
 																					 { 'text-brand-600 bg-brand-100 border-brand-300':                                 cg.url == params[:categories_group],
 																						 'text-gray-700 hover:text-brand-600 hover:bg-brand-100 hover:border-brand-300': cg.url != params[:categories_group] }) do %>
 							<div class="space-y-1">
@@ -36,7 +42,7 @@
 
 						<%= link_to category_events_path(category: category.details_url),
 												data:  { 'slider-target': 'item' },
-												class: class_names('group relative w-full rounded-lg border p-3 break-words',
+												class: class_names('group relative w-full rounded-xl border p-3 break-words',
 																					 { 'text-brand-600 bg-brand-100 border-brand-300':                                 @category == category,
 																						 'text-gray-700 hover:text-brand-600 hover:bg-brand-100 hover:border-brand-300': @category != category }) do %>
 							<div class="space-y-1">
@@ -49,7 +55,7 @@
 						<% end %>
 					<% end %>
 					<%= link_to cinemas_path,
-											class: class_names('group relative w-full rounded-lg border p-3 break-words',
+											class: class_names('group relative w-full rounded-xl border p-3 break-words',
 																				 { 'text-brand-600 bg-brand-100 border-brand-300':                                 current_page?("/porto-alegre/cinemas"),
 																					 'text-gray-700 hover:text-brand-600 hover:bg-brand-100 hover:border-brand-300': !current_page?("/porto-alegre/cinemas") }) do %>
 						<div class="space-y-1">
@@ -71,7 +77,7 @@
 
 						<%= link_to category_events_path(category: category.details_url),
 												data:  {},
-												class: class_names('group w-full rounded-lg border px-3 py-2',
+												class: class_names('group w-full rounded-xl border px-3 py-2',
 																					 { 'text-brand-600 bg-brand-100 border-brand-300':                                 @category == category,
 																						 'text-gray-700 hover:text-brand-600 hover:bg-brand-100 hover:border-brand-300': @category != category }) do %>
 							<div class="flex">

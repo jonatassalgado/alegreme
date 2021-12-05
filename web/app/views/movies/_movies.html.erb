@@ -39,21 +39,26 @@
 					</div>
 				</div>
 			<% end %>
-			<div data-action="mouseleave->hovercard#hide"
-					 class="relative">
+			<div data-action="mouseleave->hovercard#hide" class="relative">
 				<div class="relative" data-hovercard-target="card" data-action="mouseenter->hovercard#clearTimerHide mouseleave->hovercard#hide"></div>
-				<div class="hidden absolute top-0 left-0 z-20 items-center w-2 h-full select-none md:flex">
-					<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="<%= class_names('hidden my-auto -ml-5 rounded-full shadow-lg transition-colors duration-200 cursor-pointer bg-white border hover:bg-brand-200 hover:border-brand-200 text-brand-700', { 'mt-20': template == 'default', 'mt-8': template == 'small' }) %> ">
-						<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
-							<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
-						</svg>
+				<div class="hidden md:block">
+					<div data-slider-target="leftGradient" class="pointer-events-none hidden flex absolute top-0 left-0 z-20 items-center w-3/12 h-full select-none" style="background: linear-gradient(90deg, white, transparent);">
 					</div>
-				</div>
-				<div class="hidden absolute top-0 right-0 z-20 items-center w-3 h-full select-none md:flex">
-					<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="<%= class_names('my-auto -ml-2 rounded-full shadow-lg transition-colors duration-200 cursor-pointer bg-white border hover:bg-brand-200 hover:border-brand-200 text-brand-700', { 'mt-20': template == 'default', 'mt-8': template == 'small' }) %> ">
-						<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
-							<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-						</svg>
+					<div class="hidden absolute top-0 left-0 z-20 items-center h-full select-none md:flex">
+						<div data-slider-target="left" data-action="click->slider#left mouseenter->hovercard#hide" class="<%= class_names('hidden my-auto rounded-full transition-colors duration-200 cursor-pointer bg-gray-900 hover:bg-brand-600 text-white', { 'mt-16': template == 'default', 'mt-8': template == 'small' }) %> ">
+							<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
+								<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+							</svg>
+						</div>
+					</div>
+					<div data-slider-target="rightGradient" class="pointer-events-none flex absolute top-0 right-0 z-20 justify-end items-center w-3/12 h-full select-none" style="background: linear-gradient(270deg, white, transparent);">
+					</div>
+					<div class="hidden absolute top-0 right-0 z-20 items-center h-full select-none md:flex justify-end">
+						<div data-slider-target="right" data-action="click->slider#right mouseenter->hovercard#hide" class="<%= class_names('my-auto rounded-full transition-colors duration-200 cursor-pointer bg-gray-900 hover:bg-brand-600 text-white', { 'mt-16': template == 'default', 'mt-8': template == 'small' }) %> ">
+							<svg xmlns="http://www.w3.org/2000/svg" class="p-2 w-10 h-10 fill-current" viewBox="0 0 20 20" fill="currentColor">
+								<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+							</svg>
+						</div>
 					</div>
 				</div>
 				<div data-slider-target="scroller"
@@ -68,14 +73,14 @@
 									 class="<%= class_names('flex flex-col transition-transform transform group md:hover:scale-105', { 'w-24': template == 'default', 'w-10 md:w-16': template == 'small' }) %>">
 								<%= link_to movie_path(movie), class: 'flex flex-col', data: { title: "Turbo: #{movie.title}", action: template == 'small' ? 'click->turbo#stream' : '', 'turbo-preserve-scroll': true } do %>
 									<% if movie.rating %>
-										<div class="<%= class_names('absolute flex font-semibold items-stretch left-0 space-x-0.5 text-white text-xs top-0 z-20', { 'py-0.5 px-1 w-10 md:w-16 rounded-md h-10': template == 'small', 'py-1 px-2 w-16 rounded-lg h-20': template == 'default' }) %> " style="background: radial-gradient(circle at 0% 0%,  #000000bf 20%,  transparent 50%);" title="votação de usuário do IMDB">
+										<div class="<%= class_names('absolute flex font-semibold items-stretch left-0 space-x-0.5 text-white text-xs top-0 z-20', { 'py-0.5 px-1 w-10 md:w-16 rounded-md h-10': template == 'small', 'py-1 px-2 w-16 rounded-xl h-20': template == 'default' }) %> " style="background: radial-gradient(circle at 0% 0%,  #000000bf 20%,  transparent 50%);" title="votação de usuário do IMDB">
 											<span class="<%= class_names({ 'text-xxs': template == 'small' }) %>"><%= movie.rating %></span>
 											<svg xmlns="http://www.w3.org/2000/svg" class="<%= class_names('fill-current', { 'h-3.5': template == 'default', 'h-3': template == 'small' }) %>" viewBox="0 0 20 20" fill="currentColor">
 												<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
 											</svg>
 										</div>
 									<% end %>
-									<div class="<%= class_names 'relative z-10 bg-gray-100', { 'rounded-lg': template == 'default', 'rounded-md': template == 'small' } %>">
+									<div class="<%= class_names 'relative z-10 bg-gray-100', { 'rounded-xl': template == 'default', 'rounded-md': template == 'small' } %>">
 										<% if template != 'small' && is_new_movie?(movie) %>
 											<div title="Criado nos últimos 5 dias" class="absolute bg-white border border-brand-100 bottom-1 font-semibold left-1 md:bottom-2 md:left-2 md:shadow px-1 py-0.5 rounded text-brand-600 text-white text-xxs">NOVO</div>
 										<% end %>
@@ -83,7 +88,7 @@
 											loading: :lazy,
 											title:   movie.title,
 											alt:     "Filme #{movie.title}",
-											class:   class_names('border group-hover:shadow object-center object-cover', { 'h-36 rounded-lg': template == 'default', 'h-16 md:h-24 rounded-md': template == 'small' }),
+											class:   class_names('group-hover:shadow object-center object-cover', { 'h-36 rounded-xl': template == 'default', 'h-16 md:h-24 rounded-md': template == 'small' }),
 											onerror: "this.style.opacity='0'"
 										} rescue nil %>
 									</div>

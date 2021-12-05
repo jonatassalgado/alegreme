@@ -51,50 +51,26 @@ export default class extends ApplicationController {
 
     like(event) {
         const currentTarget = event.currentTarget
-        Transition.to(this.shadowItemTarget, {
-            transition: () => {
-                this.currentItemTarget.classList.add("opacity-0")
-                this.shadowItemTarget.classList.add("-translate-x-3", "-translate-y-3")
-                // this.element.classList.add("opacity-0");
-            },
-            observed:   ["-translate-x-3", "-translate-y-3"],
-            duration:   300
-        }).then(value => {
-            // document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
-            this.stimulate('Swipable#like', currentTarget)
-                .then(value => {
-                    // document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
-                    this._updateCalendar()
-                })
-                .catch(reason => {
+        this.stimulate('Swipable#like', currentTarget)
+            .then(value => {
+                // document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
+                this._updateCalendar()
+            })
+            .catch(reason => {
 
-                })
-        }, reason => {
-
-        })
+            })
     }
 
     dislike(event) {
         const currentTarget = event.currentTarget
-        Transition.to(this.shadowItemTarget, {
-            transition: () => {
-                this.currentItemTarget.classList.add("opacity-0")
-                this.shadowItemTarget.classList.add("-translate-x-3", "-translate-y-3")
-            },
-            observed:   ["-translate-x-3", "-translate-y-3"],
-            duration:   300
-        }).then(value => {
-            // document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
-            this.stimulate('Swipable#dislike', currentTarget)
-                .then(value => {
-                    // document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
-                })
-                .catch(reason => {
+        // document.dispatchEvent(new Event('swipable#suggestion-event:loading'))
+        this.stimulate('Swipable#dislike', currentTarget)
+            .then(value => {
+                // document.dispatchEvent(new Event('swipable#suggestion-event:loaded'))
+            })
+            .catch(reason => {
 
-                })
-        }, reason => {
-
-        })
+            })
     }
 
     _updateCalendar() {
