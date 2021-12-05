@@ -85,6 +85,10 @@ def clean_description(value):
     for span in spans:
         span.unwrap()
 
+    fonts = description.select("font")
+    for font in fonts:
+        font.unwrap()
+
     for attribute in REMOVE_ATTRIBUTES:
         for tag in description.find_all(attrs={attribute: True}):
             del tag[attribute]
@@ -96,7 +100,7 @@ def clean_description(value):
 
     description = str(description)
     description = re.sub(r"</p>", "</p><br>", description)
-    description = re.sub(r"<(\/|)(span|strong|div|p|o|o:p|ul|li|em)>", "", description)
+    description = re.sub(r"<(\/|)(span|strong|div|p|o|o:p|ul|li|em|i|b)>", "", description)
     description = description.strip()
     return description
 
