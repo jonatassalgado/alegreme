@@ -21,6 +21,7 @@ namespace :clean do
                                 })
 
             u.save
-        end
+				end
+				Rails.cache.clear
     end
 end

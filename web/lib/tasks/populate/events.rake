@@ -466,6 +466,8 @@ namespace :populate do
 			save_event(event)
 		end
 
+		Rails.cache.clear
+
 		if last_task_performed
 			last_task_performed.touch
 		else
