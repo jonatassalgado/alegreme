@@ -1,11 +1,17 @@
 <%= turbo_frame_tag 'movie', target: '_top' do %>
 	<div class="flex flex-col mb-32">
+		<% if movie.trailer %>
+			<div class="overflow-hidden mb-5 w-full h-56 bg-gray-200 md:h-128 md:mb-6 md:my-0 md:rounded-xl md:w-full">
+				<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="100%" type="text/html" allow="autoplay" src="<%= @movie&.trailer&.gsub('watch?v=', 'embed/') %>?autoplay=1&fs=0&showinfo=0&rel=0&cc_load_policy=0&start=15&end=0">
+				</iframe>
+			</div>
+		<% end %>
 		<div class="flex flex-row justify-center px-5 md:w-full md:mx-auto md:px-0">
 			<%= image_tag shrine_image_url(movie, :medium), {
 				loading: :lazy,
 				title:   movie.title,
 				alt:     "Filme #{movie.title}",
-				class:   'bg-gray-100 border h-36 md:h-48 md:mr-10 md:w-32 mr-5 mx-auto object-cover rounded-lg shadow-lg w-28',
+				class:   'bg-gray-100 border h-40 md:h-48 md:mr-10 md:w-32 mr-5 mx-auto object-cover rounded-xl shadow-lg w-28',
 				onerror: "this.style.opacity='0'"
 			} rescue nil %>
 			<div class="flex flex-col flex-1 space-y-3 md:mt-2">
@@ -36,23 +42,14 @@
 								<span class="font-medium">Elenco:</span> <%= movie&.cast&.join(', ') %>
 							<% end if movie&.cast? %>
 						</div>
+						<div class="hidden pt-2 text-gray-800 md:inline-block">
+							<%= movie.description %>
+						</div>
 					</div>
-					<% if movie.trailer %>
-						<a href="<%= movie.trailer %>" rel="nofollow" target="_blank" class="inline-block mt-3 text-center">
-							<div class="flex items-center py-1 px-2 text-gray-600 rounded-full border transition-transform hover:scale-105 md:transform border-brand-300 w-content">
-								<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 w-5 h-5 fill-current text-brand-600" viewBox="0 0 20 20" fill="currentColor">
-									<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
-								</svg>
-								<span class="text-xs font-semibold md:text-base text-brand-600">
-  								Ver trailer
-  							</span>
-							</div>
-						</a>
-					<% end %>
 				</div>
 			</div>
 		</div>
-		<div class="px-5 mx-auto mt-6 text-sm leading-relaxed text-gray-800 md:px-0 md:w-full md:text-base">
+		<div class="px-5 mx-auto mt-6 text-sm leading-relaxed text-gray-800 md:hidden md:px-0 md:w-full md:text-base">
 			<%= movie.description %>
 		</div>
 		<% if params[:cinema] %>

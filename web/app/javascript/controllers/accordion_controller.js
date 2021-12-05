@@ -37,26 +37,33 @@ export default class extends ApplicationController {
         }
 
         if (this.openValue) {
-            this.titleTarget.classList.remove(this.titleClass)
-            this.element.classList.remove(this.bodyClass)
-            this.hiddenTargets.forEach((el) => {
-                el.classList.add('hidden')
-            })
-            this.visibleTargets.forEach((el) => {
-                el.classList.remove('hidden')
-            })
+            this._close();
         } else {
-            this.titleTarget.classList.add(this.titleClass)
-            this.element.classList.add(this.bodyClass)
-            this.hiddenTargets.forEach((el) => {
-                el.classList.remove('hidden')
-            })
-            this.visibleTargets.forEach((el) => {
-                el.classList.add('hidden')
-            })
+            this._open();
         }
 
         this.openValue = !this.openValue
     }
 
+    _close() {
+        this.titleTarget.classList.remove(this.titleClass)
+        this.element.classList.remove(this.bodyClass)
+        this.hiddenTargets.forEach((el) => {
+            el.classList.add('hidden')
+        })
+        this.visibleTargets.forEach((el) => {
+            el.classList.remove('hidden')
+        })
+    }
+
+    _open() {
+        this.titleTarget.classList.add(this.titleClass)
+        this.element.classList.add(this.bodyClass)
+        this.hiddenTargets.forEach((el) => {
+            el.classList.remove('hidden')
+        })
+        this.visibleTargets.forEach((el) => {
+            el.classList.add('hidden')
+        })
+    }
 }
