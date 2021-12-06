@@ -341,6 +341,7 @@ module PopulateEventsRake
 			event.description    = item['description']
 			event.ticket_url     = item['ticket_url']
 			event.prices         = item['prices']
+			event.source_name    = item['source_name']
 			event.multiple_hours = item['multiple_hours'] if item['multiple_hours']
 			event.datetimes = item['datetimes'].map { |d| Time.zone.parse(d).to_datetime } rescue []
 
@@ -358,6 +359,7 @@ module PopulateEventsRake
 			event.ticket_url     = item['ticket_url']
 			event.prices         = item['prices']
 			event.source_url     = item['source_url']
+			event.source_name    = item['source_name']
 			event.multiple_hours = item['multiple_hours'] if item['multiple_hours']
 			event.status         = 'active'
 

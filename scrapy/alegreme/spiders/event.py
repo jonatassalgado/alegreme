@@ -8,6 +8,7 @@ import warnings
 
 from urllib.parse import urljoin, urlparse
 from alegreme.items import Event, EventOrganizerLoader
+from alegreme.event_eb import EventEB
 from scrapy_splash import SplashRequest
 from scrapy.loader import ItemLoader
 from itemloaders.processors import Join
@@ -285,6 +286,40 @@ parse_sympla_event_api_script = """
 """
 
 
+# Eventbrite scripts
+
+parse_eventbrite_event_script = """
+    function main(splash, args)
+        splash.js_enabled = false
+        splash.private_mode_enabled = false
+        splash.images_enabled = false
+        splash.plugins_enabled = false
+        splash.html5_media_enabled = false
+        splash.media_source_enabled = false
+        splash.resource_timeout = 60
+        splash:on_request(function(request)
+            if string.find(request.url, ".css") ~= nil then
+                --request.abort()
+            end
+        end)
+
+        splash:set_custom_headers({
+                ["user-agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
+                ["cache-control"] = "max-age=0",
+                ["upgrade-insecure-requests"] = "1",
+                ["accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                ["accept-enconding"] = "gzip, deflate, br",
+                ["cookie"] = "location={%22slug%22:%22brazil--porto-alegre--8307%22%2C%22place_id%22:%22101960525%22%2C%22latitude%22:-30.099115%2C%22longitude%22:-51.179506%2C%22place_type%22:%22locality%22%2C%22current_place%22:%22Porto%20Alegre%22%2C%22current_place_parent%22:%22RS%2C%20Brasil%22%2C%22is_online%22:false}"
+            })
+        assert(splash:go(splash.args.url))
+        assert(splash:wait(3))
+        splash.scroll_position = {y=500}
+
+        return splash:html()
+    end
+"""
+
+
 class EventSpider(scrapy.Spider):
     http_user = "alegreme"
     http_pass = "ve97K8bCwNkNgQSqvMkYRryMG4MQuQGU"
@@ -293,20 +328,25 @@ class EventSpider(scrapy.Spider):
 
     custom_settings = {
         "ITEM_PIPELINES": {"alegreme.pipelines.EventPipeline": 400},
-        "CLOSESPIDER_ITEMCOUNT": 400,
-        "CLOSESPIDER_PAGECOUNT": 800,
+        "CLOSESPIDER_ITEMCOUNT": 1000,
+        "CLOSESPIDER_PAGECOUNT": 1500,
         "DEPTH_LIMIT": 3,
-        "DOMAIN_DEPTHS": {"facebook.com": 2, "sympla.com.br": 3},
+        "DOMAIN_DEPTHS": {
+            "facebook.com": 2,
+            "sympla.com.br": 3,
+            "eventbrite.com.br": 2,
+        },
     }
 
-    allowed_domains = ["facebook.com", "sympla.com.br"]
+    allowed_domains = ["facebook.com", "sympla.com.br", "eventbrite.com.br"]
 
     start_pages = [
+        "https://www.eventbrite.com.br/fe/",
         "https://www.sympla.com.br/eventos/porto-alegre-rs",
         "https://www.sympla.com.br/api/v1/search",
-        "https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D",
         "https://site.bileto.sympla.com.br/farolsantanderpoa",
         "https://site.bileto.sympla.com.br/opiniao",
+        "https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D"
     ]
 
     organizers_ids = [
@@ -350,6 +390,15 @@ class EventSpider(scrapy.Spider):
                         "lua_source": parse_sympla_events_page_script,
                         "ua": user_agents[0],
                     },
+                )
+
+            if "eventbrite.com.br/fe/" in page:
+                cookie_location = '{"slug":"brazil--porto-alegre--8307","place_id":"101960525","latitude":-30.099115,"longitude":-51.179506,"place_type":"locality","current_place":"Porto Alegre","current_place_parent":"RS, Brasil","is_online":false}'
+
+                yield scrapy.Request(
+                    page,
+                    callback=self.parse_eventbrite_event_api,
+                    cookies={"location": cookie_location},
                 )
 
             if "/eventos/porto-alegre-rs" in page:
@@ -408,6 +457,8 @@ class EventSpider(scrapy.Spider):
 
     def parse_facebook_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
+        event_loader.add_value("source_url", response.url)
+        event_loader.add_value("source_name", 'facebook')
         event_loader.add_xpath("name", "//title[1]/text()")
         event_loader.add_xpath(
             "cover_url",
@@ -461,7 +512,6 @@ class EventSpider(scrapy.Spider):
         event_loader.add_xpath("description", '//*[@class="_63ew"]//span')
         event_loader.add_xpath("prices", '//*[@class="_63ew"]//span/text()')
         event_loader.add_xpath("categories", '//li[@class="_63ep _63eq"]/a/text()')
-        event_loader.add_value("source_url", response.url)
         event_loader.load_item()
 
         yield event_loader.load_item()
@@ -582,7 +632,9 @@ class EventSpider(scrapy.Spider):
     def parse_bileto_event(self, response, source_url):
         body = json.loads(response.body)
         event_loader = ItemLoader(item=Event())
-
+    
+        event_loader.add_value("source_url", source_url)
+        event_loader.add_value("source_name", 'bileto')
         event_loader.add_value("name", body["data"]["name"])
         event_loader.add_value("cover_url", body["data"]["notification_image"])
         event_loader.add_value("address", body["data"]["venue"]["locale"]["address"])
@@ -630,12 +682,13 @@ class EventSpider(scrapy.Spider):
 
         event_loader.add_value("description", body["data"]["description"]["raw"])
         event_loader.add_value("prices", body["data"]["description"]["raw"])
-        event_loader.add_value("source_url", source_url)
 
         return event_loader.load_item()
 
     def parse_sympla_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
+        event_loader.add_value("source_url", response.url)
+        event_loader.add_value("source_name", 'sympla')
         event_loader.add_xpath(
             "name", 'normalize-space(//h1[contains(@class, "event-name")]/text())'
         )
@@ -677,7 +730,95 @@ class EventSpider(scrapy.Spider):
             "prices", '//*[contains(@id, "ticket-form")]//text()', Join()
         )
         # event_loader.add_xpath('categories', '//li[@class="_63ep _63eq"]/a/text()')
+        event_loader.load_item()
+
+        yield event_loader.load_item()
+
+    def parse_eventbrite_event_api(self, response):
+        body = json.loads(response.body)
+
+        events = body["flatBucket"]["results"]
+
+        for event in events:
+            if "url" in event:
+                yield SplashRequest(
+                    url=event["url"],
+                    callback=self.parse_eventbrite_event,
+                    endpoint="execute",
+                    args={
+                        "timeout": 300,
+                        "lua_source": parse_eventbrite_event_script,
+                        "ua": user_agents[0],
+                    },
+                )
+            else:
+                pass
+
+    def parse_eventbrite_event(self, response):
+        event_loader = ItemLoader(
+            item=EventEB(), response=response, source="eventbrite"
+        )
+
         event_loader.add_value("source_url", response.url)
+        event_loader.add_value("source_name", 'eventbrite')
+        event_loader.add_xpath("name", "//*[contains(@class, 'hero-title')]//text()")
+        event_loader.add_xpath(
+            "cover_url",
+            '//source[contains(@srcset, "800w")]//@srcset',
+        )
+        event_loader.add_xpath(
+            "address",
+            '//*[contains(@class, "listing-map-card-street-address")]/text()',
+        )
+        event_loader.add_xpath(
+            "datetimes",
+            '//*[contains(@class, "listing-info__body")]//*[contains(text(), "Data e hora")]/following-sibling::div/meta[1]/@content',
+        )
+        event_loader.add_xpath(
+            "place_name",
+            '//*[contains(@class, "listing-info__body")]//*[contains(text(), "Localização")]/following-sibling::div/p[1]/text()',
+        )
+        event_loader.add_xpath(
+            "place_cover_url",
+            '//*[contains(@class, "_2xr0")]/@style//*[contains(@class, "listing-info__body")]//*[contains(text(), "Localização")]/following-sibling::div/p[1]/text()',
+        )
+        event_loader.add_value("ticket_url", response.url)
+        event_loader.add_xpath(
+            "latitude",
+            '//meta[contains(@property, "latitude")]/@content',
+        )
+        event_loader.add_xpath(
+            "longitude",
+            '//meta[contains(@property, "longitude")]/@content',
+        )
+
+        organizer_loader = EventOrganizerLoader()
+        organizer_loader.add_value(
+            "cover_url",
+            event_loader.get_xpath(
+                '//*[contains(@class, "listing-organizer")]//picture/@content'
+            ),
+        )
+        organizer_loader.add_value(
+            "name",
+            event_loader.get_xpath(
+                '//*[contains(@data-automation, "organizer-name")]/a/text()'
+            ),
+        )
+        organizer_loader.add_value(
+            "source_url",
+            event_loader.get_xpath(
+                '//*[contains(@data-automation, "organizer-name")]/a/@href'
+            ),
+        )
+        event_loader.add_value("organizers", dict(organizer_loader.load_item()))
+
+        event_loader.add_xpath(
+            "description", '//*[contains(@class, "structured-content-rich-text")]'
+        )
+        event_loader.add_xpath(
+            "prices", '//*[contains(@class, "js-display-price")]/text()'
+        )
         event_loader.load_item()
 
         yield event_loader.load_item()

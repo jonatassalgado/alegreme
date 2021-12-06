@@ -32,7 +32,7 @@
 							<span class="bg-gray-200 p-1 rounded text-xs">HOJE</span>
 						<% end %>
 					</div>
-					<% date_event_group[1].map { |e| /facebook|sympla|bileto/.match(e.source_url)[0] rescue nil }.compact.tally.each do |k, v| %>
+					<% date_event_group[1].map { |e| /facebook|sympla|bileto|eventbrite/.match(e.source_url)[0] rescue nil }.compact.tally.each do |k, v| %>
 						<span class="text-sm block"><%= k %>: <%= v %></span>
 					<% end %>
 				</div>

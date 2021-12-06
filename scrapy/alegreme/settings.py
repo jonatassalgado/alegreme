@@ -30,7 +30,7 @@ IS_DOCKER = 'true'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 6
+CONCURRENT_REQUESTS = 8
 # CONCURRENT_ITEMS = 50
 
 # Scrapy Proxy Pool

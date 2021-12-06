@@ -73,9 +73,14 @@ def clean_description(value):
     description = re.sub(r"(<br>){3,}", "<br><br>", description)
     description = unquote(description)
     description = BeautifulSoup(description, "html.parser")
+    
     hashtags = description.select("a[href*=hashtag]")
     for hashtag in hashtags:
         hashtag.decompose()
+
+    h1s = description.select("a[href*=hashtag]")
+    for h1 in h1s:
+        h1.decompose()
 
     divs = description.select("div")
     for div in divs:
@@ -100,7 +105,9 @@ def clean_description(value):
 
     description = str(description)
     description = re.sub(r"</p>", "</p><br>", description)
-    description = re.sub(r"<(\/|)(span|strong|div|p|o|o:p|ul|li|em|i|b)>", "", description)
+    description = re.sub(
+        r"<(\/|)(span|strong|div|p|o|o:p|ul|li|em|i|b)>", "", description
+    )
     description = description.strip()
     return description
 
@@ -131,7 +138,7 @@ def get_event_longitude(value):
 
 
 def get_prices(value):
-    prices = re.findall(r"(?:R\$\s{0,1})(\d{0,4})(?:\d{0,2}.+taxa)", value)
+    prices = re.findall(r"(?:R\$\s{0,1})(\d{1,4})(?!\d{0,4}.+taxa)", value)
     return prices
 
 
@@ -139,6 +146,9 @@ def parse_date(value):
     date = re.sub(r"(seg|ter|qua|qui|sex|sáb|dom)", "", value)
     return dateparser.parse(date).date()
 
+
+def strip_string(value):
+    return value.strip()
 
 def get_image_url_from_style(value):
     url = re.search("http(s|):\/\/.+?(?=\))", value)
@@ -175,9 +185,6 @@ class Event(scrapy.Item):
     )
     address = scrapy.Field(output_processor=TakeFirst())
     datetimes = scrapy.Field(input_processor=MapCompose(get_date))
-    source_url = scrapy.Field(
-        input_processor=MapCompose(remove_url_params), output_processor=TakeFirst()
-    )
     place_name = scrapy.Field(output_processor=TakeFirst())
     place_cover_url = scrapy.Field(
         input_processor=MapCompose(get_image_url_from_style),
@@ -200,13 +207,17 @@ class Event(scrapy.Item):
     organizers = scrapy.Field(input_processor=Identity())
     multiple_hours = scrapy.Field(output_processor=TakeFirst())
     deleted = scrapy.Field(output_processor=TakeFirst())
+    source_url = scrapy.Field(
+        input_processor=MapCompose(remove_url_params), output_processor=TakeFirst()
+    )
+    source_name = scrapy.Field()
 
 
 class EventOrganizer(scrapy.Item):
     cover_url = scrapy.Field(
         input_processor=MapCompose(handle_image_url), output_processor=TakeFirst()
     )
-    name = scrapy.Field(output_processor=TakeFirst())
+    name = scrapy.Field(input_processor=MapCompose(strip_string), output_processor=TakeFirst())
     source_url = scrapy.Field(
         input_processor=MapCompose(remove_url_params), output_processor=TakeFirst()
     )
