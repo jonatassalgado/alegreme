@@ -2,7 +2,7 @@
 	<div data-hero--horizontal-event-target="currentItem"
 			 class="transition-opacity select-none">
 		<div class="flex justify-between">
-			<div class="h-24 md:h-36 md:w-5/12 relative w-5/12">
+			<div class="h-24 md:h-44 md:w-5/12 relative w-5/12">
 				<div style="background-color: <%= @event.image_dominant_color %>"
 						 class="<%= helpers.class_names('z-10 w-full h-full border-2 border-white overflow-hidden relative rounded-xl',
 																						{}) %>">
@@ -20,7 +20,7 @@
 						} rescue nil %>
 					<% end %>
 				</div>
-				<div data-hero--horizontal-event-target="shadowItem" class="-right-6 absolute bg-gray-400 h-full md:-right-10 overflow-hidden rounded-xl scale-75 top-0 transform transition-all w-full z-0">
+				<div data-hero--horizontal-event-target="shadowItem" class="-right-6 absolute bg-gray-400 h-full md:-right-11 overflow-hidden rounded-xl scale-75 top-0 transform transition-all w-full z-0">
 				</div>
 			</div>
 			<div class="<%= helpers.class_names('pl-5 md:pl-8 flex-1', {}) %>">

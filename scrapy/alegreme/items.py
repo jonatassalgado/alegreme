@@ -210,7 +210,7 @@ class Event(scrapy.Item):
     source_url = scrapy.Field(
         input_processor=MapCompose(remove_url_params), output_processor=TakeFirst()
     )
-    source_name = scrapy.Field()
+    source_name = scrapy.Field(output_processor=TakeFirst())
 
 
 class EventOrganizer(scrapy.Item):

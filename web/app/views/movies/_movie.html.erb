@@ -52,16 +52,16 @@
 		<div class="px-5 mx-auto mt-6 text-sm leading-relaxed text-gray-800 md:hidden md:px-0 md:w-full md:text-base">
 			<%= movie.description %>
 		</div>
-		<% if params[:cinema] %>
+		<% if params[:cinema] && @cinemas.present? %>
 			<div class="flex inline-flex items-center px-5 mt-10 space-x-3 md:px-0 md:-mb-10">
-				<div>Exibindo apenas o cinema <span class="font-semibold"><%= @cinemas.first.display_name %></span></div>
+				<div>Exibindo apenas o cinema <span class="font-semibold"><%= @cinemas.first&.display_name %></span></div>
 				<%= link_to movie_path(@movie), class: 'c-chip' do %>
 					Ver todos os cinemas
 				<% end %>
 			</div>
 		<% end %>
 		<div class="grid grid-cols-12 grid-flow-col gap-0 px-5 mt-10 max-w-screen-lg md:px-0 md:mt-20 md:gap-10">
-			<div class="overflow-hidden col-span-12 mx-auto w-full rounded-lg border md:border-0 md:col-span-9 md:space-y-12">
+			<div class="<%= class_names 'overflow-hidden col-span-12 mx-auto w-full rounded-lg border md:border-0 md:space-y-12', {'md:col-span-9': @cinemas.present?, 'md:col-span-12': @cinemas.empty?} %>">
 				<% movie.screening_groups&.includes(:screenings)&.active&.sort_by { |sg| sg.cinema&.display_name }&.group_by { |sg| [sg.cinema&.display_name, sg.cinema&.google_id] }.each_with_index do |cinema_name_group, index| %>
 					<% if cinema_name_group[1].any? { |sg| sg.date.to_date >= Date.current } && (params[:cinema].blank? ? true : cinema_name_group[1][0]&.cinema&.slug == params[:cinema]) %>
 						<div data-controller="accordion" data-accordion-mobile-only-value="true" data-accordion-body-class="bg-white" data-accordion-title-class="font-semibold" class="p-4 border-b md:border-0 md:p-0 last:border-b-0">
@@ -136,22 +136,24 @@
 					</div>
 				<% end %>
 			</div>
-			<div class="hidden col-span-3 md:block">
-				<div class="">
-					<h4 class="mb-2 text-xl font-bold text-gray-800">Cinemas</h4>
-					<div class="space-y-3">
-						<% cinemas&.each_with_index do |cinema, index| %>
-							<a data-controller="scroll-to-anchor-link"
-								 data-action="click->scroll-to-anchor-link#scrollTo"
-								 data-turbo="false"
-								 data-scroll-to-anchor-link-url-value="#<%= cinema.slug %>"
-								 class="block text-sm leading-tight cursor-pointer hover:underline">
-								<%= cinema.display_name %>
-							</a>
-						<% end %>
+			<% if @cinemas.present? %>
+				<div class="hidden col-span-3 md:block">
+					<div class="">
+						<h4 class="mb-2 text-xl font-bold text-gray-800">Cinemas</h4>
+						<div class="space-y-3">
+							<% cinemas&.each_with_index do |cinema, index| %>
+								<a data-controller="scroll-to-anchor-link"
+									data-action="click->scroll-to-anchor-link#scrollTo"
+									data-turbo="false"
+									data-scroll-to-anchor-link-url-value="#<%= cinema.slug %>"
+									class="block text-sm leading-tight cursor-pointer hover:underline">
+									<%= cinema.display_name %>
+								</a>
+							<% end %>
+						</div>
 					</div>
 				</div>
-			</div>
+			<% end %>
 		</div>
 	</div>
 <% end %>
