@@ -43,74 +43,105 @@
   }
 }
 
+
+
+
 </script>
 
 <div class="me-event">
 
-  <amp-img height="1"
-           layout="responsive"
-           class="me-event__cover"
-           alt="<%= @event.name %>"
-           src="<%= get_original_image_url @event %>"
-           width="1.66"></amp-img>
+	<amp-img height="1"
+					 layout="responsive"
+					 class="me-event__cover"
+					 alt="<%= @event.name %>"
+					 src="<%= get_original_image_url @event %>"
+					 width="1.66"></amp-img>
 
-  <%= tag.h1 @event.name, class: 'title' %>
+	<%= tag.h1 @event.name, class: 'title' %>
 
-  <div class="me-event__primary-section">
-    <div class="me-event__place">
-      <% if @event.place %>
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="none" d="M0 0h24v24H0V0z"/>
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.13.48 1.53 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-          </svg>
-        </i>
-        <div>
-          <div class="title">
-            <%= link_to limit_place_name_size(@event.place_name, 30), place_path(@event.place), class: 'me-is-clickable' %>
-          </div>
-          <span>
-            <%= limit_address_name_size @event.place_address %>
-          </span>
-        </div>
-      <% end %>
-    </div>
-    <div class="me-event__date">
-      <% if @event.place %>
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-          </svg>
-        </i>
-        <div>
-          <div class="title">
-            <%= "#{@event.day_of_week['decorator']} #{format_hour @event.start_time }" %>
-          </div>
-          <span>
+	<div class="me-event__primary-section">
+		<div class="me-event__date">
+			<% if @event.start_time %>
+				<i class="icon">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+						<path d="M0 0h24v24H0z" fill="none"/>
+						<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+					</svg>
+				</i>
+				<div>
+					<div class="title">
+						<%= "#{@event.day_of_week['decorator']&.capitalize} #{format_hour @event.start_time }" %>
+					</div>
+					<span>
               <%= I18n.l(@event.start_time) %>
           </span>
-        </div>
-      <% end %>
-    </div>
-  </div>
+				</div>
+			<% end %>
+		</div>
+		<% if @event&.ticket_url.present? %>
+			<a href="<%= @event.ticket_url %>" class="me-event__ticket">
+				<i class="icon">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/>
+					</svg>
+				</i>
+				<div>
+					<div class="title">
+						Ingressos
+					</div>
+					<span>
+              <%= truncate @event.ticket_url %>
+          </span>
+				</div>
+			</a>
+		<% end %>
+		<div class="me-event__place">
+			<% if @event.place %>
+				<i class="icon">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+						<path fill="none" d="M0 0h24v24H0V0z"/>
+						<path d="M12 2C8.13 2 5 5.13 5 9c0 4.17 4.42 9.92 6.24 12.11.4.48 1.13.48 1.53 0C14.58 18.92 19 13.17 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+					</svg>
+				</i>
+				<div>
+					<div class="title">
+						<%= limit_place_name_size(@event.place_name, 30) %>
+					</div>
+					<span>
+            <%= limit_address_name_size @event.place_address %>
+          </span>
+				</div>
+			<% end %>
+		</div>
+	</div>
 
-  <div class="me-event__description">
-    <%= sanitize @event.description, scrubber: AmpScrubber.new %>
-  </div>
+	<div class="me-event__description">
+		<%= sanitize @event.description, scrubber: AmpScrubber.new %>
+	</div>
 
-  <div class="me-event__similar">
-    <h2>Eventos similares</h2>
-    <amp-list reset-on-refresh="always"
-              binding="no"
-              height="20"
-              load-more="auto"
-              src="<%= api_events_similar_path @event.slug, format: :json %>">
-      <template type="amp-mustache">
-        <div class="item">
-          <a href="{{url}}.amp">{{name}}</a>
-        </div>
-      </template>
-    </amp-list>
-  </div>
+	<div class="me-event__add">
+		<amp-ad width="100vw" height="320"
+						type="adsense"
+						data-ad-client="ca-pub-8286231373119724"
+						data-ad-slot="9265904980"
+						data-auto-format="rspv"
+						data-full-width="">
+			<div overflow=""></div>
+		</amp-ad>
+	</div>
+
+	<div class="me-event__similar">
+		<h2>Eventos similares</h2>
+		<amp-list reset-on-refresh="always"
+							binding="no"
+							height="20"
+							load-more="auto"
+							src="<%= api_events_similar_path @event.slug, format: :json %>">
+			<template type="amp-mustache">
+				<div class="item">
+					<a href="{{url}}.amp">{{name}}</a>
+				</div>
+			</template>
+		</amp-list>
+	</div>
 </div>
