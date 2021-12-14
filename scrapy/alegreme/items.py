@@ -138,7 +138,8 @@ def get_event_longitude(value):
 
 
 def get_prices(value):
-    prices = re.findall(r"(?:R\$\s{0,1})(\d{1,4})(?!\d{0,4}.+taxa)", value)
+    prices = re.sub(r"(\d{1,4},\d{0,2}.{1,2}taxa)|(\d{1,2}x.{1,2}.+\d{1,4})", "", value) 
+    prices = re.findall(r"(?!\d{2}x)(\d{1,4})(?:,\d{2})", value) 
     return prices
 
 
