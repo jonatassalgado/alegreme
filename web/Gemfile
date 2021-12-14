@@ -126,7 +126,6 @@ gem 'view_component', require: 'view_component/engine'
 
 group :production do
 	gem 'aws-sdk-s3'
-	gem 'sentry-raven'
 
 	# Cache
 	# gem 'dalli'
@@ -143,6 +142,10 @@ group :development, :production do
 	gem "redis", ">= 4.0", :require => ["redis", "redis/connection/hiredis"]
 	gem "hiredis"
 	gem 'sendgrid-ruby'
+
+	gem "sentry-ruby"
+	gem "sentry-rails"
+	gem "sentry-sidekiq"
 end
 
 group :development, :test do

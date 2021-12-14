@@ -57,7 +57,7 @@ Rails.application.configure do
 
 	# Use the lowest log level to ensure availability of diagnostic information
 	# when problems arise.
-	config.log_level = :debug
+	config.log_level = :warn
 
 	# Prepend all log lines with the following tags.
 	config.log_tags = [:request_id]
@@ -67,7 +67,7 @@ Rails.application.configure do
 	config.cache_store = :redis_cache_store, {url:             ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" },
 	                                          reconnect_attempts: 1, # Defaults to 0
 	                                          error_handler: -> (method:, returning:, exception:) {
-		                                          Raven.capture_exception exception,
+																							Sentry.capture_exception exception,
 		                                                                  level: 'warning',
 		                                                                  tags:  {
 				                                                                  method:    method,

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
 	# Sentry
 	if Rails.env.production?
-		before_action :set_raven_context
+		before_action :set_sentry_context
 	end
 
 	#def current_user
@@ -59,9 +59,9 @@ class ApplicationController < ActionController::Base
 	end
 
 	# Sentry
-	def set_raven_context
-		Raven.user_context(id: session[current_user.try(:id)]) # or anything else in session
-		Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+	def set_sentry_context
+		Sentry.set_user(id: session[current_user.try(:id)]) # or anything else in session
+		Sentry.set_extras(params: params.to_unsafe_h, url: request.url)
 	end
 
 	def authorize_current_user

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationReflex < StimulusReflex::Reflex
-	require 'raven'
+	require 'sentry-ruby'
 	# Put application wide Reflex behavior in this file.
 	delegate :current_user, to: :connection
 
 	rescue_from StandardError do |exception|
-		Raven.capture_exception exception, level: 'warning'
+		Sentry.capture_exception exception, level: 'warning'
 	end
 	#
 	# Example:
