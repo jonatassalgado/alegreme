@@ -8,6 +8,7 @@
 import scrapy
 import re
 import dateparser
+import numpy as np
 
 from scrapy.loader import ItemLoader
 from itemloaders.processors import Join, MapCompose, TakeFirst, Identity
@@ -128,17 +129,23 @@ def clean_facebook_url(value):
 
 
 def get_event_latitude(value):
-    latitude = re.search(r"latitude=(.\d{2}\.\d{6,12})", value)
-    return latitude.group(1) if latitude else None
+    if isinstance(value, str) and 'latitude' in value:
+        latitude = re.search(r"latitude=(.\d{2}\.\d{6,12})", value)
+        return latitude.group(1) if latitude else None
+    elif isinstance(value, float):
+        value
 
 
 def get_event_longitude(value):
-    longitude = re.search(r"longitude=(.\d{2}\.\d{6,12})", value)
-    return longitude.group(1) if longitude else None
+    if isinstance(value, str) and 'longitude' in value:
+        longitude = re.search(r"longitude=(.\d{2}\.\d{6,12})", value)
+        return longitude.group(1) if longitude else None
+    elif isinstance(value, float):
+        value
 
 
 def get_prices(value):
-    prices = re.sub(r"(\d{1,4},\d{0,2}.{1,2}taxa)|(\d{1,2}x.{1,2}.+\d{1,4})", "", value) 
+    prices = re.sub(r"(\d{1,4},\d{0,2}.{1,2}taxa)|(\d{1,2}x.{1,2}.+\d{1,4})|(R\$(|\s)\d(,|)\d{2})", "", value) 
     prices = re.findall(r"(?!\d{2}x)(\d{1,4})(?:,\d{2})", value) 
     return prices
 

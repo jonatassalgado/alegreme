@@ -342,18 +342,22 @@ class EventSpider(scrapy.Spider):
 
     start_pages = [
         "https://www.eventbrite.com.br/fe/",
-        "https://www.sympla.com.br/eventos/porto-alegre-rs",
         "https://www.sympla.com.br/api/v1/search",
         "https://site.bileto.sympla.com.br/farolsantanderpoa",
         "https://site.bileto.sympla.com.br/opiniao",
-        "https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D"
+        "https://m.facebook.com/events/discovery/?suggestion_token=%7B%22city%22%3A%22111072692249998%22%7D",
     ]
 
-    organizers_ids = [
+    """  organizers_ids = [
         ["ksacentro", "4569602"],
         ["doneadventuredone", "9290306"],
         ["CHCSantaCasa", "2984476"],
-    ]
+        ["cortexbar", "293710"],
+        ["bluelounge", "10514303"],
+        ["clubegloria", "10316441"],
+        ["cuckopoa", "253072"],
+        ["tietafesta", "1892943"],
+    ] """
 
     def start_requests(self):
         self.log("INITIALIZING...")
@@ -362,23 +366,35 @@ class EventSpider(scrapy.Spider):
         for page in self.start_pages:
 
             if "api/v1/search" in page:
-                for organizer_id in self.organizers_ids:
-                    data = {
-                        "service": "/v5/search",
-                        "params": {
-                            "organizer_id": organizer_id[1],
-                            "sort": "date",
-                            "limit": "24",
-                            "page": 1,
-                        },
-                    }
-                    yield scrapy.Request(
-                        "https://www.sympla.com.br/api/v1/search",
-                        method="POST",
-                        callback=self.parse_search_api_event,
-                        body=json.dumps(data),
-                        headers={"Content-Type": "application/json"},
-                    )
+                # for organizer_id in self.organizers_ids:
+                data = {
+                    "service": "/v5/search",
+                    "params": {
+                        "q": "",
+                        "collections": "",
+                        "range": "",
+                        "need_pay": "",
+                        "sort": "location-score",
+                        "include_organizers": 0,
+                        "only": "name,start_date,end_date,location,url",
+                        "components_limit": "4",
+                        "components_page": "1",
+                        "include_response": "true",
+                        "limit": "100",
+                        "location": "-30.03405,-51.21363",
+                        "matrix_category": "city",
+                        "matrix_uuid": "porto-alegre",
+                        "component_uuid": "todos-eventos",
+                        "page": 1,
+                    },
+                }
+                yield scrapy.Request(
+                    page,
+                    method="POST",
+                    callback=self.parse_search_api_event,
+                    body=json.dumps(data),
+                    headers={"Content-Type": "application/json"},
+                )
 
             if "bileto.sympla" in page:
                 yield SplashRequest(
@@ -458,7 +474,7 @@ class EventSpider(scrapy.Spider):
     def parse_facebook_event(self, response):
         event_loader = ItemLoader(item=Event(), response=response)
         event_loader.add_value("source_url", response.url)
-        event_loader.add_value("source_name", 'facebook')
+        event_loader.add_value("source_name", "facebook")
         event_loader.add_xpath("name", "//title[1]/text()")
         event_loader.add_xpath(
             "cover_url",
@@ -627,14 +643,15 @@ class EventSpider(scrapy.Spider):
                     "lua_source": parse_sympla_events_page_script,
                     "ua": user_agents[0],
                 },
+                cb_kwargs=dict(event_data=event_data),
             )
 
     def parse_bileto_event(self, response, source_url):
         body = json.loads(response.body)
         event_loader = ItemLoader(item=Event())
-    
+
         event_loader.add_value("source_url", source_url)
-        event_loader.add_value("source_name", 'bileto')
+        event_loader.add_value("source_name", "bileto")
         event_loader.add_value("name", body["data"]["name"])
         event_loader.add_value("cover_url", body["data"]["notification_image"])
         event_loader.add_value("address", body["data"]["venue"]["locale"]["address"])
@@ -685,10 +702,10 @@ class EventSpider(scrapy.Spider):
 
         return event_loader.load_item()
 
-    def parse_sympla_event(self, response):
+    def parse_sympla_event(self, response, event_data):
         event_loader = ItemLoader(item=Event(), response=response)
         event_loader.add_value("source_url", response.url)
-        event_loader.add_value("source_name", 'sympla')
+        event_loader.add_value("source_name", "sympla")
         event_loader.add_xpath(
             "name", 'normalize-space(//h1[contains(@class, "event-name")]/text())'
         )
@@ -714,8 +731,8 @@ class EventSpider(scrapy.Spider):
         )
         # event_loader.add_xpath('place_cover_url', '//*[contains(@class, "_2xr0")]/@style')
         event_loader.add_value("ticket_url", response.url)
-        # event_loader.add_xpath('latitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "latitude")]/@ajaxify')
-        # event_loader.add_xpath('longitude', '//*[@id="event_summary"]//*[contains(@ajaxify, "longitude")]/@ajaxify')
+        event_loader.add_value("latitude", event_data["location"]["lat"])
+        event_loader.add_value("longitude", event_data["location"]["lon"])
 
         organizers_els = response.xpath('//*[contains(@id, "produtor")]')
         if organizers_els:
@@ -760,7 +777,7 @@ class EventSpider(scrapy.Spider):
         )
 
         event_loader.add_value("source_url", response.url)
-        event_loader.add_value("source_name", 'eventbrite')
+        event_loader.add_value("source_name", "eventbrite")
         event_loader.add_xpath("name", "//*[contains(@class, 'hero-title')]//text()")
         event_loader.add_xpath(
             "cover_url",
