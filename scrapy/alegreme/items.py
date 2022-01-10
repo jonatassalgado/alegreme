@@ -147,7 +147,7 @@ def get_prices(value):
         "",
         value,
     )
-    prices = re.findall(r"(?!\d{2}x)(\d{1,4})(?:,\d{2})", value)
+    prices = re.findall(r"(?!\d{2}x)(\d{1,4})(?:,\d{2})", prices)
     return prices
 
 
