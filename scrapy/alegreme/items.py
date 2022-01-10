@@ -59,7 +59,7 @@ def handle_image_url(value):
 
 
 def clean_description(value):
-    REMOVE_ATTRIBUTES = ["data-saferedirecturl"]
+    REMOVE_ATTRIBUTES = ["data-saferedirecturl", "style", "class", "align", "color"]
 
     description = re.sub(r"http(s|):\/\/l.facebook?.+?u=", "", value)
     description = re.sub(r';h=.+?(?=")', "", description)
@@ -68,13 +68,10 @@ def clean_description(value):
     description = re.sub(r"\n", "</br>", description)
     description = re.sub(r"(&amp|\xa0)", "", description)
     description = re.sub(r"&nbsp;", " ", description)
-    description = re.sub(
-        r'(class|style|align)="[a-zA-Z0-9:;\.\s\(\)\-\,]*"', "", description
-    )
     description = re.sub(r"(<br>){3,}", "<br><br>", description)
     description = unquote(description)
     description = BeautifulSoup(description, "html.parser")
-    
+
     hashtags = description.select("a[href*=hashtag]")
     for hashtag in hashtags:
         hashtag.decompose()
@@ -129,7 +126,7 @@ def clean_facebook_url(value):
 
 
 def get_event_latitude(value):
-    if isinstance(value, str) and 'latitude' in value:
+    if isinstance(value, str) and "latitude" in value:
         latitude = re.search(r"latitude=(.\d{2}\.\d{6,12})", value)
         return latitude.group(1) if latitude else None
     elif isinstance(value, float):
@@ -137,7 +134,7 @@ def get_event_latitude(value):
 
 
 def get_event_longitude(value):
-    if isinstance(value, str) and 'longitude' in value:
+    if isinstance(value, str) and "longitude" in value:
         longitude = re.search(r"longitude=(.\d{2}\.\d{6,12})", value)
         return longitude.group(1) if longitude else None
     elif isinstance(value, float):
@@ -145,8 +142,12 @@ def get_event_longitude(value):
 
 
 def get_prices(value):
-    prices = re.sub(r"(\d{1,4},\d{0,2}.{1,2}taxa)|(\d{1,2}x.{1,2}.+\d{1,4})|(R\$(|\s)\d(,|)\d{2})", "", value) 
-    prices = re.findall(r"(?!\d{2}x)(\d{1,4})(?:,\d{2})", value) 
+    prices = re.sub(
+        r"(\d{1,4},\d{0,2}.{1,2}taxa)|(\d{1,2}x.{1,2}.+\d{1,4})|(R\$(|\s)\d(,|)\d{2})",
+        "",
+        value,
+    )
+    prices = re.findall(r"(?!\d{2}x)(\d{1,4})(?:,\d{2})", value)
     return prices
 
 
@@ -157,6 +158,7 @@ def parse_date(value):
 
 def strip_string(value):
     return value.strip()
+
 
 def get_image_url_from_style(value):
     url = re.search("http(s|):\/\/.+?(?=\))", value)
@@ -225,7 +227,9 @@ class EventOrganizer(scrapy.Item):
     cover_url = scrapy.Field(
         input_processor=MapCompose(handle_image_url), output_processor=TakeFirst()
     )
-    name = scrapy.Field(input_processor=MapCompose(strip_string), output_processor=TakeFirst())
+    name = scrapy.Field(
+        input_processor=MapCompose(strip_string), output_processor=TakeFirst()
+    )
     source_url = scrapy.Field(
         input_processor=MapCompose(remove_url_params), output_processor=TakeFirst()
     )
