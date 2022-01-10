@@ -20,19 +20,19 @@ module EventsHelper
 	end
 
 	def limit_name_size(name, limit = 60)
-		name.titleize.truncate(limit, separator: " ") if name
+		name.titleize&.truncate(limit, separator: " ") if name
 	end
 
 	def limit_description_size(name, limit = 140)
-		strip_tags(name).truncate(limit, separator: " ") if name
+		strip_tags(name)&.truncate(limit, separator: " ") if name
 	end
 
 	def limit_place_name_size(place_name, limit = 25)
-		place_name.truncate(limit)
+		place_name&.truncate(limit)
 	end
 
 	def limit_address_name_size(address_name, limit = 80)
-		address_name.truncate(limit, separator: " ")
+		address_name&.truncate(limit, separator: " ")
 	end
 
 	def format_hour(datetime)
