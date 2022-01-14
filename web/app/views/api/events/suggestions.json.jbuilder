@@ -1,6 +1,6 @@
 json.array! @events_suggestions do |event|
 	json.id event.id
-	json.cover_url shrine_image_url(event, :feed)
+	json.cover_url shrine_image_url(event, :medium)
 	json.name limit_name_size event.name
 	json.start_time event.start_time
 	json.price event.prices.try(:min)
